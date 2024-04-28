@@ -8,7 +8,7 @@ const ProductSeries = ({ brandId }) => {
     useGetBrandSeriesQuery(brandId);
 
   if (!seriesLoading) {
-    console.log("brandSeries", brandSeries);
+    // console.log("brandSeries", brandSeries);
   }
   return (
     <div className="mt-10">
