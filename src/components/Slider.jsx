@@ -15,8 +15,8 @@ function Slider() {
     // console.log(slidersList);
   }
 
-  console.log("slidersList", slidersList);
-  console.log("slidersList length", slidersList.length);
+  // console.log("slidersList", slidersList);
+  // console.log("slidersList length", slidersList.length);
 
   const baseURL = import.meta.env.VITE_APP_BASE_URL;
   // console.log(baseURL);

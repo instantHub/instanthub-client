@@ -13,7 +13,7 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.adminInfo = action.payload;
       localStorage.setItem("adminInfo", JSON.stringify(action.payload));
-      console.log("from authSlice", state.adminInfo);
+      // console.log("from authSlice", state.adminInfo);
     },
     logout: (state, action) => {
       // console.log("authSlice logout");

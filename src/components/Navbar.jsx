@@ -34,9 +34,7 @@ const Navbar = () => {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="#" className="">
-                    About
-                  </a>
+                  <Link to={`/about`}>About</Link>
                 </li>
                 <li>
                   <a href="#" className="">
@@ -44,9 +42,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="">
-                    Contact
-                  </a>
+                  <Link to={`/contact-us`}>Contact</Link>
                 </li>
                 <li>
                   <a href="/admin/login" className="">
@@ -88,14 +84,10 @@ const Navbar = () => {
           <div className="md:hidden mt-2 text-center  float-right absolute right-0">
             <ul className="flex flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
               <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
-                <a href="#" className="">
-                  Home
-                </a>
+                <Link to="/">Home</Link>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <a href="#" className="">
-                  About
-                </a>
+                <Link to={`/about`}>About</Link>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
                 <a href="#" className="">
@@ -103,9 +95,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <a href="#" className="">
-                  Contact
-                </a>
+                <Link to={`/contact-us`}>Contact</Link>
               </li>
             </ul>
           </div>

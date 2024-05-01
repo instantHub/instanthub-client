@@ -153,8 +153,8 @@ const ProductDeductions = () => {
   return (
     <>
       <div className=" mt-4 ">
-        <div className="flex gap-3 justify-center my-auto">
-          <div className="w-[55%] flex flex-col border py-6 rounded my-auto ">
+        <div className="flex gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
+          <div className="w-[55%] flex flex-col border py-6 rounded my-auto max-sm:w-[90%] ">
             {!checkIsOff && (
               <div className="mx-auto pb-10">
                 <h1 className="">Tell Us More About Your Device</h1>
@@ -232,7 +232,7 @@ const ProductDeductions = () => {
                   <div className="px-5 py-2 text-center font-extrabold text-lg">
                     <h1>{deductions[currentConditionIndex].conditionName}</h1>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4">
+                  <div className="grid grid-cols-3 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4 max-sm:gap-2">
                     {deductions[currentConditionIndex].conditionLabels.map(
                       (label) => (
                         <div
@@ -242,7 +242,7 @@ const ProductDeductions = () => {
                               (condLabel) =>
                                 condLabel.conditionLabel == label.conditionLabel
                             )
-                              ? "border-[#E27D60] border-red-600"
+                              ? "border-[#E27D60] border-cyan-500"
                               : ""
                           } flex flex-col border rounded items-center`}
                           // onClick={() =>
@@ -276,7 +276,7 @@ const ProductDeductions = () => {
                               )
                                 ? "bg-[#E27D60] text-white bg-cyan-500"
                                 : "bg-slate-100 "
-                            } py-2 text-sm text-center w-full`}
+                            } py-2 text-sm  flex items-center text-center justify-center w-full h-[70px]`}
                           >
                             {label.conditionLabel}
                           </div>
@@ -375,7 +375,9 @@ const ProductDeductions = () => {
           </div>
 
           {/* Right Side Div */}
+          {/* <div className=""> */}
           <ProdDeductionsRight />
+          {/* </div> */}
         </div>
       </div>
     </>

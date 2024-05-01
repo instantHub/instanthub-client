@@ -204,7 +204,7 @@ const LaptopsQuestions = (props) => {
                   </>
                 ) : (
                   <>
-                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4">
+                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-3 items-center px-4">
                       {deduction.conditionLabels.map((label, index) => (
                         <div key={index}>
                           <div
@@ -214,7 +214,7 @@ const LaptopsQuestions = (props) => {
                                   condLabel.conditionLabel ==
                                   label.conditionLabel
                               )
-                                ? "border-[#E27D60]"
+                                ? "border-[#E27D60] border-cyan-500"
                                 : ""
                             } flex flex-col border rounded items-center`}
                             onClick={() =>
@@ -242,9 +242,9 @@ const LaptopsQuestions = (props) => {
                                     condLabel.conditionLabel ==
                                     label.conditionLabel
                                 )
-                                  ? "bg-[#E27D60] text-white"
+                                  ? "bg-[#E27D60] text-white bg-cyan-500"
                                   : "bg-slate-100 "
-                              } py-2 text-sm text-center w-full`}
+                              } py-2  text-center w-full h-[100px] flex items-center justify-center lg:text-[13px] max-md:text-[12px] max-sm:text-sm`}
                             >
                               {label.conditionLabel}
                             </div>
