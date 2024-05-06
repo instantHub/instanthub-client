@@ -8,7 +8,7 @@ const ProdDeductionsRight = () => {
 
   return (
     // <div>
-    <div className="w-[25%] border rounded max-2sm:hidden">
+    <div className="w-[25%] border rounded max-sm:w-[90%]">
       <>
         <div className="flex items-center justify-center gap-3 p-2">
           <div>

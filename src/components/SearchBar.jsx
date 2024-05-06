@@ -26,6 +26,7 @@ const SearchBar = () => {
     // setPage(1);
     try {
       setProductsLoading(true);
+<<<<<<< HEAD
       // const response = await axios.get("http://localhost:8000/api/products", {
       const response = await axios.get(
         "https://api.yusufqureshi.online/api/products",
@@ -37,6 +38,15 @@ const SearchBar = () => {
           },
         }
       );
+=======
+      const response = await axios.get("/api/products", {
+        params: {
+          search: search.trim() ? search : undefined,
+          page,
+          limit: 10,
+        },
+      });
+>>>>>>> origin
       console.log("response", response);
       setProductsData(response.data);
     } catch (error) {

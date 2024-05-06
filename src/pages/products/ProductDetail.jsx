@@ -32,7 +32,7 @@ const ProductDetail = () => {
       <div className="mx-0 mb-6">
         {productDetails && (
           <div className="flex items-center gap-1">
-            <h1 className="flex items-center opacity-60 gap-1">
+            <h1 className="flex items-center opacity-60 gap-1 max-sm:text-[12px]">
               <Link to={"/"}>Home</Link>
               <FaAngleRight />
               <Link to={`/categories/brands/${productDetails.category.id}`}>
@@ -48,7 +48,7 @@ const ProductDetail = () => {
               <span>Products</span>
               <FaAngleRight />
             </h1>
-            <span>{productDetails.name}</span>
+            <span className="max-sm:text-[10px]">{productDetails.name}</span>
           </div>
         )}
         <hr className="text-black mt-1" />
