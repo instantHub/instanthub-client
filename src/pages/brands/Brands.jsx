@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import brands from "../../data/brands.json";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery, useGetBrandQuery } from "../../features/api";
