@@ -53,32 +53,66 @@ import AdminLayout from "./admin/pages/layout/Layout";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ErrorComponent from "./components/ErrorComponent";
+import AboutPage from "./components/About";
+import ContactUs from "./components/ContactUs";
 
 function App() {
   const router = Router([
     {
       path: "/",
-      // element: <ClientNavbar />,
+      // errorElement: (
+      //   <ErrorComponent message={`Sorry please try after sometime..!`} />
+      // ),
       element: <ClientLayout />,
       children: [
         {
+          path: "/about",
+          element: <AboutPage />,
+        },
+        {
+          path: "/contact-us",
+          element: <ContactUs />,
+        },
+        {
           index: true,
+          errorElement: (
+            <ErrorComponent message={`Sorry please try after sometime..!`} />
+          ),
           element: <ClientHome />,
         },
         {
           path: "/categories/brands/:catId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Brands, please try after sometime..!`}
+            />
+          ),
           element: <ClientBrands />,
         },
         {
           path: "/categories/brands/products/:brandId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Products, please try after sometime..!`}
+            />
+          ),
           element: <ClientProducts />,
         },
         {
           path: "/categories/brands/productDetails/:prodId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Product Details, please try after sometime..!`}
+            />
+          ),
           element: <ClientProductDetail />,
         },
         {
           path: "/sell/deductions",
+          errorElement: (
+            <ErrorComponent message={`Sorry please try after sometime..!`} />
+          ),
           element: <ClientProductDeductions />,
           // children: [
           //   {

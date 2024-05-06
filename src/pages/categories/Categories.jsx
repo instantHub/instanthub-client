@@ -21,7 +21,7 @@ const Categories = () => {
 
         {isLoading ? (
           <div className="flex flex-col justify-center items-center h-32">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-cyan-500"></div>
             <span>Loading...</span>
           </div>
         ) : (
@@ -31,7 +31,8 @@ const Categories = () => {
                 <div
                   key={i}
                   // border-[#E27D60]
-                  className="w-28 p-4 h-32 flex bg-white cursor-pointer border border-[#000] rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                  className="w-32 p-4 h-32 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                  // className="w-28 p-4 h-32 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                 >
                   {/* {console.log("from categories component ", category)} */}
                   <img

@@ -16,6 +16,7 @@ const CreateProducts = () => {
   const [imageSelected, setImageSelected] = useState("");
   const [prodName, setProdName] = useState("");
   const [uniqueURL, setUniqueURL] = useState("");
+  const [status, setStatus] = useState("Active");
   const { data: seriesData, isLoading: seriesLoading } = useGetAllSeriesQuery();
   const [uploadProductImage, { isLoading: uploadLoading }] =
     useUploadProductImageMutation();
@@ -96,6 +97,7 @@ const CreateProducts = () => {
       brand: selectedBrand,
       series: seriesYes ? selectedSeries : null,
       variants: variants,
+      status: status,
     };
 
     console.log("productsData: ", productsData);
@@ -117,13 +119,13 @@ const CreateProducts = () => {
 
       console.log("Product created", productCreated);
       toast.success("Product created successfull..!");
-      setSelectedCategory("");
-      setSelectedBrand("");
+      // setSelectedCategory("");
+      // setSelectedBrand("");
       setImageSelected("");
-      setProdName("");
-      setUniqueURL("");
+      // setProdName("");
+      // setUniqueURL("");
       // Reset the variants state to a single empty variant
-      setVariants([{ name: "", price: "" }]);
+      // setVariants([{ name: "", price: "" }]);
       // Clear the value of the file input
       fileInputRef.current.value = "";
       // Mark the file input as required again
@@ -133,6 +135,8 @@ const CreateProducts = () => {
       console.log("Error: ", error);
     }
   };
+
+  console.log("status", status);
 
   // if selectedSeries is empty than series is not selected
   useEffect(() => {
@@ -382,9 +386,10 @@ const CreateProducts = () => {
                   id="status"
                   name="status"
                   className="border rounded-sm p-2"
+                  onChange={(e) => setStatus(e.target.value)}
                 >
-                  <option value="active">Active</option>
-                  <option value="blocked">Blocked</option>
+                  <option value="Active">Active</option>
+                  <option value="Blocked">Blocked</option>
                 </select>
               </div>
             </div>

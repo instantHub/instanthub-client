@@ -60,7 +60,7 @@ const Brands = () => {
                 <Link to={`/categories/brands/products/${brand.id}`} key={i}>
                   <div
                     key={i}
-                    className="w-28 p-4 h-28 flex cursor-pointer border border-[#E27D60] rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                    className="w-28 p-4 h-28 flex cursor-pointer border border-[#E27D60] border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                   >
                     <img
                       src={import.meta.env.VITE_APP_BASE_URL + brand.image}

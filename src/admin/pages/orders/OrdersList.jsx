@@ -22,6 +22,7 @@ const OrdersList = () => {
   if (!ordersLoading) {
     console.log(ordersData);
   }
+  console.log("ordersData", ordersData);
 
   const [isOpen, setIsOpen] = useState(false);
 

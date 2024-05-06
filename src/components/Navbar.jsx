@@ -4,6 +4,7 @@ import Logo from "../assets/LOGO.png";
 import Slider from "./Slider";
 import Categories from "../pages/categories/Categories";
 import { Link, Outlet } from "react-router-dom";
+// import LOGO 'LOGO1.png'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[#E27D60] bg-cyan-500 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl">
+      <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl">
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         {/* <nav className="bg-gradient-to-r from-red-700 via-yellow-400 to-orange-600 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         <div className="max-w-full mx-auto px-4">
@@ -22,7 +23,9 @@ const Navbar = () => {
             {/* <div className="grid grid-cols-3 items-center"> */}
             <div className="flex items-center grow">
               <Link to="/">
-                <span className=" font-semibold text-lg">Your Logo</span>
+                {/* <span className=""> */}
+                  <img src="/LOGO1.png" alt="logo" className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"/>
+                {/* </span> */}
               </Link>
             </div>
 
@@ -34,9 +37,7 @@ const Navbar = () => {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="#" className="">
-                    About
-                  </a>
+                  <Link to={`/about`}>About</Link>
                 </li>
                 <li>
                   <a href="#" className="">
@@ -44,9 +45,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="">
-                    Contact
-                  </a>
+                  <Link to={`/contact-us`}>Contact</Link>
                 </li>
                 <li>
                   <a href="/admin/login" className="">
@@ -88,14 +87,10 @@ const Navbar = () => {
           <div className="md:hidden mt-2 text-center  float-right absolute right-0">
             <ul className="flex flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
               <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
-                <a href="#" className="">
-                  Home
-                </a>
+                <Link to="/">Home</Link>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <a href="#" className="">
-                  About
-                </a>
+                <Link to={`/about`}>About</Link>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
                 <a href="#" className="">
@@ -103,9 +98,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <a href="#" className="">
-                  Contact
-                </a>
+                <Link to={`/contact-us`}>Contact</Link>
               </li>
             </ul>
           </div>

@@ -3,6 +3,8 @@ import Slider from "../../components/Slider";
 import Categories from "../categories/Categories";
 import Testimonials from "../../components/Testimonials";
 import TestimonialCarousel from "../../components/TestimonialsCorousel";
+import HowItWorks from "../../components/HowItWorks";
+import WhyChooseInstantCashPicks from "../../components/WhyUs";
 
 const Home = () => {
   const images = [
@@ -22,7 +24,9 @@ const Home = () => {
       <Slider />
       <Categories />
       {/* <Testimonials /> */}
+      <HowItWorks />
       <TestimonialCarousel />
+      <WhyChooseInstantCashPicks />
     </>
   );
 };

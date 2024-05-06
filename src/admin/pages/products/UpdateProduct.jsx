@@ -17,6 +17,9 @@ const UpdateProduct = () => {
   const [imageSelected, setImageSelected] = useState("");
   const [newImgSelected, setNewImgSelected] = useState(false);
   const [uniqueURL, setUniqueURL] = useState("");
+  const [oldVariants, setOldVariants] = useState();
+  const [variantLen, setVariantLen] = useState(0);
+  const [updatedVriantLen, setUpdatedVariantLen] = useState(0);
 
   const [uploadProductImage, { isLoading: uploadLoading }] =
     useUploadProductImageMutation();
@@ -25,14 +28,19 @@ const UpdateProduct = () => {
   const [updateProduct] = useUpdateProductMutation();
 
   if (productData) {
-    // console.log("productData from updateProduct", productData);
+    console.log("productData from updateProduct", productData);
   }
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
   // VARIANTS
-  const [variants, setVariants] = useState([{ name: "", price: "" }]);
+  // const [variants, setVariants] = useState([
+  //   { name: "", price: "" },
+  // ]);
+  const [variants, setVariants] = useState([
+    { variantId: "", name: "", price: "" },
+  ]);
   const handleVariantChange = (index, key, value) => {
     const updatedVariants = [...variants];
     updatedVariants[index][key] = value;
@@ -40,13 +48,15 @@ const UpdateProduct = () => {
   };
 
   const addVariant = () => {
-    setVariants([...variants, { name: "", price: "" }]);
+    setVariants([...variants, { variantId: "New", name: "", price: "" }]);
+    setUpdatedVariantLen(updatedVriantLen + 1);
   };
 
   const handleRemoveVariant = (index) => {
     const newVariants = [...variants];
     newVariants.splice(index, 1);
     setVariants(newVariants);
+    setUpdatedVariantLen(updatedVriantLen - 1);
   };
 
   // console.log("variants", variants);
@@ -96,6 +106,7 @@ const UpdateProduct = () => {
       category,
       brand,
       variants: variants,
+      oldVariants: oldVariants,
     };
 
     console.log("updatedProductData: ", updatedProductData);
@@ -137,13 +148,25 @@ const UpdateProduct = () => {
       setUniqueURL(productData.uniqueURL);
       setImageSelected(productData.image);
       // Variants - Extract only name and price from each variant and create a new array
+      // const extractedVariants = productData.variants.map((variant) => ({
+      //   name: variant.name,
+      //   price: variant.price,
+      // }));
       const extractedVariants = productData.variants.map((variant) => ({
+        variantId: variant.id,
         name: variant.name,
         price: variant.price,
       }));
       setVariants(extractedVariants);
+      setOldVariants(extractedVariants);
+      setVariantLen(extractedVariants.length);
+      setUpdatedVariantLen(extractedVariants.length);
     }
   }, [productData]);
+  console.log("Variant", variants);
+  console.log("Old Variant", oldVariants);
+  console.log("variantLength", variantLen);
+  console.log("New variantLength", updatedVriantLen);
 
   return (
     <div className="flex px-[2%] pt-[2%]">

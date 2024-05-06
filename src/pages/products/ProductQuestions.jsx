@@ -172,7 +172,7 @@ const ProductDeductions = () => {
                 <div className="flex gap-4 justify-center">
                   <div
                     onClick={() => setCheckIsOn(true)}
-                    className={`flex pr-16 items-center border rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow hover:border-[#E27D60]`}
+                    className={`flex pr-16 items-center border rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow hover:border-cyan-500`}
                   >
                     <span className="border border-solid rounded-full w-5 h-5 mr-1.5"></span>
                     <span className="text-sm  flex-1 flex justify-center">
@@ -181,7 +181,7 @@ const ProductDeductions = () => {
                   </div>
                   <div
                     onClick={() => setCheckIsOff(true)}
-                    className={`flex pr-16 items-center border rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow hover:border-[#E27D60]`}
+                    className={`flex pr-16 items-center border rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow hover:border-cyan-500`}
                   >
                     <span className="border px- border-solid border-surface-dark rounded-full w-5 h-5 mr-1.5"></span>
                     <span className="text-sm  flex-1 flex justify-center">

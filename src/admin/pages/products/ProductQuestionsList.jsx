@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+
 import {
   useGetAllProductsQuery,
   useGetProductDetailsQuery,
@@ -9,8 +10,13 @@ import { toast } from "react-toastify";
 
 const ProductQuestionsList = () => {
   const { productId } = useParams();
+  // Query Params
+  const [searchParams] = useSearchParams();
+  const selectedVariant = searchParams.get("variant");
+  console.log("selectedVariant", selectedVariant);
   // const { data: productDetail, isLoading: productsLoading } =
   //   useGetAllProductsQuery({ page: 1, limit: 10, search: "" });
+  const [selectedDeductions, setSelectedDeductions] = useState();
 
   const { data: productDetail, isLoading: productsLoading } =
     useGetProductDetailsQuery(productId);
@@ -25,10 +31,15 @@ const ProductQuestionsList = () => {
 
       // Set the matched product to the component state
       setProductData(productDetail);
+      setSelectedDeductions(
+        productDetail.deductions.find((d) => d.variantName == selectedVariant)
+      );
+
       console.log("useEffect");
     }
   }, [productDetail]);
 
+  console.log("selectedDeductions", selectedDeductions);
   if (productData) {
     console.log("productData", productData);
   }
@@ -36,21 +47,49 @@ const ProductQuestionsList = () => {
   // Handle input changes and update productData state
   // New Approach
   const handlePriceDropChange = (conditionLabelId, priceDrop) => {
-    // Find the condition label by conditionLabelId and update the priceDrop
+    // Find the index of the variant in the deductions array
+    const variantIndex = productData.deductions.findIndex(
+      (variant) => variant.variantName == selectedVariant
+    );
+
+    if (variantIndex === -1) {
+      // Variant not found, return without updating
+      return;
+    }
+
+    // Update the deductions for the selected variant
+    const updatedDeductions = productData.deductions.map((variant, index) => {
+      if (index === variantIndex) {
+        // Update the condition label with the provided conditionLabelId
+        return {
+          ...variant,
+          deductions: variant.deductions.map((condition) => ({
+            ...condition,
+            conditionLabels: condition.conditionLabels.map((label) => ({
+              ...label,
+              priceDrop:
+                label.conditionLabelId === conditionLabelId
+                  ? priceDrop
+                  : label.priceDrop,
+            })),
+          })),
+        };
+      } else {
+        // Return the variant without updating
+        return variant;
+      }
+    });
+
+    // Update the product data with the updated deductions
     const updatedProductData = {
       ...productData,
-      deductions: productData.deductions.map((condition) => ({
-        ...condition,
-        conditionLabels: condition.conditionLabels.map((label) => ({
-          ...label,
-          priceDrop:
-            label.conditionLabelId === conditionLabelId
-              ? priceDrop
-              : label.priceDrop,
-        })),
-      })),
+      deductions: updatedDeductions,
     };
+
+    // Set the updated product data
     setProductData(updatedProductData);
+
+    setSelectedDeductions(updatedProductData.deductions[variantIndex]);
   };
 
   // Function to handle form submission
@@ -71,6 +110,8 @@ const ProductQuestionsList = () => {
     }
   };
 
+  useEffect(() => {}, [productDetail]);
+
   return (
     <div className="">
       <div className="inline-block m-4 px-4 py-1 bg-green-600 text-white rounded">
@@ -82,7 +123,7 @@ const ProductQuestionsList = () => {
       <div className="w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
         <div className="m-2 ">
           <h1 className="text-sm mb-1 sticky">
-            {productData ? productData.name : "Loading.."}
+            {productData ? productData.name : "Loading.."} {selectedVariant}
           </h1>
           <hr />
         </div>
@@ -90,51 +131,55 @@ const ProductQuestionsList = () => {
         <div className="bg-scroll">
           <form onSubmit={handleSubmit}>
             {productData &&
-              productData.deductions.map((condition, index) => (
+              selectedDeductions.deductions.map((condition, index) => (
                 <div key={index} className=" border my-2 py-2 px-2 rounded">
                   <div>
                     <h1>{condition.conditionName}</h1>
                   </div>
                   <hr />
                   <div className="flex flex-col">
-                    {condition.conditionLabels.map((conditionLabel, index) => (
-                      <div key={index} className="flex gap-6 items-center mt-2">
-                        <div>
+                    {condition.conditionLabels &&
+                      condition.conditionLabels.map((conditionLabel, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-6 items-center mt-2"
+                        >
                           <div>
-                            <h1 className="text-sm">
-                              {conditionLabel.conditionLabel}
-                            </h1>
+                            <div>
+                              <h1 className="text-sm">
+                                {conditionLabel.conditionLabel}
+                              </h1>
+                            </div>
+                            <div className="">
+                              <input
+                                type="number"
+                                name="priceDrop"
+                                value={conditionLabel.priceDrop}
+                                className="border px-3 py-1 rounded text-[0.9rem]"
+                                placeholder="Price Drop"
+                                // onChange={handleInputChange}
+                                onChange={(e) =>
+                                  handlePriceDropChange(
+                                    conditionLabel.conditionLabelId,
+                                    parseInt(e.target.value)
+                                  )
+                                }
+                                required
+                              />
+                            </div>
                           </div>
-                          <div className="">
-                            <input
-                              type="number"
-                              name="priceDrop"
-                              value={conditionLabel.priceDrop}
-                              className="border px-3 py-1 rounded text-[0.9rem]"
-                              placeholder="Price Drop"
-                              // onChange={handleInputChange}
-                              onChange={(e) =>
-                                handlePriceDropChange(
-                                  conditionLabel.conditionLabelId,
-                                  parseInt(e.target.value)
-                                )
+                          <div>
+                            <img
+                              src={
+                                import.meta.env.VITE_APP_BASE_URL +
+                                conditionLabel.conditionLabelImg
                               }
-                              required
+                              alt="conditionLabelImg"
+                              className="w-[60px] h-[60px] mx-auto "
                             />
                           </div>
                         </div>
-                        <div>
-                          <img
-                            src={
-                              import.meta.env.VITE_APP_BASE_URL +
-                              conditionLabel.conditionLabelImg
-                            }
-                            alt="conditionLabelImg"
-                            className="w-[60px] h-[60px] mx-auto "
-                          />
-                        </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               ))}

@@ -5,11 +5,11 @@ import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 const Footer = () => {
   return (
     // JSX
-    <div className=" w-full sm:pt-10 mt-2 pb-4 bg-[#E27D60] bg-cyan-500 px-4 py-2">
+    <div className=" w-full sm:pt-10 mt-2 pb-4 bg-[#E27D60] bg-cyan-500 px-4 py-2 max-sm:text-md">
       <div className="mx-auto max-w-screen-xl flex gap-4 justify-evenly max-md:gap-1">
-        <div className="px-4 sm:px-0 flex flex-col">
+        <div className="px-4 sm:px-0 flex flex-col items-center">
           <div>
-            <img src="" alt="LOGO" />
+            <img src="/LOGO1.png" alt="logo" className="h-20 max-sm:h-16" />
           </div>
           <div>
             <span className="text-xs text-white">Follow Us On</span>
@@ -26,7 +26,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div>
+        {/* <div>
           <div className="text-white font-bold py-2">
             <label htmlFor="">Services</label>
           </div>
@@ -59,7 +59,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
         <div>
           <div className="text-white font-bold py-2">
             <label htmlFor="">Company</label>
@@ -67,7 +67,7 @@ const Footer = () => {
           <div className="pl-2">
             <ul className="flex flex-col text-[13px] leading-8 font-thin">
               <li>
-                <Link>
+                <Link to={`/about`}>
                   <span>About Us</span>
                 </Link>
               </li>
@@ -91,7 +91,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link>
+                <Link to={`/contact-us`}>
                   <span>Contact Us</span>
                 </Link>
               </li>
@@ -105,7 +105,7 @@ const Footer = () => {
         </div>
         <div>
           <div className="text-white font-bold py-2">
-            <label htmlFor="">MoreAbout Us</label>
+            <label htmlFor="">More</label>
           </div>
           <div className="pl-2">
             <ul className="flex flex-col text-[13px] leading-8 font-thin">
