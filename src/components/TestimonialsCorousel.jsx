@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { RxDotFilled } from "react-icons/rx";
 
 const Testimonials = () => {
   const testimonials = [
@@ -24,72 +25,126 @@ const Testimonials = () => {
     },
   ];
 
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  // const nextTestimonial = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+  //   );
+  // };
+
+  // const prevTestimonial = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+  //   );
+  // };
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
+  const goToPrevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const index = isFirstSlide ? testimonials.length - 1 : currentIndex - 1;
+    setCurrentIndex(index);
   };
 
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
+  const goToNextSlide = () => {
+    // console.log("goToNextSlide", slidersList.length);
+    // if (slidersList.length == 1) {
+    //   return;
+    // }
+    const isLastSlide = currentIndex === testimonials.length - 1;
+    const index = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(index);
   };
+
+  const gotoSlide = (slideIndex) => {
+    setCurrentIndex(slideIndex);
+  };
+
+  console.log("testing", testimonials[currentIndex]);
+
+  useEffect(() => {
+    // Automatically move to the next slide every 3 seconds
+
+    const intervalId = setInterval(goToNextSlide, 4000);
+
+    // Clean up the interval when the component unmounts or when currentIndex changes
+    return () => clearInterval(intervalId);
+  }, [currentIndex]);
 
   return (
-    // <div className="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
-    <div className="bg-cyan-50 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-          Testimonials
-        </h2>
-        <p className="mt-4 text-lg text-gray-600">
-          Check out what our customers are saying about us.
-        </p>
-      </div>
-      <div className="flex justify-center mt-8">
-        <button
-          className="mr-4 text-black px-4 py-2 rounded focus:outline-none"
-          onClick={prevTestimonial}
-        >
-          <FaChevronLeft />
-        </button>
-        <div className="max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none">
-          {testimonials
-            .slice(currentIndex, currentIndex + 3)
-            .map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="flex flex-col rounded-lg shadow-lg overflow-hidden"
+    <div>
+      <div className="group">
+        <div className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500">
+          <div className="bg-cyan-50 py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl max-sm:text-2xl">
+                Testimonials
+              </h2>
+              <p className="mt-4 text-lg text-gray-600 max-sm:text-[16px]">
+                Check out what our customers are saying about us.
+              </p>
+            </div>
+            <div className="flex justify-center mt-8">
+              <button
+                className="mr-4 text-black px-4 py-2 rounded focus:outline-none"
+                onClick={goToPrevSlide}
               >
-                <div className="px-6 py-8 bg-white sm:p-10 sm:pb-6">
-                  <div className="flex justify-center">
-                    <img
-                      className="h-12 w-12 rounded-full"
-                      src={testimonial.image}
-                      alt={testimonial.author}
-                    />
+                <FaChevronLeft />
+              </button>
+              <div className="max-w-lg mx-auto grid gap-8 lg:max-w-none">
+                <div
+                  key={testimonials[currentIndex].id}
+                  className="flex flex-col rounded-lg shadow-lg overflow-hidden"
+                >
+                  <div className="px-6 py-8 bg-white sm:p-10 sm:pb-6">
+                    <div className="flex justify-center">
+                      <img
+                        className="h-12 w-12 rounded-full"
+                        src={testimonials[currentIndex].image}
+                        alt={testimonials[currentIndex].author}
+                      />
+                    </div>
+                    <div className="mt-6 text-center sm:text-lg max-sm:text-sm">
+                      <p>{testimonials[currentIndex].text}</p>
+                    </div>
                   </div>
-                  <div className="mt-6 text-center sm:text-lg">
-                    <p>{testimonial.text}</p>
+                  <div className="px-6 py-4 bg-gray-50 sm:px-10 sm:py-6">
+                    <p className="text-sm text-gray-600">
+                      - {testimonials[currentIndex].author}
+                    </p>
                   </div>
-                </div>
-                <div className="px-6 py-4 bg-gray-50 sm:px-10 sm:py-6">
-                  <p className="text-sm text-gray-600">
-                    - {testimonial.author}
-                  </p>
                 </div>
               </div>
-            ))}
+              <button
+                className="ml-4 text-black px-4 py-2 rounded focus:outline-none"
+                onClick={goToNextSlide}
+              >
+                <FaChevronRight />
+              </button>
+            </div>
+          </div>
+          {/* left arrow */}
+          {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <BsChevronCompactLeft size={30} onClick={goToPrevSlide} />
+        </div> */}
+          {/* right arrow */}
+          {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <BsChevronCompactRight size={30} onClick={goToNextSlide} />
+        </div> */}
         </div>
-        <button
-          className="ml-4 text-black px-4 py-2 rounded focus:outline-none"
-          onClick={nextTestimonial}
-        >
-          <FaChevronRight />
-        </button>
+
+        <div className="flex top-4 justify-center py-2">
+          {testimonials.map((t, index) => (
+            <div
+              key={index}
+              onClick={() => gotoSlide(index)}
+              className="text-2xl cursor-pointer"
+            >
+              <RxDotFilled />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

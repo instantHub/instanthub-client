@@ -30,7 +30,7 @@ const LaptopsQuestions = (props) => {
   const laptopSlice = useSelector((state) => state.laptopDeductions);
   const laptopsConList = useSelector((state) => state.laptopDeductionsList);
   const deductionData = useSelector((state) => state.deductions.deductions);
-  // console.log("laptopSlice", laptopSlice);
+  console.log("laptopSlice", laptopSlice);
   // console.log("deductionData", deductionData);
   console.log("deductions", deductions);
   console.log("laptopsConList", laptopsConList);
@@ -111,19 +111,20 @@ const LaptopsQuestions = (props) => {
     const selectedOption = event.target.options[selectedIndex];
 
     const conditionLabel = selectedOption.getAttribute("data-arg1");
-    const priceDrop = selectedOption.getAttribute("data-arg2");
+    const priceDrop = Number(selectedOption.getAttribute("data-arg2"));
     const conditionName = selectedOption.getAttribute("data-arg3");
+    const operation = selectedOption.getAttribute("data-arg4");
     console.log("arg", conditionLabel, priceDrop, conditionName);
 
     if (conditionName === "Processor") {
       setProcessor({ conditionLabel, priceDrop });
-      dispatch(addProcessor({ conditionLabel, priceDrop }));
+      dispatch(addProcessor({ conditionLabel, priceDrop, operation }));
     } else if (conditionName === "Hard Disk") {
       setHardDisk({ conditionLabel, priceDrop });
-      dispatch(addHardDisk({ conditionLabel, priceDrop }));
+      dispatch(addHardDisk({ conditionLabel, priceDrop, operation }));
     } else if (conditionName === "Ram") {
       setRam({ conditionLabel, priceDrop });
-      dispatch(addRam({ conditionLabel, priceDrop }));
+      dispatch(addRam({ conditionLabel, priceDrop, operation }));
     }
 
     // Call your function with the selected option's arguments
@@ -195,6 +196,7 @@ const LaptopsQuestions = (props) => {
                             data-arg1={label.conditionLabel}
                             data-arg2={label.priceDrop}
                             data-arg3={deduction.conditionName}
+                            data-arg4={label.operation}
                           >
                             {label.conditionLabel}
                           </option>
@@ -204,7 +206,7 @@ const LaptopsQuestions = (props) => {
                   </>
                 ) : (
                   <>
-                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-3 items-center px-4">
+                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4">
                       {deduction.conditionLabels.map((label, index) => (
                         <div key={index}>
                           <div
@@ -220,7 +222,8 @@ const LaptopsQuestions = (props) => {
                             onClick={() =>
                               handleLabelSelection(
                                 label.conditionLabel,
-                                label.priceDrop
+                                label.priceDrop,
+                                label.operation
                               )
                             }
                           >
@@ -242,7 +245,7 @@ const LaptopsQuestions = (props) => {
                                     condLabel.conditionLabel ==
                                     label.conditionLabel
                                 )
-                                  ? "bg-[#E27D60] text-white bg-cyan-500"
+                                  ? "bg-[#E27D60] bg-cyan-500 text-white"
                                   : "bg-slate-100 "
                               } py-2  text-center w-full h-[100px] flex items-center justify-center lg:text-[13px] max-md:text-[12px] max-sm:text-sm`}
                             >

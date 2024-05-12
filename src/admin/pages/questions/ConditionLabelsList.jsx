@@ -21,7 +21,7 @@ const ConditionLabelsTable = () => {
     console.log("conditionLabelsData", conditionLabelsData);
   }
 
-  const [selectedCondition, setSelectedCondition] = useState(null);
+  const [selectedCondition, setSelectedCondition] = useState(undefined);
 
   const handleConditionChange = (e) => {
     setSelectedCondition(e.target.value);
@@ -50,9 +50,9 @@ const ConditionLabelsTable = () => {
 
           {!conditionsLoading &&
             conditionsData.map(
-              (condition) => (
+              (condition, index) => (
                 <option
-                  key={condition.category.id}
+                  key={`${condition.category.id}-${index}`}
                   value={condition.conditionName}
                 >
                   {condition.conditionName}
@@ -81,7 +81,10 @@ const ConditionLabelsTable = () => {
           {!conditionLabelsLoading &&
             conditionLabelsData.map(
               (conditionLabel, index) => (
-                <tr className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}>
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                >
                   <td className=" py-2">{conditionLabel.category.name}</td>
                   <td className=" py-2">
                     {conditionLabel.conditionNameId.conditionName}

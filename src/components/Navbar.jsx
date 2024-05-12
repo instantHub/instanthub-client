@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl">
+      <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky z-50 top-2 border-b border-[#E27D60] shadow-xl">
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         {/* <nav className="bg-gradient-to-r from-red-700 via-yellow-400 to-orange-600 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         <div className="max-w-full mx-auto px-4">
@@ -24,7 +24,11 @@ const Navbar = () => {
             <div className="flex items-center grow">
               <Link to="/">
                 {/* <span className=""> */}
-                  <img src="/LOGO1.png" alt="logo" className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"/>
+                <img
+                  src="/LOGO1.png"
+                  alt="logo"
+                  className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
+                />
                 {/* </span> */}
               </Link>
             </div>
@@ -47,11 +51,11 @@ const Navbar = () => {
                 <li>
                   <Link to={`/contact-us`}>Contact</Link>
                 </li>
-                <li>
+                {/* <li>
                   <a href="/admin/login" className="">
                     Admin
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="md:hidden ">

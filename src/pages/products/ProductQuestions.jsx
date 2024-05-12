@@ -37,13 +37,13 @@ const ProductDeductions = () => {
 
   const deductionData = useSelector((state) => state.deductions.deductions);
   const data = useSelector((state) => state.deductions);
-  // console.log("useSelector", deductionData);
+  // console.log("useSelector", data);
 
   if (productsData) {
-    // console.log("productsData", productsData);
+    // console.log("productsData ProductQuestions ", productsData);
   }
 
-  const handleAge = async (ageLabel, price) => {
+  const handleAge = async (ageLabel, price, operation) => {
     // setAge({ conditionLabel: ageLabel, priceDrop: price });
     // console.log(ageLabel, price);
     // Logic to handle continue to the next condition
@@ -52,16 +52,25 @@ const ProductDeductions = () => {
     // }
 
     setAge(true);
-    dispatch(addProductAge({ conditionLabel: ageLabel, priceDrop: price }));
+    dispatch(
+      addProductAge({
+        conditionLabel: ageLabel,
+        priceDrop: price,
+        operation: operation,
+      })
+    );
   };
 
-  const handleLabelSelection = (label, price) => {
+  const handleLabelSelection = (label, price, operation) => {
+    console.log("handleLabelSelection");
     if (!selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels([
         ...selectedLabels,
         { conditionLabel: label, priceDrop: price },
       ]);
-      dispatch(addDeductions({ conditionLabel: label, priceDrop: price }));
+      dispatch(
+        addDeductions({ conditionLabel: label, priceDrop: price, operation })
+      );
       console.log("selectedLabels", selectedLabels);
     } else if (selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels(
@@ -69,7 +78,9 @@ const ProductDeductions = () => {
           (selectedLabel) => selectedLabel.conditionLabel !== label
         )
       );
-      dispatch(removeDeductions({ conditionLabel: label, priceDrop: price }));
+      dispatch(
+        removeDeductions({ conditionLabel: label, priceDrop: price, operation })
+      );
     }
   };
 
@@ -108,14 +119,23 @@ const ProductDeductions = () => {
     };
   }, [dispatch]); // include dispatch in the dependency array to ensure that it has access to the latest dispatch function.
 
-  // useEffect to set priceUpTo value from productsData
+  // useEffect to set deductions and priceUpTo value from productsData
   useEffect(() => {
     if (productsData) {
       const variant = productsData.variants.filter(
         (variant) => variant.name == selectedVariant
       );
       setPriceGetUpTo(variant[0].price);
-      setDeductions(productsData.deductions);
+      // setDeductions(productsData.deductions);
+      if (productsData.category.name === "Mobile") {
+        const d = productsData.variantDeductions.filter(
+          (vd) => vd.variantName === selectedVariant
+        );
+        console.log("Mobile Deductions", d[0].deductions);
+        setDeductions(d[0].deductions);
+      } else if (productsData.category.name !== "Mobile") {
+        setDeductions(productsData.simpleDeductions);
+      }
     }
     // console.log("selectedVariant", selectedVariant, priceGetUpTo);
   }, [productsData]);
@@ -137,13 +157,24 @@ const ProductDeductions = () => {
 
   // if no deduction questions found
   if (productsData) {
-    if (productsData.deductions.length < 1) {
-      return (
-        <h1 className="my-[10%] mx-auto text-center">
-          No Questions Available Yet for Category{" "}
-          <span className="font-bold"> {productsData.category.name}</span>
-        </h1>
-      );
+    if (productsData.category.name === "Mobile") {
+      if (productsData.variantDeductions.length < 1) {
+        return (
+          <h1 className="my-[10%] mx-auto text-center">
+            No Questions Available Yet for Category{" "}
+            <span className="font-bold"> {productsData.category.name}</span>
+          </h1>
+        );
+      }
+    } else if (productsData.category.name !== "Mobile") {
+      if (productsData.simpleDeductions.length < 1) {
+        return (
+          <h1 className="my-[10%] mx-auto text-center">
+            No Questions Available Yet for Category{" "}
+            <span className="font-bold"> {productsData.category.name}</span>
+          </h1>
+        );
+      }
     }
   }
 
@@ -251,7 +282,8 @@ const ProductDeductions = () => {
                           onClick={() =>
                             handleLabelSelection(
                               label.conditionLabel,
-                              label.priceDrop
+                              label.priceDrop,
+                              label.operation
                             )
                           }
                         >
@@ -307,6 +339,7 @@ const ProductDeductions = () => {
                   deductions={deductions}
                   handleContinue={handleContinue}
                   handleLabelSelection={handleLabelSelection}
+                  rtkData={data}
                 />
               )}
 
@@ -344,11 +377,18 @@ const ProductDeductions = () => {
                               className="px-4 py-2"
                               placeholder={label.conditionLabel}
                               onClick={() =>
-                                handleAge(label.conditionLabel, label.priceDrop)
+                                handleAge(
+                                  label.conditionLabel,
+                                  label.priceDrop,
+                                  label.operation
+                                )
                               }
                               required
                             />
                             <label htmlFor="age">{label.conditionLabel} </label>
+                            <label htmlFor="age" className="">
+                              {label.operation}{" "}
+                            </label>
                           </div>
                         </div>
                       )

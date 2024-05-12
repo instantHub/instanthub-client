@@ -64,37 +64,39 @@ function Slider() {
   return (
     // <div className="max-w-[1400px] h-[480px] w-full m-auto py-8 px-4 relative group">
     // TODO: need to set this div to relative for right and left arrow functionality, however navbar will be affected
-    <div className="max-w-[1400px] w-full h-[480px] mx-auto mt-10  max-md:h-[200px] group">
+    <div>
       {!slidersLoading && slidersList.length !== 0 && (
-        <div
-          style={{
-            backgroundImage: `url(${baseURL}${slidersList[currentIndex].image})`,
-          }}
-          className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500"
-        >
-          {/* left arrow */}
-          {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+        <div className="max-w-[1400px] w-full h-[480px] mx-auto mt-10  max-md:h-[200px] group">
+          <div
+            style={{
+              backgroundImage: `url(${baseURL}${slidersList[currentIndex].image})`,
+            }}
+            className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500"
+          >
+            {/* left arrow */}
+            {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
             <BsChevronCompactLeft size={30} onClick={goToPrevSlide} />
           </div> */}
-          {/* right arrow */}
-          {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+            {/* right arrow */}
+            {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
             <BsChevronCompactRight size={30} onClick={goToNextSlide} />
           </div> */}
+          </div>
+
+          <div className="flex top-4 justify-center py-2">
+            {!slidersLoading &&
+              slidersList.map((image, index) => (
+                <div
+                  key={index}
+                  onClick={() => gotoSlide(index)}
+                  className="text-2xl cursor-pointer"
+                >
+                  <RxDotFilled />
+                </div>
+              ))}
+          </div>
         </div>
       )}
-
-      <div className="flex top-4 justify-center py-2">
-        {!slidersLoading &&
-          slidersList.map((image, index) => (
-            <div
-              key={index}
-              onClick={() => gotoSlide(index)}
-              className="text-2xl cursor-pointer"
-            >
-              <RxDotFilled />
-            </div>
-          ))}
-      </div>
     </div>
   );
 }

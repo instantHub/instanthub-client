@@ -28,6 +28,8 @@ const CreateProducts = () => {
 
   const [selectedSeries, setSelectedSeries] = useState("");
   const [seriesYes, setSeriesYes] = useState(false);
+  const [mobileCategory, setMobileCategory] = useState("");
+  console.log("mobileCategory", mobileCategory);
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
@@ -46,6 +48,7 @@ const CreateProducts = () => {
     updatedVariants[index][key] = value;
     setVariants(updatedVariants);
   };
+  console.log("variants", variants);
 
   const addVariant = () => {
     setVariants([...variants, { name: "", price: "" }]);
@@ -78,9 +81,14 @@ const CreateProducts = () => {
     e.preventDefault();
 
     // Check if any variant fields are empty
-    const isEmptyVariant = variants.some(
-      (variant) => variant.name.trim() === "" || variant.price.trim() === ""
-    );
+    let isEmptyVariant;
+    if (selectedCategory !== mobileCategory) {
+      isEmptyVariant = variants.some(
+        (variant) => variant.name.trim() === "" || variant.price.trim() === ""
+      );
+    } else {
+      isEmptyVariant = variants.some((variant) => variant.price.trim() === "");
+    }
 
     if (isEmptyVariant) {
       toast.warning("Please fill out all variant fields");
@@ -145,6 +153,13 @@ const CreateProducts = () => {
     }
   }, [selectedSeries]);
 
+  useEffect(() => {
+    if (!categoryLoading) {
+      const found = categoryData.find((cat) => cat.name === "Mobile");
+      setMobileCategory(found.id);
+    }
+  }, [categoryData]);
+
   return (
     <div className="flex px-[2%] pt-[2%]">
       <div className="grow">
@@ -191,12 +206,6 @@ const CreateProducts = () => {
                           setSelectedCategory(e.target.value);
                         }}
                       >
-                        {/* {console.log(
-                          "category: ",
-                          category.name,
-                          ", ID: ",
-                          category.id
-                        )} */}
                         {category.name}
                       </option>
                     ))}
@@ -228,12 +237,6 @@ const CreateProducts = () => {
                             name="brand"
                             className=""
                           >
-                            {/* {console.log(
-                              "brand: ",
-                              brand.name,
-                              ", ID: ",
-                              brand.id
-                            )} */}
                             {brand.name}
                           </option>
                         );
@@ -318,40 +321,6 @@ const CreateProducts = () => {
                 />
               </div>
 
-              {/* VARIANT TESTING */}
-
-              {/* <div>
-                <h3>Variants:</h3>
-                {variants.map((variant, index) => (
-                  <div key={index} className="my-2">
-                    <input
-                      type="text"
-                      value={variant.name}
-                      placeholder="variant name"
-                      onChange={(e) =>
-                        handleVariantChange(index, "name", e.target.value)
-                      }
-                    />
-                    <input
-                      type="number"
-                      value={variant.price}
-                      placeholder="variant price"
-                      onChange={(e) =>
-                        handleVariantChange(index, "price", e.target.value)
-                      }
-                    />
-                  </div>
-                ))}
-                <button
-                  onClick={addVariant}
-                  className="px-3 py-1 bg-emerald-500 rounded-lg"
-                >
-                  Add Variant
-                </button>
-              </div> */}
-
-              {/* VARIANT TESTING END */}
-
               <div className="p-2">
                 <label htmlFor="fileInput">File Input :</label>
                 <div className="flex">
@@ -406,61 +375,104 @@ const CreateProducts = () => {
         </div>
       </div>
 
-      <div className="m-1 flex flex-col items-center justify-center">
-        <h3 className="text-xl inline-block">Add Variants:</h3>
-        {variants.map((variant, index) => (
-          <div
-            key={index}
-            className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
+      {/* !categoryLoading &&
+        categoryData.some(
+          (cat) => cat.id === selectedCategory && cat.name === "Mobile" */}
+
+      {selectedCategory && selectedCategory === mobileCategory ? (
+        <div className="m-1 flex flex-col items-center justify-center">
+          <h3 className="text-xl inline-block">Add Variants:</h3>
+          {variants.map((variant, index) => (
+            <div
+              key={index}
+              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
+            >
+              <div>
+                <input
+                  type="text"
+                  value={variant.name}
+                  placeholder="variant name"
+                  onChange={(e) =>
+                    handleVariantChange(index, "name", e.target.value)
+                  }
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                />
+                <input
+                  type="number"
+                  value={variant.price}
+                  placeholder="variant price"
+                  onChange={(e) =>
+                    handleVariantChange(index, "price", e.target.value)
+                  }
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                />
+              </div>
+
+              <div>
+                {variants.length != 1 && (
+                  <button
+                    className="bg-red-600 px-2 py-1 text-white rounded-md"
+                    onClick={() => {
+                      handleRemoveVariant(index);
+                    }}
+                  >
+                    remove
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+          <button
+            onClick={addVariant}
+            className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
           >
-            <div>
-              <input
-                type="text"
-                value={variant.name}
-                placeholder="variant name"
-                onChange={(e) =>
-                  handleVariantChange(index, "name", e.target.value)
-                }
-                className="m-1 p-2 border rounded-lg"
-                required
-              />
-              <input
-                type="number"
-                value={variant.price}
-                placeholder="variant price"
-                onChange={(e) =>
-                  handleVariantChange(index, "price", e.target.value)
-                }
-                className="m-1 p-2 border rounded-lg"
-                required
-              />
-            </div>
-
-            <div>
-              {variants.length != 1 && (
-                <button
-                  className="bg-red-600 px-2 py-1 text-white rounded-md"
-                  onClick={() => {
-                    handleRemoveVariant(index);
+            Add Variant
+          </button>
+        </div>
+      ) : (
+        <div className="m-1 flex flex-col items-center justify-center">
+          <h3 className="text-xl inline-block">Add Price:</h3>
+          {variants.map((variant, index) => (
+            <div
+              key={index}
+              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
+            >
+              <div>
+                <input
+                  type="text"
+                  value={`Price`}
+                  placeholder="Price"
+                  // onChange={(e) =>
+                  //   handleVariantChange(index, "name", e.target.value)
+                  // }
+                  className="m-1 p-2 border rounded-lg"
+                  disabled
+                />
+                <input
+                  type="number"
+                  value={variant.price}
+                  placeholder="Enter price"
+                  onChange={(e) => {
+                    handleVariantChange(index, "price", e.target.value);
+                    handleVariantChange(index, "name", "Price");
                   }}
-                >
-                  remove
-                </button>
-              )}
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                />
+              </div>
             </div>
-          </div>
-        ))}
-        <button
-          onClick={addVariant}
-          className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
-        >
-          Add Variant
-        </button>
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* <div className="flex justify-evenly mx-6 gap-80 2sm:gap-5 items-center">
-        <CreateSeries />
-      </div> */}
+      {/* {!categoryLoading &&
+        categoryData.some(
+          (cat) => cat.id === selectedCategory && cat.name !== "Mobile"
+        ) && (
+         
+        )} */}
     </div>
   );
 };

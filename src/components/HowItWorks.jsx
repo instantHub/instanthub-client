@@ -46,17 +46,17 @@ const HowItWorks = () => {
 
   return (
     <section className="py-16 ">
-      <div className="max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 py-8 max-sm:py-4">
-        <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
+      <div className="max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 py-8 max-sm:py-4 max-sm:px-0">
+        <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center max-sm:mb-6">
           How It Works
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center max-sm:gap-2">
           {data.map((d, index) => (
-            <div className="flex flex-col items-center px-2 py-10 border border-cyan-500 rounded-2xl ">
+            <div className="flex flex-col items-center px-2 py-10 border border-cyan-500 rounded-2xl max-sm:text-sm">
               <div className="flex items-center justify-center text-center flex-shrink-0 mr-4 mb-4 pb-2">
                 <div className="flex gap-1 items-center mb-2">
-                  <div className="text-3xl text-gray-600">{d.icon}</div>
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <div className="text-3xl text-gray-600 max-sm:text-xl">{d.icon}</div>
+                  <h3 className="text-xl font-semibold text-gray-800 max-sm:text-sm">
                     {d.heading}
                   </h3>
                   {/* <hr className="" /> */}
@@ -67,83 +67,6 @@ const HowItWorks = () => {
               </div>
             </div>
           ))}
-
-          {/* <div className="flex flex-col items-center px-2 py-10 border border-cyan-500 rounded-2xl ">
-            <div className="flex items-center justify-center text-center flex-shrink-0 mr-4 mb-4 pb-2">
-              <div className="">
-              </div>
-              <div className="flex items-center mb-2">
-                <HiOutlineClipboardList className="text-3xl text-gray-600" />
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Submit Your Device
-                </h3>
-              </div>
-            </div>
-            <div>
-              <p className="text-gray-600 px-4">
-                Begin by selecting the electronic item you wish to sell. Whether
-                it's a smartphone, laptop, tablet, or gaming console, we accept
-                a wide range of devices.
-              </p>
-            </div>
-          </div> */}
-          {/* <div className="flex flex-col items-center px-1 py-2">
-            <div className="flex items-center justify-center flex-shrink-0 mr-4 mb-4">
-              <div className="">
-                <HiOutlineCurrencyDollar className="w-8 h-8 text-gray-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  Get an Instant Quote
-                </h3>
-              </div>
-            </div>
-            <div>
-              <p className="text-gray-600">
-                Once you've chosen your device, our intuitive platform will
-                generate an instant quote based on its condition, age, and
-                market value.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col items-center px-1 py-2">
-            <div className="flex items-center justify-center flex-shrink-0 mr-4 mb-4">
-              <div className="">
-                <HiOutlineClock className="w-8 h-8 text-gray-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  Schedule a Pickup
-                </h3>
-              </div>
-            </div>
-            <div>
-              <p className="text-gray-600">
-                After receiving your quote, simply schedule a pickup time that
-                works best for you. Our team will come directly to your location
-                to collect the device.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col items-center px-1 py-2">
-            <div className="flex items-center justify-center flex-shrink-0 mr-4 mb-4">
-              <div className="">
-                <HiOutlineCash className="w-8 h-8 text-gray-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  Receive Instant Cash Payment
-                </h3>
-              </div>
-            </div>
-            <div>
-              <p className="text-gray-600">
-                Upon inspection of the device, you'll receive an instant cash
-                payment. No waiting periods, no hidden fees – just quick and
-                reliable service.
-              </p>
-            </div>
-          </div> */}
         </div>
       </div>
     </section>

@@ -24,11 +24,22 @@ const ProductDetail = () => {
     setSelectedDiv(variantSelected.id);
   };
 
+  console.log("variantSelected", variantSelected);
+
   console.log(productDetails);
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (productDetails.category.name !== "Mobile") {
+        handleToggle(productDetails.variants[0]);
+      }
+    }
+  }, [productDetails]);
 
   return (
     <div className="w-[70%] mx-auto my-36 ">
       {/* <div className="bg-white px-10 pt-10 pb-24 rounded-md shadow-lg"> */}
+      {/* Header Links: Home > Category > Brand > Products > ProductName */}
       <div className="mx-0 mb-6">
         {productDetails && (
           <div className="flex items-center gap-1">
@@ -80,58 +91,88 @@ const ProductDetail = () => {
               <div className="flex flex-col gap-24 w-full sm:w-2/3 max-sm:gap-6">
                 <div className="mt-6 flex gap-2 items-center">
                   <h1 className="text-3xl">{productDetails.name}</h1>
-                  {variantSelected.length != 0 && (
-                    <h3 className="text-2xl">({variantSelected.name})</h3>
-                  )}
+                  {productDetails.category.name === "Mobile" &&
+                    variantSelected.length != 0 && (
+                      <h3 className="text-2xl">({variantSelected.name})</h3>
+                    )}
+
+                  {/* {variantSelected.length != 0 && (
+                  <h3 className="text-2xl">({variantSelected.name})</h3>
+                )} */}
                 </div>
-
-                <div className="flex flex-col gap-4">
-                  <p>Choose a Variant</p>
-
-                  {variantSelected.length == 0 && (
-                    <p className="opacity-40 text-sm">
-                      Select a variantSelected to know the price
-                    </p>
-                  )}
-
-                  {/* VARIANT PRICE WILL BE SHOWN WHEN CLICKED ON A VARIANT */}
-                  <div className="">
-                    <div className="flex items-center">
-                      {variantSelected.price ? (
-                        <FaIndianRupeeSign className="text-4xl" />
-                      ) : null}
-                      <h2 className="text-5xl text-yellow-500">
-                        {variantSelected.price}
-                      </h2>
-                    </div>
-                  </div>
-                  {/* END OF VARIANT PRICE */}
-
-                  <div className="flex flex-row flex-wrap list-none p-0 my-0 -mx-2">
-                    {productDetails.variants.map((variantSelected) => (
-                      <>
-                        <div
-                          key={variantSelected.id}
-                          className="p-2 w-1/2 sm:w-40 sm:max-w-full"
-                          onClick={() => handleToggle(variantSelected)}
-                        >
-                          <div
-                            className={`${
-                              selectedDiv == variantSelected.id
-                                ? "bg-amber-500 text-white"
-                                : "bg-white"
-                            } flex items-center rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow`}
-                          >
-                            <span className="border border-solid border-surface-dark rounded-full w-5 h-5 mr-1.5"></span>
-                            <span className="text-sm flex-1 flex justify-center">
-                              {variantSelected.name}
-                            </span>
-                          </div>
-                          {/* var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow) */}
+                {/* Check if it is Mobile Product */}
+                <div className="">
+                  {productDetails.category.name === "Mobile" ? (
+                    <div className="flex flex-col gap-4">
+                      {variantSelected.length == 0 ? (
+                        <div>
+                          <p>Choose a Variant</p>
+                          <p className="opacity-40 text-sm">
+                            Select a variantSelected to know the price
+                          </p>
                         </div>
-                      </>
-                    ))}
-                  </div>
+                      ) : null}
+
+                      {/* VARIANT PRICE WILL BE SHOWN WHEN CLICKED ON A VARIANT */}
+                      <div className="">
+                        <div className="flex items-center">
+                          {variantSelected.price ? (
+                            <FaIndianRupeeSign className="text-4xl" />
+                          ) : null}
+                          <h2 className="text-5xl text-yellow-500">
+                            {variantSelected.price}
+                          </h2>
+                        </div>
+                      </div>
+                      {/* END OF VARIANT PRICE */}
+
+                      <div className="flex flex-row flex-wrap list-none p-0 my-0 -mx-2">
+                        {productDetails.variants.map((variantSelected) => (
+                          <>
+                            <div
+                              key={variantSelected.id}
+                              className="p-2 w-1/2 sm:w-40 sm:max-w-full"
+                              onClick={() => handleToggle(variantSelected)}
+                            >
+                              <div
+                                className={`${
+                                  selectedDiv == variantSelected.id
+                                    ? "bg-amber-500 text-white"
+                                    : "bg-white"
+                                } flex items-center rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow`}
+                              >
+                                <span className="border border-solid border-surface-dark rounded-full w-5 h-5 mr-1.5"></span>
+                                <span className="text-sm flex-1 flex justify-center">
+                                  {variantSelected.name}
+                                </span>
+                              </div>
+                              {/* var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow) */}
+                            </div>
+                          </>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    // <div className="">
+                    //     <div className="flex items-center">
+                    //       {variantSelected.price ? (
+                    //         <FaIndianRupeeSign className="text-4xl" />
+                    //       ) : null}
+                    //       <h2 className="text-5xl text-yellow-500">
+                    //         {variantSelected.price}
+                    //       </h2>
+                    //     </div>
+
+                    <div>
+                      <div className="flex flex-col mb-4">
+                        <h2>Product Price</h2>
+                        <h2 className="flex items-center text-5xl text-yellow-500">
+                          <FaIndianRupeeSign className="text-4xl text-black" />{" "}
+                          {variantSelected.price}
+                        </h2>
+                      </div>
+                    </div>
+                  )}
 
                   {variantSelected.length != 0 ? (
                     <div className="flex items-center w-fit bg-emerald-600 text-white px-4 py-2 rounded-md ">
@@ -170,6 +211,7 @@ const ProductDetail = () => {
                     </p>
                   </div>
                 </div>
+                {/* // )} */}
               </div>
             </div>
           </>
@@ -180,3 +222,93 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+// <div className="flex flex-col gap-4">
+//                   {productDetails.category.name === "Mobile" &&
+//                   variantSelected.length == 0 ? (
+//                     <div>
+//                       <p>Choose a Variant</p>
+//                       <p className="opacity-40 text-sm">
+//                         Select a variantSelected to know the price
+//                       </p>
+//                     </div>
+//                   ) : (
+//                     <div>
+//                       <p>Product Price</p>
+//                     </div>
+//                   )}
+
+//                   VARIANT PRICE WILL BE SHOWN WHEN CLICKED ON A VARIANT
+//                   <div className="">
+//                     <div className="flex items-center">
+//                       {variantSelected.price ? (
+//                         <FaIndianRupeeSign className="text-4xl" />
+//                       ) : null}
+//                       <h2 className="text-5xl text-yellow-500">
+//                         {variantSelected.price}
+//                       </h2>
+//                     </div>
+//                   </div>
+//                   END OF VARIANT PRICE
+
+//                   <div className="flex flex-row flex-wrap list-none p-0 my-0 -mx-2">
+//                     {productDetails.variants.map((variantSelected) => (
+//                       <>
+//                         <div
+//                           key={variantSelected.id}
+//                           className="p-2 w-1/2 sm:w-40 sm:max-w-full"
+//                           onClick={() => handleToggle(variantSelected)}
+//                         >
+//                           <div
+//                             className={`${
+//                               selectedDiv == variantSelected.id
+//                                 ? "bg-amber-500 text-white"
+//                                 : "bg-white"
+//                             } flex items-center rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow`}
+//                           >
+//                             <span className="border border-solid border-surface-dark rounded-full w-5 h-5 mr-1.5"></span>
+//                             <span className="text-sm flex-1 flex justify-center">
+//                               {variantSelected.name}
+//                             </span>
+//                           </div>
+//                         </div>
+//                       </>
+//                     ))}
+//                   </div>
+
+//                   {variantSelected.length != 0 ? (
+//                     <div className="flex items-center w-fit bg-emerald-600 text-white px-4 py-2 rounded-md ">
+//                       <Link
+//                         // to={`/categories/brands/productDetails/${prodId}/productDeductions`}
+//                         to={`/sell/deductions?productId=${prodId}&variant=${variantSelected.name}`}
+//                       >
+//                         <button
+
+//                         // onClick={}
+//                         >
+//                           Get Exact Value
+//                         </button>
+//                         {/* </div> */}
+//                       </Link>
+//                       <FaAngleRight />
+//                     </div>
+//                   ) : (
+//                     <div>
+//                       <button
+//                         className="bg-emerald-500 text-white px-4 py-2 rounded-md disabled:bg-gray-400 disabled:opacity-30 disabled:text-black"
+//                         disabled
+//                       >
+//                         Get Exact Value
+//                       </button>
+//                     </div>
+//                   )}
+
+//                   Disclaimer
+//                   <div className="py-1 px-2 w-3/4 bg-yellow-200 max-sm:w-full">
+//                     <p className="text-xs opacity-70">
+//                       The above pricing is subject to change based on the
+//                       product's condition. The final pricing offer will be
+//                       provided after the entire product has been inspected.
+//                     </p>
+//                   </div>
+//                 </div>

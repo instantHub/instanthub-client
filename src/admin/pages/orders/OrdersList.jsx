@@ -11,14 +11,16 @@ import { Link } from "react-router-dom";
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =
     useGetOrdersListQuery();
-  const [imageSelected, setImageSelected] = useState("");
+  const [imageSelected1, setImageSelected1] = useState("");
+  const [imageSelected2, setImageSelected2] = useState("");
   const [uploadCustomerProof, { isLoading: uploadLoading }] =
     useUploadCustomerProofImageMutation();
   const [orderReceived] = useOrderReceivedMutation();
   const [deleteOrder] = useDeleteOrderMutation();
 
   // Create a ref to store the reference to the file input element
-  const fileInputRef = useRef(null);
+  const fileInputRef1 = useRef(null);
+  const fileInputRef2 = useRef(null);
   if (!ordersLoading) {
     console.log(ordersData);
   }
@@ -29,7 +31,8 @@ const OrdersList = () => {
   const [selectedOrder, setSelectedOrder] = useState("");
   const [orderView, setOrderView] = useState("");
   const [orderViewOpen, setOrderViewOpen] = useState(false);
-  console.log("imageSelected", imageSelected);
+  console.log("imageSelected1", imageSelected1);
+  console.log("imageSelected2", imageSelected2);
 
   const handleDelete = async (orderId) => {
     console.log("handledelete", orderId);
@@ -51,9 +54,27 @@ const OrdersList = () => {
   };
 
   // File handler
-  const uploadFileHandler = async () => {
+  // const uploadFileHandler = async () => {
+  //   const formData = new FormData();
+  //   formData.append("image", imageSelected1);
+
+  //   try {
+  //     const res = await uploadCustomerProof(formData).unwrap();
+  //     console.log("res.image", res.image);
+
+  //     return res.image;
+  //   } catch (error) {
+  //     console.log("Error: ", error);
+  //   }
+  // };
+  const uploadFileHandler = async (image) => {
     const formData = new FormData();
-    formData.append("image", imageSelected);
+    if (image === "front") {
+      formData.append("image", imageSelected1);
+    } else if (image === "back") {
+      formData.append("image", imageSelected2);
+    }
+    // formData.append("image", imageSelected1);
 
     try {
       const res = await uploadCustomerProof(formData).unwrap();
@@ -70,13 +91,21 @@ const OrdersList = () => {
     e.preventDefault();
 
     // Image upload handler call
-    const imageURL = await uploadFileHandler();
+    // const imageURL = await uploadFileHandler();
+    const imageURL1 = await uploadFileHandler("front");
+    const imageURL2 = await uploadFileHandler("back");
 
-    console.log("handlesubmit ", imageURL);
+    console.log("handlesubmit ", imageURL1, imageURL2);
 
+    // const formData = {
+    //   orderId: selectedOrder.id,
+    //   customerProof: imageURL,
+    //   status: "received",
+    // };
     const formData = {
       orderId: selectedOrder.id,
-      customerProof: imageURL,
+      customerProofFront: imageURL1,
+      customerProofBack: imageURL2,
       status: "received",
     };
 
@@ -87,12 +116,46 @@ const OrdersList = () => {
       setIsOpen(false);
 
       // Clear the value of the file input
-      fileInputRef.current.value = "";
+      fileInputRef1.current.value = "";
+      fileInputRef2.current.value = "";
       // Mark the file input as required again
-      fileInputRef.current.required = true;
+      fileInputRef1.current.required = true;
+      fileInputRef2.current.required = true;
     } catch (error) {
       console.log("Error: ", error);
     }
+  };
+
+  const openImageInNewWindow = (imageUrl) => {
+    window.open(imageUrl, "_blank");
+  };
+
+  // const downloadImage = (imageUrl) => {
+  //   console.log("inside download image");
+
+  //   const anchor = document.createElement("a");
+  //   anchor.href = imageUrl;
+  //   anchor.download = "image.jpg"; // Change the filename if needed
+  //   anchor.click();
+  // };
+
+  const downloadImage = (imageUrl, imageName) => {
+    console.log(imageName);
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        // link.setAttribute("download", "image.jpg"); // Change the filename if needed
+        link.setAttribute("download", `${imageName}.jpg`); // Change the filename if needed
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch((error) => {
+        console.error("Error downloading image:", error);
+      });
   };
 
   return (
@@ -135,8 +198,14 @@ const OrdersList = () => {
                   <td className="px-4 py-2">
                     {order.productId.name}{" "}
                     <div className="flex gap-1 text-sm opacity-50 justify-center">
-                      <span>Variant {order.variant?.variantName}</span>
-                      <span>Price {order.variant?.price}</span>
+                      {order.category === "Mobile" ? (
+                        <>
+                          <span>Variant {order.variant?.variantName}</span>
+                          <span>Price {order.variant?.price}</span>
+                        </>
+                      ) : (
+                        <span>Price {order.variant?.price}</span>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-2">{order.email}</td>
@@ -242,16 +311,32 @@ const OrdersList = () => {
 
             <div onSubmit={handleSubmit} className="text-center mt-4">
               <form action="" className="flex flex-col gap-2">
-                <label htmlFor="name">Upload Customer ID</label>
+                {/* ID Front Image */}
+                <label htmlFor="name">Upload Front of Customer ID</label>
                 <input
                   type="file"
                   name="name"
                   id=""
-                  ref={fileInputRef}
+                  ref={fileInputRef1}
                   placeholder="Enter Name"
                   className="border rounded px-2 py-1 w-1/3 mx-auto"
                   onChange={(e) => {
-                    setImageSelected(e.target.files[0]);
+                    setImageSelected1(e.target.files[0]);
+                  }}
+                  required
+                />
+
+                {/* ID Back Image */}
+                <label htmlFor="name">Upload Back of Customer ID</label>
+                <input
+                  type="file"
+                  name="name"
+                  id=""
+                  ref={fileInputRef2}
+                  placeholder="Enter Name"
+                  className="border rounded px-2 py-1 w-1/3 mx-auto"
+                  onChange={(e) => {
+                    setImageSelected2(e.target.files[0]);
                   }}
                   required
                 />
@@ -294,8 +379,8 @@ const OrdersList = () => {
                   <div className="flex flex-col items-center">
                     <h1>Customer Name: {orderView.customerName}</h1>
 
-                    <div className="flex items-center justify-center">
-                      <h1>Customer ID:</h1>
+                    <div className="flex items-center justify-center gap-3 border p-1 rounded">
+                      {/* <h1>Customer ID:</h1>
                       <img
                         src={
                           import.meta.env.VITE_APP_BASE_URL +
@@ -303,7 +388,65 @@ const OrdersList = () => {
                         }
                         alt="ConditionLabel"
                         className="w-[100px] h-[100px] mx-auto "
-                      />
+                      /> */}
+                      <div>
+                        <h1>Customer ID Front:</h1>
+                        <img
+                          src={
+                            import.meta.env.VITE_APP_BASE_URL +
+                            orderView.customerProofFront
+                          }
+                          alt="ConditionLabel"
+                          className="w-[100px] h-[100px] mx-auto "
+                        />
+                        {/* <button
+                          onClick={() => {
+                            openImageInNewWindow(
+                              import.meta.env.VITE_APP_BASE_URL +
+                                orderView.customerProofFront
+                            );
+                          }}
+                        >
+                          View in New Window
+                        </button> */}
+                        <button
+                          onClick={() => {
+                            downloadImage(
+                              import.meta.env.VITE_APP_BASE_URL +
+                                orderView.customerProofFront,
+                              `${orderView.customerName}-customerProofFront`
+                            );
+                          }}
+                          className="bg-green-600 px-2 rounded text-white"
+                        >
+                          Download
+                        </button>
+                      </div>
+
+                      <div>
+                        <h1>Customer ID Back:</h1>
+                        <img
+                          src={
+                            import.meta.env.VITE_APP_BASE_URL +
+                            orderView.customerProofBack
+                          }
+                          alt="ConditionLabel"
+                          className="w-[100px] h-[100px] mx-auto "
+                          onClick={() => downloadImage()}
+                        />
+                        <button
+                          onClick={() => {
+                            downloadImage(
+                              import.meta.env.VITE_APP_BASE_URL +
+                                orderView.customerProofBack,
+                              `${orderView.customerName}-customerProofBack`
+                            );
+                          }}
+                          className="bg-green-600 px-2 rounded text-white"
+                        >
+                          Download
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </h1>

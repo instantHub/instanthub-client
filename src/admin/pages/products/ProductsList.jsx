@@ -169,6 +169,7 @@ const ProductsList = () => {
                         className="w-[60px] h-[60px] mx-auto "
                       />
                     </td>
+                    <td className="px-4 py-2">{product.status}</td>
                     <td className="px-4 py-2">
                       <Link to={`/admin/update-product/${product.id}`}>
                         <button className="bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -186,14 +187,55 @@ const ProductsList = () => {
                       </button>
                     </td>
                     <td className="px-4 py-2">
-                      {product.deductions && (
-                        <Link
-                          to={`/admin/products/product-questions/${product.id}`}
-                        >
-                          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            validate
-                          </button>
-                        </Link>
+                      {/* Testing */}
+                      {/* VALIDATE BUTTON */}
+                      {product.category.name === "Mobile" ? (
+                        <div>
+                          <select
+                            name=""
+                            onChange={(e) =>
+                              setDeductionSelected({
+                                [product.id]: e.target.value,
+                              })
+                            }
+                          >
+                            <option value="">Variant</option>
+                            {product.variantDeductions.map(
+                              (variantDeduction, index) => (
+                                <option
+                                  key={index}
+                                  value={variantDeduction.variantName}
+                                >
+                                  {variantDeduction.variantName}
+                                </option>
+                              )
+                            )}
+                          </select>
+                          {/* Testing END */}
+                          {deductionSelected[product.id] && (
+                            <Link
+                              to={`/admin/products/product-questions/${
+                                product.id
+                              }?variant=${deductionSelected[product.id]}`}
+                            >
+                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                validate
+                              </button>
+                            </Link>
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                          {/* {deductionSelected[product.id] && ( */}
+                          <Link
+                          // to={`/admin/products/product-questions/${product.id}?variant=${product.deductions[0].variantName}`}
+                          >
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                              validate
+                            </button>
+                          </Link>
+                          {/* )} */}
+                        </div>
                       )}
                     </td>
                   </tr>
@@ -214,32 +256,49 @@ const ProductsList = () => {
                     <td className="px-4 py-2">{product.name}</td>
                     <td className="px-4 py-2">
                       <ul>
-                        {product.variants.map((variant, i) => (
-                          <div key={i} className="flex gap-2 justify-center">
-                            <div className="">
-                              <label
-                                htmlFor="variantName"
-                                className="text-xs text-gray-500"
+                        {product.category.name === "Mobile"
+                          ? product.variants.map((variant, i) => (
+                              <div
+                                key={i}
+                                className="flex gap-2 justify-center"
                               >
-                                Variant Name
-                              </label>
-                              <li key={i} className="" name="variantName">
-                                {variant.name}
-                              </li>
-                            </div>
-                            <div>
-                              <label
-                                htmlFor="variantName"
-                                className="text-xs text-gray-500"
-                              >
-                                Variant Price
-                              </label>
-                              <li key={i} className="" name="variantName">
-                                {variant.price}
-                              </li>
-                            </div>
-                          </div>
-                        ))}
+                                <div className="">
+                                  <label
+                                    htmlFor="variantName"
+                                    className="text-xs text-gray-500"
+                                  >
+                                    Variant Name
+                                  </label>
+                                  <li key={i} className="" name="variantName">
+                                    {variant.name}
+                                  </li>
+                                </div>
+                                <div>
+                                  <label
+                                    htmlFor="variantName"
+                                    className="text-xs text-gray-500"
+                                  >
+                                    Variant Price
+                                  </label>
+                                  <li key={i} className="" name="variantName">
+                                    {variant.price}
+                                  </li>
+                                </div>
+                              </div>
+                            ))
+                          : product.variants.map((variant, i) => (
+                              <div className="">
+                                <label
+                                  htmlFor="price"
+                                  className="text-xs text-gray-500"
+                                >
+                                  Product Price
+                                </label>
+                                <li key={i} className="" name="price">
+                                  {variant.price}
+                                </li>
+                              </div>
+                            ))}
                       </ul>
                     </td>
                     <td className="px-4 py-2">
@@ -270,34 +329,54 @@ const ProductsList = () => {
                     </td>
                     <td className="px-4 py-2">
                       {/* Testing */}
-                      <select
-                        name=""
-                        // onChange={(e) => setDeductionSelected(e.target.value)}
-                        onChange={(e) =>
-                          setDeductionSelected({ [product.id]: e.target.value })
-                        }
-                      >
-                        <option value="">Variant</option>
-                        {product.deductions.map((variantDeduction, index) => (
-                          <option
-                            key={index}
-                            value={variantDeduction.variantName}
+                      {/* VALIDATE BUTTON */}
+                      {product.category.name === "Mobile" ? (
+                        <div>
+                          <select
+                            name=""
+                            onChange={(e) =>
+                              setDeductionSelected({
+                                [product.id]: e.target.value,
+                              })
+                            }
                           >
-                            {variantDeduction.variantName}
-                          </option>
-                        ))}
-                      </select>
-                      {/* Testing END */}
-                      {deductionSelected[product.id] && (
-                        <Link
-                          to={`/admin/products/product-questions/${
-                            product.id
-                          }?variant=${deductionSelected[product.id]}`}
-                        >
-                          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            validate
-                          </button>
-                        </Link>
+                            <option value="">Variant</option>
+                            {product.variantDeductions.map(
+                              (variantDeduction, index) => (
+                                <option
+                                  key={index}
+                                  value={variantDeduction.variantName}
+                                >
+                                  {variantDeduction.variantName}
+                                </option>
+                              )
+                            )}
+                          </select>
+                          {/* Testing END */}
+                          {deductionSelected[product.id] && (
+                            <Link
+                              to={`/admin/products/product-questions/${
+                                product.id
+                              }?variant=${deductionSelected[product.id]}`}
+                            >
+                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                validate
+                              </button>
+                            </Link>
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                          {/* {deductionSelected[product.id] && ( */}
+                          <Link
+                            to={`/admin/products/product-questions/${product.id}`}
+                          >
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                              validate
+                            </button>
+                          </Link>
+                          {/* )} */}
+                        </div>
                       )}
                     </td>
                   </tr>

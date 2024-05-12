@@ -315,7 +315,7 @@ const UpdateProduct = () => {
         </div>
       </div>
 
-      {!productDataLoading && (
+      {/* {!productDataLoading && (
         <div className="m-1 flex flex-col items-center justify-center">
           <h3 className="text-xl inline-block">Add Variants:</h3>
           {variants.map((variant, index) => (
@@ -366,6 +366,94 @@ const UpdateProduct = () => {
           >
             Add Variant
           </button>
+        </div>
+      )} */}
+
+      {!productDataLoading && productData.category.name === "Mobile" ? (
+        <div className="m-1 flex flex-col items-center justify-center">
+          <h3 className="text-xl inline-block">Add Variants:</h3>
+          {variants.map((variant, index) => (
+            <div
+              key={index}
+              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
+            >
+              <div>
+                <input
+                  type="text"
+                  value={variant.name}
+                  placeholder="variant name"
+                  onChange={(e) =>
+                    handleVariantChange(index, "name", e.target.value)
+                  }
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                />
+                <input
+                  type="number"
+                  value={variant.price}
+                  placeholder="variant price"
+                  onChange={(e) =>
+                    handleVariantChange(index, "price", e.target.value)
+                  }
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                />
+              </div>
+
+              <div>
+                {variants.length != 1 && (
+                  <button
+                    className="bg-red-600 px-2 py-1 text-white rounded-md"
+                    onClick={() => {
+                      handleRemoveVariant(index);
+                    }}
+                  >
+                    remove
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+          <button
+            onClick={addVariant}
+            className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
+          >
+            Add Variant
+          </button>
+        </div>
+      ) : (
+        <div className="m-1 flex flex-col items-center justify-center">
+          <h3 className="text-xl inline-block">Add Price:</h3>
+          {variants.map((variant, index) => (
+            <div
+              key={index}
+              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
+            >
+              <div>
+                <input
+                  type="text"
+                  value={variant.name}
+                  placeholder="variant name"
+                  // onChange={(e) =>
+                  //   handleVariantChange(index, "name", e.target.value)
+                  // }
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                  disabled
+                />
+                <input
+                  type="number"
+                  value={variant.price}
+                  placeholder="variant price"
+                  onChange={(e) =>
+                    handleVariantChange(index, "price", e.target.value)
+                  }
+                  className="m-1 p-2 border rounded-lg"
+                  required
+                />
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

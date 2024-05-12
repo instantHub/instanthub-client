@@ -8,7 +8,7 @@ const ProductFinalPrice = () => {
   const selectedProdDetails = useSelector((state) => state.deductions);
   const [formData, setFormData] = useState();
   const [offerPrice, setOfferPrice] = useState();
-  console.log(selectedProdDetails);
+  console.log("selectedProdDetails", selectedProdDetails);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -76,16 +76,23 @@ const ProductFinalPrice = () => {
     setFormData({
       ...formData,
       productId,
+      category: selectedProdDetails.productCategory,
       variant: selectedProdDetails.getUpTo,
       deductions: selectedProdDetails.deductions,
-      offerPrice:
+      offerPrice: Math.ceil(
         Number(selectedProdDetails.getUpTo.price) -
-        Number(selectedProdDetails.toBeDeducted),
+          Number(selectedProdDetails.toBeDeducted) +
+          Number(selectedProdDetails.toBeAdded)
+      ),
       status: "pending",
     });
-    setOfferPrice(
-      selectedProdDetails.getUpTo.price - selectedProdDetails.toBeDeducted
-    );
+    const deductedPrice =
+      Number(selectedProdDetails.getUpTo.price) -
+      Number(selectedProdDetails.toBeDeducted) +
+      Number(selectedProdDetails.toBeAdded);
+    console.log("selectedProdDetails", selectedProdDetails);
+
+    setOfferPrice(Math.ceil(deductedPrice));
   }, [selectedProdDetails]);
 
   console.log(formData);
@@ -153,7 +160,7 @@ const ProductFinalPrice = () => {
 
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-2/4">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-2/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold mb-4">Enter your details</h2>
               <button
@@ -176,7 +183,7 @@ const ProductFinalPrice = () => {
                   name="name"
                   id=""
                   placeholder="Enter Name"
-                  className="border rounded px-2 py-1 w-1/3"
+                  className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2"
                   onChange={(e) =>
                     setFormData({ ...formData, customerName: e.target.value })
                   }
@@ -188,7 +195,7 @@ const ProductFinalPrice = () => {
                   name="email"
                   id=""
                   placeholder="Enter your email"
-                  className="border rounded px-2 py-1 w-1/3"
+                  className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2"
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
@@ -200,7 +207,7 @@ const ProductFinalPrice = () => {
                   name="phone"
                   value={formData.phone}
                   placeholder="Enter your phone number"
-                  className="border rounded px-2 py-1 w-1/3"
+                  className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2"
                   // onChange={(e) =>
                   //   setFormData({ ...formData, phone: Number(e.target.value) })
                   // }
@@ -226,7 +233,7 @@ const ProductFinalPrice = () => {
                     name="pincode"
                     value={formData.pinCode}
                     placeholder="pincode"
-                    className="border rounded px-2 py-1 w-1/5"
+                    className="border rounded px-2 py-1 w-1/5 max-sm:w-1/3"
                     onChange={handlePinCodeChange}
                     required
                   />

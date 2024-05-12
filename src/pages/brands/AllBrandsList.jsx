@@ -22,7 +22,7 @@ const AllBrandsList = () => {
   return (
     <div>
       <div className="my-10">
-        <h1 className="text-2xl flex gap-2 items-center border-b-[1px] border-b-cyan-300 w-fit">
+        <h1 className="text-2xl flex gap-2 items-center border-b-[1px] border-b-cyan-300 w-fit max-sm:text-xl">
           Explore{" "}
           {!brandsLoading && (
             <span className="text-4xl font-semibold text-cyan-500">
