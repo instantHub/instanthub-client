@@ -37,7 +37,7 @@ const ProductDeductions = () => {
 
   const deductionData = useSelector((state) => state.deductions.deductions);
   const data = useSelector((state) => state.deductions);
-  // console.log("useSelector", data);
+  console.log("useSelector", data);
 
   if (productsData) {
     // console.log("productsData ProductQuestions ", productsData);
@@ -355,40 +355,42 @@ const ProductDeductions = () => {
                     <h1>{deductions[currentConditionIndex].conditionName}</h1>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4">
+                  <div className="grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2">
                     {deductions[currentConditionIndex].conditionLabels.map(
                       (label) => (
                         <div
                           className={`${
                             //   selectedLabels.includes(label.conditionLabel)
-                            selectedLabels.some(
-                              (condLabel) =>
-                                condLabel.conditionLabel == label.conditionLabel
+                            data.productAge.conditionLabel ===
+                            label.conditionLabel
+                              ? "border-cyan-500"
+                              : "bg-gray-100"
+                          } flex pl-3 border rounded items-center`}
+                          onClick={() =>
+                            handleAge(
+                              label.conditionLabel,
+                              label.priceDrop,
+                              label.operation
                             )
-                              ? "border-[#E27D60]"
-                              : ""
-                          } flex flex-col border rounded items-center`}
+                          }
                         >
-                          <div className="flex text-sm items-center gap-1">
-                            <input
-                              type="radio"
-                              name="age"
-                              id=""
-                              className="px-4 py-2"
-                              placeholder={label.conditionLabel}
-                              onClick={() =>
-                                handleAge(
-                                  label.conditionLabel,
-                                  label.priceDrop,
-                                  label.operation
-                                )
-                              }
-                              required
-                            />
-                            <label htmlFor="age">{label.conditionLabel} </label>
-                            <label htmlFor="age" className="">
+                          <div className="flex text-sm items-center gap-1 py-4">
+                            <span
+                              className={`${
+                                //   selectedLabels.includes(label.conditionLabel)
+                                data.productAge.conditionLabel ===
+                                label.conditionLabel
+                                  ? "border-cyan-500"
+                                  : "border-surface-dark"
+                              } border border-solid rounded-full w-5 h-5 mr-1.5`}
+                            ></span>
+                            <span className="text-sm flex-1 flex justify-center">
+                              {label.conditionLabel}
+                            </span>
+
+                            {/* <label htmlFor="age" className="">
                               {label.operation}{" "}
-                            </label>
+                            </label> */}
                           </div>
                         </div>
                       )

@@ -176,6 +176,8 @@ const LaptopsQuestions = (props) => {
   return (
     <div>
       <div className="flex flex-col">
+        {/* testing */}
+        {/* <h1>Page {currentPage}</h1> */}
         {currentPage === 1 && (
           <h1 className="text-center font-semibold">
             Select the system configuration of your device?
@@ -184,174 +186,168 @@ const LaptopsQuestions = (props) => {
         <div>
           {laptopsConList.length !== 0 &&
             getDeductionsForPage().map((deduction, index) => (
-              <>
-                <div key={index} className="px-8 py-4">
-                  {currentPage === 1 ? (
-                    <div className="px-1 py-2 font-extrabold text-lg">
-                      <h1>{deduction.conditionName}</h1>
-                    </div>
-                  ) : (
-                    <div className="px-5 py-2 text-center font-extrabold text-lg">
-                      <h1>{deduction.conditionName}</h1>
-                    </div>
-                  )}
-
-                  {/* Processor, Ram & HardDisk Questions */}
-                  {currentPage === 1 ? (
-                    <>
-                      <div className="flex">
-                        <select
-                          className="block appearance-none w-full bg-white border border-gray-0 hover:border-gray-200 px-4 py-4 pr-8 rounded shadow-lg leading-tight focus:outline-none focus:shadow-outline"
-                          onChange={handleSelectChange}
+              <div key={index} className="px-8 py-4">
+                {/* Condtion Name */}
+                {currentPage === 1 ? (
+                  <div className="px-1 py-2 font-extrabold text-lg">
+                    <h1>{deduction.conditionName}</h1>
+                  </div>
+                ) : (
+                  <div className="px-5 py-2 text-center font-extrabold text-lg">
+                    <h1>{deduction.conditionName}</h1>
+                  </div>
+                )}
+                {/* Processor, Ram & HardDisk Questions */}
+                {currentPage === 1 ? (
+                  <>
+                    <div className="flex">
+                      <select
+                        className="block appearance-none w-full bg-white border border-gray-0 hover:border-gray-200 px-4 py-4 pr-8 rounded shadow-lg leading-tight focus:outline-none focus:shadow-outline"
+                        onChange={handleSelectChange}
+                      >
+                        <option
+                          value=""
+                          className="py-2 bg-transparent hover:bg-gray-200"
                         >
+                          search
+                        </option>
+                        {deduction.conditionLabels.map((label, index) => (
                           <option
-                            value=""
-                            className="py-2 bg-transparent hover:bg-gray-200"
+                            key={index}
+                            data-arg1={label.conditionLabel}
+                            data-arg2={label.priceDrop}
+                            data-arg3={deduction.conditionName}
+                            data-arg4={label.operation}
                           >
-                            search
+                            {label.conditionLabel}
                           </option>
-                          {deduction.conditionLabels.map((label, index) => (
-                            <option
-                              key={index}
-                              data-arg1={label.conditionLabel}
-                              data-arg2={label.priceDrop}
-                              data-arg3={deduction.conditionName}
-                              data-arg4={label.operation}
-                            >
-                              {label.conditionLabel}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </>
-                  ) : (
-                    <div>
-                      {!deduction.conditionName.includes("Age") ? (
-                        <>
-                          <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4">
-                            {deduction.conditionLabels.map((label, index) => (
-                              <>
-                                <div key={index}>
-                                  <div
-                                    className={`${
-                                      deductionData.some(
-                                        (condLabel) =>
-                                          condLabel.conditionLabel ==
-                                          label.conditionLabel
-                                      )
-                                        ? "border-[#E27D60] border-cyan-500"
-                                        : ""
-                                    } flex flex-col border rounded items-center`}
-                                    onClick={() =>
-                                      handleLabelSelection(
-                                        label.conditionLabel,
-                                        label.priceDrop,
-                                        label.operation
-                                      )
-                                    }
-                                  >
-                                    <div className="p-4">
-                                      <img
-                                        src={
-                                          import.meta.env.VITE_APP_BASE_URL +
-                                          label.conditionLabelImg
-                                        }
-                                        alt="LabelImg"
-                                        className="size-20 max-sm:size-24"
-                                      />
-                                    </div>
-                                    <div
-                                      key={label.conditonLabelId}
-                                      className={`${
-                                        deductionData.some(
-                                          (condLabel) =>
-                                            condLabel.conditionLabel ==
-                                            label.conditionLabel
-                                        )
-                                          ? "bg-[#E27D60] bg-cyan-500 text-white"
-                                          : "bg-slate-100 "
-                                      } py-2  text-center w-full h-[100px] flex items-center justify-center lg:text-[13px] max-md:text-[12px] max-sm:text-sm`}
-                                    >
-                                      {label.conditionLabel}
-                                    </div>
-                                  </div>
-                                </div>
-                              </>
-                            ))}
-                          </div>
-                          <div>
-                            <button
-                              onClick={handleContinue}
-                              className="px-2 py-1 border rounded w-1/2 m-2"
-                            >
-                              Continue
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex flex-col">
-                            <div className="grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2">
-                              {deduction.conditionLabels.map((label) => (
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4">
+                      {!deduction.conditionName.includes("Age")
+                        ? deduction.conditionLabels.map((label, index) => (
+                            <>
+                              <div key={index}>
                                 <div
                                   className={`${
-                                    //   selectedLabels.includes(label.conditionLabel)
-                                    data.productAge.conditionLabel ===
-                                    label.conditionLabel
-                                      ? "border-cyan-500"
-                                      : "bg-gray-100"
-                                  } flex pl-3 border rounded items-center`}
+                                    deductionData.some(
+                                      (condLabel) =>
+                                        condLabel.conditionLabel ==
+                                        label.conditionLabel
+                                    )
+                                      ? "border-[#E27D60] border-cyan-500"
+                                      : ""
+                                  } flex flex-col border rounded items-center`}
                                   onClick={() =>
-                                    handleAge(
+                                    handleLabelSelection(
                                       label.conditionLabel,
                                       label.priceDrop,
                                       label.operation
                                     )
                                   }
                                 >
-                                  <div className="flex text-sm items-center gap-1 py-4">
-                                    <span
-                                      className={`${
-                                        data.productAge.conditionLabel ===
-                                        label.conditionLabel
-                                          ? "border-cyan-500"
-                                          : "border-surface-dark"
-                                      } border border-solid rounded-full w-5 h-5 mr-1.5`}
-                                    ></span>
-                                    <span className="text-sm flex-1 flex justify-center">
-                                      {label.conditionLabel}
-                                    </span>
+                                  <div className="p-4">
+                                    <img
+                                      src={
+                                        import.meta.env.VITE_APP_BASE_URL +
+                                        label.conditionLabelImg
+                                      }
+                                      alt="LabelImg"
+                                      className="size-20 max-sm:size-24"
+                                    />
+                                  </div>
+                                  <div
+                                    key={label.conditonLabelId}
+                                    className={`${
+                                      deductionData.some(
+                                        (condLabel) =>
+                                          condLabel.conditionLabel ==
+                                          label.conditionLabel
+                                      )
+                                        ? "bg-[#E27D60] bg-cyan-500 text-white"
+                                        : "bg-slate-100 "
+                                    } py-2  text-center w-full h-[100px] flex items-center justify-center lg:text-[13px] max-md:text-[12px] max-sm:text-sm`}
+                                  >
+                                    {label.conditionLabel}
                                   </div>
                                 </div>
-                              ))}
+                              </div>
+                            </>
+                          ))
+                        : // deduction.conditionName.includes("Age") && (
+                          //     // <div className="flex flex-col">
+                          //     <div className="flex flex-col gap-2 w-full">
+                          //       {/* <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4 max-sm:grid-cols-1 max-sm:w-fi"> */}
+                          //       <div>
+                          //         {
+                          deduction.conditionLabels.map((label) => (
+                            <div
+                              className={`${
+                                //   selectedLabels.includes(label.conditionLabel)
+                                data.productAge.conditionLabel ===
+                                label.conditionLabel
+                                  ? "border-cyan-500"
+                                  : "bg-gray-100"
+                              } flex pl-3 border rounded items-center`}
+                              onClick={() =>
+                                handleAge(
+                                  label.conditionLabel,
+                                  label.priceDrop,
+                                  label.operation
+                                )
+                              }
+                            >
+                              <div className="flex text-sm items-center gap-1 py-4">
+                                <span
+                                  className={`${
+                                    data.productAge.conditionLabel ===
+                                    label.conditionLabel
+                                      ? "border-cyan-500"
+                                      : "border-surface-dark"
+                                  } border border-solid rounded-full w-5 h-5 mr-1.5`}
+                                ></span>
+                                <span className="text-sm flex-1 flex justify-center">
+                                  {label.conditionLabel}
+                                </span>
+                              </div>
                             </div>
-                            <div>
-                              {age ? (
-                                <button
-                                  onClick={handleContinue}
-                                  className="px-2 py-1 border rounded w-1/2 m-2"
-                                >
-                                  Continue
-                                </button>
-                              ) : (
-                                <button
-                                  className="px-2 py-1 border rounded w-3/4 m-2 bg-gray-400 opacity-35"
-                                  disabled
-                                >
-                                  Select Age To Continue
-                                </button>
-                              )}
+                          ))}
+                      {/* </div>
                             </div>
-                          </div>
-                        </>
-                      )}
+                          )} */}
                     </div>
-                  )}
-                </div>
-                {/* <button>Continue</button> */}
-              </>
+                    {!deduction.conditionName.includes("Age") ? (
+                      <button
+                        onClick={handleContinue}
+                        className="px-2 py-1 border rounded w-1/2 m-2"
+                      >
+                        Continue
+                      </button>
+                    ) : age ? (
+                      <button
+                        onClick={handleContinue}
+                        className="px-2 py-1 border rounded w-1/2 m-2"
+                      >
+                        Continue
+                      </button>
+                    ) : (
+                      <button
+                        className="px-2 py-1 border rounded w-1/2 m-2 bg-gray-400 opacity-35"
+                        disabled
+                      >
+                        Select Age To Continue
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
             ))}
         </div>
+
         {currentPage === 1 && (
           <button
             onClick={handleContinue}
@@ -364,4 +360,5 @@ const LaptopsQuestions = (props) => {
     </div>
   );
 };
+
 export default LaptopsQuestions;
