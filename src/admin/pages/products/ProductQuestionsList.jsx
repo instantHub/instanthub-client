@@ -210,7 +210,7 @@ const ProductQuestionsList = () => {
     <div className="">
       <div className="inline-block m-4 px-4 py-1 bg-green-600 text-white rounded">
         <Link to={"/admin/productsList"}>
-          <button>Products List</button>
+          <button>Back</button>
         </Link>
       </div>
 

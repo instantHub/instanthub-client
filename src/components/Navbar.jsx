@@ -4,32 +4,48 @@ import Logo from "../assets/LOGO.png";
 import Slider from "./Slider";
 import Categories from "../pages/categories/Categories";
 import { Link, Outlet } from "react-router-dom";
+import { useGetCategoryQuery } from "../features/api";
 // import LOGO 'LOGO1.png'
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: categoryData, isLoading: categoryLoading } =
+    useGetCategoryQuery();
+  console.log("categoryData from NAV", categoryData);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
+
+  const handleMouseEnter = (categoryId) => {
+    setHoveredCategoryId(categoryId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCategoryId(null);
+  };
+
   return (
     <>
-      <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky z-50 top-2 border-b border-[#E27D60] shadow-xl">
+      <nav className="bg-white text-black py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b">
+        {/* Main */}
+        {/* <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky z-50 top-2 border-b border-[#E27D60] shadow-xl"> */}
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
-        {/* <nav className="bg-gradient-to-r from-red-700 via-yellow-400 to-orange-600 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         <div className="max-w-full mx-auto px-4">
           <div className="flex items-center">
             {/* <div className="grid grid-cols-3 items-center"> */}
             <div className="flex items-center grow">
               <Link to="/">
-                {/* <span className=""> */}
                 <img
-                  src="/LOGO1.png"
+                  // src="/LOGO1.png"
+                  src="/2.png"
                   alt="logo"
-                  className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
+                  // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
+                  className="w-[88px] h-[70px] h- my-[1px] max-sm:w-[95%]"
                 />
-                {/* </span> */}
               </Link>
             </div>
 
@@ -108,6 +124,93 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+      {/* <div class="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full z-10 mt-4 pb-4 border-b">
+        <div class="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
+          <div class="flex flex-row w-full max-w-screen-xl justify-between px-4">
+            {!categoryLoading
+              ? categoryData.map((category, i) => (
+                  <Link to={`/categories/brands/${category.id}`} key={i}>
+                    <div
+                      key={i}
+                      class="relative flex flex-row items-center cursor-pointer group/navigation"
+                    >
+                      <span class="flex flex-col items-center justify-center w-full h-full no-underline">
+                        <div>Sell {category.name}</div>
+                      </span>
+                    </div>
+                  </Link>
+                ))
+              : null}
+          </div>
+        </div>
+      </div> */}
+      <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full z-10 pb-4 border-b">
+        <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
+          <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 ">
+            {!categoryLoading &&
+              categoryData.map((category, i) => (
+                <Link
+                  to={`/categories/brands/${category.id}`}
+                  key={i}
+                  onClick={() => setHoveredCategoryId(null)}
+                >
+                  <div
+                    key={i}
+                    className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-cyan-500 hover:pt-[13px]"
+                    onMouseEnter={() => handleMouseEnter(category.id)}
+                    onMouseLeave={() => handleMouseLeave()}
+                  >
+                    <span className="flex flex-col items-center justify-center w-full h-full no-underline">
+                      <div
+                        key={i}
+                        className="hover:text-cyan-500 flex items-center gap-1"
+                      >
+                        <span>Sell {category.name}</span>
+                        {hoveredCategoryId === category.id ? (
+                          <FaAngleUp />
+                        ) : (
+                          <FaAngleDown />
+                        )}
+                      </div>
+
+                      {hoveredCategoryId === category.id && (
+                        <div
+                          className="absolute top-full right-0 mt-0 pt-3 bg-white shadow-md p-2  w-[200%]"
+                          onMouseEnter={() => handleMouseEnter(category.id)}
+                        >
+                          <h1 className="py-2 font-bold">Brands</h1>
+                          <ul>
+                            {category.brands.length > 0 ? (
+                              category.brands.map((brand, index) => (
+                                <li
+                                  key={index}
+                                  className="py-1 px-2 rounded hover:bg-gray-100"
+                                >
+                                  <Link
+                                    to={`/categories/brands/products/${brand.id}`}
+                                    onClick={() => setHoveredCategoryId(null)}
+                                  >
+                                    {brand.name}
+                                  </Link>
+                                </li>
+                              ))
+                            ) : (
+                              <div>
+                                <div>
+                                  <h1 className="text-sm">No Brands</h1>
+                                </div>
+                              </div>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+          </div>
+        </div>
+      </div>
 
       {/* <Outlet />
 

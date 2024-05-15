@@ -28,22 +28,40 @@ const ProductDetail = () => {
 
   console.log(productDetails);
 
+  const [reloaded, setReloaded] = useState(false);
+
+  const [loadedInitially, setLoadedInitially] = useState(false);
+
+  // MAIN
   useEffect(() => {
     if (!isLoading) {
       if (productDetails.category.name !== "Mobile") {
         handleToggle(productDetails.variants[0]);
       }
     }
+    setLoadedInitially(true);
   }, [productDetails]);
 
+  // useEffect(() => {
+  //   if (productDetails && productDetails.category.name === "Mobile") {
+  //     window.location.reload();
+  //   }
+  // }, [prodId]);
+
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   window.location.reload();
+  // }, [location.pathname]); // Reload when the pathname of the location changes
+
   return (
-    <div className="w-[70%] mx-auto my-36 ">
+    <div className="w-[70%] mx-auto my-28 max-md:w-[90%] max-sm:my-20">
       {/* <div className="bg-white px-10 pt-10 pb-24 rounded-md shadow-lg"> */}
       {/* Header Links: Home > Category > Brand > Products > ProductName */}
       <div className="mx-0 mb-6">
         {productDetails && (
           <div className="flex items-center gap-1">
-            <h1 className="flex items-center opacity-60 gap-1 max-sm:text-[12px]">
+            <h1 className="flex items-center opacity-60 gap-1 max-sm:text-[14px]">
               <Link to={"/"}>Home</Link>
               <FaAngleRight />
               <Link to={`/categories/brands/${productDetails.category.id}`}>
@@ -59,12 +77,13 @@ const ProductDetail = () => {
               <span>Products</span>
               <FaAngleRight />
             </h1>
-            <span className="max-sm:text-[10px]">{productDetails.name}</span>
+            <span className="max-sm:text-[14px]">{productDetails.name}</span>
           </div>
         )}
         <hr className="text-black mt-1" />
       </div>
-      <div className="ring-0 ring-transparent shadow">
+      {/* <div className="ring-0 ring-transparent shadow"> */}
+      <div className="">
         {isLoading ? (
           <div className="flex flex-col justify-center items-center h-32">
             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
@@ -73,7 +92,8 @@ const ProductDetail = () => {
         ) : (
           <>
             {/* <div className="flex gap-10 "> */}
-            <div className="bg-white flex flex-col sm:flex-row rounded-lg px-3 sm:p-6 max-sm:pb-3 ring-0 ring-transparent shadow max-sm:flex-col">
+            {/* <div className="bg-white flex flex-col sm:flex-row rounded-lg px-3 sm:p-6 max-sm:pb-3 ring-0 ring-transparent shadow max-sm:flex-col"> */}
+            <div className="bg-white flex flex-col sm:flex-row px-3 sm:p-6 max-sm:pb-3  max-sm:flex-col">
               {/* IMAGE */}
               <div className="sm:flex items-center justify-center mr-5 w-full sm:max-w-xs max-sm:size-32 sm:w-1/3 h-20 sm:h-96 max-sm:mx-auto">
                 <div className="flex items-center justify-center h-full w-full">
@@ -194,7 +214,7 @@ const ProductDetail = () => {
                   ) : (
                     <div>
                       <button
-                        className="bg-emerald-500 text-white px-4 py-2 rounded-md disabled:bg-gray-400 disabled:opacity-30 disabled:text-black"
+                        className="bg-emerald-500 mt-2 text-white px-4 py-2 rounded-md disabled:bg-gray-400 disabled:opacity-30 disabled:text-black"
                         disabled
                       >
                         Get Exact Value
@@ -203,7 +223,7 @@ const ProductDetail = () => {
                   )}
 
                   {/* Disclaimer */}
-                  <div className="py-1 px-2 w-3/4 bg-yellow-200 max-sm:w-full">
+                  <div className="py-1 mt-2 px-2 w-3/4 bg-yellow-200 max-sm:w-full">
                     <p className="text-xs opacity-70">
                       The above pricing is subject to change based on the
                       product's condition. The final pricing offer will be

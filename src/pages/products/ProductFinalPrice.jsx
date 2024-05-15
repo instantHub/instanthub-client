@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useCreateOrderMutation } from "../../features/api";
+import {
+  useCreateOrderMutation,
+  useGetProductDetailsQuery,
+} from "../../features/api";
 import { toast } from "react-toastify";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ProductFinalPrice = () => {
   const selectedProdDetails = useSelector((state) => state.deductions);
   const [formData, setFormData] = useState();
   const [offerPrice, setOfferPrice] = useState();
-  console.log("selectedProdDetails", selectedProdDetails);
+  const [accessoriesNotSelected, setAccessoriesNotSelected] = useState([]);
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const currentDate = new Date();
+
+  // Set the minimum time to 10:00 AM
+  const minTime = new Date();
+  minTime.setHours(10, 0, 0, 0);
+
+  // Set the maximum time to 10:00 PM
+  const maxTime = new Date();
+  maxTime.setHours(22, 0, 0, 0);
+
+  // console.log("selectedProdDetails", selectedProdDetails);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
+  const { data: productDetails, isLoading: productLoading } =
+    useGetProductDetailsQuery(productId);
   console.log("productId", productId);
   const [createOrder, { isLoading }] = useCreateOrderMutation();
 
@@ -55,8 +75,24 @@ const ProductFinalPrice = () => {
     }
   };
 
+  const handleTimeChange = (date) => {
+    console.log("date", typeof date);
+
+    setSelectedDate(date);
+
+    const formattedDate = `${date.toLocaleString("en-US", {
+      month: "long",
+    })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
+      "en-US",
+      { hour: "numeric", minute: "numeric", hour12: true }
+    )}`;
+    // console.log("formattedDate", formattedDate);
+    setFormData({ ...formData, schedulePickUp: formattedDate });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const order = await createOrder(formData);
     console.log("order", order);
     if (order.data.success) {
@@ -73,33 +109,106 @@ const ProductFinalPrice = () => {
   });
 
   useEffect(() => {
-    setFormData({
-      ...formData,
-      productId,
-      category: selectedProdDetails.productCategory,
-      variant: selectedProdDetails.getUpTo,
-      deductions: selectedProdDetails.deductions,
-      offerPrice: Math.ceil(
-        Number(selectedProdDetails.getUpTo.price) -
-          Number(selectedProdDetails.toBeDeducted) +
-          Number(selectedProdDetails.toBeAdded)
-      ),
-      status: "pending",
-    });
-    const deductedPrice =
+    let prodDeductions;
+    if (!productLoading) {
+      // console.log("productDetails", productDetails);
+      if (productDetails.category.name === "Mobile") {
+        prodDeductions = productDetails.variantDeductions.find(
+          (vd) =>
+            vd.variantName === String(selectedProdDetails.getUpTo.variantName)
+        );
+        prodDeductions = prodDeductions.deductions;
+      } else if (productDetails.category.name !== "Mobile") {
+        prodDeductions = productDetails.simpleDeductions;
+      }
+    }
+    const prodAccessories = prodDeductions.find(
+      (pd) => pd.conditionName === "Accessories"
+    );
+    // console.log("prodAccessories", prodAccessories.conditionLabels);
+    // console.log(
+    //   "selectedProdDetails.deductions",
+    //   selectedProdDetails.deductions
+    // );
+
+    // Get the condition labels from selectedProdDetails.deductions
+    const deductedConditionLabels = selectedProdDetails.deductions.map(
+      (item) => item.conditionLabel
+    );
+    // console.log("deductedConditionLabels",deductedConditionLabels);
+
+    // Filter out the prodAccessories that are not present in selectedProdDetails.deductions
+    const AccessoriesNotSelected = prodAccessories.conditionLabels.filter(
+      (accessory) => {
+        // Check if the conditionLabel of the accessory is not present in deductedConditionLabels
+        return !deductedConditionLabels.some(
+          (label) => label === accessory.conditionLabel
+        );
+      }
+    );
+    setAccessoriesNotSelected(AccessoriesNotSelected);
+
+    // console.log("AccessoriesNotSelected", AccessoriesNotSelected);
+
+    // setFormData({
+    //   ...formData,
+    //   productId,
+    //   category: selectedProdDetails.productCategory,
+    //   variant: selectedProdDetails.getUpTo,
+    //   deductions: selectedProdDetails.deductions,
+    //   offerPrice: Math.ceil(
+    //     Number(selectedProdDetails.getUpTo.price) -
+    //       Number(selectedProdDetails.toBeDeducted) +
+    //       Number(selectedProdDetails.toBeAdded)
+    //   ),
+    //   status: "pending",
+    // });
+    let deductedPrice =
       Number(selectedProdDetails.getUpTo.price) -
       Number(selectedProdDetails.toBeDeducted) +
       Number(selectedProdDetails.toBeAdded);
-    console.log("selectedProdDetails", selectedProdDetails);
+    // console.log("selectedProdDetails", selectedProdDetails);
+
+    if (AccessoriesNotSelected.length > 0) {
+      console.log("deductedPrice before accessory deducted", deductedPrice);
+      AccessoriesNotSelected.map((a) => {
+        deductedPrice =
+          deductedPrice -
+          Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
+      });
+      console.log("deductedPrice after accessory deducted", deductedPrice);
+
+      setFormData({
+        ...formData,
+        productId,
+        category: selectedProdDetails.productCategory,
+        variant: selectedProdDetails.getUpTo,
+        deductions: selectedProdDetails.deductions,
+        accessoriesNotAvailable: AccessoriesNotSelected,
+        offerPrice: Math.ceil(deductedPrice),
+        status: "pending",
+      });
+    } else {
+      setFormData({
+        ...formData,
+        productId,
+        category: selectedProdDetails.productCategory,
+        variant: selectedProdDetails.getUpTo,
+        deductions: selectedProdDetails.deductions,
+        offerPrice: Math.ceil(deductedPrice),
+        status: "pending",
+      });
+    }
 
     setOfferPrice(Math.ceil(deductedPrice));
-  }, [selectedProdDetails]);
+  }, [selectedProdDetails, productDetails]);
 
-  console.log(formData);
+  console.log("formData", formData);
+  // console.log("accessoriesNotSelected out", accessoriesNotSelected);
 
   return (
     <>
-      <div className="flex flex-col items-center my-[10%] mx-auto">
+      <div className="flex flex-col items-center my-10 mx-auto">
         <div className="p-4 flex flex-col items-center">
           <h1 className="text-[20px]">
             Product {"  "}
@@ -111,15 +220,8 @@ const ProductFinalPrice = () => {
             <span className="text-[25px] text-green-600 font-bold"></span>
           </h1>
 
-          {/* <h1 className="text-[20px]">
-            Quoted Price{" "}
-            <span className="text-[30px] text-yellow-500 font-bold">
-              {selectedProdDetails.getUpTo.price}/-
-            </span>
-          </h1> */}
           <h1 className="text-[20px]">
             Final Price{" "}
-            {/* <span className="text-[30px] text-green-600 font-bold">4800/-</span> */}
             <span className="text-[30px] text-green-600 font-bold">
               {/* {formData.offerPrice && formData.offerPrice} */}
               {offerPrice}
@@ -133,16 +235,40 @@ const ProductFinalPrice = () => {
             This is your Products Final Price based on the following criteria
             which you mentioned
           </h1>
-          <ul>
-            {selectedProdDetails.deductions.map((deduction, index) => (
-              <li key={index}>
-                <span>{index + 1}. </span>{" "}
-                <span className="text-lg font-semibold text-red-600">
-                  {deduction.conditionLabel}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {/* Selected ConditionLabels Items List */}
+          <div>
+            <div>
+              <h1 className="text-lg font-semibold py-2">
+                Selected Conditions
+              </h1>
+              {selectedProdDetails.deductions.map((deduction, index) => (
+                <h1 key={index}>
+                  <span>{index + 1}. </span>{" "}
+                  <span className="text-lg font-semibold text-red-600">
+                    {deduction.conditionLabel}
+                  </span>
+                </h1>
+              ))}
+            </div>
+            {accessoriesNotSelected.length > 0 ? (
+              <div className="mt-4">
+                <h1 className="text-lg font-semibold py-2">
+                  Accessories Not Selected
+                </h1>
+                <div>
+                  {accessoriesNotSelected.map((a, index) => (
+                    <h1 key={index}>
+                      {" "}
+                      <span>{index + 1}. </span>{" "}
+                      <span className="text-lg font-semibold text-red-600">
+                        {a.conditionLabel}
+                      </span>
+                    </h1>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
         <div className="flex flex-col items-center">
           <h2>Want to sell?..</h2>
@@ -238,6 +364,29 @@ const ProductFinalPrice = () => {
                     required
                   />
                 </div>
+                <div>
+                  <h2>Select Date and Time</h2>
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleTimeChange}
+                    showTimeSelect
+                    // timeFormat="HH:mm" // 24 hours
+                    timeFormat="h:mm aa" // 12 hours
+                    timeIntervals={30}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    timeCaption="Time"
+                    minDate={currentDate}
+                    minTime={minTime}
+                    maxTime={maxTime}
+                    className="border px-1 rounded"
+                    required
+                  />
+
+                  {selectedDate && (
+                    <p>Schedule time: {formData.schedulePickUp}</p>
+                  )}
+                </div>
+
                 <input
                   type="submit"
                   value="Submit"

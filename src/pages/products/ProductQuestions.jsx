@@ -294,7 +294,8 @@ const ProductDeductions = () => {
                                 label.conditionLabelImg
                               }
                               alt="LabelImg"
-                              className="size-20 max-sm:size-24"
+                              className="size-20 max-sm:size-20"
+                              // className="size-20 max-sm:w-20 max-sm:h-20"
                             />
                           </div>
                           <div

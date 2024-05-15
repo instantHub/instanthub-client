@@ -9,7 +9,13 @@ const Footer = () => {
       <div className="mx-auto max-w-screen-xl flex gap-4 justify-evenly max-md:gap-1">
         <div className="px-4 sm:px-0 flex flex-col items-center">
           <div>
-            <img src="/LOGO1.png" alt="logo" className="h-20 max-sm:h-16" />
+            <img
+              // src="/LOGO1.png"
+              src="/footer-logo.png"
+              alt="logo"
+              // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
+              className="w-[95px] h-[75px] h- my-[1px] max-sm:w-[95%]"
+            />
           </div>
           <div>
             <span className="text-xs text-white">Follow Us On</span>

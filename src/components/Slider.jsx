@@ -66,12 +66,14 @@ function Slider() {
     // TODO: need to set this div to relative for right and left arrow functionality, however navbar will be affected
     <div>
       {!slidersLoading && slidersList.length !== 0 && (
-        <div className="max-w-[1400px] w-full h-[480px] mx-auto mt-10  max-md:h-[200px] group">
+        // <div className="max-w-[1400px] w-full h-[480px] mx-auto mt-10  max-md:h-[200px] group">
+        <div className="max-w-[1400px] w-full h-[350px] mx-auto mt-10 max-md:h-[200px] max-lg:h-[300px] group">
           <div
             style={{
               backgroundImage: `url(${baseURL}${slidersList[currentIndex].image})`,
             }}
-            className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500"
+            // className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500"
+            className="w-[95%] h-full rounded-2xl mx-auto bg-cover bg-center bg-no-repeat duration-500"
           >
             {/* left arrow */}
             {/* <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
