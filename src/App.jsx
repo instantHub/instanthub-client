@@ -14,7 +14,9 @@ import ClientBrands from "./pages/brands/Brands";
 import ClientProducts from "./pages/products/Products";
 import ClientProductDetail from "./pages/products/ProductDetail";
 import ClientProductDeductions from "./pages/products/ProductQuestions";
+import ClientOtpGenerator from "./pages/otp/OTPGenerator";
 import ClientProductFinalPrice from "./pages/products/ProductFinalPrice";
+// import emailcheck from './components/'
 
 // Admin side
 import PrivateRoute from "./admin/components/PrivateRoute";
@@ -120,6 +122,10 @@ function App() {
           //     element: <ClientProductFinalPrice />,
           //   },
           // ],
+        },
+        {
+          path: "/sell/deductions/generateOTP",
+          element: <ClientOtpGenerator />,
         },
         {
           path: "/sell/deductions/finalPrice",

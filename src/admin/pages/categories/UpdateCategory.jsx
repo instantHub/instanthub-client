@@ -106,14 +106,13 @@ function UpdateCategory() {
               <h2>Home </h2>
               <h2 className="pl-1"> / Update Category</h2>
               {/* <div className="py-3 px-2"> */}
-              <Link to="/admin/categories-list">
-                <button
-                  type="button"
-                  className="border  mx-auto border-gray-950 bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
-                >
-                  Categories List
-                </button>
-              </Link>
+              <div>
+                <Link to={"/admin/categories-list"}>
+                  <button className="bg-blue-700 text-white px-2 py-1 rounded">
+                    Back
+                  </button>
+                </Link>
+              </div>
               {/* </div> */}
             </div>
           </div>
@@ -184,12 +183,12 @@ function UpdateCategory() {
                 )}
               </div>
 
-              <div className="py-3 px-2 text-center">
+              <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="border border-black bg-green-600 rounded-md px-4 py-1 cursor-pointer hover:bg-white"
+                  className="bg-green-600 text-white rounded-md px-4 py-1 cursor-pointer hover:bg-green-700"
                 >
-                  Update
+                  Update Category
                 </button>
               </div>
             </form>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Summary</title>
+    <style>
+      h2 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        text-align: left;
+        background-color: #f2f2f2;
+      }
+
+      .order-detail h1 {
+        font-size: small;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+        table {
+          font-size: 14px;
+        }
+        th,
+        td {
+          padding: 8px;
+        }
+        .logo {
+          width: 100px;
+          height: 80px;
+        }
+        h2 {
+          color: #333;
+          font-size: 10.2px;
+        }
+        .sell {
+          font-size: 15px;
+        }
+        img {
+          width: 70px;
+          height: 60px;
+        }
+      }
+
+      .logo-header {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 15%;
+      }
+    </style>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    "
+  >
+    <div
+      class="container"
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <h2 class="sell" style="text-align: center">
+        <img
+          src="https://api.yusufqureshi.online/uploads/logo-image-1715942935175.png"
+          alt=""
+          style="width: 100px; height: 90px"
+        />
+      </h2>
+      <h1 class="sell" style="text-align: center">Sell Receipt</h1>
+      <h2 style="text-align: center">
+        Congradulations your order has been placed with InstantCashPick
+      </h2>
+      <h1 style="font-size: small">
+        <a href="https://instantcashpick.com">InstantCashPick</a>
+      </h1>
+
+      <div class="order-detail">
+        <div>
+          <h1>
+            <span>Order #</span>
+            <span># ${orderId}</span>
+          </h1>
+          <h1>
+            <span>Customer Name</span>
+            <span>${req.body.customerName}</span>
+          </h1>
+        </div>
+
+        <div>
+          <h1>
+            <span>PickUp Scheduled</span>
+            <span>${req.body.schedulePickUp}</span>
+          </h1>
+        </div>
+
+        <div>
+          <h1>
+            <span>Email</span>
+            <span>${req.body.email}</span>
+          </h1>
+          <h1>
+            <span>Ph #</span>
+            <span>${req.body.phone}</span>
+          </h1>
+        </div>
+
+        <div>
+          <h1>
+            <span>Billing Address</span>
+            <span>
+              ${req.body.addressDetails.address}
+              ${req.body.addressDetails.state} ${req.body.addressDetails.city}
+              ${req.body.addressDetails.pinCode}
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      <table
+        style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+      >
+        <tr>
+          <th>Product Details</th>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div>
+                <p>Product Category</p>
+                <p>${req.body.category}</p>
+              </div>
+              <div>
+                <p>Product Name</p>
+                <p>${product.name}</p>
+              </div>
+              <div>
+                <p>Variant</p>
+                <p>${req.body.variant.variantName}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Accessories</th>
+          <td>
+            <ol>
+              ${ order.accessoriesAvailable && order.accessoriesAvailable.length
+              > 0 ? order.accessoriesAvailable .map( (accessory) => `
+              <li>${accessory.conditionLabel}</li>
+              ` ) .join("") : "
+              <li>No accessories</li>
+              " }
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>Problems</th>
+          <td>
+            <ol>
+              ${ order.deductions && order.deductions.length > 0 ?
+              order.deductions .map( (deduction) => `
+              <li>${deduction.conditionLabel}</li>
+              ` ) .join("") : "
+              <li>Problems not selected</li>
+              " }
+            </ol>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Offered Price</th>
+          <td>₹ ${req.body.offerPrice}</td>
+        </tr>
+      </table>
+      <p style="text-align: center; color: #777">
+        If you have any questions or concerns about your order, please send us a
+        mail at
+        <a href="mailto:support@instantcashpick.com"
+          >support@instantcashpick.com</a
+        >.
+      </p>
+      <p
+        class="min-size"
+        style="font-size: smaller; text-align: right; color: #777"
+      >
+        GST Number: ABC123456XYZ
+      </p>
+    </div>
+  </body>
+</html>

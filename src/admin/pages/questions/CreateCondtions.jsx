@@ -84,7 +84,7 @@ function Condtions() {
                 <Link to="/admin/conditionsList">
                   <button
                     type="button"
-                    className="border mx-auto border-gray-950 bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                    className=" mx-auto bg-blue-700 text-white px-2 rounded-md py-1 cursor-pointer"
                   >
                     Conditions List
                   </button>
@@ -132,13 +132,13 @@ function Condtions() {
                 </div>
 
                 <div className="mx-auto">
-                  <button
+                  {/* <button
                     type="button"
                     onClick={addConditionName}
                     className="border border-black  bg-emerald-600 rounded-md px-4 py-2 text-white hover:text-black cursor-pointer hover:bg-white "
                   >
                     Add Condition
-                  </button>
+                  </button> */}
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
@@ -171,9 +171,9 @@ function Condtions() {
                 <div className="py-3 px-2">
                   <button
                     type="submit"
-                    className="border w-[80%] mx-auto border-black bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                    className="w-[30%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                   >
-                    Submit
+                    Create Condition
                   </button>
                 </div>
               </form>

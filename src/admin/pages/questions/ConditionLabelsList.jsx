@@ -35,8 +35,19 @@ const ConditionLabelsTable = () => {
   return (
     //ConditionLabelsTable based on the Condition selected
     <div className="p-4">
-      <h2 className=" text-lg font-bold mb-4">ConditionLabels Table</h2>
-      <div className="mb-4">
+      <div className="flex justify-between">
+        <h2 className="text-black text-lg font-bold mb-4">
+          ConditionLabels Table
+        </h2>
+        <div>
+          <Link to={"/admin/questions"}>
+            <button className="bg-blue-700 text-white px-2 py-1 rounded">
+              Create ConditionLabels
+            </button>
+          </Link>
+        </div>
+      </div>{" "}
+      {/* <div className="mb-4">
         <label htmlFor="condition" className=" mr-2">
           Select Label:
         </label>
@@ -61,7 +72,7 @@ const ConditionLabelsTable = () => {
               //   ))
             )}
         </select>
-      </div>
+      </div> */}
       <table className="w-full">
         <thead>
           <tr>

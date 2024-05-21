@@ -34,7 +34,17 @@ const BrandsList = () => {
   return (
     //Products based on the Category selected
     <div className="p-4">
-      <h2 className="text-black text-lg font-bold mb-4">Brands Table</h2>
+      <div className="flex justify-between">
+        <h2 className="text-black text-lg font-bold mb-4">Brands Table</h2>
+        <div>
+          <Link to={"/admin/add-brands"}>
+            <button className="bg-blue-700 text-white px-2 py-1 rounded">
+              Create Brand
+            </button>
+          </Link>
+        </div>
+      </div>
+
       <div className="mb-4">
         <label htmlFor="condition" className=" mr-2">
           Select Category:

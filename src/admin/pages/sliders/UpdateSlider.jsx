@@ -90,7 +90,7 @@ const UpdateSlider = () => {
           <div className="flex justify-between items-center">
             <h1 className="bold text-[1.4rem] mb-2">Update Slider</h1>
             <div className="py-3 px-2 text-center">
-              <Link to={`/admin/sliders-list`}>
+              <Link to={`/admin/add-sliders`}>
                 <button
                   type="submit"
                   className="border text-white bg-blue-600 rounded-md px-4 py-1 cursor-pointer  hover:bg-blue-700"

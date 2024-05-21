@@ -23,7 +23,7 @@ const ProductDetail = () => {
     setIsSelected(!isSelected);
     setSelectedDiv(variantSelected.id);
   };
-
+ 
   console.log("variantSelected", variantSelected);
 
   console.log(productDetails);

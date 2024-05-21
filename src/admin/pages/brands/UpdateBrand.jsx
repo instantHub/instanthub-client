@@ -109,16 +109,13 @@ function UpdateBrand() {
             <div className="flex items-center gap-1">
               <h2>Home </h2>
               <h2 className="pl-1"> / Update Brand</h2>
-              {/* <div className="py-3 px-2"> */}
-              <Link to="/admin/brands-list">
-                <button
-                  type="button"
-                  className="border  mx-auto border-gray-950 bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
-                >
-                  Brands List
-                </button>
-              </Link>
-              {/* </div> */}
+              <div>
+                <Link to={"/admin/brands-list"}>
+                  <button className="bg-blue-700 text-white px-2 py-1 rounded">
+                    Back
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="bg-white border rounded-md shadow-lg">
@@ -193,9 +190,9 @@ function UpdateBrand() {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="border w-[80%] mx-auto border-black bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                  className="w-[20%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                 >
-                  Submit
+                  Update Brand
                 </button>
               </div>
             </form>

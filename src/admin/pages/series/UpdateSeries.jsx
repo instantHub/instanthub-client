@@ -68,7 +68,7 @@ const UpdateSeries = () => {
           <div className="flex justify-between items-center">
             <h1 className="bold text-[1.4rem] mb-2">Update Series</h1>
             <div className="py-3 px-2 text-center">
-              <Link to={`/admin/series-list`}>
+              <Link to={`/admin/add-series`}>
                 <button
                   type="submit"
                   className="border text-white bg-blue-600 rounded-md px-4 py-1 cursor-pointer  hover:bg-blue-700"

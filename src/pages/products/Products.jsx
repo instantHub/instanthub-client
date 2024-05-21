@@ -10,6 +10,7 @@ import { useParams, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import ProductSeries from "../series/ProductSeries";
 import { FaAngleRight } from "react-icons/fa6";
+import { FaTimes } from "react-icons/fa";
 
 const Products = () => {
   const { brandId } = useParams();
@@ -87,13 +88,13 @@ const Products = () => {
 
       {/*  */}
       <div className="mt-10">
-        <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+        {/* <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {!seriesLoading && brandSeries.length !== 0
             ? brandSeries.map((series, i) => (
                 <>
                   <div
                     key={i}
-                    className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                    className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
                   >
                     <button
                       onClick={() => handleSeries(series.id)}
@@ -106,8 +107,8 @@ const Products = () => {
                         key={i}
                         className={`${
                           showSeries && series.id === seriesSelected
-                            ? "bg-cyan-200"
-                            : "bg-gray-200"
+                            ? "bg-cyan-500 text-white"
+                            : "bg-gray-200 max-sm:bg-white"
                         } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                       >
                         <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
@@ -120,9 +121,86 @@ const Products = () => {
                   </div>
                 </>
               ))
+              : null}
+        </div> */}
+
+        <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+          {!seriesLoading && brandSeries.length !== 0
+            ? !showSeries
+              ? brandSeries.map((series, i) => (
+                  <div
+                    key={series.id} // Changed from 'i' to 'series.id'
+                    className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
+                  >
+                    <button
+                      onClick={() => handleSeries(series.id)}
+                      className="w-full h-full"
+                    >
+                      <div
+                        className={`${
+                          showSeries && series.id === seriesSelected
+                            ? "bg-cyan-500 text-white"
+                            : "bg-gray-200 max-sm:bg-white"
+                        } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+                      >
+                        <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                          <div className="text-[14.5px] font-[500] leading-7">
+                            {series.name}
+                          </div>
+                        </span>
+                      </div>
+                    </button>
+                    {showSeries && series.id === seriesSelected && (
+                      <button
+                        onClick={() => handleSeries(series.id)}
+                        className="absolute top-1 right-1 text-white hover:"
+                      >
+                        <FaTimes />
+                      </button>
+                    )}
+                  </div>
+                ))
+              : brandSeries
+                  .filter((series, i) => series.id === seriesSelected)
+                  .map((series, i) => (
+                    <div
+                      key={series.id} // Changed from 'i' to 'series.id'
+                      className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
+                    >
+                      <button
+                        onClick={() => handleSeries(series.id)}
+                        className="w-full h-full"
+                      >
+                        <div
+                          className={`${
+                            showSeries && series.id === seriesSelected
+                              ? "bg-cyan-500 text-white"
+                              : "bg-gray-200 max-sm:bg-white"
+                          } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+                        >
+                          <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                            <div className="text-[14.5px] font-[500] leading-7">
+                              {series.name}
+                            </div>
+                          </span>
+                        </div>
+                      </button>
+                      {showSeries && series.id === seriesSelected && (
+                        <button
+                          onClick={() => handleSeries(series.id)}
+                          className="absolute top-1 right-1 text-white hover:"
+                        >
+                          <FaTimes />
+                        </button>
+                      )}
+                    </div>
+                  ))
             : null}
         </div>
       </div>
+      {/* {showSeries && series.id === seriesSelected ? (
+                  <span className="p-0 m-0 ml-[95%]">x</span>
+                ) : null} */}
 
       {/*  */}
 
@@ -168,7 +246,7 @@ const Products = () => {
             <span>Loading...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+          <div className="grid grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
             {!productsData.length == 0 ? (
               !showSeries ? (
                 productsData.map((product, i) => (
@@ -187,18 +265,18 @@ const Products = () => {
                           // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                           className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
                         >
-                          <div className="flex horizontal  w-28 h-28 items-start justify-between">
+                          <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
                             <img
                               src={
                                 import.meta.env.VITE_APP_BASE_URL +
                                 product.image
                               }
                               alt="CAT"
-                              className="w-28 h-28"
+                              className="w-28 h-28 max-sm:w-24 max-sm:h-24"
                             />
                           </div>
                           <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                            <div className="text-[14.5px] font-[500] leading-7">
+                            <div className="text-[14.5px] font-[500] leading-7 max-sm:text-xs">
                               {product.name}
                             </div>
                           </span>

@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useGetProductDetailsQuery } from "../../features/api";
+import {
+  useGetProductDetailsQuery,
+  useGenerateOTPMutation,
+} from "../../features/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +16,7 @@ import { clearLaptopDeductions } from "../../features/laptopDeductionSlice";
 import { toast } from "react-toastify";
 import ProdDeductionsRight from "./ProdQuestionsRight";
 import LaptopsQuestions from "./LaptopsQuestions";
+import OtpGenerator from "../otp/OTPGenerator";
 
 const ProductDeductions = () => {
   // Query Params
@@ -29,6 +33,7 @@ const ProductDeductions = () => {
   const [currentConditionIndex, setCurrentConditionIndex] = useState(0);
   const [checkIsOn, setCheckIsOn] = useState(false);
   const [checkIsOff, setCheckIsOff] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
 
   const [age, setAge] = useState(false);
 
@@ -90,10 +95,12 @@ const ProductDeductions = () => {
     if (currentConditionIndex < deductions.length - 1) {
       setCurrentConditionIndex(currentConditionIndex + 1);
     } else {
-      dispatch(addDeductions(data.productAge));
       // Handle if there are no more conditions
+      dispatch(addDeductions(data.productAge));
       console.log("No more conditions to display.");
-      navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
+      setShowOTP(true);
+      // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
+      // navigate(`/sell/deductions/generateOTP?productId=${productsData.id}`);
     }
   };
 
@@ -178,12 +185,17 @@ const ProductDeductions = () => {
     }
   }
 
+  const closeModal = () => {
+    setShowOTP(false);
+  };
+
   // console.log("priceGetUpTo", priceGetUpTo);
   // console.log("Deductions", deductions);
 
   return (
     <>
       <div className=" mt-4 ">
+        {/* {showOTP ? ( */}
         <div className="flex gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
           <div className="w-[55%] flex flex-col border py-6 rounded my-auto max-sm:w-[90%] ">
             {!checkIsOff && (
@@ -287,14 +299,14 @@ const ProductDeductions = () => {
                             )
                           }
                         >
-                          <div className="p-4">
+                          <div className="p-2">
                             <img
                               src={
                                 import.meta.env.VITE_APP_BASE_URL +
                                 label.conditionLabelImg
                               }
                               alt="LabelImg"
-                              className="size-20 max-sm:size-20"
+                              className="size-20 max-sm:size-[68px]"
                               // className="size-20 max-sm:w-20 max-sm:h-20"
                             />
                           </div>
@@ -309,7 +321,7 @@ const ProductDeductions = () => {
                               )
                                 ? "bg-[#E27D60] text-white bg-cyan-500"
                                 : "bg-slate-100 "
-                            } py-2 text-sm  flex items-center text-center justify-center w-full h-[70px]`}
+                            } py-2 px-[2px]  text-sm flex items-center text-center justify-center w-full h-[70px] max-sm:text-xs`}
                           >
                             {label.conditionLabel}
                           </div>
@@ -320,7 +332,7 @@ const ProductDeductions = () => {
 
                   <button
                     onClick={handleContinue}
-                    className="px-2 py-1 border rounded w-1/2 m-2"
+                    className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
                   >
                     Continue
                   </button>
@@ -390,8 +402,8 @@ const ProductDeductions = () => {
                             </span>
 
                             {/* <label htmlFor="age" className="">
-                              {label.operation}{" "}
-                            </label> */}
+                             {label.operation}{" "}
+                           </label> */}
                           </div>
                         </div>
                       )
@@ -401,13 +413,13 @@ const ProductDeductions = () => {
                   {age ? (
                     <button
                       onClick={handleContinue}
-                      className="px-2 py-1 border rounded w-1/2 m-2"
+                      className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
                     >
                       Continue
                     </button>
                   ) : (
                     <button
-                      className="px-2 py-1 border rounded w-1/2 m-2 bg-gray-400 opacity-35"
+                      className="px-2 py-1 border rounded w-[35%] m-2 bg-gray-400 mx-auto opacity-35 mt-6"
                       disabled
                     >
                       Select Age To Continue
@@ -422,6 +434,13 @@ const ProductDeductions = () => {
           <ProdDeductionsRight />
           {/* </div> */}
         </div>
+        {/* ) : null} */}
+
+        {showOTP ? (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <OtpGenerator closeModal={closeModal} />
+          </div>
+        ) : null}
       </div>
     </>
   );

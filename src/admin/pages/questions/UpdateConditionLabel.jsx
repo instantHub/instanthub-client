@@ -116,14 +116,14 @@ function UpdateConditionLabel() {
             <h1 className="bold text-[1.4rem] mb-2">Update Condition Label</h1>
             <div className="flex items-center gap-1">
               <h2>Home </h2>
-              <h2 className="pl-1"> / Update Condition</h2>
+              <h2 className="pl-1"> / Update ConditionLabel</h2>
               {/* <div className="py-3 px-2"> */}
               <Link to="/admin/conditionLabelsList">
                 <button
                   type="button"
-                  className="border  mx-auto border-gray-950 bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                  className="bg-blue-700 text-white px-2 py-1 rounded"
                 >
-                  ConditionLabels List
+                  Back
                 </button>
               </Link>
               {/* </div> */}
@@ -205,9 +205,9 @@ function UpdateConditionLabel() {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="border w-[80%] mx-auto border-black bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                  className="w-[30%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                 >
-                  Submit
+                  Update ConditionLabel
                 </button>
               </div>
             </form>

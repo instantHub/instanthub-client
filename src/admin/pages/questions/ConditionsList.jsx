@@ -48,7 +48,18 @@ const ConditionsTable = () => {
     //ConditionsListList
     <>
       <div className="p-4">
-        <h2 className=" text-lg font-bold mb-4">Conditions Table</h2>
+        <div className="flex justify-between">
+          <h2 className="text-black text-lg font-bold mb-4">
+            Conditions Table
+          </h2>
+          <div>
+            <Link to={"/admin/questions"}>
+              <button className="bg-blue-700 text-white px-2 py-1 rounded">
+                Create Condition
+              </button>
+            </Link>
+          </div>
+        </div>
         {/* <div className="mb-4">
           <label htmlFor="condition" className="text-white mr-2">
             Select Condition:

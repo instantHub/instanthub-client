@@ -83,7 +83,8 @@ const ProductsList = () => {
         </div>
 
         <h2 className="text-black text-lg font-bold mb-4">Products Table</h2>
-        <div className="grid grid-cols-2 mb-4">
+        {/* <div className="grid grid-cols-2 mb-4"> */}
+        <div className="flex items-center justify-between mb-4">
           <div>
             <label htmlFor="condition" className=" mr-2">
               Select Category:
@@ -113,6 +114,13 @@ const ProductsList = () => {
                 Page {productsData.page}
               </h1>
             )}
+          </div>
+          <div>
+            <Link to={"/admin/add-products"}>
+              <button className="bg-blue-700 text-white px-2 py-1 rounded">
+                Create Product
+              </button>
+            </Link>
           </div>
         </div>
         <table className="w-full">

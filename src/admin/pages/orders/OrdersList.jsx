@@ -19,8 +19,11 @@ const OrdersList = () => {
   const [imageSelected4, setImageSelected4] = useState("");
   const [uploadCustomerProof, { isLoading: uploadLoading }] =
     useUploadCustomerProofImageMutation();
-  const [orderReceived] = useOrderReceivedMutation();
+  const [orderReceived, { isLoading: orderLoading }] =
+    useOrderReceivedMutation();
   const [deleteOrder] = useDeleteOrderMutation();
+  const [deviceInfo, setDeviceInfo] = useState();
+  console.log("deviceInfo", deviceInfo);
 
   // Create a ref to store the reference to the file input element
   const fileInputRef1 = useRef(null);
@@ -50,10 +53,13 @@ const OrdersList = () => {
   const [selectedOrder, setSelectedOrder] = useState("");
   const [orderView, setOrderView] = useState("");
   const [orderViewOpen, setOrderViewOpen] = useState(false);
-  console.log("imageSelected1", imageSelected1);
-  console.log("imageSelected2", imageSelected2);
-  console.log("imageSelected3", imageSelected3);
-  console.log("imageSelected4", imageSelected4);
+  const [pickedUpBy, setPickedUpBy] = useState("");
+  const [finalPrice, setFinalPrice] = useState("");
+  console.log("pickedUpBy", pickedUpBy);
+  // console.log("imageSelected1", imageSelected1);
+  // console.log("imageSelected2", imageSelected2);
+  // console.log("imageSelected3", imageSelected3);
+  // console.log("imageSelected4", imageSelected4);
 
   const handleDelete = async (orderId) => {
     console.log("handledelete", orderId);
@@ -132,12 +138,15 @@ const OrdersList = () => {
     //   customerProof: imageURL,
     //   status: "received",
     // };
-    const formattedDate = `${selectedDate.toLocaleString("en-US", {
-      month: "long",
-    })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
-      "en-US",
-      { hour: "numeric", minute: "numeric", hour12: true }
-    )}`;
+    const formattedDate = {
+      agentName: pickedUpBy,
+      pickedUpDate: `${selectedDate.toLocaleString("en-US", {
+        month: "long",
+      })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
+        "en-US",
+        { hour: "numeric", minute: "numeric", hour12: true }
+      )}`,
+    };
 
     const formData = {
       orderId: selectedOrder.id,
@@ -145,7 +154,9 @@ const OrdersList = () => {
       customerProofBack: imageURL2,
       customerOptional1: imageURL3 ? imageURL3 : null,
       customerOptional2: imageURL4 ? imageURL4 : null,
-      pickedUpOn: formattedDate,
+      pickedUpDetails: formattedDate,
+      deviceInfo,
+      finalPrice,
       status: "received",
     };
 
@@ -221,18 +232,22 @@ const OrdersList = () => {
           <thead>
             <tr>
               <th className="px-4 py-2 text-white bg-gray-800">Order ID</th>
-              <th className="px-4 py-2 text-white bg-gray-800">
+              {/* <th className="px-4 py-2 text-white bg-gray-800">
                 Customer Name
-              </th>
+              </th> */}
               <th className="px-4 py-2 text-white bg-gray-800">Product</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Email</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Phone</th>
+              <th className="px-4 py-2 text-white bg-gray-800">
+                Customer Details
+              </th>
+              {/* <th className="px-4 py-2 text-white bg-gray-800">Phone</th> */}
               <th className="px-4 py-2 text-white bg-gray-800">Address</th>
               <th className="px-4 py-2 text-white bg-gray-800">OfferPrice</th>
               <th className="px-4 py-2 text-white bg-gray-800">
                 Schedule Time
               </th>
-              <th className="px-4 py-2 text-white bg-gray-800">PickUp Time</th>
+              <th className="px-4 py-2 text-white bg-gray-800">
+                PickUp Details
+              </th>
               <th className="px-4 py-2 text-white bg-gray-800">Status</th>
               <th className="px-4 py-2 text-white bg-gray-800">Update Order</th>
               <th className="px-4 py-2 text-white bg-gray-800">Delete Order</th>
@@ -249,7 +264,7 @@ const OrdersList = () => {
                 >
                   {/* <td className="px-4 py-2">{product.category.name}</td> */}
                   <td className="px-4 py-2">{order.orderId}</td>
-                  <td className="px-4 py-2">{order.customerName}</td>
+                  {/* <td className="px-4 py-2">{order.customerName}</td> */}
                   <td className="px-4 py-2">
                     {order.productId?.name}{" "}
                     <div className="flex gap-1 text-sm opacity-50 justify-center">
@@ -263,23 +278,65 @@ const OrdersList = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-2">{order.email}</td>
-                  <td className="px-4 py-2">{order.phone}</td>
-                  <td className="px-4 py-2">
-                    {order.address}
-                    <br />
-                    <span className="text-xs opacity-70">
-                      pincode: {order.pinCode}
-                    </span>
+                  <td className="px-4 py-2 flex flex-col items-center">
+                    <h1 className="text-xs">
+                      Customer Name:{" "}
+                      <span className="text-sm font-bold">
+                        {order.customerName}
+                      </span>
+                    </h1>
+                    <h1 className="text-xs">
+                      Phone:{" "}
+                      <span className="text-sm font-bold">{order.phone}</span>
+                    </h1>
+                    <h1 className="text-xs">
+                      Email:{" "}
+                      <span className="text-sm font-bold">{order.email}</span>
+                    </h1>
                   </td>
+
+                  <td className="w-[10%] px-4 py-2">
+                    <div className="flex flex-col">
+                      <span className="text-xs opacity-70">
+                        Address: {order.addressDetails.address}
+                      </span>
+                      <span className="text-xs opacity-70">
+                        State: {order.addressDetails.state}
+                      </span>
+                      <span className="text-xs opacity-70">
+                        City: {order.addressDetails.city}
+                      </span>
+                      <span className="text-xs opacity-70">
+                        Pincode: {order.addressDetails.pinCode}
+                      </span>
+                    </div>
+                  </td>
+
                   <td className="px-4 py-2">{order.offerPrice}</td>
                   <td className="px-1 py-2">{order.schedulePickUp}</td>
                   {/* Order Picked Up time */}
-                  <td className="px-1 py-2">
+                  <td className="w-[10%] px-1 py-2">
                     {order.status.toLowerCase() === "pending" ? (
                       <h1>Pick Up is Pending</h1>
                     ) : (
-                      <h1>{order.pickedUpOn}</h1>
+                      <div className="flex flex-col justify-center">
+                        <h1 className="text-sm">
+                          Agent Name:
+                          <span className="font-bold">
+                            {order.pickedUpDetails.agentName}
+                          </span>
+                        </h1>
+                        <h1 className="text-sm">
+                          Purchased Price:
+                          <span className="font-bold">{order.finalPrice}</span>
+                        </h1>
+                        <h1 className="text-sm">
+                          Time:
+                          <span className="font-bold">
+                            {order.pickedUpDetails.pickedUpDate}
+                          </span>
+                        </h1>
+                      </div>
                     )}
                   </td>
                   <td className="px-4 py-2">
@@ -379,7 +436,7 @@ const OrdersList = () => {
             <div onSubmit={handleSubmit} className="text-center mt-4">
               <form action="" className="flex flex-col gap-4">
                 {/* Mandatory Images */}
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 items-center">
                   <div className="">
                     <h1 className="text-lg">
                       Required Documents<span className="text-red-600">*</span>
@@ -433,15 +490,15 @@ const OrdersList = () => {
                   <div className="">
                     <h1 className="text-lg">Optional Documents</h1>
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     {/* Optional Image 1 */}
-                    <label htmlFor="name">Upload Front of Customer ID</label>
+                    <label htmlFor="name">Upload Optional Doc 1</label>
                     <input
                       type="file"
                       name="name"
                       id=""
                       ref={fileInputRef4}
-                      placeholder="Enter Name"
+                      placeholder=""
                       className="border rounded px-2 py-1 w-1/3 mx-auto"
                       onChange={(e) => {
                         setImageSelected3(e.target.files[0]);
@@ -449,66 +506,158 @@ const OrdersList = () => {
                     />
 
                     {/* Optional Image 2 */}
-                    <label htmlFor="name">Upload Back of Customer ID</label>
+                    <label htmlFor="name">Upload Optional Doc 2</label>
                     <input
                       type="file"
                       name="name"
                       id=""
                       ref={fileInputRef3}
-                      placeholder="Enter Name"
+                      placeholder=""
                       className="border rounded px-2 py-1 w-1/3 mx-auto"
                       onChange={(e) => {
                         setImageSelected4(e.target.files[0]);
                       }}
                     />
                   </div>
-                  <div>
-                    <label htmlFor="datepicker">
-                      Select Date and Time:
-                      <span className="text-red-600">* </span>
-                    </label>
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleTimeChange}
-                      showTimeSelect
-                      // timeFormat="HH:mm" // 24 hours
-                      timeFormat="h:mm aa" // 12 hours
-                      timeIntervals={30}
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      timeCaption="Time"
-                      // minDate={schedulePickUpDate}
-                      minDate={currentDate}
-                      minTime={minTime}
-                      maxTime={maxTime}
-                      placeholderText="Select PickedUp Time"
-                      className="border px-1 rounded"
-                      required
-                    />
+                  <div className="flex items-center justify-center gap-2 mt-5">
+                    <div className="flex items-center">
+                      <label htmlFor="pickedUpBy">
+                        Order Picked Up By:
+                        <span className="text-red-600">* </span>
+                      </label>
+                      <input
+                        type="text"
+                        name="pickedUpBy"
+                        id=""
+                        ref={fileInputRef3}
+                        placeholder="Picked Up By Name"
+                        className="border rounded px-1 mx-auto"
+                        onChange={(e) => {
+                          setPickedUpBy(e.target.value);
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div>
+                        <label htmlFor="finalPrice">
+                          Offered Price:{" "}
+                          <span className="font-bold">
+                            {selectedOrder.offerPrice}
+                          </span>
+                        </label>
+                      </div>
 
-                    {selectedDate && (
-                      <p className="py-2 text-xl">
-                        Picket Up time: `
-                        {selectedDate.toLocaleString("en-US", {
-                          month: "long",
-                        })}{" "}
-                        {selectedDate.getDate()}, {selectedDate.getFullYear()}{" "}
-                        {selectedDate.toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: true,
-                        })}
-                        `
-                      </p>
-                    )}
+                      <div className="flex items-center">
+                        <label htmlFor="finalPrice">
+                          Purchase Price:
+                          <span className="text-red-600">* </span>
+                        </label>
+                        <input
+                          type="number"
+                          name="finalPrice"
+                          id=""
+                          placeholder="Purchase Price"
+                          className="border rounded px-1 mx-auto"
+                          onChange={(e) => {
+                            setFinalPrice(e.target.value);
+                          }}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="datepicker">
+                        Select Date and Time:
+                        <span className="text-red-600">* </span>
+                      </label>
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={handleTimeChange}
+                        showTimeSelect
+                        // timeFormat="HH:mm" // 24 hours
+                        timeFormat="h:mm aa" // 12 hours
+                        timeIntervals={30}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        timeCaption="Time"
+                        // minDate={schedulePickUpDate}
+                        minDate={currentDate}
+                        minTime={minTime}
+                        maxTime={maxTime}
+                        placeholderText="Select PickedUp Time"
+                        className="border px-1 rounded"
+                        required
+                      />
+
+                      {selectedDate && (
+                        <p className="py-2 text-xl">
+                          Picket Up time: `
+                          {selectedDate.toLocaleString("en-US", {
+                            month: "long",
+                          })}{" "}
+                          {selectedDate.getDate()}, {selectedDate.getFullYear()}{" "}
+                          {selectedDate.toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })}
+                          `
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex justify-center mt-5 gap-2 items-center">
+                    <div>
+                      <label htmlFor="finalPrice">Serial No:</label>
+                      <input
+                        type="text"
+                        name="serialNo"
+                        id=""
+                        placeholder="Serial No"
+                        className="border rounded px-1 mx-auto"
+                        onChange={(e) => {
+                          setDeviceInfo({
+                            ...deviceInfo,
+                            serialNumber: e.target.value,
+                          });
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="finalPrice">IMEI No:</label>
+                      <input
+                        type="text"
+                        name="IMEI"
+                        id=""
+                        placeholder="IMEI No"
+                        className="border rounded px-1 mx-auto"
+                        onChange={(e) => {
+                          setDeviceInfo({
+                            ...deviceInfo,
+                            imeiNumber: e.target.value,
+                          });
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <input
-                  type="submit"
-                  value="Mark Received"
-                  name=""
-                  className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-600 mx-auto"
-                />
+                {!ordersLoading ? (
+                  <input
+                    type="submit"
+                    value="Mark Received"
+                    name=""
+                    className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-600 mx-auto"
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Loading"
+                    name=""
+                    className="border rounded px-2 py-1 w-1/5 bg-green-300 text-white cursor-none mx-auto"
+                  />
+                )}
               </form>
             </div>
           </div>
@@ -545,9 +694,15 @@ const OrdersList = () => {
                     </span>
                   </h1>
                   <h1 className="px-4 py-2">
+                    Picked Up By:{" "}
+                    <span className="font-semibold">
+                      {orderView.pickedUpDetails.agentName}
+                    </span>
+                  </h1>
+                  <h1 className="px-4 py-2">
                     Picked Up On:{" "}
                     <span className="font-semibold">
-                      {orderView.pickedUpOn}
+                      {orderView.pickedUpDetails.pickedUpDate}
                     </span>
                   </h1>
                 </div>
@@ -682,22 +837,57 @@ const OrdersList = () => {
                     <div className="">
                       {orderView.productId.name}{" "}
                       <div className="flex text-sm opacity-50 gap-2 justify-center">
-                        <span>Variant {orderView.variant?.variantName}</span>
+                        {orderView.category === "Mobile" ? (
+                          <span>Variant {orderView.variant?.variantName}</span>
+                        ) : null}
                         <span>Price {orderView.variant?.price}</span>
                       </div>
                     </div>
                   </div>
+                  {orderView.deviceInfo ? (
+                    <div className="flex items-center justify-center gap-4">
+                      <div>
+                        <h1 className="text-lg">Device Info:</h1>
+                      </div>
+                      <div className="">
+                        <div className="flex text-sm opacity-70 gap-2 justify-center">
+                          {orderView.deviceInfo.serialNumber ? (
+                            <p>
+                              Serial Number:{" "}
+                              <span className="font-bold">
+                                {orderView.deviceInfo.serialNumber}
+                              </span>
+                            </p>
+                          ) : null}
+
+                          {orderView.deviceInfo.imeiNumber ? (
+                            <p>
+                              IMEI Number:{" "}
+                              <span className="font-bold">
+                                {orderView.deviceInfo.imeiNumber}
+                              </span>
+                            </p>
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                 </h1>
-                <h1 className="px-4 py-2">
-                  Offered Price: {orderView.offerPrice}
+                <h1 className="px-4 py-2 flex gap-4 items-center justify-center">
+                  Offered Price:
+                  <span className="font-bold"> {orderView.offerPrice}</span>
+                  Final Price:
+                  <span className="font-bold"> {orderView.finalPrice}</span>
                 </h1>
                 <div className="flex justify-center">
                   <h1 className="px-4 py-2">Email: {orderView.email}</h1>
                   <h1 className="px-4 py-2">PH: {orderView.phone}</h1>
                 </div>
                 <h1 className="px-4 py-2">
-                  Address: {orderView.address} <br />
-                  PinCode: {orderView.pinCode}
+                  Address: {orderView.addressDetails.address} <br />
+                  State: {orderView.addressDetails.state}, City:{" "}
+                  {orderView.addressDetails.city}, PinCode:{" "}
+                  {orderView.addressDetails.pinCode}
                 </h1>
               </div>
             </div>

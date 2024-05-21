@@ -79,16 +79,18 @@ const CreateBrand = () => {
     <div className=" px-[2%] pt-[2%] ">
       <div className="flex justify-between items-center">
         <h1 className="bold text-[1.4rem] mb-2">Create Brand</h1>
-        <div className="flex">
-          <h2>Home </h2>
-          <h2 className="pl-1"> / Add Brand</h2>
-        </div>
-        <div>
-          <Link to={"/admin/brands-list"}>
-            <button className="bg-blue-500 px-2 py-1 rounded border border-black">
-              Brands List
-            </button>
-          </Link>
+        <div className="flex gap-2">
+          <div className="flex items-center">
+            <h2>Home </h2>
+            <h2 className="pl-1"> / Add Brands</h2>
+          </div>
+          <div>
+            <Link to={"/admin/brands-list"}>
+              <button className="bg-blue-700 text-white px-2 py-1 rounded">
+                Brands List
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       <div className="bg-white border rounded-md shadow-lg">
@@ -185,9 +187,9 @@ const CreateBrand = () => {
           <div className="py-3 px-2">
             <button
               type="submit"
-              className="border border-gray-950 bg-blue-500 rounded-md p-1 w-[20%] cursor-pointer hover:bg-white"
+              className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
             >
-              Submit
+              Create Brand
             </button>
           </div>
         </form>

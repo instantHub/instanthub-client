@@ -7,7 +7,7 @@ import {
   useUploadProductImageMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -173,9 +173,18 @@ const UpdateProduct = () => {
       <div className="grow">
         <div className="flex justify-between items-center">
           <h1 className="bold text-[1.4rem] mb-2">Update Product</h1>
-          <div className="flex">
-            <h2>Home </h2>
-            <h2 className="pl-1"> / Update Products</h2>
+          <div className="flex gap-2">
+            <div className="flex items-center">
+              <h2>Home </h2>
+              <h2 className="pl-1"> / Update Product</h2>
+            </div>
+            <div>
+              <Link to={"/admin/productsList"}>
+                <button className="bg-blue-700 text-white px-2 py-1 rounded">
+                  Back
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="bg-white border rounded-md shadow-lg">
@@ -304,10 +313,10 @@ const UpdateProduct = () => {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="border border-gray-950 bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-white hover:text-black"
+                  className="bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
                   // onClick={handleSubmit}
                 >
-                  Update
+                  Update Product
                 </button>
               </div>
             </form>

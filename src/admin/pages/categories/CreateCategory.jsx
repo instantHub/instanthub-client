@@ -101,7 +101,7 @@ const CreateCategory = () => {
         </div>
         <div>
           <Link to={"/admin/categories-list"}>
-            <button className="bg-blue-500 px-2 py-1 rounded border border-black">
+            <button className="bg-blue-700 text-white px-2 py-1 rounded">
               Categories List
             </button>
           </Link>
@@ -171,9 +171,9 @@ const CreateCategory = () => {
           <div className="py-3 px-2">
             <button
               type="submit"
-              className="border border-gray-950 bg-blue-500 rounded-md p-1 w-[20%] cursor-pointer hover:bg-white"
+              className="border border-gray-100 bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
             >
-              Submit
+              Create Category
             </button>
           </div>
         </form>

@@ -386,6 +386,21 @@ export const api = createApi({
       }),
       invalidatesTags: ["Series"],
     }),
+    getOTP: build.query({
+      query: (mobileNo) => `/api/otp/${mobileNo}`,
+      // providesTags: ["Brands"],
+    }),
+    generateOTP: build.mutation({
+      query: (data) => ({
+        url: "/api/otp/generate-otp",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Series"],
+    }),
   }),
 });
 
@@ -435,6 +450,8 @@ export const {
   useCreateSeriesMutation,
   useUpdateSeriesMutation,
   useDeleteSeriesMutation,
+  useGetOTPQuery,
+  useGenerateOTPMutation,
 } = api;
 
 // useGetAllQuestionsQuery,

@@ -208,7 +208,7 @@ const ProductQuestionsList = () => {
 
   return (
     <div className="">
-      <div className="inline-block m-4 px-4 py-1 bg-green-600 text-white rounded">
+      <div className="inline-block m-4 px-4 py-1 bg-blue-600 text-white rounded">
         <Link to={"/admin/productsList"}>
           <button>Back</button>
         </Link>
@@ -316,7 +316,7 @@ const ProductQuestionsList = () => {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="border w-[20%] border-black bg-blue-500 text-white rounded-md p-1 cursor-pointer hover:bg-white hover:text-black"
+                  className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                 >
                   Submit
                 </button>
@@ -421,7 +421,7 @@ const ProductQuestionsList = () => {
                 <div className="py-3 px-2">
                   <button
                     type="submit"
-                    className="border w-[20%] border-black bg-blue-500 text-white rounded-md p-1 cursor-pointer hover:bg-white hover:text-black"
+                    className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                   >
                     Submit
                   </button>

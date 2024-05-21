@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Summary</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        text-align: left;
+        background-color: #f2f2f2;
+      }
+      .highlight {
+        font-weight: bold;
+      }
+      .footer {
+        text-align: center;
+        color: #777;
+      }
+      .gst {
+        font-size: small;
+        text-align: center;
+        color: #777;
+      }
+      .product-details {
+        display: flex;
+        flex-direction: column;
+        font-size: small;
+        padding: 0 8px;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        table {
+          font-size: 14px;
+        }
+        th,
+        td {
+          padding: 8px;
+        }
+        .logo {
+          width: 100px;
+          height: 80px;
+        }
+        h2 {
+          color: #333;
+          font-size: 15.2px;
+        }
+        .sell {
+          font-size: 24px;
+        }
+      }
+
+      @media only screen and (min-width: 601px) {
+        .logo {
+          width: 110px;
+          height: 90px;
+        }
+      }
+
+      .logo-header {
+        display: flex;
+        /* flex-direction: column; */
+        align-items: center;
+        justify-content: center;
+        gap: 15%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo-header">
+        <h1 class="sell">Purchase Receipt</h1>
+      </div>
+
+      <table>
+        <tr>
+          <th>Order #</th>
+          <td># ${updatedOrder.orderId}</td>
+        </tr>
+        <tr>
+          <th>Customer Name</th>
+          <td>${updatedOrder.customerName}</td>
+          <th>Email</th>
+          <td>${updatedOrder.email}</td>
+          <th>Ph #</th>
+          <td>${updatedOrder.phone}</td>
+        </tr>
+        <tr>
+          <th>Agent Name</th>
+          <td>${updatedOrder.customerName}</td>
+        </tr>
+
+        <tr>
+          <th>Seller Address</th>
+          <td>${updatedOrder.address}</td>
+        </tr>
+        <tr>
+          <th>Product Details</th>
+          <td class="product-details">
+            <div>
+              <p>Product Category</p>
+              <p>${req.body.category}</p>
+            </div>
+            <div>
+              <p>Product Name</p>
+              <p>${product.name}</p>
+            </div>
+            <div>
+              <p>Variant</p>
+              <p>${req.body.variant.variantName}</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>PickUp Time</th>
+          <td>${updatedOrder.schedulePickUp}</td>
+        </tr>
+        <!-- <tr>
+          <th>Accessories</th>
+          <td>
+            <ul>
+              ${ updatedOrder.accessoriesAvailable &&
+              updatedOrder.accessoriesAvailable.length > 0 ?
+              updatedOrder.accessoriesAvailable .map( (accessory) => `
+              <li>${accessory.conditionLabel}</li>
+              ` ) .join("") : "
+              <li>No accessories</li>
+              " }
+            </ul>
+          </td>
+        </tr> -->
+        <!-- <tr>
+          <th>Offerd Price</th>
+          <td>₹ ${updatedOrder.offerPrice}</td>
+        </tr> -->
+        <tr>
+          <th>Purchase Price</th>
+          <td>₹ ${updatedOrder.offerPrice}</td>
+        </tr>
+      </table>
+      <h2 class="">Thank for shopping with us and trusting us.</h2>
+      <h3>
+        Visit us again
+        <a href="https://instantcashpick.com">click</a>
+      </h3>
+
+      <p class="footer">
+        If you have any questions or concerns about your order, please send us a
+        mail at
+        <a href="mailto:support@instantcashpick.com"
+          >support@instantcashpick.com</a
+        >.
+      </p>
+      <p class="gst">GST Number: ABC123456XYZ</p>
+    </div>
+  </body>
+</html>

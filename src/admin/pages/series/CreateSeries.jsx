@@ -164,9 +164,9 @@ const CreateSeries = () => {
             <div className="px-2">
               <button
                 type="submit"
-                className="border border-gray-950 bg-blue-500 rounded-md p-1 w-[20%] cursor-pointer hover:bg-white"
+                className="bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
               >
-                Submit
+                Create Series
               </button>
             </div>
           </form>

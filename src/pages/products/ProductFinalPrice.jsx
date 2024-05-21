@@ -12,8 +12,10 @@ import "react-datepicker/dist/react-datepicker.css";
 const ProductFinalPrice = () => {
   const selectedProdDetails = useSelector((state) => state.deductions);
   const [formData, setFormData] = useState();
+  const [addressDetails, setAddressDetails] = useState();
   const [offerPrice, setOfferPrice] = useState();
   const [accessoriesNotSelected, setAccessoriesNotSelected] = useState([]);
+  const [accessoriesSelected, setAccessoriesSelected] = useState([]);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const currentDate = new Date();
@@ -26,14 +28,14 @@ const ProductFinalPrice = () => {
   const maxTime = new Date();
   maxTime.setHours(22, 0, 0, 0);
 
-  // console.log("selectedProdDetails", selectedProdDetails);
+  console.log("selectedProdDetails", selectedProdDetails);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
   const { data: productDetails, isLoading: productLoading } =
     useGetProductDetailsQuery(productId);
   console.log("productId", productId);
-  const [createOrder, { isLoading }] = useCreateOrderMutation();
+  const [createOrder, { isLoading: ordersLoading }] = useCreateOrderMutation();
 
   const navigate = useNavigate();
 
@@ -55,9 +57,10 @@ const ProductFinalPrice = () => {
 
     // Restrict the length to 10 digits
     if (value.length <= 6) {
-      setFormData({ ...formData, pinCode: Number(e.target.value) });
+      setAddressDetails({ ...addressDetails, pinCode: Number(e.target.value) });
     } else {
-      toast.error("PinCode cannot be more than 5 digits");
+      toast.error("PinCode cannot be more than 6 digits");
+      return;
     }
   };
 
@@ -93,7 +96,14 @@ const ProductFinalPrice = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const order = await createOrder(formData);
+    const orderData = {
+      ...formData,
+      addressDetails,
+    };
+    console.log("orderData", orderData);
+
+    // const order = await createOrder(formData);
+    const order = await createOrder(orderData);
     console.log("order", order);
     if (order.data.success) {
       closeModal();
@@ -103,10 +113,18 @@ const ProductFinalPrice = () => {
   };
 
   useEffect(() => {
+    console.log(
+      "!selectedProdDetails.productAge",
+      !selectedProdDetails.productAge.conditionLabel
+    );
+    // console.log("!selectedProdDetails.productAge",selectedProdDetails.productAge);
     if (selectedProdDetails.productName == "") {
-      navigate(`/`);
+      // navigate(`/`);
+      navigate(`/categories/brands/productDetails/${productId}`);
+    } else if (!selectedProdDetails.productAge.conditionLabel) {
+      navigate(`/categories/brands/productDetails/${productId}`);
     }
-  });
+  }, [selectedProdDetails]);
 
   useEffect(() => {
     let prodDeductions;
@@ -122,10 +140,11 @@ const ProductFinalPrice = () => {
         prodDeductions = productDetails.simpleDeductions;
       }
     }
+    console.log("prodDeductions", prodDeductions);
     const prodAccessories = prodDeductions.find(
       (pd) => pd.conditionName === "Accessories"
     );
-    // console.log("prodAccessories", prodAccessories.conditionLabels);
+    console.log("prodAccessories", prodAccessories);
     // console.log(
     //   "selectedProdDetails.deductions",
     //   selectedProdDetails.deductions
@@ -148,7 +167,19 @@ const ProductFinalPrice = () => {
     );
     setAccessoriesNotSelected(AccessoriesNotSelected);
 
-    // console.log("AccessoriesNotSelected", AccessoriesNotSelected);
+    console.log("deductedConditionLabels", deductedConditionLabels);
+    // Filter out the prodAccessories that are not present in selectedProdDetails.deductions
+    const AccessoriesSelected = prodAccessories.conditionLabels.filter(
+      (accessory) => {
+        // Check if the conditionLabel of the accessory is not present in deductedConditionLabels
+        console.log(accessory);
+        return deductedConditionLabels.some(
+          (label) => label === accessory.conditionLabel
+        );
+      }
+    );
+    console.log("AccessoriesSelected", AccessoriesSelected);
+    setAccessoriesSelected(AccessoriesSelected);
 
     // setFormData({
     //   ...formData,
@@ -184,7 +215,8 @@ const ProductFinalPrice = () => {
         category: selectedProdDetails.productCategory,
         variant: selectedProdDetails.getUpTo,
         deductions: selectedProdDetails.deductions,
-        accessoriesNotAvailable: AccessoriesNotSelected,
+        // accessoriesNotAvailable: AccessoriesNotSelected,
+        accessoriesAvailable: AccessoriesSelected,
         offerPrice: Math.ceil(deductedPrice),
         status: "pending",
       });
@@ -195,6 +227,7 @@ const ProductFinalPrice = () => {
         category: selectedProdDetails.productCategory,
         variant: selectedProdDetails.getUpTo,
         deductions: selectedProdDetails.deductions,
+        accessoriesAvailable: AccessoriesSelected,
         offerPrice: Math.ceil(deductedPrice),
         status: "pending",
       });
@@ -221,7 +254,7 @@ const ProductFinalPrice = () => {
           </h1>
 
           <h1 className="text-[20px]">
-            Final Price{" "}
+            Offered Price{" "}
             <span className="text-[30px] text-green-600 font-bold">
               {/* {formData.offerPrice && formData.offerPrice} */}
               {offerPrice}
@@ -232,7 +265,7 @@ const ProductFinalPrice = () => {
             </span>
           </h1>
           <h1 className="text-center">
-            This is your Products Final Price based on the following criteria
+            This is your Products Offered Price based on the following criteria
             which you mentioned
           </h1>
           {/* Selected ConditionLabels Items List */}
@@ -285,8 +318,8 @@ const ProductFinalPrice = () => {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-2/4 max-sm:w-[90%]">
+        <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-[50%] max-sm:w-[90%]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold mb-4">Enter your details</h2>
               <button
@@ -301,71 +334,128 @@ const ProductFinalPrice = () => {
               <form
                 action=""
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-2"
+                className="flex flex-col gap-2 justify-center"
               >
-                <label htmlFor="name">Enter Name :</label>
-                <input
-                  type="text"
-                  name="name"
-                  id=""
-                  placeholder="Enter Name"
-                  className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2"
-                  onChange={(e) =>
-                    setFormData({ ...formData, customerName: e.target.value })
-                  }
-                  required
-                />
-                <label htmlFor="email">Enter Email :</label>
-                <input
-                  type="email"
-                  name="email"
-                  id=""
-                  placeholder="Enter your email"
-                  className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2"
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  required
-                />
-                <label htmlFor="phone">Enter Phone Number :</label>
-                <input
-                  type="number"
-                  name="phone"
-                  value={formData.phone}
-                  placeholder="Enter your phone number"
-                  className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2"
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, phone: Number(e.target.value) })
-                  // }
-                  onChange={handlePhoneChange}
-                  required
-                />
-                <label htmlFor="address">Enter Address :</label>
-                <input
-                  type="text"
-                  name="address"
-                  id=""
-                  placeholder="Add your address"
-                  className="border rounded px-2 py-1"
-                  onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })
-                  }
-                  required
-                />
-                <div className="flex items-center gap-2">
-                  <label htmlFor="pincode">Enter Address PinCode :</label>
+                <div>
+                  <label htmlFor="name" className="max-sm:text-md">
+                    Name:{" "}
+                  </label>
                   <input
-                    type="number"
-                    name="pincode"
-                    value={formData.pinCode}
-                    placeholder="pincode"
-                    className="border rounded px-2 py-1 w-1/5 max-sm:w-1/3"
-                    onChange={handlePinCodeChange}
+                    type="text"
+                    name="name"
+                    id=""
+                    placeholder="Enter Name"
+                    className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                    onChange={(e) =>
+                      setFormData({ ...formData, customerName: e.target.value })
+                    }
                     required
                   />
                 </div>
                 <div>
-                  <h2>Select Date and Time</h2>
+                  <label htmlFor="email">Email: </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id=""
+                    placeholder="Enter email"
+                    className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone">Phone Number: </label>
+                  <input
+                    type="number"
+                    name="phone"
+                    value={formData.phone}
+                    placeholder="Enter phone number"
+                    className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                    // onChange={(e) =>
+                    //   setFormData({ ...formData, phone: Number(e.target.value) })
+                    // }
+                    onChange={handlePhoneChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="address">Address: </label>
+                  <input
+                    type="text"
+                    name="address"
+                    // value={addressDetails.address}
+                    id=""
+                    placeholder="Add your address"
+                    className="border w-[75%] rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                    onChange={(e) =>
+                      setAddressDetails({
+                        ...addressDetails,
+                        address: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="flex gap-4 items-center max-sm:flex-col max-sm:items-start max-sm:gap-1">
+                  <div>
+                    <label htmlFor="city">State: </label>
+                    <input
+                      type="text"
+                      // value={addressDetails.state}
+                      id=""
+                      placeholder="Enter State"
+                      className="border rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                      onChange={(e) =>
+                        setAddressDetails({
+                          ...addressDetails,
+                          state: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className="">
+                    <label htmlFor="pincode">City: </label>
+                    <input
+                      type="text"
+                      name="city"
+                      // value={addressDetails.city}
+                      placeholder="Enter City"
+                      className="border rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                      onChange={(e) =>
+                        setAddressDetails({
+                          ...addressDetails,
+                          city: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="state" className="max-sm:text-md">
+                      PinCode:{" "}
+                    </label>
+                    <input
+                      type="number"
+                      name="pinCode"
+                      // value={addressDetails.pinCode}
+                      id=""
+                      placeholder="Add PinCode"
+                      className="border rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                      onChange={handlePinCodeChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center">
+                  <h2 className="max-sm:text-md">Select Date and Time:</h2>{" "}
                   <DatePicker
                     selected={selectedDate}
                     onChange={handleTimeChange}
@@ -378,21 +468,38 @@ const ProductFinalPrice = () => {
                     minDate={currentDate}
                     minTime={minTime}
                     maxTime={maxTime}
-                    className="border px-1 rounded"
+                    className="border px-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                    placeholderText="Schedule Pickup"
                     required
                   />
-
+                </div>
+                <div>
                   {selectedDate && (
-                    <p>Schedule time: {formData.schedulePickUp}</p>
+                    <p>
+                      Scheduled time:{" "}
+                      <span className="font-semibold">
+                        {formData.schedulePickUp}
+                      </span>{" "}
+                    </p>
                   )}
                 </div>
 
-                <input
-                  type="submit"
-                  value="Submit"
-                  name=""
-                  className="border rounded px-2 py-1 w-1/5 bg-blue-500 text-white cursor-pointer hover:bg-green-600"
-                />
+                {!ordersLoading ? (
+                  <input
+                    type="submit"
+                    value="Sell"
+                    name=""
+                    className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm"
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Loading"
+                    name=""
+                    className="border rounded px-2 py-1 w-1/5 bg-blue-300 text-white cursor-none max-sm:text-sm"
+                    disabled
+                  />
+                )}
               </form>
             </div>
           </div>

@@ -4,6 +4,7 @@ import {
   useUpdateConditionMutation,
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function UpdateCondition() {
   const { conditionId } = useParams();
@@ -42,42 +43,6 @@ function UpdateCondition() {
     }
   }, [conditionsData]);
 
-  // Function to add a new condition
-  //   const addCondition = () => {
-  //     setFormData({
-  //       ...formData,
-  //       conditions: [
-  //         ...formData.conditions,
-  //         { conditionName: "", questions: [{ questionName: "" }] },
-  //       ],
-  //     });
-  //     console.log("addCategory", formData);
-  //   };
-
-  // Function to add a new question for a condition
-  //   const addQuestion = (conditionIndex) => {
-  //     const updatedFormData = { ...formData };
-  //     updatedFormData.conditions[conditionIndex].questions.push({
-  //       questionName: "",
-  //     });
-  //     setFormData(updatedFormData);
-  //     console.log("addQuestions", formData);
-  //   };
-
-  // Function to delete a condition
-  //   const deleteCondition = (conditionIndex) => {
-  //     const updatedConditions = [...formData.conditions];
-  //     updatedConditions.splice(conditionIndex, 1);
-  //     setFormData({ ...formData, conditions: updatedConditions });
-  //   };
-
-  // Function to delete a question
-  //   const deleteQuestion = (conditionIndex, questionIndex) => {
-  //     const updatedConditions = [...formData.conditions];
-  //     updatedConditions[conditionIndex].questions.splice(questionIndex, 1);
-  //     setFormData({ ...formData, conditions: updatedConditions });
-  //   };
-
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -111,9 +76,9 @@ function UpdateCondition() {
               <Link to="/admin/conditionsList">
                 <button
                   type="button"
-                  className="border  mx-auto border-gray-950 bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                  className="bg-blue-700 text-white px-2 py-1 rounded"
                 >
-                  Conditions List
+                  Back
                 </button>
               </Link>
               {/* </div> */}
@@ -156,9 +121,9 @@ function UpdateCondition() {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="border w-[80%] mx-auto border-black bg-blue-500 rounded-md p-1 cursor-pointer hover:bg-white"
+                  className="w-[30%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                 >
-                  Submit
+                  Update Condition
                 </button>
               </div>
             </form>

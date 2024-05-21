@@ -18,6 +18,7 @@ import {
   addThird,
 } from "../../features/laptopDeductionsList";
 import { toast } from "react-toastify";
+import OtpGenerator from "../otp/OTPGenerator";
 
 const LaptopsQuestions = (props) => {
   //   const { productsData, deductions } = props;
@@ -34,6 +35,8 @@ const LaptopsQuestions = (props) => {
   const laptopSlice = useSelector((state) => state.laptopDeductions);
   const laptopsConList = useSelector((state) => state.laptopDeductionsList);
   const deductionData = useSelector((state) => state.deductions.deductions);
+  const [showOTP, setShowOTP] = useState(false);
+
   console.log("laptopSlice", laptopSlice);
   // console.log("deductionData", deductionData);
   console.log("deductions", deductions);
@@ -123,8 +126,14 @@ const LaptopsQuestions = (props) => {
 
       // Handle if there are no more conditions
       console.log("No more conditions to display.");
-      navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
+      setShowOTP(true);
+
+      // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
     }
+  };
+
+  const closeModal = () => {
+    setShowOTP(false);
   };
 
   const handleSelectChange = (event) => {
@@ -282,7 +291,7 @@ const LaptopsQuestions = (props) => {
                           <div>
                             <button
                               onClick={handleContinue}
-                              className="px-2 py-1 border rounded w-1/2 m-2"
+                              className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
                             >
                               Continue
                             </button>
@@ -329,13 +338,14 @@ const LaptopsQuestions = (props) => {
                               {age ? (
                                 <button
                                   onClick={handleContinue}
-                                  className="px-2 py-1 border rounded w-1/2 m-2"
+                                  className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
                                 >
                                   Continue
                                 </button>
                               ) : (
                                 <button
-                                  className="px-2 py-1 border rounded w-3/4 m-2 bg-gray-400 opacity-35"
+                                  // className="px-2 py-1 border rounded w-[35%] mx-auto bg-gray-400 opacity-35"
+                                  className="px-2 py-1 text-white border mx-auto rounded w-[35%] mt-6 bg-gray-400 opacity-35"
                                   disabled
                                 >
                                   Select Age To Continue
@@ -355,12 +365,17 @@ const LaptopsQuestions = (props) => {
         {currentPage === 1 && (
           <button
             onClick={handleContinue}
-            className="px-2 py-1 border rounded w-1/2 m-2"
+            className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
           >
             Continue
           </button>
         )}
       </div>
+      {showOTP ? (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <OtpGenerator closeModal={closeModal} />
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -35,7 +35,16 @@ const CategoriesList = () => {
   return (
     //Products based on the Category selected
     <div className="p-4 ">
-      <h2 className="text-black text-lg font-bold mb-4">Categories Table</h2>
+      <div className="flex justify-between">
+        <h2 className="text-black text-lg font-bold mb-4">Categories Table</h2>
+        <div>
+          <Link to={"/admin/add-category"}>
+            <button className="bg-blue-700 text-white px-2 py-1 rounded">
+              Create Category
+            </button>
+          </Link>
+        </div>
+      </div>
 
       <table className="w-full">
         <thead>
@@ -88,7 +97,7 @@ const CategoriesList = () => {
                   <td className="flex justify-center px-4 py-2">
                     <Link to={`/admin/update-category/${category.id}`}>
                       <button className="bg-blue-500 flex items-center gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Edit <FaEdit/>
+                        Edit <FaEdit />
                       </button>
                     </Link>
                   </td>
@@ -97,7 +106,7 @@ const CategoriesList = () => {
                       onClick={() => handleDelete(category.id)}
                       className="bg-red-600 text-white px-3 py-1 rounded-md"
                     >
-                      <MdDeleteForever className="text-2xl"/>
+                      <MdDeleteForever className="text-2xl" />
                     </button>
                   </td>
                 </tr>
