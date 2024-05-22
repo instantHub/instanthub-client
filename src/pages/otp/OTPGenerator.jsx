@@ -126,9 +126,11 @@ const OtpGenerator = (props) => {
               />{" "}
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-xl flex gap-2 max-sm:text-[17px]">
-                <h1 className="">{selectedProdDetails.productName}</h1>
-                <span>{selectedProdDetails.getUpTo.variantName}</span>
+              <div className="text-xl flex gap-2 max-sm:flex-col ">
+                <h1>{selectedProdDetails.productName}</h1>
+                {selectedProdDetails.productCategory === "Mobile" ? (
+                  <span>{selectedProdDetails.getUpTo.variantName}</span>
+                ) : null}
               </div>
               <div>
                 <h1 className="text-gray-500 text-sm">Selling Price</h1>
