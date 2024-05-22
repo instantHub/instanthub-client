@@ -41,6 +41,12 @@ const OtpGenerator = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Send the OTP to the user's phone number (backend logic)
+
+    if (phoneNumber.length < 10) {
+      toast.warning("Kindly enter ealid mobile number..!");
+      return;
+    }
+
     const data = {
       mobileNo: phoneNumber,
     };
@@ -120,14 +126,14 @@ const OtpGenerator = (props) => {
               />{" "}
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-xl flex gap-2">
-                <h1>{selectedProdDetails.productName}</h1>
+              <div className="text-xl flex gap-2 max-sm:text-[17px]">
+                <h1 className="">{selectedProdDetails.productName}</h1>
                 <span>{selectedProdDetails.getUpTo.variantName}</span>
               </div>
               <div>
                 <h1 className="text-gray-500 text-sm">Selling Price</h1>
               </div>
-              <div className="flex items-center text-2xl text-red-500">
+              <div className="flex items-center text-2xl text-red-500 max-sm:text-xl">
                 <FaIndianRupeeSign />
                 <h1 className="">XX,XXX</h1>
               </div>
@@ -167,9 +173,17 @@ const OtpGenerator = (props) => {
                       +91:
                     </label>
                     <input
-                      type="number"
+                      type="tel"
                       id="phoneNumber"
+                      maxLength={10}
                       // value={phoneNumber}
+                      // onChange={(e) => {
+                      //   if (phoneNumber.length <= 10) {
+                      //     handlePhoneNumberChange(e);
+                      //   } else {
+                      //     return;
+                      //   }
+                      // }}
                       onChange={handlePhoneNumberChange}
                       // className="border-b rounded mr-2 px-2 focus:bg-transparent outline-none "
                       className="border-b rounded mr-2 px-2 focus:bg-transparent outline-none bg-black bg-opacity-50"
@@ -246,6 +260,7 @@ const OtpGenerator = (props) => {
               </label>
               <input
                 type="number"
+                maxLength={10}
                 id="phoneNumber"
                 value={phoneNumber}
                 onChange={handlePhoneNumberChange}
