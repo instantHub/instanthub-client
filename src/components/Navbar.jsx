@@ -67,14 +67,12 @@ const Navbar = () => {
                 <li>
                   <Link to={`/contact-us`}>Contact</Link>
                 </li>
-                <li>
-                  {/* <Link to={`/contact-us`}>Email Check</Link> */}
+                {/* <li>
                   <a href="src/components/emailcheck.html">Email check</a>
                 </li>
                 <li>
-                  {/* <Link to={`/contact-us`}>Email Check</Link> */}
                   <a href="src/components/emailcheck2.html">Email check2</a>
-                </li>
+                </li> */}
                 {/* <li>
                   <a href="/admin/login" className="">
                     Admin

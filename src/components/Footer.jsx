@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaUser, FaWhatsapp } from "react-icons/fa";
+import { SiXdadevelopers } from "react-icons/si";
+import { FcServices } from "react-icons/fc";
 
 const Footer = () => {
+  // useEffect(() => {
+  //   function handleScroll() {
+  //     var footer = document.querySelector(".footer");
+  //     var developedBy = document.querySelector(".developed-by");
+  //     if (isElementInViewport(footer)) {
+  //       developedBy.classList.remove("translate-x-full");
+  //     } else {
+  //       developedBy.classList.add("translate-x-full");
+  //     }
+  //   }
+
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   // Clean up the event listener when the component unmounts
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
+  // // Function to check if an element is in the viewport
+  // function isElementInViewport(el) {
+  //   var rect = el.getBoundingClientRect();
+  //   return (
+  //     rect.top >= 0 &&
+  //     rect.left >= 0 &&
+  //     rect.bottom <=
+  //       (window.innerHeight || document.documentElement.clientHeight) &&
+  //     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  //   );
+  // }
+
   return (
     // JSX
-    <div className=" w-full sm:pt-10 mt-2 pb-4 bg-[#E27D60] bg-cyan-500 px-4 py-2 max-sm:text-md">
+    <div className=" w-full sm:pt-10 mt-2  bg-[#E27D60] bg-cyan-500 px-4 pt-2 pb-[4px] max-sm:text-md">
       <div className="mx-auto max-w-screen-xl flex gap-4 justify-evenly max-md:gap-1">
         <div className="px-4 sm:px-0 flex flex-col items-center">
           <div>
@@ -32,40 +65,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        {/* <div>
-          <div className="text-white font-bold py-2">
-            <label htmlFor="">Services</label>
-          </div>
-          <div className="pl-2">
-            <ul className="flex flex-col text-[13px] leading-8 font-thin">
-              <li>
-                <Link>
-                  <span>Sell Mobile</span>
-                </Link>
-              </li>
-              <li>
-                <Link>
-                  <span>Sell Laptop</span>
-                </Link>
-              </li>
-              <li>
-                <Link>
-                  <span>Sell Tablets</span>
-                </Link>
-              </li>
-              <li>
-                <Link>
-                  <span>Sell Earbuds</span>
-                </Link>
-              </li>
-              <li>
-                <Link>
-                  <span>Sell Cameras</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div> */}
+
         <div>
           <div className="text-white font-bold py-2">
             <label htmlFor="">Company</label>
@@ -138,6 +138,21 @@ const Footer = () => {
             <p className="text-xs">sale@instantcashpick.com</p>
             <p className="text-xs">info@instantcashpick.com</p>
           </div>
+        </div>
+      </div>
+      {/* <div className="text-end p-0 m-0 text-xs text-white developed-by transition-transform duration-3000 transform translate-x-full md:translate-x-0">
+        <h1>Developed by: Yusufulla Qureshi</h1>
+      </div> */}
+      <div className="flex items-center justify-end p-0 text-white">
+        <div className="flex flex-col items-center">
+          {/* Render the user icon */}
+          <div className="flex items-center">
+            <FcServices />
+            <h1 className="text-sm flex items-center justify-center max-sm:text-[10px]">
+              Developed by: Yusufulla Qureshi
+            </h1>
+          </div>
+          {/* <p className="text-[9px]">qureshiyusuff@gmail.com</p> */}
         </div>
       </div>
     </div>

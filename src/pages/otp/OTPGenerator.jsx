@@ -43,7 +43,7 @@ const OtpGenerator = (props) => {
     // Send the OTP to the user's phone number (backend logic)
 
     if (phoneNumber.length < 10) {
-      toast.warning("Kindly enter ealid mobile number..!");
+      toast.warning("Kindly enter a valid mobile number..!");
       return;
     }
 
