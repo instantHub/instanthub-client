@@ -38,7 +38,7 @@ const DeductionItems = ({
       ${
         conditionName.toLowerCase().includes("screen condition")
           ? `grid lg:grid-cols-2 md:grid-cols-1`
-          : ``
+          : null
       }
       `}
     >
