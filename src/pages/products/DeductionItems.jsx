@@ -1,6 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addScreenSize, addGraphic } from "../../features/laptopDeductionSlice";
+import {
+  addScreenSize,
+  addGraphic,
+  addScreenCondition,
+} from "../../features/laptopDeductionSlice";
 
 const DeductionItems = ({
   conditionName,
@@ -17,7 +21,11 @@ const DeductionItems = ({
 
   // Determine if the image should be shown based on the condition name
   const shouldShowImage = !(
-    (conditionName.includes("Screen Size") || conditionName.includes("Graphic"))
+    (
+      conditionName.includes("Screen Size") ||
+      conditionName.includes("Graphic") ||
+      conditionName.toLowerCase().includes("screen condition")
+    )
     // || conditionName.toLowerCase().includes("screen")
   );
 
@@ -25,10 +33,18 @@ const DeductionItems = ({
 
   return (
     // <div key={index}>
-    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-3 items-center px-4">
+    <div
+      className={` grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-3 items-center px-4 
+      ${
+        conditionName.toLowerCase().includes("screen condition")
+          ? `grid lg:grid-cols-2 md:grid-cols-1`
+          : ``
+      }
+      `}
+    >
       {conditionLabels.map((label, index) => (
         <div
-        key={index}
+          key={index}
           className={`${
             shouldShowImage
               ? deductionData.some(
@@ -39,7 +55,10 @@ const DeductionItems = ({
                 : ""
               : laptopSliceData.screenSize.conditionLabel ===
                   label.conditionLabel ||
-                laptopSliceData.graphic.conditionLabel === label.conditionLabel
+                laptopSliceData.graphic.conditionLabel ===
+                  label.conditionLabel ||
+                laptopSliceData.screenCondition.conditionLabel ===
+                  label.conditionLabel
               ? "border-cyan-500"
               : ""
           } flex flex-col border rounded items-center`}
@@ -51,6 +70,16 @@ const DeductionItems = ({
                 label.operation
               );
             }
+            // if (
+            //   !conditionName.includes("Screen Size") ||
+            //   !conditionName.includes("Graphic")
+            // ) {
+            //   handleLabelSelection(
+            //     label.conditionLabel,
+            //     label.priceDrop,
+            //     label.operation
+            //   );
+            // }
             if (conditionName.includes("Screen Size")) {
               // console.log("Screen Size");
               dispatch(
@@ -64,6 +93,16 @@ const DeductionItems = ({
               // console.log("Graphic");
               dispatch(
                 addGraphic({
+                  conditionLabel: label.conditionLabel,
+                  priceDrop: label.priceDrop,
+                  operation: label.operation,
+                })
+              );
+            } else if (
+              conditionName.toLowerCase().includes("screen condition")
+            ) {
+              dispatch(
+                addScreenCondition({
                   conditionLabel: label.conditionLabel,
                   priceDrop: label.priceDrop,
                   operation: label.operation,

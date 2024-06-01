@@ -56,6 +56,7 @@ const ProdDeductionsRight = () => {
                     </ul>
                   </div>
 
+                  {/* Screen Size */}
                   <div>
                     {laptopSlice.screenSize.conditionLabel ? (
                       <h1 className="font-bold">Screen Size</h1>
@@ -67,6 +68,7 @@ const ProdDeductionsRight = () => {
                     </ul>
                   </div>
 
+                  {/* Graphic */}
                   <div>
                     {laptopSlice.graphic.conditionLabel ? (
                       <h1 className="font-bold">Graphic</h1>
@@ -74,6 +76,18 @@ const ProdDeductionsRight = () => {
                     <ul>
                       <li className="py-1 pl-2">
                         {laptopSlice.graphic.conditionLabel}
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Screen Condition */}
+                  <div>
+                    {laptopSlice.screenCondition.conditionLabel ? (
+                      <h1 className="font-bold">Screen Condition</h1>
+                    ) : null}
+                    <ul>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.screenCondition.conditionLabel}
                       </li>
                     </ul>
                   </div>

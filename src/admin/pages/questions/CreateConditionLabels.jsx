@@ -67,7 +67,9 @@ const YourComponent = () => {
     console.log("handle submit");
     console.log(formData);
 
-    formData.conditionLabelImg = await uploadFileHandler();
+    if (formData.conditionLabelImg) {
+      formData.conditionLabelImg = await uploadFileHandler();
+    }
 
     console.log("conditionLabelData: ", formData);
 
@@ -81,7 +83,8 @@ const YourComponent = () => {
       // Clear the value of the file input
       fileInputRef.current.value = "";
       // Mark the file input as required again
-      fileInputRef.current.required = true;
+      // fileInputRef.current.required = true;
+      formData.conditionLabelImg = undefined;
     } catch (error) {
       console.log(
         "Error while creating conditionLabel using API call: ",
@@ -206,7 +209,7 @@ const YourComponent = () => {
                     });
                   }}
                   // onChange={(e) => setImageSelected(e.target.files[0])}
-                  required
+                  // required
                 />
               </div>
             </div>
