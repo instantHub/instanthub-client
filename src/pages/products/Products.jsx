@@ -11,6 +11,7 @@ import { BsSearch } from "react-icons/bs";
 import ProductSeries from "../series/ProductSeries";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const Products = () => {
   const { brandId } = useParams();
@@ -31,21 +32,7 @@ const Products = () => {
     isError,
   } = useGetProductsQuery({ brandId, search });
 
-  // Get all Products
-  // const {
-  //   data: products,
-  //   isLoading: productsLoading,
-  //   isSuccess: productsLoaded,
-  //   isError,
-  // } = useGetAllProductsQuery(search);
-  // console.log("products", products);
-
-  // let productsData = undefined;
-
-  // if (!productsLoading) {
-  //   productsData = products.filter((product) => product.brand.id == brandId);
-  //   console.log("productsData", productsData);
-  // }
+  console.log("productsData", productsData);
 
   // Finding Category of the Product
   let category = { name: "", id: "" };
@@ -85,6 +72,21 @@ const Products = () => {
   return (
     <>
       {/* <ProductSeries brandId={brandId} /> */}
+
+      <Helmet>
+        <title>{`Sell Old ${brand.name} ${category.name}s | InstantCashPick`}</title>
+
+        <meta
+          name="description"
+          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+        />
+
+        <meta
+          name="keywords"
+          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+        />
+        <link rel="canonical" href="https://instantcashpick.com/" />
+      </Helmet>
 
       {/*  */}
       <div className="mt-10">

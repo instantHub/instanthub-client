@@ -89,6 +89,7 @@ const ConditionsTable = () => {
             <tr>
               <th className="px-4 py-2 text-white bg-gray-800">Category</th>
               <th className="px-4 py-2 text-white bg-gray-800">Condition</th>
+              <th className="px-4 py-2 text-white bg-gray-800">Page</th>
               <th className="px-4 py-2 text-white bg-gray-800">
                 Edit & Delete
               </th>
@@ -106,6 +107,7 @@ const ConditionsTable = () => {
                   >
                     <td className=" py-2">{condition.category.name}</td>
                     <td className=" py-2">{condition.conditionName}</td>
+                    <td className=" py-2">{condition.page}</td>
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
                         <Link to={`/admin/updateCondition/${condition.id}`}>

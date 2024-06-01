@@ -15,14 +15,16 @@ import App from "./App";
 import "./index.css";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
-
 import { ThemeProvider } from "@material-tailwind/react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider>
-        <App />
+        <HelmetProvider>
+          <App></App>
+        </HelmetProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

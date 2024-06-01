@@ -6,6 +6,8 @@ const ProdDeductionsRight = () => {
   console.log(productsData);
   const laptopSlice = useSelector((state) => state.laptopDeductions);
 
+  console.log("object", productsData);
+
   return (
     // <div>
     <div className="w-[25%] border rounded max-sm:w-[90%]">
@@ -36,31 +38,69 @@ const ProdDeductionsRight = () => {
             <div>
               {/* Laptop's Processor, HardDisk & Ram display */}
               {productsData.productCategory === "Laptop" && (
-                <ul>
-                  <li className="py-1 pl-2">
-                    {laptopSlice.processor.conditionLabel}
-                  </li>
-                  <li className="py-1 pl-2">
-                    {laptopSlice.hardDisk.conditionLabel}
-                  </li>
-                  <li className="py-1 pl-2">
-                    {laptopSlice.ram.conditionLabel}
-                  </li>
-                </ul>
+                <>
+                  <div>
+                    {laptopSlice.processor.conditionLabel ? (
+                      <h1 className="font-bold">Laptop Configuration</h1>
+                    ) : null}
+                    <ul>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.processor.conditionLabel}
+                      </li>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.hardDisk.conditionLabel}
+                      </li>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.ram.conditionLabel}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    {laptopSlice.screenSize.conditionLabel ? (
+                      <h1 className="font-bold">Screen Size</h1>
+                    ) : null}
+                    <ul>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.screenSize.conditionLabel}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    {laptopSlice.graphic.conditionLabel ? (
+                      <h1 className="font-bold">Graphic</h1>
+                    ) : null}
+                    <ul>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.graphic.conditionLabel}
+                      </li>
+                    </ul>
+                  </div>
+                </>
               )}
 
               <ul>
                 {/* Displaying all selected deduction */}
+                {productsData.deductions.length !== 0 ? (
+                  <h1 className="font-bold">Selected Conditions</h1>
+                ) : null}
                 {productsData.deductions.map((label, index) => (
-                  <li key={index} className="py-1 pl-2 text-md">
-                    {label.conditionLabel}
-                  </li>
+                  <>
+                    <li key={index} className="py-1 pl-2 text-md">
+                      {label.conditionLabel}
+                    </li>
+                  </>
                 ))}
 
                 {/* Products Age display when selected */}
                 {productsData.productAge && (
                   <>
-                    {/* <h1 className="mt-2 mb-1">{productsData.productCategory} Age</h1> */}
+                    {productsData.productAge.conditionLabel ? (
+                      <h1 className="mt-2 mb-1 font-bold">
+                        {productsData.productCategory} Age
+                      </h1>
+                    ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productAge.conditionLabel}
                     </li>

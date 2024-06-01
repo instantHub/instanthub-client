@@ -18,7 +18,6 @@ import ProdDeductionsRight from "./ProdQuestionsRight";
 import LaptopsQuestions from "./LaptopsQuestions";
 import OtpGenerator from "../otp/OTPGenerator";
 import DeductionItems from "./DeductionItems";
-import { Helmet } from "react-helmet-async";
 
 const ProductDeductions = () => {
   // Query Params
@@ -33,8 +32,6 @@ const ProductDeductions = () => {
   const [deductions, setDeductions] = useState();
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [currentConditionIndex, setCurrentConditionIndex] = useState(0);
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-
   const [checkIsOn, setCheckIsOn] = useState(false);
   const [checkIsOff, setCheckIsOff] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
@@ -87,26 +84,17 @@ const ProductDeductions = () => {
   };
 
   // handle continue to next condition and its conditionLabellist
-  // const handleContinue = async () => {
-  //   // Logic to handle continue to the next condition
-  //   if (currentConditionIndex < deductions.length - 1) {
-  //     setCurrentConditionIndex(currentConditionIndex + 1);
-  //   } else {
-  //     // Handle if there are no more conditions
-  //     // dispatch(addDeductions(data.productAge));
-  //     console.log("No more conditions to display.");
-  //     setShowOTP(true);
-  //     // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
-  //     // navigate(`/sell/deductions/generateOTP?productId=${productsData.id}`);
-  //   }
-  // };
-
-  const handleContinue = () => {
-    if (currentPageIndex < sortedConditions.length - 1) {
-      setCurrentPageIndex(currentPageIndex + 1);
+  const handleContinue = async () => {
+    // Logic to handle continue to the next condition
+    if (currentConditionIndex < deductions.length - 1) {
+      setCurrentConditionIndex(currentConditionIndex + 1);
     } else {
+      // Handle if there are no more conditions
+      // dispatch(addDeductions(data.productAge));
       console.log("No more conditions to display.");
       setShowOTP(true);
+      // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
+      // navigate(`/sell/deductions/generateOTP?productId=${productsData.id}`);
     }
   };
 
@@ -198,61 +186,8 @@ const ProductDeductions = () => {
   // console.log("priceGetUpTo", priceGetUpTo);
   // console.log("Deductions", deductions);
 
-  const groupConditionsByPage = (conditions) => {
-    console.log("IN groupConditionsByPage", conditions);
-    const grouped = conditions.reduce((acc, condition) => {
-      const { page } = condition;
-      if (!acc[page]) {
-        acc[page] = [];
-      }
-      acc[page].push(condition);
-      return acc;
-    }, {});
-
-    console.log("grouped", grouped);
-    // Convert the grouped object into an array of pages with conditions
-    const sortedPages = Object.keys(grouped)
-      .sort((a, b) => a - b)
-      .map((page) => ({
-        page,
-        conditions: grouped[page],
-      }));
-
-    console.log("sortedPages", sortedPages);
-
-    return sortedPages;
-  };
-
-  // Usage
-  // const sortedConditions = groupConditionsByPage(deductions);
-  let sortedConditions;
-  if (deductions && productsData.category.name === "Mobile") {
-    sortedConditions = groupConditionsByPage(deductions);
-  }
-
-  // console.log("deductions", deductions);
-  console.log("sortedConditions", sortedConditions);
-
   return (
     <>
-      <Helmet>
-        <title>{`Sell Old ${
-          productsData ? `${productsData.category.name}` : null
-        } Online and Get Instant Cash for used ${
-          productsData ? `${productsData.category.name}s` : null
-        } | InstantCashPick`}</title>
-
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
-        />
-
-        <meta
-          name="keywords"
-          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
-        />
-        <link rel="canonical" href="https://instantcashpick.com/" />
-      </Helmet>
       <div className=" mt-4 ">
         {/* {showOTP ? ( */}
         <div className="flex gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
@@ -326,96 +261,81 @@ const ProductDeductions = () => {
             {checkIsOn &&
             productsData &&
             deductions &&
-            productsData.category.name.toLowerCase() !== "laptop" ? (
-              <div key={sortedConditions[currentPageIndex].page}>
-                {sortedConditions[currentPageIndex].conditions.map(
-                  (condition) =>
-                    !condition.conditionName.includes("Age") ? (
-                      <div
-                        className="flex flex-col"
-                        key={condition.conditionId}
-                      >
-                        <div className="px-5 py-2 text-center font-extrabold text-lg">
-                          <h1>{condition.conditionName}</h1>
-                        </div>
-
-                        <DeductionItems
-                          conditionName={condition.conditionName}
-                          conditionLabels={condition.conditionLabels}
-                          handleLabelSelection={handleLabelSelection}
-                        />
-
-                        {/* <button
-                        onClick={handleContinue}
-                        className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-                      >
-                        Continue
-                      </button> */}
-                      </div>
-                    ) : (
-                      <div className="flex flex-col">
-                        <div className="px-5 py-2 text-center font-extrabold text-lg">
-                          <h1>{condition.conditionName}</h1>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2">
-                          {condition.conditionLabels.map((label) => (
-                            <div
-                              className={`${
-                                //   selectedLabels.includes(label.conditionLabel)
-                                data.productAge.conditionLabel ===
-                                label.conditionLabel
-                                  ? "border-cyan-500"
-                                  : "bg-gray-100"
-                              } flex pl-3 border rounded items-center`}
-                              onClick={() =>
-                                handleAge(
-                                  label.conditionLabel,
-                                  label.priceDrop,
-                                  label.operation
-                                )
+            productsData.category.name !== "Laptop"
+              ? !deductions[currentConditionIndex].conditionName.includes(
+                  "Age"
+                ) && (
+                  <div className="flex flex-col">
+                    <div className="px-5 py-2 text-center font-extrabold text-lg">
+                      <h1>{deductions[currentConditionIndex].conditionName}</h1>
+                    </div>
+                    {/* <div className="grid grid-cols-3 gap-4 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 items-center px-4 max-sm:gap-2">
+                    {deductions[currentConditionIndex].conditionLabels.map(
+                      (label) => (
+                        <div
+                          className={`${
+                            // selectedLabels.includes(label.conditionLabel)
+                            selectedLabels.some(
+                              (condLabel) =>
+                                condLabel.conditionLabel == label.conditionLabel
+                            )
+                              ? "border-[#E27D60] border-cyan-500"
+                              : ""
+                          } flex flex-col border rounded items-center`}
+                          // onClick={() =>
+                          //   handleLabelSelection(label.conditionLabel)
+                          // }
+                          onClick={() =>
+                            handleLabelSelection(
+                              label.conditionLabel,
+                              label.priceDrop,
+                              label.operation
+                            )
+                          }
+                        >
+                          <div className="p-2">
+                            <img
+                              src={
+                                import.meta.env.VITE_APP_BASE_URL +
+                                label.conditionLabelImg
                               }
-                            >
-                              <div className="flex text-sm items-center gap-1 py-4">
-                                <span
-                                  className={`${
-                                    //   selectedLabels.includes(label.conditionLabel)
-                                    data.productAge.conditionLabel ===
-                                    label.conditionLabel
-                                      ? "border-cyan-500"
-                                      : "border-surface-dark"
-                                  } border border-solid rounded-full w-5 h-5 mr-1.5`}
-                                ></span>
-                                <span className="text-sm flex-1 flex justify-center">
-                                  {label.conditionLabel}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
+                              alt="LabelImg"
+                              className="size-20 max-sm:size-[68px]"
+                              // className="size-20 max-sm:w-20 max-sm:h-20"
+                            />
+                          </div>
+                          <div
+                            key={label.conditonLabelId}
+                            className={`${
+                              // selectedLabels.includes(label.conditionLabel)
+                              selectedLabels.some(
+                                (condLabel) =>
+                                  condLabel.conditionLabel ==
+                                  label.conditionLabel
+                              )
+                                ? "bg-[#E27D60] text-white bg-cyan-500"
+                                : "bg-slate-100 "
+                            } py-2 px-[2px]  text-sm flex items-center text-center justify-center w-full h-[70px] max-sm:text-xs`}
+                          >
+                            {label.conditionLabel}
+                          </div>
                         </div>
+                      )
+                    )}
+                  </div> */}
 
-                        {age ? (
-                          <button
-                            onClick={handleContinue}
-                            className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-                          >
-                            Continue
-                          </button>
-                        ) : (
-                          <button
-                            className="px-2 py-1 border rounded w-[35%] m-2 bg-gray-400 mx-auto opacity-35 mt-6"
-                            disabled
-                          >
-                            Select Age To Continue
-                          </button>
-                        )}
-                      </div>
-                    )
-                )}
-                {!sortedConditions[
-                  currentPageIndex
-                ].conditions[0].conditionName.includes("Age") && (
-                  <div className="flex items-center">
+                    <DeductionItems
+                      // key={index}
+                      conditionName={
+                        deductions[currentConditionIndex].conditionName
+                      }
+                      conditionLabels={
+                        deductions[currentConditionIndex].conditionLabels
+                      }
+                      handleLabelSelection={handleLabelSelection}
+                      handleContinue={handleContinue}
+                    />
+
                     <button
                       onClick={handleContinue}
                       className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
@@ -423,12 +343,26 @@ const ProductDeductions = () => {
                       Continue
                     </button>
                   </div>
+                )
+              : deductions &&
+                checkIsOn && (
+                  <LaptopsQuestions
+                    productsData={productsData}
+                    deductions={deductions}
+                    handleContinue={handleContinue}
+                    handleLabelSelection={handleLabelSelection}
+                    rtkData={data}
+                  />
                 )}
-              </div>
-            ) : (
-              checkIsOn &&
+
+            {/* Laptop questions design */}
+            {/* {checkIsOn &&
               productsData &&
-              deductions && (
+              productsData.category.name === "Laptop" &&
+              deductions &&
+              !deductions[currentConditionIndex].conditionName.includes(
+                "Age"
+              ) && (
                 <LaptopsQuestions
                   productsData={productsData}
                   deductions={deductions}
@@ -436,8 +370,75 @@ const ProductDeductions = () => {
                   handleLabelSelection={handleLabelSelection}
                   rtkData={data}
                 />
-              )
-            )}
+              )} */}
+
+            {/* AGE selection */}
+            {checkIsOn &&
+              productsData &&
+              deductions &&
+              deductions[currentConditionIndex].conditionName.includes(
+                "Age"
+              ) && (
+                <div className="flex flex-col">
+                  <div className="px-5 py-2 text-center font-extrabold text-lg">
+                    <h1>{deductions[currentConditionIndex].conditionName}</h1>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2">
+                    {deductions[currentConditionIndex].conditionLabels.map(
+                      (label) => (
+                        <div
+                          className={`${
+                            //   selectedLabels.includes(label.conditionLabel)
+                            data.productAge.conditionLabel ===
+                            label.conditionLabel
+                              ? "border-cyan-500"
+                              : "bg-gray-100"
+                          } flex pl-3 border rounded items-center`}
+                          onClick={() =>
+                            handleAge(
+                              label.conditionLabel,
+                              label.priceDrop,
+                              label.operation
+                            )
+                          }
+                        >
+                          <div className="flex text-sm items-center gap-1 py-4">
+                            <span
+                              className={`${
+                                //   selectedLabels.includes(label.conditionLabel)
+                                data.productAge.conditionLabel ===
+                                label.conditionLabel
+                                  ? "border-cyan-500"
+                                  : "border-surface-dark"
+                              } border border-solid rounded-full w-5 h-5 mr-1.5`}
+                            ></span>
+                            <span className="text-sm flex-1 flex justify-center">
+                              {label.conditionLabel}
+                            </span>
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+
+                  {age ? (
+                    <button
+                      onClick={handleContinue}
+                      className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                    >
+                      Continue
+                    </button>
+                  ) : (
+                    <button
+                      className="px-2 py-1 border rounded w-[35%] m-2 bg-gray-400 mx-auto opacity-35 mt-6"
+                      disabled
+                    >
+                      Select Age To Continue
+                    </button>
+                  )}
+                </div>
+              )}
           </div>
 
           {/* Right Side Div */}

@@ -20,28 +20,28 @@ function UpdateCondition() {
   const [formData, setFormData] = useState({
     category: "",
     conditionName: "",
+    page: undefined,
   });
 
   let conditiontoUpdate;
-  if (!conditionsLoading) {
-    conditiontoUpdate = conditionsData.filter(
-      (condition) => condition.id == conditionId
-    );
-  }
 
   useEffect(() => {
-    if (conditionsData) {
-      //   conditiontoUpdate = conditionsData.filter(
-      //     (condition) => condition.id == conditionId
-      //   );
+    // if (conditionsData) {
+    if (!conditionsLoading) {
+      conditiontoUpdate = conditionsData.find(
+        (condition) => condition.id == conditionId
+      );
       console.log("useEffect", conditiontoUpdate);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        category: conditiontoUpdate[0].category.id,
-        conditionName: conditiontoUpdate[0].conditionName,
+        category: conditiontoUpdate.category.id,
+        conditionName: conditiontoUpdate.conditionName,
+        page: conditiontoUpdate.page,
       }));
     }
   }, [conditionsData]);
+  console.log("formdata", formData);
+  console.log("conditiontoUpdate", conditiontoUpdate);
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -55,8 +55,10 @@ function UpdateCondition() {
         data: formData,
       }).unwrap();
       // Handle success
+      toast.success(`Condition Updated Successfully`);
     } catch (error) {
       console.error("Error updating condition:", error);
+      toast.error(`Something went wrong..!`);
     }
 
     // Send formData to backend or perform any other action
@@ -89,7 +91,11 @@ function UpdateCondition() {
               <div className="flex gap-2 items-center">
                 <span className="text-xl opacity-75">Update </span>
                 {!conditionsLoading && (
-                  <h1 className="text-2xl ">{conditiontoUpdate.category} </h1>
+                  <h1 className="text-2xl ">
+                    {conditiontoUpdate !== undefined
+                      ? conditiontoUpdate.category
+                      : null}{" "}
+                  </h1>
                 )}
                 <span className="text-xl opacity-75">Condition</span>
               </div>
@@ -97,7 +103,7 @@ function UpdateCondition() {
 
               <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
                 {!conditionsLoading && (
-                  <div className="flex flex-col">
+                  <div className="flex flex-row">
                     <div className="">
                       <label>Condition Name:</label>
                       <input
@@ -110,6 +116,22 @@ function UpdateCondition() {
                           setFormData({
                             ...formData,
                             conditionName: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="">
+                      <label>Page:</label>
+                      <input
+                        type="number"
+                        name="page"
+                        className="border mx-2 py-1 px-2 rounded text-[15px]"
+                        placeholder="Enter Page Number"
+                        value={formData.page}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            page: e.target.value,
                           })
                         }
                       />

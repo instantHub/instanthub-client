@@ -21,23 +21,19 @@ function Condtions() {
 
   const [formData, setFormData] = useState({
     category: "",
-    conditionNames: [{ name: "" }],
+    conditionName: "",
+    page: "",
   });
 
-  // if (categoryData) {
-  //   console.log("cat", categoryData);
-  // }
-  // if (conditionsData) {
-  //   console.log("con", conditionsData);
-  // }
-
   // Function to handle changes in the form fields
-  const handleChange = (event, index, field, arrayName) => {
+  const handleChange = (event, field, conditionName) => {
     const { value } = event.target;
     const updatedFormData = { ...formData };
-    updatedFormData[arrayName][index][field] = value;
+    updatedFormData[conditionName] = value;
     setFormData(updatedFormData);
   };
+
+  console.log("condition formData", formData);
 
   // Function to add a new condition name
   const addConditionName = () => {
@@ -59,12 +55,14 @@ function Condtions() {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const conditions = await createConditions(
-      JSON.stringify(formData)
-    ).unwrap();
-    console.log(conditions);
-    // if (conditionCreated) {
+    const condition = await createConditions(JSON.stringify(formData)).unwrap();
+    console.log("condition created", condition);
+    if (condition.message.includes("Duplicate")) {
+      toast.warning(condition.message);
+      return;
+    }
     toast.success("Conditions created successfull..!");
+
     // } else if (conditionFailed) {
     //   toast.error("Conditions creation failed..!");
     // }
@@ -142,30 +140,49 @@ function Condtions() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
-                  {formData.conditionNames.map((condition, index) => (
-                    <div key={index} className="flex flex-col">
-                      <div className="">
-                        <label>Condition Name:</label>
-                        <input
-                          type="text"
-                          name="name"
-                          className="border mx-2 py-1 px-2 rounded text-[15px]"
-                          placeholder="Enter Condition Name"
-                          value={condition.name}
-                          onChange={(event) =>
-                            handleChange(event, index, "name", "conditionNames")
-                          }
-                          required
-                        />
-                        <button
+                  {/* {formData.conditionNames.map((condition, index) => ( */}
+                  <div className="flex items-center">
+                    <div className="">
+                      <label>Condition Name:</label>
+                      <input
+                        type="text"
+                        name="name"
+                        className="border mx-2 py-1 px-2 rounded text-[15px]"
+                        placeholder="Enter Condition Name"
+                        value={formData.conditionName}
+                        onChange={(event) =>
+                          handleChange(event, "name", "conditionName")
+                        }
+                        // onChange={(e) => {
+                        //   setFormData(...formData, {
+                        //     conditionName: e.target.value,
+                        //   });
+                        // }}
+                        required
+                      />
+                      {/* <button
                           type="button"
                           onClick={() => deleteConditionName(index)}
                         >
                           x
-                        </button>
-                      </div>
+                        </button> */}
                     </div>
-                  ))}
+                    <div className="">
+                      <label>Page:</label>
+                      <input
+                        type="number"
+                        name="page"
+                        className="border mx-2 py-1 px-2 rounded text-[15px]"
+                        placeholder="Enter Page Number"
+                        value={formData.page}
+                        onChange={(event) =>
+                          handleChange(event, "name", "page")
+                        }
+                        required
+                      />
+                    </div>
+                  </div>
+                  {/* ))} */}
                 </div>
 
                 <div className="py-3 px-2">

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery, useGetBrandQuery } from "../../features/api";
 import { FaAngleRight } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const Brands = () => {
   const { catId } = useParams();
@@ -29,6 +30,20 @@ const Brands = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {`Sell Old ${!isLoading ? category.name : null}s | InstantCashPick`}
+        </title>
+        <meta
+          name="description"
+          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+        />
+        <meta
+          name="keywords"
+          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+        />
+        <link rel="canonical" href={`https://instantcashpick.com/${catId}`} />
+      </Helmet>
       <div className="mt-20 w-4/5 mx-auto">
         <div className="mx-0 mb-6">
           {!isLoading && (

@@ -5,6 +5,8 @@ const initialState = {
   processor: {},
   hardDisk: {},
   ram: {},
+  screenSize: {},
+  graphic: {},
   deductions: [],
 };
 
@@ -13,7 +15,7 @@ export const laptopDeductionSlice = createSlice({
   initialState,
   reducers: {
     addProcessor: (state, action) => {
-      console.log("addProcessor Reducer", action.payload);
+      // console.log("addProcessor Reducer", action.payload);
       console.log(initialState);
       state.processor = {
         conditionLabel: action.payload.conditionLabel,
@@ -22,7 +24,7 @@ export const laptopDeductionSlice = createSlice({
       };
     },
     addHardDisk: (state, action) => {
-      console.log("addHardDisk Reducer", action.payload);
+      // console.log("addHardDisk Reducer", action.payload);
       console.log(initialState);
       return {
         ...state,
@@ -32,14 +34,26 @@ export const laptopDeductionSlice = createSlice({
           operation: action.payload.operation,
         },
       };
-      // state.hardDisk = {
-      //   conditionLabel: action.payload.conditionLabel,
-      //   priceDrop: action.payload.priceDrop,
-      // };
     },
     addRam: (state, action) => {
-      console.log("addRam Reducer", action.payload);
+      // console.log("addRam Reducer", action.payload);
       state.ram = {
+        conditionLabel: action.payload.conditionLabel,
+        priceDrop: action.payload.priceDrop,
+        operation: action.payload.operation,
+      };
+    },
+    addScreenSize: (state, action) => {
+      // console.log("addRam Reducer", action.payload);
+      state.screenSize = {
+        conditionLabel: action.payload.conditionLabel,
+        priceDrop: action.payload.priceDrop,
+        operation: action.payload.operation,
+      };
+    },
+    addGraphic: (state, action) => {
+      // console.log("addRam Reducer", action.payload);
+      state.graphic = {
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
@@ -92,6 +106,8 @@ export const laptopDeductionSlice = createSlice({
         processor: {},
         hardDisk: {},
         ram: {},
+        screenSize: {},
+        graphic: {},
         toBeDeducted: 0,
         deductions: [],
       };
@@ -103,6 +119,8 @@ export const {
   addProcessor,
   addHardDisk,
   addRam,
+  addScreenSize,
+  addGraphic,
   addLaptopDeductions,
   removeLaptopDeductions,
   clearLaptopDeductions,

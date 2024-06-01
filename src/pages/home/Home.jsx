@@ -5,6 +5,7 @@ import Testimonials from "../../components/Testimonials";
 import TestimonialCarousel from "../../components/TestimonialsCorousel";
 import HowItWorks from "../../components/HowItWorks";
 import WhyChooseInstantCashPicks from "../../components/WhyUs";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const images = [
@@ -20,6 +21,24 @@ const Home = () => {
   ];
   return (
     <>
+      <Helmet>
+        <title>{`Home | InstantCashPick`}</title>
+        {/* <meta
+          name="description"
+          content="India's growing trusted platform to sell old Mobile Phone, Laptops etc, sell your used Mobile Phone, Laptops etc at InstantCashPick and get instant cash at your doorstep. Visit the website to know more!"
+        /> */}
+        <meta
+          name="description"
+          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+        />
+
+        <meta
+          name="keywords"
+          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+        />
+        <meta name="author" content="Yusufulla Qureshi" />
+        <link rel="canonical" href="https://instantcashpick.com/" />
+      </Helmet>
       {/* <Slider images={images} /> */}
       <Slider />
       <Categories />

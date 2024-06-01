@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Helmet } from "react-helmet-async";
 
 const ProductFinalPrice = () => {
   const selectedProdDetails = useSelector((state) => state.deductions);
@@ -241,6 +242,22 @@ const ProductFinalPrice = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{`Sell Old ${
+          selectedProdDetails ? `${selectedProdDetails.productName}` : null
+        } Online and Get Instant Cash | InstantCashPick`}</title>
+
+        <meta
+          name="description"
+          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+        />
+
+        <meta
+          name="keywords"
+          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+        />
+        <link rel="canonical" href="https://instantcashpick.com/" />
+      </Helmet>
       <div className="flex flex-col items-center my-10 mx-auto">
         <div className="p-4 flex flex-col items-center">
           <h1 className="text-[20px]">

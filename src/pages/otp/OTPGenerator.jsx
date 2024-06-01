@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useGenerateOTPMutation } from "../../features/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { GiDialPadlock } from "react-icons/gi";
 import { BsUnlockFill } from "react-icons/bs";
 import { FaLock } from "react-icons/fa6";
 import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import {
+  addDeductions,
+  removeDeductions,
+  addProductAge,
+} from "../../features/deductionSlice";
 
 const OtpGenerator = (props) => {
   const { closeModal } = props;
@@ -24,6 +29,13 @@ const OtpGenerator = (props) => {
     useGenerateOTPMutation();
   const [enteredOtp, setEnteredOtp] = useState("");
   const [verificationStatus, setVerificationStatus] = useState("");
+
+  // Dispatch
+  const dispatch = useDispatch();
+  // Slice Data
+  const laptopSlice = useSelector((state) => state.laptopDeductions);
+  const data = useSelector((state) => state.deductions);
+  console.log("useSelector from OTP", laptopSlice, data);
 
   const navigate = useNavigate();
 
@@ -47,16 +59,27 @@ const OtpGenerator = (props) => {
       return;
     }
 
-    const data = {
+    const otpData = {
       mobileNo: phoneNumber,
     };
 
-    const otpGenerated = await generateOTP(data);
+    const otpGenerated = await generateOTP(otpData);
     console.log("otpGenerated", otpGenerated);
     if (otpGenerated.data.success) {
       console.log("success");
       // toast.success("OTP Generated");
       // setOtp(otpGenerated.data.data.otp);
+
+      if (data.productCategory === "Laptop") {
+        dispatch(addDeductions(laptopSlice.processor));
+        dispatch(addDeductions(laptopSlice.hardDisk));
+        dispatch(addDeductions(laptopSlice.ram));
+        dispatch(addDeductions(laptopSlice.screenSize));
+        dispatch(addDeductions(laptopSlice.graphic));
+        dispatch(addDeductions(data.productAge));
+      } else if (data.productCategory === "Mobile") {
+        dispatch(addDeductions(data.productAge));
+      }
 
       // Until OTP is applied
       toast.success("Success..!");
