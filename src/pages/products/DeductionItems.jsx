@@ -11,6 +11,9 @@ const DeductionItems = ({
   conditionLabels,
   handleLabelSelection,
   handleContinue,
+  setScreenSize,
+  setGraphic,
+  setScreenCondition,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
 
@@ -89,6 +92,11 @@ const DeductionItems = ({
                   operation: label.operation,
                 })
               );
+              setScreenSize({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             } else if (conditionName.includes("Graphic")) {
               // console.log("Graphic");
               dispatch(
@@ -98,6 +106,11 @@ const DeductionItems = ({
                   operation: label.operation,
                 })
               );
+              setGraphic({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             } else if (
               conditionName.toLowerCase().includes("screen condition")
             ) {
@@ -108,6 +121,11 @@ const DeductionItems = ({
                   operation: label.operation,
                 })
               );
+              setScreenCondition({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             }
           }}
         >

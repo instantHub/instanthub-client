@@ -30,6 +30,9 @@ const LaptopsQuestions = (props) => {
   const [processor, setProcessor] = useState();
   const [hardDisk, setHardDisk] = useState();
   const [ram, setRam] = useState();
+  const [screenSize, setScreenSize] = useState();
+  const [graphic, setGraphic] = useState();
+  const [screenCondition, setScreenCondition] = useState();
 
   // const age = "";
   const navigate = useNavigate();
@@ -65,36 +68,6 @@ const LaptopsQuestions = (props) => {
     );
   };
 
-  // const getDeductionsForPage = () => {
-  //   // Filter deductions into two groups
-  //   const groupedDeductions = deductions.reduce(
-  //     (acc, deduction) => {
-  //       if (deduction.conditionName === "Processor") {
-  //         acc.group1.unshift(deduction); // Add Processor to the beginning of group1
-  //       } else if (
-  //         deduction.conditionName === "Hard Disk" ||
-  //         deduction.conditionName === "Ram"
-  //       ) {
-  //         acc.group1.push(deduction); // Add Ram and Hard Disk to the end of group1
-  //       } else {
-  //         acc.group2.push(deduction); // Add other deductions to group2
-  //       }
-  //       return acc;
-  //     },
-  //     { group1: [], group2: [] }
-  //   );
-
-  //   if (currentPage === 1) {
-  //     // Return the first group for the first page
-  //     return groupedDeductions.group1;
-  //   } else {
-  //     // Calculate startIndex for subsequent pages
-  //     const startIndex = currentPage - 2; // Assuming each page after the first one displays one deduction
-  //     // Return the deduction at startIndex from the second group
-  //     return groupedDeductions.group2.slice(startIndex, startIndex + 1);
-  //   }
-  // };
-
   const groupConditionsByPage = (conditions) => {
     console.log("IN groupConditionsByPage laptop", conditions);
     const grouped = conditions.reduce((acc, condition) => {
@@ -106,7 +79,19 @@ const LaptopsQuestions = (props) => {
       return acc;
     }, {});
 
-    console.log("grouped", grouped);
+    // Custom order for page 1
+    const customOrder = ["Processor", "Hard Disk", "Ram"];
+    if (grouped[1]) {
+      grouped[1].sort((a, b) => {
+        return (
+          customOrder.indexOf(a.conditionName) -
+          customOrder.indexOf(b.conditionName)
+        );
+      });
+    }
+
+    console.log("grouped 1", grouped[1]);
+
     // Convert the grouped object into an array of pages with conditions
     const sortedPages = Object.keys(grouped)
       .sort((a, b) => a - b)
@@ -114,8 +99,6 @@ const LaptopsQuestions = (props) => {
         page,
         conditions: grouped[page],
       }));
-
-    console.log("sortedPages", sortedPages);
 
     return sortedPages;
   };
@@ -127,36 +110,6 @@ const LaptopsQuestions = (props) => {
     sortedConditions = groupConditionsByPage(deductions);
   }
 
-  // Function to handle moving to the next page
-  // const handleContinue = () => {
-  //   // If in 1st page all fields must be selected
-  //   if (currentPage === 1) {
-  //     if (
-  //       processor === undefined ||
-  //       hardDisk === undefined ||
-  //       ram === undefined
-  //     ) {
-  //       toast.error("select all system configurations");
-  //       return;
-  //     }
-  //   }
-
-  //   if (currentPage < deductions.length - 2) {
-  //     setCurrentPage(currentPage + 1);
-  //   } else {
-  //     // dispatch(addDeductions(laptopSlice.processor));
-  //     // dispatch(addDeductions(laptopSlice.hardDisk));
-  //     // dispatch(addDeductions(laptopSlice.ram));
-  //     // dispatch(addDeductions(data.productAge));
-
-  //     // Handle if there are no more conditions
-  //     console.log("No more conditions to display.");
-  //     setShowOTP(true);
-
-  //     // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
-  //   }
-  // };
-
   const handleContinue = () => {
     // If in 1st page all fields must be selected
     if (currentPageIndex === 0) {
@@ -166,6 +119,18 @@ const LaptopsQuestions = (props) => {
         ram === undefined
       ) {
         toast.error("select all system configurations");
+        return;
+      }
+    }
+    if (currentPageIndex === 1) {
+      if (screenSize === undefined || graphic === undefined) {
+        toast.error("Select Both ScreenSize & Graphic to proceed..!");
+        return;
+      }
+    }
+    if (currentPageIndex === 5) {
+      if (screenCondition === undefined) {
+        toast.error("Select screenCondition to proceed..!");
         return;
       }
     }
@@ -215,23 +180,6 @@ const LaptopsQuestions = (props) => {
     // handleLabelSelection(arg1, arg2);
     // handleLaptopLabelSelection();
   };
-
-  // useEffect(() => {
-  //   deductions.map((d) => {
-  //     if (d.conditionName === "Processor") {
-  //       console.log("useffect", d.conditionName);
-  //       dispatch(addFirst(d));
-  //     } else if (d.conditionName === "Ram") {
-  //       console.log("useffect", d.conditionName);
-  //       dispatch(addSecond(d));
-  //     } else if (d.conditionName === "Hard Disk") {
-  //       console.log("useffect", d.conditionName);
-  //       dispatch(addThird(d));
-  //     } else {
-  //       dispatch(addRest(d));
-  //     }
-  //   });
-  // }, [deductions]);
 
   //   console.log("state", processor, hardDisk, ram);
   //   console.log("selectedLabels", selectedLabels);
@@ -317,6 +265,9 @@ const LaptopsQuestions = (props) => {
                               conditionLabels={condition.conditionLabels}
                               handleLabelSelection={handleLabelSelection}
                               handleContinue={handleContinue}
+                              setScreenSize={setScreenSize}
+                              setGraphic={setGraphic}
+                              setScreenCondition={setScreenCondition}
                             />
                             {/* <div>
                               <button
