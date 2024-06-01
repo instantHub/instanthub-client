@@ -34,11 +34,11 @@ const DeductionItems = ({
   return (
     // <div key={index}>
     <div
-      className={` grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-3 items-center px-4 
+      className={`
       ${
         conditionName.toLowerCase().includes("screen condition")
-          ? `grid lg:grid-cols-2 md:grid-cols-1`
-          : null
+          ? `grid lg:grid-cols-2 gap-2 md:grid-cols-1 items-center px-2`
+          : `grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-3 items-center px-4 `
       }
       `}
     >
