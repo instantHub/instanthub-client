@@ -141,16 +141,16 @@ const Footer = () => {
         </div>
       </div>
       {/* <div className="text-end p-0 m-0 text-xs text-white developed-by transition-transform duration-3000 transform translate-x-full md:translate-x-0">
-        <h1>Developed by: Yusufulla Qureshi</h1>
+        <h2>Developed by: Yusufulla Qureshi</h2>
       </div> */}
       <div className="flex items-center justify-end p-0 text-white">
         <div className="flex flex-col items-center">
           {/* Render the user icon */}
           <div className="flex items-center">
             <FcServices />
-            <h1 className="text-sm flex items-center justify-center max-sm:text-[10px]">
+            <p className="text-sm flex items-center justify-center max-sm:text-[10px]">
               Developed by: Yusufulla Qureshi
-            </h1>
+            </p>
           </div>
           {/* <p className="text-[9px]">qureshiyusuff@gmail.com</p> */}
         </div>

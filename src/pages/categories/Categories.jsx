@@ -13,7 +13,7 @@ const Categories = () => {
           <h1 className="text-2xl pb-6">
             Ready to sell?{" "}
             <span className="text-3xl text-cyan-500 font-semibold">
-              Let's turn your stuff into cash!
+              Let's turn your gadgets into cash!
             </span>
           </h1>
           {/* <hr className="text-black mt-1" /> */}

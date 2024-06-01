@@ -39,13 +39,15 @@ const Navbar = () => {
             {/* <div className="grid grid-cols-3 items-center"> */}
             <div className="flex items-center grow">
               <Link to="/">
-                <img
-                  // src="/LOGO1.png"
-                  src="/2.png"
-                  alt="logo"
-                  // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-                  className="w-[88px] h-[70px] h- my-[1px] max-sm:w-[95%]"
-                />
+                <h2>
+                  <img
+                    // src="/LOGO1.png"
+                    src="/2.png"
+                    alt="logo"
+                    // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
+                    className="w-[88px] h-[70px] my-[1px] max-sm:w-[95%]"
+                  />
+                </h2>
               </Link>
             </div>
 
@@ -130,26 +132,7 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-      {/* <div class="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full z-10 mt-4 pb-4 border-b">
-        <div class="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
-          <div class="flex flex-row w-full max-w-screen-xl justify-between px-4">
-            {!categoryLoading
-              ? categoryData.map((category, i) => (
-                  <Link to={`/categories/brands/${category.id}`} key={i}>
-                    <div
-                      key={i}
-                      class="relative flex flex-row items-center cursor-pointer group/navigation"
-                    >
-                      <span class="flex flex-col items-center justify-center w-full h-full no-underline">
-                        <div>Sell {category.name}</div>
-                      </span>
-                    </div>
-                  </Link>
-                ))
-              : null}
-          </div>
-        </div>
-      </div> */}
+
       <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full z-10 pb-4 border-b">
         <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
           <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 ">
@@ -184,7 +167,7 @@ const Navbar = () => {
                           className="absolute top-full right-0 mt-0 pt-3 bg-white shadow-md p-2  w-[200%]"
                           onMouseEnter={() => handleMouseEnter(category.id)}
                         >
-                          <h1 className="py-2 font-bold">Brands</h1>
+                          <h2 className="py-2 font-bold">Brands</h2>
                           <ul>
                             {category.brands.length > 0 ? (
                               category.brands.map((brand, index) => (
@@ -203,7 +186,7 @@ const Navbar = () => {
                             ) : (
                               <div>
                                 <div>
-                                  <h1 className="text-sm">No Brands</h1>
+                                  <h2 className="text-sm">No Brands</h2>
                                 </div>
                               </div>
                             )}

@@ -12,7 +12,7 @@ const ErrorComponent = ({ message }) => {
       >
         <div className="flex flex-col items-center justify-center gap-">
           <FaExclamationTriangle className="text-5xl text-red-500 mb-4" />
-          <h1 className="text-3xl font-bold mb-2">Oops!</h1>
+          <h2 className="text-3xl font-bold mb-2">Oops!</h2>
           <div className="opacity-75">
             <span className="block sm:inline">{message}</span>
           </div>
