@@ -80,6 +80,7 @@ const OtpGenerator = (props) => {
         dispatch(addDeductions(data.productAge));
       } else if (data.productCategory === "Mobile") {
         dispatch(addDeductions(data.productAge));
+        dispatch(addDeductions(data.productScreenCondition));
       }
 
       // Until OTP is applied

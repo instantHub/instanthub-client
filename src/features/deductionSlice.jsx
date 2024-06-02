@@ -5,6 +5,8 @@ const initialState = {
   productImage: "",
   productCategory: "",
   productAge: {},
+  productScreenCondition: {},
+  productPanelCondition: {},
   getUpTo: {
     variantName: "",
     price: undefined,
@@ -76,11 +78,21 @@ export const deductionSlice = createSlice({
       }
     },
     addProductAge: (state, action) => {
-      console.log("addProductAge reducer", action.payload);
-      console.log(initialState);
+      // console.log("addProductAge reducer", action.payload);
+      // console.log(initialState);
       return {
         ...state,
         productAge: {
+          conditionLabel: action.payload.conditionLabel,
+          priceDrop: action.payload.priceDrop,
+          operation: action.payload.operation,
+        },
+      };
+    },
+    addProductScreenCondition: (state, action) => {
+      return {
+        ...state,
+        productScreenCondition: {
           conditionLabel: action.payload.conditionLabel,
           priceDrop: action.payload.priceDrop,
           operation: action.payload.operation,
@@ -135,6 +147,7 @@ export const deductionSlice = createSlice({
         toBeDeducted: 0,
         toBeAdded: 0,
         productAge: {},
+        productScreenCondition: {},
         deductions: [],
       };
     },
@@ -145,6 +158,7 @@ export const {
   setGetUpto,
   addDeductions,
   addProductAge,
+  addProductScreenCondition,
   clearDeductions,
   removeDeductions,
 } = deductionSlice.actions;

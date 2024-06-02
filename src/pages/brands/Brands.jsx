@@ -40,7 +40,9 @@ const Brands = () => {
         />
         <meta
           name="keywords"
-          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content={`Sell ${
+            !categoryLoading ? category.name : `Mobiles`
+          } on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, sell mobiles on instantcashpick`}
         />
         <link rel="canonical" href={`https://instantcashpick.com/${catId}`} />
       </Helmet>

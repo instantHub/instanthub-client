@@ -36,6 +36,7 @@ const ProdDeductionsRight = () => {
             </div>
 
             <div>
+              {/* Laptop selected items from laptopSlice */}
               {/* Laptop's Processor, HardDisk & Ram display */}
               {productsData.productCategory === "Laptop" && (
                 <>
@@ -117,6 +118,20 @@ const ProdDeductionsRight = () => {
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productAge.conditionLabel}
+                    </li>
+                  </>
+                )}
+
+                {/* Products ScreenCondition */}
+                {productsData.productAge && (
+                  <>
+                    {productsData.productScreenCondition.conditionLabel ? (
+                      <h1 className="mt-2 mb-1 font-bold">
+                        {productsData.productCategory} Screen Condition
+                      </h1>
+                    ) : null}
+                    <li className="py-1 pl-2 text-md">
+                      {productsData.productScreenCondition.conditionLabel}
                     </li>
                   </>
                 )}

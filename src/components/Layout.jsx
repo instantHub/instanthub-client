@@ -36,7 +36,7 @@ const Layout = () => {
 
         <meta
           name="keywords"
-          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content="Sell products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://instantcashpick.com/" />

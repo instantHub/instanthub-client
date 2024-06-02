@@ -11,7 +11,7 @@ import {
   addHardDisk,
   addRam,
 } from "../../features/laptopDeductionSlice";
-import {
+import LaptopDeductionsList, {
   addFirst,
   addRest,
   addSecond,
@@ -21,18 +21,33 @@ import { toast } from "react-toastify";
 import OtpGenerator from "../otp/OTPGenerator";
 import DeductionItems from "./DeductionItems";
 import { Helmet } from "react-helmet-async";
+import LaptopDeductionItems from "./LaptopDeductionItems";
 
 const LaptopsQuestions = (props) => {
   //   const { productsData, deductions } = props;
   const { productsData, deductions, handleLabelSelection } = props;
   //   console.log(productsData, deductions, handleLabelSelection);
   console.log("deductions", deductions);
+  console.log("productsData from laptop", productsData);
   const [processor, setProcessor] = useState();
   const [hardDisk, setHardDisk] = useState();
   const [ram, setRam] = useState();
   const [screenSize, setScreenSize] = useState();
   const [graphic, setGraphic] = useState();
   const [screenCondition, setScreenCondition] = useState();
+  const [pageIndexes, setPageIndexes] = useState({});
+
+  if (deductions) {
+    deductions.map((d) => {
+      if (d.conditionName.toLowerCase().includes("screen size")) {
+        // setPageIndexes(...pageIndexes, { screenSizeIndex: d.page - 1 });
+        // setPageIndexes({ ...pageIndexes, screenSizeIndex: Number(d.page - 1) });
+        console.log("check", d.page);
+        // pageIndexes.screenSizeIndex = d.page - 1;
+      }
+    });
+  }
+  console.log("pageIndexes", pageIndexes);
 
   // const age = "";
   const navigate = useNavigate();
@@ -112,6 +127,7 @@ const LaptopsQuestions = (props) => {
 
   const handleContinue = () => {
     // If in 1st page all fields must be selected
+    console.log("handleconinue", sortedConditions[currentPageIndex]);
     if (currentPageIndex === 0) {
       if (
         processor === undefined ||
@@ -122,6 +138,7 @@ const LaptopsQuestions = (props) => {
         return;
       }
     }
+    // if (currentPageIndex === 1) {
     if (currentPageIndex === 1) {
       if (screenSize === undefined || graphic === undefined) {
         toast.error("Select Both ScreenSize & Graphic to proceed..!");
@@ -241,7 +258,45 @@ const LaptopsQuestions = (props) => {
                             >
                               search
                             </option>
-                            {condition.conditionLabels.map((label, index) => (
+                            {productsData.brand.name === "Apple" &&
+                            condition.conditionName === "Processor"
+                              ? condition.conditionLabels
+                                  .filter((label) =>
+                                    label.conditionLabel
+                                      .toLowerCase()
+                                      .includes("apple")
+                                  )
+                                  .map((label, index) => (
+                                    <option
+                                      key={index}
+                                      data-arg1={label.conditionLabel}
+                                      data-arg2={label.priceDrop}
+                                      data-arg3={condition.conditionName}
+                                      data-arg4={label.operation}
+                                    >
+                                      {label.conditionLabel}
+                                    </option>
+                                  ))
+                              : condition.conditionLabels
+                                  .filter(
+                                    (label) =>
+                                      !label.conditionLabel
+                                        .toLowerCase()
+                                        .includes("apple")
+                                  )
+                                  .map((label, index) => (
+                                    <option
+                                      key={index}
+                                      data-arg1={label.conditionLabel}
+                                      data-arg2={label.priceDrop}
+                                      data-arg3={condition.conditionName}
+                                      data-arg4={label.operation}
+                                    >
+                                      {label.conditionLabel}
+                                    </option>
+                                  ))}
+
+                            {/* {condition.conditionLabels.map((label, index) => (
                               <option
                                 key={index}
                                 data-arg1={label.conditionLabel}
@@ -251,7 +306,7 @@ const LaptopsQuestions = (props) => {
                               >
                                 {label.conditionLabel}
                               </option>
-                            ))}
+                            ))} */}
                           </select>
                         </div>
                       </>
@@ -259,7 +314,7 @@ const LaptopsQuestions = (props) => {
                       <div>
                         {!condition.conditionName.includes("Age") ? (
                           <>
-                            <DeductionItems
+                            <LaptopDeductionItems
                               // key={index}
                               conditionName={condition.conditionName}
                               conditionLabels={condition.conditionLabels}

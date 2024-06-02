@@ -6,9 +6,7 @@ import {
   addScreenCondition,
 } from "../../features/laptopDeductionSlice";
 
-import { addProductScreenCondition } from "../../features/deductionSlice";
-
-const DeductionItems = ({
+const LaptopDeductionItems = ({
   conditionName,
   conditionLabels,
   handleLabelSelection,
@@ -18,16 +16,20 @@ const DeductionItems = ({
   setScreenCondition,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
-  const deductionSliceData = useSelector((state) => state.deductions);
-  console.log("deductionSliceData", deductionSliceData);
 
   const dispatch = useDispatch();
 
+  const laptopSliceData = useSelector((state) => state.laptopDeductions);
+  console.log("laptopSliceData", laptopSliceData);
+
   // Determine if the image should be shown based on the condition name
   const shouldShowImage = !(
-    conditionName.includes("Screen Size") ||
-    conditionName.includes("Graphic") ||
-    conditionName.toLowerCase().includes("screen condition")
+    (
+      conditionName.includes("Screen Size") ||
+      conditionName.includes("Graphic") ||
+      conditionName.toLowerCase().includes("screen condition")
+    )
+    // || conditionName.toLowerCase().includes("screen")
   );
 
   console.log("shouldHideImage", shouldShowImage);
@@ -59,8 +61,12 @@ const DeductionItems = ({
                 )
                 ? " border-cyan-500"
                 : ""
-              : deductionSliceData.productScreenCondition.conditionLabel ===
-                label.conditionLabel
+              : laptopSliceData.screenSize.conditionLabel ===
+                  label.conditionLabel ||
+                laptopSliceData.graphic.conditionLabel ===
+                  label.conditionLabel ||
+                laptopSliceData.screenCondition.conditionLabel ===
+                  label.conditionLabel
               ? "border-cyan-500"
               : ""
           } flex flex-col border rounded items-center`}
@@ -72,22 +78,59 @@ const DeductionItems = ({
                 label.operation
               );
             }
-
+            // if (
+            //   !conditionName.includes("Screen Size") ||
+            //   !conditionName.includes("Graphic")
+            // ) {
+            //   handleLabelSelection(
+            //     label.conditionLabel,
+            //     label.priceDrop,
+            //     label.operation
+            //   );
+            // }
             if (conditionName.includes("Screen Size")) {
               // console.log("Screen Size");
-            } else if (conditionName.includes("Graphic")) {
-              // console.log("Graphic");
-            } else if (
-              conditionName.toLowerCase().includes("screen condition")
-            ) {
-              // dispatch(addProductScreenCondition)
               dispatch(
-                addProductScreenCondition({
+                addScreenSize({
                   conditionLabel: label.conditionLabel,
                   priceDrop: label.priceDrop,
                   operation: label.operation,
                 })
               );
+              setScreenSize({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
+            } else if (conditionName.includes("Graphic")) {
+              // console.log("Graphic");
+              dispatch(
+                addGraphic({
+                  conditionLabel: label.conditionLabel,
+                  priceDrop: label.priceDrop,
+                  operation: label.operation,
+                })
+              );
+              setGraphic({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
+            } else if (
+              conditionName.toLowerCase().includes("screen condition")
+            ) {
+              dispatch(
+                addScreenCondition({
+                  conditionLabel: label.conditionLabel,
+                  priceDrop: label.priceDrop,
+                  operation: label.operation,
+                })
+              );
+              setScreenCondition({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             }
           }}
         >
@@ -143,4 +186,4 @@ const DeductionItems = ({
   );
 };
 
-export default DeductionItems;
+export default LaptopDeductionItems;
