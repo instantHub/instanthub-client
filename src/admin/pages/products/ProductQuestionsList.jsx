@@ -334,6 +334,185 @@ const ProductQuestionsList = () => {
                       </div>
                       <hr />
                       <div className="flex flex-col">
+                        {productData.category.name === "Laptop" &&
+                        productData.brand.name === "Apple"
+                          ? condition.conditionLabels &&
+                            condition.conditionLabels
+                              .filter((label) =>
+                                label.conditionLabel
+                                  .toLowerCase()
+                                  .includes("apple")
+                              )
+                              .map((conditionLabel, index) => (
+                                <div
+                                  key={index}
+                                  className="flex gap-6 items-center mt-2"
+                                >
+                                  <div>
+                                    <div>
+                                      <h1 className="text-sm">
+                                        {conditionLabel.conditionLabel}
+                                      </h1>
+                                    </div>
+
+                                    <div className="flex items-center gap-1">
+                                      <input
+                                        type="number"
+                                        name="priceDrop"
+                                        value={conditionLabel.priceDrop}
+                                        className="border px-3 py-1 rounded text-[0.9rem]"
+                                        placeholder="Price Drop"
+                                        // onChange={handleInputChange}
+                                        onChange={(e) =>
+                                          handlePriceDropChange2(
+                                            conditionLabel.conditionLabelId,
+                                            parseInt(e.target.value),
+                                            e.target.name
+                                          )
+                                        }
+                                        required
+                                      />
+                                      <h1>%</h1>
+                                    </div>
+                                  </div>
+                                  {/* <div>
+                                  <h1>%</h1>
+                                </div> */}
+                                  <div>
+                                    <img
+                                      src={
+                                        import.meta.env.VITE_APP_BASE_URL +
+                                        conditionLabel.conditionLabelImg
+                                      }
+                                      alt="conditionLabelImg"
+                                      className="w-[60px] h-[60px] mx-auto "
+                                    />
+                                  </div>
+                                  <div className="flex gap-4">
+                                    <div className="w-[82px] text-center">
+                                      <h1
+                                        className={`${
+                                          conditionLabel.operation ===
+                                          "Subtrack"
+                                            ? "bg-red-200"
+                                            : "bg-blue-200"
+                                        } text-black font-bold px-2 py-1 rounded`}
+                                      >
+                                        {conditionLabel.operation}
+                                      </h1>
+                                    </div>
+                                    <select
+                                      name="operation"
+                                      id=""
+                                      className="border rounded px-1"
+                                      onChange={(e) => {
+                                        if (e.target.value !== "") {
+                                          handlePriceDropChange2(
+                                            conditionLabel.conditionLabelId,
+                                            e.target.value,
+                                            e.target.name
+                                          );
+                                        }
+                                      }}
+                                    >
+                                      <option value="">Select Operation</option>
+                                      <option value="Subtrack">Subtrack</option>
+                                      <option value="Add">Add</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              ))
+                          : condition.conditionLabels &&
+                            condition.conditionLabels
+                              .filter(
+                                (label) =>
+                                  !label.conditionLabel
+                                    .toLowerCase()
+                                    .includes("apple")
+                              )
+                              .map((conditionLabel, index) => (
+                                <div
+                                  key={index}
+                                  className="flex gap-6 items-center mt-2"
+                                >
+                                  <div>
+                                    <div>
+                                      <h1 className="text-sm">
+                                        {conditionLabel.conditionLabel}
+                                      </h1>
+                                    </div>
+
+                                    <div className="flex items-center gap-1">
+                                      <input
+                                        type="number"
+                                        name="priceDrop"
+                                        value={conditionLabel.priceDrop}
+                                        className="border px-3 py-1 rounded text-[0.9rem]"
+                                        placeholder="Price Drop"
+                                        // onChange={handleInputChange}
+                                        onChange={(e) =>
+                                          handlePriceDropChange2(
+                                            conditionLabel.conditionLabelId,
+                                            parseInt(e.target.value),
+                                            e.target.name
+                                          )
+                                        }
+                                        required
+                                      />
+                                      <h1>%</h1>
+                                    </div>
+                                  </div>
+                                  {/* <div>
+                                <h1>%</h1>
+                              </div> */}
+                                  <div>
+                                    <img
+                                      src={
+                                        import.meta.env.VITE_APP_BASE_URL +
+                                        conditionLabel.conditionLabelImg
+                                      }
+                                      alt="conditionLabelImg"
+                                      className="w-[60px] h-[60px] mx-auto "
+                                    />
+                                  </div>
+                                  <div className="flex gap-4">
+                                    <div className="w-[82px] text-center">
+                                      <h1
+                                        className={`${
+                                          conditionLabel.operation ===
+                                          "Subtrack"
+                                            ? "bg-red-200"
+                                            : "bg-blue-200"
+                                        } text-black font-bold px-2 py-1 rounded`}
+                                      >
+                                        {conditionLabel.operation}
+                                      </h1>
+                                    </div>
+                                    <select
+                                      name="operation"
+                                      id=""
+                                      className="border rounded px-1"
+                                      onChange={(e) => {
+                                        if (e.target.value !== "") {
+                                          handlePriceDropChange2(
+                                            conditionLabel.conditionLabelId,
+                                            e.target.value,
+                                            e.target.name
+                                          );
+                                        }
+                                      }}
+                                    >
+                                      <option value="">Select Operation</option>
+                                      <option value="Subtrack">Subtrack</option>
+                                      <option value="Add">Add</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              ))}
+                      </div>
+
+                      {/* comment */}
+                      {/* <div className="flex flex-col">
                         {condition.conditionLabels &&
                           condition.conditionLabels.map(
                             (conditionLabel, index) => (
@@ -368,9 +547,7 @@ const ProductQuestionsList = () => {
                                     <h1>%</h1>
                                   </div>
                                 </div>
-                                {/* <div>
-                                  <h1>%</h1>
-                                </div> */}
+                               
                                 <div>
                                   <img
                                     src={
@@ -415,7 +592,7 @@ const ProductQuestionsList = () => {
                               </div>
                             )
                           )}
-                      </div>
+                      </div> */}
                     </div>
                   ))}
                 <div className="py-3 px-2">

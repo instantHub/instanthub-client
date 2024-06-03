@@ -95,7 +95,7 @@ const LaptopsQuestions = (props) => {
     }, {});
 
     // Custom order for page 1
-    const customOrder = ["Processor", "Hard Disk", "Ram"];
+    const customOrder = ["Processor", "Ram", "Hard Disk"];
     if (grouped[1]) {
       grouped[1].sort((a, b) => {
         return (
