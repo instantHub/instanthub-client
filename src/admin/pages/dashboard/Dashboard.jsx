@@ -31,9 +31,9 @@ const Dashboard = () => {
       countOut = 0;
     if (!stocksDataLoading) {
       stocksData.map((s) => {
-        if (s.status.toLowerCase().includes("in")) {
+        if (s.stockStatus.toLowerCase().includes("in")) {
           countIn = countIn + 1;
-        } else if (s.status.toLowerCase().includes("out")) {
+        } else if (s.stockStatus.toLowerCase().includes("out")) {
           countOut = countOut + 1;
         }
       });

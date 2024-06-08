@@ -32,7 +32,7 @@ const FloatingButtons = () => {
       </div> */}
 
       {/* Buttons on right of screen */}
-      <div className="fixed bottom-0 right-0 w-full z-10 lg:top-[75%] lg:-translate-y-1/2 lg:right-4 lg:w-auto flex lg:flex-col lg:space-y-4 bg-gray-800 lg:bg-transparent">
+      <div className="fixed bottom-0 h-11 right-0 w-full z-10 lg:top-[75%] lg:-translate-y-1/2 lg:right-4 lg:w-auto flex lg:flex-col lg:space-y-4 bg-gray-800 lg:bg-transparent">
         <a
           href={`https://wa.me/8722288017?text=${defaultMessage}`}
           target="_blank"
