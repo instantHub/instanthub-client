@@ -21,22 +21,39 @@ const SearchBar = () => {
 
   console.log("productsData", productsData);
 
+  console.log(
+    "import.meta.env.VITE_APP_BASE_URL",
+    import.meta.env.VITE_BUILD === "development"
+  );
+
   const handleSearch = async () => {
     // setSearched(true);
     // setPage(1);
     try {
       setProductsLoading(true);
-      const response = await axios.get("http://localhost:8000/api/products", {
-      // const response = await axios.get(
-      //   "https://api.yusufqureshi.online/api/products",
-      //   {
+
+      let response;
+      if (import.meta.env.VITE_BUILD === "development") {
+        response = await axios.get("http://localhost:8000/api/products", {
           params: {
             search: search.trim() ? search : undefined,
             page,
             limit: 10,
           },
-        }
-      );
+        });
+      } else if (import.meta.env.VITE_BUILD === "production") {
+        response = await axios.get(
+          "https://api.yusufqureshi.online/api/products",
+          {
+            params: {
+              search: search.trim() ? search : undefined,
+              page,
+              limit: 10,
+            },
+          }
+        );
+      }
+
       // const response = await axios.get("/api/products", {
       //   params: {
       //     search: search.trim() ? search : undefined,

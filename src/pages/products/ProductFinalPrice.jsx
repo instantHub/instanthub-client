@@ -327,7 +327,7 @@ const ProductFinalPrice = () => {
                 />
               </div>
               <div className="flex flex-col items-center justify-center">
-                <div className="flex flex-col gap-2 text-2xl text-yellow-500 font-semibold max-sm:text-xl">
+                <div className="flex flex-col gap-2 text-lg text-yellow-500 font-semibold max-sm:text-xl">
                   <span>{selectedProdDetails.productName}</span>
                   {productDetails?.category.name === "Mobile" ? (
                     <span>{selectedProdDetails.getUpTo.variantName}</span>
