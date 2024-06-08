@@ -7,6 +7,7 @@ import {
 } from "../../features/laptopDeductionSlice";
 
 import { addProductScreenCondition } from "../../features/deductionSlice";
+import { BsCircle } from "react-icons/bs";
 
 const DeductionItems = ({
   conditionName,
@@ -39,9 +40,11 @@ const DeductionItems = ({
       ${
         conditionName.toLowerCase().includes("screen condition")
           ? `grid lg:grid-cols-2 md:grid-cols-1 gap-2 items-center px-2`
-          : `${
+          : //grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2
+
+            `${
               !shouldShowImage
-                ? `grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
+                ? `grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-4 items-center px-4 `
                 : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
             }`
       }
@@ -53,17 +56,24 @@ const DeductionItems = ({
           key={index}
           className={`${
             shouldShowImage
-              ? deductionData.some(
+              ? `flex flex-col 
+              ${
+                deductionData.some(
                   (condLabel) =>
                     condLabel.conditionLabel == label.conditionLabel
                 )
-                ? " border-cyan-500"
-                : ""
-              : deductionSliceData.productScreenCondition.conditionLabel ===
-                label.conditionLabel
-              ? "border-cyan-500"
-              : ""
-          } flex flex-col border rounded items-center`}
+                  ? " border-cyan-500"
+                  : ""
+              }`
+              : `flex px-2 ${
+                  deductionSliceData.productScreenCondition.conditionLabel ===
+                  label.conditionLabel
+                    ? "border-cyan-500"
+                    : ""
+                }`
+          } 
+           border rounded items-center`}
+          // } flex flex-col border rounded items-center`}
           onClick={() => {
             if (shouldShowImage) {
               handleLabelSelection(
@@ -116,8 +126,8 @@ const DeductionItems = ({
             } 
             ${
               shouldShowImage
-                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[13px] max-md:text-[12px] max-sm:text-sm"
-                : "flex text-sm items-center gap-1 py-4 bg-white "
+                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
+                : "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white "
             }
             `}
           >
@@ -129,13 +139,18 @@ const DeductionItems = ({
                       (condLabel) =>
                         condLabel.conditionLabel == label.conditionLabel
                     )
-                      ? "border-cyan-500"
-                      : "border-surface-dark"
-                  } border border-solid rounded-full w-5 h-5 mr-1.5`}
-                ></span>
+                      ? "text-cyan-500"
+                      : deductionSliceData.productScreenCondition
+                          .conditionLabel === label.conditionLabel
+                      ? "text-cyan-500"
+                      : "opacity-30"
+                  } `}
+                >
+                  <BsCircle />
+                </span>
               </>
             ) : null}
-            {label.conditionLabel}
+            <span className="block">{label.conditionLabel}</span>
           </div>
         </div>
       ))}

@@ -176,6 +176,10 @@ const OrdersList = () => {
       // Mark the file input as required again
       fileInputRef1.current.required = true;
       fileInputRef2.current.required = true;
+      setPickedUpBy("");
+      setFinalPrice("");
+      setDeviceInfo();
+      setSelectedDate();
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -223,11 +227,11 @@ const OrdersList = () => {
   return (
     <>
       {/* //Products based on the Category selected */}
-      <div className="p-4 bg-black">
-        <h2 className="text-white text-lg font-bold mb-4">Orders Table</h2>
-        <div className="mb-4">
+      <div className="p-4">
+        <h2 className=" text-lg font-bold mb-4">Orders Table</h2>
+        {/* <div className="mb-4">
           <h1>Orders List</h1>
-        </div>
+        </div> */}
         <table className="w-full">
           <thead>
             <tr>

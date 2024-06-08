@@ -26,10 +26,10 @@ const SearchBar = () => {
     // setPage(1);
     try {
       setProductsLoading(true);
-      // const response = await axios.get("http://localhost:8000/api/products", {
-      const response = await axios.get(
-        "https://api.yusufqureshi.online/api/products",
-        {
+      const response = await axios.get("http://localhost:8000/api/products", {
+      // const response = await axios.get(
+      //   "https://api.yusufqureshi.online/api/products",
+      //   {
           params: {
             search: search.trim() ? search : undefined,
             page,

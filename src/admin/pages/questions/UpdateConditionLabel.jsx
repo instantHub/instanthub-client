@@ -4,6 +4,7 @@ import {
   useUpdateConditionMutation,
   useUploadConditionLabelsImageMutation,
   useUpdateConditionLabelMutation,
+  useDeleteCLImageMutation,
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,6 +26,9 @@ function UpdateConditionLabel() {
     },
   ] = useUpdateConditionLabelMutation();
 
+  const [deleteCLImage, { isLoading: deleteLoading }] =
+    useDeleteCLImageMutation();
+
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
@@ -42,19 +46,6 @@ function UpdateConditionLabel() {
     );
   }
 
-  useEffect(() => {
-    if (conditionLabelsData) {
-      console.log("useEffect", conditionLabelToUpdate);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        category: conditionLabelToUpdate[0].category.id,
-        conditionNameId: conditionLabelToUpdate[0].conditionNameId.id,
-        conditionLabel: conditionLabelToUpdate[0].conditionLabel,
-        conditionLabelImg: conditionLabelToUpdate[0].conditionLabelImg,
-      }));
-    }
-  }, [conditionLabelsData]);
-
   // File handler
   const uploadFileHandler = async () => {
     const imageData = new FormData();
@@ -67,6 +58,26 @@ function UpdateConditionLabel() {
       return res.image;
     } catch (error) {
       console.log("Error: ", error);
+    }
+  };
+
+  // handle Image Delete
+  const handleImageDelete = async (e) => {
+    e.preventDefault();
+    console.log(formData.conditionLabelImg);
+
+    try {
+      const imageDeleted = await deleteCLImage(formData).unwrap();
+      // const imageDeleted = await deleteCLImage({
+      //   imageURL: formData.conditionLabelImg,
+      // }).unwrap();
+      console.log("handleImageDelete ", imageDeleted);
+      toast.success("Image Deleted successfully..!");
+      window.location.reload();
+      // Handle success
+    } catch (error) {
+      console.error("Error deleting image from conditionLabels:", error);
+      toast.error("deleting conditionLabel image failed..!");
     }
   };
 
@@ -107,6 +118,33 @@ function UpdateConditionLabel() {
     // Send formData to backend or perform any other action
     // console.log("handleSubmit", formData);
   };
+
+  useEffect(() => {
+    if (conditionLabelsData) {
+      console.log("useEffect", conditionLabelToUpdate);
+
+      if (conditionLabelToUpdate[0].conditionLabelImg) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          category: conditionLabelToUpdate[0].category.id,
+          conditionNameId: conditionLabelToUpdate[0].conditionNameId.id,
+          conditionLabel: conditionLabelToUpdate[0].conditionLabel,
+          conditionLabelImg: conditionLabelToUpdate[0].conditionLabelImg,
+          conditionLabelId: conditionLabelToUpdate[0].id,
+        }));
+      } else {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          category: conditionLabelToUpdate[0].category.id,
+          conditionNameId: conditionLabelToUpdate[0].conditionNameId.id,
+          conditionLabel: conditionLabelToUpdate[0].conditionLabel,
+          conditionLabelId: conditionLabelToUpdate[0].id,
+        }));
+      }
+    }
+  }, [conditionLabelsData]);
+
+  console.log(formData);
 
   return (
     <>
@@ -174,28 +212,42 @@ function UpdateConditionLabel() {
                           }
                         />
                       </div>
-                      <div className="flex items-center grow-0">
-                        <img
-                          src={
-                            import.meta.env.VITE_APP_BASE_URL +
-                            formData.conditionLabelImg
-                          }
-                          alt="ConditionLabel"
-                          className="w-[100px] h-[100px] mx-auto "
-                        />
-                        <input
-                          type="file"
-                          name=""
-                          ref={fileInputRef}
-                          id=""
-                          onChange={(e) => {
-                            setFormData({
-                              ...formData,
-                              conditionLabelImg: e.target.files[0],
-                            });
-                            setNewImgSelected(true);
-                          }}
-                        />
+                      <div className="flex flex-col items-center grow-0">
+                        <div className="flex items-center">
+                          <img
+                            src={
+                              import.meta.env.VITE_APP_BASE_URL +
+                              formData.conditionLabelImg
+                            }
+                            alt="ConditionLabel"
+                            className="w-[100px] h-[100px] mx-auto "
+                          />
+
+                          <input
+                            type="file"
+                            name=""
+                            ref={fileInputRef}
+                            id=""
+                            onChange={(e) => {
+                              setFormData({
+                                ...formData,
+                                conditionLabelImg: e.target.files[0],
+                              });
+                              setNewImgSelected(true);
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          {formData.conditionLabelImg ? (
+                            <button
+                              onClick={(e) => handleImageDelete(e)}
+                              className="px-2 py-1 text-white bg-red-500 rounded w-fit"
+                            >
+                              Delete Image
+                            </button>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>

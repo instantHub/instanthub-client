@@ -16,6 +16,7 @@ const UpdateProduct = () => {
   const [prodName, setProdName] = useState("");
   const [imageSelected, setImageSelected] = useState("");
   const [newImgSelected, setNewImgSelected] = useState(false);
+  const [status, setStatus] = useState("");
   const [uniqueURL, setUniqueURL] = useState("");
   const [oldVariants, setOldVariants] = useState();
   const [variantLen, setVariantLen] = useState(0);
@@ -105,6 +106,7 @@ const UpdateProduct = () => {
       image: newImgSelected ? imageURL : imageSelected,
       category,
       brand,
+      status,
       variants: variants,
       oldVariants: oldVariants,
     };
@@ -147,6 +149,7 @@ const UpdateProduct = () => {
       setBrand(productData.brand.id);
       setUniqueURL(productData.uniqueURL);
       setImageSelected(productData.image);
+      setStatus(productData.status);
       // Variants - Extract only name and price from each variant and create a new array
       // const extractedVariants = productData.variants.map((variant) => ({
       //   name: variant.name,
@@ -163,6 +166,7 @@ const UpdateProduct = () => {
       setUpdatedVariantLen(extractedVariants.length);
     }
   }, [productData]);
+  console.log("Prod Status", status);
   console.log("Variant", variants);
   console.log("Old Variant", oldVariants);
   console.log("variantLength", variantLen);
@@ -179,7 +183,7 @@ const UpdateProduct = () => {
               <h2 className="pl-1"> / Update Product</h2>
             </div>
             <div>
-              <Link to={"/admin/productsList"}>
+              <Link to={"/admin/products-list"}>
                 <button className="bg-blue-700 text-white px-2 py-1 rounded">
                   Back
                 </button>
@@ -303,10 +307,12 @@ const UpdateProduct = () => {
                   <select
                     id="status"
                     name="status"
+                    value={status}
                     className="border rounded-sm p-2"
+                    onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="active">Active</option>
-                    <option value="blocked">Blocked</option>
+                    <option value="Active">Active</option>
+                    <option value="Blocked">Blocked</option>
                   </select>
                 </div>
               </div>

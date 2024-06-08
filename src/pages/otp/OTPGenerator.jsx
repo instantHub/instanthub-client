@@ -47,7 +47,11 @@ const OtpGenerator = (props) => {
   };
 
   const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
+    const { value } = e.target;
+    const phoneNumberPattern = /^[0-9]{0,10}$/; // Regular expression to match up to 10 digits
+    if (phoneNumberPattern.test(value)) {
+      setPhoneNumber(value);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -204,19 +208,17 @@ const OtpGenerator = (props) => {
                       id="phoneNumber"
                       maxLength={10}
                       // value={phoneNumber}
-                      // onChange={(e) => {
-                      //   if (phoneNumber.length <= 10) {
-                      //     handlePhoneNumberChange(e);
-                      //   } else {
-                      //     return;
-                      //   }
-                      // }}
                       onChange={handlePhoneNumberChange}
                       // className="border-b rounded mr-2 px-2 focus:bg-transparent outline-none "
                       className="border-b rounded mr-2 px-2 focus:bg-transparent outline-none bg-black bg-opacity-50"
                       placeholder="Enter Mobile Number"
                       required
                     />
+                    {phoneNumber.length > 10 && (
+                      <p className="text-red-500">
+                        Phone number cannot exceed 10 digits.
+                      </p>
+                    )}
                   </div>
 
                   <button

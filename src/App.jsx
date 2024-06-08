@@ -16,6 +16,7 @@ import ClientProductDetail from "./pages/products/ProductDetail";
 import ClientProductDeductions from "./pages/products/ProductQuestions";
 import ClientOtpGenerator from "./pages/otp/OTPGenerator";
 import ClientProductFinalPrice from "./pages/products/ProductFinalPrice";
+import ClientPrivacyPolicy from "./components/PrivacyPolicy";
 // import emailcheck from './components/'
 
 // Admin side
@@ -49,6 +50,9 @@ import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
 import AdminSlidersList from "./admin/pages/sliders/SlidersList";
 import AdminUpdateSlider from "./admin/pages/sliders/UpdateSlider";
 import AdminOrdersList from "./admin/pages/orders/OrdersList";
+import AdminPhoneNumbers from "./admin/pages/orders/PhoneNumbersList";
+import AdminManageStocks from "./admin/pages/stocks/ManageStocks";
+import AdminCreateCoupon from "./admin/pages/coupons/CreateCoupon";
 
 import Admin from "./admin/Admin";
 import AdminLayout from "./admin/pages/layout/Layout";
@@ -75,6 +79,10 @@ function App() {
         {
           path: "/contact-us",
           element: <ContactUs />,
+        },
+        {
+          path: "/privacy-policy",
+          element: <ClientPrivacyPolicy />,
         },
         {
           index: true,
@@ -167,7 +175,7 @@ function App() {
               element: <AdminProducts />,
             },
             {
-              path: "/admin/productsList",
+              path: "/admin/products-list",
               element: <AdminProductsList />,
             },
             {
@@ -227,7 +235,7 @@ function App() {
               element: <AdminUpdateSeries />,
             },
             {
-              path: "/admin/questions",
+              path: "/admin/create-questions",
               element: <AdminCreateConditions />,
             },
             {
@@ -261,6 +269,18 @@ function App() {
             {
               path: "/admin/orders",
               element: <AdminOrdersList />,
+            },
+            {
+              path: "/admin/manage-stocks",
+              element: <AdminManageStocks />,
+            },
+            {
+              path: "/admin/phone-numbers",
+              element: <AdminPhoneNumbers />,
+            },
+            {
+              path: "/admin/add-coupons",
+              element: <AdminCreateCoupon />,
             },
           ],
         },

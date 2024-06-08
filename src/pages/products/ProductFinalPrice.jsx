@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   useCreateOrderMutation,
+  useGetCouponQuery,
   useGetProductDetailsQuery,
 } from "../../features/api";
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Helmet } from "react-helmet-async";
+import { FaAngleRight } from "react-icons/fa6";
+import FAQ from "../../components/FAQ";
 
 const ProductFinalPrice = () => {
+  const { data: couponsData, isLoading: couponsDataLoading } =
+    useGetCouponQuery();
+  const [couponCode, setCouponCode] = useState("");
+  const [couponPrice, setCouponPrice] = useState("");
+  const [couponCodeApplied, setCouponCodeApplied] = useState(false);
   const selectedProdDetails = useSelector((state) => state.deductions);
   const [formData, setFormData] = useState();
   const [addressDetails, setAddressDetails] = useState();
   const [offerPrice, setOfferPrice] = useState();
+  const [specialPrice, setSpecialPrice] = useState();
   const [accessoriesNotSelected, setAccessoriesNotSelected] = useState([]);
   const [accessoriesSelected, setAccessoriesSelected] = useState([]);
 
   const [selectedDate, setSelectedDate] = useState(null);
+  const [couponView, setCouponView] = useState(false);
   const currentDate = new Date();
+
+  const couponDiv = useRef(null);
 
   // Set the minimum time to 10:00 AM
   const minTime = new Date();
@@ -41,6 +53,8 @@ const ProductFinalPrice = () => {
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  // console.log("productDetails", productDetails);
 
   const openModal = () => {
     setIsOpen(true);
@@ -94,12 +108,37 @@ const ProductFinalPrice = () => {
     setFormData({ ...formData, schedulePickUp: formattedDate });
   };
 
+  const handleCoupon = async () => {
+    console.log("handleCoupon");
+
+    console.log(couponCode);
+    const couponFound = couponsData.find((c) => c.couponCode === couponCode);
+    console.log("couponFound", couponFound);
+    if (couponFound) {
+      const currentPrice = offerPrice;
+
+      const couponValue = (couponFound.couponValue * currentPrice) / 100;
+
+      setCouponPrice(couponValue);
+
+      const finalPrice = couponValue + offerPrice;
+
+      setCouponCodeApplied(true);
+      setSpecialPrice(finalPrice);
+      setCouponView(false);
+      toast.success("Coupon Code Applied Successfully");
+    } else {
+      toast.error("Invalid Coupon Code..!");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const orderData = {
       ...formData,
       addressDetails,
+      offerPrice: couponCodeApplied ? specialPrice : offerPrice,
     };
     console.log("orderData", orderData);
 
@@ -113,6 +152,7 @@ const ProductFinalPrice = () => {
     }
   };
 
+  // UseEffect to handle page refresh
   useEffect(() => {
     console.log(
       "!selectedProdDetails.productAge",
@@ -127,6 +167,7 @@ const ProductFinalPrice = () => {
     }
   }, [selectedProdDetails]);
 
+  // UseEffect to get complete final data
   useEffect(() => {
     let prodDeductions;
     if (!productLoading) {
@@ -218,7 +259,7 @@ const ProductFinalPrice = () => {
         deductions: selectedProdDetails.deductions,
         // accessoriesNotAvailable: AccessoriesNotSelected,
         accessoriesAvailable: AccessoriesSelected,
-        offerPrice: Math.ceil(deductedPrice),
+        // offerPrice: Math.ceil(deductedPrice),
         status: "pending",
       });
     } else {
@@ -229,7 +270,7 @@ const ProductFinalPrice = () => {
         variant: selectedProdDetails.getUpTo,
         deductions: selectedProdDetails.deductions,
         accessoriesAvailable: AccessoriesSelected,
-        offerPrice: Math.ceil(deductedPrice),
+        // offerPrice: Math.ceil(deductedPrice),
         status: "pending",
       });
     }
@@ -258,81 +299,289 @@ const ProductFinalPrice = () => {
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
-      <div className="flex flex-col items-center my-10 mx-auto">
-        <div className="p-4 flex flex-col items-center">
-          <h1 className="text-[20px]">
-            Product {"  "}
-            <span className="text-[30px] text-yellow-500 font-semibold">
-              {selectedProdDetails.productName +
-                " " +
-                selectedProdDetails.getUpTo.variantName}
-            </span>
-            <span className="text-[25px] text-green-600 font-bold"></span>
-          </h1>
 
-          <h1 className="text-[20px]">
-            Offered Price{" "}
-            <span className="text-[30px] text-green-600 font-bold">
-              {/* {formData.offerPrice && formData.offerPrice} */}
-              {offerPrice}
-              /-
-              {/* {Number(selectedProdDetails.getUpTo.price)}
-              {" - "}
-              {Number(selectedProdDetails.toBeDeducted)} */}
-            </span>
-          </h1>
-          <h1 className="text-center">
-            This is your Products Offered Price based on the following criteria
-            which you mentioned
-          </h1>
-          {/* Selected ConditionLabels Items List */}
-          <div>
-            <div>
-              <h1 className="text-lg font-semibold py-2">
-                Selected Conditions
-              </h1>
-              {selectedProdDetails.deductions.map((deduction, index) => (
-                <h1 key={index}>
-                  <span>{index + 1}. </span>{" "}
-                  <span className="text-lg font-semibold text-red-600">
-                    {deduction.conditionLabel}
-                  </span>
-                </h1>
-              ))}
-            </div>
-            {accessoriesNotSelected.length > 0 ? (
-              <div className="mt-4">
-                <h1 className="text-lg font-semibold py-2">
-                  Accessories Not Selected
-                </h1>
-                <div>
-                  {accessoriesNotSelected.map((a, index) => (
-                    <h1 key={index}>
-                      {" "}
-                      <span>{index + 1}. </span>{" "}
-                      <span className="text-lg font-semibold text-red-600">
-                        {a.conditionLabel}
-                      </span>
-                    </h1>
-                  ))}
+      <div className="flex flex-col justify-between items- pt-2 px-10 bg-slate-200 bg-opacity-10 w-full">
+        <div className=" justify-start items-start mb-2">
+          <Link to={`/categories/brands/productDetails/${productDetails?.id}`}>
+            <button className=" text-cyan-600 bg-white px-2 py-1 border border-cyan-600 rounded">
+              Back
+            </button>
+          </Link>
+        </div>
+
+        <div className="w-full flex gap-10 max-sm:flex-col">
+          {/* Left */}
+          <div
+            className={`${
+              couponCodeApplied ? ` max-h-[630px]` : ` max-h-[600px]`
+            } w-[40%] bg-white grow-0 border-l border-r px-4 py-2 shadow-md flex flex-col items-center justify-center max-sm:w-full`}
+          >
+            <div className="flex justify-center items-center">
+              <div>
+                <img
+                  src={`${import.meta.env.VITE_APP_BASE_URL}${
+                    productDetails && productDetails.image
+                  }`}
+                  alt="productImage"
+                  className="size-20 max-sm:size-24"
+                />
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col gap-2 text-2xl text-yellow-500 font-semibold max-sm:text-xl">
+                  <span>{selectedProdDetails.productName}</span>
+                  {productDetails?.category.name === "Mobile" ? (
+                    <span>{selectedProdDetails.getUpTo.variantName}</span>
+                  ) : null}
                 </div>
+                {/* <h2 className="text-xl">
+                Offered Price{" "}
+                <span className="text-[30px] text-green-600 font-bold">
+                  {offerPrice}
+                  /-
+                </span>
+              </h2> */}
+              </div>
+            </div>
+
+            <div className="flex w-full justify-end mt-5">
+              <Link
+                to={`/sell/deductions?productId=${productDetails?.id}&variant=${selectedProdDetails?.getUpTo.variantName}`}
+              >
+                <button
+                  className="px-2 border-b rounded"
+                  // onClick={() => window.location.reload()}
+                >
+                  Recalculate
+                </button>
+              </Link>
+            </div>
+
+            {/* Price Summary */}
+            <div className="flex flex-col w-full items-start mt-2 mb-7 gap-4 border rounded shadow-md px-4 py-2">
+              <h2 className="pb-2 border-b">Price Summary</h2>
+              <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
+                <h2>Offered Price</h2>
+                <span>₹{offerPrice}</span>
+              </div>
+              <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
+                <h2>PickUp Charges</h2>
+                <div className="flex items-center">
+                  <span className="text-green-500">Free</span>
+                  <span className="pl-1 line-through">₹100</span>
+                </div>
+              </div>
+              <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
+                <h2>Processing Fee</h2>
+                <div className="flex items-center">
+                  <span className="text-green-500">Free</span>
+                  <span className="pl-1 line-through">₹50</span>
+                </div>
+              </div>
+              {couponCodeApplied && (
+                <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
+                  <h2>Coupon</h2>
+                  <div className="flex items-center">
+                    <span className="pl-1">₹{couponPrice}</span>
+                  </div>
+                </div>
+              )}
+              <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
+                <h2>Total</h2>
+                {couponCodeApplied ? (
+                  <span>₹{specialPrice}</span>
+                ) : (
+                  <span>₹{offerPrice}</span>
+                )}
+              </div>
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={openModal}
+                  className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
+                >
+                  Sell
+                </button>
+              </div>
+            </div>
+
+            <div className="w-full px-4 py-4 border rounded shadow-md">
+              <div
+                className="flex justify-between items-center"
+                onClick={() => setCouponView(true)}
+                ref={couponDiv}
+              >
+                <div className="flex items-center gap-2">
+                  <span>
+                    <img
+                      src="/apply_coupon.webp"
+                      alt="applycoupon"
+                      className="size-5"
+                    />
+                  </span>
+                  <span>Apply Coupon</span>
+                </div>
+                <div>
+                  <FaAngleRight />
+                </div>
+              </div>
+            </div>
+            {/* <div className="flex flex-col items-center">
+            <h2>Want to sell?..</h2>
+            <h2 className="text-center">
+              Click on "Sell" below and book your order for Instant Cash Pick
+            </h2>
+            <button
+              onClick={openModal}
+              className="px-4 py-1 border text-white bg-[#E27D60] rounded"
+            >
+              Sell
+            </button>
+          </div> */}
+          </div>
+
+          {/* Right */}
+          <div className="w-full grow flex flex-col items-center max-sm:w-full">
+            <div className="w-3/4 p-4 max-h-[550px] flex flex-col shadow-md overflow-y-auto scrollbar max-sm:w-full">
+              <div className="flex items-center justify-center">
+                <p className="text-center">
+                  This is your Products Offered Price based on the <br />
+                  following criteria that you selected
+                </p>
+              </div>
+
+              {/* Selected ConditionLabels Items List */}
+              {/* <div className="flex flex-col items-start">
+                <h2 className="text-lg font-semibold py-2">
+                  Selected Creteria
+                </h2>
+                {selectedProdDetails.deductions.map((deduction, index) => (
+                  <h2 key={index}>
+                    <span>{index + 1}. </span>{" "}
+                    <span
+                      className={`${
+                        deduction.operation.toLowerCase().includes("add")
+                          ? `text-green-600`
+                          : `text-red-500`
+                      } text-lg font-semibold`}
+                    >
+                      {deduction.conditionLabel}
+                    </span>
+                  </h2>
+                ))}
+              </div> */}
+              <div className="flex flex-col items-start">
+                <h2 className="text-lg font-semibold py-2">
+                  Positive Creteria
+                </h2>
+                {selectedProdDetails.deductions
+                  .filter((d) => d.operation.toLowerCase().includes("add"))
+                  .map((deduction, index) => (
+                    <h2 key={index}>
+                      <span>{index + 1}. </span>{" "}
+                      <span
+                        className={`${
+                          deduction.operation.toLowerCase().includes("add")
+                            ? `text-green-600`
+                            : `text-red-500`
+                        } text-lg font-semibold`}
+                      >
+                        {deduction.conditionLabel}
+                      </span>
+                    </h2>
+                  ))}
+              </div>
+              <div className="flex flex-col items-start">
+                <h2 className="text-lg font-semibold py-2">
+                  Negative Creteria
+                </h2>
+                {selectedProdDetails.deductions
+                  .filter((d) => d.operation.toLowerCase().includes("subtrack"))
+                  .map((deduction, index) => (
+                    <h2 key={index}>
+                      <span>{index + 1}. </span>{" "}
+                      <span
+                        className={`${
+                          deduction.operation.toLowerCase().includes("add")
+                            ? `text-green-600`
+                            : `text-red-500`
+                        } text-lg font-semibold`}
+                      >
+                        {deduction.conditionLabel}
+                      </span>
+                    </h2>
+                  ))}
+              </div>
+              {accessoriesNotSelected.length > 0 ? (
+                <div className="flex flex-col items-start">
+                  <h2 className="text-lg font-semibold py-2">
+                    Accessories Not Selected
+                  </h2>
+                  <div>
+                    {accessoriesNotSelected.map((a, index) => (
+                      <h2 key={index}>
+                        <span>{index + 1}. </span>{" "}
+                        <span className="text-lg font-semibold text-red-600">
+                          {a.conditionLabel}
+                        </span>
+                      </h2>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+
+            <div className="w-3/4 mt-5 flex items-center justify-center">
+              <FAQ />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {couponView && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white pt-5 px-8 rounded-lg shadow-lg w-fit">
+            <div className="flex flex-col items-start justify-center gap-2">
+              <label htmlFor="">Add Coupon Code</label>
+              <input
+                type="text"
+                name=""
+                id=""
+                placeholder="Enter Coupon Code"
+                className="px-2 py-1 border rounded"
+                onChange={(e) => setCouponCode(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex gap-2 items-center justify-center my-4">
+              {!couponCodeApplied ? (
+                <button
+                  onClick={() => handleCoupon()}
+                  className="bg-green-700 text-white px-4 py-1 rounded"
+                >
+                  Apply
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleCoupon()}
+                  className="bg-gray-500 text-white px-4 py-1 rounded pointer-events-none opacity-30"
+                >
+                  Apply
+                </button>
+              )}
+              <button
+                onClick={() => setCouponView(false)}
+                className="bg-red-700 text-white px-4 py-1 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+            {couponCodeApplied ? (
+              <div className="pb-3 text-center">
+                <p>Coupon Already Applied</p>
               </div>
             ) : null}
           </div>
         </div>
-        <div className="flex flex-col items-center">
-          <h2>Want to sell?..</h2>
-          <h2 className="text-center">
-            Click on "Sell" below and book your order for Instant Cash Pick
-          </h2>
-          <button
-            onClick={openModal}
-            className="px-4 py-1 border text-white bg-[#E27D60] rounded"
-          >
-            Sell
-          </button>
-        </div>
-      </div>
+      )}
 
       {isOpen && (
         <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

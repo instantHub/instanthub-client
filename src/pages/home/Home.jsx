@@ -6,6 +6,7 @@ import TestimonialCarousel from "../../components/TestimonialsCorousel";
 import HowItWorks from "../../components/HowItWorks";
 import WhyChooseInstantCashPicks from "../../components/WhyUs";
 import { Helmet } from "react-helmet-async";
+import FloatingButtons from "../../components/FloatingButtons";
 
 const Home = () => {
   const images = [

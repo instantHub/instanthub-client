@@ -21,6 +21,8 @@ export const api = createApi({
     "Orders",
     "Sliders",
     "Series",
+    "Stocks",
+    "Coupons",
   ],
   endpoints: (build) => ({
     getCategory: build.query({
@@ -401,6 +403,58 @@ export const api = createApi({
       }),
       invalidatesTags: ["Series"],
     }),
+    getPhoneNumbers: build.query({
+      query: () => `/api/otp`,
+      // providesTags: ["Brands"],
+    }),
+    getStocks: build.query({
+      query: () => `/api/stocks`,
+      providesTags: ["Stocks", "Orders"],
+    }),
+    stockSold: build.mutation({
+      query: (data) => ({
+        url: `/api/stocks/stock-sold`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Stocks"],
+    }),
+    deleteCLImage: build.mutation({
+      query: (data) => ({
+        url: `/api/delete/delete-cl-image`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["ConditionLabels"],
+    }),
+    getCoupon: build.query({
+      query: () => `/api/coupons`,
+      providesTags: ["Coupons"],
+    }),
+    createCoupon: build.mutation({
+      query: (data) => ({
+        url: `/api/coupons/add-coupon`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Coupons"],
+    }),
+    deleteCoupon: build.mutation({
+      query: (couponId) => ({
+        url: `/api/coupons/delete-coupon/${couponId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Coupons"],
+    }),
   }),
 });
 
@@ -452,6 +506,13 @@ export const {
   useDeleteSeriesMutation,
   useGetOTPQuery,
   useGenerateOTPMutation,
+  useGetPhoneNumbersQuery,
+  useGetStocksQuery,
+  useStockSoldMutation,
+  useDeleteCLImageMutation,
+  useGetCouponQuery,
+  useCreateCouponMutation,
+  useDeleteCouponMutation,
 } = api;
 
 // useGetAllQuestionsQuery,

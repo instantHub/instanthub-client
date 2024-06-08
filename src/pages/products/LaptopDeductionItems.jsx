@@ -5,6 +5,7 @@ import {
   addGraphic,
   addScreenCondition,
 } from "../../features/laptopDeductionSlice";
+import { BsCircle } from "react-icons/bs";
 
 const LaptopDeductionItems = ({
   conditionName,
@@ -25,8 +26,8 @@ const LaptopDeductionItems = ({
   // Determine if the image should be shown based on the condition name
   const shouldShowImage = !(
     (
-      conditionName.includes("Screen Size") ||
-      conditionName.includes("Graphic") ||
+      conditionName.toLowerCase().includes("screen size") ||
+      conditionName.toLowerCase().includes("graphic") ||
       conditionName.toLowerCase().includes("screen condition")
     )
     // || conditionName.toLowerCase().includes("screen")
@@ -43,7 +44,7 @@ const LaptopDeductionItems = ({
           ? `grid lg:grid-cols-2 md:grid-cols-1 gap-2 items-center px-2`
           : `${
               !shouldShowImage
-                ? `grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
+                ? `grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-4 items-center px-4 `
                 : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
             }`
       }
@@ -55,21 +56,25 @@ const LaptopDeductionItems = ({
           key={index}
           className={`${
             shouldShowImage
-              ? deductionData.some(
-                  (condLabel) =>
-                    condLabel.conditionLabel == label.conditionLabel
-                )
-                ? " border-cyan-500"
-                : ""
-              : laptopSliceData.screenSize.conditionLabel ===
-                  label.conditionLabel ||
-                laptopSliceData.graphic.conditionLabel ===
-                  label.conditionLabel ||
-                laptopSliceData.screenCondition.conditionLabel ===
-                  label.conditionLabel
-              ? "border-cyan-500"
-              : ""
-          } flex flex-col border rounded items-center`}
+              ? `flex flex-col ${
+                  deductionData.some(
+                    (condLabel) =>
+                      condLabel.conditionLabel == label.conditionLabel
+                  )
+                    ? " border-cyan-500"
+                    : ""
+                }`
+              : `flex px-2 ${
+                  laptopSliceData.screenSize.conditionLabel ===
+                    label.conditionLabel ||
+                  laptopSliceData.graphic.conditionLabel ===
+                    label.conditionLabel ||
+                  laptopSliceData.screenCondition.conditionLabel ===
+                    label.conditionLabel
+                    ? "border-cyan-500"
+                    : ""
+                }`
+          }  border rounded items-center`}
           onClick={() => {
             if (shouldShowImage) {
               handleLabelSelection(
@@ -159,7 +164,7 @@ const LaptopDeductionItems = ({
             } 
             ${
               shouldShowImage
-                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[13px] max-md:text-[12px] max-sm:text-sm"
+                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
                 : "flex text-sm items-center gap-1 py-4 bg-white "
             }
             `}
@@ -174,8 +179,10 @@ const LaptopDeductionItems = ({
                     )
                       ? "border-cyan-500"
                       : "border-surface-dark"
-                  } border border-solid rounded-full w-5 h-5 mr-1.5`}
-                ></span>
+                  } `}
+                >
+                  <BsCircle />
+                </span>
               </>
             ) : null}
             {label.conditionLabel}

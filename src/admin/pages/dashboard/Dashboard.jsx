@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   useGetCategoryQuery,
   useGetAllBrandQuery,
   useGetAllProductsQuery,
   useGetOrdersListQuery,
+  useGetStocksQuery,
 } from "../../../features/api";
 
 const Dashboard = () => {
@@ -16,29 +17,49 @@ const Dashboard = () => {
     useGetAllProductsQuery({ search: "" });
   const { data: ordersData, isLoading: ordersLoading } =
     useGetOrdersListQuery();
+  const { data: stocksData, isLoading: stocksDataLoading } =
+    useGetStocksQuery();
 
-  let ordersPending = undefined;
-  let ordersReceived = 0;
+  const [ordersPendingCount, setOrdersPendingCount] = useState();
+  const [ordersReceivedCount, setOrdersReceivedCount] = useState();
+
+  const [totalStocksIn, setTotalStocksIn] = useState(0);
+  const [totalStocksOut, setTotalStocksOut] = useState(0);
+
+  useEffect(() => {
+    let countIn = 0,
+      countOut = 0;
+    if (!stocksDataLoading) {
+      stocksData.map((s) => {
+        if (s.status.toLowerCase().includes("in")) {
+          countIn = countIn + 1;
+        } else if (s.status.toLowerCase().includes("out")) {
+          countOut = countOut + 1;
+        }
+      });
+    }
+    setTotalStocksIn(countIn);
+    setTotalStocksOut(countOut);
+  }, [stocksData]);
 
   useEffect(() => {
     if (!ordersLoading) {
-      ordersPending = ordersData.filter((order) => {
-        console.log(order.status.toLowerCase());
+      const ordersPending = ordersData.filter(
+        (order) => order.status.toLowerCase() === "pending"
+      );
+      console.log("ordersPending", ordersPending);
+      setOrdersPendingCount(ordersPending.length);
 
-        order.status == "pending";
-      });
-      // ordersData.map((order) => {
-      //   console.log(order.status.toLowerCase());
-      //   if (order.status.toLowerCase() === "pending") {
-      //     ordersPending = ordersPending + 1;
-      //   } else if (order.status.toLowerCase() === "received") {
-      //     ordersReceived = ordersReceived + 1;
-      //   }
-      // });
+      const ordersReceived = ordersData.filter(
+        (order) => order.status.toLowerCase() === "received"
+      );
+      console.log("ordersReceived", ordersReceived);
+      setOrdersReceivedCount(ordersReceived.length);
     }
   }, [ordersData]);
 
-  console.log(ordersPending);
+  console.log("ordersPendingCount", ordersPendingCount);
+  console.log("ordersReceivedCount", ordersReceivedCount);
 
   const dispatch = useDispatch();
 
@@ -52,7 +73,7 @@ const Dashboard = () => {
               Total {categoryData.length} Categories
             </div>
             <div className="py-2 text-center bg-orange-600">
-              <h1 className="">More Info</h1>
+              <Link to={"/admin/categories-list"}>More Info</Link>
             </div>
           </div>
         )}
@@ -63,7 +84,7 @@ const Dashboard = () => {
               Total {brandsData.length} Brands
             </div>
             <div className="py-2 text-center bg-green-600">
-              <h1 className="">More Info</h1>
+              <Link to={"/admin/brands-list"}>More Info</Link>
             </div>
           </div>
         )}
@@ -74,7 +95,7 @@ const Dashboard = () => {
               Total {productsData.totalProducts} Products
             </div>
             <div className="py-2 text-center bg-blue-600">
-              <h1 className="">More Info</h1>
+              <Link to={"/admin/products-list"}>More Info</Link>
             </div>
           </div>
         )}
@@ -85,23 +106,39 @@ const Dashboard = () => {
                 Total {ordersData.length} Orders
               </div>
               <div className="py-2 text-center bg-yellow-600">
-                <h1 className="">More Info</h1>
+                <Link to={"/admin/orders"}>More Info</Link>
               </div>
             </div>
-            <div className="bg-emerald-500 text-center text-white pt-4 ">
+            <div className="bg-slate-500 text-center text-white pt-4 ">
               <div className="text-start pl-4 my-2 text-lg">
-                Total {ordersPending} Orders Pending
+                Total {ordersPendingCount} Orders Pending
               </div>
-              <div className="py-2 text-center bg-emerald-600">
-                <h1 className="">More Info</h1>
+              <div className="py-2 text-center bg-slate-600">
+                <Link to={"/admin/orders"}>More Info</Link>
               </div>
             </div>
             <div className="bg-cyan-500 text-center text-white pt-4 ">
               <div className="text-start pl-4 my-2 text-lg">
-                Total {ordersReceived} Orders Received / Completed
+                Total {ordersReceivedCount} Orders Received / Completed
               </div>
               <div className="py-2 text-center bg-cyan-600">
-                <h1 className="">More Info</h1>
+                <Link to={"/admin/orders"}>More Info</Link>
+              </div>
+            </div>
+            <div className="bg-red-700 text-center text-white pt-4 ">
+              <div className="text-start pl-4 my-2 text-lg">
+                Total {totalStocksIn} Stocks In
+              </div>
+              <div className="py-2 text-center bg-red-800">
+                <Link to={"/admin/manage-stocks"}>More Info</Link>
+              </div>
+            </div>
+            <div className="bg-pink-400 text-center text-white pt-4 ">
+              <div className="text-start pl-4 my-2 text-lg">
+                Total {totalStocksOut} Stocks Out
+              </div>
+              <div className="py-2 text-center bg-pink-600">
+                <Link to={"/admin/manage-stocks"}>More Info</Link>
               </div>
             </div>
           </>

@@ -40,7 +40,7 @@ const ConditionLabelsTable = () => {
           ConditionLabels Table
         </h2>
         <div>
-          <Link to={"/admin/questions"}>
+          <Link to={"/admin/create-questions"}>
             <button className="bg-blue-700 text-white px-2 py-1 rounded">
               Create ConditionLabels
             </button>

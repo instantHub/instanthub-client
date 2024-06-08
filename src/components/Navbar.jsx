@@ -28,6 +28,10 @@ const Navbar = () => {
     setHoveredCategoryId(null);
   };
 
+  if (categoryData) {
+    console.log("last cat", categoryData[categoryData.length - 1]);
+  }
+
   return (
     <>
       <nav className="bg-white text-black py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b">
@@ -133,7 +137,7 @@ const Navbar = () => {
         )}
       </nav>
 
-      <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full z-10 pb-4 border-b">
+      <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full pb-4 border-b">
         <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
           <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 ">
             {!categoryLoading &&
@@ -164,24 +168,32 @@ const Navbar = () => {
 
                       {hoveredCategoryId === category.id && (
                         <div
-                          className="absolute top-full right-0 mt-0 pt-3 bg-white shadow-md p-2  w-[200%]"
+                          className={`${
+                            categoryData[categoryData.length - 1].id ===
+                            hoveredCategoryId
+                              ? `right-0`
+                              : `${
+                                  categoryData[0].id === hoveredCategoryId &&
+                                  `left-0`
+                                }`
+                          } absolute z-10 top-full mt-0 pt-3 bg-white shadow-md p-2  w-[150%]`}
                           onMouseEnter={() => handleMouseEnter(category.id)}
                         >
                           <h2 className="py-2 font-bold">Brands</h2>
                           <ul>
                             {category.brands.length > 0 ? (
                               category.brands.map((brand, index) => (
-                                <li
-                                  key={index}
-                                  className="py-1 px-2 rounded hover:bg-gray-100"
+                                <Link
+                                  to={`/categories/brands/products/${brand.id}`}
+                                  onClick={() => setHoveredCategoryId(null)}
                                 >
-                                  <Link
-                                    to={`/categories/brands/products/${brand.id}`}
-                                    onClick={() => setHoveredCategoryId(null)}
+                                  <li
+                                    key={index}
+                                    className="py-1 px-2 rounded hover:bg-gray-100"
                                   >
                                     {brand.name}
-                                  </Link>
-                                </li>
+                                  </li>
+                                </Link>
                               ))
                             ) : (
                               <div>

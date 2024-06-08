@@ -116,7 +116,7 @@ const Footer = () => {
           <div className="pl-2">
             <ul className="flex flex-col text-[13px] leading-8 font-thin">
               <li>
-                <Link>
+                <Link to={`/privacy-policy`}>
                   <span>Privary Policy</span>
                 </Link>
               </li>

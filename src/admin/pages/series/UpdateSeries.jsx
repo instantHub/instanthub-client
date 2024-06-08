@@ -63,7 +63,8 @@ const UpdateSeries = () => {
 
   return (
     <div>
-      {selectedCategory && seriesName && (
+      {/* {selectedCategory && seriesName && ( */}
+      {selectedCategory && (
         <div className="mt-[5%] w-[80%] mx-auto grow">
           <div className="flex justify-between items-center">
             <h1 className="bold text-[1.4rem] mb-2">Update Series</h1>

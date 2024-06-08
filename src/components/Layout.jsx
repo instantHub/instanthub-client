@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Helmet } from "react-helmet-async";
+import FloatingButtons from "./FloatingButtons";
 
 const Layout = () => {
   const structuredData = {
@@ -47,6 +48,7 @@ const Layout = () => {
       </Helmet>
       <div className="flex flex-col min-h-screen">
         <Navbar />
+        <FloatingButtons />
 
         <div className="flex-grow">
           <Outlet />

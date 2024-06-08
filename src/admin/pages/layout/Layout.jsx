@@ -15,35 +15,16 @@ const Layout = () => {
   return (
     <div className="flex sm:block ">
       <div className="h-full">
-        {/* <SideBar user={data || {}} isSidebarOpen={isSidebarOpen} /> */}
         <SideBar isSidebarOpen={isSidebarOpen} />
       </div>
-      {/* <div className={`${isSidebarOpen ? "ml-[10%]" : ""} `}> */}
-      <div className={` ml-[10%] `}>
-        {/* <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} /> */}
-        <Navbar  isSidebarOpen={isSidebarOpen} />
+      <div className={` ml-[12%] `}>
+        <Navbar isSidebarOpen={isSidebarOpen} />
         <Outlet />
       </div>
     </div>
+
+    // NEW
   );
 };
 
 export default Layout;
-
-{
-  /* <h2>Layout</h2> */
-}
-{
-  /* <SideBar
-          drawerWidth="250px"
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        /> */
-}
-
-{
-  /* <Navbar
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
-          /> */
-}

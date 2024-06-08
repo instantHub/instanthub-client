@@ -123,32 +123,10 @@ const CreateSeries = () => {
                     })}
                 </select>
               </div>
-
-              {/* <div className="flex gap-2">
-      <label htmlFor="productName">Product : </label>
-      <span name="productName" className="opacity-50">
-        ProductName
-      </span>
-    </div> */}
             </div>
-
-            {/* <div className="flex flex-col">
-      <label htmlFor="selectSeries">Series List:</label>
-      <select
-        id="selectSeries"
-        name="selectSeries"
-        className="border rounded-sm p-2"
-        required
-      >
-        <option value="">Select Series</option>
-      </select>
-    </div> */}
 
             <div className="flex gap-4 items-center mx-auto">
               <div className="flex flex-col">
-                {/* <label htmlFor="seriesName" className="text-[12px]">
-      Series Not Found?
-    </label> */}
                 <label htmlFor="seriesName">Enter New Series Name :</label>
                 <input
                   type="text"

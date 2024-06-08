@@ -172,7 +172,7 @@ const CreateProducts = () => {
               <h2 className="pl-1"> / Add Products</h2>
             </div>
             <div>
-              <Link to={"/admin/productsList"}>
+              <Link to={"/admin/products-list"}>
                 <button className="bg-blue-700 text-white px-2 py-1 rounded">
                   Products List
                 </button>

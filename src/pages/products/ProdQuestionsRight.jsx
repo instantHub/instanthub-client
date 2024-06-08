@@ -10,7 +10,7 @@ const ProdDeductionsRight = () => {
 
   return (
     // <div>
-    <div className="w-[25%] border rounded max-sm:w-[90%]">
+    <div className="w-[25%] border rounded max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%]">
       <>
         <div className="flex items-center justify-center gap-3 p-2">
           <div>
@@ -24,7 +24,9 @@ const ProdDeductionsRight = () => {
           </div>
           <div className="text-sm">
             <h1>{productsData.productName}</h1>
-            <span>{productsData.getUpTo.variantName}</span>
+            {productsData.productCategory === "Mobile" && (
+              <span>{productsData.getUpTo.variantName}</span>
+            )}
           </div>
         </div>
         <hr />
