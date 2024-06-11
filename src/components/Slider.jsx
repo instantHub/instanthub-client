@@ -68,7 +68,10 @@ function Slider() {
       {!slidersLoading && slidersList.length !== 0 && (
         // <div className="max-w-[1400px] w-full h-[480px] mx-auto mt-10  max-md:h-[200px] group">
         <div
-          className={`max-w-[1400px] w-full h-[350px] mx-auto mt-10 max-md:h-[200px] max-lg:h-[300px] group max-14inch:px-24 max-14inch:max-h-[300px] max-14inch:max-w-[1300px]`}
+          className={`max-w-[1400px] w-full h-[380px] mx-auto mt-10 
+          max-md:h-[200px] max-lg:h-[300px] group  max-lg:px-0
+          max-2sm:px-0 max-2sm:max-h-[150px] 
+          max-14inch:px-24 max-14inch:max-h-[300px] max-14inch:max-w-[1300px]`}
         >
           <div
             style={{

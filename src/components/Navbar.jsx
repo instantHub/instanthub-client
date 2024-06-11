@@ -53,11 +53,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white text-black py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-14inch:bg-blac">
+      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1">
         {/* Main */}
         {/* <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky z-50 top-2 border-b border-[#E27D60] shadow-xl"> */}
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
-        <div className="max-w-full mx-auto px-4">
+        <div className="max-w-full mx-auto px-4 max-2sm:px-1">
           <div className="flex items-center">
             {/* <div className="grid grid-cols-3 items-center"> */}
             <div className="flex items-center grow">
@@ -68,7 +68,7 @@ const Navbar = () => {
                     src="/2.png"
                     alt="logo"
                     // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-                    className="w-[88px] h-[70px] my-[1px] max-sm:w-[95%]"
+                    className="w-[88px] h-[70px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
                   />
                 </h2>
               </Link>

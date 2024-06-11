@@ -118,8 +118,8 @@ const SearchBar = () => {
   }, []); // Empty dependency array to run effect only once on mount
 
   return (
-    // <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:w-3/4 max-14inch:bg-black">
-    <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:w-3/4">
+    <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 max-2sm:w-[58%] max-2sm:mx-2">
+    {/* <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:mx-1 3sm:w-[100px]"> */}
       <div className="flex pl- items-center bg-gray-100 pl-2">
         <BsSearch className="text-gray-500" />
         <input
