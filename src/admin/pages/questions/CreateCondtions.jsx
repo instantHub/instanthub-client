@@ -89,7 +89,8 @@ function Condtions() {
                 </Link>
               </div>
             </div>
-            <div className="bg-white border rounded-md shadow-lg">
+            {/* Create Condition BOX */}
+            <div className="bg-white flex border rounded-md shadow-lg">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-4  p-5 "
@@ -98,7 +99,7 @@ function Condtions() {
                   <h2 className="">Add Condition</h2>
                 </div>
                 <hr />
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 ">
                   <div className="flex flex-col">
                     <label>Category:</label>
                     <select
@@ -194,22 +195,25 @@ function Condtions() {
                   </button>
                 </div>
               </form>
-            </div>
-          </div>
 
-          {/* condition List */}
-          <div className="my-auto ml-[5%]">
-            <ul className="">
-              {!conditionsLoading &&
-                conditionsData.map(
-                  (condition) =>
-                    condition.category.id == formData.category && (
-                      <li className="bg-white text-lg px-4 py-2">
-                        {condition.conditionName}
-                      </li>
-                    )
-                )}
-            </ul>
+              {/* condition List */}
+              <div className="mt-5 ml-5 overflow-y-auto scrollbar max-h-[250px]">
+                <p className="w-full text-xl font-semibold">
+                  {" "}
+                  List of selected category's conditions
+                </p>
+                <ul className="">
+                  {!conditionsLoading &&
+                    conditionsData
+                      .filter((cond) => cond.category.id == formData.category)
+                      .map((condition) => (
+                        <li className="bg-white text-lg px-4 py-2">
+                          {condition.conditionName}
+                        </li>
+                      ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 

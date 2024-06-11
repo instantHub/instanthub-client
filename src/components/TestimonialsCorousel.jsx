@@ -81,7 +81,7 @@ const Testimonials = () => {
               <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl max-sm:text-2xl">
                 Testimonials
               </h2>
-              <p className="mt-4 text-lg text-gray-600 max-sm:text-[16px]">
+              <p className="mt-4 text-lg text-gray-600 max-sm:text-[16px] max-14inch:text-sm">
                 Check out what our customers are saying about us.
               </p>
             </div>
@@ -99,11 +99,18 @@ const Testimonials = () => {
                 >
                   <div className="px-6 py-8 bg-white sm:p-10 sm:pb-6">
                     <div className="flex justify-center">
-                      <img
+                      {/* <img
                         className="h-12 w-12 rounded-full"
                         src={testimonials[currentIndex].image}
                         alt={testimonials[currentIndex].author}
-                      />
+                      /> */}
+                      <p className="px-4 py-2 text-black text-3xl bg-cyan-50 shadow-lg rounded-full max-sm:text-xl">
+                        {/* {testimonials[currentIndex].author[0]} */}
+                        {testimonials[currentIndex].author
+                          .split(" ")
+                          .map((name) => name[0])
+                          .join("")}
+                      </p>
                     </div>
                     <div className="mt-6 text-center sm:text-lg max-sm:text-sm">
                       <p>{testimonials[currentIndex].text}</p>

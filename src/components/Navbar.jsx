@@ -18,6 +18,25 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const data = [
+    {
+      name: "Home",
+      url: "/",
+    },
+    {
+      name: "About",
+      url: "/about",
+    },
+    {
+      name: "Services",
+      url: "/",
+    },
+    {
+      name: "Contact",
+      url: "/contact-us",
+    },
+  ];
+
   const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
 
   const handleMouseEnter = (categoryId) => {
@@ -34,7 +53,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white text-black py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b">
+      <nav className="bg-white text-black py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-14inch:bg-blac">
         {/* Main */}
         {/* <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky z-50 top-2 border-b border-[#E27D60] shadow-xl"> */}
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
@@ -57,33 +76,13 @@ const Navbar = () => {
 
             <SearchBar />
 
-            <div className="hidden  md:flex ">
+            <div className="hidden md:flex max-14inch:text-sm">
               <ul className="flex space-x-4">
-                <li className="">
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to={`/about`}>About</Link>
-                </li>
-                <li>
-                  <a href="#" className="">
-                    Services
-                  </a>
-                </li>
-                <li>
-                  <Link to={`/contact-us`}>Contact</Link>
-                </li>
-                {/* <li>
-                  <a href="src/components/emailcheck.html">Email check</a>
-                </li>
-                <li>
-                  <a href="src/components/emailcheck2.html">Email check2</a>
-                </li> */}
-                {/* <li>
-                  <a href="/admin/login" className="">
-                    Admin
-                  </a>
-                </li> */}
+                {data.map((d) => (
+                  <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
+                    <Link to={`${d.url}`}>{d.name}</Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="md:hidden ">
@@ -116,9 +115,14 @@ const Navbar = () => {
           </div>
         </div>
         {isOpen && (
-          <div className="md:hidden mt-2 text-center  float-right absolute right-0">
-            <ul className="flex flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
-              <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
+          <div className="md:hidden  mt-2 text-center  float-right absolute right-0">
+            <ul className="flex  flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
+              {data.map((d) => (
+                <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
+                  <Link to={`${d.url}`}>{d.name}</Link>
+                </li>
+              ))}
+              {/* <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
                 <Link to="/">Home</Link>
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
@@ -131,15 +135,15 @@ const Navbar = () => {
               </li>
               <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
                 <Link to={`/contact-us`}>Contact</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         )}
       </nav>
 
-      <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full pb-4 border-b">
+      <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full pb-4 border-b max-14inch:text-sm">
         <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
-          <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 ">
+          <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 max-14inch:px-14">
             {!categoryLoading &&
               categoryData.map((category, i) => (
                 <Link

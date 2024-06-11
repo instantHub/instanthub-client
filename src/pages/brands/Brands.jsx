@@ -46,7 +46,10 @@ const Brands = () => {
         />
         <link rel="canonical" href={`https://instantcashpick.com/${catId}`} />
       </Helmet>
-      <div className="mt-20 w-4/5 mx-auto">
+      <div className="mt-8 w-4/5 mx-auto">
+        <p className="pb-5 text-2xl font-bold max-sm:text-xl">
+          Sell your {!categoryLoading ? category.name : null} for Instant Cash
+        </p>
         <div className="mx-0 mb-6">
           {!isLoading && (
             <div className="flex items-center gap-1">

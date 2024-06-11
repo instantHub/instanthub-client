@@ -89,7 +89,7 @@ const Products = () => {
       </Helmet>
 
       {/* Series */}
-      <div className="mt-10">
+      <div className="mt-8">
         {/* OLD Series Code */}
         {/* <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {!seriesLoading && brandSeries.length !== 0
@@ -127,13 +127,13 @@ const Products = () => {
               : null}
         </div> */}
 
-        <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+        <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {!seriesLoading && brandSeries.length !== 0
             ? !showSeries
               ? brandSeries.map((series, i) => (
                   <div
                     key={series.id} // Changed from 'i' to 'series.id'
-                    className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
+                    className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300" //mobile view
                   >
                     <button
                       onClick={() => handleSeries(series.id)}
@@ -144,10 +144,10 @@ const Products = () => {
                           showSeries && series.id === seriesSelected
                             ? "bg-cyan-500 text-white"
                             : "bg-gray-200 max-sm:bg-white"
-                        } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+                        } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-2 sm:min-w-full rounded-0 sm:rounded-md sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                       >
                         <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                          <div className="text-[14.5px] font-[500] leading-7">
+                          <div className="text-[14px] font-[500] leading-7">
                             {series.name}
                           </div>
                         </span>
@@ -168,7 +168,7 @@ const Products = () => {
                   .map((series, i) => (
                     <div
                       key={series.id} // Changed from 'i' to 'series.id'
-                      className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
+                      className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
                     >
                       <button
                         onClick={() => handleSeries(series.id)}
@@ -179,10 +179,10 @@ const Products = () => {
                             showSeries && series.id === seriesSelected
                               ? "bg-cyan-500 text-white"
                               : "bg-gray-200 max-sm:bg-white"
-                          } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+                          } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-2 sm:min-w-full rounded sm:rounded sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                         >
                           <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                            <div className="text-[14.5px] font-[500] leading-7">
+                            <div className="text-[14px] font-[500] leading-7">
                               {series.name}
                             </div>
                           </span>
@@ -207,9 +207,9 @@ const Products = () => {
 
       {/*  */}
 
-      <div className="mt-10 w-4/5 mx-auto">
+      <div className="mt-5 w-4/5 mx-auto">
         {/* Search Bar */}
-        <div className=" my-4 flex justify-end gap-2 items-center">
+        <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
           <div className="flex pl-4 items-center border rounded">
             <BsSearch className="text-black" />
             <input
@@ -226,6 +226,16 @@ const Products = () => {
               Search
             </button>
           </div>
+        </div>
+
+        <div>
+          <p className="pb-5 text-2xl font-bold max-sm:text-xl">
+            Sell your{" "}
+            {!categoryLoading && !brandLoading
+              ? `${brand.name} ${category.name}`
+              : null}{" "}
+            for Instant Cash
+          </p>
         </div>
 
         <div className="mx-0 mb-6">
@@ -249,7 +259,7 @@ const Products = () => {
             <span>Loading...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+          <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
             {!productsData.length == 0 ? (
               !showSeries ? (
                 productsData.map(
@@ -258,7 +268,7 @@ const Products = () => {
                       <>
                         <div
                           key={i}
-                          className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                          className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
                         >
                           <Link
                             to={`/categories/brands/productDetails/${product.id}`}

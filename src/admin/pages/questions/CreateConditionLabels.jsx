@@ -5,6 +5,7 @@ import {
   useUploadFileHandlerMutation,
   useCreateConditionLabelsMutation,
   useUploadConditionLabelsImageMutation,
+  useGetConditionLabelsQuery,
 } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +15,8 @@ const YourComponent = () => {
     useGetCategoryQuery();
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
+  const { data: conditionsLabelsData, isLoading: conditionsLabelsLoading } =
+    useGetConditionLabelsQuery();
   const [uploadConditionLabelsImage, { isLoading: uploadLoading }] =
     useUploadConditionLabelsImageMutation();
   const [createConditionLabels, { isLoading: clLoading }] =
@@ -79,12 +82,23 @@ const YourComponent = () => {
       ).unwrap();
       // productId = product.id;
       console.log("conditionLabel created", conditionLabel);
-      toast.success("conditionLabel created successfully..!");
+      if (conditionLabel.message?.toLowerCase().includes("duplicate")) {
+        toast.warning(`${conditionLabel.message}`);
+      } else {
+        toast.success("conditionLabel created successfully..!");
+      }
       // Clear the value of the file input
       fileInputRef.current.value = "";
       // Mark the file input as required again
       // fileInputRef.current.required = true;
       formData.conditionLabelImg = undefined;
+
+      // setFormData({
+      //   category: "",
+      //   conditionNameId: "",
+      //   conditionLabel: "",
+      //   conditionLabelImg: undefined,
+      // });
     } catch (error) {
       console.log(
         "Error while creating conditionLabel using API call: ",
@@ -93,39 +107,46 @@ const YourComponent = () => {
     }
   };
 
-  return (
-    <div className="flex gap-4">
-      <div className="">
-        <div className="flex justify-between items-center">
-          <h1 className="bold text-[1.4rem] mb-2">Create ConditionLabels</h1>
-          <div className="flex items-center gap-1">
-            <h2>Home </h2>
-            <h2 className="pl-1"> / Add ConditionLabels</h2>
-            <Link to="/admin/conditionLabelsList">
-              <button
-                type="button"
-                className=" mx-auto bg-blue-700 text-white px-2 rounded-md py-1 cursor-pointer"
-              >
-                ConditionLabels List
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className="bg-white border rounded-md shadow-lg">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
-            <div>
-              <h2 className="">Add ConditionLabels</h2>
-            </div>
-            <hr />
+  console.log("TEST", conditionsLabelsData && conditionsLabelsData);
 
-            <div className="flex">
-              <div className="">
-                <div className="grid grid-cols-2 gap-4">
+  return (
+    <div className="flex w-[90%] mt-[2%]">
+      <div className="flex gap-4 w-full">
+        <div className="w-full">
+          <div className="flex justify-between items-center">
+            <h1 className="bold text-[1.4rem] mb-2">Create ConditionLabels</h1>
+            <div className="flex items-center gap-1">
+              <h2>Home </h2>
+              <h2 className="pl-1"> / Add ConditionLabels</h2>
+              <Link to="/admin/conditionLabelsList">
+                <button
+                  type="button"
+                  className=" mx-auto bg-blue-700 text-white px-2 rounded-md py-1 cursor-pointer"
+                >
+                  ConditionLabels List
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="bg-white w-full flex border rounded-md shadow-lg">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4 p-5 w-full"
+            >
+              <div>
+                <h2 className="">Add ConditionLabels</h2>
+              </div>
+              <hr />
+
+              <div className="flex">
+                <div className="grid grid-cols-2 gap-2">
+                  {/* Select Category */}
                   <div className="flex flex-col">
                     <label>Category:</label>
                     <select
                       name=""
                       id=""
+                      value={formData.category}
                       className="border p-1 rounded"
                       onChange={(e) => {
                         setFormData({
@@ -150,8 +171,9 @@ const YourComponent = () => {
                     </select>{" "}
                   </div>
 
+                  {/* Select Condition */}
                   <div className="flex flex-col">
-                    <label>Conditions:</label>
+                    <label>ConditionsLabel:</label>
                     <select
                       name=""
                       id=""
@@ -182,51 +204,79 @@ const YourComponent = () => {
                         )}
                     </select>{" "}
                   </div>
+
+                  {/* Enter ConditionLabel */}
+                  <div className="py-2">
+                    <label>ConditionLabel:</label>
+                    <input
+                      type="text"
+                      name="label"
+                      value={formData.conditionLabel.label}
+                      className="border mx-2 py-1 px-2 rounded text-[15px]"
+                      placeholder="Enter Condition Label"
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          conditionLabel: e.target.value,
+                        });
+                      }}
+                      required
+                    />
+                  </div>
+
+                  <div className="py-2">
+                    <input
+                      type="file"
+                      name="image"
+                      ref={fileInputRef}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          conditionLabelImg: e.target.files[0],
+                        });
+                      }}
+                      // onChange={(e) => setImageSelected(e.target.files[0])}
+                      // required
+                    />
+                  </div>
                 </div>
-                <label>Condition Label:</label>
-                <input
-                  type="text"
-                  name="label"
-                  className="border mx-2 py-1 px-2 rounded text-[15px]"
-                  placeholder="Enter Condition Label"
-                  value={formData.conditionLabel.label}
-                  onChange={(e) => {
-                    setFormData({
-                      ...formData,
-                      conditionLabel: e.target.value,
-                    });
-                  }}
-                  required
-                />
-                <input
-                  type="file"
-                  name="image"
-                  ref={fileInputRef}
-                  onChange={(e) => {
-                    setFormData({
-                      ...formData,
-                      conditionLabelImg: e.target.files[0],
-                    });
-                  }}
-                  // onChange={(e) => setImageSelected(e.target.files[0])}
-                  // required
-                />
               </div>
-            </div>
 
-            <div className="py-3 px-2">
-              <button
-                type="submit"
-                className="w-[40%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
-              >
-                Create ConditionLabel
-              </button>
+              <div className="py-3 px-2">
+                <button
+                  type="submit"
+                  className="w-[40%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                >
+                  Create ConditionLabel
+                </button>
+              </div>
+            </form>
+            {/* condition List */}
+            <div className="mt-5 ml-5 overflow-y-auto scrollbar max-h-[250px]">
+              <p className="w-full text-xl font-semibold">
+                {" "}
+                List of selected condition's conditionLabels
+              </p>
+              <ul className="">
+                {!conditionsLabelsLoading &&
+                  conditionsLabelsData
+                    .filter((cl) => cl.category.id == formData.category)
+                    .filter(
+                      (cl) => cl.conditionNameId?.id == formData.conditionNameId
+                    )
+                    .map((condition, index) => (
+                      <>
+                        <li key={index} className="bg-white text-lg px-4 py-2">
+                          {index + 1}. {condition.conditionLabel}
+                        </li>
+                      </>
+                    ))}
+              </ul>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <div className="my-auto ml-[5%]">
+        {/* <div className="my-auto ml-[5%]">
         <ul className="">
           {!conditionsLoading &&
             conditionsData.map(
@@ -238,6 +288,7 @@ const YourComponent = () => {
                 )
             )}
         </ul>
+      </div> */}
       </div>
     </div>
   );

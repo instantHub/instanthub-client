@@ -27,7 +27,7 @@ const ProductDetail = () => {
 
   console.log("variantSelected", variantSelected);
 
-  console.log(productDetails);
+  console.log("productDetails", productDetails);
 
   const [reloaded, setReloaded] = useState(false);
 
@@ -75,9 +75,16 @@ const ProductDetail = () => {
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
-      <div className="w-[70%] mx-auto my-28 max-md:w-[90%] max-sm:my-20">
+      <div className="w-[70%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">
         {/* <div className="bg-white px-10 pt-10 pb-24 rounded-md shadow-lg"> */}
         {/* Header Links: Home > Category > Brand > Products > ProductName */}
+        <p className="pb-5 text-2xl font-bold max-sm:text-xl">
+          Sell your{" "}
+          {productDetails
+            ? `${productDetails.brand.name} ${productDetails.name} ${productDetails.category.name} `
+            : null}{" "}
+          for Instant Cash
+        </p>
         <div className="mx-0 mb-6">
           {productDetails && (
             <div className="flex items-center gap-1">
@@ -93,8 +100,11 @@ const ProductDetail = () => {
                 >
                   {productDetails.brand.name}
                 </Link>
-                <FaAngleRight />
-                <span>Products</span>
+                <span className="max-sm:hidden">
+                  <FaAngleRight />
+                </span>
+                <span className="max-sm:hidden">Products</span>
+
                 <FaAngleRight />
               </h1>
               <span className="max-sm:text-[14px]">{productDetails.name}</span>
@@ -128,7 +138,7 @@ const ProductDetail = () => {
                 </div>
 
                 {/* Products Details */}
-                <div className="flex flex-col gap-24 w-full sm:w-2/3 max-sm:gap-6">
+                <div className="flex flex-col gap-24 w-full sm:w-2/3 max-sm:gap-6 max-14inch:gap-12">
                   <div className="mt-6 flex gap-2 items-center">
                     <h1 className="text-3xl">{productDetails.name}</h1>
                     {productDetails.category.name === "Mobile" &&

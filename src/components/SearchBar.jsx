@@ -118,15 +118,17 @@ const SearchBar = () => {
   }, []); // Empty dependency array to run effect only once on mount
 
   return (
+    // <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:w-3/4 max-14inch:bg-black">
     <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:w-3/4">
-      <div className="flex pl-4 items-center">
-        <BsSearch className="text-black" />
+      <div className="flex pl- items-center bg-gray-100 pl-2">
+        <BsSearch className="text-gray-500" />
         <input
           type="search"
           name="search"
           value={search}
           id="search"
-          className="text-black grow pl-2 pr-5 py-2 w-full rounded-full md:w-72 sm:w-64 2sm:w-3/4 3sm:w-3/4 focus:bg-transparent outline-none"
+          // className="text-black grow pl-2 pr-5 py-2 w-full rounded-full md:w-72 sm:w-64 2sm:w-3/4 3sm:w-3/4 focus:bg-transparent outline-none"
+          className="text-black grow bg-gray-100 px-2 text-sm py-2 focus:bg-transparent outline-none"
           placeholder={`Search for Mobiles, Laptops etc.. `}
           onChange={(e) => {
             setSearch(e.target.value);

@@ -19,6 +19,7 @@ const ConditionsTable = () => {
   const [selectedCondition, setSelectedCondition] = useState();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Modal open for confirming Condition DELETE
   const openModal = (categoryId, categoryName, conditionId, conditionName) => {
     console.log(categoryId, categoryName, conditionId, conditionName);
     setSelectedCondition({
@@ -33,6 +34,8 @@ const ConditionsTable = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const [selectedCategory, setSelectedCategory] = useState(undefined);
 
   // const handleConditionChange = (e) => {
   //   setSelectedCondition(e.target.value);
@@ -49,6 +52,30 @@ const ConditionsTable = () => {
     <>
       <div className="p-4">
         <div className="flex justify-between">
+          <div className="flex items-center gap-4 mb-4">
+            <div>
+              <label htmlFor="condition" className=" mr-2">
+                Select Category:
+              </label>
+              <select
+                id="condition"
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setSelectedCondition("");
+                }}
+                value={selectedCategory}
+                className="px-2 py-1 rounded border text-black"
+              >
+                <option value="">Search</option>
+                {!categoriesLoading &&
+                  categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          </div>
           <h2 className="text-black text-lg font-bold mb-4">
             Conditions Table
           </h2>
@@ -60,30 +87,7 @@ const ConditionsTable = () => {
             </Link>
           </div>
         </div>
-        {/* <div className="mb-4">
-          <label htmlFor="condition" className="text-white mr-2">
-            Select Condition:
-          </label>
-          <select
-            id="condition"
-            onChange={handleConditionChange}
-            value={selectedCondition}
-            className="p-2 rounded bg-gray-300 text-gray-800"
-          >
-            <option value="">Select</option>
 
-            {!conditionsLoading &&
-              conditions.map(
-                (condition) => (
-                  //   question.map((question) => (
-                  <option key={condition.category} value={condition.category}>
-                    {condition.conditionName}
-                  </option>
-                )
-                //   ))
-              )}
-          </select>
-        </div> */}
         <table className="w-full">
           <thead>
             <tr>
@@ -97,46 +101,81 @@ const ConditionsTable = () => {
           </thead>
 
           <tbody className="text-center">
-            {!conditionsLoading &&
-              conditions.map(
-                (condition, index) => (
-                  //   question.map((question) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
-                  >
-                    <td className=" py-2">{condition.category.name}</td>
-                    <td className=" py-2">{condition.conditionName}</td>
-                    <td className=" py-2">{condition.page}</td>
-                    <td className="text-white py-2">
-                      <div className="flex gap-2 justify-center">
-                        <Link to={`/admin/updateCondition/${condition.id}`}>
-                          <button className="bg-blue-600 px-3 py-1 rounded-md">
-                            Edit
+            {!conditionsLoading && !selectedCategory
+              ? conditions.map(
+                  (condition, index) => (
+                    //   question.map((question) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    >
+                      <td className=" py-2">{condition.category.name}</td>
+                      <td className=" py-2">{condition.conditionName}</td>
+                      <td className=" py-2">{condition.page}</td>
+                      <td className="text-white py-2">
+                        <div className="flex gap-2 justify-center">
+                          <Link to={`/admin/updateCondition/${condition.id}`}>
+                            <button className="bg-blue-600 px-3 py-1 rounded-md">
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            className="bg-red-600 px-3 py-1 rounded-md"
+                            // onClick={() =>
+                            //   handleDelete(condition.category.id, condition.id)
+                            // }
+                            onClick={() =>
+                              openModal(
+                                condition.category.id,
+                                condition.category.name,
+                                condition.id,
+                                condition.conditionName
+                              )
+                            }
+                          >
+                            Delete
                           </button>
-                        </Link>
-                        <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
-                          // onClick={() =>
-                          //   handleDelete(condition.category.id, condition.id)
-                          // }
-                          onClick={() =>
-                            openModal(
-                              condition.category.id,
-                              condition.category.name,
-                              condition.id,
-                              condition.conditionName
-                            )
-                          }
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                  //   ))
                 )
-                //   ))
-              )}
+              : !conditionsLoading &&
+                conditions
+                  .filter((cond) => cond.category.id === selectedCategory)
+                  .map((condition, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    >
+                      <td className=" py-2">{condition.category.name}</td>
+                      <td className=" py-2">{condition.conditionName}</td>
+                      <td className=" py-2">{condition.page}</td>
+                      <td className="text-white py-2">
+                        <div className="flex gap-2 justify-center">
+                          <Link to={`/admin/updateCondition/${condition.id}`}>
+                            <button className="bg-blue-600 px-3 py-1 rounded-md">
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            className="bg-red-600 px-3 py-1 rounded-md"
+                            onClick={() =>
+                              openModal(
+                                condition.category.id,
+                                condition.category.name,
+                                condition.id,
+                                condition.conditionName
+                              )
+                            }
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
           </tbody>
         </table>
       </div>

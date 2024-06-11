@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const FAQ = () => {
+const FAQ = (props) => {
+  const { from } = props;
   const [activeIndex, setActiveIndex] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
@@ -50,8 +51,20 @@ const FAQ = () => {
   const displayedFAQs = showAll ? faqData : faqData.slice(0, 3);
 
   return (
-    <div className="p-4 bg- shadow-d rounded-md w-full">
-      <h2 className="text-2xl pl-2 font-bold text-start mb-6">FAQs</h2>
+    <div
+      className={`p-4 bg- shadow-d rounded-md ${
+        from === "home" ? `w-[90%] mx-auto` : `w-full`
+      }`}
+    >
+      <h2
+        className={`${
+          from === "home"
+            ? `text-2xl pl-2 font-bold text-center mb-6`
+            : `text-2xl pl-2 font-bold text-start mb-6`
+        }`}
+      >
+        FAQs
+      </h2>
       {displayedFAQs.map((faq, index) => (
         <div key={index} className="mb-4 border-b">
           <button

@@ -1,4 +1,5 @@
 import React from "react";
+import FAQ from "./FAQ";
 
 const WhyChooseInstantCashPicks = () => {
   const data = [
@@ -34,16 +35,16 @@ const WhyChooseInstantCashPicks = () => {
         <div className=" ">
           {data.map((d, index) => (
             <div className="bg-white mb-4">
-              <h3 className="text-xl font-semibold opacity-90 max-sm:text-lg">
+              <h3 className="text-lg font-bold text-gray-700 max-sm:text-lg">
                 {d.heading}
               </h3>
-              <p className="opacity-70 max-sm:text-sm"> {d.text}</p>
+              <p className="opacity-70 text-gray-600 max-sm:text-sm"> {d.text}</p>
             </div>
           ))}
         </div>
       </div>
       {/* FAQ */}
-      <div className="max-w-[85%] mx-auto py-8">
+      {/* <div className="max-w-[85%] mx-auto py-8">
         <h2 className="text-3xl font-bold text-center mb-8 max-sm:text-2xl">
           Frequently Asked Questions
         </h2>
@@ -65,7 +66,7 @@ const WhyChooseInstantCashPicks = () => {
             your gadget.
           </p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
