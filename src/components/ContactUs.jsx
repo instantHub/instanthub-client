@@ -24,7 +24,7 @@ const ContactUs = () => {
             our friendly team today:
           </p>
           <ul className="list-disc pl-6 mb-6">
-            <li>Phone: +91 8722220099</li>
+            <li>Phone: +91 8722288017</li>
             <li>Email: support@instantcashpick.com</li>
             <li>
               Live Chat: Visit our website to chat with a representative in

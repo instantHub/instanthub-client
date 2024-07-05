@@ -1,6 +1,7 @@
 // FloatingButtons.jsx
 import React from "react";
-import { FaWhatsapp, FaPhone, FaEnvelope } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+// import { FaPhone } from "react-icons/fa";
 
 const FloatingButtons = () => {
   const defaultMessage =
@@ -45,7 +46,8 @@ const FloatingButtons = () => {
           href="tel:8722288017"
           className="flex-1 lg:flex-none bg-blue-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-blue-600 transition "
         >
-          <FaPhone size={24} />
+          {/* <FaPhone size={24} /> */}
+          <FaPhoneAlt size={24} />
         </a>
         <a
           href="mailto:instantcashpick@gmail.com"

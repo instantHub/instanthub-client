@@ -6,6 +6,7 @@ import { api } from "../features/api";
 import { adminApiSlice } from "../features/adminApiSlice";
 import deductionSlice from "../features/deductionSlice";
 import laptopDeductionSlice from "../features/laptopDeductionSlice";
+import serviceProblemsSlice from "../features/serviceProblemsSlice";
 import laptopDeductionsList from "../features/laptopDeductionsList";
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     auth: authSlice,
     global: globalSlice,
     deductions: deductionSlice,
+    serviceProblems: serviceProblemsSlice,
     laptopDeductions: laptopDeductionSlice,
     laptopDeductionsList: laptopDeductionsList,
     [api.reducerPath]: api.reducer,

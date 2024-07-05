@@ -7,12 +7,19 @@ import { Link, Outlet } from "react-router-dom";
 import { useGetCategoryQuery } from "../features/api";
 // import LOGO 'LOGO1.png'
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery();
   console.log("categoryData from NAV", categoryData);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log("Current Pathname:", location.pathname.substring(0, 6));
+  console.log("Current URL:", window.location.href);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -29,7 +36,7 @@ const Navbar = () => {
     },
     {
       name: "Services",
-      url: "/",
+      url: "/services",
     },
     {
       name: "Contact",
@@ -65,7 +72,7 @@ const Navbar = () => {
                 <h2>
                   <img
                     // src="/LOGO1.png"
-                    src="/2.png"
+                    src="/MainLogo.png"
                     alt="logo"
                     // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
                     className="w-[88px] h-[70px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
@@ -213,6 +220,61 @@ const Navbar = () => {
                   </div>
                 </Link>
               ))}
+
+            <Link to={`/services`}>
+              <div className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-cyan-500 hover:pt-[13px]">
+                <span className="">
+                  <div className="hover:text-cyan-500 flex items-center gap-1">
+                    <span>Services</span>
+                  </div>
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="min-w-0 flex sm:hidden mt-5 max-14inch:text-sm">
+        <div className="grid grid-cols-3 bg-gray-100 justify-center w-[300px] items-center border rounded-full mx-auto sm:hidden">
+          <div
+            className={`text-center p-2 rounded-tl-full rounded-bl-full ${
+              location.pathname.includes("/recycle-categories")
+                ? `bg-green-600 text-white p-2 transition-colors duration-1000 ease-in-out `
+                : ``
+            }`}
+            onClick={() => {
+              navigate("/recycle-categories");
+            }}
+          >
+            <button>Recycle</button>
+          </div>
+
+          <div
+            className={`text-center p-2 ${
+              location.pathname.substring(0, 6).includes("/cat")
+                ? `bg-green-600 text-white rounded transition-colors duration-1000 ease-in-out `
+                : location.pathname === "/" || location.pathname.substring(0, 6).includes("/sell")
+                ? `bg-green-600 text-white rounded transition-colors duration-1000 ease-in-out `
+                : ``
+            }`}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <button>Sell</button>
+          </div>
+
+          <div
+            className={`text-center py-2 rounded-tr-full rounded-br-full ${
+              location.pathname.substring(0, 6).includes("/ser")
+                ? `bg-green-600 text-white transition-colors duration-1000 ease-in-out `
+                : ``
+            }`}
+            onClick={() => {
+              navigate("/services");
+            }}
+          >
+            <button>Services</button>
           </div>
         </div>
       </div>

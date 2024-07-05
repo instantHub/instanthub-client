@@ -19,6 +19,9 @@ const ConditionsTable = () => {
   const [selectedCondition, setSelectedCondition] = useState();
   const [isOpen, setIsOpen] = useState(false);
 
+  // console.log("conditions", conditions);
+  // 66840ed655ab1a29d1d8d7d1
+
   // Modal open for confirming Condition DELETE
   const openModal = (categoryId, categoryName, conditionId, conditionName) => {
     console.log(categoryId, categoryName, conditionId, conditionName);

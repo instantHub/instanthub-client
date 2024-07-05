@@ -8,6 +8,7 @@ import WhyChooseInstantCashPicks from "../../components/WhyUs";
 import { Helmet } from "react-helmet-async";
 import FloatingButtons from "../../components/FloatingButtons";
 import FAQ from "../../components/FAQ";
+import Services from "../services/Services";
 
 const Home = () => {
   const images = [
@@ -42,6 +43,7 @@ const Home = () => {
       <Slider />
       <Categories />
       {/* <Testimonials /> */}
+      <Services />
       <HowItWorks />
       <TestimonialCarousel />
       <WhyChooseInstantCashPicks />

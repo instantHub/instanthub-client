@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "../../features/api";
 import AllBrandsList from "../brands/AllBrandsList";
@@ -6,13 +6,23 @@ import AllBrandsList from "../brands/AllBrandsList";
 const Categories = () => {
   const { data, isLoading } = useGetCategoryQuery();
 
+  const [mobileCat, setMobileCat] = useState("");
+
+  useEffect(() => {
+    if (data) {
+      const mobile = data.find((d) => d.name.toLowerCase().includes("mobile"));
+      console.log(mobile);
+      setMobileCat(mobile.id);
+    }
+  });
+
   return (
     <div className="mt-20 mx-auto">
       <div className="w-4/5 mx-auto">
         <div className="mx-0 mb-6">
-          <h1 className="text-2xl pb-6">
+          <h1 className="text-2xl pb-6 max-sm:text-lg">
             Ready to sell?{" "}
-            <span className="text-3xl text-cyan-500 font-semibold">
+            <span className="text-3xl text-cyan-500 font-semibold max-sm:text-xl">
               Let's turn your gadgets into cash!
             </span>
           </h1>
@@ -44,6 +54,14 @@ const Categories = () => {
                 </div>
               </Link>
             ))}
+
+            {/* RECYCLE */}
+            <Link to={`/recycle-categories`}>
+              <div className="w-32 p-4 h-32 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500">
+                <img src="/recycle2.png" alt="CAT" className="justify-center" />
+                {/* <p className="size-4 pt-1">Recyle</p> */}
+              </div>
+            </Link>
           </div>
         )}
       </div>

@@ -53,8 +53,8 @@ const FAQ = (props) => {
   return (
     <div
       className={`p-4 bg- shadow-d rounded-md ${
-        from === "home" ? `w-[90%] mx-auto` : `w-full`
-      }`}
+        from === "home" ? `w-[90%] mx-auto max-sm:w-full` : `w-full`
+      } max-sm:px-1`}
     >
       <h2
         className={`${
@@ -66,12 +66,12 @@ const FAQ = (props) => {
         FAQs
       </h2>
       {displayedFAQs.map((faq, index) => (
-        <div key={index} className="mb-4 border-b">
+        <div key={index} className="mb-4 border-b max-sm:mb-1">
           <button
             onClick={() => handleToggle(index)}
             className="w-full flex justify-between items-center p-4 focus:outline-none"
           >
-            <span className="text-l font-bold text-gray-700">
+            <span className="text-l font-bold text-gray-700 max-sm:text-start">
               {faq.question}
             </span>
             {activeIndex === index ? (

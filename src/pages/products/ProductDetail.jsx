@@ -33,7 +33,7 @@ const ProductDetail = () => {
 
   const [loadedInitially, setLoadedInitially] = useState(false);
 
-  // MAIN
+  // useEffect to handle categories other than mobile for variant selection
   useEffect(() => {
     if (!isLoading) {
       if (productDetails.category.name !== "Mobile") {
@@ -75,7 +75,7 @@ const ProductDetail = () => {
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
-      <div className="w-[70%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">
+      <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">
         {/* <div className="bg-white px-10 pt-10 pb-24 rounded-md shadow-lg"> */}
         {/* Header Links: Home > Category > Brand > Products > ProductName */}
         <p className="pb-5 text-2xl font-bold max-sm:text-xl">
@@ -112,7 +112,6 @@ const ProductDetail = () => {
           )}
           <hr className="text-black mt-1" />
         </div>
-        {/* <div className="ring-0 ring-transparent shadow"> */}
         <div className="">
           {isLoading ? (
             <div className="flex flex-col justify-center items-center h-32">
@@ -121,8 +120,6 @@ const ProductDetail = () => {
             </div>
           ) : (
             <>
-              {/* <div className="flex gap-10 "> */}
-              {/* <div className="bg-white flex flex-col sm:flex-row rounded-lg px-3 sm:p-6 max-sm:pb-3 ring-0 ring-transparent shadow max-sm:flex-col"> */}
               <div className="bg-white flex flex-col sm:flex-row px-3 sm:p-6 max-sm:pb-3  max-sm:flex-col">
                 {/* IMAGE */}
                 <div className="sm:flex items-center justify-center mr-5 w-full sm:max-w-xs max-sm:size-32 sm:w-1/3 h-20 sm:h-96 max-sm:mx-auto">
@@ -145,10 +142,6 @@ const ProductDetail = () => {
                       variantSelected.length != 0 && (
                         <h3 className="text-2xl">({variantSelected.name})</h3>
                       )}
-
-                    {/* {variantSelected.length != 0 && (
-            <h3 className="text-2xl">({variantSelected.name})</h3>
-          )} */}
                   </div>
                   {/* Check if it is Mobile Product */}
                   <div className="">
@@ -203,15 +196,6 @@ const ProductDetail = () => {
                         </div>
                       </div>
                     ) : (
-                      // <div className="">
-                      //     <div className="flex items-center">
-                      //       {variantSelected.price ? (
-                      //         <FaIndianRupeeSign className="text-4xl" />
-                      //       ) : null}
-                      //       <h2 className="text-5xl text-yellow-500">
-                      //         {variantSelected.price}
-                      //       </h2>
-                      //     </div>
                       <div>
                         <div className="flex flex-col mb-4">
                           <h2>Product Price</h2>
@@ -226,12 +210,9 @@ const ProductDetail = () => {
                     {variantSelected.length != 0 ? (
                       <div className="flex items-center w-fit bg-emerald-600 text-white px-4 py-2 rounded-md ">
                         <Link
-                          // to={`/categories/brands/productDetails/${prodId}/productDeductions`}
                           to={`/sell/deductions?productId=${prodId}&variant=${variantSelected.name}`}
                         >
-                          {/* <div className="flex items-center w-fit bg-emerald-600 text-white px-4 py-2 rounded-md "> */}
                           <button>Get Exact Value</button>
-                          {/* </div> */}
                         </Link>
                         <FaAngleRight />
                       </div>
@@ -255,7 +236,6 @@ const ProductDetail = () => {
                       </p>
                     </div>
                   </div>
-                  {/* // )} */}
                 </div>
               </div>
             </>

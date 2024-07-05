@@ -1,37 +1,35 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addScreenSize,
-  addGraphic,
-  addScreenCondition,
-} from "../../features/laptopDeductionSlice";
+  addProductScreenCondition,
+  addProductPhysicalCondition,
+} from "../../features/deductionSlice";
 
-import { addProductScreenCondition } from "../../features/deductionSlice";
 import { BsCircle } from "react-icons/bs";
 
 const DeductionItems = ({
   conditionName,
   conditionLabels,
   handleLabelSelection,
+  setPhysicalCondition,
   handleContinue,
-  setScreenSize,
-  setGraphic,
   setScreenCondition,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
   const deductionSliceData = useSelector((state) => state.deductions);
-  console.log("deductionSliceData", deductionSliceData);
+  // console.log("deductionData", deductionData);
+  // console.log("deductionSliceData", deductionSliceData);
 
   const dispatch = useDispatch();
 
   // Determine if the image should be shown based on the condition name
   const shouldShowImage = !(
-    conditionName.includes("Screen Size") ||
-    conditionName.includes("Graphic") ||
+    conditionName.toLowerCase().includes("screen size") ||
+    conditionName.toLowerCase().includes("physical condition") ||
     conditionName.toLowerCase().includes("screen condition")
   );
 
-  console.log("shouldHideImage", shouldShowImage);
+  // console.log("shouldHideImage", shouldShowImage);
 
   return (
     // <div key={index}>
@@ -66,8 +64,10 @@ const DeductionItems = ({
                   : ""
               }`
               : `flex px-2 ${
+                  deductionSliceData.productPhysicalCondition.conditionLabel ===
+                    label.conditionLabel ||
                   deductionSliceData.productScreenCondition.conditionLabel ===
-                  label.conditionLabel
+                    label.conditionLabel
                     ? "border-cyan-500"
                     : ""
                 }`
@@ -85,12 +85,26 @@ const DeductionItems = ({
 
             if (conditionName.includes("Screen Size")) {
               // console.log("Screen Size");
-            } else if (conditionName.includes("Graphic")) {
-              // console.log("Graphic");
+            } else if (
+              conditionName.toLowerCase().includes("physical condition")
+            ) {
+              // console.log("phyical condition");
+              dispatch(
+                addProductPhysicalCondition({
+                  conditionLabel: label.conditionLabel,
+                  priceDrop: label.priceDrop,
+                  operation: label.operation,
+                })
+              );
+
+              setPhysicalCondition({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             } else if (
               conditionName.toLowerCase().includes("screen condition")
             ) {
-              // dispatch(addProductScreenCondition)
               dispatch(
                 addProductScreenCondition({
                   conditionLabel: label.conditionLabel,
@@ -98,6 +112,11 @@ const DeductionItems = ({
                   operation: label.operation,
                 })
               );
+              setScreenCondition({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             }
           }}
         >
@@ -126,7 +145,7 @@ const DeductionItems = ({
             } 
             ${
               shouldShowImage
-                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
+                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs "
                 : "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white "
             }
             `}
@@ -140,10 +159,12 @@ const DeductionItems = ({
                         condLabel.conditionLabel == label.conditionLabel
                     )
                       ? "text-cyan-500"
-                      : deductionSliceData.productScreenCondition
+                      : deductionSliceData.productPhysicalCondition
+                          .conditionLabel === label.conditionLabel ||
+                        deductionSliceData.productScreenCondition
                           .conditionLabel === label.conditionLabel
                       ? "text-cyan-500"
-                      : "opacity-30"
+                      : "opacity-30 "
                   } `}
                 >
                   <BsCircle />

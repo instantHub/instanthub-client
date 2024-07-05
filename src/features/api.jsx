@@ -23,6 +23,8 @@ export const api = createApi({
     "Series",
     "Stocks",
     "Coupons",
+    "Services",
+    "Recycle",
   ],
   endpoints: (build) => ({
     getCategory: build.query({
@@ -455,6 +457,122 @@ export const api = createApi({
       }),
       invalidatesTags: ["Coupons"],
     }),
+    getServices: build.query({
+      query: () => `/api/services`,
+      providesTags: ["Services"],
+    }),
+    createServices: build.mutation({
+      query: (data) => ({
+        url: `/api/services/add-service`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Services"],
+    }),
+    uploadServicesImage: build.mutation({
+      query: (data) => ({
+        url: "/api/upload/services",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateService: build.mutation({
+      query: ({ serviceId, data }) => ({
+        url: `/api/services/update-service/${serviceId}`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Services"],
+    }),
+    deleteService: build.mutation({
+      query: ({ serviceId, serviceType, serviceFrom }) => ({
+        url: `/api/services/delete-service?serviceId=${serviceId}&serviceType=${serviceType}&serviceFrom=${serviceFrom}`,
+        method: "DELETE",
+        // body: data,
+      }),
+      invalidatesTags: ["Services"],
+    }),
+    getServicesOrders: build.query({
+      query: () => `/api/services/get-orders`,
+      providesTags: ["Orders"],
+    }),
+    createServiceOrder: build.mutation({
+      query: (data) => ({
+        url: `/api/services/create-order`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Orders"],
+    }),
+    deleteServiceOrder: build.mutation({
+      query: (orderId) => ({
+        url: `/api/services/delete-order/${orderId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Orders"],
+    }),
+    serviceOrderComplete: build.mutation({
+      query: (data) => ({
+        url: `/api/services/completed-service-order`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Orders"],
+    }),
+
+    // DELETE IMAGE
+    deleteImage: build.mutation({
+      query: (data) => ({
+        url: `/api/delete/delete-image`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["ConditionLabels"],
+    }),
+
+    // Recycle
+    getRecycleOrders: build.query({
+      query: () => `/api/recycle/get-orders`,
+      providesTags: ["Recycle"],
+    }),
+    createRecycleOrder: build.mutation({
+      query: (data) => ({
+        url: `/api/recycle/create-order`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Recycle"],
+    }),
+    recycleOrderComplete: build.mutation({
+      query: (data) => ({
+        url: `/api/recycle/order-received`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Recycle"],
+    }),
+    deleteRecycleOrder: build.mutation({
+      query: (orderId) => ({
+        url: `/api/recycle/delete-order/${orderId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Recycle"],
+    }),
   }),
 });
 
@@ -513,6 +631,20 @@ export const {
   useGetCouponQuery,
   useCreateCouponMutation,
   useDeleteCouponMutation,
+  useGetServicesQuery,
+  useCreateServicesMutation,
+  useUploadServicesImageMutation,
+  useUpdateServiceMutation,
+  useGetServicesOrdersQuery,
+  useCreateServiceOrderMutation,
+  useServiceOrderCompleteMutation,
+  useDeleteServiceOrderMutation,
+  useDeleteServiceMutation,
+  useDeleteImageMutation,
+  useGetRecycleOrdersQuery,
+  useCreateRecycleOrderMutation,
+  useRecycleOrderCompleteMutation,
+  useDeleteRecycleOrderMutation,
 } = api;
 
 // useGetAllQuestionsQuery,

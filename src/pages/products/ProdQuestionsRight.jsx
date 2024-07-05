@@ -6,11 +6,11 @@ const ProdDeductionsRight = () => {
   console.log(productsData);
   const laptopSlice = useSelector((state) => state.laptopDeductions);
 
-  console.log("object", productsData);
+  console.log("productsData", productsData);
 
   return (
     // <div>
-    <div className="w-[25%] border rounded max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%]">
+    <div className="w-[25%] border rounded max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">
       <>
         <div className="flex items-center justify-center gap-3 p-2">
           <div>
@@ -120,6 +120,20 @@ const ProdDeductionsRight = () => {
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productAge.conditionLabel}
+                    </li>
+                  </>
+                )}
+
+                {/* Products Physical Condition display when selected */}
+                {productsData.productPhysicalCondition && (
+                  <>
+                    {productsData.productPhysicalCondition.conditionLabel ? (
+                      <h1 className="mt-2 mb-1 font-bold">
+                        {productsData.productCategory} Physical Condition
+                      </h1>
+                    ) : null}
+                    <li className="py-1 pl-2 text-md">
+                      {productsData.productPhysicalCondition.conditionLabel}
                     </li>
                   </>
                 )}

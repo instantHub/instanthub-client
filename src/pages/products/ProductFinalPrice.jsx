@@ -146,9 +146,9 @@ const ProductFinalPrice = () => {
     const order = await createOrder(orderData);
     console.log("order", order);
     if (order.data.success) {
-      closeModal();
-      toast.success("Your Order placed successfully");
-      navigate(`/categories/brands/productDetails/${productId}`);
+      // closeModal();
+      // toast.success("Your Order placed successfully");
+      // navigate(`/categories/brands/productDetails/${productId}`);
     }
   };
 
@@ -163,6 +163,10 @@ const ProductFinalPrice = () => {
       // navigate(`/`);
       navigate(`/categories/brands/productDetails/${productId}`);
     } else if (!selectedProdDetails.productAge.conditionLabel) {
+      navigate(`/categories/brands/productDetails/${productId}`);
+    } else if (
+      selectedProdDetails.productPhysicalCondition.conditionLabel === ""
+    ) {
       navigate(`/categories/brands/productDetails/${productId}`);
     }
   }, [selectedProdDetails]);
@@ -226,6 +230,7 @@ const ProductFinalPrice = () => {
     // setFormData({
     //   ...formData,
     //   productId,
+    // productName: selectedProdDetails.productName,
     //   category: selectedProdDetails.productCategory,
     //   variant: selectedProdDetails.getUpTo,
     //   deductions: selectedProdDetails.deductions,
@@ -254,7 +259,9 @@ const ProductFinalPrice = () => {
       setFormData({
         ...formData,
         productId,
-        category: selectedProdDetails.productCategory,
+        productName: selectedProdDetails.productName,
+        productBrand: productDetails.brand.name,
+        productCategory: selectedProdDetails.productCategory,
         variant: selectedProdDetails.getUpTo,
         deductions: selectedProdDetails.deductions,
         // accessoriesNotAvailable: AccessoriesNotSelected,
@@ -266,7 +273,9 @@ const ProductFinalPrice = () => {
       setFormData({
         ...formData,
         productId,
-        category: selectedProdDetails.productCategory,
+        productName: selectedProdDetails.productName,
+        productBrand: productDetails.brand.name,
+        productCategory: selectedProdDetails.productCategory,
         variant: selectedProdDetails.getUpTo,
         deductions: selectedProdDetails.deductions,
         accessoriesAvailable: AccessoriesSelected,
@@ -300,7 +309,7 @@ const ProductFinalPrice = () => {
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
 
-      <div className="flex flex-col justify-between items- pt-2 px-10 bg-slate-200 bg-opacity-10 w-full">
+      <div className="flex flex-col justify-between items- pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
         <div className=" justify-start items-start mb-2">
           <Link to={`/categories/brands/productDetails/${productDetails?.id}`}>
             <button className=" text-cyan-600 bg-white px-2 py-1 border border-cyan-600 rounded">
@@ -529,7 +538,7 @@ const ProductFinalPrice = () => {
               ) : null}
             </div>
 
-            <div className="w-3/4 mt-5 flex items-center justify-center">
+            <div className="w-3/4 mt-5 flex items-center justify-center max-lg:w-full">
               <FAQ />
             </div>
           </div>

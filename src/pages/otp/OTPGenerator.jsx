@@ -74,17 +74,19 @@ const OtpGenerator = (props) => {
       // toast.success("OTP Generated");
       // setOtp(otpGenerated.data.data.otp);
 
-      if (data.productCategory === "Laptop") {
+      if (data.productCategory.toLowerCase().includes("laptop")) {
         dispatch(addDeductions(laptopSlice.processor));
         dispatch(addDeductions(laptopSlice.hardDisk));
         dispatch(addDeductions(laptopSlice.ram));
+        dispatch(addDeductions(data.productAge));
         dispatch(addDeductions(laptopSlice.screenSize));
         dispatch(addDeductions(laptopSlice.graphic));
         dispatch(addDeductions(laptopSlice.screenCondition));
-        dispatch(addDeductions(data.productAge));
-      } else if (data.productCategory === "Mobile") {
+      } else if (data.productCategory.toLowerCase().includes("mobile")) {
         dispatch(addDeductions(data.productAge));
         dispatch(addDeductions(data.productScreenCondition));
+        dispatch(addDeductions(data.productPhysicalCondition));
+        dispatch(addDeductions(data.productPanelCondition));
       }
 
       // Until OTP is applied

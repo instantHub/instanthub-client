@@ -65,7 +65,7 @@ export default function StocksIn() {
       orderId: selectedStock.id,
       soldByDetails: formattedDate,
       soldPrice: sellingPrice,
-      stockStatus: "Out",
+      stockStatus: "Stock Out",
     };
 
     console.log("formData from StockIn handleSubmit", formData);

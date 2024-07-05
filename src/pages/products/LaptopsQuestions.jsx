@@ -32,9 +32,12 @@ const LaptopsQuestions = (props) => {
   const [processor, setProcessor] = useState();
   const [hardDisk, setHardDisk] = useState();
   const [ram, setRam] = useState();
+  const [screenSizePage, setScreenSizePage] = useState();
   const [screenSize, setScreenSize] = useState();
   const [graphic, setGraphic] = useState();
+  const [graphicPage, setGraphicPage] = useState();
   const [screenCondition, setScreenCondition] = useState();
+  const [screenConditionPage, setScreenConditionPage] = useState();
   const [pageIndexes, setPageIndexes] = useState({});
 
   if (deductions) {
@@ -58,7 +61,7 @@ const LaptopsQuestions = (props) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
   const [showOTP, setShowOTP] = useState(false);
 
-  console.log("laptopSlice", laptopSlice);
+  // console.log("laptopSlice", laptopSlice);
   // console.log("deductionData", deductionData);
   // console.log("deductions", deductions);
   // console.log("laptopsConList", laptopsConList);
@@ -67,7 +70,7 @@ const LaptopsQuestions = (props) => {
   // const [currentPage, setCurrentPage] = useState(1);
 
   const data = useSelector((state) => state.deductions);
-  console.log("useSelector", data);
+  // console.log("useSelector", data);
 
   const [age, setAge] = useState(false);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -125,6 +128,8 @@ const LaptopsQuestions = (props) => {
     sortedConditions = groupConditionsByPage(deductions);
   }
 
+  // console.log("screenConditionPage", screenConditionPage, screenCondition);
+
   const handleContinue = () => {
     // If in 1st page all fields must be selected
     console.log("handleconinue", sortedConditions[currentPageIndex]);
@@ -139,18 +144,34 @@ const LaptopsQuestions = (props) => {
       }
     }
     // if (currentPageIndex === 1) {
-    if (currentPageIndex === 1) {
-      if (screenSize === undefined || graphic === undefined) {
-        toast.error("Select Both ScreenSize & Graphic to proceed..!");
-        return;
-      }
+    // if (currentPageIndex === 1) {
+    //   if (screenSize === undefined || graphic === undefined) {
+    //     toast.error("Select Both ScreenSize & Graphic to proceed..!");
+    //     return;
+    //   }
+    // }
+    if (currentPageIndex === screenSizePage - 1 && screenSize === undefined) {
+      toast.error("Select ScreenSize to proceed..!");
+      return;
     }
-    if (currentPageIndex === 5) {
-      if (screenCondition === undefined) {
-        toast.error("Select screenCondition to proceed..!");
-        return;
-      }
+    if (currentPageIndex === graphicPage - 1 && graphic === undefined) {
+      toast.error("Select Graphics to proceed..!");
+      return;
     }
+    if (
+      currentPageIndex === screenConditionPage - 1 &&
+      screenCondition === undefined
+    ) {
+      toast.error("Select Screen Condition to proceed..!");
+      return;
+    }
+
+    // if (currentPageIndex === 5) {
+    //   if (screenCondition === undefined) {
+    //     toast.error("Select screenCondition to proceed..!");
+    //     return;
+    //   }
+    // }
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
       //     setCurrentPage(currentPage + 1);
@@ -198,6 +219,22 @@ const LaptopsQuestions = (props) => {
     // handleLaptopLabelSelection();
   };
 
+  useEffect(() => {
+    console.log("UseEffect", deductions);
+    deductions.map((d) => {
+      if (d.conditionName.toLowerCase().includes("screen size")) {
+        // console.log(d.page);
+        setScreenSizePage(d.page);
+      } else if (d.conditionName.toLowerCase().includes("graphic")) {
+        // console.log(d.page);
+        setGraphicPage(d.page);
+      } else if (d.conditionName.toLowerCase().includes("screen condition")) {
+        // console.log(d.page);
+        setScreenConditionPage(d.page);
+      }
+    });
+  });
+
   //   console.log("state", processor, hardDisk, ram);
   //   console.log("selectedLabels", selectedLabels);
 
@@ -224,7 +261,7 @@ const LaptopsQuestions = (props) => {
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (
-            <h1 className="text-center font-semibold">
+            <h1 className="text-center font-semibold text-2xl max-2sm:text-xl mt-5">
               Select the system configuration of your device?
             </h1>
           )}
@@ -234,15 +271,39 @@ const LaptopsQuestions = (props) => {
             {sortedConditions[currentPageIndex].conditions.map(
               (condition, index) => (
                 <>
-                  <div key={index} className="px-8 py-4">
+                  <div key={index} className="px-4 py-4">
                     {currentPageIndex === 0 ? (
-                      <div className="px-1 py-2 font-extrabold text-lg">
+                      <div className="px-1 py-2 font-extrabold text-lg ">
                         <h1>{condition.conditionName}</h1>
                       </div>
                     ) : (
-                      <div className="px-5 py-2 text-center font-extrabold text-lg">
-                        <h1>{condition.conditionName}</h1>
-                      </div>
+                      <>
+                        <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
+                          <h1>{condition.conditionName}</h1>
+                        </div>
+                        <div>
+                          {condition.conditionName
+                            .toLowerCase()
+                            .includes("age") && (
+                            <div className="text-center mb-5">
+                              <p className="text-lg font-semibold max-2sm:text-sm">
+                                Let us know how old your device is. Valid bill
+                                is needed for device less than 3 years.
+                              </p>
+                            </div>
+                          )}
+                          {condition.conditionName
+                            .toLowerCase()
+                            .includes("screen condition") && (
+                            <div className="text-center mb-5">
+                              <p className="text-lg font-semibold max-2sm:text-sm px-2">
+                                The better condition your device is in, we will
+                                pay you more.
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </>
                     )}
 
                     {currentPageIndex === 0 ? (
@@ -295,18 +356,6 @@ const LaptopsQuestions = (props) => {
                                       {label.conditionLabel}
                                     </option>
                                   ))}
-
-                            {/* {condition.conditionLabels.map((label, index) => (
-                              <option
-                                key={index}
-                                data-arg1={label.conditionLabel}
-                                data-arg2={label.priceDrop}
-                                data-arg3={condition.conditionName}
-                                data-arg4={label.operation}
-                              >
-                                {label.conditionLabel}
-                              </option>
-                            ))} */}
                           </select>
                         </div>
                       </>

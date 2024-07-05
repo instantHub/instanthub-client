@@ -164,6 +164,35 @@ const SideBar = (props) => {
       ],
     },
     {
+      title: "Services",
+      links: [
+        {
+          name: "add-services",
+          // icon: <CgProfile />,
+          icon: <ImProfile />,
+        },
+        {
+          name: "services-list",
+          // icon: <CgProfile />,
+          icon: <ImProfile />,
+        },
+        {
+          name: "services-Orders",
+          // icon: <CgProfile />,
+          icon: <ImProfile />,
+        },
+      ],
+    },
+    {
+      title: "Recycle Order",
+      links: [
+        {
+          name: "recycle-orders",
+          icon: <ImProfile />,
+        },
+      ],
+    },
+    {
       title: "Settings",
       links: [
         {

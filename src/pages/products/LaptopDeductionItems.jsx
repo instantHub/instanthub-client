@@ -45,7 +45,8 @@ const LaptopDeductionItems = ({
           : `${
               !shouldShowImage
                 ? `grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-4 items-center px-4 `
-                : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
+                : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4`
+                // `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
             }`
       }
       
@@ -83,18 +84,7 @@ const LaptopDeductionItems = ({
                 label.operation
               );
             }
-            // if (
-            //   !conditionName.includes("Screen Size") ||
-            //   !conditionName.includes("Graphic")
-            // ) {
-            //   handleLabelSelection(
-            //     label.conditionLabel,
-            //     label.priceDrop,
-            //     label.operation
-            //   );
-            // }
             if (conditionName.includes("Screen Size")) {
-              // console.log("Screen Size");
               dispatch(
                 addScreenSize({
                   conditionLabel: label.conditionLabel,
@@ -108,7 +98,6 @@ const LaptopDeductionItems = ({
                 operation: label.operation,
               });
             } else if (conditionName.includes("Graphic")) {
-              // console.log("Graphic");
               dispatch(
                 addGraphic({
                   conditionLabel: label.conditionLabel,

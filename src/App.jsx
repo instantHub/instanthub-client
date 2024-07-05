@@ -17,6 +17,16 @@ import ClientProductDeductions from "./pages/products/ProductQuestions";
 import ClientOtpGenerator from "./pages/otp/OTPGenerator";
 import ClientProductFinalPrice from "./pages/products/ProductFinalPrice";
 import ClientPrivacyPolicy from "./components/PrivacyPolicy";
+import ClientServices from "./pages/services/Services";
+import ClientSubServices from "./pages/services/ServiceSubCategory";
+import ClientServiceSubProducts from "./pages/services/ServiceSubProducts";
+import ClientServicesBrands from "./pages/services/ServiceBrands";
+import ClientServicesBrandsProblems from "./pages/services/ServiceBrandProblems";
+import ClientBookService from "./pages/services/BookService";
+import ClientRecycleCategories from "./pages/recycle/RecycleCategories";
+import ClientRecycleBrands from "./pages/recycle/RecycleBrands";
+import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
+import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
 // import emailcheck from './components/'
 
 // Admin side
@@ -53,6 +63,10 @@ import AdminOrdersList from "./admin/pages/orders/OrdersList";
 import AdminPhoneNumbers from "./admin/pages/orders/PhoneNumbersList";
 import AdminManageStocks from "./admin/pages/stocks/ManageStocks";
 import AdminCreateCoupon from "./admin/pages/coupons/CreateCoupon";
+import AdminCreateServiceForm from "./admin/pages/services/CreateServices";
+import AdminServicesList from "./admin/pages/services/ServicesList";
+import AdminServicesOrdersList from "./admin/pages/services/ServicesOrders";
+import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
 
 import Admin from "./admin/Admin";
 import AdminLayout from "./admin/pages/layout/Layout";
@@ -100,6 +114,7 @@ function App() {
           ),
           element: <ClientBrands />,
         },
+
         {
           path: "/categories/brands/products/:brandId",
           errorElement: (
@@ -138,6 +153,97 @@ function App() {
         {
           path: "/sell/deductions/finalPrice",
           element: <ClientProductFinalPrice />,
+        },
+        // Services
+        {
+          path: "/services",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Services, please try after sometime..!`}
+            />
+          ),
+          element: <ClientServices />,
+        },
+        {
+          path: "/services/serviceSubCategory/:serviceCategoryId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Services, please try after sometime..!`}
+            />
+          ),
+          element: <ClientSubServices />,
+        },
+        {
+          path: "/services/serviceSubProducts/:subServiceId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Services, please try after sometime..!`}
+            />
+          ),
+          element: <ClientServiceSubProducts />,
+        },
+        {
+          path: "/services/serviceBrands/:serviceCategoryId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Services, please try after sometime..!`}
+            />
+          ),
+          element: <ClientServicesBrands />,
+        },
+        {
+          path: "/services/serviceBrandProblems/:serviceBrandId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Services Problems, please try after sometime..!`}
+            />
+          ),
+          element: <ClientServicesBrandsProblems />,
+        },
+        {
+          path: "/services/book-service/:serviceId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Book-Service, please try after sometime..!`}
+            />
+          ),
+          element: <ClientBookService />,
+        },
+        {
+          path: "/recycle-categories",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to Recycle Categories, please try after sometime..!`}
+            />
+          ),
+          element: <ClientRecycleCategories />,
+        },
+        {
+          path: "/recycle-categories/recycle-brands/:catId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to Recycle Brands, please try after sometime..!`}
+            />
+          ),
+          element: <ClientRecycleBrands />,
+        },
+        {
+          path: "/recycle-categories/recycle-brands/recycle-products/:brandId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Products, please try after sometime..!`}
+            />
+          ),
+          element: <ClientRecycleProducts />,
+        },
+        {
+          path: "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
+          errorElement: (
+            <ErrorComponent
+              message={`Sorry unable to load Product Details, please try after sometime..!`}
+            />
+          ),
+          element: <ClientRecycleProductDetail />,
         },
       ],
     },
@@ -281,6 +387,23 @@ function App() {
             {
               path: "/admin/add-coupons",
               element: <AdminCreateCoupon />,
+            },
+            // SERVICES
+            {
+              path: "/admin/add-services",
+              element: <AdminCreateServiceForm />,
+            },
+            {
+              path: "/admin/services-list",
+              element: <AdminServicesList />,
+            },
+            {
+              path: "/admin/services-orders",
+              element: <AdminServicesOrdersList />,
+            },
+            {
+              path: "/admin/recycle-orders",
+              element: <AdminRecycleOrdersList />,
             },
           ],
         },

@@ -5,6 +5,7 @@ import {
   useGetCategoryQuery,
   useGetAllProductsQuery,
   useGetBrandSeriesQuery,
+  useGetAllBrandQuery,
 } from "../../features/api";
 import { useParams, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
@@ -15,16 +16,13 @@ import { Helmet } from "react-helmet-async";
 
 const Products = () => {
   const { brandId } = useParams();
-  const { data: getCategories, isLoading: categoryLoading } =
-    useGetCategoryQuery();
+
   const { data: brandSeries, isLoading: seriesLoading } =
     useGetBrandSeriesQuery(brandId);
-  const [showSeries, setShowSeries] = useState(false);
-  const [seriesSelected, setSeriesSelected] = useState("");
+
+  const { data: brandData, isLoading: brandLoading } = useGetAllBrandQuery();
 
   const [search, setSearch] = useState("");
-
-  // Get Products by Brand
   const {
     data: productsData,
     isLoading: productsLoading,
@@ -32,47 +30,32 @@ const Products = () => {
     isError,
   } = useGetProductsQuery({ brandId, search });
 
+  const [showSeries, setShowSeries] = useState(false);
+  const [seriesSelected, setSeriesSelected] = useState("");
+
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+
+  console.log("category", category);
+  console.log("brand", brand);
   console.log("productsData", productsData);
 
-  // Finding Category of the Product
-  let category = { name: "", id: "" };
-  if (!categoryLoading && !productsLoading && productsData.length > 0) {
-    getCategories.map((cat) => {
-      if (productsData[0].category == cat.id) {
-        category = { name: cat.name, id: cat.id };
-      }
-    });
-  }
-  //   console.log(category);
-
-  let { data: brandData, isLoading: brandLoading } = useGetBrandQuery(
-    category.id
-  );
-
-  if (!brandLoading) {
-    // console.log("brandData", brandData);
-  }
-  // Finding Brand of the Product
-  let brand = { name: "", id: "" };
-  if (!categoryLoading && !productsLoading && !brandLoading) {
-    brandData.map((brandDetail) => {
-      if (brandDetail.id == brandId) {
-        brand = { name: brandDetail.name, id: brandDetail.id };
-      }
-    });
-    // console.log("brandname", brand.name);
-  }
-  console.log("showSeries", showSeries);
   const handleSeries = (seriesId) => {
     setShowSeries(!showSeries);
     setSeriesSelected(seriesId);
     console.log(seriesId);
   };
 
+  useEffect(() => {
+    if (brandData) {
+      const brandFound = brandData.find((b) => b.id === brandId);
+      setBrand(brandFound);
+      setCategory(brandFound.category);
+    }
+  }, [brandData]);
+
   return (
     <>
-      {/* <ProductSeries brandId={brandId} /> */}
-
       <Helmet>
         <title>{`Sell Old ${brand.name} ${category.name}s | InstantCashPick`}</title>
 
@@ -90,43 +73,6 @@ const Products = () => {
 
       {/* Series */}
       <div className="mt-8">
-        {/* OLD Series Code */}
-        {/* <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
-          {!seriesLoading && brandSeries.length !== 0
-            ? brandSeries.map((series, i) => (
-                <>
-                  <div
-                    key={i}
-                    className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
-                  >
-                    <button
-                      onClick={() => handleSeries(series.id)}
-                      // value={series.id}
-                      // to={`/categories/brands/productDetails/${series.id}`}
-                      key={i}
-                      className="w-full h-full"
-                    >
-                      <div
-                        key={i}
-                        className={`${
-                          showSeries && series.id === seriesSelected
-                            ? "bg-cyan-500 text-white"
-                            : "bg-gray-200 max-sm:bg-white"
-                        } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
-                      >
-                        <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                          <div className="text-[14.5px] font-[500] leading-7">
-                            {series.name}
-                          </div>
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-                </>
-              ))
-              : null}
-        </div> */}
-
         <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {!seriesLoading && brandSeries.length !== 0
             ? !showSeries
@@ -201,14 +147,10 @@ const Products = () => {
             : null}
         </div>
       </div>
-      {/* {showSeries && series.id === seriesSelected ? (
-                  <span className="p-0 m-0 ml-[95%]">x</span>
-                ) : null} */}
-
-      {/*  */}
 
       {/* <div className="mt-5 w-4/5 max-sm:w-[90%] mx-auto"> */}
-      <div className="mt-5 w-[90%] max-sm:w-[90%] mx-auto">
+      {/* <div className="mt-5 w-[90%] max-sm:w-[90%] mx-auto"> */}
+      <div className="pt-10 w-4/5 max-2sm:w-[90%] mx-auto ">
         {/* Search Bar */}
         <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
           <div className="flex pl-4 items-center border rounded">
@@ -231,25 +173,36 @@ const Products = () => {
 
         <div>
           <p className="pb-5 text-2xl font-bold max-sm:text-xl">
-            Sell your{" "}
-            {!categoryLoading && !brandLoading
-              ? `${brand.name} ${category.name}`
-              : null}{" "}
-            for Instant Cash
+            Sell your {`${brand?.name} ${category?.name}`} to recycle and get
+            Instant Cash
           </p>
         </div>
 
         <div className="mx-0 mb-6">
           <div className="flex items-center gap-1">
-            <h1 className="flex items-center opacity-60 gap-1">
-              <Link to={"/"}>Home</Link>
-              <FaAngleRight />
-              <Link to={`/categories/brands/${category.id}`}>
-                {category.name}
+            <h2 className="flex items-center opacity-60 gap-1 max-2sm:text-xs max-2sm:gap-0">
+              <Link to={"/"} className="max-2sm:hidden">
+                Home
+              </Link>
+              <Link to={"/"} className="2sm:hidden">
+                H..
+              </Link>
+              <FaAngleRight className="" />
+              <Link to={"/recycle-categories"} className="max-sm:hidden">
+                Recycle
+              </Link>
+              <Link to={"/recycle-categories"} className="sm:hidden">
+                Re..
               </Link>
               <FaAngleRight />
-            </h1>
-            {brand.name}
+              <Link to={`/recycle-categories/recycle-brands/${category.id}`}>
+                Recycle {category.name}
+              </Link>
+              <FaAngleRight />
+              <span className="font-semibold">
+                Recycle {brand.name} {category.name}
+              </span>
+            </h2>
           </div>
           <hr className="text-black mt-1" />
         </div>
@@ -272,7 +225,7 @@ const Products = () => {
                           className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
                         >
                           <Link
-                            to={`/categories/brands/productDetails/${product.id}`}
+                            to={`/recycle-categories/recycle-brands/recycle-productDetails/${product.id}`}
                             key={i}
                             className="w-full h-full"
                           >
@@ -314,7 +267,7 @@ const Products = () => {
                             className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
                           >
                             <Link
-                              to={`/categories/brands/productDetails/${product.id}`}
+                              to={`/categories/recycle-brands/recycle-productDetails/${product.id}`}
                               key={i}
                               className="w-full h-full"
                             >
