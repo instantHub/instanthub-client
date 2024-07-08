@@ -178,7 +178,7 @@ const RecycleProductDetail = () => {
       //   closeModal();
       //   setOrderOpen(false);
       toast.success("Your Order placed successfully");
-      // navigate(`/recycle-categories`);
+      navigate(`/recycle-categories`);
     }
   };
 
