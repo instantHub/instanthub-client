@@ -68,8 +68,8 @@ const DeductionItems = ({
                     label.conditionLabel ||
                   deductionSliceData.productScreenCondition.conditionLabel ===
                     label.conditionLabel
-                    ? "border-cyan-500"
-                    : ""
+                    ? "border-cyan-500 "
+                    : "bg-gray-100"
                 }`
           } 
            border rounded items-center`}
@@ -139,14 +139,21 @@ const DeductionItems = ({
                 (condLabel) => condLabel.conditionLabel == label.conditionLabel
               )
                 ? `bg-cyan-500 ${
-                    shouldShowImage ? "text-white " : "text-black"
+                    shouldShowImage ? "text-white" : "text-black"
                   } `
-                : "bg-slate-100"
+                : // : "bg-slate-100"
+                deductionSliceData.productPhysicalCondition.conditionLabel ===
+                    label.conditionLabel ||
+                  deductionSliceData.productScreenCondition.conditionLabel ===
+                    label.conditionLabel
+                ? "bg-white"
+                : "bg-slate-100 "
             } 
             ${
               shouldShowImage
                 ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs "
-                : "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white "
+                : "flex justify-between text-sm h-[90px] items-center gap-1 py-4"
+              // "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white"
             }
             `}
           >
@@ -163,7 +170,7 @@ const DeductionItems = ({
                           .conditionLabel === label.conditionLabel ||
                         deductionSliceData.productScreenCondition
                           .conditionLabel === label.conditionLabel
-                      ? "text-cyan-500"
+                      ? "text-cyan-500 bg-white"
                       : "opacity-30 "
                   } `}
                 >

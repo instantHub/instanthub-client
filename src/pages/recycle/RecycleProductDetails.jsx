@@ -304,7 +304,13 @@ const RecycleProductDetail = () => {
                 </div>
 
                 {/* Products Details */}
-                <div className="flex flex-col gap-24 w-full sm:w-2/3 max-sm:gap-6 max-14inch:gap-12">
+                <div
+                  className={`flex flex-col  w-full sm:w-2/3 max-sm:gap-6 max-14inch:gap-12 ${
+                    productDetails.category.name === "Mobile"
+                      ? `gap-16`
+                      : `gap-10`
+                  }`}
+                >
                   <div className="mt-6 flex gap-2 items-center">
                     <h1 className="text-3xl">{productDetails.name}</h1>
                     {productDetails.category.name === "Mobile" &&
@@ -317,12 +323,18 @@ const RecycleProductDetail = () => {
                     {productDetails.category.name
                       .toLowerCase()
                       .includes("mobile") ? (
-                      <div className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-2">
+                        <div className="">
+                          <div className="text-xl max-sm:text-sm">
+                            Recyle price will range between 500 - 700 <br />{" "}
+                            based on the product status
+                          </div>
+                        </div>
                         <div>
                           <p>Choose a Variant</p>
                           <p className="opacity-40 text-sm">
                             Select a variant and click on Recycle to know the
-                            price
+                            recyle price
                           </p>
                         </div>
 
@@ -365,13 +377,17 @@ const RecycleProductDetail = () => {
                         </div>
                       </div>
                     ) : (
-                      <div>
-                        <div className="flex flex-col mb-4">
-                          {/* <h2>Product Price</h2> */}
-                          <h2 className="flex items-center text-5xl text-yellow-500 bg-white w-fit">
-                            {/* <FaIndianRupeeSign className="text-4xl text-black" />{" "}
-                            {variantSelected.price} */}
-                          </h2>
+                      <div className="flex flex-col items-start gap-4">
+                        <div className="">
+                          <div className="text-xl max-sm:text-sm">
+                            Recyle price will range between 500 - 1500 <br />{" "}
+                            based on the product status
+                          </div>
+                        </div>
+                        <div className="flex items-center text-5xl text-black bg-white w-fit mb-4">
+                          <p className="opacity-40 text-sm">
+                            Click on Recycle to know the recylce price
+                          </p>
                         </div>
                       </div>
                     )}
@@ -412,13 +428,13 @@ const RecycleProductDetail = () => {
                     )}
 
                     {/* Disclaimer */}
-                    <div className="py-1 mt-2 px-2 w-3/4 bg-yellow-200 max-sm:w-full">
+                    {/* <div className="py-1 mt-2 px-2 w-3/4 bg-yellow-200 max-sm:w-full">
                       <p className="text-xs opacity-70">
                         The above pricing is subject to change based on the
                         product's condition. The final pricing offer will be
                         provided after the entire product has been inspected.
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

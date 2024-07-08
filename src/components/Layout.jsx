@@ -46,6 +46,7 @@ const Layout = () => {
           {JSON.stringify(structuredData)}
         </script>
       </Helmet>
+      {/* <div className="flex flex-col min-h-screen items-center"> */}
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <FloatingButtons />

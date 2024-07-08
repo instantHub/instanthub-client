@@ -35,7 +35,8 @@ const Categories = () => {
             <span>Loading...</span>
           </div>
         ) : (
-          <div className="flex flex-wrap justify-evenly gap-6 ">
+          // <div className="flex flex-wrap justify-evenly gap-6 ">
+          <div className="grid grid-cols-6 gap-x-2 gap-y-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 w-full mx-auto items-center justify-center text-center relative">
             {data.map((category, i) => (
               <Link to={`/categories/brands/${category.id}`} key={i}>
                 <div

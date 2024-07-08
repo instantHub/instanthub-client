@@ -40,7 +40,7 @@ const AllBrandsList = () => {
           </div>
         ) : (
           <div className="flex justify-center flex-wrap items-center h-full">
-            <div className="grid  grid-cols-6 justify-center gap-2 w-[80%] max-lg:grid-cols-4 max-sm:grid-cols-2 max-md:grid-cols-3">
+            <div className="grid grid-cols-6 justify-center gap-2 w-[80%] max-xl:grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 max-sm:w-full">
               {!brandsData.length == 0 ? (
                 <>
                   {brandsData

@@ -73,7 +73,8 @@ const Brands = () => {
             <span>Loading...</span>
           </div>
         ) : (
-          <div className="flex flex-wrap justify-evenly gap-6">
+          // <div className="flex flex-wrap justify-evenly gap-6">
+          <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
             {!data.length == 0 ? (
               data.map((brand, i) => (
                 <Link to={`/categories/brands/products/${brand.id}`} key={i}>
