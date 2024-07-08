@@ -23,7 +23,7 @@ export const deductionSlice = createSlice({
   initialState,
   reducers: {
     setGetUpto: (state, action) => {
-      console.log("setGetUpto reducer");
+      // console.log("setGetUpto reducer");
       // console.log(
       //   action.payload.productName,
       //   action.payload.productImage,
@@ -44,8 +44,8 @@ export const deductionSlice = createSlice({
       };
     },
     addDeductions: (state, action) => {
-      console.log("addDeduction Reducer", action.payload);
-      console.log(initialState);
+      // console.log("addDeduction Reducer", action.payload);
+      // console.log(initialState);
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
@@ -101,7 +101,7 @@ export const deductionSlice = createSlice({
       };
     },
     addProductPhysicalCondition: (state, action) => {
-      console.log("addProductPhysicalCondition Slice");
+      // console.log("addProductPhysicalCondition Slice");
       return {
         ...state,
         productPhysicalCondition: {
@@ -112,7 +112,7 @@ export const deductionSlice = createSlice({
       };
     },
     removeDeductions: (state, action) => {
-      console.log("removeDeductions reducer", action.payload);
+      // console.log("removeDeductions reducer", action.payload);
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {

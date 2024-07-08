@@ -9,15 +9,15 @@ import { FaAnglesDown } from "react-icons/fa6";
 
 const SubServices = () => {
   const { serviceCategoryId } = useParams();
-  console.log("serviceCategoryId", serviceCategoryId);
+  // console.log("serviceCategoryId", serviceCategoryId);
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
 
   const [serviceCategory, setServiceCategory] = useState("");
   const [subServices, setSubServices] = useState("");
-  console.log("serviceCategory", serviceCategory);
-  console.log("subServices", subServices);
+  // console.log("serviceCategory", serviceCategory);
+  // console.log("subServices", subServices);
 
   const [subServiceSelected, setSubServiceSelected] = useState(false);
   const [selectedSubService, setSelectedSubService] = useState("");
@@ -27,7 +27,7 @@ const SubServices = () => {
   useEffect(() => {
     if (!servicesDataLoading) {
       const sc = servicesData.serviceCategories;
-      console.log(sc, "sc");
+      // console.log(sc, "sc");
       const serviceFound = sc.find((s) => s._id === serviceCategoryId);
       setServiceCategory(serviceFound);
       const subServiceFound = servicesData.serviceSubCategories.filter(

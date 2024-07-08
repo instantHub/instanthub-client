@@ -14,13 +14,13 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery();
-  console.log("categoryData from NAV", categoryData);
+  // console.log("categoryData from NAV", categoryData);
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log("Current Pathname:", location.pathname.substring(0, 6));
-  console.log("Current URL:", window.location.href);
+  // console.log("Current Pathname:", location.pathname.substring(0, 6));
+  // console.log("Current URL:", window.location.href);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -55,9 +55,9 @@ const Navbar = () => {
     setHoveredCategoryId(null);
   };
 
-  if (categoryData) {
-    console.log("last cat", categoryData[categoryData.length - 1]);
-  }
+  // if (categoryData) {
+  //   console.log("last cat", categoryData[categoryData.length - 1]);
+  // }
 
   return (
     <>
@@ -86,8 +86,11 @@ const Navbar = () => {
 
             <div className="hidden md:flex max-14inch:text-sm">
               <ul className="flex space-x-4">
-                {data.map((d) => (
-                  <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
+                {data.map((d, i) => (
+                  <li
+                    key={i}
+                    className="px-2 py-1 border border-white rounded hover:border-cyan-500"
+                  >
                     <Link to={`${d.url}`}>{d.name}</Link>
                   </li>
                 ))}
@@ -125,8 +128,11 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden  mt-2 text-center  float-right absolute right-0">
             <ul className="flex  flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
-              {data.map((d) => (
-                <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
+              {data.map((d, i) => (
+                <li
+                  key={i}
+                  className="px-2 py-1 border border-white rounded hover:border-cyan-500"
+                >
                   <Link to={`${d.url}`}>{d.name}</Link>
                 </li>
               ))}
@@ -235,8 +241,8 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div class="max-sm:hidden relative bg-white px-1 mt-5 shadow-xl mx-auto w-full max-w-2xl rounded-2xl border-dashed border-2 border-gray-500">
-        <div class="mx-auto flex w-full max-w-md flex-row items-center justify-around">
+      <div className="max-sm:hidden relative bg-white px-1 mt-5 shadow-xl mx-auto w-full max-w-2xl rounded-2xl border-dashed border-2 border-gray-500">
+        <div className="mx-auto flex w-full max-w-md flex-row items-center justify-around">
           <div
             className={`text-center py-2 w-1/2 ${
               location.pathname.substring(0, 6).includes("/ser")

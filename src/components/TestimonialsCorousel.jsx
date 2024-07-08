@@ -61,7 +61,7 @@ const Testimonials = () => {
     setCurrentIndex(slideIndex);
   };
 
-  console.log("testing", testimonials[currentIndex]);
+  // console.log("testing", testimonials[currentIndex]);
 
   useEffect(() => {
     // Automatically move to the next slide every 3 seconds

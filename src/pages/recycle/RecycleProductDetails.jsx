@@ -51,8 +51,12 @@ const RecycleProductDetail = () => {
 
   const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
   const [selectedDigitalPayment, setSelectedDigitalPayment] = useState("");
-  console.log("selectedPaymentMode", selectedPaymentMode);
-  console.log("selectedDigitalPayment", selectedDigitalPayment);
+  // console.log(
+  //   "selectedPaymentMode",
+  //   selectedPaymentMode,
+  //   "selectedDigitalPayment",
+  //   selectedDigitalPayment
+  // );
 
   const handlePaymentModeChange = (e) => {
     setSelectedPaymentMode(e.target.value);
@@ -111,8 +115,6 @@ const RecycleProductDetail = () => {
   };
 
   const handleTimeChange = (date) => {
-    console.log("date", typeof date);
-
     setSelectedDate(date);
 
     const formattedDate = `${date.toLocaleString("en-US", {
@@ -167,11 +169,11 @@ const RecycleProductDetail = () => {
         : selectedDigitalPayment,
       recyclePrice,
     };
-    console.log("orderData", orderData);
+    // console.log("orderData", orderData);
 
     // const order = await createOrder(formData);
     const order = await createRecycleOrder(orderData);
-    console.log("order", order);
+    // console.log("order", order);
     if (order.data.success) {
       //   closeModal();
       //   setOrderOpen(false);
@@ -190,8 +192,8 @@ const RecycleProductDetail = () => {
     // setLoadedInitially(true);
   }, [productDetails]);
 
-  console.log("formData", formData);
-  console.log("addressDetails", addressDetails);
+  // console.log("formData", formData);
+  // console.log("addressDetails", addressDetails);
 
   //   const location = useLocation();
 

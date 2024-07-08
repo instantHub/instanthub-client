@@ -17,7 +17,7 @@ export const laptopDeductionSlice = createSlice({
   reducers: {
     addProcessor: (state, action) => {
       // console.log("addProcessor Reducer", action.payload);
-      console.log(initialState);
+      // console.log(initialState);
       state.processor = {
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
@@ -26,7 +26,7 @@ export const laptopDeductionSlice = createSlice({
     },
     addHardDisk: (state, action) => {
       // console.log("addHardDisk Reducer", action.payload);
-      console.log(initialState);
+      // console.log(initialState);
       return {
         ...state,
         hardDisk: {
@@ -71,8 +71,8 @@ export const laptopDeductionSlice = createSlice({
     },
 
     addLaptopDeductions: (state, action) => {
-      console.log("addLaptopDeductions Reducer");
-      console.log(action.payload);
+      // console.log("addLaptopDeductions Reducer");
+      // console.log(action.payload);
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
@@ -87,7 +87,7 @@ export const laptopDeductionSlice = createSlice({
       }
     },
     removeLaptopDeductions: (state, action) => {
-      console.log("removeLaptopDeductions reducer");
+      // console.log("removeLaptopDeductions reducer");
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
@@ -109,7 +109,7 @@ export const laptopDeductionSlice = createSlice({
       }
     },
     clearLaptopDeductions: (state, action) => {
-      console.log("clearLaptopDeductions reducer");
+      // console.log("clearLaptopDeductions reducer");
 
       return {
         ...state,

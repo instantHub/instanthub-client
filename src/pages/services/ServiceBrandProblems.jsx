@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ServiceBrands = () => {
   const { serviceBrandId } = useParams();
-  console.log("serviceCategoryId", serviceBrandId);
+  // console.log("serviceCategoryId", serviceBrandId);
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
@@ -30,17 +30,17 @@ const ServiceBrands = () => {
   const [showSubService, setShowSubService] = useState(false);
 
   const [selectedServiceProblems, setSelectedServiceProblems] = useState([]);
-  console.log("selectedServiceProblems", selectedServiceProblems);
+  // console.log("selectedServiceProblems", selectedServiceProblems);
 
   const dispatch = useDispatch();
 
   const serviceProblemsData = useSelector(
     (state) => state.serviceProblems.serviceProblems
   );
-  console.log("serviceProblemsSlice", serviceProblemsData);
+  // console.log("serviceProblemsSlice", serviceProblemsData);
 
   const handleProblemSelection = (serviceProblem) => {
-    console.log("handleProblemSelection");
+    // console.log("handleProblemSelection");
     if (
       !selectedServiceProblems.some((sp) => sp.serviceProblem == serviceProblem)
     ) {
@@ -188,55 +188,46 @@ const ServiceBrands = () => {
 
             <div className="grid grid-cols-7 gap-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
               {serviceProblems &&
-                serviceProblems
-                  // .subCategory
-                  //   .filter(
-                  //     (sc) => sc.serviceCategoryId._id === serviceCategoryId
-                  //   )
-                  .map((serviceBrandProblem, i) => (
-                    // <Link to={determinePath(serviceBrand)} key={i}>
-
-                    <>
-                      <div
-                        key={serviceBrandProblem._id + i}
-                        onClick={() =>
-                          handleProblemSelection(serviceBrandProblem.name)
+                serviceProblems.map((serviceBrandProblem, i) => (
+                  <div
+                    // key={i}
+                    key={serviceBrandProblem._id + i}
+                    onClick={() =>
+                      handleProblemSelection(serviceBrandProblem.name)
+                    }
+                    className={`${
+                      serviceProblemsData.some(
+                        (sp) => sp.serviceProblem === serviceBrandProblem.name
+                      )
+                        ? `text-cyan-500 shadow-2xl rounded-xl shadow-cyan-500 transition ease-in-out duration-500`
+                        : `sm:rounded-sm border sm:shadow-sm transition ease-in-out duration-1000`
+                    } flex flex-col items-center py-2 justify-center cursor-pointer w-full h-full bg-white sm:min-w-full rounded-0 sm:ring-0 sm:ring-transparent sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+                  >
+                    <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
+                      <img
+                        src={
+                          import.meta.env.VITE_APP_BASE_URL +
+                          serviceBrandProblem.image
                         }
-                        className={`${
-                          serviceProblemsData.some(
-                            (sp) =>
-                              sp.serviceProblem === serviceBrandProblem.name
-                          )
-                            ? `text-cyan-500 shadow-2xl rounded-xl shadow-cyan-500 transition ease-in-out duration-500`
-                            : `sm:rounded-sm border sm:shadow-sm transition ease-in-out duration-1000`
-                        } flex flex-col items-center py-2 justify-center cursor-pointer w-full h-full bg-white sm:min-w-full rounded-0 sm:ring-0 sm:ring-transparent sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
-                      >
-                        <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
-                          <img
-                            src={
-                              import.meta.env.VITE_APP_BASE_URL +
-                              serviceBrandProblem.image
-                            }
-                            alt="CAT"
-                            // className="w-full h-full max-sm:w-32 max-sm:h-32"
-                            className="w-28 h-28 max-sm:w-32 max-sm:h-24"
-                          />
-                        </div>
-                        <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                          <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                            {serviceBrandProblem.name}
-                          </div>
-                        </span>
+                        alt="CAT"
+                        // className="w-full h-full max-sm:w-32 max-sm:h-32"
+                        className="w-28 h-28 max-sm:w-32 max-sm:h-24"
+                      />
+                    </div>
+                    <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                      <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+                        {serviceBrandProblem.name}
                       </div>
-                    </>
-                  ))}
+                    </span>
+                  </div>
+                ))}
             </div>
 
             {serviceProblemsData.length > 0 ? (
               // <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cyan to Blue</button>
 
               // <div className="mx-auto mt-10 bg-cyan-500 py-1 px-8 text-xl text-white rounded">
-              <div class="mx-auto mt-10 px-8 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm py-2.5 text-center mb-2">
+              <div className="mx-auto mt-10 px-8 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm py-2.5 text-center mb-2">
                 <Link to={`/services/book-service/${serviceBrand._id}?st=b`}>
                   <button>Continue</button>
                 </Link>

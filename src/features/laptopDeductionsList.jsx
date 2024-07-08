@@ -10,20 +10,20 @@ export const laptopDeductionsList = createSlice({
   initialState,
   reducers: {
     addFirst: (state, action) => {
-      console.log("addFirst Reducer", action.payload);
+      // console.log("addFirst Reducer", action.payload);
 
       state.deductions[0] = action.payload;
     },
     addSecond: (state, action) => {
-      console.log("addSecond Reducer");
+      // console.log("addSecond Reducer");
       state.deductions[1] = action.payload;
     },
     addThird: (state, action) => {
-      console.log("addThird Reducer");
+      // console.log("addThird Reducer");
       state.deductions[2] = action.payload;
     },
     addRest: (state, action) => {
-      console.log("addRest Reducer", action.payload);
+      // console.log("addRest Reducer", action.payload);
       //   state.deductions.push(action.payload);
       //   state.deductions = [...state.deductions, action.payload];
 
@@ -37,7 +37,7 @@ export const laptopDeductionsList = createSlice({
     },
 
     clearLaptopDeductionsList: (state, action) => {
-      console.log("clearLaptopDeductions reducer");
+      // console.log("clearLaptopDeductions reducer");
 
       return {
         ...state,

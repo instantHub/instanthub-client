@@ -36,14 +36,14 @@ const Products = () => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
 
-  console.log("category", category);
-  console.log("brand", brand);
-  console.log("productsData", productsData);
+  // console.log("category", category);
+  // console.log("brand", brand);
+  // console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
     setShowSeries(!showSeries);
     setSeriesSelected(seriesId);
-    console.log(seriesId);
+    // console.log(seriesId);
   };
 
   useEffect(() => {

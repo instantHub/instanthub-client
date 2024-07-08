@@ -21,7 +21,7 @@ const LaptopDeductionItems = ({
   const dispatch = useDispatch();
 
   const laptopSliceData = useSelector((state) => state.laptopDeductions);
-  console.log("laptopSliceData", laptopSliceData);
+  // console.log("laptopSliceData", laptopSliceData);
 
   // Determine if the image should be shown based on the condition name
   const shouldShowImage = !(
@@ -33,7 +33,7 @@ const LaptopDeductionItems = ({
     // || conditionName.toLowerCase().includes("screen")
   );
 
-  console.log("shouldHideImage", shouldShowImage);
+  // console.log("shouldHideImage", shouldShowImage);
 
   return (
     // <div key={index}>

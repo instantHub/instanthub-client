@@ -34,11 +34,14 @@ const WhyChooseInstantCashPicks = () => {
         </h2>
         <div className=" ">
           {data.map((d, index) => (
-            <div className="bg-white mb-4">
+            <div key={index} className="bg-white mb-4">
               <h3 className="text-lg font-bold text-gray-700 max-sm:text-lg">
                 {d.heading}
               </h3>
-              <p className="opacity-70 text-gray-600 max-sm:text-sm"> {d.text}</p>
+              <p className="opacity-70 text-gray-600 max-sm:text-sm">
+                {" "}
+                {d.text}
+              </p>
             </div>
           ))}
         </div>

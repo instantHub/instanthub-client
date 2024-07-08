@@ -6,15 +6,15 @@ import AllBrandsList from "../brands/AllBrandsList";
 const RecycleCategories = () => {
   const { data, isLoading } = useGetCategoryQuery();
 
-  const [mobileCat, setMobileCat] = useState("");
+  // const [mobileCat, setMobileCat] = useState("");
 
-  useEffect(() => {
-    if (data) {
-      const mobile = data.find((d) => d.name.toLowerCase().includes("mobile"));
-      console.log(mobile);
-      setMobileCat(mobile.id);
-    }
-  });
+  // useEffect(() => {
+  //   if (data) {
+  //     const mobile = data.find((d) => d.name.toLowerCase().includes("mobile"));
+  //     // console.log(mobile);
+  //     setMobileCat(mobile.id);
+  //   }
+  // });
 
   return (
     // <div className="mt-20 mx-auto">

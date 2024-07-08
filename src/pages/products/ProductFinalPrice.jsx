@@ -41,13 +41,14 @@ const ProductFinalPrice = () => {
   const maxTime = new Date();
   maxTime.setHours(22, 0, 0, 0);
 
-  console.log("selectedProdDetails", selectedProdDetails);
+  // console.log("selectedProdDetails", selectedProdDetails);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
+  // console.log("productId", productId);
   const { data: productDetails, isLoading: productLoading } =
     useGetProductDetailsQuery(productId);
-  console.log("productId", productId);
+  // console.log("productDetails", productDetails);
   const [createOrder, { isLoading: ordersLoading }] = useCreateOrderMutation();
 
   const navigate = useNavigate();
@@ -56,8 +57,6 @@ const ProductFinalPrice = () => {
 
   const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
   const [selectedDigitalPayment, setSelectedDigitalPayment] = useState("");
-  console.log("selectedPaymentMode", selectedPaymentMode);
-  console.log("selectedDigitalPayment", selectedDigitalPayment);
 
   const handlePaymentModeChange = (e) => {
     setSelectedPaymentMode(e.target.value);
@@ -67,8 +66,6 @@ const ProductFinalPrice = () => {
   const handleDigitalPaymentChange = (e) => {
     setSelectedDigitalPayment(e.target.value);
   };
-
-  // console.log("productDetails", productDetails);
 
   const openModal = () => {
     setIsOpen(true);
@@ -108,8 +105,6 @@ const ProductFinalPrice = () => {
   };
 
   const handleTimeChange = (date) => {
-    console.log("date", typeof date);
-
     setSelectedDate(date);
 
     const formattedDate = `${date.toLocaleString("en-US", {
@@ -123,11 +118,9 @@ const ProductFinalPrice = () => {
   };
 
   const handleCoupon = async () => {
-    console.log("handleCoupon");
-
-    console.log(couponCode);
+    // console.log("handleCoupon", couponCode);
     const couponFound = couponsData.find((c) => c.couponCode === couponCode);
-    console.log("couponFound", couponFound);
+    // console.log("couponFound", couponFound);
     if (couponFound) {
       const currentPrice = offerPrice;
 
@@ -166,25 +159,24 @@ const ProductFinalPrice = () => {
         : selectedDigitalPayment,
       offerPrice: couponCodeApplied ? specialPrice : offerPrice,
     };
-    console.log("orderData", orderData);
+    // console.log("orderData", orderData);
 
     // const order = await createOrder(formData);
     const order = await createOrder(orderData);
-    console.log("order", order);
+    // console.log("order", order);
     if (order.data.success) {
-      // closeModal();
-      // toast.success("Your Order placed successfully");
-      // navigate(`/categories/brands/productDetails/${productId}`);
+      closeModal();
+      toast.success("Your Order placed successfully");
+      navigate(`/categories/brands/productDetails/${productId}`);
     }
   };
 
   // UseEffect to handle page refresh
   useEffect(() => {
-    console.log(
-      "!selectedProdDetails.productAge",
-      !selectedProdDetails.productAge.conditionLabel
-    );
-    // console.log("!selectedProdDetails.productAge",selectedProdDetails.productAge);
+    // console.log(
+    //   "!selectedProdDetails.productAge",
+    //   !selectedProdDetails.productAge.conditionLabel
+    // );
     if (selectedProdDetails.productName == "") {
       // navigate(`/`);
       navigate(`/categories/brands/productDetails/${productId}`);
@@ -212,11 +204,11 @@ const ProductFinalPrice = () => {
         prodDeductions = productDetails.simpleDeductions;
       }
     }
-    console.log("prodDeductions", prodDeductions);
+    // console.log("prodDeductions", prodDeductions);
     const prodAccessories = prodDeductions.find(
       (pd) => pd.conditionName === "Accessories"
     );
-    console.log("prodAccessories", prodAccessories);
+    // console.log("prodAccessories", prodAccessories);
     // console.log(
     //   "selectedProdDetails.deductions",
     //   selectedProdDetails.deductions
@@ -239,18 +231,18 @@ const ProductFinalPrice = () => {
     );
     setAccessoriesNotSelected(AccessoriesNotSelected);
 
-    console.log("deductedConditionLabels", deductedConditionLabels);
+    // console.log("deductedConditionLabels", deductedConditionLabels);
     // Filter out the prodAccessories that are not present in selectedProdDetails.deductions
     const AccessoriesSelected = prodAccessories.conditionLabels.filter(
       (accessory) => {
         // Check if the conditionLabel of the accessory is not present in deductedConditionLabels
-        console.log(accessory);
+        // console.log(accessory);
         return deductedConditionLabels.some(
           (label) => label === accessory.conditionLabel
         );
       }
     );
-    console.log("AccessoriesSelected", AccessoriesSelected);
+    // console.log("AccessoriesSelected", AccessoriesSelected);
     setAccessoriesSelected(AccessoriesSelected);
 
     // setFormData({
@@ -274,13 +266,13 @@ const ProductFinalPrice = () => {
     // console.log("selectedProdDetails", selectedProdDetails);
 
     if (AccessoriesNotSelected.length > 0) {
-      console.log("deductedPrice before accessory deducted", deductedPrice);
+      // console.log("deductedPrice before accessory deducted", deductedPrice);
       AccessoriesNotSelected.map((a) => {
         deductedPrice =
           deductedPrice -
           Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
       });
-      console.log("deductedPrice after accessory deducted", deductedPrice);
+      // console.log("deductedPrice after accessory deducted", deductedPrice);
 
       setFormData({
         ...formData,
@@ -313,8 +305,7 @@ const ProductFinalPrice = () => {
     setOfferPrice(Math.ceil(deductedPrice));
   }, [selectedProdDetails, productDetails]);
 
-  console.log("formData", formData);
-  // console.log("accessoriesNotSelected out", accessoriesNotSelected);
+  // console.log("formData", formData);
 
   return (
     <>

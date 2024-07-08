@@ -12,7 +12,7 @@ const Services = () => {
   const [serviceBrandSelected, setServiceBrandSelected] = useState("");
   const [selectedServiceBrand, setSelectedServiceBrand] = useState("");
 
-  console.log("Services", servicesData);
+  // console.log("Services", servicesData);
 
   const determinePath = (service) => {
     const type = service.type.toLowerCase();

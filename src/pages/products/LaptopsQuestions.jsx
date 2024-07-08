@@ -26,9 +26,8 @@ import LaptopDeductionItems from "./LaptopDeductionItems";
 const LaptopsQuestions = (props) => {
   //   const { productsData, deductions } = props;
   const { productsData, deductions, handleLabelSelection } = props;
-  //   console.log(productsData, deductions, handleLabelSelection);
-  console.log("deductions", deductions);
-  console.log("productsData from laptop", productsData);
+  // console.log("deductions", deductions);
+  // console.log("productsData from laptop", productsData);
   const [processor, setProcessor] = useState();
   const [hardDisk, setHardDisk] = useState();
   const [ram, setRam] = useState();
@@ -40,17 +39,15 @@ const LaptopsQuestions = (props) => {
   const [screenConditionPage, setScreenConditionPage] = useState();
   const [pageIndexes, setPageIndexes] = useState({});
 
-  if (deductions) {
-    deductions.map((d) => {
-      if (d.conditionName.toLowerCase().includes("screen size")) {
-        // setPageIndexes(...pageIndexes, { screenSizeIndex: d.page - 1 });
-        // setPageIndexes({ ...pageIndexes, screenSizeIndex: Number(d.page - 1) });
-        console.log("check", d.page);
-        // pageIndexes.screenSizeIndex = d.page - 1;
-      }
-    });
-  }
-  console.log("pageIndexes", pageIndexes);
+  // if (deductions) {
+  //   deductions.map((d) => {
+  //     if (d.conditionName.toLowerCase().includes("screen size")) {
+  //       // setPageIndexes(...pageIndexes, { screenSizeIndex: d.page - 1 });
+  //       // setPageIndexes({ ...pageIndexes, screenSizeIndex: Number(d.page - 1) });
+  //       // pageIndexes.screenSizeIndex = d.page - 1;
+  //     }
+  //   });
+  // }
 
   // const age = "";
   const navigate = useNavigate();
@@ -63,8 +60,6 @@ const LaptopsQuestions = (props) => {
 
   // console.log("laptopSlice", laptopSlice);
   // console.log("deductionData", deductionData);
-  // console.log("deductions", deductions);
-  // console.log("laptopsConList", laptopsConList);
 
   //   const deductionsPerPage = 3; // Number of deductions to display per page
   // const [currentPage, setCurrentPage] = useState(1);
@@ -87,7 +82,7 @@ const LaptopsQuestions = (props) => {
   };
 
   const groupConditionsByPage = (conditions) => {
-    console.log("IN groupConditionsByPage laptop", conditions);
+    // console.log("IN groupConditionsByPage laptop", conditions);
     const grouped = conditions.reduce((acc, condition) => {
       const { page } = condition;
       if (!acc[page]) {
@@ -107,8 +102,6 @@ const LaptopsQuestions = (props) => {
         );
       });
     }
-
-    console.log("grouped 1", grouped[1]);
 
     // Convert the grouped object into an array of pages with conditions
     const sortedPages = Object.keys(grouped)
@@ -132,7 +125,6 @@ const LaptopsQuestions = (props) => {
 
   const handleContinue = () => {
     // If in 1st page all fields must be selected
-    console.log("handleconinue", sortedConditions[currentPageIndex]);
     if (currentPageIndex === 0) {
       if (
         processor === undefined ||
@@ -182,7 +174,7 @@ const LaptopsQuestions = (props) => {
       // dispatch(addDeductions(data.productAge));
 
       // Handle if there are no more conditions
-      console.log("No more conditions to display.");
+      // console.log("No more conditions to display.");
       setShowOTP(true);
 
       // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
@@ -220,16 +212,13 @@ const LaptopsQuestions = (props) => {
   };
 
   useEffect(() => {
-    console.log("UseEffect", deductions);
+    // console.log("UseEffect", deductions);
     deductions.map((d) => {
       if (d.conditionName.toLowerCase().includes("screen size")) {
-        // console.log(d.page);
         setScreenSizePage(d.page);
       } else if (d.conditionName.toLowerCase().includes("graphic")) {
-        // console.log(d.page);
         setGraphicPage(d.page);
       } else if (d.conditionName.toLowerCase().includes("screen condition")) {
-        // console.log(d.page);
         setScreenConditionPage(d.page);
       }
     });

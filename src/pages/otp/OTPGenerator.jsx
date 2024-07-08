@@ -21,7 +21,7 @@ const OtpGenerator = (props) => {
   const productId = searchParams.get("productId");
 
   const selectedProdDetails = useSelector((state) => state.deductions);
-  console.log("selectedProdDetails", selectedProdDetails);
+  // console.log("selectedProdDetails", selectedProdDetails);
 
   const [otp, setOtp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -35,7 +35,7 @@ const OtpGenerator = (props) => {
   // Slice Data
   const laptopSlice = useSelector((state) => state.laptopDeductions);
   const data = useSelector((state) => state.deductions);
-  console.log("useSelector from OTP", laptopSlice, data);
+  // console.log("useSelector from OTP", laptopSlice, data);
 
   const navigate = useNavigate();
 
@@ -68,9 +68,9 @@ const OtpGenerator = (props) => {
     };
 
     const otpGenerated = await generateOTP(otpData);
-    console.log("otpGenerated", otpGenerated);
+    // console.log("otpGenerated", otpGenerated);
     if (otpGenerated.data.success) {
-      console.log("success");
+      // console.log("success");
       // toast.success("OTP Generated");
       // setOtp(otpGenerated.data.data.otp);
 
@@ -121,9 +121,9 @@ const OtpGenerator = (props) => {
   };
   // END OTP Verification
 
-  useEffect(() => {
-    console.log("OTP from useEffect", otp);
-  }, [otp]);
+  // useEffect(() => {
+  // console.log("OTP from useEffect", otp);
+  // }, [otp]);
 
   // useEffect(() => {
   //   if (selectedProdDetails.productName == "") {

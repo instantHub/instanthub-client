@@ -19,12 +19,12 @@ const SearchBar = () => {
   const [productsData, setProductsData] = useState([]);
   const [productsLoading, setProductsLoading] = useState(false);
 
-  console.log("productsData", productsData);
+  // console.log("productsData", productsData);
 
-  console.log(
-    "import.meta.env.VITE_APP_BASE_URL",
-    import.meta.env.VITE_BUILD === "development"
-  );
+  // console.log(
+  //   "import.meta.env.VITE_APP_BASE_URL",
+  //   import.meta.env.VITE_BUILD === "development"
+  // );
 
   const handleSearch = async () => {
     // setSearched(true);
@@ -61,7 +61,7 @@ const SearchBar = () => {
       //     limit: 10,
       //   },
       // });
-      console.log("response", response);
+      // console.log("response", response);
       setProductsData(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);

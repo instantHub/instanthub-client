@@ -3,10 +3,9 @@ import { useSelector } from "react-redux";
 
 const ProdDeductionsRight = () => {
   const productsData = useSelector((state) => state.deductions);
-  console.log(productsData);
   const laptopSlice = useSelector((state) => state.laptopDeductions);
 
-  console.log("productsData", productsData);
+  // console.log("productsData", productsData);
 
   return (
     // <div>

@@ -17,11 +17,11 @@ import { useSelector } from "react-redux";
 
 export default function BookService() {
   const { serviceId } = useParams();
-  console.log("serviceId", serviceId);
+  // console.log("serviceId", serviceId);
 
   const [searchParams] = useSearchParams();
   const st = searchParams.get("st");
-  console.log("service type", st);
+  // console.log("service type", st);
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
@@ -52,7 +52,7 @@ export default function BookService() {
   const serviceProblemsData = useSelector(
     (state) => state.serviceProblems.serviceProblems
   );
-  console.log("serviceProblemsSlice", serviceProblemsData);
+  // console.log("serviceProblemsSlice", serviceProblemsData);
 
   const timings = [
     "9 AM - 11 AM",
@@ -63,31 +63,11 @@ export default function BookService() {
   ];
 
   const handleTimeChange = (date) => {
-    console.log("date", typeof date);
-
     setSelectedDate(date);
-
-    // const formattedDate = `${date.toLocaleString("en-US", {
-    //   month: "long",
-    // })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
-    //   "en-US",
-    //   { hour: "numeric", minute: "numeric", hour12: true }
-    // )}`;
-
-    // const formattedDate = `${date.toLocaleString("en-US", {
-    //   month: "long",
-    // })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
-    //   "en-US",
-    //   { hour: "numeric", minute: "numeric", hour12: true }
-    // )}`;
-    // // console.log("formattedDate", formattedDate);
-    // setFormData({ ...formData, schedulePickUp: formattedDate });
   };
 
   const handlePinCodeChange = (e) => {
     let value = e.target.value;
-
-    console.log("handlePhoneChange");
 
     // Remove non-numeric characters
     value = value.replace(/\D/g, "");
@@ -126,32 +106,29 @@ export default function BookService() {
 
   //   UseEffect to Set Service
   useEffect(() => {
-    console.log("UseEffect of BookService");
+    // console.log("UseEffect of BookService");
 
     let service;
     if (!servicesDataLoading) {
       if (st === "b") {
         service = servicesData.serviceBrands.find((sb) => sb._id === serviceId);
-        console.log("service", service);
+        // console.log("service", service);
         setSelectedService(service);
         // setInspectionCharges(149);
       } else if (st === "ds") {
         service = servicesData.serviceCategories.find(
           (sc) => sc._id === serviceId
         );
-        console.log("service", service);
+        // console.log("service", service);
         setSelectedService(service);
         if (service.name.toLowerCase().includes("interior")) {
           setInspectionCharges(499);
         }
-        // else {
-        //   setInspectionCharges(149);
-        // }
       } else if (st === "ss") {
         service = servicesData.serviceSubProducts.find(
           (sc) => sc._id === serviceId
         );
-        console.log("service", service);
+        // console.log("service", service);
         let price = service.price - (service.discount * service.price) / 100;
         setProdPrice(price);
         setSelectedService(service);
@@ -162,7 +139,7 @@ export default function BookService() {
 
   // UseEffect to handle page refresh
   useEffect(() => {
-    console.log("!serviceProblemsData", serviceProblemsData.length > 0);
+    // console.log("!serviceProblemsData", serviceProblemsData.length > 0);
     if (st === "b") {
       if (serviceProblemsData.length <= 0) {
         navigate(`/services/serviceBrandProblems/${serviceId}`);
@@ -170,7 +147,7 @@ export default function BookService() {
     }
   }, [serviceProblemsData]);
 
-  console.log("selectedService", selectedService);
+  // console.log("selectedService", selectedService);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -221,12 +198,12 @@ export default function BookService() {
       };
     }
 
-    console.log("formdata", formData);
+    // console.log("formdata", formData);
 
     try {
       // const response = await axios.post("/api/services", payload);
       const response = await createServiceOrder(formData);
-      console.log("Service Order created successfully:", response.data);
+      // console.log("Service Order created successfully:", response.data);
 
       if (response.data.success) {
         toast.success(
@@ -234,10 +211,6 @@ export default function BookService() {
         );
         navigate(`/services`);
       }
-      // // Clear the value of the file input
-      // fileInputRef.current.value = "";
-      // // Mark the file input as required again
-      // fileInputRef.current.required = true;
     } catch (error) {
       console.error("Error creating service:", error);
       // Handle error (e.g., show an error message)
@@ -394,8 +367,8 @@ export default function BookService() {
                         <h2 className="font-semibold border-b mb-1">
                           Selected Problems
                         </h2>
-                        {serviceProblemsData.map((sp) => (
-                          <div>
+                        {serviceProblemsData.map((sp, i) => (
+                          <div key={i}>
                             <span>{sp.serviceProblem}</span>
                           </div>
                         ))}
@@ -494,11 +467,12 @@ export default function BookService() {
                         className="text-gray-400 border-b"
                         required
                       >
-                        <option value="">
-                          Time<span className="text-red-500">*</span>
-                        </option>
+                        <option value="">Time</option>
+                        {/* <span className="text-red-500">*</span> */}
                         {timings.map((time, i) => (
-                          <option value={time}>{time}</option>
+                          <option key={i} value={time}>
+                            {time}
+                          </option>
                         ))}
                       </select>
                     </div>

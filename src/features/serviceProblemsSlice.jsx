@@ -9,8 +9,8 @@ export const serviceProblemsSlice = createSlice({
   initialState,
   reducers: {
     addServiceProblems: (state, action) => {
-      console.log("addServiceProblems Reducer", action.payload);
-      console.log(initialState);
+      // console.log("addServiceProblems Reducer", action.payload);
+      // console.log(initialState);
 
       // Check if action.payload already exists in deductions
       const isExisting = state.serviceProblems.some((sp) => {
@@ -25,7 +25,7 @@ export const serviceProblemsSlice = createSlice({
     },
 
     removeServiceProblems: (state, action) => {
-      console.log("removeServiceProblems reducer", action.payload);
+      // console.log("removeServiceProblems reducer", action.payload);
 
       // Check if action.payload already exists in deductions
       const isExisting = state.serviceProblems.some((sp) => {

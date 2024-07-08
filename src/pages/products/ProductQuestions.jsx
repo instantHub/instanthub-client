@@ -44,13 +44,12 @@ const ProductDeductions = () => {
   const [screenCondition, setScreenCondition] = useState();
   const [screenConditionPage, setScreenConditionPage] = useState();
 
-  console.log("physicalConditionPage", physicalConditionPage);
-  console.log(
-    "screenConditionPage",
-    currentPageIndex,
-    screenConditionPage,
-    screenCondition
-  );
+  // console.log(
+  //   "physicalConditionPage",
+  //   physicalConditionPage,
+  //   "screenConditionPage",
+  //   screenConditionPage
+  // );
 
   const [age, setAge] = useState(false);
 
@@ -60,10 +59,6 @@ const ProductDeductions = () => {
   const deductionData = useSelector((state) => state.deductions.deductions);
   const data = useSelector((state) => state.deductions);
   // console.log("useSelector", data);
-
-  if (productsData) {
-    // console.log("productsData ProductQuestions ", productsData);
-  }
 
   const handleAge = async (ageLabel, price, operation) => {
     setAge(true);
@@ -77,7 +72,7 @@ const ProductDeductions = () => {
   };
 
   const handleLabelSelection = (label, price, operation) => {
-    console.log("handleLabelSelection");
+    // console.log("handleLabelSelection");
     if (!selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels([
         ...selectedLabels,
@@ -86,7 +81,6 @@ const ProductDeductions = () => {
       dispatch(
         addDeductions({ conditionLabel: label, priceDrop: price, operation })
       );
-      // console.log("selectedLabels", selectedLabels);
     } else if (selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels(
         selectedLabels.filter(
@@ -99,23 +93,8 @@ const ProductDeductions = () => {
     }
   };
 
-  // handle continue to next condition and its conditionLabellist
-  // const handleContinue = async () => {
-  //   // Logic to handle continue to the next condition
-  //   if (currentConditionIndex < deductions.length - 1) {
-  //     setCurrentConditionIndex(currentConditionIndex + 1);
-  //   } else {
-  //     // Handle if there are no more conditions
-  //     // dispatch(addDeductions(data.productAge));
-  //     console.log("No more conditions to display.");
-  //     setShowOTP(true);
-  //     // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
-  //     // navigate(`/sell/deductions/generateOTP?productId=${productsData.id}`);
-  //   }
-  // };
-
   const handleContinue = () => {
-    console.log("physicalCondition", physicalConditionPage);
+    // console.log("physicalCondition", physicalConditionPage);
     if (
       currentPageIndex === physicalConditionPage - 1 &&
       physicalCondition === undefined
@@ -135,7 +114,7 @@ const ProductDeductions = () => {
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
     } else {
-      console.log("No more conditions to display.");
+      // console.log("No more conditions to display.");
       setShowOTP(true);
     }
   };
@@ -201,11 +180,10 @@ const ProductDeductions = () => {
         const d = productsData.variantDeductions.filter(
           (vd) => vd.variantName === selectedVariant
         );
-        console.log("Mobile Deductions", d[0].deductions);
+        // console.log("Mobile Deductions", d[0].deductions);
         setDeductions(d[0].deductions);
         d[0].deductions.map((d) => {
           if (d.conditionName.toLowerCase().includes("physical condition")) {
-            // console.log(d.page);
             setPhysicalConditionPage(d.page);
           } else if (
             d.conditionName.toLowerCase().includes("screen condition")
@@ -217,7 +195,6 @@ const ProductDeductions = () => {
         setDeductions(productsData.simpleDeductions);
         productsData.simpleDeductions.map((d) => {
           if (d.conditionName.toLowerCase().includes("physical condition")) {
-            // console.log(d.page);
             setPhysicalConditionPage(d.page);
           } else if (
             d.conditionName.toLowerCase().includes("screen condition")
@@ -249,7 +226,7 @@ const ProductDeductions = () => {
   // console.log("Deductions", deductions);
 
   const groupConditionsByPage = (conditions) => {
-    console.log("IN groupConditionsByPage", conditions);
+    // console.log("IN groupConditionsByPage", conditions);
     const grouped = conditions.reduce((acc, condition) => {
       const { page } = condition;
       if (!acc[page]) {
@@ -259,7 +236,7 @@ const ProductDeductions = () => {
       return acc;
     }, {});
 
-    console.log("grouped", grouped);
+    // console.log("grouped", grouped);
     // Convert the grouped object into an array of pages with conditions
     const sortedPages = Object.keys(grouped)
       .sort((a, b) => a - b)
@@ -268,7 +245,7 @@ const ProductDeductions = () => {
         conditions: grouped[page],
       }));
 
-    console.log("sortedPages", sortedPages);
+    // console.log("sortedPages", sortedPages);
 
     return sortedPages;
   };
@@ -281,7 +258,7 @@ const ProductDeductions = () => {
   }
 
   // console.log("deductions", deductions);
-  console.log("sortedConditions", sortedConditions);
+  // console.log("sortedConditions", sortedConditions);
 
   return (
     <>

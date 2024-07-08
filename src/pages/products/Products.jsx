@@ -32,7 +32,7 @@ const Products = () => {
     isError,
   } = useGetProductsQuery({ brandId, search });
 
-  console.log("productsData", productsData);
+  // console.log("productsData", productsData);
 
   // Finding Category of the Product
   let category = { name: "", id: "" };
@@ -43,15 +43,11 @@ const Products = () => {
       }
     });
   }
-  //   console.log(category);
 
   let { data: brandData, isLoading: brandLoading } = useGetBrandQuery(
     category.id
   );
 
-  if (!brandLoading) {
-    // console.log("brandData", brandData);
-  }
   // Finding Brand of the Product
   let brand = { name: "", id: "" };
   if (!categoryLoading && !productsLoading && !brandLoading) {
@@ -60,13 +56,12 @@ const Products = () => {
         brand = { name: brandDetail.name, id: brandDetail.id };
       }
     });
-    // console.log("brandname", brand.name);
   }
-  console.log("showSeries", showSeries);
+  // console.log("showSeries", showSeries);
   const handleSeries = (seriesId) => {
     setShowSeries(!showSeries);
     setSeriesSelected(seriesId);
-    console.log(seriesId);
+    // console.log(seriesId);
   };
 
   return (
@@ -91,49 +86,12 @@ const Products = () => {
 
       {/* Series */}
       <div className="mt-8">
-        {/* OLD Series Code */}
-        {/* <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
-          {!seriesLoading && brandSeries.length !== 0
-            ? brandSeries.map((series, i) => (
-                <>
-                  <div
-                    key={i}
-                    className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
-                  >
-                    <button
-                      onClick={() => handleSeries(series.id)}
-                      // value={series.id}
-                      // to={`/categories/brands/productDetails/${series.id}`}
-                      key={i}
-                      className="w-full h-full"
-                    >
-                      <div
-                        key={i}
-                        className={`${
-                          showSeries && series.id === seriesSelected
-                            ? "bg-cyan-500 text-white"
-                            : "bg-gray-200 max-sm:bg-white"
-                        } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
-                      >
-                        <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                          <div className="text-[14.5px] font-[500] leading-7">
-                            {series.name}
-                          </div>
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-                </>
-              ))
-              : null}
-        </div> */}
-
         <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {!seriesLoading && brandSeries.length !== 0
             ? !showSeries
               ? brandSeries.map((series, i) => (
                   <div
-                    key={series.id} // Changed from 'i' to 'series.id'
+                    key={series.id + i} // Changed from 'i' to 'series.id'
                     className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300" //mobile view
                   >
                     <button
@@ -168,7 +126,7 @@ const Products = () => {
                   .filter((series, i) => series.id === seriesSelected)
                   .map((series, i) => (
                     <div
-                      key={series.id} // Changed from 'i' to 'series.id'
+                      key={series.id + i} // Changed from 'i' to 'series.id'
                       className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
                     >
                       <button
@@ -267,39 +225,37 @@ const Products = () => {
                 productsData.map(
                   (product, i) =>
                     product.status.toLowerCase() !== "blocked" && (
-                      <>
-                        <div
+                      <div
+                        key={i}
+                        className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
+                      >
+                        <Link
+                          to={`/categories/brands/productDetails/${product.id}`}
                           key={i}
-                          className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
+                          className="w-full h-full"
                         >
-                          <Link
-                            to={`/categories/brands/productDetails/${product.id}`}
+                          <div
                             key={i}
-                            className="w-full h-full"
+                            className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
                           >
-                            <div
-                              key={i}
-                              className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
-                            >
-                              <div className="flex horizontal w-28 h-28 items-start justify-center max-sm:w-24 max-sm:h-24">
-                                <img
-                                  src={
-                                    import.meta.env.VITE_APP_BASE_URL +
-                                    product.image
-                                  }
-                                  alt="CAT"
-                                  className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
-                                />
-                              </div>
-                              <span className="text-center mt-1 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                                <div className="text-[12px] font-[500] leading-2 max-sm:text-xs">
-                                  {product.name}
-                                </div>
-                              </span>
+                            <div className="flex horizontal w-28 h-28 items-start justify-center max-sm:w-24 max-sm:h-24">
+                              <img
+                                src={
+                                  import.meta.env.VITE_APP_BASE_URL +
+                                  product.image
+                                }
+                                alt="CAT"
+                                className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
+                              />
                             </div>
-                          </Link>
-                        </div>
-                      </>
+                            <span className="text-center mt-1 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                              <div className="text-[12px] font-[500] leading-2 max-sm:text-xs">
+                                {product.name}
+                              </div>
+                            </span>
+                          </div>
+                        </Link>
+                      </div>
                     )
                 )
               ) : (
@@ -309,40 +265,38 @@ const Products = () => {
                   .map(
                     (product, i) =>
                       product.status.toLowerCase() !== "blocked" && (
-                        <>
-                          <div
+                        <div
+                          key={i}
+                          className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                        >
+                          <Link
+                            to={`/categories/brands/productDetails/${product.id}`}
                             key={i}
-                            className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                            className="w-full h-full"
                           >
-                            <Link
-                              to={`/categories/brands/productDetails/${product.id}`}
+                            <div
                               key={i}
-                              className="w-full h-full"
+                              // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                              className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
                             >
-                              <div
-                                key={i}
-                                // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-                                className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
-                              >
-                                <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
-                                  <img
-                                    src={
-                                      import.meta.env.VITE_APP_BASE_URL +
-                                      product.image
-                                    }
-                                    alt="CAT"
-                                    className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
-                                  />
-                                </div>
-                                <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                                  <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                                    {product.name}
-                                  </div>
-                                </span>
+                              <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
+                                <img
+                                  src={
+                                    import.meta.env.VITE_APP_BASE_URL +
+                                    product.image
+                                  }
+                                  alt="CAT"
+                                  className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
+                                />
                               </div>
-                            </Link>
-                          </div>
-                        </>
+                              <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                                <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+                                  {product.name}
+                                </div>
+                              </span>
+                            </div>
+                          </Link>
+                        </div>
                       )
                   )
               )

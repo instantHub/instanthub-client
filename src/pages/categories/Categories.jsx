@@ -11,7 +11,7 @@ const Categories = () => {
   useEffect(() => {
     if (data) {
       const mobile = data.find((d) => d.name.toLowerCase().includes("mobile"));
-      console.log(mobile);
+      // console.log(mobile);
       setMobileCat(mobile.id);
     }
   });

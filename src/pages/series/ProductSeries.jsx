@@ -3,13 +3,10 @@ import { useGetBrandSeriesQuery } from "../../features/api";
 import { Link } from "react-router-dom";
 
 const ProductSeries = ({ brandId }) => {
-  console.log("series", brandId);
+  // console.log("series", brandId);
   const { data: brandSeries, isLoading: seriesLoading } =
     useGetBrandSeriesQuery(brandId);
 
-  if (!seriesLoading) {
-    // console.log("brandSeries", brandSeries);
-  }
   return (
     <div className="mt-10">
       <div className="mx-10 grid grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">

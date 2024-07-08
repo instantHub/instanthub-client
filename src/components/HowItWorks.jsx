@@ -52,10 +52,15 @@ const HowItWorks = () => {
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center max-sm:gap-2 max-14inch:gap-5">
           {data.map((d, index) => (
-            <div className="flex flex-col items-center px-2 py-10 border border-cyan-500 rounded-2xl max-sm:text-sm">
+            <div
+              key={index}
+              className="flex flex-col items-center px-2 py-10 border border-cyan-500 rounded-2xl max-sm:text-sm"
+            >
               <div className="flex items-center justify-center text-center flex-shrink-0 mr-4 mb-4 pb-2">
                 <div className="flex gap-1 items-center mb-2">
-                  <div className="text-3xl text-gray-600 max-sm:text-xl">{d.icon}</div>
+                  <div className="text-3xl text-gray-600 max-sm:text-xl">
+                    {d.icon}
+                  </div>
                   <h3 className="text-xl font-semibold text-gray-800 max-sm:text-sm max-14inch:text-lg">
                     {d.heading}
                   </h3>
@@ -63,7 +68,9 @@ const HowItWorks = () => {
                 </div>
               </div>
               <div>
-                <p className="text-gray-600 px-4 max-14inch:text-sm">{d.text}</p>
+                <p className="text-gray-600 px-4 max-14inch:text-sm">
+                  {d.text}
+                </p>
               </div>
             </div>
           ))}

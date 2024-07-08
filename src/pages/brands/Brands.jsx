@@ -7,23 +7,23 @@ import { Helmet } from "react-helmet-async";
 
 const Brands = () => {
   const { catId } = useParams();
-  console.log("catID", catId);
+  // console.log("catID", catId);
 
   const { data: getCategories, isLoading: categoryLoading } =
     useGetCategoryQuery();
   const { data, isLoading } = useGetBrandQuery(catId);
-  console.log("brand api data", data);
+  // console.log("brand api data", data);
 
   // Finding Category Name
   let category = { name: "", id: "" };
   if (!categoryLoading) {
-    console.log(getCategories);
+    // console.log(getCategories);
     getCategories.map((cat) => {
       if (catId == cat.id) {
         category = { name: cat.name, id: cat.id };
       }
     });
-    console.log(category.name);
+    // console.log(category.name);
   }
 
   // useEffect(() => {});

@@ -7,26 +7,24 @@ import { Helmet } from "react-helmet-async";
 
 const RecycleBrands = () => {
   const { catId } = useParams();
-  console.log("catID", catId);
+  // console.log("catID", catId);
 
   const { data: getCategories, isLoading: categoryLoading } =
     useGetCategoryQuery();
   const { data, isLoading } = useGetBrandQuery(catId);
-  console.log("brand api data", data);
+  // console.log("brand api data", data);
 
   // Finding Category Name
   let category = { name: "", id: "" };
   if (!categoryLoading) {
-    console.log(getCategories);
+    // console.log(getCategories);
     getCategories.map((cat) => {
       if (catId == cat.id) {
         category = { name: cat.name, id: cat.id };
       }
     });
-    console.log(category.name);
+    // console.log(category.name);
   }
-
-  // useEffect(() => {});
 
   return (
     <>
@@ -75,7 +73,7 @@ const RecycleBrands = () => {
           </div>
         ) : (
           <div className="flex flex-wrap justify-evenly gap-6 bg-[url('/recycle1.png')] bg-center bg-no-repeat min-h-[400px] max-sm:min-h-[300px]">
-          {/* <div className="grid grid-cols-6 max-sm:grid-cols-3 max-2sm:grid-cols-2 justify-center gap-6 bg-[url('/recycle1.png')] bg-center bg-no-repeat min-h-[400px] max-sm:min-h-[300px]"> */}
+            {/* <div className="grid grid-cols-6 max-sm:grid-cols-3 max-2sm:grid-cols-2 justify-center gap-6 bg-[url('/recycle1.png')] bg-center bg-no-repeat min-h-[400px] max-sm:min-h-[300px]"> */}
             {!data.length == 0 ? (
               data.map((brand, i) => (
                 <Link

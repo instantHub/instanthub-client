@@ -9,15 +9,15 @@ import { FaAnglesDown } from "react-icons/fa6";
 
 const ServiceBrands = () => {
   const { subServiceId } = useParams();
-  console.log("subServiceId", subServiceId);
+  // console.log("subServiceId", subServiceId);
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
 
   const [serviceSubCategory, setServiceSubCategory] = useState("");
   const [serviceSubProducts, setServiceSubProducts] = useState("");
-  console.log("serviceSubCategory", serviceSubCategory);
-  console.log("serviceSubProducts", serviceSubProducts);
+  // console.log("serviceSubCategory", serviceSubCategory);
+  // console.log("serviceSubProducts", serviceSubProducts);
 
   useEffect(() => {
     if (!servicesDataLoading) {

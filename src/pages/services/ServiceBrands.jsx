@@ -9,7 +9,7 @@ import { FaAnglesDown } from "react-icons/fa6";
 
 const ServiceBrands = () => {
   const { serviceCategoryId } = useParams();
-  console.log("serviceCategoryId", serviceCategoryId);
+  // console.log("serviceCategoryId", serviceCategoryId);
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
@@ -18,8 +18,8 @@ const ServiceBrands = () => {
 
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceBrands, setServiceBrand] = useState("");
-  console.log("serviceCategory", serviceCategory);
-  console.log("subServices", serviceBrands);
+  // console.log("serviceCategory", serviceCategory);
+  // console.log("subServices", serviceBrands);
 
   const [showSubService, setShowSubService] = useState(false);
 
@@ -40,7 +40,7 @@ const ServiceBrands = () => {
   useEffect(() => {
     if (!servicesDataLoading) {
       const sc = servicesData.serviceCategories;
-      console.log(sc, "sc");
+      // console.log(sc, "sc");
       const serviceFound = sc.find((s) => s._id === serviceCategoryId);
       setServiceCategory(serviceFound);
 
@@ -126,10 +126,11 @@ const ServiceBrands = () => {
                     // <Link to={determinePath(serviceBrand)} key={i}>
                     <Link
                       to={`/services/serviceBrandProblems/${serviceBrand._id}`}
+                      // key={serviceBrand._id + i}
                       key={i}
                     >
                       <div
-                        key={i}
+                        // key={i}
                         // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                         className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
                       >

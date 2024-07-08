@@ -16,9 +16,9 @@ const AllBrandsList = () => {
     setShowAllBrands(false);
   };
 
-  if (!brandsLoading) {
-    console.log(brandsData);
-  }
+  // if (!brandsLoading) {
+  //   console.log(brandsData);
+  // }
   return (
     <div>
       <div className="my-10">
