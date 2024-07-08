@@ -36,49 +36,47 @@ const ServiceBrands = () => {
   return (
     <>
       <Helmet>
-        <title>{`Avail ${serviceSubCategory?.serviceCategoryId?.name} Services | InstantCashPick`}</title>
+        <title>{`${serviceSubCategory?.serviceCategoryId?.name} ${serviceSubCategory?.name} Products | InstantCashPick`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          content="InstantCashPick offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantCashPick. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
         />
         <meta
           name="keywords"
-          content={`Sell
-           on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, sell mobiles on instantcashpick`}
+          content="InstantCashPick, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
-        <link rel="canonical" href={`https://instantcashpick.com/`} />
+        <link rel="canonical" href={`https://instantcashpick.com/services`} />
       </Helmet>
       <div className="mt-8 w-4/5 mx-auto">
         <div className="mx-0 mb-6">
-          {
-            <div className="flex items-center gap-1 max-sm:text-xs">
-              <span className="flex items-center opacity-60 gap-1">
-                <Link to={"/"}>Home</Link>
-                <FaAngleRight />
-                <Link className="max-2sm:hidden" to={`/services`}>
-                  Services
-                </Link>
-                <Link className="2sm:hidden" to={`/services`}>
-                  ...
-                </Link>
-                <FaAngleRight />
-                <Link
-                  className="max-2sm:hidden"
-                  to={`/services/serviceSubCategory/${serviceSubCategory?.serviceCategoryId?._id}`}
-                >
-                  {serviceSubCategory?.serviceCategoryId?.name}
-                </Link>
-                <Link
-                  className="2sm:hidden"
-                  to={`/services/serviceSubCategory/${serviceSubCategory?.serviceCategoryId?._id}`}
-                >
-                  ...
-                </Link>
-                <FaAngleRight />
-              </span>
-              <span>{serviceSubCategory.name}</span>
-            </div>
-          }
+          <div className="flex items-center gap-1 max-sm:text-xs">
+            <span className="flex items-center opacity-60 gap-1">
+              <Link to={"/"}>Home</Link>
+              <FaAngleRight />
+              <Link className="max-2sm:hidden" to={`/services`}>
+                Services
+              </Link>
+              <Link className="2sm:hidden" to={`/services`}>
+                ...
+              </Link>
+              <FaAngleRight />
+              <Link
+                className="max-2sm:hidden"
+                to={`/services/serviceSubCategory/${serviceSubCategory?.serviceCategoryId?._id}`}
+              >
+                {serviceSubCategory?.serviceCategoryId?.name}
+              </Link>
+              <Link
+                className="2sm:hidden"
+                to={`/services/serviceSubCategory/${serviceSubCategory?.serviceCategoryId?._id}`}
+              >
+                ...
+              </Link>
+              <FaAngleRight />
+            </span>
+            <span>{serviceSubCategory.name}</span>
+          </div>
+
           <hr className="text-black mt-1" />
         </div>
 
@@ -131,7 +129,7 @@ const ServiceBrands = () => {
               <h2 className="text-xl font-semibold">Select a Product below</h2>
             </div>
 
-            <div className="grid grid-cols-5 gap-6 max-md:grid-cols-5 max-sm:grid-cols-3">
+            <div className="grid grid-cols-5 gap-4 max-lg:grid-cols-3 max-sm:grid-cols-2 max-sm:gap-1">
               {serviceSubProducts &&
                 serviceSubProducts
                   // .subCategory
@@ -165,13 +163,13 @@ const ServiceBrands = () => {
                             <span>{serviceSubProduct.name}</span>
                           </div>
                           {/* Prod Desc */}
-                          <div className="text-sm font-semibold text-start pl-2 max-sm:text-xs">
+                          <div className="text-sm font-semibold text-start pl-2 max-sm:text-xs max-2sm:text-[10px]">
                             <span>{serviceSubProduct.description}</span>
                           </div>
                         </div>
                         <div className="flex flex-col mt-2 pl-2 py-1 items-start justify-start">
                           <div className="flex items-center gap-1">
-                            <span className="text-red-500 line-through text-xs">
+                            <span className="text-red-500 line-through text-xs max-sm:text-[10px]">
                               MRP{serviceSubProduct.price}
                             </span>
 

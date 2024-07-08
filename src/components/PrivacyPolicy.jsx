@@ -7,13 +7,12 @@ const PrivacyPolicy = () => {
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Privacy Policy
         </h1>
-        <p className="text-gray-600 mb-4">Effective date: [Insert Date]</p>
+        <p className="text-gray-600 mb-4">Effective date: 2024</p>
         <p className="text-gray-600 mb-6">
-          Welcome to [Your Website Name] (“we”, “our”, “us”). We are committed
-          to protecting your personal information and your right to privacy. If
-          you have any questions or concerns about our policy, or our practices
-          with regards to your personal information, please contact us at [Your
-          Contact Information].
+          Welcome to Instant Cash Pick. We are committed to protecting your
+          personal information and your right to privacy. If you have any
+          questions or concerns about our policy, or our practices with regards
+          to your personal information, please contact us at 8722288017.
         </p>
 
         <section className="mb-6">
@@ -123,13 +122,15 @@ const PrivacyPolicy = () => {
           </h2>
           <p className="text-gray-600 mb-4">
             If you have questions or comments about this policy, you may email
-            us at [Your Email Address] or by post to:
+            us at support@instantcashpick.com or by post to:
           </p>
           <address className="text-gray-600 not-italic">
-            [Your Company Name] <br />
-            [Street Address] <br />
-            [City, State, Zip Code] <br />
-            [Country]
+            Instant Cash Pick <br />
+            Sy. No. 92, R Greens A.C, <br />
+            Sarjapur Outer Ring Road Marathahalli <br />
+            <br />
+            Bengaluru, Karnataka - 560037 <br />
+            India
           </address>
         </section>
       </div>

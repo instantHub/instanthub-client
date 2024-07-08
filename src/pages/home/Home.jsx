@@ -39,6 +39,20 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        {/* <title>{`Sell Old Gadgets Online | InstantCashPick`}</title> */}
+
+        <meta
+          name="description"
+          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+        />
+
+        <meta
+          name="keywords"
+          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+        />
+        <link rel="canonical" href="https://instantcashpick.com/" />
+      </Helmet>
       {/* <Slider images={images} /> */}
       <Slider />
       <Categories />

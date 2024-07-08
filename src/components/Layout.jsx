@@ -13,7 +13,7 @@ const Layout = () => {
     url: "https://instantcashpick.com/",
     name: "InstantCashPick",
     description:
-      "Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily.",
+      "Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
       target: "https://instantcashpick.com/search?q={search_term_string}",
@@ -23,21 +23,21 @@ const Layout = () => {
   return (
     <>
       <Helmet>
-        {/* <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /> */}
         <meta charSet="utf-8" />
-        <title>{`Sell Your Gadgets | InstantCashPick`}</title>
+        <title>{`Sell Your Gadgets Online | InstantCashPick`}</title>
         {/* <meta
       name="description"
       content="India's growing trusted platform to sell old Mobile Phone, Laptops etc, sell your used Mobile Phone, Laptops etc at InstantCashPick and get instant cash at your doorstep. Visit the website to know more!"
     /> */}
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          // No more waiting for checks to clear or funds to transfer.
+          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
 
         <meta
           name="keywords"
-          content="Sell products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://instantcashpick.com/" />

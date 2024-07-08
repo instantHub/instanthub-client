@@ -91,17 +91,16 @@ const ServiceBrands = () => {
   return (
     <>
       <Helmet>
-        <title>{`Avail ${serviceBrand?.serviceCategoryId?.name} Services | InstantCashPick`}</title>
+        <title>{`${serviceBrand?.name} ${serviceBrand?.serviceCategoryId?.name} Problems | InstantCashPick`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          content="InstantCashPick offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantCashPick. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
         />
         <meta
           name="keywords"
-          content={`Sell
-           on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, sell mobiles on instantcashpick`}
+          content="InstantCashPick, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
-        <link rel="canonical" href={`https://instantcashpick.com/`} />
+        <link rel="canonical" href={`https://instantcashpick.com/services`} />
       </Helmet>
       <div className="mt-8 w-4/5 mx-auto">
         <div className="mx-0 mb-6">
@@ -187,7 +186,7 @@ const ServiceBrands = () => {
               <h2 className="text-xl font-semibold">Select a Problem below</h2>
             </div>
 
-            <div className="grid grid-cols-8 gap-6 max-md:grid-cols-5 max-sm:grid-cols-3">
+            <div className="grid grid-cols-7 gap-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
               {serviceProblems &&
                 serviceProblems
                   // .subCategory
@@ -234,13 +233,16 @@ const ServiceBrands = () => {
             </div>
 
             {serviceProblemsData.length > 0 ? (
-              <div className="mx-auto mt-10 bg-cyan-500 py-1 px-8 text-xl text-white rounded">
+              // <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cyan to Blue</button>
+
+              // <div className="mx-auto mt-10 bg-cyan-500 py-1 px-8 text-xl text-white rounded">
+              <div class="mx-auto mt-10 px-8 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm py-2.5 text-center mb-2">
                 <Link to={`/services/book-service/${serviceBrand._id}?st=b`}>
                   <button>Continue</button>
                 </Link>
               </div>
             ) : (
-              <div className="mx-auto mt-10 bg-gray-400 pointer-events-none py-1 px-2 text-xl text-white rounded">
+              <div className="mx-auto mt-10 bg-gray-400 font-medium text-sm pointer-events-none px-4 py-2.5 text-center mb-2 text-white rounded">
                 <button>Select a Problem</button>
               </div>
             )}

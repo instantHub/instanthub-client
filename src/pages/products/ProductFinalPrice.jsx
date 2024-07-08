@@ -54,6 +54,20 @@ const ProductFinalPrice = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
+  const [selectedDigitalPayment, setSelectedDigitalPayment] = useState("");
+  console.log("selectedPaymentMode", selectedPaymentMode);
+  console.log("selectedDigitalPayment", selectedDigitalPayment);
+
+  const handlePaymentModeChange = (e) => {
+    setSelectedPaymentMode(e.target.value);
+    setSelectedDigitalPayment(""); // Reset digital payment selection
+  };
+
+  const handleDigitalPaymentChange = (e) => {
+    setSelectedDigitalPayment(e.target.value);
+  };
+
   // console.log("productDetails", productDetails);
 
   const openModal = () => {
@@ -135,9 +149,21 @@ const ProductFinalPrice = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      selectedPaymentMode === "" ||
+      (selectedPaymentMode.toLowerCase().includes("digital") &&
+        selectedDigitalPayment === "")
+    ) {
+      toast.error("Select Payment Mode..!");
+      return;
+    }
+
     const orderData = {
       ...formData,
       addressDetails,
+      paymentMode: selectedPaymentMode.toLowerCase().includes("instant")
+        ? selectedPaymentMode
+        : selectedDigitalPayment,
       offerPrice: couponCodeApplied ? specialPrice : offerPrice,
     };
     console.log("orderData", orderData);
@@ -299,12 +325,12 @@ const ProductFinalPrice = () => {
 
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
 
         <meta
           name="keywords"
-          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
@@ -594,7 +620,7 @@ const ProductFinalPrice = () => {
 
       {isOpen && (
         <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-[50%] max-sm:w-[90%]">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold mb-4">Enter your details</h2>
               <button
@@ -675,7 +701,8 @@ const ProductFinalPrice = () => {
                   />
                 </div>
 
-                <div className="flex gap-4 items-center max-sm:flex-col max-sm:items-start max-sm:gap-1">
+                {/* State, City, Pincode */}
+                <div className="flex gap-4 items-center max-lg:flex-col max-sm:items-start max-sm:gap-1">
                   <div>
                     <label htmlFor="city">State: </label>
                     <input
@@ -757,6 +784,100 @@ const ProductFinalPrice = () => {
                       </span>{" "}
                     </p>
                   )}
+                </div>
+
+                {/* Payment */}
+                <div className="pb-2">
+                  <h2 className="text-xl mb-4 max-sm:text-lg">
+                    Select Payment Mode
+                  </h2>
+                  <div className="space-y-2">
+                    <label className="flex items-center">
+                      <input
+                        id="instantCash"
+                        type="radio"
+                        name="paymentMode"
+                        value="Instant Cash"
+                        checked={selectedPaymentMode === "Instant Cash"}
+                        onChange={handlePaymentModeChange}
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-900">
+                        Instant Cash
+                      </span>
+                      <div className="mx-2">
+                        <img
+                          src="/instantcash.webp"
+                          alt="upi"
+                          className="w-16 h-7"
+                        />
+                      </div>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        id="digitalPayments"
+                        type="radio"
+                        name="paymentMode"
+                        value="Digital Payments"
+                        checked={selectedPaymentMode === "Digital Payments"}
+                        onChange={handlePaymentModeChange}
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-900">
+                        Digital Payments
+                      </span>
+                      <div className="mx-2">
+                        <img src="/upi2.webp" alt="upi" className="w-14 h-7" />
+                      </div>
+                    </label>
+
+                    {selectedPaymentMode === "Digital Payments" && (
+                      <div className="ml-6 mt-2 space-y-2">
+                        <label className="flex items-center">
+                          <input
+                            id="gpay"
+                            type="radio"
+                            name="digitalPaymentMode"
+                            value="GPay"
+                            checked={selectedDigitalPayment === "GPay"}
+                            onChange={handleDigitalPaymentChange}
+                            className="w-4 h-4 max-sm:w-3 max-sm:h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <span className="ml-2 text-sm font-medium text-gray-900 max-sm:text-xs">
+                            GPay
+                          </span>
+                        </label>
+                        <label className="flex items-center">
+                          <input
+                            id="phonepe"
+                            type="radio"
+                            name="digitalPaymentMode"
+                            value="PhonePe"
+                            checked={selectedDigitalPayment === "PhonePe"}
+                            onChange={handleDigitalPaymentChange}
+                            className="w-4 h-4 max-sm:w-3 max-sm:h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <span className="ml-2 text-sm font-medium text-gray-900 max-sm:text-xs">
+                            PhonePe
+                          </span>
+                        </label>
+                        <label className="flex items-center">
+                          <input
+                            id="upi"
+                            type="radio"
+                            name="digitalPaymentMode"
+                            value="UPI"
+                            checked={selectedDigitalPayment === "UPI"}
+                            onChange={handleDigitalPaymentChange}
+                            className="w-4 h-4 max-sm:w-3 max-sm:h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <span className="ml-2 text-sm font-medium text-gray-900 max-sm:text-xs">
+                            UPI
+                          </span>
+                        </label>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {!ordersLoading ? (

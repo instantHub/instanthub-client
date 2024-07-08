@@ -36,7 +36,7 @@ const RecycleBrands = () => {
         </title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
@@ -75,6 +75,7 @@ const RecycleBrands = () => {
           </div>
         ) : (
           <div className="flex flex-wrap justify-evenly gap-6 bg-[url('/recycle1.png')] bg-center bg-no-repeat min-h-[400px] max-sm:min-h-[300px]">
+          {/* <div className="grid grid-cols-6 max-sm:grid-cols-3 max-2sm:grid-cols-2 justify-center gap-6 bg-[url('/recycle1.png')] bg-center bg-no-repeat min-h-[400px] max-sm:min-h-[300px]"> */}
             {!data.length == 0 ? (
               data.map((brand, i) => (
                 <Link

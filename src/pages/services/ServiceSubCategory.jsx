@@ -41,17 +41,16 @@ const SubServices = () => {
   return (
     <>
       <Helmet>
-        <title>{`Avail ${serviceCategory?.name} Services | InstantCashPick`}</title>
+        <title>{`${serviceCategory?.name} Sub Categories | InstantCashPick`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          content="InstantCashPick offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantCashPick. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
         />
         <meta
           name="keywords"
-          content={`Sell
-           on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, sell mobiles on instantcashpick`}
+          content="InstantCashPick, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
-        <link rel="canonical" href={`https://instantcashpick.com/`} />
+        <link rel="canonical" href={`https://instantcashpick.com/services`} />
       </Helmet>
       <div className="mt-8 w-4/5 mx-auto">
         <div className="mx-0 mb-6">
@@ -107,7 +106,7 @@ const SubServices = () => {
             <div
               className={`${
                 !subServiceSelected
-                  ? `grid grid-cols-5 gap-6 max-md:grid-cols-4 max-sm:grid-cols-3`
+                  ? `grid grid-cols-5 gap-4 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2`
                   : `flex flex-col`
               } `}
             >

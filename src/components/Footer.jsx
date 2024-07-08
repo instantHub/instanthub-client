@@ -128,13 +128,17 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="max-md:hidden">
+        <div className="flex flex-col items-center max-md:hidden">
           <div className="text-white font-bold py-2">
             <label htmlFor="">Our Office</label>
           </div>
-          <div className="pl-2 flex flex-col items-center">
-            <p className="text-xs">RT Nagar, Bangalore-560032</p>
-            <p className="text-xs">Ph: +91 1234567890</p>
+          <div className="pl-2 flex flex-col items-start">
+            <p className="text-xs">
+              Sy. No. 92, R Greens A.C, <br />
+              Sarjapur Outer Ring Road Marathahalli <br />
+              Bengaluru - 37
+            </p>
+            <p className="text-xs">Ph: +91 8722288017</p>
             <p className="text-xs">sale@instantcashpick.com</p>
             <p className="text-xs">info@instantcashpick.com</p>
           </div>
@@ -143,18 +147,16 @@ const Footer = () => {
       {/* <div className="text-end p-0 m-0 text-xs text-white developed-by transition-transform duration-3000 transform translate-x-full md:translate-x-0">
         <h2>Developed by: Yusufulla Qureshi</h2>
       </div> */}
-      <div className="flex items-center justify-end p-0 text-white">
+      {/* <div className="flex items-center justify-end p-0 text-white">
         <div className="flex flex-col items-center">
-          {/* Render the user icon */}
           <div className="flex items-center">
             <FcServices />
             <p className="text-sm flex items-center justify-center max-sm:text-[10px]">
               Developed by: Yusufulla Qureshi
             </p>
           </div>
-          {/* <p className="text-[9px]">qureshiyusuff@gmail.com</p> */}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

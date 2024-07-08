@@ -10,6 +10,7 @@ import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
+import { FaGooglePay } from "react-icons/fa";
 
 const RecycleProductDetail = () => {
   const { prodId } = useParams();
@@ -22,20 +23,45 @@ const RecycleProductDetail = () => {
   const [selectedDiv, setSelectedDiv] = useState();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [checkAge, setCheckAge] = useState(false);
+
+  const [checkMobileOn, setCheckMobileOn] = useState(false);
+  const [mobileStatus, setMobileStatus] = useState("");
+
+  const [checkLaptopOn, setCheckLaptopOn] = useState(false);
+  const [laptopStatus, setLaptopStatus] = useState("");
+  const [checkLaptopAge, setCheckLaptopAge] = useState(false);
   const [ageSelected, setAgeSelected] = useState("");
   const [laptopAge, setLaptopAge] = useState([
     "Between 1 - 3 Years",
     "More Than 3 Years",
   ]);
+
   const [recyclePrice, setRecyclePrice] = useState(500);
-  console.log("recyclePrice", recyclePrice);
+  // console.log("recyclePrice", recyclePrice);
+
   const [orderOpen, setOrderOpen] = useState(false);
   const [formData, setFormData] = useState();
   const [addressDetails, setAddressDetails] = useState();
   const [selectedDate, setSelectedDate] = useState(null);
   const currentDate = new Date();
   const navigate = useNavigate();
+
+  const [paymentMode, setPaymentMode] = useState("");
+  const [showDigitalPay, setShowDigitalPay] = useState(false);
+
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
+  const [selectedDigitalPayment, setSelectedDigitalPayment] = useState("");
+  console.log("selectedPaymentMode", selectedPaymentMode);
+  console.log("selectedDigitalPayment", selectedDigitalPayment);
+
+  const handlePaymentModeChange = (e) => {
+    setSelectedPaymentMode(e.target.value);
+    setSelectedDigitalPayment(""); // Reset digital payment selection
+  };
+
+  const handleDigitalPaymentChange = (e) => {
+    setSelectedDigitalPayment(e.target.value);
+  };
 
   // Set the minimum time to 10:00 AM
   const minTime = new Date();
@@ -52,9 +78,8 @@ const RecycleProductDetail = () => {
     setSelectedDiv(variantSelected.id);
   };
 
-  console.log("variantSelected", variantSelected);
-
-  console.log("productDetails", productDetails);
+  // console.log("variantSelected", variantSelected);
+  // console.log("productDetails", productDetails);
 
   const handlePinCodeChange = (e) => {
     let value = e.target.value;
@@ -103,6 +128,17 @@ const RecycleProductDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let paymentMode;
+
+    if (
+      selectedPaymentMode === "" ||
+      (selectedPaymentMode.toLowerCase().includes("digital") &&
+        selectedDigitalPayment === "")
+    ) {
+      toast.error("Select Payment Mode..!");
+      return;
+    }
+
     const orderData = {
       ...formData,
       addressDetails,
@@ -120,9 +156,15 @@ const RecycleProductDetail = () => {
           .includes("laptop")
           ? ageSelected
           : null,
+        productStatus: productDetails.category.name
+          .toLowerCase()
+          .includes("mobile")
+          ? mobileStatus
+          : laptopStatus,
       },
-      //   productDetails,
-
+      paymentMode: selectedPaymentMode.toLowerCase().includes("instant")
+        ? selectedPaymentMode
+        : selectedDigitalPayment,
       recyclePrice,
     };
     console.log("orderData", orderData);
@@ -134,7 +176,7 @@ const RecycleProductDetail = () => {
       //   closeModal();
       //   setOrderOpen(false);
       toast.success("Your Order placed successfully");
-      navigate(`/recycle-categories`);
+      // navigate(`/recycle-categories`);
     }
   };
 
@@ -164,12 +206,12 @@ const RecycleProductDetail = () => {
 
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily."
+          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
 
         <meta
           name="keywords"
-          content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
@@ -274,24 +316,23 @@ const RecycleProductDetail = () => {
                       .toLowerCase()
                       .includes("mobile") ? (
                       <div className="flex flex-col gap-4">
-                        {variantSelected.length == 0 ? (
-                          <div>
-                            <p>Choose a Variant</p>
-                            <p className="opacity-40 text-sm">
-                              Select a variantSelected to know the price
-                            </p>
-                          </div>
-                        ) : null}
+                        <div>
+                          <p>Choose a Variant</p>
+                          <p className="opacity-40 text-sm">
+                            Select a variant and click on Recycle to know the
+                            price
+                          </p>
+                        </div>
 
                         {/* VARIANT PRICE WILL BE SHOWN WHEN CLICKED ON A VARIANT */}
                         <div className="">
                           <div className="flex items-center">
-                            {variantSelected.price ? (
+                            {/* {variantSelected.price ? (
                               <FaIndianRupeeSign className="text-4xl" />
                             ) : null}
                             <h2 className="text-5xl text-yellow-500 bg-white pr-2 rounded-tr-xl rounded-br-xl">
                               {variantSelected.price}
-                            </h2>
+                            </h2> */}
                           </div>
                         </div>
                         {/* END OF VARIANT PRICE */}
@@ -324,10 +365,10 @@ const RecycleProductDetail = () => {
                     ) : (
                       <div>
                         <div className="flex flex-col mb-4">
-                          <h2>Product Price</h2>
+                          {/* <h2>Product Price</h2> */}
                           <h2 className="flex items-center text-5xl text-yellow-500 bg-white w-fit">
-                            <FaIndianRupeeSign className="text-4xl text-black" />{" "}
-                            {variantSelected.price}
+                            {/* <FaIndianRupeeSign className="text-4xl text-black" />{" "}
+                            {variantSelected.price} */}
                           </h2>
                         </div>
                       </div>
@@ -342,13 +383,15 @@ const RecycleProductDetail = () => {
                               .toLowerCase()
                               .includes("mobile")
                           ) {
-                            setIsOpen(true);
+                            // setIsOpen(true);
+                            setCheckMobileOn(true);
                           } else if (
                             productDetails.category.name
                               .toLowerCase()
                               .includes("laptop")
                           ) {
-                            setCheckAge(true);
+                            // setCheckLaptopAge(true);
+                            setCheckLaptopOn(true);
                           }
                         }}
                       >
@@ -381,7 +424,121 @@ const RecycleProductDetail = () => {
           )}
         </div>
 
-        {checkAge && (
+        {checkMobileOn && (
+          <td>
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+                <div className="flex justify-center">
+                  <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
+                    Is Your {productDetails.category.name} Switched On?
+                  </h2>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-4 items-center">
+                    <span className="max-sm:text-sm">
+                      {productDetails.category.name} Name
+                    </span>
+                    <span className="text-lg font-semibold max-sm:text-sm">
+                      {productDetails.name}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-center mt-4">
+                  <span>
+                    Is Your {productDetails.category.name} Switched On?
+                  </span>
+                </div>
+                <div className="flex justify-around items-center gap-4 my-4">
+                  <div
+                    // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
+                    className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    onClick={() => {
+                      setRecyclePrice(700);
+                      setMobileStatus("Switched On");
+                      setCheckMobileOn(false);
+                      setIsOpen(true);
+                    }}
+                  >
+                    <span>Switched On</span>
+                  </div>
+                  <div
+                    // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
+                    className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    onClick={() => {
+                      setRecyclePrice(500);
+                      setMobileStatus("Switched Off");
+                      setCheckMobileOn(false);
+                      setIsOpen(true);
+                    }}
+                  >
+                    <span>Switched Off</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        )}
+
+        {checkLaptopOn && (
+          <td>
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+                <div className="flex justify-center">
+                  <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
+                    Is Your {productDetails.category.name} Switched On?
+                  </h2>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-4 items-center">
+                    <span className="max-sm:text-sm">
+                      {productDetails.category.name} Name
+                    </span>
+                    <span className="text-lg font-semibold max-sm:text-sm">
+                      {productDetails.name}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-center mt-4">
+                  <span>
+                    Is Your {productDetails.category.name} Switched On?
+                  </span>
+                </div>
+                <div className="flex justify-around items-center gap-4 my-4">
+                  <div
+                    // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
+                    className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    onClick={() => {
+                      // setRecyclePrice(700);
+                      setLaptopStatus("Switched On");
+                      setCheckLaptopOn(false);
+                      // setIsOpen(true);
+                      setCheckLaptopAge(true);
+                    }}
+                  >
+                    <span>Switched On</span>
+                  </div>
+                  <div
+                    // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
+                    className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    onClick={() => {
+                      setRecyclePrice(500);
+                      setLaptopStatus("Switched Off");
+                      setCheckLaptopOn(false);
+                      setIsOpen(true);
+                      // setCheckLaptopAge(true);
+                    }}
+                  >
+                    <span>Switched Off</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        )}
+
+        {checkLaptopAge && (
           <td>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
@@ -408,25 +565,26 @@ const RecycleProductDetail = () => {
                     // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
                     className="border shadow-xl shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
                     onClick={() => {
-                      setRecyclePrice(1000);
-                      setAgeSelected(laptopAge[0]);
-                      setCheckAge(false);
+                      setRecyclePrice(1500);
+                      setAgeSelected("Between 1-3 Years");
+                      setCheckLaptopAge(false);
                       setIsOpen(true);
                     }}
                   >
-                    <span>{laptopAge[0]}</span>
+                    <span>Between 1-3 Years</span>
                   </div>
                   <div
                     // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
                     className="border shadow-xl shadow-red-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
                     onClick={() => {
                       setRecyclePrice(500);
-                      setAgeSelected(laptopAge[1]);
-                      setCheckAge(false);
+                      // setAgeSelected(laptopAge[1]);
+                      setAgeSelected("More Than 3 Years");
+                      setCheckLaptopAge(false);
                       setIsOpen(true);
                     }}
                   >
-                    <span>{laptopAge[1]}</span>
+                    <span>More Than 3 Years</span>
                   </div>
                 </div>
               </div>
@@ -444,24 +602,42 @@ const RecycleProductDetail = () => {
                     {productDetails.category.name}?
                   </h2>
                 </div>
+
                 <div className="flex flex-col items-center">
+                  <div className="flex gap-2 items-center">
+                    <span>{productDetails.category.name} is</span>
+                    <span className="text-lg font-semibold">
+                      {productDetails.category.name
+                        .toLowerCase()
+                        .includes("laptop")
+                        ? laptopStatus
+                        : mobileStatus}
+                    </span>
+                  </div>
+
+                  {productDetails.category.name
+                    .toLowerCase()
+                    .includes("laptop") &&
+                    laptopStatus.toLowerCase().includes("on") && (
+                      <div className="flex gap-2 items-center my-2">
+                        <span>{productDetails.category.name} Age</span>
+                        <span className="text-lg font-semibold border-b">
+                          {ageSelected}
+                        </span>
+                      </div>
+                    )}
+                  <div className="flex gap-2 items-center my-2">
+                    <span>Recycle Price</span>
+                    <span className="text-lg font-semibold">
+                      {recyclePrice}
+                    </span>
+                  </div>
                   <div className="flex gap-4 items-center max-sm:text-sm">
                     <span>{productDetails.category.name} Name</span>
                     <span className="text-lg font-semibold max-sm:text-sm">
                       {productDetails.name}
                     </span>
                   </div>
-                  {productDetails.category.name
-                    .toLowerCase()
-                    .includes("laptop") && (
-                    <div className="flex gap-4 items-center max-sm:text-sm mt-4 ">
-                      <span>{productDetails.category.name} Age</span>
-                      <span className="text-lg font-semibold max-sm:text-sm border-b">
-                        {ageSelected}
-                      </span>
-                    </div>
-                  )}
-
                   {productDetails.category.name
                     .toLowerCase()
                     .includes("mobile") && (
@@ -522,7 +698,7 @@ const RecycleProductDetail = () => {
                 <form
                   action=""
                   onSubmit={handleSubmit}
-                  className="flex flex-col gap-2 justify-center"
+                  className="flex flex-col gap-3 justify-center"
                 >
                   <div>
                     <label htmlFor="name" className="max-sm:text-md">
@@ -659,7 +835,7 @@ const RecycleProductDetail = () => {
                       minDate={currentDate}
                       minTime={minTime}
                       maxTime={maxTime}
-                      className="border px-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                      className="border ml-1 p-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-[2px]"
                       placeholderText="Schedule Pickup"
                       required
                     />
@@ -674,6 +850,103 @@ const RecycleProductDetail = () => {
                       </p>
                     )}
                   </div>
+
+                  {/* Payment */}
+                  <div className="pb-2">
+                    <h2 className="text-xl mb-4">Select Payment Mode</h2>
+                    <div className="space-y-2">
+                      <label className="flex items-center">
+                        <input
+                          id="instantCash"
+                          type="radio"
+                          name="paymentMode"
+                          value="Instant Cash"
+                          checked={selectedPaymentMode === "Instant Cash"}
+                          onChange={handlePaymentModeChange}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                        />
+                        <span className="ml-2 text-sm font-medium text-gray-900">
+                          Instant Cash
+                        </span>
+                        <div className="mx-2">
+                          <img
+                            src="/instantcash.webp"
+                            alt="upi"
+                            className="w-16 h-7"
+                          />
+                        </div>
+                      </label>
+                      <label className="flex items-center">
+                        <input
+                          id="digitalPayments"
+                          type="radio"
+                          name="paymentMode"
+                          value="Digital Payments"
+                          checked={selectedPaymentMode === "Digital Payments"}
+                          onChange={handlePaymentModeChange}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                        />
+                        <span className="ml-2 text-sm font-medium text-gray-900">
+                          Digital Payments
+                        </span>
+                        <div className="mx-2">
+                          <img
+                            src="/upi2.webp"
+                            alt="upi"
+                            className="w-14 h-7"
+                          />
+                        </div>
+                      </label>
+
+                      {selectedPaymentMode === "Digital Payments" && (
+                        <div className="ml-6 mt-2 space-y-2">
+                          <label className="flex items-center">
+                            <input
+                              id="gpay"
+                              type="radio"
+                              name="digitalPaymentMode"
+                              value="GPay"
+                              checked={selectedDigitalPayment === "GPay"}
+                              onChange={handleDigitalPaymentChange}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            />
+                            <span className="ml-2 text-sm font-medium text-gray-900">
+                              GPay
+                            </span>
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              id="phonepe"
+                              type="radio"
+                              name="digitalPaymentMode"
+                              value="PhonePe"
+                              checked={selectedDigitalPayment === "PhonePe"}
+                              onChange={handleDigitalPaymentChange}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            />
+                            <span className="ml-2 text-sm font-medium text-gray-900">
+                              PhonePe
+                            </span>
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              id="upi"
+                              type="radio"
+                              name="digitalPaymentMode"
+                              value="UPI"
+                              checked={selectedDigitalPayment === "UPI"}
+                              onChange={handleDigitalPaymentChange}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            />
+                            <span className="ml-2 text-sm font-medium text-gray-900">
+                              UPI
+                            </span>
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   {/* <input
                     type="submit"
                     value="Recycle"
