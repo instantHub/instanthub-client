@@ -219,55 +219,17 @@ const Products = () => {
             <span>Loading...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
-            {!productsData.length == 0 ? (
-              !showSeries ? (
-                productsData.map(
-                  (product, i) =>
-                    product.status.toLowerCase() !== "blocked" && (
-                      <div
-                        key={i}
-                        className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
-                      >
-                        <Link
-                          to={`/categories/brands/productDetails/${product.id}`}
-                          key={i}
-                          className="w-full h-full"
-                        >
-                          <div
-                            key={i}
-                            className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
-                          >
-                            <div className="flex horizontal w-28 h-28 items-start justify-center max-sm:w-24 max-sm:h-24">
-                              <img
-                                src={
-                                  import.meta.env.VITE_APP_BASE_URL +
-                                  product.image
-                                }
-                                alt="CAT"
-                                className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
-                              />
-                            </div>
-                            <span className="text-center mt-1 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                              <div className="text-[12px] font-[500] leading-2 max-sm:text-xs">
-                                {product.name}
-                              </div>
-                            </span>
-                          </div>
-                        </Link>
-                      </div>
-                    )
-                )
-              ) : (
-                // productsData.map((product, i) => (
-                productsData
-                  .filter((product) => product.series === seriesSelected)
-                  .map(
+          <div class="">
+            <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+              {!productsData.length == 0 ? (
+                !showSeries ? (
+                  productsData.map(
                     (product, i) =>
                       product.status.toLowerCase() !== "blocked" && (
                         <div
                           key={i}
-                          className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                          // className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
+                          className="flex items-center justify-center max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
                         >
                           <Link
                             to={`/categories/brands/productDetails/${product.id}`}
@@ -276,10 +238,10 @@ const Products = () => {
                           >
                             <div
                               key={i}
-                              // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                               className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
                             >
-                              <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
+                              {/* <div className="flex horizontal w-28 h-28 items-start justify-center max-sm:w-24 max-sm:h-24"> */}
+                              <div className="flex horizontal w-28 h-28 items-center justify-center max-sm:w-24 max-sm:h-24">
                                 <img
                                   src={
                                     import.meta.env.VITE_APP_BASE_URL +
@@ -289,8 +251,8 @@ const Products = () => {
                                   className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
                                 />
                               </div>
-                              <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                                <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+                              <span className="text-center mt-1 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                                <div className="text-[12px] font-[500] leading-2 max-sm:text-xs">
                                   {product.name}
                                 </div>
                               </span>
@@ -299,10 +261,54 @@ const Products = () => {
                         </div>
                       )
                   )
-              )
-            ) : (
-              <h1>Not Available</h1>
-            )}
+                ) : (
+                  // productsData.map((product, i) => (
+                  productsData
+                    .filter((product) => product.series === seriesSelected)
+                    .map(
+                      (product, i) =>
+                        product.status.toLowerCase() !== "blocked" && (
+                          <div
+                            key={i}
+                            // className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                            className="flex items-center justify-center max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:"
+                          >
+                            <Link
+                              to={`/categories/brands/productDetails/${product.id}`}
+                              key={i}
+                              className="w-full h-full"
+                            >
+                              <div
+                                key={i}
+                                // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                                className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
+                              >
+                                {/* <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24"> */}
+                                <div className="flex horizontal w-28 h-28 items-center justify-center max-sm:w-24 max-sm:h-24">
+                                  <img
+                                    src={
+                                      import.meta.env.VITE_APP_BASE_URL +
+                                      product.image
+                                    }
+                                    alt="CAT"
+                                    className="w-[105px] h-[105px] max-sm:w-24 max-sm:h-24"
+                                  />
+                                </div>
+                                <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                                  <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+                                    {product.name}
+                                  </div>
+                                </span>
+                              </div>
+                            </Link>
+                          </div>
+                        )
+                    )
+                )
+              ) : (
+                <h1>Not Available</h1>
+              )}
+            </div>
           </div>
         )}
       </div>

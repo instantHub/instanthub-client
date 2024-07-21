@@ -1,0 +1,83 @@
+import React, { useEffect, useState } from "react";
+import PrivacyPolicy from "./PrivacyPolicy";
+import TermsAndConditions from "./TermsAndConditions";
+import TermsOfUse from "./TermsOfUse";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const TermsAndPolicies = () => {
+  const [privacyPolicy, setPrivacyPolicy] = useState(false);
+  const [termsAndConditions, setTermsAndConditions] = useState(false);
+  const [termsOfUse, setTermsOfUse] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log("locaiton", location.pathname);
+
+  const showPrivacyPolicy = () => {
+    setPrivacyPolicy(true);
+    setTermsOfUse(false);
+    setTermsAndConditions(false);
+  };
+
+  useEffect(() => {
+    if (location.pathname.includes("privacy")) {
+      showPrivacyPolicy();
+    } else if (location.pathname.includes("conditions")) {
+      setTermsAndConditions(true);
+      setPrivacyPolicy(false);
+      setTermsOfUse(false);
+    } else if (location.pathname.includes("use")) {
+      setTermsOfUse(true);
+      setPrivacyPolicy(false);
+      setTermsAndConditions(false);
+    }
+  });
+
+  const activeSideBar =
+    "text-green-600 font-extrabold text-[22px] max-md:text-2xl max-2sm:text-xl";
+  const nonActiveSideBar = "text-xl max-md:text-xl max-2sm:text-lg";
+
+  return (
+    <div className="mx-10 flex items-center justify-center bg-white max-md:mx-5">
+      <div className="flex justify-center max-md:flex-col max-md:items-center max-md:gap-5">
+        <div className="px-5">
+          <div className="mt-[200px] h-[300px] w-[200px] max-md:w-[300px] max-2sm:w-[250px] flex flex-col gap-6 px-4 py-10 border rounded-lg shadow-2xl text-2xl max-md:mt-5 max-md:h-fit max-sm:items-center">
+            <div
+              onClick={() => navigate("/privacy-policies")}
+              className={`${privacyPolicy ? activeSideBar : nonActiveSideBar}`}
+            >
+              Privacy Policy
+            </div>
+            <div
+              onClick={() => navigate("/terms-conditions")}
+              className={`${
+                termsAndConditions ? activeSideBar : nonActiveSideBar
+              }`}
+            >
+              Terms & Conditions
+            </div>
+            <div
+              onClick={() => navigate("/terms-of-use")}
+              className={`${termsOfUse ? activeSideBar : nonActiveSideBar}`}
+            >
+              Terms Of use
+            </div>
+          </div>
+        </div>
+        <div className="flex-1">
+          <div className="max-h-screen overflow-scroll scrollbar">
+            {privacyPolicy ? <PrivacyPolicy /> : null}
+          </div>
+          <div className="max-h-screen overflow-scroll scrollbar">
+            {termsAndConditions ? <TermsAndConditions /> : null}
+          </div>
+          <div className="max-h-screen overflow-scroll scrollbar">
+            {termsOfUse ? <TermsOfUse /> : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TermsAndPolicies;

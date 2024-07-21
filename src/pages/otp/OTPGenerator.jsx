@@ -136,7 +136,7 @@ const OtpGenerator = (props) => {
     <div className="flex bg-white max-sm:w-[90%] justify-center rounded-xl">
       <div className="">
         <img
-          src="/OTP2.png"
+          src="/images/OTP2.png"
           alt=""
           // className="w-full h-auto transform transition-transform hover:scale-110"
           className="max-sm:hidden"

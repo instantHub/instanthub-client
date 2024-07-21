@@ -457,6 +457,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Coupons"],
     }),
+    getAllServices: build.query({
+      query: ({ page, limit, search }) => ({
+        url: `/api/search-services`,
+        method: "GET",
+        params: { page, limit, search },
+      }),
+      providesTags: ["Services"],
+    }),
     getServices: build.query({
       query: () => `/api/services`,
       providesTags: ["Services"],
@@ -635,6 +643,7 @@ export const {
   useCreateServicesMutation,
   useUploadServicesImageMutation,
   useUpdateServiceMutation,
+  useGetAllServicesQuery,
   useGetServicesOrdersQuery,
   useCreateServiceOrderMutation,
   useServiceOrderCompleteMutation,

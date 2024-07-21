@@ -217,7 +217,7 @@ const RecycleProductDetail = () => {
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
-      <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 bg-[url('/recycle1.png')] bg-center bg-no-repeat">
+      <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 bg-[url('/images/recycle1.png')] bg-center bg-no-repeat">
         {/* <div className="bg-white px-10 pt-10 pb-24 rounded-md shadow-lg"> */}
         {/* Header Links: Home > Category > Brand > Products > ProductName */}
         <p className="pb-5 text-2xl font-bold max-sm:text-xl">
@@ -289,7 +289,7 @@ const RecycleProductDetail = () => {
             </div>
           ) : (
             <>
-              <div className="bg-white flex flex-col sm:flex-row px-3 sm:p-6 max-sm:pb-3 max-sm:flex-col bg-[url('/recycle1.png')] bg-center bg-no-repeat">
+              <div className="bg-white flex flex-col sm:flex-row px-3 sm:p-6 max-sm:pb-3 max-sm:flex-col bg-[url('/images/recycle1.png')] bg-center bg-no-repeat">
                 {/* IMAGE */}
                 <div className="sm:flex items-center justify-center mr-5 w-full sm:max-w-xs max-sm:size-32 sm:w-1/3 h-20 sm:h-96 max-sm:mx-auto">
                   <div className="flex items-center justify-center h-full w-full">
@@ -680,7 +680,7 @@ const RecycleProductDetail = () => {
                       Yes
                     </button>
                     <img
-                      src="/recycle1.png"
+                      src="/images/recycle1.png"
                       alt="logo"
                       className="w-[88px] h-[70px] max-2sm:w-[60px] max-2sm:h-[55px]"
                     />
@@ -888,7 +888,7 @@ const RecycleProductDetail = () => {
                         </span>
                         <div className="mx-2">
                           <img
-                            src="/instantcash.webp"
+                            src="/images/instantcash.webp"
                             alt="upi"
                             className="w-16 h-7"
                           />
@@ -909,7 +909,7 @@ const RecycleProductDetail = () => {
                         </span>
                         <div className="mx-2">
                           <img
-                            src="/upi2.webp"
+                            src="/images/upi2.webp"
                             alt="upi"
                             className="w-14 h-7"
                           />

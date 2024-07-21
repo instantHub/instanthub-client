@@ -46,7 +46,7 @@ const LaptopDeductionItems = ({
               !shouldShowImage
                 ? `grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-4 items-center px-4 `
                 : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4`
-                // `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
+              // `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
             }`
       }
       
@@ -62,17 +62,17 @@ const LaptopDeductionItems = ({
                     (condLabel) =>
                       condLabel.conditionLabel == label.conditionLabel
                   )
-                    ? " border-cyan-500"
+                    ? " border-cyan-500 "
                     : ""
                 }`
-              : `flex px-2 ${
+              : `flex px-2 bg-slate-100  ${
                   laptopSliceData.screenSize.conditionLabel ===
                     label.conditionLabel ||
                   laptopSliceData.graphic.conditionLabel ===
                     label.conditionLabel ||
                   laptopSliceData.screenCondition.conditionLabel ===
                     label.conditionLabel
-                    ? "border-cyan-500"
+                    ? "border-cyan-500 bg-white"
                     : ""
                 }`
           }  border rounded items-center`}
@@ -146,15 +146,26 @@ const LaptopDeductionItems = ({
               deductionData.some(
                 (condLabel) => condLabel.conditionLabel == label.conditionLabel
               )
-                ? `bg-cyan-500 ${
+                ? `bg-cyan-500  ${
                     shouldShowImage ? "text-white " : "text-black"
                   } `
-                : "bg-slate-100"
+                : // : "bg-slate-100"
+                  `${
+                    laptopSliceData.screenSize.conditionLabel ===
+                      label.conditionLabel ||
+                    laptopSliceData.graphic.conditionLabel ===
+                      label.conditionLabel ||
+                    laptopSliceData.screenCondition.conditionLabel ===
+                      label.conditionLabel
+                      ? " bg-white"
+                      : "bg-slate-100"
+                  }`
             } 
             ${
               shouldShowImage
                 ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
-                : "flex text-sm items-center gap-1 py-4 bg-white "
+                : "flex text-sm items-center gap-1 py-4 bg-slate-100"
+              // : "flex text-sm items-center gap-1 py-4 bg-white"
             }
             `}
           >
@@ -166,7 +177,7 @@ const LaptopDeductionItems = ({
                       (condLabel) =>
                         condLabel.conditionLabel == label.conditionLabel
                     )
-                      ? "border-cyan-500"
+                      ? "border-cyan-500 "
                       : "border-surface-dark"
                   } `}
                 >

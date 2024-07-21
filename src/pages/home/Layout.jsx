@@ -1,10 +1,10 @@
 import React from "react";
-import Slider from "./Slider";
+import Slider from "../../components/Slider";
 import { Link, Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet-async";
-import FloatingButtons from "./FloatingButtons";
+import FloatingButtons from "../../components/FloatingButtons";
 
 const Layout = () => {
   const structuredData = {
@@ -16,7 +16,7 @@ const Layout = () => {
       "Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/search?q={search_term_string}",
+      target: "https://instantcashpick.com",
       "query-input": "required name=search_term_string",
     },
   };

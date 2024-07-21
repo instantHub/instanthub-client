@@ -59,7 +59,7 @@ const Categories = () => {
             {/* RECYCLE */}
             <Link to={`/recycle-categories`}>
               <div className="w-32 p-4 h-32 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500">
-                <img src="/recycle1.png" alt="CAT" className="justify-center" />
+                <img src="/images/recycle1.png" alt="CAT" className="justify-center" />
                 {/* <p className="size-4 pt-1">Recyle</p> */}
               </div>
             </Link>
@@ -67,9 +67,9 @@ const Categories = () => {
         )}
       </div>
 
-      <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
+      {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
         <AllBrandsList />
-      </div>
+      </div> */}
     </div>
   );
 };

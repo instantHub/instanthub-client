@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
+import SearchBar2 from "./SearchBar2";
 import Logo from "../assets/LOGO.png";
 import Slider from "./Slider";
 import Categories from "../pages/categories/Categories";
@@ -35,10 +36,10 @@ const Navbar = () => {
       name: "About",
       url: "/about",
     },
-    {
-      name: "Services",
-      url: "/services",
-    },
+    // {
+    //   name: "Services",
+    //   url: "/services",
+    // },
     {
       name: "Contact",
       url: "/contact-us",
@@ -63,7 +64,6 @@ const Navbar = () => {
     <>
       <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1">
         {/* Main */}
-        {/* <nav className="bg-[#E27D60] bg-cyan-500 text-white py-2 pr-4 pl-2 rounded-xl mt-4 mx-4 sticky z-50 top-2 border-b border-[#E27D60] shadow-xl"> */}
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         <div className="max-w-full mx-auto px-4 max-2sm:px-1">
           <div className="flex items-center">
@@ -72,8 +72,7 @@ const Navbar = () => {
               <Link to="/">
                 <h2>
                   <img
-                    // src="/LOGO1.png"
-                    src="/MainLogo.png"
+                    src="/images/MainLogo.png"
                     alt="logo"
                     // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
                     className="w-[88px] h-[70px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
@@ -82,7 +81,11 @@ const Navbar = () => {
               </Link>
             </div>
 
-            <SearchBar />
+            {/* custom debounce hook */}
+            {/* <SearchBar /> */}
+
+            {/* Debounce used in below search */}
+            <SearchBar2 />
 
             <div className="hidden md:flex max-14inch:text-sm">
               <ul className="flex space-x-4">
@@ -155,6 +158,7 @@ const Navbar = () => {
         )}
       </nav>
 
+      {/* All Categories row list */}
       <div className="min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full pb-4 border-b max-14inch:text-sm">
         <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
           <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 max-14inch:px-14">
@@ -241,6 +245,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* BUTTONS -> Services Sell Recylce */}
       <div className="max-sm:hidden relative bg-white px-1 mt-5 shadow-xl mx-auto w-full max-w-2xl rounded-2xl border-dashed border-2 border-gray-500">
         <div className="mx-auto flex w-full max-w-md flex-row items-center justify-around">
           <div
@@ -258,7 +263,7 @@ const Navbar = () => {
           <div
             className={`text-center p-2 w-1/2 ${
               location.pathname.substring(0, 6).includes("/cat")
-                ? `bg-green-600 text-white rounded transition-colors duration-1000 ease-in-out w-full`
+                ? `text-green-600 text-2xl rounded transition-colors duration-1000 ease-in-out w-full`
                 : location.pathname === "/" ||
                   location.pathname.substring(0, 6).includes("/sell")
                 ? `text-green-600 text-2xl rounded transition-colors duration-1000 ease-in-out w-full`
@@ -296,24 +301,10 @@ const Navbar = () => {
                 ? `bg-green-600 text-white transition-colors duration-1000 ease-in-out `
                 : ``
             }`}
-            // class={`text-center rounded-tl-full rounded-bl-full ${
-            //   location.pathname.substring(0, 6).includes("/ser")
-            //     ? `bg-green-600 text-white transition-colors duration-1000 ease-in-out `
-            //     : ` inline-flex items-center px-4 py-2 text-sm font-medium  bg-transparent border rounded-s-lg hover:bg-white hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:text-white dark:border-gray-100 dark:text-black dark:hover:text-white dark:hover:bg-green-700 dark:focus:bg-green-700`
-            // } `}
             onClick={() => {
               navigate("/services");
             }}
           >
-            {/* <svg
-              class="w-3 h-3 me-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-            </svg> */}
             <button>Services</button>
           </div>
 
@@ -349,7 +340,6 @@ const Navbar = () => {
       </div>
 
       {/* <Outlet />
-
       <div>Footer</div> */}
     </>
   );

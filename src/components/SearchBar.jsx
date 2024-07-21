@@ -4,71 +4,100 @@ import { Link } from "react-router-dom";
 import "./searchStyle.css";
 import { BsSearch } from "react-icons/bs";
 import axios from "axios";
+import useDebounce, { useDebounceFunc } from "../hooks/UseDebounce";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  // const { data: productsData, isLoading: productsLoading } =
-  //   useGetAllProductsQuery({
-  //     search,
-  //     page,
-  //     limit: 10,
-  //   });
 
   const [productsData, setProductsData] = useState([]);
   const [productsLoading, setProductsLoading] = useState(false);
 
+  const debouncedSearch = useDebounce(search, 1000);
+
   // console.log("productsData", productsData);
 
-  // console.log(
-  //   "import.meta.env.VITE_APP_BASE_URL",
-  //   import.meta.env.VITE_BUILD === "development"
-  // );
-
-  const handleSearch = async () => {
-    // setSearched(true);
-    // setPage(1);
+  useEffect(() => {
     try {
       setProductsLoading(true);
-
+      console.log("API Call");
       let response;
-      if (import.meta.env.VITE_BUILD === "development") {
-        response = await axios.get("http://localhost:8000/api/products", {
-          params: {
-            search: search.trim() ? search : undefined,
-            page,
-            limit: 10,
-          },
-        });
-      } else if (import.meta.env.VITE_BUILD === "production") {
-        response = await axios.get(
-          "https://api.yusufqureshi.online/api/products",
-          {
+      const loadProducts = async () => {
+        if (import.meta.env.VITE_BUILD === "development") {
+          response = await axios.get("http://localhost:8000/api/products", {
             params: {
-              search: search.trim() ? search : undefined,
+              search: debouncedSearch.trim() ? debouncedSearch : undefined,
               page,
               limit: 10,
             },
-          }
-        );
-      }
-
-      // const response = await axios.get("/api/products", {
-      //   params: {
-      //     search: search.trim() ? search : undefined,
-      //     page,
-      //     limit: 10,
-      //   },
-      // });
-      // console.log("response", response);
-      setProductsData(response.data);
+          });
+          console.log("responce", response);
+          setProductsData(response.data);
+        } else if (import.meta.env.VITE_BUILD === "production") {
+          response = await axios.get(
+            "https://api.yusufqureshi.online/api/products",
+            {
+              params: {
+                search: debouncedSearch.trim() ? debouncedSearch : undefined,
+                page,
+                limit: 10,
+              },
+            }
+          );
+          setProductsData(response.data);
+        }
+      };
+      loadProducts();
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
       setProductsLoading(false);
     }
-  };
+  }, [debouncedSearch]);
+
+  // const handleSearch = async () => {
+  //   console.log("Search API 1");
+  //   try {
+  //     setProductsLoading(true);
+
+  //     let response;
+  //     if (import.meta.env.VITE_BUILD === "development") {
+  //       response = await axios.get("http://localhost:8000/api/products", {
+  //         params: {
+  //           search: search.trim() ? search : undefined,
+  //           page,
+  //           limit: 10,
+  //         },
+  //       });
+  //     } else if (import.meta.env.VITE_BUILD === "production") {
+  //       response = await axios.get(
+  //         "https://api.yusufqureshi.online/api/products",
+  //         {
+  //           params: {
+  //             search: search.trim() ? search : undefined,
+  //             page,
+  //             limit: 10,
+  //           },
+  //         }
+  //       );
+  //     }
+
+  //     // const response = await axios.get("/api/products", {
+  //     //   params: {
+  //     //     search: search.trim() ? search : undefined,
+  //     //     page,
+  //     //     limit: 10,
+  //     //   },
+  //     // });
+  //     // console.log("response", response);
+  //     setProductsData(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching products:", error);
+  //   } finally {
+  //     setProductsLoading(false);
+  //   }
+  // };
 
   const productListRef = useRef(null);
 
@@ -119,7 +148,7 @@ const SearchBar = () => {
 
   return (
     <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 max-2sm:w-[58%] max-2sm:mx-2">
-    {/* <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:mx-1 3sm:w-[100px]"> */}
+      {/* <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:mx-1 3sm:w-[100px]"> */}
       <div className="flex pl- items-center bg-gray-100 pl-2">
         <BsSearch className="text-gray-500" />
         <input
@@ -132,7 +161,8 @@ const SearchBar = () => {
           placeholder={`Search for Mobiles, Laptops etc.. `}
           onChange={(e) => {
             setSearch(e.target.value);
-            handleSearch();
+            // handleSearch();
+            debounceFunc(handleSearch(e), 1000);
           }}
         />
       </div>

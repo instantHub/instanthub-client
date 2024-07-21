@@ -438,7 +438,7 @@ const ProductFinalPrice = () => {
                 <div className="flex items-center gap-2">
                   <span>
                     <img
-                      src="/apply_coupon.webp"
+                      src="/images/apply_coupon.webp"
                       alt="applycoupon"
                       className="size-5"
                     />
@@ -798,7 +798,7 @@ const ProductFinalPrice = () => {
                       </span>
                       <div className="mx-2">
                         <img
-                          src="/instantcash.webp"
+                          src="/images/instantcash.webp"
                           alt="upi"
                           className="w-16 h-7"
                         />
@@ -818,7 +818,11 @@ const ProductFinalPrice = () => {
                         Digital Payments
                       </span>
                       <div className="mx-2">
-                        <img src="/upi2.webp" alt="upi" className="w-14 h-7" />
+                        <img
+                          src="/images/upi2.webp"
+                          alt="upi"
+                          className="w-14 h-7"
+                        />
                       </div>
                     </label>
 

@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 // Client side
-import ClientLayout from "./components/Layout";
+import ClientLayout from "./pages/home/Layout";
 import ClientHome from "./pages/home/Home";
 import ClientNavbar from "./components/Navbar";
 import ClientBrands from "./pages/brands/Brands";
@@ -16,7 +16,6 @@ import ClientProductDetail from "./pages/products/ProductDetail";
 import ClientProductDeductions from "./pages/products/ProductQuestions";
 import ClientOtpGenerator from "./pages/otp/OTPGenerator";
 import ClientProductFinalPrice from "./pages/products/ProductFinalPrice";
-import ClientPrivacyPolicy from "./components/PrivacyPolicy";
 import ClientServices from "./pages/services/Services";
 import ClientSubServices from "./pages/services/ServiceSubCategory";
 import ClientServiceSubProducts from "./pages/services/ServiceSubProducts";
@@ -27,6 +26,12 @@ import ClientRecycleCategories from "./pages/recycle/RecycleCategories";
 import ClientRecycleBrands from "./pages/recycle/RecycleBrands";
 import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
 import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
+
+// POLICIES
+import ClientTermsAndPolicies from "./components/policies/TermsAndPolicies";
+import ClientPrivacyPolicy from "./components/policies/PrivacyPolicy";
+import ClientTermsAndConditions from "./components/policies/TermsAndConditions";
+import ClientTermsOfUse from "./components/policies/TermsOfUse";
 // import emailcheck from './components/'
 
 // Admin side
@@ -95,8 +100,19 @@ function App() {
           element: <ContactUs />,
         },
         {
-          path: "/privacy-policy",
-          element: <ClientPrivacyPolicy />,
+          path: "/privacy-policies",
+          element: <ClientTermsAndPolicies />,
+          // element: <ClientPrivacyPolicy />,
+        },
+        {
+          path: "/terms-conditions",
+          element: <ClientTermsAndPolicies />,
+          // element: <ClientTermsAndConditions />,
+        },
+        {
+          path: "/terms-of-use",
+          element: <ClientTermsAndPolicies />,
+          // element: <ClientTermsOfUse />,
         },
         {
           index: true,

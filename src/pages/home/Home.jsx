@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet-async";
 import FloatingButtons from "../../components/FloatingButtons";
 import FAQ from "../../components/FAQ";
 import Services from "../services/Services";
+import AllBrandsList from "../brands/AllBrandsList";
+import ServicesHome from "../services/ServicesHome";
 
 const Home = () => {
   const images = [
@@ -40,7 +42,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        {/* <title>{`Sell Old Gadgets Online | InstantCashPick`}</title> */}
+        <title>{`Sell Old Gadgets Online | InstantCashPick`}</title>
 
         <meta
           name="description"
@@ -56,8 +58,13 @@ const Home = () => {
       {/* <Slider images={images} /> */}
       <Slider />
       <Categories />
-      {/* <Testimonials /> */}
-      <Services />
+      {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
+        <AllBrandsList />
+      </div> */}
+      <div className="mt-10 pt-5 pb-16 bg-cyan-50">
+        {/* <Services /> */}
+        <ServicesHome />
+      </div>
       <HowItWorks />
       <TestimonialCarousel />
       <WhyChooseInstantCashPicks />
