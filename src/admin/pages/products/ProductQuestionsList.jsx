@@ -209,7 +209,7 @@ const ProductQuestionsList = () => {
   return (
     <div className="">
       <div className="inline-block m-4 px-4 py-1 bg-blue-600 text-white rounded">
-        <Link to={"/admin/productsList"}>
+        <Link to={"/admin/products-list"}>
           <button>Back</button>
         </Link>
       </div>

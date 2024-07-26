@@ -275,7 +275,7 @@ const LaptopsQuestions = (props) => {
                             .toLowerCase()
                             .includes("age") && (
                             <div className="text-center mb-5">
-                              <p className="text-lg font-semibold max-2sm:text-sm">
+                              <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
                                 Let us know how old your device is. Valid bill
                                 is needed for device less than 3 years.
                               </p>
@@ -285,10 +285,50 @@ const LaptopsQuestions = (props) => {
                             .toLowerCase()
                             .includes("screen condition") && (
                             <div className="text-center mb-5">
-                              <p className="text-lg font-semibold max-2sm:text-sm px-2">
+                              <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
                                 The better condition your device is in, we will
                                 pay you more.
                               </p>
+                            </div>
+                          )}
+                          {condition.conditionName
+                            .toLowerCase()
+                            .includes("graphic") && (
+                            <div className="text-center mb-5">
+                              <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                                Check your device's external graphics cards
+                              </p>
+                            </div>
+                          )}
+                          {condition.conditionName
+                            .toLowerCase()
+                            .includes("screen size") && (
+                            <div className="text-center mb-5">
+                              <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                                Check your device's screen size
+                              </p>
+                            </div>
+                          )}
+                          {condition.conditionName
+                            .toLowerCase()
+                            .includes("functional") && (
+                            <div className="text-center mb-5">
+                              <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                                Please choose appropriate condition to get
+                                accurate quote
+                              </p>
+                            </div>
+                          )}
+                          {condition.conditionName
+                            .toLowerCase()
+                            .includes("accessories") && (
+                            <div className="flex flex-col justify-start items-start">
+                              <p className="text-lg max-sm:[16px]">
+                                Do you have the following?
+                              </p>
+                              <span className="text-sm font-medium text-gray-600">
+                                please select accessories which are available
+                              </span>
                             </div>
                           )}
                         </div>

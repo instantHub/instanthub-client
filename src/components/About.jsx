@@ -11,7 +11,7 @@ const AboutPage = () => {
           name="keywords"
           content="About, About Instant Cash Pick, Instant Cash, Instant Pick, About InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
-        <meta name="author" content="Your Name" />
+        <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://instantcashpick.com/about" />
       </Helmet>
       <div className="min-h-screen p-8">
@@ -45,6 +45,7 @@ const AboutPage = () => {
             </p>
           </div>
 
+          {/* VALUES */}
           <div className="mb-8">
             <h2 className="text-3xl font-bold mb-4 text-gray-800">Values</h2>
             <ul className="grid grid-cols-4 gap-4 max-sm:grid-cols-2 max-md:grid-cols-2">
@@ -102,17 +103,17 @@ const AboutPage = () => {
           <div>
             <h2 className="text-3xl font-bold mb-4 text-gray-800">History</h2>
             <p className="text-lg text-gray-700">
-              InstantCashPicks was founded in [Year] by a team of tech
+              InstantCashPicks was founded in [2024] by a team of tech
               enthusiasts with a passion for simplifying the process of selling
               electronic items. Frustrated by the traditional methods of selling
               gadgets, they set out to create a better solution that would offer
               speed, convenience, and transparency. Since then, InstantCashPicks
               has grown into a leading platform for instant electronic item
-              purchases, serving customers across [Location/Country]. With a
-              commitment to innovation and customer satisfaction, we continue to
-              redefine the way people sell their gadgets, one transaction at a
-              time. Join us on our journey and experience the future of
-              electronic item selling with InstantCashPicks!
+              purchases, serving customers across India. With a commitment to
+              innovation and customer satisfaction, we continue to redefine the
+              way people sell their gadgets, one transaction at a time. Join us
+              on our journey and experience the future of electronic item
+              selling with InstantCashPicks!
             </p>
           </div>
         </div>

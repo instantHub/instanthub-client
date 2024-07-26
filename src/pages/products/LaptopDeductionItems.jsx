@@ -25,13 +25,13 @@ const LaptopDeductionItems = ({
 
   // Determine if the image should be shown based on the condition name
   const shouldShowImage = !(
-    (
-      conditionName.toLowerCase().includes("screen size") ||
-      conditionName.toLowerCase().includes("graphic") ||
-      conditionName.toLowerCase().includes("screen condition")
-    )
-    // || conditionName.toLowerCase().includes("screen")
+    conditionName.toLowerCase().includes("screen size") ||
+    conditionName.toLowerCase().includes("graphic") ||
+    conditionName.toLowerCase().includes("screen condition")
   );
+  // || conditionName.toLowerCase().includes("screen")
+
+  const functionalProblems = conditionName.toLowerCase().includes("functional");
 
   // console.log("shouldHideImage", shouldShowImage);
 
@@ -62,7 +62,11 @@ const LaptopDeductionItems = ({
                     (condLabel) =>
                       condLabel.conditionLabel == label.conditionLabel
                   )
-                    ? " border-cyan-500 "
+                    ? ` ${
+                        functionalProblems
+                          ? "border-red-500"
+                          : "border-cyan-500"
+                      }`
                     : ""
                 }`
               : `flex px-2 bg-slate-100  ${
@@ -167,6 +171,8 @@ const LaptopDeductionItems = ({
                 : "flex text-sm items-center gap-1 py-4 bg-slate-100"
               // : "flex text-sm items-center gap-1 py-4 bg-white"
             }
+
+            ${functionalProblems && "bg-red-500"}
             `}
           >
             {!shouldShowImage ? (

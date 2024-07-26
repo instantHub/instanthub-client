@@ -9,7 +9,7 @@ const ProdDeductionsRight = () => {
 
   return (
     // <div>
-    <div className="w-[25%] border rounded max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">
+    <div className="w-[25%] border rounded sm:h-[450px] max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">
       <>
         <div className="flex items-center justify-center gap-3 p-2">
           <div>
@@ -147,6 +147,20 @@ const ProdDeductionsRight = () => {
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productScreenCondition.conditionLabel}
+                    </li>
+                  </>
+                )}
+
+                {/* Products Display & Defect Condition display when selected */}
+                {productsData.productDisplayDefect && (
+                  <>
+                    {productsData.productDisplayDefect.conditionLabel ? (
+                      <h1 className="mt-2 mb-1 font-bold">
+                        {productsData.productCategory} Display & Defect
+                      </h1>
+                    ) : null}
+                    <li className="py-1 pl-2 text-md">
+                      {productsData.productDisplayDefect.conditionLabel}
                     </li>
                   </>
                 )}

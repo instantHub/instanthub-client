@@ -8,6 +8,7 @@ const initialState = {
   productScreenCondition: {},
   productPhysicalCondition: {},
   productPanelCondition: {},
+  productDisplayDefect: {},
   getUpTo: {
     variantName: "",
     price: undefined,
@@ -111,6 +112,17 @@ export const deductionSlice = createSlice({
         },
       };
     },
+    addProductDisplayDefect: (state, action) => {
+      console.log("addProductDisplayDefect Slice");
+      return {
+        ...state,
+        productDisplayDefect: {
+          conditionLabel: action.payload.conditionLabel,
+          priceDrop: action.payload.priceDrop,
+          operation: action.payload.operation,
+        },
+      };
+    },
     removeDeductions: (state, action) => {
       // console.log("removeDeductions reducer", action.payload);
 
@@ -161,6 +173,7 @@ export const deductionSlice = createSlice({
         productAge: {},
         productScreenCondition: {},
         productPhysicalCondition: {},
+        productDisplayDefect: {},
         deductions: [],
       };
     },
@@ -173,6 +186,7 @@ export const {
   addProductAge,
   addProductScreenCondition,
   addProductPhysicalCondition,
+  addProductDisplayDefect,
   clearDeductions,
   removeDeductions,
 } = deductionSlice.actions;

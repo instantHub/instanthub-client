@@ -11,7 +11,7 @@ const ContactUs = () => {
           name="keywords"
           content="Contact Us, Contact Us Instant Cash Pick, Instant Cash, Instant Pick,Contact Us InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
-        <meta name="author" content="Your Name" />
+        <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://instantcashpick.com/contact-us" />
       </Helmet>
       <div className="flex justify-center items-center mt-[5%]">

@@ -87,6 +87,7 @@ const OtpGenerator = (props) => {
         dispatch(addDeductions(data.productScreenCondition));
         dispatch(addDeductions(data.productPhysicalCondition));
         dispatch(addDeductions(data.productPanelCondition));
+        dispatch(addDeductions(data.productDisplayDefect));
       }
 
       // Until OTP is applied
@@ -156,17 +157,19 @@ const OtpGenerator = (props) => {
                 className="size-20 rounded-xl"
               />{" "}
             </div>
-            <div className="flex flex-col gap-1">
-              <div className="text-xl flex gap-2 max-sm:flex-col ">
+            <div className="flex flex-col gap-1 max-sm:px-2">
+              <div className="text-xl flex gap-2 max-sm:flex-col max-sm:text-sm">
                 <h1>{selectedProdDetails.productName}</h1>
                 {selectedProdDetails.productCategory === "Mobile" ? (
                   <span>{selectedProdDetails.getUpTo.variantName}</span>
                 ) : null}
               </div>
               <div>
-                <h1 className="text-gray-500 text-sm">Selling Price</h1>
+                <h1 className="text-gray-500 text-sm max-sm:text-xs">
+                  Selling Price
+                </h1>
               </div>
-              <div className="flex items-center text-2xl text-red-500 max-sm:text-xl">
+              <div className="flex items-center text-2xl text-red-500 max-sm:text-sm">
                 <FaIndianRupeeSign />
                 <h1 className="">XX,XXX</h1>
               </div>
@@ -174,17 +177,17 @@ const OtpGenerator = (props) => {
           </div>
         </div>
         {/* fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 */}
-        <div className="w-fit flex flex-col inset-0 bg-black bg-opacity-50 px-4 max-sm:w-[90%] pointer-events-none py-4 rounded-lg">
+        <div className="relative w-fit flex flex-col inset-0 bg-black bg-opacity-50 px-4 max-sm:w-[90%] pointer-events-none py-4 rounded-lg">
           {/* <div className="absolute inset-0 flex flex-col items-center justify-center">
             <h1 className="text-whie text-xl z-10">Coming Soon</h1>
           </div> */}
           {!otp ? (
             <>
               <div className="absolute flex flex-col items-center mt-8 max-2sm:mt-12">
-                <h1 className="text-white ml-20 text-2xl z-10 font-extrabold max-2sm:ml-10">
+                <h1 className="text-white ml-20 text-2xl z-10 font-extrabold max-2sm:ml-6">
                   OTP Verification
                 </h1>
-                <h1 className="text-white ml-20 text-xl z-10 font-bold max-2sm:ml-10">
+                <h1 className="text-white ml-20 text-xl z-10 font-bold max-2sm:ml-6">
                   Coming Soon
                 </h1>
               </div>

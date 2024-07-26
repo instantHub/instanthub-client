@@ -459,7 +459,8 @@ export const api = createApi({
     }),
     getAllServices: build.query({
       query: ({ page, limit, search }) => ({
-        url: `/api/search-services`,
+        // url: `/api/search-services`,
+        url: `/api/search`,
         method: "GET",
         params: { page, limit, search },
       }),
@@ -471,7 +472,8 @@ export const api = createApi({
     }),
     createServices: build.mutation({
       query: (data) => ({
-        url: `/api/services/add-service`,
+        // url: `/api/services/add-service`,
+        url: `/api/services`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -489,7 +491,8 @@ export const api = createApi({
     }),
     updateService: build.mutation({
       query: ({ serviceId, data }) => ({
-        url: `/api/services/update-service/${serviceId}`,
+        // url: `/api/services/update-service/${serviceId}`,
+        url: `/api/services/${serviceId}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -500,7 +503,8 @@ export const api = createApi({
     }),
     deleteService: build.mutation({
       query: ({ serviceId, serviceType, serviceFrom }) => ({
-        url: `/api/services/delete-service?serviceId=${serviceId}&serviceType=${serviceType}&serviceFrom=${serviceFrom}`,
+        // url: `/api/services/delete-service?serviceId=${serviceId}&serviceType=${serviceType}&serviceFrom=${serviceFrom}`,
+        url: `/api/services?serviceId=${serviceId}&serviceType=${serviceType}&serviceFrom=${serviceFrom}`,
         method: "DELETE",
         // body: data,
       }),

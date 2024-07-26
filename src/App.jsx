@@ -28,7 +28,7 @@ import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
 import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
 
 // POLICIES
-import ClientTermsAndPolicies from "./components/policies/TermsAndPolicies";
+import ClientTermsAndPolicies from "./components/policies/AllTermsAndPolicies";
 import ClientPrivacyPolicy from "./components/policies/PrivacyPolicy";
 import ClientTermsAndConditions from "./components/policies/TermsAndConditions";
 import ClientTermsOfUse from "./components/policies/TermsOfUse";

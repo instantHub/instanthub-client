@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addProductScreenCondition,
   addProductPhysicalCondition,
+  addProductDisplayDefect,
 } from "../../features/deductionSlice";
 
 import { BsCircle } from "react-icons/bs";
@@ -14,6 +15,7 @@ const DeductionItems = ({
   setPhysicalCondition,
   handleContinue,
   setScreenCondition,
+  setDisplayDefectCondition,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
   const deductionSliceData = useSelector((state) => state.deductions);
@@ -28,6 +30,9 @@ const DeductionItems = ({
     conditionName.toLowerCase().includes("physical condition") ||
     conditionName.toLowerCase().includes("screen condition")
   );
+  // || conditionName.toLowerCase().includes("defects")
+
+  const functionalProblems = conditionName.toLowerCase().includes("functional");
 
   // console.log("shouldHideImage", shouldShowImage);
 
@@ -59,10 +64,15 @@ const DeductionItems = ({
                 deductionData.some(
                   (condLabel) =>
                     condLabel.conditionLabel == label.conditionLabel
-                )
-                  ? " border-cyan-500"
+                ) ||
+                deductionSliceData.productDisplayDefect.conditionLabel ===
+                  label.conditionLabel
+                  ? ` ${
+                      functionalProblems ? "border-red-500" : "border-cyan-500"
+                    }`
                   : ""
-              }`
+              }
+                  `
               : `flex px-2 ${
                   deductionSliceData.productPhysicalCondition.conditionLabel ===
                     label.conditionLabel ||
@@ -70,21 +80,39 @@ const DeductionItems = ({
                     label.conditionLabel
                     ? "border-cyan-500 "
                     : "bg-gray-100"
-                }`
+                }
+                    
+                `
           } 
+          
            border rounded items-center`}
           // } flex flex-col border rounded items-center`}
           onClick={() => {
             if (shouldShowImage) {
-              handleLabelSelection(
-                label.conditionLabel,
-                label.priceDrop,
-                label.operation
-              );
+              if (!conditionName.toLowerCase().includes("defects")) {
+                handleLabelSelection(
+                  label.conditionLabel,
+                  label.priceDrop,
+                  label.operation
+                );
+              }
             }
 
-            if (conditionName.includes("Screen Size")) {
-              // console.log("Screen Size");
+            if (conditionName.toLowerCase().includes("defects")) {
+              console.log("display defects");
+              dispatch(
+                addProductDisplayDefect({
+                  conditionLabel: label.conditionLabel,
+                  priceDrop: label.priceDrop,
+                  operation: label.operation,
+                })
+              );
+
+              setDisplayDefectCondition({
+                conditionLabel: label.conditionLabel,
+                priceDrop: label.priceDrop,
+                operation: label.operation,
+              });
             } else if (
               conditionName.toLowerCase().includes("physical condition")
             ) {
@@ -137,7 +165,9 @@ const DeductionItems = ({
             className={`${
               deductionData.some(
                 (condLabel) => condLabel.conditionLabel == label.conditionLabel
-              )
+              ) ||
+              deductionSliceData.productDisplayDefect.conditionLabel ===
+                label.conditionLabel
                 ? `bg-cyan-500 ${
                     shouldShowImage ? "text-white" : "text-black"
                   } `
@@ -155,6 +185,8 @@ const DeductionItems = ({
                 : "flex justify-between text-sm h-[90px] items-center gap-1 py-4"
               // "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white"
             }
+
+            ${functionalProblems && "bg-red-500"}
             `}
           >
             {!shouldShowImage ? (

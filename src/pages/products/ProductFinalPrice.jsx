@@ -302,7 +302,11 @@ const ProductFinalPrice = () => {
       });
     }
 
-    setOfferPrice(Math.ceil(deductedPrice));
+    if (deductedPrice > 0) {
+      setOfferPrice(Math.ceil(deductedPrice));
+    } else {
+      setOfferPrice(0);
+    }
   }, [selectedProdDetails, productDetails]);
 
   // console.log("formData", formData);
@@ -420,12 +424,31 @@ const ProductFinalPrice = () => {
                 )}
               </div>
               <div className="w-full flex justify-center">
-                <button
-                  onClick={openModal}
-                  className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
-                >
-                  Sell
-                </button>
+                {offerPrice > 500 ? (
+                  <button
+                    onClick={openModal}
+                    className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
+                  >
+                    Sell
+                  </button>
+                ) : (
+                  <div className="flex flex-col justify-center items-center gap-2">
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/recycle-categories/recycle-brands/recycle-productDetails/${productId}`
+                        )
+                      }
+                      className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded max-sm:text-sm"
+                    >
+                      Recycle this product
+                    </button>
+                    <p className="text-sm text-center text-gray-500 max-sm:text-xs">
+                      Since your product value is very low you can recycle this
+                      product with us.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 

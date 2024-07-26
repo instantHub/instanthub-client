@@ -34,17 +34,18 @@ const TermsAndPolicies = () => {
   });
 
   const activeSideBar =
-    "text-green-600 font-extrabold text-[22px] max-md:text-2xl max-2sm:text-xl";
-  const nonActiveSideBar = "text-xl max-md:text-xl max-2sm:text-lg";
+    "text-green-600 font-extrabold text-[22px] max-md:text-2xl max-2sm:text-xl border-b border-dashed pb-2";
+  const nonActiveSideBar = "text-xl max-md:text-xl max-2sm:text-lg border-b border-dashed pb-2 text-gray-600 font-semibold";
 
   return (
     <div className="mx-10 flex items-center justify-center bg-white max-md:mx-5">
       <div className="flex justify-center max-md:flex-col max-md:items-center max-md:gap-5">
         <div className="px-5">
-          <div className="mt-[200px] h-[300px] w-[200px] max-md:w-[300px] max-2sm:w-[250px] flex flex-col gap-6 px-4 py-10 border rounded-lg shadow-2xl text-2xl max-md:mt-5 max-md:h-fit max-sm:items-center">
+          {/* <div className="mt-[200px] h-[300px] w-[200px] max-md:w-[300px] max-2sm:w-[250px] flex flex-col gap-6 px-4 py-10 border-r rounded-lg shadow-2xl text-2xl max-md:mt-5 max-md:h-fit max-sm:items-center"> */}
+          <div className="mt-[30px] h-[300px] w-[300px] max-md:w-[300px] max-2sm:w-[250px] flex flex-col gap-6 px-4 py-10 border-r shadow-inner text-2xl max-md:mt-5 max-md:h-fit max-sm:items-center">
             <div
               onClick={() => navigate("/privacy-policies")}
-              className={`${privacyPolicy ? activeSideBar : nonActiveSideBar}`}
+              className={`${privacyPolicy ? activeSideBar : nonActiveSideBar} mt-10 max-sm:mt-0`}
             >
               Privacy Policy
             </div>
@@ -60,7 +61,7 @@ const TermsAndPolicies = () => {
               onClick={() => navigate("/terms-of-use")}
               className={`${termsOfUse ? activeSideBar : nonActiveSideBar}`}
             >
-              Terms Of use
+              Terms Of Use
             </div>
           </div>
         </div>

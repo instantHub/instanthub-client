@@ -43,6 +43,9 @@ const ProductDeductions = () => {
   const [physicalConditionPage, setPhysicalConditionPage] = useState();
   const [screenCondition, setScreenCondition] = useState();
   const [screenConditionPage, setScreenConditionPage] = useState();
+  const [displayDefectCondition, setDisplayDefectCondition] = useState();
+  const [displayDefectConditionPage, setDisplayDefectConditionPage] =
+    useState();
 
   // console.log(
   //   "physicalConditionPage",
@@ -111,6 +114,14 @@ const ProductDeductions = () => {
       return;
     }
 
+    if (
+      currentPageIndex === displayDefectConditionPage - 1 &&
+      displayDefectCondition === undefined
+    ) {
+      toast.error("Select Display Defects to proceed.!");
+      return;
+    }
+
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
     } else {
@@ -168,7 +179,7 @@ const ProductDeductions = () => {
     };
   }, [dispatch]); // include dispatch in the dependency array to ensure that it has access to the latest dispatch function.
 
-  // useEffect to set deductions and priceUpTo value from productsData
+  // useEffect to set deductions and priceUpTo value from productsData and set conditions PAGE numbers
   useEffect(() => {
     if (productsData) {
       const variant = productsData.variants.filter(
@@ -189,6 +200,8 @@ const ProductDeductions = () => {
             d.conditionName.toLowerCase().includes("screen condition")
           ) {
             setScreenConditionPage(d.page);
+          } else if (d.conditionName.toLowerCase().includes("defect")) {
+            setDisplayDefectConditionPage(d.page);
           }
         });
       } else if (productsData.category.name !== "Mobile") {
@@ -257,6 +270,9 @@ const ProductDeductions = () => {
     sortedConditions = groupConditionsByPage(deductions);
   }
 
+  const conditionNameSubHeading =
+    "text-lg font-medium text-gray-600 max-2sm:text-sm";
+
   // console.log("deductions", deductions);
   // console.log("sortedConditions", sortedConditions);
 
@@ -282,8 +298,8 @@ const ProductDeductions = () => {
       </Helmet>
       <div className=" mt-4 ">
         {/* {showOTP ? ( */}
-        <div className="flex gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
-          <div className="w-[55%] flex flex-col border py-6 rounded my-auto max-sm:w-[95%] ">
+        <div className="flex  gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
+          <div className="w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] ">
             {!checkIsOff && (
               <div className="mx-auto pb-0 font-semibold">
                 <h1 className="">Tell Us More About Your Device</h1>
@@ -325,17 +341,27 @@ const ProductDeductions = () => {
             {checkIsOff && (
               <div className="my-10 text-center">
                 <div className="flex flex-col items-center">
-                  <h1 className="my-3">
+                  <h2 className="my-3">
                     Your {productsData.category.name}
                     <span className="font-semibold"> {productsData.name} </span>
                     is{" "}
                     <span className="text-red-500 font-semibold">
                       Switched Off.
                     </span>
-                  </h1>
+                  </h2>
                   <span className="text-lg px-4 text-[#E27D60]">
                     Please Contact Customer Support 8722288017
                   </span>
+                  <button
+                    onClick={() =>
+                      navigate(
+                        `/recycle-categories/recycle-brands/recycle-productDetails/${productId}`
+                      )
+                    }
+                    className="bg-green-600 px-2 py-1 mt-4 rounded text-white"
+                  >
+                    Recycle this product
+                  </button>
                 </div>
               </div>
             )}
@@ -364,6 +390,70 @@ const ProductDeductions = () => {
                       >
                         <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
                           <h1>{condition.conditionName}</h1>
+                          <div>
+                            {condition.conditionName
+                              .toLowerCase()
+                              .includes("functional") && (
+                              <div className="text-center mb-5">
+                                <p className={conditionNameSubHeading}>
+                                  Please choose appropriate condition to get
+                                  accurate quote
+                                </p>
+                              </div>
+                            )}
+                            {condition.conditionName
+                              .toLowerCase()
+                              .includes("accessories") ? (
+                              <div className="flex flex-col justify-start items-start">
+                                <p className="text-lg max-sm:[16px]">
+                                  Do you have the following?
+                                </p>
+                                <span className="text-sm font-medium text-gray-600">
+                                  please select accessories which are available
+                                </span>
+                              </div>
+                            ) : null}
+
+                            {condition.conditionName
+                              .toLowerCase()
+                              .includes("age") && (
+                              <div className="text-center mb-5">
+                                <p className={conditionNameSubHeading}>
+                                  Let us know how old your device is. Valid bill
+                                  is needed for device less than 3 years.
+                                </p>
+                              </div>
+                            )}
+
+                            {condition.conditionName
+                              .toLowerCase()
+                              .includes("screen condition") && (
+                              <div className="text-center mb-5">
+                                <p className={conditionNameSubHeading}>
+                                  The better condition your device is in, we
+                                  will pay you more.
+                                </p>
+                              </div>
+                            )}
+                            {condition.conditionName
+                              .toLowerCase()
+                              .includes("defect") && (
+                              <div className="text-center mb-5">
+                                <p className={conditionNameSubHeading}>
+                                  Please provide correct details
+                                </p>
+                              </div>
+                            )}
+                            {condition.conditionName
+                              .toLowerCase()
+                              .includes("physical condition") && (
+                              <div className="text-center mb-5">
+                                <p className={conditionNameSubHeading}>
+                                  Please provide correct details
+                                </p>
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <DeductionItems
@@ -371,6 +461,7 @@ const ProductDeductions = () => {
                           conditionLabels={condition.conditionLabels}
                           setPhysicalCondition={setPhysicalCondition}
                           setScreenCondition={setScreenCondition}
+                          setDisplayDefectCondition={setDisplayDefectCondition}
                           handleLabelSelection={handleLabelSelection}
                         />
 
