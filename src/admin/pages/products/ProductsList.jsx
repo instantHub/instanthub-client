@@ -234,15 +234,15 @@ const ProductsList = () => {
                         </div>
                       ) : (
                         <div>
-                          {/* {deductionSelected[product.id] && ( */}
                           <Link
-                          // to={`/admin/products/product-questions/${product.id}?variant=${product.deductions[0].variantName}`}
+                            to={`/admin/products/product-questions/${
+                              product.id
+                            }?variant=${deductionSelected[product.id]}`}
                           >
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                               validate
                             </button>
                           </Link>
-                          {/* )} */}
                         </div>
                       )}
                     </td>

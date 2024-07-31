@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  useGetProductDetailsQuery,
-  useGenerateOTPMutation,
-} from "../../features/api";
+import { useGetProductDetailsQuery } from "../../features/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -32,8 +29,8 @@ const ProductDeductions = () => {
   const [priceGetUpTo, setPriceGetUpTo] = useState();
   const [deductions, setDeductions] = useState();
   const [selectedLabels, setSelectedLabels] = useState([]);
-  const [currentConditionIndex, setCurrentConditionIndex] = useState(0);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  // const [currentConditionIndex, setCurrentConditionIndex] = useState(0);
 
   const [checkIsOn, setCheckIsOn] = useState(false);
   const [checkIsOff, setCheckIsOff] = useState(false);
@@ -114,13 +111,13 @@ const ProductDeductions = () => {
       return;
     }
 
-    if (
-      currentPageIndex === displayDefectConditionPage - 1 &&
-      displayDefectCondition === undefined
-    ) {
-      toast.error("Select Display Defects to proceed.!");
-      return;
-    }
+    // if (
+    //   currentPageIndex === displayDefectConditionPage - 1 &&
+    //   displayDefectCondition === undefined
+    // ) {
+    //   toast.error("Select Display Defects to proceed.!");
+    //   return;
+    // }
 
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
@@ -266,7 +263,8 @@ const ProductDeductions = () => {
   // Usage
   // const sortedConditions = groupConditionsByPage(deductions);
   let sortedConditions;
-  if (deductions && productsData.category.name === "Mobile") {
+  // if (deductions && productsData.category.name === "Mobile") {
+  if (deductions) {
     sortedConditions = groupConditionsByPage(deductions);
   }
 
@@ -464,13 +462,6 @@ const ProductDeductions = () => {
                           setDisplayDefectCondition={setDisplayDefectCondition}
                           handleLabelSelection={handleLabelSelection}
                         />
-
-                        {/* <button
-                        onClick={handleContinue}
-                        className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-                      >
-                        Continue
-                      </button> */}
                       </div>
                     ) : (
                       <>

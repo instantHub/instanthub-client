@@ -59,6 +59,7 @@ import AdminUpdateCondition from "./admin/pages/questions/UpdateCondition";
 import AdminUpdateConditionLabel from "./admin/pages/questions/UpdateConditionLabel";
 import AdminProductsList from "./admin/pages/products/ProductsList";
 import AdminProductQuestions from "./admin/pages/products/ProductQuestionsList";
+import AdminLaptopConfiguration from "./admin/pages/products/UpdateLaptopConfigurations";
 import AdminConditionsList from "./admin/pages/questions/ConditionsList";
 import AdminConditionLabelsList from "./admin/pages/questions/ConditionLabelsList";
 import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
@@ -311,6 +312,10 @@ function App() {
             {
               path: "/admin/products/product-questions/:productId",
               element: <AdminProductQuestions />,
+            },
+            {
+              path: "/admin/products/laptop-configurations/:productId",
+              element: <AdminLaptopConfiguration />,
             },
             {
               path: "/admin/categories",

@@ -198,6 +198,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+    updateLaptopConfigurationsPriceDrop: build.mutation({
+      query: ({ productId, data }) => ({
+        url: `/api/products/updateLaptopConfigurationsPriceDrop/${productId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
     deleteProduct: build.mutation({
       query: (productId) => ({
         url: `/api/products/delete-product/${productId}`,
@@ -609,6 +617,7 @@ export const {
   useGetProductDetailsQuery,
   useGetProductQuestionsQuery,
   useUpdatePriceDropMutation,
+  useUpdateLaptopConfigurationsPriceDropMutation,
   useDeleteProductMutation,
   useGetConditionsQuery,
   useCreateConditionsMutation,

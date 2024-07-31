@@ -13,9 +13,8 @@ const ProductQuestionsList = () => {
   // Query Params
   const [searchParams] = useSearchParams();
   const selectedVariant = searchParams.get("variant");
-  console.log("selectedVariant", selectedVariant);
-  // const { data: productDetail, isLoading: productsLoading } =
-  //   useGetAllProductsQuery({ page: 1, limit: 10, search: "" });
+  // console.log("selectedVariant", selectedVariant);
+
   const [selectedDeductions, setSelectedDeductions] = useState();
   const [operation, setOperation] = useState();
 
@@ -29,7 +28,7 @@ const ProductQuestionsList = () => {
   //  UseEffect to set the Deductions what is selected
   useEffect(() => {
     if (productDetail) {
-      console.log("productDetail", productDetail);
+      // console.log("productDetail", productDetail);
 
       // Set the matched product to the component state
       setProductData(productDetail);
@@ -42,22 +41,17 @@ const ProductQuestionsList = () => {
       } else if (productDetail.category.name !== "Mobile") {
         setSelectedDeductions(productDetail.simpleDeductions);
       }
-
-      console.log("useEffect");
     }
   }, [productDetail]);
 
-  console.log("selectedDeductions", selectedDeductions);
-  if (productData) {
-    // console.log("productData", productData);
-  }
+  // console.log("selectedDeductions", selectedDeductions);
 
   // Handle input changes and update productData state
   // New Approach
   const handlePriceDropChange = (conditionLabelId, value, check) => {
     // Find the index of the variant in the deductions array
-    console.log("Variant Deductions");
-    console.log(productData);
+    // console.log("Variant Deductions");
+    // console.log(productData);
 
     const variantIndex = productData.variantDeductions.findIndex(
       (variant) => variant.variantName == selectedVariant
@@ -139,7 +133,7 @@ const ProductQuestionsList = () => {
   // New Approach
   const handlePriceDropChange2 = (conditionLabelId, value, check) => {
     // Find the condition label by conditionLabelId and update the priceDrop
-    console.log("Simple Deductions", check);
+    // console.log("Simple Deductions", check);
     let updatedProductData;
     if (check === "priceDrop") {
       // const updatedProductData = {
@@ -162,7 +156,7 @@ const ProductQuestionsList = () => {
 
       // console.log("updatedProductData", updatedProductData);
     } else if (check === "operation") {
-      console.log("OPERATION", value);
+      // console.log("OPERATION", value);
 
       updatedProductData = {
         ...productData,
@@ -188,9 +182,6 @@ const ProductQuestionsList = () => {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log("handleSubmit", productData);
-
     try {
       await updatePriceDrop({
         productId: productId,
@@ -214,13 +205,21 @@ const ProductQuestionsList = () => {
         </Link>
       </div>
 
-      <div className="w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
+      <div className="relative w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
         <div className="m-2 ">
           <h1 className="text-sm mb-1 sticky">
             {productData ? productData.name : "Loading.."} {selectedVariant}
           </h1>
           <hr />
         </div>
+
+        {productData && productData.category.name === "Laptop" ? (
+          <div className="px-2 py-1 my-1 w-fit absolute right-0 text-end flex justify-end items-end bg-green-600 text-white rounded ">
+            <Link to={`/admin/products/laptop-configurations/${productId}`}>
+              <button>Update All Laptops Configurations</button>
+            </Link>
+          </div>
+        ) : null}
 
         <div className="bg-scroll">
           {productData && productData.category.name === "Mobile" ? (

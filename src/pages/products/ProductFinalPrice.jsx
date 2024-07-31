@@ -41,7 +41,7 @@ const ProductFinalPrice = () => {
   const maxTime = new Date();
   maxTime.setHours(22, 0, 0, 0);
 
-  // console.log("selectedProdDetails", selectedProdDetails);
+  console.log("selectedProdDetails", selectedProdDetails);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -193,7 +193,7 @@ const ProductFinalPrice = () => {
   useEffect(() => {
     let prodDeductions;
     if (!productLoading) {
-      // console.log("productDetails", productDetails);
+      console.log("productDetails", productDetails);
       if (productDetails.category.name === "Mobile") {
         prodDeductions = productDetails.variantDeductions.find(
           (vd) =>
@@ -302,10 +302,15 @@ const ProductFinalPrice = () => {
       });
     }
 
-    if (deductedPrice > 0) {
+    if (
+      deductedPrice > 500 &&
+      deductedPrice < selectedProdDetails.getUpTo.price
+    ) {
       setOfferPrice(Math.ceil(deductedPrice));
+    } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
+      setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
-      setOfferPrice(0);
+      setOfferPrice(500);
     }
   }, [selectedProdDetails, productDetails]);
 
@@ -423,7 +428,7 @@ const ProductFinalPrice = () => {
                   <span>₹{offerPrice}</span>
                 )}
               </div>
-              <div className="w-full flex justify-center">
+              {/* <div className="w-full flex justify-center">
                 {offerPrice > 500 ? (
                   <button
                     onClick={openModal}
@@ -449,6 +454,14 @@ const ProductFinalPrice = () => {
                     </p>
                   </div>
                 )}
+              </div> */}
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={openModal}
+                  className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
+                >
+                  Sell
+                </button>
               </div>
             </div>
 
