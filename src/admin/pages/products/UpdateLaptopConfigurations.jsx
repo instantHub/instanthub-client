@@ -134,18 +134,23 @@ const UpdateLaptopConfigurations = () => {
                         // condition.conditionName
                         //   .toLowerCase()
                         //   .includes("graphic")
-                        condition.conditionName !== 'Functions & Problems Of Your Device'
+                        condition.conditionName !==
+                        "Functions & Problems Of Your Device"
                     )
                     .map((condition, index) => (
                       <div
                         key={index}
-                        className=" border my-2 py-2 px-2 rounded"
+                        className={`mb-10 border my-2 py- px- rounded ${
+                          index % 2 === 0 ? `` : `bg-gray-100`
+                        }`}
                       >
                         <div>
-                          <h1>{condition.conditionName}</h1>
+                          <h1 className="text-2xl text-center py-2 bg-white">
+                            {condition.conditionName}
+                          </h1>
                         </div>
                         <hr />
-                        <div className="flex flex-col">
+                        <div className="flex flex-col px-4 py-2">
                           {productData.brand.name === "Apple" &&
                           condition.conditionName === "Processor"
                             ? condition.conditionLabels &&
@@ -162,7 +167,7 @@ const UpdateLaptopConfigurations = () => {
                                   >
                                     <div>
                                       <div>
-                                        <h1 className="text-sm">
+                                        <h1 className="text-xl">
                                           {conditionLabel.conditionLabel}
                                         </h1>
                                       </div>

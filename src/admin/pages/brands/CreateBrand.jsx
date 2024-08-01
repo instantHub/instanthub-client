@@ -30,7 +30,7 @@ const CreateBrand = () => {
 
     try {
       const res = await uploadBrandImage(formData).unwrap();
-      console.log("Brand res.image", res.image);
+      // console.log("Brand res.image", res.image);
 
       return res.image;
     } catch (error) {
@@ -42,13 +42,10 @@ const CreateBrand = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const validate = inputValidation();
-
-    // if (validate) {
     // Image upload handler call
     const imageURL = await uploadFileHandler();
 
-    console.log("handlesubmit ", categorySelected, brand, uniqueURL, imageURL);
+    // console.log("handlesubmit ", categorySelected, brand, uniqueURL, imageURL);
     const brandData = {
       category: categorySelected,
       name: brand,
@@ -57,22 +54,30 @@ const CreateBrand = () => {
     };
 
     try {
-      await createBrand(JSON.stringify(brandData)).unwrap();
-      toast("Brand created successfull..!");
+      // const brandCreated = await createBrand(
+      //   JSON.stringify(brandData)
+      // ).unwrap();
+
+      const brandCreated = createBrand(JSON.stringify(brandData));
+      brandCreated
+        .then((data) => {
+          console.log("brand promise", data);
+          toast.success("Brand created successfull..!");
+          // Clear the value of the file input
+          fileInputRef.current.value = "";
+          // Mark the file input as required again
+          fileInputRef.current.required = true;
+        })
+        .catch((err) => console.log("Error in promise creating brand", err));
+
+      console.log("brand created", brandCreated);
+
       // setBrand("");
       // setUniqueURL("");
       // setImageSelected("");
-      // Clear the value of the file input
-      fileInputRef.current.value = "";
-      // Mark the file input as required again
-      fileInputRef.current.required = true;
     } catch (error) {
-      console.log("Error: ", error);
+      console.log("Error in try block of creating brand: ", error);
     }
-    // } else {
-    //   console.log("All fields are required");
-    //   return;
-    // }
   };
 
   return (

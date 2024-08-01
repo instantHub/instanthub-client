@@ -199,10 +199,19 @@ const ProductQuestionsList = () => {
 
   return (
     <div className="">
-      <div className="inline-block m-4 px-4 py-1 bg-blue-600 text-white rounded">
-        <Link to={"/admin/products-list"}>
-          <button>Back</button>
-        </Link>
+      <div className="flex items-center justify-between mx-4">
+        <div className="inline-block m-4 px-4 py-1 bg-blue-600 text-white rounded">
+          <Link to={"/admin/products-list"}>
+            <button>Back</button>
+          </Link>
+        </div>
+        {productData && productData.category.name === "Laptop" ? (
+          <div className="px-2 py-1 my-1 w-fit  right-0 text-end flex justify-end items-end bg-green-600 text-white rounded ">
+            <Link to={`/admin/products/laptop-configurations/${productId}`}>
+              <button>Update All Laptops Configurations</button>
+            </Link>
+          </div>
+        ) : null}
       </div>
 
       <div className="relative w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
@@ -213,22 +222,21 @@ const ProductQuestionsList = () => {
           <hr />
         </div>
 
-        {productData && productData.category.name === "Laptop" ? (
-          <div className="px-2 py-1 my-1 w-fit absolute right-0 text-end flex justify-end items-end bg-green-600 text-white rounded ">
-            <Link to={`/admin/products/laptop-configurations/${productId}`}>
-              <button>Update All Laptops Configurations</button>
-            </Link>
-          </div>
-        ) : null}
-
         <div className="bg-scroll">
           {productData && productData.category.name === "Mobile" ? (
             <form onSubmit={handleSubmit}>
               {productData &&
                 selectedDeductions.deductions.map((condition, index) => (
-                  <div key={index} className=" border my-2 py-2 px-2 rounded">
+                  <div
+                    key={index}
+                    className={`mb-10 border my-2 py-2 px-2 rounded ${
+                      index % 2 === 0 ? `` : `bg-gray-100`
+                    }`}
+                  >
                     <div>
-                      <h1>{condition.conditionName}</h1>
+                      <h1 className="text-2xl text-center font-extrabold">
+                        {condition.conditionName}
+                      </h1>
                     </div>
                     <hr />
                     <div className="flex flex-col">
@@ -327,12 +335,19 @@ const ProductQuestionsList = () => {
               <form onSubmit={handleSubmit}>
                 {productData &&
                   selectedDeductions.map((condition, index) => (
-                    <div key={index} className=" border my-2 py-2 px-2 rounded">
+                    <div
+                      key={index}
+                      className={`mb-10 border my-2 py- px- rounded ${
+                        index % 2 === 0 ? `` : `bg-gray-100`
+                      }`}
+                    >
                       <div>
-                        <h1>{condition.conditionName}</h1>
+                        <h1 className="text-2xl py-2 text-center font-extrabold bg-white">
+                          {condition.conditionName}
+                        </h1>
                       </div>
                       <hr />
-                      <div className="flex flex-col">
+                      <div className="flex px-4 py-2 flex-col">
                         {productData.category.name === "Laptop" &&
                         productData.brand.name === "Apple" &&
                         condition.conditionName === "Processor"
@@ -346,7 +361,7 @@ const ProductQuestionsList = () => {
                               .map((conditionLabel, index) => (
                                 <div
                                   key={index}
-                                  className="flex gap-6 items-center mt-2"
+                                  className={`flex gap-6 items-center mt-2`}
                                 >
                                   <div>
                                     <div>

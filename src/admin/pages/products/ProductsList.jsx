@@ -13,10 +13,10 @@ import { MdDeleteForever } from "react-icons/md";
 const ProductsList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(25);
   const [searchTerm, setSearchTerm] = useState("");
   const [deductionSelected, setDeductionSelected] = useState("");
-  console.log("deductionSelected", deductionSelected);
+  // console.log("deductionSelected", deductionSelected);
   const {
     data: productsData,
     error,
@@ -26,10 +26,6 @@ const ProductsList = () => {
     limit,
     search: search,
   });
-
-  if (productsData) {
-    console.log(productsData);
-  }
 
   const { data: categoryData, isLoading: categoryDataLoading } =
     useGetCategoryQuery();
@@ -64,21 +60,40 @@ const ProductsList = () => {
       {/* Products based on the Category selected */}
       <div className="p-4 ">
         {/* Search */}
-        <div className=" my-4 flex gap-2 items-center">
-          <div>
-            <input
-              type="search"
-              name=""
-              id=""
-              placeholder="Search a product"
-              className="px-2 text-sm py-1 rounded border"
-              onChange={(e) => setSearch(e.target.value)}
-            />
+        <div className="flex justify-around items-center">
+          <div className=" my-4 flex gap-2 items-center">
+            <div>
+              <input
+                type="search"
+                name=""
+                id=""
+                placeholder="Search a product"
+                className="px-2 text-sm py-1 rounded border"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <div>
+              <button className="bg-green-600 px-2 rounded text-sm py-1 text-white">
+                Search
+              </button>
+            </div>
           </div>
-          <div>
-            <button className="bg-green-600 px-2 rounded text-sm py-1 text-white">
-              Search
-            </button>
+
+          <div className=" my-4 flex gap-2 items-center">
+            <div>
+              <input
+                type="number"
+                placeholder="Search a Page"
+                className="px-2 text-sm py-1 rounded border"
+                onChange={(e) => setPage(e.target.value)}
+                disabled={productsData?.totalPages <= 1}
+              />
+            </div>
+            <div>
+              <button className="bg-green-600 px-2 rounded text-sm py-1 text-white">
+                Page No
+              </button>
+            </div>
           </div>
         </div>
 
@@ -110,9 +125,10 @@ const ProductsList = () => {
           </div>
           <div className="">
             {!productsDataLoading && (
-              <h1 className="text-lg border-b-[1px] w-fit">
-                Page {productsData.page}
-              </h1>
+              <div className="text-center text-lg">
+                {/* Total {productsData.totalPages} Pages */}
+                Page {productsData.page} of {productsData.totalPages} Pages
+              </div>
             )}
           </div>
           <div>
@@ -156,14 +172,17 @@ const ProductsList = () => {
                     <td className="px-4 py-2">
                       <ul>
                         {product.variants.map((variant, i) => (
-                          <div key={i} className="flex items-center gap-2">
+                          <div
+                            key={`${variant.id}-${i}`}
+                            className="flex items-center gap-2"
+                          >
                             <label
                               htmlFor="variantName"
                               className="text-xs text-gray-500"
                             >
                               Variant Name
                             </label>
-                            <li key={i} className="" name="variantName">
+                            <li key={i + 10} className="" name="variantName">
                               {variant.name}
                             </li>
                           </div>
@@ -211,7 +230,7 @@ const ProductsList = () => {
                             {product.variantDeductions.map(
                               (variantDeduction, index) => (
                                 <option
-                                  key={index}
+                                  key={`${variantDeduction.id}-${index}`}
                                   value={variantDeduction.variantName}
                                 >
                                   {variantDeduction.variantName}
@@ -226,8 +245,8 @@ const ProductsList = () => {
                                 product.id
                               }?variant=${deductionSelected[product.id]}`}
                             >
-                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                validate
+                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
+                                Price Drop
                               </button>
                             </Link>
                           )}
@@ -239,8 +258,8 @@ const ProductsList = () => {
                               product.id
                             }?variant=${deductionSelected[product.id]}`}
                           >
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                              validate
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
+                               Price Drop
                             </button>
                           </Link>
                         </div>
@@ -267,7 +286,7 @@ const ProductsList = () => {
                         {product.category.name === "Mobile"
                           ? product.variants.map((variant, i) => (
                               <div
-                                key={i}
+                                key={`${variant.id}-${i}`}
                                 className="flex gap-2 justify-center"
                               >
                                 <div className="">
@@ -277,7 +296,11 @@ const ProductsList = () => {
                                   >
                                     Variant Name
                                   </label>
-                                  <li key={i} className="" name="variantName">
+                                  <li
+                                    key={i + 23}
+                                    className=""
+                                    name="variantName"
+                                  >
                                     {variant.name}
                                   </li>
                                 </div>
@@ -288,7 +311,11 @@ const ProductsList = () => {
                                   >
                                     Variant Price
                                   </label>
-                                  <li key={i} className="" name="variantName">
+                                  <li
+                                    key={i + 77}
+                                    className=""
+                                    name="variantName"
+                                  >
                                     {variant.price}
                                   </li>
                                 </div>
@@ -302,7 +329,7 @@ const ProductsList = () => {
                                 >
                                   Product Price
                                 </label>
-                                <li key={i} className="" name="price">
+                                <li key={i + 78} className="" name="price">
                                   {variant.price}
                                 </li>
                               </div>
@@ -352,7 +379,7 @@ const ProductsList = () => {
                             {product.variantDeductions.map(
                               (variantDeduction, index) => (
                                 <option
-                                  key={index}
+                                  key={`${variantDeduction._id}-${index}`}
                                   value={variantDeduction.variantName}
                                 >
                                   {variantDeduction.variantName}
@@ -367,20 +394,20 @@ const ProductsList = () => {
                                 product.id
                               }?variant=${deductionSelected[product.id]}`}
                             >
-                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                validate
+                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
+                                 Price Drop
                               </button>
                             </Link>
                           )}
                         </div>
                       ) : (
-                        <div>
+                        <div >
                           {/* {deductionSelected[product.id] && ( */}
                           <Link
                             to={`/admin/products/product-questions/${product.id}`}
                           >
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                              validate
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 text-sm rounded">
+                               Price Drop
                             </button>
                           </Link>
                           {/* )} */}
@@ -404,6 +431,7 @@ const ProductsList = () => {
               </button>
             )}
             {/* {!productsDataLoading && productsData.products.length != 0 && ( */}
+
             {!productsDataLoading &&
               productsData.page !== productsData.totalPages && (
                 <button
@@ -416,11 +444,11 @@ const ProductsList = () => {
               )}
             {/* )} */}
           </div>
-          {!productsDataLoading && (
+          {/* {!productsDataLoading && (
             <div className="text-center text-lg">
-              Total {productsData.totalPages} Pages
+              Page {productsData.page} of {productsData.totalPages} Pages
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
