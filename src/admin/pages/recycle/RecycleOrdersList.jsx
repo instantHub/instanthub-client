@@ -233,32 +233,18 @@ const RecycleOrdersList = () => {
         </div> */}
         <table className="w-full">
           <thead>
-            <tr>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Recycle Order ID
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Product Details
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Customer Details
-              </th>
-              {/* <th className="px-4 py-2 text-white bg-gray-800">Phone</th> */}
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Address Details
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Schedule Time
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Recycle Price
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                PickUp Details
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">Status</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Update Order</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Delete Order</th>
+            <tr className="py-10 font-serif text-lg border shadow-xl text-green-800">
+              <th className="px-4 py-4">Recycle Order ID</th>
+              <th className="px-4 py-2 ">Product Details</th>
+              <th className="px-4 py-2 ">Customer Details</th>
+              {/* <th className="px-4 py-2 ">Phone</th> */}
+              <th className="px-4 py-2 ">Address Details</th>
+              <th className="px-4 py-2 ">Schedule Time</th>
+              <th className="px-4 py-2 ">Recycle Price</th>
+              <th className="px-4 py-2 ">PickUp Details</th>
+              <th className="px-4 py-2 ">Status</th>
+              <th className="px-4 py-2 ">Update Order</th>
+              <th className="px-4 py-2 ">Delete Order</th>
             </tr>
           </thead>
 
@@ -268,7 +254,9 @@ const RecycleOrdersList = () => {
               recycleOrdersData.map((order, index) => (
                 <tr
                   key={`${order._id}-${index}`}
-                  className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                  className={
+                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                  }
                 >
                   {/* <td className="px-4 py-2">{product.category.name}</td> */}
                   <td className="px-4 py-2">{order.recycleOrderId}</td>

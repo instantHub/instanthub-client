@@ -12,6 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
 import FAQ from "../../components/FAQ";
+import { GiPartyPopper } from "react-icons/gi";
+import { FcCancel } from "react-icons/fc";
 
 const ProductFinalPrice = () => {
   const { data: couponsData, isLoading: couponsDataLoading } =
@@ -124,7 +126,11 @@ const ProductFinalPrice = () => {
     if (couponFound) {
       const currentPrice = offerPrice;
 
-      const couponValue = (couponFound.couponValue * currentPrice) / 100;
+      // PERCENTAGE CALCULATIONS FOR COUPON
+      // const couponValue = (couponFound.couponValue * currentPrice) / 100;
+
+      // AMOUNT CALCULATION FOR COUPON
+      const couponValue = couponFound.couponValue;
 
       setCouponPrice(couponValue);
 
@@ -245,20 +251,6 @@ const ProductFinalPrice = () => {
     // console.log("AccessoriesSelected", AccessoriesSelected);
     setAccessoriesSelected(AccessoriesSelected);
 
-    // setFormData({
-    //   ...formData,
-    //   productId,
-    // productName: selectedProdDetails.productName,
-    //   category: selectedProdDetails.productCategory,
-    //   variant: selectedProdDetails.getUpTo,
-    //   deductions: selectedProdDetails.deductions,
-    //   offerPrice: Math.ceil(
-    //     Number(selectedProdDetails.getUpTo.price) -
-    //       Number(selectedProdDetails.toBeDeducted) +
-    //       Number(selectedProdDetails.toBeAdded)
-    //   ),
-    //   status: "pending",
-    // });
     let deductedPrice =
       Number(selectedProdDetails.getUpTo.price) -
       Number(selectedProdDetails.toBeDeducted) +
@@ -267,10 +259,16 @@ const ProductFinalPrice = () => {
 
     if (AccessoriesNotSelected.length > 0) {
       // console.log("deductedPrice before accessory deducted", deductedPrice);
+
       AccessoriesNotSelected.map((a) => {
-        deductedPrice =
-          deductedPrice -
-          Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
+        if (productDetails.category.name.includes("Mobile")) {
+          deductedPrice =
+            deductedPrice -
+            Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
+        } else {
+          deductedPrice = deductedPrice - Number(a.priceDrop);
+        }
+        console.log("AccessoriesNotSelected", a);
       });
       // console.log("deductedPrice after accessory deducted", deductedPrice);
 
@@ -413,8 +411,14 @@ const ProductFinalPrice = () => {
                 </div>
               </div>
               {couponCodeApplied && (
-                <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
-                  <h2>Coupon</h2>
+                <div className="w-full flex justify-between items-center pb-3 border-b">
+                  <h2 className="flex items-center gap-1">
+                    Coupon
+                    <span className="flex gap-1 items-center text-green-600">
+                      {couponCode} Applied
+                      <GiPartyPopper />
+                    </span>
+                  </h2>
                   <div className="flex items-center">
                     <span className="pl-1">₹{couponPrice}</span>
                   </div>
@@ -638,7 +642,9 @@ const ProductFinalPrice = () => {
             </div>
             {couponCodeApplied ? (
               <div className="pb-3 text-center">
-                <p>Coupon Already Applied</p>
+                <p className="text-red-600 flex items-center ">
+                  Coupon Already Applied <FcCancel />
+                </p>
               </div>
             ) : null}
           </div>

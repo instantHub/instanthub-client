@@ -6,10 +6,14 @@ import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { BsFileArrowDown } from "react-icons/bs";
 import { FaAnglesDown } from "react-icons/fa6";
+import { clearServiceProblems } from "../../features/serviceProblemsSlice";
+import { useDispatch } from "react-redux";
 
 const ServiceBrands = () => {
   const { serviceCategoryId } = useParams();
   // console.log("serviceCategoryId", serviceCategoryId);
+
+  const dispatch = useDispatch();
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
@@ -38,6 +42,7 @@ const ServiceBrands = () => {
   };
 
   useEffect(() => {
+    dispatch(clearServiceProblems());
     if (!servicesDataLoading) {
       const sc = servicesData.serviceCategories;
       // console.log(sc, "sc");

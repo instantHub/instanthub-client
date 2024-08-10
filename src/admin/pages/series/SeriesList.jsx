@@ -39,18 +39,23 @@ const SeriesList = () => {
 
               <table className="w-full">
                 <thead>
-                  <tr className="border">
-                    <th className="px-4 py-2 text-black">Series Name</th>
-                    <th className="px-4 py-2 text-black">Category & Brand</th>
-                    <th className="px-4 py-2 text-black">Update</th>
-                    <th className="px-4 py-2 text-black">Delete</th>
+                  <tr className="py-10 font-serif text-xl border shadow-xl font-bold text-green-800">
+                    <th className="p-4 ">Series Name</th>
+                    <th className="px-4 py-2 ">Category & Brand</th>
+                    <th className="px-4 py-2 ">Update</th>
+                    <th className="px-4 py-2 ">Delete</th>
                   </tr>
                 </thead>
 
-                <tbody className="text-center border">
+                <tbody className="text-center">
                   {!seriesLoading &&
                     seriesData.map((series, index) => (
-                      <tr key={index}>
+                      <tr
+                        key={index}
+                        className={
+                          index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                        }
+                      >
                         <td>{series.name}</td>
                         <td className="flex flex-col">
                           <div>

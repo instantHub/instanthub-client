@@ -45,8 +45,8 @@ export const deductionSlice = createSlice({
       };
     },
     addDeductions: (state, action) => {
-      // console.log("addDeduction Reducer", action.payload);
-      // console.log(initialState);
+      console.log("addDeduction Reducer", action.payload);
+      console.log(state.productCategory);
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
@@ -56,27 +56,32 @@ export const deductionSlice = createSlice({
         if (action.payload.operation === "Subtrack") {
           return {
             ...state,
-            toBeDeducted: Math.ceil(
-              state.toBeDeducted +
-                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-            ),
+            // Deduction based on Product Category
+            toBeDeducted: state.productCategory.toLowerCase().includes("mobile")
+              ? Math.ceil(
+                  state.toBeDeducted +
+                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
+                      100
+                )
+              : Math.ceil(state.toBeDeducted + action.payload.priceDrop),
+            // Push deduction into deductions array
             deductions: [...state.deductions, action.payload],
           };
         } else if (action.payload.operation === "Add") {
           return {
             ...state,
-            toBeAdded: Math.ceil(
-              state.toBeAdded +
-                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-            ),
+            // Deduction based on Product Category
+            toBeAdded: state.productCategory.toLowerCase().includes("mobile")
+              ? Math.ceil(
+                  state.toBeAdded +
+                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
+                      100
+                )
+              : Math.ceil(state.toBeAdded + action.payload.priceDrop),
+            // Push deduction into deductions array
             deductions: [...state.deductions, action.payload],
           };
         }
-        // return {
-        //   ...state,
-        //   toBeDeducted: state.toBeDeducted + Number(action.payload.priceDrop),
-        //   deductions: [...state.deductions, action.payload],
-        // };
       }
     },
     addProductAge: (state, action) => {
@@ -141,22 +146,52 @@ export const deductionSlice = createSlice({
         if (action.payload.operation === "Subtrack") {
           return {
             ...state,
-            toBeDeducted: Math.ceil(
-              state.toBeDeducted -
-                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-            ),
+            // Deduction based on Product Category
+            toBeDeducted: state.productCategory.toLowerCase().includes("mobile")
+              ? Math.ceil(
+                  state.toBeDeducted -
+                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
+                      100
+                )
+              : Math.ceil(state.toBeDeducted - action.payload.priceDrop),
+            // Add updated deduction to deductions array
             deductions: updatedDeductions,
           };
         } else if (action.payload.operation === "Add") {
           return {
             ...state,
-            toBeAdded: Math.ceil(
-              state.toBeAdded -
-                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-            ),
+            // Deduction based on Product Category
+            toBeAdded: state.productCategory.toLowerCase().includes("mobile")
+              ? Math.ceil(
+                  state.toBeAdded -
+                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
+                      100
+                )
+              : Math.ceil(state.toBeAdded - action.payload.priceDrop),
+            // Add updated deduction to deductions array
             deductions: updatedDeductions,
           };
         }
+
+        // if (action.payload.operation === "Subtrack") {
+        //   return {
+        //     ...state,
+        //     toBeDeducted: Math.ceil(
+        //       state.toBeDeducted -
+        //         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+        //     ),
+        //     deductions: updatedDeductions,
+        //   };
+        // } else if (action.payload.operation === "Add") {
+        //   return {
+        //     ...state,
+        //     toBeAdded: Math.ceil(
+        //       state.toBeAdded -
+        //         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+        //     ),
+        //     deductions: updatedDeductions,
+        //   };
+        // }
 
         // return {
         //   ...state,
@@ -191,3 +226,63 @@ export const {
   removeDeductions,
 } = deductionSlice.actions;
 export default deductionSlice.reducer;
+
+// ADD DEDUCTIONS
+// if (state.productCategory.toLowerCase().includes("mobile")) {
+//   if (action.payload.operation === "Subtrack") {
+//     return {
+//       ...state,
+//       toBeDeducted: Math.ceil(
+//         state.toBeDeducted +
+//           (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+//       ),
+//       deductions: [...state.deductions, action.payload],
+//     };
+//   } else if (action.payload.operation === "Add") {
+//     return {
+//       ...state,
+//       toBeAdded: Math.ceil(
+//         state.toBeAdded +
+//           (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+//       ),
+//       deductions: [...state.deductions, action.payload],
+//     };
+//   }
+// } else {
+//   if (action.payload.operation === "Subtrack") {
+//     return {
+//       ...state,
+//       toBeDeducted: Math.ceil(
+//         state.toBeDeducted + action.payload.priceDrop
+//       ),
+//       deductions: [...state.deductions, action.payload],
+//     };
+//   } else if (action.payload.operation === "Add") {
+//     return {
+//       ...state,
+//       toBeAdded: Math.ceil(state.toBeAdded + action.payload.priceDrop),
+//       deductions: [...state.deductions, action.payload],
+//     };
+//   }
+// }
+
+// REMOVE DEDUCTIONS
+// if (action.payload.operation === "Subtrack") {
+//   return {
+//     ...state,
+//     toBeDeducted: Math.ceil(
+//       state.toBeDeducted -
+//         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+//     ),
+//     deductions: updatedDeductions,
+//   };
+// } else if (action.payload.operation === "Add") {
+//   return {
+//     ...state,
+//     toBeAdded: Math.ceil(
+//       state.toBeAdded -
+//         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+//     ),
+//     deductions: updatedDeductions,
+//   };
+// }

@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineCancel } from "react-icons/md";
 import { SiShopware } from "react-icons/si";
 import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
-import { MdCategory, MdOutlineNumbers, MdSlideshow } from "react-icons/md";
+import {
+  MdCategory,
+  MdOutlineNumbers,
+  MdSlideshow,
+  MdOutlineMultipleStop,
+  MdOutlineCancel,
+} from "react-icons/md";
+import { FaJediOrder } from "react-icons/fa6";
+import { PiGitDiff } from "react-icons/pi";
+import { GoMultiSelect } from "react-icons/go";
+import { GrMultiple } from "react-icons/gr";
+import { FcMultipleInputs } from "react-icons/fc";
+
 import {
   RiListCheck2,
   RiListCheck3,
@@ -55,6 +66,7 @@ const SideBar = (props) => {
   const [isClicked, setIsClicked] = useState(initialState);
 
   const links = [
+    // DASHBOARD
     {
       title: "Dashboard",
       links: [
@@ -65,6 +77,7 @@ const SideBar = (props) => {
       ],
     },
 
+    // CATEGORY
     {
       title: "Category",
       links: [
@@ -79,6 +92,7 @@ const SideBar = (props) => {
       ],
     },
 
+    // BRANDS
     {
       title: "Brands",
       links: [
@@ -92,6 +106,8 @@ const SideBar = (props) => {
         },
       ],
     },
+
+    // PRODUCTS
     {
       title: "Products",
       links: [
@@ -106,6 +122,8 @@ const SideBar = (props) => {
         },
       ],
     },
+
+    // SERIES
     {
       title: "Series",
       links: [
@@ -115,6 +133,8 @@ const SideBar = (props) => {
         },
       ],
     },
+
+    // QUESTIONS
     {
       title: "Questions",
       links: [
@@ -124,12 +144,26 @@ const SideBar = (props) => {
         },
       ],
     },
+
+    // VARIANT QUESTIONS
+    {
+      title: "Variant Questions",
+      links: [
+        {
+          name: "variants-questions",
+          icon: <PiGitDiff />,
+        },
+      ],
+    },
+
+    // ORDERS
     {
       title: "Orders",
       links: [
         {
           name: "orders",
-          icon: <BsBorderStyle />,
+          // icon: <BsBorderStyle />,
+          icon: <FcMultipleInputs />,
         },
         {
           name: "phone-numbers",
@@ -138,6 +172,8 @@ const SideBar = (props) => {
         },
       ],
     },
+
+    // MANAGE STOCKS
     {
       title: "Manage Stocks",
       links: [
@@ -148,6 +184,7 @@ const SideBar = (props) => {
       ],
     },
 
+    // SLIDERS & COUPONS
     {
       title: "Sliders & Coupons",
       links: [
@@ -163,35 +200,41 @@ const SideBar = (props) => {
         },
       ],
     },
+
+    // SERVICES
     {
       title: "Services",
       links: [
         {
           name: "add-services",
           // icon: <CgProfile />,
-          icon: <ImProfile />,
+          icon: <GrMultiple />,
         },
         {
           name: "services-list",
           // icon: <CgProfile />,
-          icon: <ImProfile />,
+          icon: <GoMultiSelect />,
         },
         {
           name: "services-Orders",
           // icon: <CgProfile />,
-          icon: <ImProfile />,
+          icon: <MdOutlineMultipleStop />,
         },
       ],
     },
+
+    // RECYCLE
     {
       title: "Recycle Order",
       links: [
         {
           name: "recycle-orders",
-          icon: <ImProfile />,
+          icon: <FaJediOrder />,
         },
       ],
     },
+
+    // UPDATE PROFILE
     {
       title: "Settings",
       links: [

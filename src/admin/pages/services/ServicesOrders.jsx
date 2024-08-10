@@ -154,28 +154,20 @@ const ConditionsTable = () => {
         {/* Service Orders List */}
         <table className="w-full">
           <thead>
-            <tr>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                ServiceOrderId
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Customer Details
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Service Details
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">Problems</th>
-              <th className="px-4 py-2 text-white bg-gray-800">
+            <tr className="py-10 font-serif text-lg border shadow-xl text-green-800">
+              <th className="px-4 py-4 ">ServiceOrderId</th>
+              <th className="px-4 py-2 ">Customer Details</th>
+              <th className="px-4 py-2 ">Service Details</th>
+              <th className="px-4 py-2 ">Problems</th>
+              <th className="px-4 py-2 ">
                 Inspection <br />
                 Charges
               </th>
-              <th className="px-4 py-2 text-white bg-gray-800">Address</th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Schedule Date & Time
-              </th>
-              <th className="px-4 py-2 text-white bg-gray-800">Status</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Edit</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Delete</th>
+              <th className="px-4 py-2 ">Address</th>
+              <th className="px-4 py-2 ">Schedule Date & Time</th>
+              <th className="px-4 py-2 ">Status</th>
+              <th className="px-4 py-2 ">Edit</th>
+              <th className="px-4 py-2 ">Delete</th>
             </tr>
           </thead>
 
@@ -184,7 +176,9 @@ const ConditionsTable = () => {
               servicesOrders.map((servicesOrder, index) => (
                 <tr
                   key={index}
-                  className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                  className={
+                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                  }
                 >
                   <td className=" py-2">{servicesOrder.serviceOrderId}</td>
                   <td className=" py-2">

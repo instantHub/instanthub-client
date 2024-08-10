@@ -38,17 +38,22 @@ const CouponsList = () => {
 
               <table className="w-full">
                 <thead>
-                  <tr className="border">
-                    <th className="px-4 py-2 text-black">Coupon Code</th>
-                    <th className="px-4 py-2 text-black">Coupon Value</th>
-                    <th className="px-4 py-2 text-black">Delete</th>
+                  <tr className="py-10 font-serif text-xl border shadow-xl text-green-800 font-bold">
+                    <th className="px-4 py-4 ">Coupon Code</th>
+                    <th className="px-4 py-2 ">Coupon Value</th>
+                    <th className="px-4 py-2 ">Delete</th>
                   </tr>
                 </thead>
 
-                <tbody className="text-center border">
+                <tbody className="text-center">
                   {!couponsDataLoading &&
                     couponsData.map((coupon, index) => (
-                      <tr key={index}>
+                      <tr
+                        key={index}
+                        className={
+                          index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                        }
+                      >
                         <td>{coupon.couponCode}</td>
                         <td className="">{coupon.couponValue}</td>
                         <td>

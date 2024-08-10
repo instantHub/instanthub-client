@@ -66,14 +66,12 @@ const BrandsList = () => {
       </div>
       <table className="w-full">
         <thead>
-          <tr>
-            {!selectedCondition && (
-              <th className="px-4 py-2 text-white bg-gray-800">Category</th>
-            )}
-            <th className="px-4 py-2 text-white bg-gray-800">Brand</th>
-            <th className="px-4 py-2 text-white bg-gray-800">Product IMG</th>
-            <th className="px-4 py-2 text-white bg-gray-800">Edit/Update</th>
-            <th className="px-4 py-2 text-white bg-gray-800">Delete</th>
+          <tr className="py-10 font-serif text-xl border shadow-xl text-green-800 font-bold">
+            {!selectedCondition && <th className="px-4 py-4 ">Category</th>}
+            <th className="px-4 py-4 ">Brand</th>
+            <th className="px-4 py-2 ">Product IMG</th>
+            <th className="px-4 py-2 ">Edit/Update</th>
+            <th className="px-4 py-2 ">Delete</th>
           </tr>
         </thead>
 
@@ -85,7 +83,9 @@ const BrandsList = () => {
               .map((brand, index) => (
                 <tr
                   key={`${brand._id}-${index}`}
-                  className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                  className={
+                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                  }
                 >
                   {/* <td className="px-4 py-2">{product.category.name}</td> */}
                   <td className="px-4 py-2">{brand.name}</td>
@@ -123,7 +123,9 @@ const BrandsList = () => {
               .map((brand, index) => (
                 <tr
                   key={`${brand._id}-${index}`}
-                  className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                  className={
+                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                  }
                 >
                   {/* {categoryData &&
                     categoryData.map((cat) => {

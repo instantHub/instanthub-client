@@ -32,12 +32,8 @@ const ProductsList = () => {
   const [deleteProduct, { isLoading: deleteLoading }] =
     useDeleteProductMutation();
 
-  const [selectedCondition, setSelectedCondition] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   console.log(search);
-
-  const handleConditionChange = (e) => {
-    setSelectedCondition(e.target.value);
-  };
 
   const handleDelete = async (productId) => {
     console.log("handledelete", productId);
@@ -60,8 +56,8 @@ const ProductsList = () => {
       {/* Products based on the Category selected */}
       <div className="p-4 ">
         {/* Search */}
-        <div className="flex justify-around items-center">
-          <div className=" my-4 flex gap-2 items-center">
+        <div className="flex justify-around items-center mb-5">
+          <div className="my-4 flex gap-2 items-center">
             <div>
               <input
                 type="search"
@@ -77,6 +73,12 @@ const ProductsList = () => {
                 Search
               </button>
             </div>
+          </div>
+
+          <div>
+            <h2 className="text-black font-serif text-2xl font-bold">
+              Products Table
+            </h2>
           </div>
 
           <div className=" my-4 flex gap-2 items-center">
@@ -97,7 +99,6 @@ const ProductsList = () => {
           </div>
         </div>
 
-        <h2 className="text-black text-lg font-bold mb-4">Products Table</h2>
         {/* <div className="grid grid-cols-2 mb-4"> */}
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -106,30 +107,50 @@ const ProductsList = () => {
             </label>
             <select
               id="condition"
-              onChange={handleConditionChange}
-              value={selectedCondition}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
               className="p-2 rounded bg-gray-700 text-white"
             >
               <option value="">Select</option>
               {!categoryDataLoading &&
-                categoryData.map(
-                  (category) => (
-                    //   question.map((question) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  )
-                  //   ))
-                )}
+                categoryData.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
             </select>
           </div>
-          <div className="">
-            {!productsDataLoading && (
-              <div className="text-center text-lg">
-                {/* Total {productsData.totalPages} Pages */}
-                Page {productsData.page} of {productsData.totalPages} Pages
-              </div>
-            )}
+          {/* Pagination controls */}
+          <div className="flex gap-2 justify-center">
+            <div className="flex gap-2 justify-center mt-2">
+              {!productsDataLoading && (
+                <button
+                  onClick={() => setPage((prevPage) => prevPage - 1)}
+                  className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
+                  disabled={productsData.page === 1}
+                >
+                  <FaAngleLeft />
+                  Previous
+                </button>
+              )}
+
+              {!productsDataLoading && (
+                <div className="text-center text-lg">
+                  Page {productsData.page} of {productsData.totalPages}
+                </div>
+              )}
+
+              {!productsDataLoading && (
+                <button
+                  onClick={() => setPage((prevPage) => prevPage + 1)}
+                  className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
+                  disabled={productsData.page === productsData.totalPages}
+                >
+                  Next
+                  <FaAngleRight />
+                </button>
+              )}
+            </div>
           </div>
           <div>
             <Link to={"/admin/add-products"}>
@@ -141,18 +162,17 @@ const ProductsList = () => {
         </div>
         <table className="w-full">
           <thead>
-            <tr>
-              {!selectedCondition && (
-                <th className="px-4 py-2 text-white bg-gray-800">Category</th>
-              )}
-              <th className="px-4 py-2 text-white bg-gray-800">Brand</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Product Name</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Variants</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Product IMG</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Status</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Edit/Update</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Delete</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Questions</th>
+            {/* className="px-4 py-2 text-white bg-gray-800" */}
+            <tr className="py-10 font-serif text-lg border shadow-xl text-green-800">
+              {!selectedCategory && <th className="px-4 py-2">Category</th>}
+              <th className="">Brand</th>
+              <th className="px-4 py-4">Product Name</th>
+              <th className="px-4 py-2 ">Variants</th>
+              <th className="px-4 py-2 ">Product IMG</th>
+              <th className="px-4 py-2 ">Status</th>
+              <th className="px-4 py-2 ">Edit/Update</th>
+              <th className="px-4 py-2 ">Delete</th>
+              <th className="px-4 py-2 ">Questions</th>
             </tr>
           </thead>
 
@@ -160,33 +180,70 @@ const ProductsList = () => {
             {/* Products when Category is selected */}
             {!productsDataLoading &&
               productsData.products
-                .filter((product) => product.category.id === selectedCondition)
+                .filter((product) => product.category.id === selectedCategory)
                 .map((product, index) => (
                   <tr
                     key={`${product._id}-${index}`}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    className={
+                      index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                    }
                   >
                     {/* <td className="px-4 py-2">{product.category.name}</td> */}
                     <td className="px-4 py-2">{product.brand.name}</td>
                     <td className="px-4 py-2">{product.name}</td>
                     <td className="px-4 py-2">
                       <ul>
-                        {product.variants.map((variant, i) => (
-                          <div
-                            key={`${variant.id}-${i}`}
-                            className="flex items-center gap-2"
-                          >
-                            <label
-                              htmlFor="variantName"
-                              className="text-xs text-gray-500"
-                            >
-                              Variant Name
-                            </label>
-                            <li key={i + 10} className="" name="variantName">
-                              {variant.name}
-                            </li>
-                          </div>
-                        ))}
+                        {product.category.name === "Mobile"
+                          ? product.variants.map((variant, i) => (
+                              <div
+                                key={`${variant.id}-${i}`}
+                                className="flex gap-2 justify-center"
+                              >
+                                <div className="">
+                                  <label
+                                    htmlFor="variantName"
+                                    className="text-xs text-gray-500"
+                                  >
+                                    Variant Name
+                                  </label>
+                                  <li
+                                    key={i + 23}
+                                    className=""
+                                    name="variantName"
+                                  >
+                                    {variant.name}
+                                  </li>
+                                </div>
+                                <div>
+                                  <label
+                                    htmlFor="variantName"
+                                    className="text-xs text-gray-500"
+                                  >
+                                    Variant Price
+                                  </label>
+                                  <li
+                                    key={i + 77}
+                                    className=""
+                                    name="variantName"
+                                  >
+                                    {variant.price}
+                                  </li>
+                                </div>
+                              </div>
+                            ))
+                          : product.variants.map((variant, i) => (
+                              <div className="">
+                                <label
+                                  htmlFor="price"
+                                  className="text-xs text-gray-500"
+                                >
+                                  Product Price
+                                </label>
+                                <li key={i + 78} className="" name="price">
+                                  {variant.price}
+                                </li>
+                              </div>
+                            ))}
                       </ul>
                     </td>
                     <td className="px-4 py-2">
@@ -259,7 +316,7 @@ const ProductsList = () => {
                             }?variant=${deductionSelected[product.id]}`}
                           >
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
-                               Price Drop
+                              Price Drop
                             </button>
                           </Link>
                         </div>
@@ -270,13 +327,15 @@ const ProductsList = () => {
 
             {/* Products when Category not selected */}
             {!productsDataLoading &&
-              !selectedCondition &&
+              !selectedCategory &&
               productsData.products
-                //   .filter((product) => product.category.id != selectedCondition)
+                //   .filter((product) => product.category.id != selectedCategory)
                 .map((product, index) => (
                   <tr
                     key={`${product._id}-${index}`}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    className={
+                      index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                    }
                   >
                     <td className="px-4 py-2">{product.category.name}</td>
                     <td className="px-4 py-2">{product.brand.name}</td>
@@ -395,19 +454,19 @@ const ProductsList = () => {
                               }?variant=${deductionSelected[product.id]}`}
                             >
                               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
-                                 Price Drop
+                                Price Drop
                               </button>
                             </Link>
                           )}
                         </div>
                       ) : (
-                        <div >
+                        <div>
                           {/* {deductionSelected[product.id] && ( */}
                           <Link
                             to={`/admin/products/product-questions/${product.id}`}
                           >
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 text-sm rounded">
-                               Price Drop
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-2 px-2 rounded">
+                              Price Drop
                             </button>
                           </Link>
                           {/* )} */}

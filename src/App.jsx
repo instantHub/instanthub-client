@@ -74,6 +74,10 @@ import AdminServicesList from "./admin/pages/services/ServicesList";
 import AdminServicesOrdersList from "./admin/pages/services/ServicesOrders";
 import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
 
+// VARIANTS QUESTIONS
+import AdminCreateVariantsQuestions from "./admin/pages/variantQuestions/CreateVariantsQuestions";
+import AdminUpdateVariantQuestions from "./admin/pages/variantQuestions/UpdateVariantQuestions";
+
 import Admin from "./admin/Admin";
 import AdminLayout from "./admin/pages/layout/Layout";
 
@@ -409,6 +413,7 @@ function App() {
               path: "/admin/add-coupons",
               element: <AdminCreateCoupon />,
             },
+
             // SERVICES
             {
               path: "/admin/add-services",
@@ -425,6 +430,16 @@ function App() {
             {
               path: "/admin/recycle-orders",
               element: <AdminRecycleOrdersList />,
+            },
+
+            // VARIANTS QUESTIONS
+            {
+              path: "/admin/variants-questions",
+              element: <AdminCreateVariantsQuestions />,
+            },
+            {
+              path: "/admin/update-variant-questions/:variantQuestionsId",
+              element: <AdminUpdateVariantQuestions />,
             },
           ],
         },

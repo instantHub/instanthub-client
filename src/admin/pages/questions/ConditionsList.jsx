@@ -183,7 +183,7 @@ const ConditionsTable = () => {
         </table>
       </div>
       {isOpen && (
-        <td>
+        <div>
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-8 rounded-lg shadow-lg w-2/4">
               <div className="flex justify-center">
@@ -227,7 +227,7 @@ const ConditionsTable = () => {
               </div>
             </div>
           </div>
-        </td>
+        </div>
       )}
     </>
   );

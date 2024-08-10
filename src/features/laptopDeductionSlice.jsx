@@ -86,6 +86,7 @@ export const laptopDeductionSlice = createSlice({
         };
       }
     },
+    
     removeLaptopDeductions: (state, action) => {
       // console.log("removeLaptopDeductions reducer");
 

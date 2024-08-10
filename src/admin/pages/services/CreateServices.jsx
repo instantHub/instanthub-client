@@ -141,6 +141,17 @@ const CreateServiceForm = () => {
     }
   };
 
+  const createHeadingStyle =
+    "text-2xl text-green-800 font-serif font-bold py-1";
+
+  const createButtonStyle = (buttonType) => {
+    return `${
+      buttonType
+        ? `bg-green-700 text-white px-4 py-3 text-lg `
+        : `bg-white px-4 py-2`
+    } border font-serif text-black rounded-md shadow-xl cursor-pointer`;
+  };
+
   return (
     <div className="flex w-[90%] mt-[2%] mx-auto">
       <div className="flex gap-4 w-full">
@@ -156,9 +167,10 @@ const CreateServiceForm = () => {
                 setCreateServiceForm(!createServiceForm);
                 setServiceType("DirectService");
               }}
-              className={`${
-                createServiceForm ? `bg-red-700` : `bg-blue-700`
-              } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+              // className={`${
+              //   createServiceForm ? `bg-red-700` : `bg-blue-700`
+              // } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+              className={createButtonStyle(createServiceForm)}
             >
               Create Service Category
             </button>
@@ -171,9 +183,7 @@ const CreateServiceForm = () => {
                 setCreateServiceBrandForm(!createServiceBrandForm);
                 setServiceType("Brand");
               }}
-              className={`${
-                createServiceBrandForm ? `bg-red-700` : `bg-blue-700`
-              } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+              className={createButtonStyle(createServiceBrandForm)}
             >
               Create Service Brand
             </button>
@@ -187,9 +197,7 @@ const CreateServiceForm = () => {
                 setCreateBrandProblemsForm(!createBrandProblemsForm);
                 setServiceType("ServiceSubCategory");
               }}
-              className={`${
-                createBrandProblemsForm ? `bg-red-700` : `bg-blue-700`
-              } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+              className={createButtonStyle(createBrandProblemsForm)}
             >
               Create Brand Problems
             </button>
@@ -203,9 +211,7 @@ const CreateServiceForm = () => {
                 setCreateSubServiceForm(!createSubServiceForm);
                 setServiceType("ServiceSubCategory");
               }}
-              className={`${
-                createSubServiceForm ? `bg-red-700` : `bg-blue-700`
-              } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+              className={createButtonStyle(createSubServiceForm)}
             >
               Create Service Sub Category
             </button>
@@ -219,9 +225,7 @@ const CreateServiceForm = () => {
                 setCreateSubServiceProdForm(!createSubServiceProdForm);
                 setServiceType("ServiceSubCategory");
               }}
-              className={`${
-                createSubServiceProdForm ? `bg-red-700` : `bg-blue-700`
-              } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+              className={createButtonStyle(createSubServiceProdForm)}
             >
               Create Sub Service Products
             </button>
@@ -246,9 +250,7 @@ const CreateServiceForm = () => {
           {createServiceForm && (
             <div className="bg-white w-full flex flex-col border rounded-md shadow-lg">
               <div className="text-center py-2 border-b w-full">
-                <h2 className="text-lg font-semibold">
-                  Create Service Category
-                </h2>
+                <h2 className={createHeadingStyle}>Create Service Category</h2>
               </div>
               <form
                 onSubmit={(e) => handleSubmit(e, "serviceCategory")}
@@ -314,9 +316,9 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-600 text-white rounded"
+                    className="px-2 py-1 bg-green-700 text-white rounded"
                   >
-                    Create Service
+                    Create Service Category
                   </button>
                 </div>
               </form>
@@ -327,7 +329,7 @@ const CreateServiceForm = () => {
           {createServiceBrandForm && (
             <div className="bg-white w-full flex flex-col border rounded-md shadow-lg">
               <div className="text-center py-2 border-b w-full">
-                <h2 className="text-lg font-semibold">Create Service Brand</h2>
+                <h2 className={createHeadingStyle}>Create Service Brand</h2>
               </div>
               <form
                 // onSubmit={handleSubmit}
@@ -415,9 +417,9 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-600 text-white rounded"
+                    className="px-2 py-1 bg-green-700 text-white rounded"
                   >
-                    Create Service
+                    Create Service Brand
                   </button>
                 </div>
               </form>
@@ -428,7 +430,7 @@ const CreateServiceForm = () => {
           {createBrandProblemsForm && (
             <div className="bg-white w-full flex flex-col border rounded-md shadow-lg">
               <div className="text-center py-2 border-b w-full">
-                <h2 className="text-lg font-semibold">Create Brand Problems</h2>
+                <h2 className={createHeadingStyle}>Create Brand Problems</h2>
               </div>
               <form
                 // onSubmit={handleSubmit}
@@ -523,9 +525,9 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-600 text-white rounded"
+                    className="px-2 py-1 bg-green-700 text-white rounded"
                   >
-                    Create Service
+                    Create Brand Problem
                   </button>
                 </div>
               </form>
@@ -536,7 +538,7 @@ const CreateServiceForm = () => {
           {createSubServiceForm && (
             <div className="bg-white w-full flex flex-col border rounded-md shadow-lg">
               <div className="text-center py-2 border-b w-full">
-                <h2 className="text-lg font-semibold">
+                <h2 className={createHeadingStyle}>
                   Create Service Sub Category
                 </h2>
               </div>
@@ -630,9 +632,9 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-600 text-white rounded"
+                    className="px-2 py-1 bg-green-700 text-white rounded"
                   >
-                    Create Service
+                    Create Sub Service
                   </button>
                 </div>
               </form>
@@ -643,7 +645,7 @@ const CreateServiceForm = () => {
           {createSubServiceProdForm && (
             <div className="bg-white w-full flex flex-col border rounded-md shadow-lg">
               <div className="text-center py-2 border-b w-full">
-                <h2 className="text-lg font-semibold">
+                <h2 className={createHeadingStyle}>
                   Create Sub Service Products
                 </h2>
               </div>
@@ -762,9 +764,9 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-600 text-white rounded"
+                    className="px-2 py-1 bg-green-700 text-white rounded"
                   >
-                    Create Service
+                    Create Service products
                   </button>
                 </div>
               </form>

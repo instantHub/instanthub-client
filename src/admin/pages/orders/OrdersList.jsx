@@ -234,27 +234,27 @@ const OrdersList = () => {
         </div> */}
         <table className="w-full">
           <thead>
-            <tr>
-              <th className="px-4 py-2 text-white bg-gray-800">Order ID</th>
-              {/* <th className="px-4 py-2 text-white bg-gray-800">
+            <tr className="py-10 font-serif text-lg font-bold border shadow-xl text-green-800">
+              <th className="px-4 py-4">Order ID</th>
+              {/* <th className="px-4 py-2 ">
                 Customer Name
               </th> */}
-              <th className="px-4 py-2 text-white bg-gray-800">Product</th>
-              <th className="px-4 py-2 text-white bg-gray-800">
+              <th className="px-4 py-2 ">Product</th>
+              <th className="px-4 py-2 ">
                 Customer Details
               </th>
-              {/* <th className="px-4 py-2 text-white bg-gray-800">Phone</th> */}
-              <th className="px-4 py-2 text-white bg-gray-800">Address</th>
-              <th className="px-4 py-2 text-white bg-gray-800">OfferPrice</th>
-              <th className="px-4 py-2 text-white bg-gray-800">
+              {/* <th className="px-4 py-2 ">Phone</th> */}
+              <th className="px-4 py-2 ">Address</th>
+              <th className="px-4 py-2 ">OfferPrice</th>
+              <th className="px-4 py-2 ">
                 Schedule Time
               </th>
-              <th className="px-4 py-2 text-white bg-gray-800">
+              <th className="px-4 py-2 ">
                 PickUp Details
               </th>
-              <th className="px-4 py-2 text-white bg-gray-800">Status</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Update Order</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Delete Order</th>
+              <th className="px-4 py-2 ">Status</th>
+              <th className="px-4 py-2 ">Update Order</th>
+              <th className="px-4 py-2 ">Delete Order</th>
             </tr>
           </thead>
 
@@ -264,7 +264,9 @@ const OrdersList = () => {
               ordersData.map((order, index) => (
                 <tr
                   key={`${order._id}-${index}`}
-                  className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                  className={
+                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                  }
                 >
                   {/* <td className="px-4 py-2">{product.category.name}</td> */}
                   <td className="px-4 py-2">{order.orderId}</td>

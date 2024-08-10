@@ -116,9 +116,9 @@ const UpdateLaptopConfigurations = () => {
         <div className="bg-scroll">
           {productData && productData.category.name === "Laptop" && (
             <>
-              <h1 className="text-xl text-center font-bold">
+              <h3 className="text-2xl font-serif text-center font-bold">
                 Laptop Configurations to update
-              </h1>
+              </h3>
               <form onSubmit={handleSubmit}>
                 {productData &&
                   selectedDeductions
@@ -145,9 +145,9 @@ const UpdateLaptopConfigurations = () => {
                         }`}
                       >
                         <div>
-                          <h1 className="text-2xl text-center py-2 bg-white">
+                          <h3 className="text-2xl font-serif font-bold text-center py-2 bg-white">
                             {condition.conditionName}
-                          </h1>
+                          </h3>
                         </div>
                         <hr />
                         <div className="flex flex-col px-4 py-2">
@@ -167,17 +167,18 @@ const UpdateLaptopConfigurations = () => {
                                   >
                                     <div>
                                       <div>
-                                        <h1 className="text-xl">
+                                        <h3 className="text-xl">
                                           {conditionLabel.conditionLabel}
-                                        </h1>
+                                        </h3>
                                       </div>
 
                                       <div className="flex items-center gap-1">
+                                        <span className="text-lg">₹</span>
                                         <input
                                           type="number"
                                           name="priceDrop"
                                           value={conditionLabel.priceDrop}
-                                          className="border px-3 py-1 rounded text-[0.9rem]"
+                                          className="border-b px-3 py-1 rounded text-[0.9rem]"
                                           placeholder="Price Drop"
                                           onChange={(e) =>
                                             handlePriceDropChange2(
@@ -188,7 +189,6 @@ const UpdateLaptopConfigurations = () => {
                                           }
                                           required
                                         />
-                                        <h1>%</h1>
                                       </div>
                                     </div>
 
@@ -204,7 +204,7 @@ const UpdateLaptopConfigurations = () => {
                                     </div>
                                     <div className="flex gap-4">
                                       <div className="w-[82px] text-center">
-                                        <h1
+                                        <h3
                                           className={`${
                                             conditionLabel.operation ===
                                             "Subtrack"
@@ -213,7 +213,7 @@ const UpdateLaptopConfigurations = () => {
                                           } text-black font-bold px-2 py-1 rounded`}
                                         >
                                           {conditionLabel.operation}
-                                        </h1>
+                                        </h3>
                                       </div>
                                       <select
                                         name="operation"
@@ -255,17 +255,18 @@ const UpdateLaptopConfigurations = () => {
                                   >
                                     <div>
                                       <div>
-                                        <h1 className="text-sm">
+                                        <h3 className="text-sm">
                                           {conditionLabel.conditionLabel}
-                                        </h1>
+                                        </h3>
                                       </div>
 
                                       <div className="flex items-center gap-1">
+                                        <span className="text-lg">₹</span>
                                         <input
                                           type="number"
                                           name="priceDrop"
                                           value={conditionLabel.priceDrop}
-                                          className="border px-3 py-1 rounded text-[0.9rem]"
+                                          className="border-b px-3 py-1 rounded text-[0.9rem]"
                                           placeholder="Price Drop"
                                           onChange={(e) =>
                                             handlePriceDropChange2(
@@ -276,7 +277,6 @@ const UpdateLaptopConfigurations = () => {
                                           }
                                           required
                                         />
-                                        <h1>%</h1>
                                       </div>
                                     </div>
 
@@ -292,7 +292,7 @@ const UpdateLaptopConfigurations = () => {
                                     </div>
                                     <div className="flex gap-4">
                                       <div className="w-[82px] text-center">
-                                        <h1
+                                        <h3
                                           className={`${
                                             conditionLabel.operation ===
                                             "Subtrack"
@@ -301,7 +301,7 @@ const UpdateLaptopConfigurations = () => {
                                           } text-black font-bold px-2 py-1 rounded`}
                                         >
                                           {conditionLabel.operation}
-                                        </h1>
+                                        </h3>
                                       </div>
                                       <select
                                         name="operation"

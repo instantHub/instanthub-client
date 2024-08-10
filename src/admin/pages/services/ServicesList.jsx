@@ -56,11 +56,19 @@ const ServicesList = () => {
     });
   };
 
+  const createButtonStyle = (buttonType) => {
+    return `${
+      buttonType
+        ? `bg-green-700 text-white px-4 py-3 text-lg `
+        : `bg-white px-4 py-2`
+    } border font-serif text-black rounded-md shadow-xl cursor-pointer`;
+  };
+
   return (
     <>
       <div className="p-4">
         {/* Buttons */}
-        <div className="flex justify-between items-center mb-5">
+        <div className="flex justify-between items-center mb-10">
           <button
             onClick={() => {
               setListServiceBrands(false);
@@ -70,9 +78,10 @@ const ServicesList = () => {
               setListServiceCategories(!listServiceCategories);
               // setServiceType("DirectService");
             }}
-            className={`${
-              listServiceCategories ? `bg-red-700` : `bg-blue-700`
-            } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+            // className={`${
+            //   listServiceCategories ? `bg-red-700` : `bg-blue-700`
+            // } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+            className={createButtonStyle(listServiceCategories)}
           >
             List Service Categories
           </button>
@@ -84,9 +93,7 @@ const ServicesList = () => {
               setListSubServicesProducts(false);
               setListServiceBrands(!listServiceBrands);
             }}
-            className={`${
-              listServiceBrands ? `bg-red-700` : `bg-blue-700`
-            } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+            className={createButtonStyle(listServiceBrands)}
           >
             List Service Brands
           </button>
@@ -99,9 +106,7 @@ const ServicesList = () => {
               setListSubServicesProducts(false);
               setListBrandProblems(!listBrandProblems);
             }}
-            className={`${
-              listBrandProblems ? `bg-red-700` : `bg-blue-700`
-            } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+            className={createButtonStyle(listBrandProblems)}
           >
             List Brand Problems
           </button>
@@ -114,9 +119,7 @@ const ServicesList = () => {
               setListSubServicesProducts(false);
               setListSubServices(!listSubServices);
             }}
-            className={`${
-              listSubServices ? `bg-red-700` : `bg-blue-700`
-            } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+            className={createButtonStyle(listSubServices)}
           >
             List Service Sub Category
           </button>
@@ -129,9 +132,7 @@ const ServicesList = () => {
               setListSubServices(false);
               setListSubServicesProducts(!listSubServicesProducts);
             }}
-            className={`${
-              listSubServicesProducts ? `bg-red-700` : `bg-blue-700`
-            } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
+            className={createButtonStyle(listSubServicesProducts)}
           >
             List Service Sub Products
           </button>
@@ -141,19 +142,11 @@ const ServicesList = () => {
         {listServiceCategories && (
           <table className="w-full">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Service Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Service Image
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Service Type
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Edit & Delete
-                </th>
+              <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
+                <th className="px-4 py-4 ">Service Name</th>
+                <th className="px-4 py-2 ">Service Image</th>
+                <th className="px-4 py-2 ">Service Type</th>
+                <th className="px-4 py-2 ">Edit & Delete</th>
               </tr>
             </thead>
 
@@ -162,7 +155,9 @@ const ServicesList = () => {
                 servicesData.serviceCategories.map((serviceCategory, index) => (
                   <tr
                     key={index}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    className={
+                      index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                    }
                   >
                     <td className=" py-2">{serviceCategory.name}</td>
                     <td className=" py-2">
@@ -245,19 +240,11 @@ const ServicesList = () => {
             </div>
             <table className="w-full">
               <thead>
-                <tr>
-                  <th className="px-4 py-2 text-white bg-gray-800">
-                    Service Name
-                  </th>
-                  <th className="px-4 py-2 text-white bg-gray-800">
-                    Brand Name
-                  </th>
-                  <th className="px-4 py-2 text-white bg-gray-800">
-                    Service Image
-                  </th>
-                  <th className="px-4 py-2 text-white bg-gray-800">
-                    Edit & Delete
-                  </th>
+                <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
+                  <th className="px-4 py-4 ">Service Name</th>
+                  <th className="px-4 py-2 ">Brand Name</th>
+                  <th className="px-4 py-2 ">Service Image</th>
+                  <th className="px-4 py-2 ">Edit & Delete</th>
                 </tr>
               </thead>
 
@@ -266,7 +253,9 @@ const ServicesList = () => {
                   ? servicesData.serviceBrands.map((serviceBrand, index) => (
                       <tr
                         key={index}
-                        className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                        className={
+                          index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                        }
                       >
                         <td className=" py-2">
                           {serviceBrand.serviceCategoryId.name}
@@ -370,19 +359,11 @@ const ServicesList = () => {
         {listBrandProblems && (
           <table className="w-full">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Service Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Problem Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Sub Service Image
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Edit & Delete
-                </th>
+              <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
+                <th className="px-4 py-4 ">Service Name</th>
+                <th className="px-4 py-2 ">Problem Name</th>
+                <th className="px-4 py-2 ">Sub Service Image</th>
+                <th className="px-4 py-2 ">Edit & Delete</th>
               </tr>
             </thead>
 
@@ -391,7 +372,9 @@ const ServicesList = () => {
                 servicesData.serviceProblems.map((problem, index) => (
                   <tr
                     key={index}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    className={
+                      index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                    }
                   >
                     <td className=" py-2">{problem.serviceCategoryId.name}</td>
                     <td className=" py-2">{problem.name}</td>
@@ -445,19 +428,11 @@ const ServicesList = () => {
         {listSubServices && (
           <table className="w-full">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Service Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Sub Service Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Sub Service Image
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Edit & Delete
-                </th>
+              <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
+                <th className="px-4 py-4 ">Service Name</th>
+                <th className="px-4 py-2 ">Sub Service Name</th>
+                <th className="px-4 py-2 ">Sub Service Image</th>
+                <th className="px-4 py-2 ">Edit & Delete</th>
               </tr>
             </thead>
 
@@ -466,7 +441,9 @@ const ServicesList = () => {
                 servicesData.serviceSubCategories.map((subService, index) => (
                   <tr
                     key={index}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    className={
+                      index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                    }
                   >
                     <td className=" py-2">
                       {subService.serviceCategoryId.name}
@@ -522,31 +499,15 @@ const ServicesList = () => {
         {listSubServicesProducts && (
           <table className="w-full">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Service Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Sub Service Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Product Name
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Product Description
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Product Discount
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Product Price
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Product Image
-                </th>
-                <th className="px-4 py-2 text-white bg-gray-800">
-                  Edit & Delete
-                </th>
+              <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
+                <th className="px-4 py-4 ">Service Name</th>
+                <th className="px-4 py-2 ">Sub Service Name</th>
+                <th className="px-4 py-2 ">Product Name</th>
+                <th className="px-4 py-2 ">Product Description</th>
+                <th className="px-4 py-2 ">Product Discount</th>
+                <th className="px-4 py-2 ">Product Price</th>
+                <th className="px-4 py-2 ">Product Image</th>
+                <th className="px-4 py-2 ">Edit & Delete</th>
               </tr>
             </thead>
 
@@ -555,7 +516,9 @@ const ServicesList = () => {
                 servicesData.serviceSubProducts.map((product, index) => (
                   <tr
                     key={index}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                    className={
+                      index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
+                    }
                   >
                     <td className=" py-2">{product.serviceCategoryId.name}</td>
                     <td className=" py-2">{product.subServiceId.name}</td>

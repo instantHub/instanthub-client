@@ -89,6 +89,7 @@ const DeductionItems = ({
           // } flex flex-col border rounded items-center`}
           onClick={() => {
             if (shouldShowImage) {
+              // 
               if (!conditionName.toLowerCase().includes("defects")) {
                 handleLabelSelection(
                   label.conditionLabel,

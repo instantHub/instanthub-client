@@ -25,6 +25,7 @@ export const api = createApi({
     "Coupons",
     "Services",
     "Recycle",
+    "Variants Questions",
   ],
   endpoints: (build) => ({
     getCategory: build.query({
@@ -593,6 +594,42 @@ export const api = createApi({
       }),
       invalidatesTags: ["Recycle"],
     }),
+
+    // VARIANT WISE QUESTIONS
+    getSingleProduct: build.query({
+      query: () => `/api/questions/single-product`,
+      providesTags: ["Variants Questions"],
+    }),
+    getVariantsQuestions: build.query({
+      query: () => `/api/questions/variants-questions`,
+      providesTags: ["Variants Questions"],
+    }),
+    createVariantQuestions: build.mutation({
+      query: (data) => ({
+        url: "/api/questions/add-variant-questions",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Variants Questions"],
+    }),
+    updateVariantQuestions: build.mutation({
+      query: ({ variantQuestionsId, data }) => ({
+        url: `/api/questions/update-variant-questions/${variantQuestionsId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Variants Questions"],
+    }),
+    deleteVariantQuestions: build.mutation({
+      query: (variantQuestionsId) => ({
+        url: `/api/questions/delete-variant-questions/${variantQuestionsId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Variants Questions"],
+    }),
   }),
 });
 
@@ -667,6 +704,11 @@ export const {
   useCreateRecycleOrderMutation,
   useRecycleOrderCompleteMutation,
   useDeleteRecycleOrderMutation,
+  useGetSingleProductQuery,
+  useGetVariantsQuestionsQuery,
+  useCreateVariantQuestionsMutation,
+  useUpdateVariantQuestionsMutation,
+  useDeleteVariantQuestionsMutation,
 } = api;
 
 // useGetAllQuestionsQuery,
