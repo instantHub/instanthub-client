@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import {
-  useGetAllProductsQuery,
   useGetProductDetailsQuery,
   useGetVariantsQuestionsQuery,
   useUpdatePriceDropMutation,
@@ -258,6 +257,10 @@ const ProductQuestionsList = () => {
     }
   };
 
+  if (!productsLoading) {
+    console.log(productDetail);
+  }
+
   // useEffect(() => {}, [productDetail]);
   // console.log("operation", operation);
 
@@ -279,12 +282,12 @@ const ProductQuestionsList = () => {
       </div>
 
       <div className="relative w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
-        <div className="flex justify-center m-2">
+        <div className="flex justify-between m-2">
           <h3 className="text-2xl font-serif font-bold mb-1 sticky">
             {productData ? productData.name : "Loading.."} {selectedVariant}
           </h3>
           {/* Variants Questions Data */}
-          {/* {productData && productData.category.name === "Mobile" ? (
+          {productData && productData.category.name === "Mobile" ? (
             <div className="flex items-center justify-around gap-4">
               {variantsQuestionsData.map((vq) => {
                 return (
@@ -306,7 +309,7 @@ const ProductQuestionsList = () => {
                 );
               })}
             </div>
-          ) : null} */}
+          ) : null}
         </div>
 
         <hr />

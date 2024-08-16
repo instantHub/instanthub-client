@@ -16,7 +16,7 @@ export const adminApiSlice = api.injectEndpoints({
       query: (data) => ({
         url: `${ADMIN_URL}/auth`,
         method: "POST",
-        // credentials: "include",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

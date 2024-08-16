@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { startTransition, Suspense, useEffect, useState } from "react";
 import { SiShopware } from "react-icons/si";
 import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
@@ -64,6 +64,13 @@ const SideBar = (props) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
+
+  const handleClick = (event) => {
+    event.preventDefault(); // Prevent default behavior
+    startTransition(() => {
+      window.history.pushState({}, "", to); // Programmatic navigation
+    });
+  };
 
   const links = [
     // DASHBOARD
@@ -252,11 +259,11 @@ const SideBar = (props) => {
   const normalLink =
     "flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2";
 
-  const handleCloseSideBar = () => {
-    if (activeMenu !== undefined && screenSize <= 900) {
-      setActiveMenu(false);
-    }
-  };
+  // const handleCloseSideBar = () => {
+  //   if (activeMenu !== undefined && screenSize <= 900) {
+  //     setActiveMenu(false);
+  //   }
+  // };
 
   return (
     <div
@@ -267,7 +274,7 @@ const SideBar = (props) => {
       <div className="flex justify-between items-center">
         <Link
           to="/admin"
-          onClick={handleCloseSideBar}
+          // onClick={handleCloseSideBar}
           className="items-center gap-2 ml-3 mt-4 flex text-l font-extrabold tracking-tight dark:text-white text-slate-900"
         >
           {/* <SiShopware />  */}
@@ -290,23 +297,26 @@ const SideBar = (props) => {
             <p className="text-gray-400 text-sm dark:text-gray-400 mx-2 mt-2 uppercase">
               {item.title}
             </p>
-            {item.links.map((link) => (
-              <NavLink
-                to={`/admin/${link.name}`}
-                // to={`/${link.name}`}
-                key={link.name}
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : "",
-                })}
-                className={({ isActive }) =>
-                  isActive ? activeLink : normalLink
-                }
-              >
-                {link.icon}
-                <span className="capitalize">{link.name}</span>
-              </NavLink>
-            ))}
+            <Suspense fallback={<div>Loading...</div>}>
+              {item.links.map((link) => (
+                <NavLink
+                  to={`/admin/${link.name}`}
+                  // to={`/${link.name}`}
+                  key={link.name}
+                  // onClick={handleCloseSideBar}
+                  onClick={() => handleClick(e, `/admin/${link.name}`)}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  {link.icon}
+                  <span className="capitalize">{link.name}</span>
+                </NavLink>
+              ))}
+            </Suspense>
           </div>
         ))}
       </div>

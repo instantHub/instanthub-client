@@ -50,6 +50,10 @@ const ConditionsTable = () => {
     closeModal();
   };
 
+  // if (!conditionsLoading) {
+  //   console.log(conditions);
+  // }
+
   return (
     //ConditionsListList
     <>

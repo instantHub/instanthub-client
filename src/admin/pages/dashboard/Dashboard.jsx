@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import {
   useGetCategoryQuery,
@@ -47,21 +46,19 @@ const Dashboard = () => {
       const ordersPending = ordersData.filter(
         (order) => order.status.toLowerCase() === "pending"
       );
-      console.log("ordersPending", ordersPending);
+      // console.log("ordersPending", ordersPending);
       setOrdersPendingCount(ordersPending.length);
 
       const ordersReceived = ordersData.filter(
         (order) => order.status.toLowerCase() === "received"
       );
-      console.log("ordersReceived", ordersReceived);
+      // console.log("ordersReceived", ordersReceived);
       setOrdersReceivedCount(ordersReceived.length);
     }
   }, [ordersData]);
 
-  console.log("ordersPendingCount", ordersPendingCount);
-  console.log("ordersReceivedCount", ordersReceivedCount);
-
-  const dispatch = useDispatch();
+  // console.log("ordersPendingCount", ordersPendingCount);
+  // console.log("ordersReceivedCount", ordersReceivedCount);
 
   return (
     <>
@@ -149,4 +146,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import "./App.css";
 import {
   createBrowserRouter as Router,
@@ -29,18 +29,23 @@ import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
 
 // POLICIES
 import ClientTermsAndPolicies from "./components/policies/AllTermsAndPolicies";
-import ClientPrivacyPolicy from "./components/policies/PrivacyPolicy";
-import ClientTermsAndConditions from "./components/policies/TermsAndConditions";
-import ClientTermsOfUse from "./components/policies/TermsOfUse";
+// import ClientPrivacyPolicy from "./components/policies/PrivacyPolicy";
+// import ClientTermsAndConditions from "./components/policies/TermsAndConditions";
+// import ClientTermsOfUse from "./components/policies/TermsOfUse";
 // import emailcheck from './components/'
 
 // Admin side
 import PrivateRoute from "./admin/components/PrivateRoute";
 import AdminSignIn from "./admin/pages/signIn & signup/SignIn";
 import AdminSignUp from "./admin/pages/signIn & signup/SignUp";
-import UpdateAdminProfile from "./admin/components/UpdateAdmin";
-import AdminDashboard from "./admin/pages/dashboard/Dashboard";
-import AdminProducts from "./admin/pages/products/Products";
+
+// import UpdateAdminProfile from "./admin/components/UpdateAdmin";
+// import AdminDashboard from "./admin/pages/dashboard/Dashboard";
+// import AdminProducts from "./admin/pages/products/Products";
+const UpdateAdminProfile = lazy(() => import("./admin/components/UpdateAdmin"));
+const AdminDashboard = lazy(() => import("./admin/pages/dashboard/Dashboard"));
+const AdminProducts = lazy(() => import("./admin/pages/products/Products"));
+
 import AdminCreateProducts from "./admin/pages/products/CreateProducts";
 import AdminUpdateProduct from "./admin/pages/products/UpdateProduct";
 import AdminBrands from "./admin/pages/brands/Brands";
