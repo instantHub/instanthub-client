@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import {
-  useGetAllProductsQuery,
-  useGetProductDetailsQuery,
   useGetVariantsQuestionsQuery,
-  useUpdatePriceDropMutation,
   useUpdateVariantQuestionsMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";
@@ -45,7 +42,7 @@ const UpdateVariantQuestions = () => {
   // New Approach
   const handlePriceDropChange = (conditionLabelId, value, check) => {
     // Find the condition label by conditionLabelId and update the priceDrop
-    // console.log("Simple Deductions", check);
+    console.log("Simple Deductions", check);
     let updatedVariantsData;
     if (check === "priceDrop") {
       // const updatedVariantsData = {
@@ -228,7 +225,7 @@ const UpdateVariantQuestions = () => {
                   type="submit"
                   className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </form>

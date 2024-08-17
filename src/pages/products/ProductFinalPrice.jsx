@@ -652,7 +652,7 @@ const ProductFinalPrice = () => {
       )}
 
       {isOpen && (
-        <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold mb-4">Enter your details</h2>
@@ -666,7 +666,6 @@ const ProductFinalPrice = () => {
             <p></p>
             <div>
               <form
-                action=""
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-2 justify-center"
               >
@@ -917,22 +916,13 @@ const ProductFinalPrice = () => {
                   </div>
                 </div>
 
-                {!ordersLoading ? (
-                  <input
-                    type="submit"
-                    value="Sell"
-                    name=""
-                    className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm"
-                  />
-                ) : (
-                  <input
-                    type="submit"
-                    value="Loading"
-                    name=""
-                    className="border rounded px-2 py-1 w-1/5 bg-blue-300 text-white cursor-none max-sm:text-sm"
-                    disabled
-                  />
-                )}
+                <input
+                  type="submit"
+                  value={`${!ordersLoading ? "Sell" : "Loading..."} `}
+                  name=""
+                  className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
+                  disabled={ordersLoading}
+                />
               </form>
             </div>
           </div>

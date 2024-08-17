@@ -35,6 +35,13 @@ const Navbar = (props) => {
     } catch (error) {}
   };
 
+  const handleClick = (event) => {
+    event.preventDefault(); // Prevent default behavior
+    startTransition(() => {
+      window.history.pushState({}, "", to); // Programmatic navigation
+    });
+  };
+
   return (
     <>
       {/* Appbar */}
@@ -58,7 +65,10 @@ const Navbar = (props) => {
               {isDropdownOpen && (
                 <div className="absolute mt-32 w- bg-white rounded-lg shadow-lg">
                   <div className="py-1">
-                    <Link to={"/admin/update-profile"}>
+                    <Link
+                      to={"/admin/update-profile"}
+                      onClick={() => handleClick(e, "/admin/update-profile")}
+                    >
                       <h1 className="block px-4 py-2 text-gray-800 hover:bg-gray-300">
                         Profile
                       </h1>

@@ -219,7 +219,7 @@ const Products = () => {
             <span>Loading...</span>
           </div>
         ) : (
-          <div class="">
+          <div>
             <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
               {!productsData.length == 0 ? (
                 !showSeries ? (

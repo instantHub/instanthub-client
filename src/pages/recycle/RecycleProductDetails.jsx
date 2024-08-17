@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet-async";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import { FaGooglePay } from "react-icons/fa";
+import FormInput from "../../components/FormInput";
 
 const RecycleProductDetail = () => {
   const { prodId } = useParams();
@@ -46,6 +47,7 @@ const RecycleProductDetail = () => {
   const currentDate = new Date();
   const navigate = useNavigate();
 
+  const [schedulePickUp, setSchedulePickUp] = useState(null);
   const [paymentMode, setPaymentMode] = useState("");
   const [showDigitalPay, setShowDigitalPay] = useState(false);
 
@@ -59,6 +61,7 @@ const RecycleProductDetail = () => {
   // );
 
   const handlePaymentModeChange = (e) => {
+    console.log("handlePaymentModeChange");
     setSelectedPaymentMode(e.target.value);
     setSelectedDigitalPayment(""); // Reset digital payment selection
   };
@@ -107,11 +110,14 @@ const RecycleProductDetail = () => {
     value = value.replace(/\D/g, "");
 
     // Restrict the length to 10 digits
-    if (value.length <= 10) {
-      setFormData({ ...formData, phone: Number(e.target.value) });
-    } else {
+    if (value.length > 10) {
       toast.error("Phone Number cannot be more than 10 digits");
     }
+    // if (value.length <= 10) {
+    //   setFormData({ ...formData, phone: Number(e.target.value) });
+    // } else {
+    //   toast.error("Phone Number cannot be more than 10 digits");
+    // }
   };
 
   const handleTimeChange = (date) => {
@@ -124,13 +130,22 @@ const RecycleProductDetail = () => {
       { hour: "numeric", minute: "numeric", hour12: true }
     )}`;
     // console.log("formattedDate", formattedDate);
-    setFormData({ ...formData, schedulePickUp: formattedDate });
+    setSchedulePickUp(formattedDate);
   };
+
+  // useEffect to select product variant
+  useEffect(() => {
+    if (!isLoading) {
+      if (productDetails.category.name !== "Mobile") {
+        handleToggle(productDetails.variants[0]);
+      }
+    }
+    // setLoadedInitially(true);
+  }, [productDetails]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    let paymentMode;
+    console.log("handleSubmit");
 
     if (
       selectedPaymentMode === "" ||
@@ -141,9 +156,29 @@ const RecycleProductDetail = () => {
       return;
     }
 
+    const data = new FormData(e.target);
+    const formData = Object.fromEntries(data.entries());
+    // console.log("formData", formData);
+
+    for (const i in formData) {
+      // console.log(`${i}: ${formData[i]}`);
+      if (formData[i] === "") {
+        toast.error("Fill all the fields..!!");
+        return;
+      }
+    }
+
     const orderData = {
-      ...formData,
-      addressDetails,
+      customerName: formData.customerName,
+      email: formData.email,
+      phone: formData.phone,
+      schedulePickUp,
+      addressDetails: {
+        address: formData.address,
+        state: formData.state,
+        city: formData.city,
+        pinCode: formData.pinCode,
+      },
       productDetails: {
         productName: productDetails.name,
         productBrand: productDetails.brand.name,
@@ -171,26 +206,19 @@ const RecycleProductDetail = () => {
     };
     // console.log("orderData", orderData);
 
-    // const order = await createOrder(formData);
-    const order = await createRecycleOrder(orderData);
-    // console.log("order", order);
-    if (order.data.success) {
-      //   closeModal();
-      //   setOrderOpen(false);
-      toast.success("Your Order placed successfully");
-      navigate(`/recycle-categories`);
+    try {
+      const order = await createRecycleOrder(orderData);
+      console.log("order", order);
+      if (order.data.success) {
+        //   closeModal();
+        //   setOrderOpen(false);
+        toast.success("Your Order placed successfully");
+        navigate(`/recycle-categories`);
+      }
+    } catch (error) {
+      console.log("Error while booking recycle product:- ", error.message);
     }
   };
-
-  // useEffect to select product variant
-  useEffect(() => {
-    if (!isLoading) {
-      if (productDetails.category.name !== "Mobile") {
-        handleToggle(productDetails.variants[0]);
-      }
-    }
-    // setLoadedInitially(true);
-  }, [productDetails]);
 
   // console.log("formData", formData);
   // console.log("addressDetails", addressDetails);
@@ -353,26 +381,24 @@ const RecycleProductDetail = () => {
 
                         <div className="flex flex-row flex-wrap list-none p-0 my-0 -mx-2">
                           {productDetails.variants.map((variantSelected) => (
-                            <>
+                            <div
+                              key={variantSelected.id}
+                              className="p-2 w-1/2 sm:w-40 sm:max-w-full"
+                              onClick={() => handleToggle(variantSelected)}
+                            >
                               <div
-                                key={variantSelected.id}
-                                className="p-2 w-1/2 sm:w-40 sm:max-w-full"
-                                onClick={() => handleToggle(variantSelected)}
+                                className={`${
+                                  selectedDiv == variantSelected.id
+                                    ? "bg-amber-500 text-white"
+                                    : "bg-white"
+                                } flex items-center rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow`}
                               >
-                                <div
-                                  className={`${
-                                    selectedDiv == variantSelected.id
-                                      ? "bg-amber-500 text-white"
-                                      : "bg-white"
-                                  } flex items-center rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow`}
-                                >
-                                  <span className="border border-solid border-surface-dark rounded-full w-5 h-5 mr-1.5"></span>
-                                  <span className="text-sm flex-1 flex justify-center">
-                                    {variantSelected.name}
-                                  </span>
-                                </div>
+                                <span className="border border-solid border-surface-dark rounded-full w-5 h-5 mr-1.5"></span>
+                                <span className="text-sm flex-1 flex justify-center">
+                                  {variantSelected.name}
+                                </span>
                               </div>
-                            </>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -443,7 +469,7 @@ const RecycleProductDetail = () => {
         </div>
 
         {checkMobileOn && (
-          <td>
+          <div>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
                 <div className="flex justify-center">
@@ -495,11 +521,11 @@ const RecycleProductDetail = () => {
                 </div>
               </div>
             </div>
-          </td>
+          </div>
         )}
 
         {checkLaptopOn && (
-          <td>
+          <div>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
                 <div className="flex justify-center">
@@ -553,11 +579,11 @@ const RecycleProductDetail = () => {
                 </div>
               </div>
             </div>
-          </td>
+          </div>
         )}
 
         {checkLaptopAge && (
-          <td>
+          <div>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
                 <div className="flex justify-center">
@@ -607,11 +633,11 @@ const RecycleProductDetail = () => {
                 </div>
               </div>
             </div>
-          </td>
+          </div>
         )}
 
         {isOpen && (
-          <td>
+          <div>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-8 rounded-lg shadow-lg w-[30%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
                 <div className="flex justify-center">
@@ -694,12 +720,12 @@ const RecycleProductDetail = () => {
                 </div>
               </div>
             </div>
-          </td>
+          </div>
         )}
 
         {orderOpen && (
           <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-[50%] max-sm:w-[90%]">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-[50%] max-lg:w-[90%]">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold mb-4">
                   Enter your details
@@ -711,9 +737,224 @@ const RecycleProductDetail = () => {
                   x
                 </button>
               </div>
-              <p></p>
               <div>
                 <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-3 justify-center"
+                >
+                  <FormInput
+                    name="customerName"
+                    pattern="^[A-Za-z]{3,16}"
+                    placeholder="Enter Name"
+                    errorMessage="Min 3 characters required..!"
+                    required={true}
+                  />
+                  <FormInput
+                    type="text"
+                    name="email"
+                    placeholder="Enter Email"
+                  />
+                  <FormInput
+                    type="number"
+                    name="phone"
+                    placeholder="Enter Phone Number"
+                    handleChange={handlePhoneChange}
+                  />
+                  <FormInput
+                    type="text"
+                    name="address"
+                    placeholder="Enter your Address"
+                  />
+                  <div className="flex gap-4 items-center max-sm:flex-col max-sm:items-start max-sm:gap-1">
+                    <FormInput
+                      type="text"
+                      name="state"
+                      placeholder="Enter State"
+                    />
+                    <FormInput
+                      type="text"
+                      name="city"
+                      placeholder="Enter City"
+                    />
+                    <FormInput
+                      type="number"
+                      name="pinCode"
+                      placeholder="Enter Pincode"
+                      handleChange={handlePinCodeChange}
+                    />
+                  </div>
+
+                  <div className="flex items-center">
+                    <h2 className="max-sm:text-md">Select Date and Time:</h2>{" "}
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={handleTimeChange}
+                      showTimeSelect
+                      // timeFormat="HH:mm" // 24 hours
+                      timeFormat="h:mm aa" // 12 hours
+                      timeIntervals={30}
+                      dateFormat="MMMM d, yyyy h:mm aa"
+                      timeCaption="Time"
+                      minDate={currentDate}
+                      minTime={minTime}
+                      maxTime={maxTime}
+                      className="border ml-1 p-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-[2px]"
+                      placeholderText="Schedule Pickup"
+                      required
+                    />
+                  </div>
+                  <div>
+                    {selectedDate && (
+                      <p>
+                        Scheduled time:{" "}
+                        <span className="font-semibold">{schedulePickUp}</span>{" "}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <FormInput
+                      type="radio"
+                      name="paymentMode"
+                      value="Instant Cash"
+                      checked={selectedPaymentMode === "Instant Cash"}
+                      handlePayment={handlePaymentModeChange}
+                    />
+
+                    <div className="mx-2">
+                      <img
+                        src="/images/instantcash.webp"
+                        alt="upi"
+                        className="w-16 h-7"
+                      />
+                    </div>
+
+                    <label className="flex items-center">
+                      <FormInput
+                        type="radio"
+                        name="paymentMode"
+                        value="Digital Payments"
+                        checked={selectedPaymentMode === "Digital Payments"}
+                        handlePayment={handlePaymentModeChange}
+                      />
+                      <div className="mx-2">
+                        <img
+                          src="/images/upi2.webp"
+                          alt="upi"
+                          className="w-14 h-7"
+                        />
+                      </div>
+                    </label>
+
+                    {selectedPaymentMode === "Digital Payments" && (
+                      <div className="ml-6 mt-2 space-y-2">
+                        <label className="flex items-center">
+                          <FormInput
+                            type="radio"
+                            name="digitalPaymentMode"
+                            value="GPay"
+                            checked={selectedDigitalPayment === "GPay"}
+                            handlePayment={handleDigitalPaymentChange}
+                          />
+                        </label>
+                        <label className="flex items-center">
+                          <FormInput
+                            type="radio"
+                            name="digitalPaymentMode"
+                            value="PhonePe"
+                            checked={selectedDigitalPayment === "PhonePe"}
+                            handlePayment={handleDigitalPaymentChange}
+                          />
+                        </label>
+                        <label className="flex items-center">
+                          <FormInput
+                            // id="upi"
+                            type="radio"
+                            name="digitalPaymentMode"
+                            value="UPI"
+                            checked={selectedDigitalPayment === "UPI"}
+                            handlePayment={handleDigitalPaymentChange}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                  <input
+                    type="submit"
+                    value={`${!orderLoading ? "Sell" : "Loading..."} `}
+                    name=""
+                    className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
+                    disabled={orderLoading}
+                  />
+                </form>
+
+                {/* OLD FORM WAS BELOW */}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default RecycleProductDetail;
+
+// OLD FORM
+{
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let paymentMode;
+  //   if (
+  //     selectedPaymentMode === "" ||
+  //     (selectedPaymentMode.toLowerCase().includes("digital") &&
+  //       selectedDigitalPayment === "")
+  //   ) {
+  //     toast.error("Select Payment Mode..!");
+  //     return;
+  //   }
+  //   console.log("formData", formData);
+  //   const orderData = {
+  //     ...formData,
+  //     addressDetails,
+  //     productDetails: {
+  //       productName: productDetails.name,
+  //       productBrand: productDetails.brand.name,
+  //       productCategory: productDetails.category.name,
+  //       productVariant: productDetails.category.name
+  //         .toLowerCase()
+  //         .includes("mobile")
+  //         ? variantSelected.name
+  //         : null,
+  //       productAge: productDetails.category.name
+  //         .toLowerCase()
+  //         .includes("laptop")
+  //         ? ageSelected
+  //         : null,
+  //       productStatus: productDetails.category.name
+  //         .toLowerCase()
+  //         .includes("mobile")
+  //         ? mobileStatus
+  //         : laptopStatus,
+  //     },
+  //     paymentMode: selectedPaymentMode.toLowerCase().includes("instant")
+  //       ? selectedPaymentMode
+  //       : selectedDigitalPayment,
+  //     recyclePrice,
+  //   };
+  //   // console.log("orderData", orderData);
+  //   // const order = await createOrder(formData);
+  //   // const order = await createRecycleOrder(orderData);
+  //   // // console.log("order", order);
+  //   // if (order.data.success) {
+  //   //   //   closeModal();
+  //   //   //   setOrderOpen(false);
+  //   //   toast.success("Your Order placed successfully");
+  //   //   navigate(`/recycle-categories`);
+  //   // }
+  // };
+  /* <form
                   action=""
                   onSubmit={handleSubmit}
                   className="flex flex-col gap-3 justify-center"
@@ -869,7 +1110,6 @@ const RecycleProductDetail = () => {
                     )}
                   </div>
 
-                  {/* Payment */}
                   <div className="pb-2">
                     <h2 className="text-xl mb-4">Select Payment Mode</h2>
                     <div className="space-y-2">
@@ -965,37 +1205,12 @@ const RecycleProductDetail = () => {
                     </div>
                   </div>
 
-                  {/* <input
+                  <input
                     type="submit"
-                    value="Recycle"
+                    value={`${!orderLoading ? "Sell" : "Loading..."} `}
                     name=""
-                    className="border rounded px-2 py-1 w-1/4 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm"
-                  /> */}
-                  {!orderLoading ? (
-                    <input
-                      type="submit"
-                      value="Sell"
-                      name=""
-                      className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm"
-                      // className="border rounded px-2 py-1 w-1/5 bg-green-600 text-black cursor-pointer hover:bg-green-700 max-sm:text-sm bg-[url('/recycle1.png')] bg- bg-center bg-no-repeat"
-                    />
-                  ) : (
-                    <input
-                      type="submit"
-                      value="Loading"
-                      name=""
-                      className="border rounded px-2 py-1 w-1/5 bg-blue-300 text-white cursor-none max-sm:text-sm"
-                      disabled
-                    />
-                  )}
-                </form>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
-
-export default RecycleProductDetail;
+                    className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
+                    disabled={orderLoading}
+                  />
+                </form>{" "} */
+}

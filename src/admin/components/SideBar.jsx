@@ -65,7 +65,7 @@ const SideBar = (props) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
-  const handleClick = (event) => {
+  const handleClick = (event, to) => {
     event.preventDefault(); // Prevent default behavior
     startTransition(() => {
       window.history.pushState({}, "", to); // Programmatic navigation

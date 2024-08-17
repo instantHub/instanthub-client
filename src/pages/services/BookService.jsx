@@ -25,7 +25,6 @@ export default function BookService() {
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
-
   const [createServiceOrder, { isLoading: createServiceOrderLoading }] =
     useCreateServiceOrderMutation();
 
@@ -593,13 +592,18 @@ export default function BookService() {
                     </div>
 
                     <div>
+                      {/* <input
+                        type="submit"
+                        value={`Book Now`}
+                        className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      /> */}
                       <input
                         type="submit"
-                        name=""
-                        id=""
-                        value={`Book Now`}
-                        // className="px-2 py-1 bg-green-600 text-white rounded"
-                        className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                        value={`${
+                          !createServiceOrderLoading ? "Book Now" : "Loading..."
+                        } `}
+                        className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
+                        disabled={createServiceOrderLoading}
                       />
                     </div>
                     {st !== "ss" ? (

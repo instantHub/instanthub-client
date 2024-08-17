@@ -289,25 +289,26 @@ const ProductQuestionsList = () => {
           {/* Variants Questions Data */}
           {productData && productData.category.name === "Mobile" ? (
             <div className="flex items-center justify-around gap-4">
-              {variantsQuestionsData.map((vq) => {
-                return (
-                  <div>
-                    <button
-                      onClick={() => {
-                        setSelectedVariantToFill(vq);
-                        setIsOpen(true);
-                      }}
-                      className={`bg-green-600 px-2 py-1 text-sm rounded text-white ${
-                        vq.name === selectedVariantToFill?.name
-                          ? `bg-red-600 text-xl`
-                          : ``
-                      }`}
-                    >
-                      {vq.name}
-                    </button>
-                  </div>
-                );
-              })}
+              {!variantsQuestionsDataLoading &&
+                variantsQuestionsData.map((vq) => {
+                  return (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setSelectedVariantToFill(vq);
+                          setIsOpen(true);
+                        }}
+                        className={`bg-green-600 px-2 py-1 text-sm rounded text-white ${
+                          vq.name === selectedVariantToFill?.name
+                            ? `bg-red-600 text-xl`
+                            : ``
+                        }`}
+                      >
+                        {vq.name}
+                      </button>
+                    </div>
+                  );
+                })}
             </div>
           ) : null}
         </div>

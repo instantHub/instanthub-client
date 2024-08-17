@@ -14,8 +14,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const RecycleOrdersList = () => {
-  const { data: ordersData, isLoading: ordersLoading } =
-    useGetOrdersListQuery();
   const { data: recycleOrdersData, isLoading: recycleOrdersDataloading } =
     useGetRecycleOrdersQuery();
   console.log("recycleOrdersData", recycleOrdersData);
@@ -38,10 +36,6 @@ const RecycleOrdersList = () => {
   const fileInputRef2 = useRef(null);
   const fileInputRef3 = useRef(null);
   const fileInputRef4 = useRef(null);
-  if (!ordersLoading) {
-    console.log(ordersData);
-  }
-  console.log("ordersData", ordersData);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -84,14 +78,12 @@ const RecycleOrdersList = () => {
   };
 
   const handleOrderOpen = (recycleOrder) => {
-    // const selectedOrder = ordersData.find((order) => order.id === orderId);
     setSelectedOrder(recycleOrder);
     setIsOpen(true);
     console.log("selectedOrder", selectedOrder);
   };
 
   const handleOrderView = (recycleOrder) => {
-    // const selectedOrder = ordersData.find((order) => order.id === orderId);
     setOrderView(recycleOrder);
     setOrderViewOpen(true);
     console.log("setOrderView", selectedOrder);

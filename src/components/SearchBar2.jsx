@@ -50,7 +50,7 @@ const SearchBar = () => {
 
         // SERVICES
         services = await axios.get(
-          "http://localhost:8000/api/services/search-services",
+          "http://localhost:8000/api/services/search",
           {
             params: {
               search: searchValue.trim() ? searchValue : undefined,
@@ -74,7 +74,7 @@ const SearchBar = () => {
 
         // SERVICES
         services = await axios.get(
-          "https://api.yusufqureshi.online/api/services/search-services",
+          "https://api.yusufqureshi.online/api/services/search",
           {
             params: {
               search: searchValue.trim() ? searchValue : undefined,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   useGetCategoryQuery,
@@ -6,7 +6,11 @@ import {
   useGetAllProductsQuery,
   useGetOrdersListQuery,
   useGetStocksQuery,
+  useGetVariantsQuestionsQuery,
+  useGetServicesQuery,
+  useGetRecycleOrdersQuery,
 } from "../../../features/api";
+import axios from "axios";
 
 const Dashboard = () => {
   const { data: categoryData, isLoading: categoryLoading } =
@@ -18,12 +22,20 @@ const Dashboard = () => {
     useGetOrdersListQuery();
   const { data: stocksData, isLoading: stocksDataLoading } =
     useGetStocksQuery();
+  const { data: recycleOrdersData, isLoading: recycleOrdersDataloading } =
+    useGetRecycleOrdersQuery();
 
   const [ordersPendingCount, setOrdersPendingCount] = useState();
   const [ordersReceivedCount, setOrdersReceivedCount] = useState();
 
   const [totalStocksIn, setTotalStocksIn] = useState(0);
   const [totalStocksOut, setTotalStocksOut] = useState(0);
+
+  const divStyle =
+    "relative text-center text-white pt-4 h-[120px] max-h-[120px] border rounded-lg";
+  const divDesc = "text-start pl-4 text-lg";
+  const divMoreBtn =
+    "absolute bottom-0 w-full py-2 text-center rounded-lg cursor-pointer";
 
   useEffect(() => {
     let countIn = 0,
@@ -65,80 +77,92 @@ const Dashboard = () => {
       <div className="grid grid-cols-4 mx-10 my-20 gap-2 items-center">
         {/* {isLoading ? <h1>Loading...</h1> : <h3>bjhb {data.name}</h3>} */}
         {!categoryLoading && (
-          <div className="bg-orange-500 text-center text-white pt-4">
-            <div className="text-start pl-4 my-2 text-lg">
+          <div className={` bg-orange-50 border-orange-500  ${divStyle}`}>
+            <div className={`text-orange-500 ${divDesc}`}>
               Total {categoryData.length} Categories
             </div>
-            <div className="py-2 text-center bg-orange-600">
+            <div className={`bg-orange-200 text-orange-500 ${divMoreBtn}`}>
               <Link to={"/admin/categories-list"}>More Info</Link>
             </div>
           </div>
         )}
 
         {!brandsLoading && (
-          <div className="bg-green-500 text-center text-white pt-4 ">
-            <div className="text-start pl-4 my-2 text-lg">
+          <div className={` bg-green-50 border-green-500  ${divStyle}`}>
+            <div className={`text-green-700 ${divDesc}`}>
               Total {brandsData.length} Brands
             </div>
-            <div className="py-2 text-center bg-green-600">
+            <div className={`bg-green-200 text-green-700 ${divMoreBtn}`}>
               <Link to={"/admin/brands-list"}>More Info</Link>
             </div>
           </div>
         )}
 
         {!productsLoading && (
-          <div className="bg-blue-500 text-center text-white pt-4 ">
-            <div className="text-start pl-4 my-2 text-lg">
+          <div className={`bg-blue-50 border-blue-500  ${divStyle}`}>
+            <div className={`text-blue-700 ${divDesc}`}>
               Total {productsData.totalProducts} Products
             </div>
-            <div className="py-2 text-center bg-blue-600">
+            <div className={`bg-blue-200 text-blue-700 ${divMoreBtn}`}>
               <Link to={"/admin/products-list"}>More Info</Link>
             </div>
           </div>
         )}
+
         {!ordersLoading && (
           <>
-            <div className="bg-yellow-500 text-center text-white pt-4 ">
-              <div className="text-start pl-4 my-2 text-lg">
+            <div className={`bg-yellow-50 border-yellow-500 ${divStyle}`}>
+              <div className={`text-yellow-700 ${divDesc}`}>
                 Total {ordersData.length} Orders
               </div>
-              <div className="py-2 text-center bg-yellow-600">
+              <div className={`bg-yellow-200 text-yellow-700 ${divMoreBtn}`}>
                 <Link to={"/admin/orders"}>More Info</Link>
               </div>
             </div>
-            <div className="bg-slate-500 text-center text-white pt-4 ">
-              <div className="text-start pl-4 my-2 text-lg">
+            <div className={`bg-slate-50 border-slate-500 ${divStyle}`}>
+              <div className={`text-slate-700 ${divDesc}`}>
                 Total {ordersPendingCount} Orders Pending
               </div>
-              <div className="py-2 text-center bg-slate-600">
+              <div className={`bg-slate-200 text-slate-700 ${divMoreBtn}`}>
                 <Link to={"/admin/orders"}>More Info</Link>
               </div>
             </div>
-            <div className="bg-cyan-500 text-center text-white pt-4 ">
-              <div className="text-start pl-4 my-2 text-lg">
+            <div className={`bg-cyan-500 ${divStyle}`}>
+              <div className={`${divDesc}`}>
                 Total {ordersReceivedCount} Orders Received / Completed
               </div>
-              <div className="py-2 text-center bg-cyan-600">
+              <div className={`bg-cyan-600 ${divMoreBtn}`}>
                 <Link to={"/admin/orders"}>More Info</Link>
               </div>
             </div>
-            <div className="bg-red-700 text-center text-white pt-4 ">
-              <div className="text-start pl-4 my-2 text-lg">
+            <div className={`bg-red-50 border-red-500 ${divStyle}`}>
+              <div className={`text-red-700 ${divDesc}`}>
                 Total {totalStocksIn} Stocks In
               </div>
-              <div className="py-2 text-center bg-red-800">
+              <div className={`bg-red-200 text-red-700  ${divMoreBtn}`}>
                 <Link to={"/admin/manage-stocks"}>More Info</Link>
               </div>
             </div>
-            <div className="bg-pink-400 text-center text-white pt-4 ">
-              <div className="text-start pl-4 my-2 text-lg">
+            <div className={`bg-pink-500 ${divStyle}`}>
+              <div className={`${divDesc}`}>
                 Total {totalStocksOut} Stocks Out
               </div>
-              <div className="py-2 text-center bg-pink-600">
+              <div className={`bg-pink-600 ${divMoreBtn}`}>
                 <Link to={"/admin/manage-stocks"}>More Info</Link>
               </div>
             </div>
           </>
+        )}
+
+        {!recycleOrdersDataloading && (
+          <div className={`bg-amber-300 ${divStyle}`}>
+            <div className={`${divDesc}`}>
+              Total {recycleOrdersData.length} Recycle Order
+            </div>
+            <div className={`bg-amber-500 ${divMoreBtn}`}>
+              <Link to={"/admin/recycle-orders"}>More Info</Link>
+            </div>
+          </div>
         )}
       </div>
       <Outlet />
