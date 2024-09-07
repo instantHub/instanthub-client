@@ -6,7 +6,12 @@ import {
   useGetVariantsQuestionsQuery,
   useUpdatePriceDropMutation,
 } from "../../../features/api";
+
 import { toast } from "react-toastify";
+
+import UpdateSystemConfigurations from "./systemPriceDrops/UpdateSystemConfigurations";
+import UpdateSystemConditions from "./systemPriceDrops/UpdateSystemConditions";
+import BackButton from "../../components/BackButton";
 
 const ProductQuestionsList = () => {
   const { productId } = useParams();
@@ -16,13 +21,35 @@ const ProductQuestionsList = () => {
   // console.log("selectedVariant", selectedVariant);
 
   const [selectedDeductions, setSelectedDeductions] = useState(null);
+
+  const [productCategory, setProductCategory] = useState(null);
+  const [processorsList, setProcessorsList] = useState(null);
+  const [selectedProcessorId, setSelectedProcessorId] = useState(null);
+  const [selectedProcessorDeductions, setSelectedProcessorDeductions] =
+    useState(null);
+  const [processorBasedDeductions, setProcessorBasedDeductions] =
+    useState(null);
+
   const [selectedVariantToFill, setSelectedVariantToFill] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const [selectedMobileCat, setSelectedMobileCat] = useState(false);
+  const [selectedSystemCat, setSelectedSystemCat] = useState(false);
+  const [selectedOtherCat, setSelectedOtherCat] = useState(false);
+
+  const [toggle, setToggle] = useState({
+    updateAllSystemConfig: false,
+    updateSingleSystemConfig: false,
+    updateAllSystemCondition: false,
+    updateSingleSystemCondition: false,
+    showSystemConfiguration: true,
+  });
 
   const { data: productDetail, isLoading: productsLoading } =
     useGetProductDetailsQuery(productId);
 
-  const [productData, setProductData] = useState();
+  const [productData, setProductData] = useState(null);
+
   const [updatePriceDrop, { isLoading: updateLoading }] =
     useUpdatePriceDropMutation();
 
@@ -31,26 +58,9 @@ const ProductQuestionsList = () => {
     isLoading: variantsQuestionsDataLoading,
   } = useGetVariantsQuestionsQuery();
 
-  //  UseEffect to set the Deductions what is selected
-  useEffect(() => {
-    if (productDetail) {
-      // console.log("productDetail", productDetail);
-
-      // Set the matched product to the component state
-      setProductData(productDetail);
-      if (productDetail.category.name === "Mobile") {
-        setSelectedDeductions(
-          productDetail.variantDeductions.find(
-            (d) => d.variantName == selectedVariant
-          )
-        );
-      } else if (productDetail.category.name !== "Mobile") {
-        setSelectedDeductions(productDetail.simpleDeductions);
-      }
-    }
-  }, [productDetail]);
-
   // console.log("selectedDeductions", selectedDeductions);
+
+  const laptopDesktop = ["laptop", "desktop"];
 
   const fillVariantPriceDrops = async () => {
     console.log("fillVariantPriceDrops");
@@ -109,8 +119,7 @@ const ProductQuestionsList = () => {
     setIsOpen(false);
   };
 
-  // Handle input changes and update productData state
-  // New Approach
+  // Variant Deductions PriceDrops Update
   const handlePriceDropChange = (conditionLabelId, value, check) => {
     // Find the index of the variant in the deductions array
     // console.log("Variant Deductions");
@@ -128,8 +137,6 @@ const ProductQuestionsList = () => {
     let updatedDeductions;
 
     if (check === "priceDrop") {
-      console.log("priceDrop");
-
       // Update the deductions for the selected variant
       // const updatedDeductions = productData.variantDeductions.map(
       updatedDeductions = productData.variantDeductions.map(
@@ -156,7 +163,6 @@ const ProductQuestionsList = () => {
         }
       );
     } else if (check === "operation") {
-      console.log("operation");
       updatedDeductions = productData.variantDeductions.map(
         (variant, index) => {
           if (index === variantIndex) {
@@ -193,13 +199,12 @@ const ProductQuestionsList = () => {
     setSelectedDeductions(updatedProductData.variantDeductions[variantIndex]);
   };
 
-  // New Approach
+  // Simple Deductions PriceDrops Update
   const handlePriceDropChange2 = (conditionLabelId, value, check) => {
     // Find the condition label by conditionLabelId and update the priceDrop
     // console.log("Simple Deductions", check);
     let updatedProductData;
     if (check === "priceDrop") {
-      // const updatedProductData = {
       updatedProductData = {
         ...productData,
         simpleDeductions: productData.simpleDeductions.map((condition) => ({
@@ -207,9 +212,6 @@ const ProductQuestionsList = () => {
           conditionLabels: condition.conditionLabels.map((label) => ({
             ...label,
             priceDrop:
-              // label.conditionLabelId === conditionLabelId
-              //   ? priceDrop
-              //   : label.priceDrop,
               label.conditionLabelId === conditionLabelId
                 ? value
                 : label.priceDrop,
@@ -220,7 +222,6 @@ const ProductQuestionsList = () => {
       // console.log("updatedProductData", updatedProductData);
     } else if (check === "operation") {
       // console.log("OPERATION", value);
-
       updatedProductData = {
         ...productData,
         simpleDeductions: productData.simpleDeductions.map((condition) => ({
@@ -228,9 +229,6 @@ const ProductQuestionsList = () => {
           conditionLabels: condition.conditionLabels.map((label) => ({
             ...label,
             operation:
-              // label.conditionLabelId === conditionLabelId
-              //   ? priceDrop
-              //   : label.priceDrop,
               label.conditionLabelId === conditionLabelId
                 ? value
                 : label.operation,
@@ -257,37 +255,80 @@ const ProductQuestionsList = () => {
     }
   };
 
-  if (!productsLoading) {
-    console.log(productDetail);
-  }
+  // if (!productsLoading) {
+  //   console.log("productDetail", productDetail);
+  // }
 
-  // useEffect(() => {}, [productDetail]);
-  // console.log("operation", operation);
+  const handleProcessor = async (event) => {
+    console.log("handle processor");
+
+    const processorId = event.target.value;
+    console.log("processorId", processorId);
+
+    setSelectedProcessorId(processorId);
+
+    console.log("processorBasedDeductions", processorBasedDeductions);
+
+    const processor = processorBasedDeductions.find(
+      (pbd) => pbd.processorId === processorId
+    );
+    setSelectedProcessorDeductions(processor);
+  };
+
+  const toggleBtnStyle =
+    "px-2 py-1 my-1 w-fit right-0 text-end flex justify-end items-end  border border-green-600 text-black rounded ";
+
+  const toggleStyle = "bg-red-600 text-white font-thin text-2xl border-red-50";
+
+  //  UseEffect to set the Deductions what is selected
+  useEffect(() => {
+    if (productDetail) {
+      // console.log("productDetail", productDetail);
+
+      let productCat = productDetail.category.name;
+      setProductCategory(productCat);
+
+      // Set the matched product to the component state
+      setProductData(productDetail);
+      if (productCat === "Mobile") {
+        setSelectedMobileCat(true);
+        setSelectedDeductions(
+          productDetail.variantDeductions.find(
+            (d) => d.variantName == selectedVariant
+          )
+        );
+      } else if (laptopDesktop.includes(productCat.toLowerCase())) {
+        setSelectedSystemCat(true);
+        setSelectedDeductions(productDetail.simpleDeductions);
+        setProcessorBasedDeductions(productDetail.processorBasedDeduction);
+
+        const processorCondition = productDetail.simpleDeductions.find((d) =>
+          d.conditionName.toLowerCase().includes("processor")
+        );
+        setProcessorsList(processorCondition.conditionLabels);
+      } else {
+        setSelectedOtherCat(true);
+        setSelectedDeductions(productDetail.simpleDeductions);
+      }
+    }
+  }, [productDetail]);
+
+  console.log("processorsList", processorsList);
 
   return (
-    <div className="">
-      <div className="flex items-center justify-between mx-4">
-        <div className="inline-block m-4 px-4 py-1 bg-blue-600 text-white rounded">
-          <Link to={"/admin/products-list"}>
-            <button>Back</button>
-          </Link>
-        </div>
-        {productData && productData.category.name === "Laptop" ? (
-          <div className="px-2 py-1 my-1 w-fit  right-0 text-end flex justify-end items-end bg-green-600 text-white rounded ">
-            <Link to={`/admin/products/laptop-configurations/${productId}`}>
-              <button>Update All Laptops Configurations</button>
-            </Link>
-          </div>
-        ) : null}
-      </div>
+    <div className="relative">
+      <BackButton location={"/admin/products-list"} />
 
-      <div className="relative w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
-        <div className="flex justify-between m-2">
-          <h3 className="text-2xl font-serif font-bold mb-1 sticky">
+      <div className=" w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
+        <div className=" flex justify-center m-2">
+          <h3 className="absolute top-4 text-3xl font-serif font-bold">
             {productData ? productData.name : "Loading.."} {selectedVariant}
           </h3>
-          {/* Variants Questions Data */}
-          {productData && productData.category.name === "Mobile" ? (
+          {selectedSystemCat ? (
+            <span className="text-lg">{productCategory} Deductions</span>
+          ) : null}
+          {/* VariantsQuestions List */}
+          {productData && selectedMobileCat ? (
             <div className="flex items-center justify-around gap-4">
               {!variantsQuestionsDataLoading &&
                 variantsQuestionsData.map((vq) => {
@@ -313,10 +354,9 @@ const ProductQuestionsList = () => {
           ) : null}
         </div>
 
-        <hr />
-
         <div className="bg-scroll">
-          {productData && productData.category.name === "Mobile" ? (
+          {/* Mobile category pricedrops */}
+          {productData && selectedMobileCat ? (
             <form onSubmit={handleSubmit}>
               {productData &&
                 selectedDeductions.deductions.map((condition, index) => (
@@ -347,7 +387,7 @@ const ProductQuestionsList = () => {
                                   </h3>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  {productData.category.name !== "Mobile" ? (
+                                  {productCategory !== "Mobile" ? (
                                     <span className="text-lg">₹</span>
                                   ) : null}
                                   <input
@@ -366,7 +406,7 @@ const ProductQuestionsList = () => {
                                     }
                                     required
                                   />
-                                  {productData.category.name === "Mobile" ? (
+                                  {productCategory === "Mobile" ? (
                                     <span className="text-lg">%</span>
                                   ) : null}
                                 </div>
@@ -421,15 +461,300 @@ const ProductQuestionsList = () => {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                  className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                  disabled={updateLoading}
                 >
-                  Submit
+                  {!updateLoading ? "Update Price Drops" : "Loading..."}
                 </button>
               </div>
             </form>
-          ) : (
+          ) : null}
+
+          {/* Laptop category pricedrops */}
+          {productData && selectedSystemCat ? (
             <>
-              <h3>Simple Deductions</h3>
+              <div className="flex flex-col items- justify-around">
+                <div className="flex items-center justify-around">
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateAllSystemConfig ? toggleStyle : ``
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: !toggle.updateAllSystemConfig,
+                          updateSingleSystemConfig: false,
+                          updateAllSystemCondition: false,
+                          updateSingleSystemCondition: false,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update All {productCategory} Configurations
+                    </button>
+                  </div>
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateSingleSystemConfig ? toggleStyle : ``
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig:
+                            !toggle.updateSingleSystemConfig,
+                          updateAllSystemCondition: false,
+                          updateSingleSystemCondition: false,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update Single {productCategory} Configurations
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-around">
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateAllSystemCondition ? toggleStyle : ``
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig: false,
+                          updateAllSystemCondition:
+                            !toggle.updateAllSystemCondition,
+                          updateSingleSystemCondition: false,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update All {productCategory} Processors Conditions
+                    </button>
+                  </div>
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateSingleSystemCondition ? toggleStyle : ``
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig: false,
+                          updateAllSystemCondition: false,
+                          updateSingleSystemCondition:
+                            !toggle.updateSingleSystemCondition,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update Single {productCategory} Processors Conditions
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-around">
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.showSystemConfiguration ? toggleStyle : ""
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig: false,
+                          updateAllSystemCondition: false,
+                          updateSingleSystemCondition: false,
+                          showSystemConfiguration:
+                            !toggle.showSystemConfiguration,
+                        });
+                      }}
+                    >
+                      Show {productCategory} Configuration
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Select Processor */}
+              {processorsList &&
+              (toggle.updateAllSystemCondition ||
+                toggle.updateSingleSystemCondition) ? (
+                <div className="flex items-center gap-2 my-2">
+                  <span>Processors List</span>
+                  <select
+                    name=""
+                    className="border border-black rounded"
+                    onChange={() => handleProcessor(event)}
+                  >
+                    <option value="">Select Processor</option>
+                    {processorsList.map((processor, i) => (
+                      <option value={processor.conditionLabelId} key={i}>
+                        {processor.conditionLabel}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
+
+              {/* Show Current Laptop Configuration */}
+              {toggle.showSystemConfiguration &&
+                selectedDeductions.map((condition, index) => (
+                  <div
+                    key={index}
+                    className={`w-1/2 mx-auto mb-10 border my-2 py- px- rounded ${
+                      index % 2 === 0 ? `` : `bg-gray-100`
+                    }`}
+                  >
+                    <div>
+                      <h3 className="text-2xl py-2 font-serif text-center font-extrabold bg-white">
+                        {condition.conditionName}
+                      </h3>
+                    </div>
+                    <hr />
+                    <div className="flex px-4 py-2 flex-col ">
+                      {productCategory === "Laptop" &&
+                      productData.brand.name === "Apple" &&
+                      condition.conditionName === "Processor"
+                        ? condition.conditionLabels &&
+                          condition.conditionLabels
+                            .filter((label) =>
+                              label.conditionLabel
+                                .toLowerCase()
+                                .includes("apple")
+                            )
+                            .map((conditionLabel, index) => (
+                              <div
+                                key={index}
+                                className="flex justify-around items-center mt-2 border-b-2 pb-1"
+                              >
+                                <div>
+                                  <h3 className="text-sm">
+                                    {conditionLabel.conditionLabel}
+                                  </h3>
+                                </div>
+
+                                <div className="flex items-center gap-1">
+                                  {productCategory !== "Mobile" ? (
+                                    <span className="text-lg">₹</span>
+                                  ) : null}
+                                  <span className="  px-3 py-1 mx-5 rounded text-[0.9rem]">
+                                    {conditionLabel.priceDrop}
+                                  </span>
+                                </div>
+
+                                <div className="w-[82px] text-center">
+                                  <h3
+                                    className={`${
+                                      conditionLabel.operation === "Subtrack"
+                                        ? "bg-red-200"
+                                        : "bg-blue-200"
+                                    } text-black font-bold px-2 py-1 rounded`}
+                                  >
+                                    {conditionLabel.operation}
+                                  </h3>
+                                </div>
+                              </div>
+                            ))
+                        : condition.conditionLabels &&
+                          condition.conditionLabels
+                            .filter(
+                              (label) =>
+                                !label.conditionLabel
+                                  .toLowerCase()
+                                  .includes("apple")
+                            )
+                            .map((conditionLabel, index) => (
+                              <div
+                                key={index}
+                                className="flex justify-around items-center mt-2 border-b-2 pb-1"
+                              >
+                                <div>
+                                  <h3 className="text-sm">
+                                    {conditionLabel.conditionLabel}
+                                  </h3>
+                                </div>
+
+                                <div className="flex items-center gap-1">
+                                  {productCategory !== "Mobile" ? (
+                                    <span className="text-lg">₹</span>
+                                  ) : null}
+                                  <span className="py-1 rounded text-[0.9rem]">
+                                    {conditionLabel.priceDrop}
+                                  </span>
+                                </div>
+
+                                <div className="w-[82px] text-center">
+                                  <h3
+                                    className={`${
+                                      conditionLabel.operation === "Subtrack"
+                                        ? "bg-red-200"
+                                        : "bg-blue-200"
+                                    } text-black font-bold px-2 py-1 rounded`}
+                                  >
+                                    {conditionLabel.operation}
+                                  </h3>
+                                </div>
+                              </div>
+                            ))}
+                    </div>
+                  </div>
+                ))}
+
+              {toggle.updateAllSystemConfig && (
+                <UpdateSystemConfigurations
+                  type={"AllLaptopConfig"}
+                  productDetail={productDetail}
+                  productId={productId}
+                />
+              )}
+
+              {toggle.updateSingleSystemConfig && (
+                <UpdateSystemConfigurations
+                  type={"SingleLaptopConfig"}
+                  productDetail={productDetail}
+                  productId={productId}
+                />
+              )}
+
+              {toggle.updateAllSystemCondition && (
+                <UpdateSystemConditions
+                  productData={productData}
+                  selectedProcessorDeductions={selectedProcessorDeductions}
+                  setSelectedProcessorDeductions={
+                    setSelectedProcessorDeductions
+                  }
+                  // handleLaptopPriceDropChange={handleLaptopPriceDropChange}
+                  setProductData={setProductData}
+                  type={"AllLaptopConditions"}
+                />
+              )}
+              {toggle.updateSingleSystemCondition && (
+                <UpdateSystemConditions
+                  productData={productData}
+                  selectedProcessorDeductions={selectedProcessorDeductions}
+                  setSelectedProcessorDeductions={
+                    setSelectedProcessorDeductions
+                  }
+                  // handleLaptopPriceDropChange={handleLaptopPriceDropChange}
+                  setProductData={setProductData}
+                  type={"SingleLaptopConditions"}
+                />
+              )}
+            </>
+          ) : null}
+
+          {/* Deductions List Apart from Mobiles and Laptops */}
+          {productData && selectedOtherCat ? (
+            <>
+              <h3 className="text-center text-xl">
+                Deductions List Apart from Mobiles and Laptops
+              </h3>
               <form onSubmit={handleSubmit}>
                 {productData &&
                   selectedDeductions.map((condition, index) => (
@@ -446,51 +771,43 @@ const ProductQuestionsList = () => {
                       </div>
                       <hr />
                       <div className="flex px-4 py-2 flex-col">
-                        {productData.category.name === "Laptop" &&
-                        productData.brand.name === "Apple" &&
-                        condition.conditionName === "Processor"
-                          ? condition.conditionLabels &&
-                            condition.conditionLabels
-                              .filter((label) =>
-                                label.conditionLabel
-                                  .toLowerCase()
-                                  .includes("apple")
-                              )
-                              .map((conditionLabel, index) => (
-                                <div
-                                  key={index}
-                                  className={`flex gap-6 items-center mt-2`}
-                                >
+                        {condition.conditionLabels &&
+                          condition.conditionLabels.map(
+                            (conditionLabel, index) => (
+                              <div
+                                key={index}
+                                className={`flex gap-6 items-center mt-2`}
+                              >
+                                <div>
                                   <div>
-                                    <div>
-                                      <h3 className="text-sm">
-                                        {conditionLabel.conditionLabel}
-                                      </h3>
-                                    </div>
-
-                                    <div className="flex items-center gap-1">
-                                      {productData.category.name !==
-                                      "Mobile" ? (
-                                        <span className="text-lg">₹</span>
-                                      ) : null}
-                                      <input
-                                        type="number"
-                                        name="priceDrop"
-                                        value={conditionLabel.priceDrop}
-                                        className="border px-3 py-1 rounded text-[0.9rem]"
-                                        placeholder="Price Drop"
-                                        onChange={(e) =>
-                                          handlePriceDropChange2(
-                                            conditionLabel.conditionLabelId,
-                                            parseInt(e.target.value),
-                                            e.target.name
-                                          )
-                                        }
-                                        required
-                                      />
-                                    </div>
+                                    <h3 className="text-sm">
+                                      {conditionLabel.conditionLabel}
+                                    </h3>
                                   </div>
 
+                                  <div className="flex items-center gap-1">
+                                    {productCategory !== "Mobile" ? (
+                                      <span className="text-lg">₹</span>
+                                    ) : null}
+                                    <input
+                                      type="number"
+                                      name="priceDrop"
+                                      value={conditionLabel.priceDrop}
+                                      className="border px-3 py-1 rounded text-[0.9rem]"
+                                      placeholder="Price Drop"
+                                      onChange={(e) =>
+                                        handlePriceDropChange2(
+                                          conditionLabel.conditionLabelId,
+                                          parseInt(e.target.value),
+                                          e.target.name
+                                        )
+                                      }
+                                      required
+                                    />
+                                  </div>
+                                </div>
+
+                                {conditionLabel.conditionLabelImg && (
                                   <div>
                                     <img
                                       src={
@@ -501,127 +818,41 @@ const ProductQuestionsList = () => {
                                       className="w-[60px] h-[60px] mx-auto "
                                     />
                                   </div>
-                                  <div className="flex gap-4">
-                                    <div className="w-[82px] text-center">
-                                      <h3
-                                        className={`${
-                                          conditionLabel.operation ===
-                                          "Subtrack"
-                                            ? "bg-red-200"
-                                            : "bg-blue-200"
-                                        } text-black font-bold px-2 py-1 rounded`}
-                                      >
-                                        {conditionLabel.operation}
-                                      </h3>
-                                    </div>
-                                    <select
-                                      name="operation"
-                                      id=""
-                                      className="border rounded px-1"
-                                      onChange={(e) => {
-                                        if (e.target.value !== "") {
-                                          handlePriceDropChange2(
-                                            conditionLabel.conditionLabelId,
-                                            e.target.value,
-                                            e.target.name
-                                          );
-                                        }
-                                      }}
+                                )}
+                                <div className="flex gap-4">
+                                  <div className="w-[82px] text-center">
+                                    <h3
+                                      className={`${
+                                        conditionLabel.operation === "Subtrack"
+                                          ? "bg-red-200"
+                                          : "bg-blue-200"
+                                      } text-black font-bold px-2 py-1 rounded`}
                                     >
-                                      <option value="">Select Operation</option>
-                                      <option value="Subtrack">Subtrack</option>
-                                      <option value="Add">Add</option>
-                                    </select>
+                                      {conditionLabel.operation}
+                                    </h3>
                                   </div>
-                                </div>
-                              ))
-                          : condition.conditionLabels &&
-                            condition.conditionLabels
-                              .filter(
-                                (label) =>
-                                  !label.conditionLabel
-                                    .toLowerCase()
-                                    .includes("apple")
-                              )
-                              .map((conditionLabel, index) => (
-                                <div
-                                  key={index}
-                                  className="flex gap-6 items-center mt-2"
-                                >
-                                  <div>
-                                    <div>
-                                      <h3 className="text-sm">
-                                        {conditionLabel.conditionLabel}
-                                      </h3>
-                                    </div>
-
-                                    <div className="flex items-center gap-1">
-                                      {productData.category.name !==
-                                      "Mobile" ? (
-                                        <span className="text-lg">₹</span>
-                                      ) : null}
-                                      <input
-                                        type="number"
-                                        name="priceDrop"
-                                        value={conditionLabel.priceDrop}
-                                        className="border-b px-3 py-1 rounded text-[0.9rem]"
-                                        placeholder="Price Drop"
-                                        onChange={(e) =>
-                                          handlePriceDropChange2(
-                                            conditionLabel.conditionLabelId,
-                                            parseInt(e.target.value),
-                                            e.target.name
-                                          )
-                                        }
-                                        required
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div>
-                                    <img
-                                      src={
-                                        import.meta.env.VITE_APP_BASE_URL +
-                                        conditionLabel.conditionLabelImg
+                                  <select
+                                    name="operation"
+                                    id=""
+                                    className="border rounded px-1"
+                                    onChange={(e) => {
+                                      if (e.target.value !== "") {
+                                        handlePriceDropChange2(
+                                          conditionLabel.conditionLabelId,
+                                          e.target.value,
+                                          e.target.name
+                                        );
                                       }
-                                      alt="conditionLabelImg"
-                                      className="w-[60px] h-[60px] mx-auto "
-                                    />
-                                  </div>
-                                  <div className="flex gap-4">
-                                    <div className="w-[82px] text-center">
-                                      <h3
-                                        className={`${
-                                          conditionLabel.operation ===
-                                          "Subtrack"
-                                            ? "bg-red-200"
-                                            : "bg-blue-200"
-                                        } text-black font-bold px-2 py-1 rounded`}
-                                      >
-                                        {conditionLabel.operation}
-                                      </h3>
-                                    </div>
-                                    <select
-                                      name="operation"
-                                      id=""
-                                      className="border rounded px-1"
-                                      onChange={(e) => {
-                                        if (e.target.value !== "") {
-                                          handlePriceDropChange2(
-                                            conditionLabel.conditionLabelId,
-                                            e.target.value,
-                                            e.target.name
-                                          );
-                                        }
-                                      }}
-                                    >
-                                      <option value="">Select Operation</option>
-                                      <option value="Subtrack">Subtrack</option>
-                                      <option value="Add">Add</option>
-                                    </select>
-                                  </div>
+                                    }}
+                                  >
+                                    <option value="">Select Operation</option>
+                                    <option value="Subtrack">Subtrack</option>
+                                    <option value="Add">Add</option>
+                                  </select>
                                 </div>
-                              ))}
+                              </div>
+                            )
+                          )}
                       </div>
                     </div>
                   ))}
@@ -630,12 +861,12 @@ const ProductQuestionsList = () => {
                     type="submit"
                     className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                   >
-                    Submit
+                    Update {productCategory} Deductions
                   </button>
                 </div>
               </form>
             </>
-          )}
+          ) : null}
         </div>
       </div>
 

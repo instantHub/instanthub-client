@@ -7,6 +7,8 @@ const initialState = {
   ram: {},
   screenSize: {},
   screenCondition: {},
+  physicalCondition: {},
+  age: {},
   graphic: {},
   deductions: [],
 };
@@ -69,6 +71,22 @@ export const laptopDeductionSlice = createSlice({
         operation: action.payload.operation,
       };
     },
+    addPhysicalCondition: (state, action) => {
+      // console.log("addRam Reducer", action.payload);
+      state.physicalCondition = {
+        conditionLabel: action.payload.conditionLabel,
+        priceDrop: action.payload.priceDrop,
+        operation: action.payload.operation,
+      };
+    },
+    addAge: (state, action) => {
+      // console.log("addRam Reducer", action.payload);
+      state.age = {
+        conditionLabel: action.payload.conditionLabel,
+        priceDrop: action.payload.priceDrop,
+        operation: action.payload.operation,
+      };
+    },
 
     addLaptopDeductions: (state, action) => {
       // console.log("addLaptopDeductions Reducer");
@@ -86,7 +104,7 @@ export const laptopDeductionSlice = createSlice({
         };
       }
     },
-    
+
     removeLaptopDeductions: (state, action) => {
       // console.log("removeLaptopDeductions reducer");
 
@@ -114,13 +132,15 @@ export const laptopDeductionSlice = createSlice({
 
       return {
         ...state,
+        toBeDeducted: 0,
         processor: {},
         hardDisk: {},
         ram: {},
         screenSize: {},
-        graphic: {},
         screenCondition: {},
-        toBeDeducted: 0,
+        physicalCondition: {},
+        age: {},
+        graphic: {},
         deductions: [],
       };
     },
@@ -134,6 +154,8 @@ export const {
   addScreenSize,
   addGraphic,
   addScreenCondition,
+  addPhysicalCondition,
+  addAge,
   addLaptopDeductions,
   removeLaptopDeductions,
   clearLaptopDeductions,

@@ -37,6 +37,8 @@ const OtpGenerator = (props) => {
   const data = useSelector((state) => state.deductions);
   // console.log("useSelector from OTP", laptopSlice, data);
 
+  const laptopDesktop = ["laptop", "desktop"];
+
   const navigate = useNavigate();
 
   // Generate OTP
@@ -74,14 +76,16 @@ const OtpGenerator = (props) => {
       // toast.success("OTP Generated");
       // setOtp(otpGenerated.data.data.otp);
 
-      if (data.productCategory.toLowerCase().includes("laptop")) {
+      // if (data.productCategory.toLowerCase().includes("laptop")) {
+      if (laptopDesktop.includes(data.productCategory.toLowerCase())) {
         dispatch(addDeductions(laptopSlice.processor));
         dispatch(addDeductions(laptopSlice.hardDisk));
         dispatch(addDeductions(laptopSlice.ram));
-        dispatch(addDeductions(data.productAge));
         dispatch(addDeductions(laptopSlice.screenSize));
         dispatch(addDeductions(laptopSlice.graphic));
         dispatch(addDeductions(laptopSlice.screenCondition));
+        dispatch(addDeductions(data.productAge));
+        dispatch(addDeductions(laptopSlice.physicalCondition));
       } else if (data.productCategory.toLowerCase().includes("mobile")) {
         dispatch(addDeductions(data.productAge));
         dispatch(addDeductions(data.productScreenCondition));

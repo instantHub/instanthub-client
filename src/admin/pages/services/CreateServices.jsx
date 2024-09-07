@@ -6,6 +6,7 @@ import {
   useGetServicesQuery,
   useUploadServicesImageMutation,
 } from "../../../features/api";
+import { toast } from "react-toastify";
 
 const CreateServiceForm = () => {
   const { data: servicesData, serviceLoading: servicesLoading } =
@@ -130,6 +131,7 @@ const CreateServiceForm = () => {
       // const response = await axios.post("/api/services", payload);
       const response = await createService(payload);
       console.log("Service created successfully:", response.data);
+      toast.success("Service created successfully");
 
       // Clear the value of the file input
       fileInputRef.current.value = "";
@@ -138,6 +140,7 @@ const CreateServiceForm = () => {
     } catch (error) {
       console.error("Error creating service:", error);
       // Handle error (e.g., show an error message)
+      toast.error("Service creation failed");
     }
   };
 
@@ -316,9 +319,12 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-700 text-white rounded"
+                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    disabled={createServiceLoading}
                   >
-                    Create Service Category
+                    {!createServiceLoading
+                      ? "Create Service Category"
+                      : "Loading..."}
                   </button>
                 </div>
               </form>
@@ -417,9 +423,12 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-700 text-white rounded"
+                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    disabled={createServiceLoading}
                   >
-                    Create Service Brand
+                    {!createServiceLoading
+                      ? "Create Service Brand"
+                      : "Loading..."}
                   </button>
                 </div>
               </form>
@@ -525,9 +534,12 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-700 text-white rounded"
+                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    disabled={createServiceLoading}
                   >
-                    Create Brand Problem
+                    {!createServiceLoading
+                      ? "Create Brand Problem"
+                      : "Loading..."}
                   </button>
                 </div>
               </form>
@@ -632,9 +644,12 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-700 text-white rounded"
+                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    disabled={createServiceLoading}
                   >
-                    Create Sub Service
+                    {!createServiceLoading
+                      ? "Create Sub Service"
+                      : "Loading..."}
                   </button>
                 </div>
               </form>
@@ -764,9 +779,12 @@ const CreateServiceForm = () => {
                 <div>
                   <button
                     type="submit"
-                    className="px-2 py-1 bg-green-700 text-white rounded"
+                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    disabled={createServiceLoading}
                   >
-                    Create Service products
+                    {!createServiceLoading
+                      ? "Create Service Product"
+                      : "Loading..."}
                   </button>
                 </div>
               </form>

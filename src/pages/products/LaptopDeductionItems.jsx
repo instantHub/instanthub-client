@@ -4,8 +4,11 @@ import {
   addScreenSize,
   addGraphic,
   addScreenCondition,
+  addPhysicalCondition,
+  addAge,
 } from "../../features/laptopDeductionSlice";
 import { BsCircle } from "react-icons/bs";
+import { addProductAge } from "../../features/deductionSlice";
 
 const LaptopDeductionItems = ({
   conditionName,
@@ -15,6 +18,8 @@ const LaptopDeductionItems = ({
   setScreenSize,
   setGraphic,
   setScreenCondition,
+  setPhysicalCondition,
+  setAge,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
 
@@ -27,16 +32,118 @@ const LaptopDeductionItems = ({
   const shouldShowImage = !(
     conditionName.toLowerCase().includes("screen size") ||
     conditionName.toLowerCase().includes("graphic") ||
-    conditionName.toLowerCase().includes("screen condition")
+    conditionName.toLowerCase().includes("screen condition") ||
+    conditionName.toLowerCase().includes("physical") ||
+    conditionName.toLowerCase().includes("age")
   );
   // || conditionName.toLowerCase().includes("screen")
 
   const functionalProblems = conditionName.toLowerCase().includes("functional");
 
+  const checkIfSelected = (conditionLabel) => {
+    let sliceConditionLabels = [
+      laptopSliceData.screenSize.conditionLabel,
+      laptopSliceData.graphic.conditionLabel,
+      laptopSliceData.screenCondition.conditionLabel,
+      laptopSliceData.physicalCondition.conditionLabel,
+      laptopSliceData.age.conditionLabel,
+    ];
+    if (sliceConditionLabels.includes(conditionLabel)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleOnClick = (label) => {
+    let condName = conditionName.toLowerCase();
+
+    if (shouldShowImage) {
+      handleLabelSelection(
+        label.conditionLabel,
+        label.priceDrop,
+        label.operation
+      );
+    }
+
+    if (condName.includes("screen size")) {
+      dispatch(
+        addScreenSize({
+          conditionLabel: label.conditionLabel,
+          priceDrop: label.priceDrop,
+          operation: label.operation,
+        })
+      );
+      setScreenSize({
+        conditionLabel: label.conditionLabel,
+        priceDrop: label.priceDrop,
+        operation: label.operation,
+      });
+    } else if (condName.includes("graphic")) {
+      dispatch(
+        addGraphic({
+          conditionLabel: label.conditionLabel,
+          priceDrop: label.priceDrop,
+          operation: label.operation,
+        })
+      );
+      setGraphic({
+        conditionLabel: label.conditionLabel,
+        priceDrop: label.priceDrop,
+        operation: label.operation,
+      });
+    } else if (condName.includes("screen condition")) {
+      dispatch(
+        addScreenCondition({
+          conditionLabel: label.conditionLabel,
+          priceDrop: label.priceDrop,
+          operation: label.operation,
+        })
+      );
+      setScreenCondition({
+        conditionLabel: label.conditionLabel,
+        priceDrop: label.priceDrop,
+        operation: label.operation,
+      });
+    } else if (condName.includes("physical")) {
+      dispatch(
+        addPhysicalCondition({
+          conditionLabel: label.conditionLabel,
+          priceDrop: label.priceDrop,
+          operation: label.operation,
+        })
+      );
+      setPhysicalCondition({
+        conditionLabel: label.conditionLabel,
+        priceDrop: label.priceDrop,
+        operation: label.operation,
+      });
+    } else if (condName.includes("age")) {
+      dispatch(
+        addAge({
+          conditionLabel: label.conditionLabel,
+          priceDrop: label.priceDrop,
+          operation: label.operation,
+        })
+      );
+      dispatch(
+        addProductAge({
+          conditionLabel: label.conditionLabel,
+          priceDrop: label.priceDrop,
+          operation: label.operation,
+        })
+      );
+      setAge({
+        conditionLabel: label.conditionLabel,
+        priceDrop: label.priceDrop,
+        operation: label.operation,
+      });
+    }
+  };
+
   // console.log("shouldHideImage", shouldShowImage);
 
   return (
-    // <div key={index}>
     <div
       className={`
       ${
@@ -46,7 +153,6 @@ const LaptopDeductionItems = ({
               !shouldShowImage
                 ? `grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-4 items-center px-4 `
                 : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4`
-              // `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
             }`
       }
       
@@ -70,67 +176,12 @@ const LaptopDeductionItems = ({
                     : ""
                 }`
               : `flex px-2 bg-slate-100  ${
-                  laptopSliceData.screenSize.conditionLabel ===
-                    label.conditionLabel ||
-                  laptopSliceData.graphic.conditionLabel ===
-                    label.conditionLabel ||
-                  laptopSliceData.screenCondition.conditionLabel ===
-                    label.conditionLabel
+                  checkIfSelected(label.conditionLabel)
                     ? "border-cyan-500 bg-white"
                     : ""
                 }`
           }  border rounded items-center`}
-          onClick={() => {
-            if (shouldShowImage) {
-              handleLabelSelection(
-                label.conditionLabel,
-                label.priceDrop,
-                label.operation
-              );
-            }
-            if (conditionName.includes("Screen Size")) {
-              dispatch(
-                addScreenSize({
-                  conditionLabel: label.conditionLabel,
-                  priceDrop: label.priceDrop,
-                  operation: label.operation,
-                })
-              );
-              setScreenSize({
-                conditionLabel: label.conditionLabel,
-                priceDrop: label.priceDrop,
-                operation: label.operation,
-              });
-            } else if (conditionName.includes("Graphic")) {
-              dispatch(
-                addGraphic({
-                  conditionLabel: label.conditionLabel,
-                  priceDrop: label.priceDrop,
-                  operation: label.operation,
-                })
-              );
-              setGraphic({
-                conditionLabel: label.conditionLabel,
-                priceDrop: label.priceDrop,
-                operation: label.operation,
-              });
-            } else if (
-              conditionName.toLowerCase().includes("screen condition")
-            ) {
-              dispatch(
-                addScreenCondition({
-                  conditionLabel: label.conditionLabel,
-                  priceDrop: label.priceDrop,
-                  operation: label.operation,
-                })
-              );
-              setScreenCondition({
-                conditionLabel: label.conditionLabel,
-                priceDrop: label.priceDrop,
-                operation: label.operation,
-              });
-            }
-          }}
+          onClick={() => handleOnClick(label)}
         >
           {shouldShowImage && label.conditionLabelImg && (
             <div className="p-4">
@@ -153,14 +204,8 @@ const LaptopDeductionItems = ({
                 ? `bg-cyan-500  ${
                     shouldShowImage ? "text-white " : "text-black"
                   } `
-                : // : "bg-slate-100"
-                  `${
-                    laptopSliceData.screenSize.conditionLabel ===
-                      label.conditionLabel ||
-                    laptopSliceData.graphic.conditionLabel ===
-                      label.conditionLabel ||
-                    laptopSliceData.screenCondition.conditionLabel ===
-                      label.conditionLabel
+                : `${
+                    checkIfSelected(label.conditionLabel)
                       ? " bg-white"
                       : "bg-slate-100"
                   }`

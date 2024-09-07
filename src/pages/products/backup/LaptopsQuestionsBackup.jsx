@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setGetUpto } from "../../features/deductionSlice";
+import {
+  addDeductions,
+  removeDeductions,
+  addProductAge,
+  setGetUpto,
+} from "../../features/deductionSlice";
 import {
   addProcessor,
   addHardDisk,
@@ -10,6 +15,7 @@ import {
 
 import { toast } from "react-toastify";
 import OtpGenerator from "../otp/OTPGenerator";
+import DeductionItems from "./DeductionItems";
 import { Helmet } from "react-helmet-async";
 import LaptopDeductionItems from "./LaptopDeductionItems";
 
@@ -29,8 +35,8 @@ const LaptopsQuestions = (props) => {
   const [screenConditionPage, setScreenConditionPage] = useState(null);
   const [physicalCondition, setPhysicalCondition] = useState(null);
   const [physicalConditionPage, setPhysicalConditionPage] = useState(null);
-  const [age, setAge] = useState(null);
-  const [agePage, setAgePage] = useState(null);
+  const [pageIndexes, setPageIndexes] = useState({});
+  const [age, setAge] = useState(false);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [lastPageIndex, setLastPageIndex] = useState(0);
 
@@ -51,6 +57,17 @@ const LaptopsQuestions = (props) => {
 
   const data = useSelector((state) => state.deductions);
   // console.log("useSelector", data);
+
+  const handleAge = async (ageLabel, price, operation) => {
+    setAge(true);
+    dispatch(
+      addProductAge({
+        conditionLabel: ageLabel,
+        priceDrop: price,
+        operation: operation,
+      })
+    );
+  };
 
   const groupConditionsByPage = (conditions) => {
     console.log("IN groupConditionsByPage laptop");
@@ -107,23 +124,18 @@ const LaptopsQuestions = (props) => {
       }
     }
 
-    if (currentPageIndex === agePage - 1 && age === null) {
-      toast.error("Select Age to proceed..!");
-      return;
-    }
-
-    if (currentPageIndex === screenSizePage - 1 && screenSize === null) {
+    if (currentPageIndex === screenSizePage - 1 && screenSize === undefined) {
       toast.error("Select ScreenSize to proceed..!");
       return;
     }
 
-    if (currentPageIndex === graphicPage - 1 && graphic === null) {
+    if (currentPageIndex === graphicPage - 1 && graphic === undefined) {
       toast.error("Select Graphics to proceed..!");
       return;
     }
     if (
       currentPageIndex === screenConditionPage - 1 &&
-      screenCondition === null
+      screenCondition === undefined
     ) {
       toast.error("Select Screen Condition to proceed..!");
       return;
@@ -131,13 +143,20 @@ const LaptopsQuestions = (props) => {
 
     // if (currentPageIndex < sortedConditions.length - 1) {
     console.log("lastPageIndex from continue", lastPageIndex);
-
     if (currentPageIndex < lastPageIndex - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
+      //     setCurrentPage(currentPage + 1);
     } else {
+      // dispatch(addDeductions(laptopSlice.processor));
+      // dispatch(addDeductions(laptopSlice.hardDisk));
+      // dispatch(addDeductions(laptopSlice.ram));
+      // dispatch(addDeductions(data.productAge));
+
       // Handle if there are no more conditions
       // console.log("No more conditions to display.");
       setShowOTP(true);
+
+      // navigate(`/sell/deductions/finalPrice?productId=${productsData.id}`);
     }
   };
 
@@ -202,8 +221,7 @@ const LaptopsQuestions = (props) => {
   useEffect(() => {
     console.log("UseEffect to set page number");
     // console.log("UseEffect", deductions);
-    // deductions.map((d) => {
-    productsData.processorBasedDeduction[0].deductions.map((d) => {
+    deductions.map((d) => {
       if (d.conditionName.toLowerCase().includes("screen size")) {
         setScreenSizePage(d.page);
       } else if (d.conditionName.toLowerCase().includes("graphic")) {
@@ -212,12 +230,11 @@ const LaptopsQuestions = (props) => {
         setScreenConditionPage(d.page);
       } else if (d.conditionName.toLowerCase().includes("physical")) {
         setPhysicalConditionPage(d.page);
-      } else if (d.conditionName.toLowerCase().includes("age")) {
-        setAgePage(d.page);
       }
     });
   }, []);
 
+  // console.log("state", processor, hardDisk, ram);
   //   console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);
 
@@ -250,8 +267,6 @@ const LaptopsQuestions = (props) => {
           )}
           <div>
             {/* {laptopsConList.length !== 0 && */}
-
-            {/* List of Configurations(Processor, Ram, Hard Disk) to select */}
             {currentPageIndex === 0 &&
               sortedConditions[0].conditions.map((condition, index) => (
                 <div key={index} className="px-4 py-4">
@@ -313,113 +328,172 @@ const LaptopsQuestions = (props) => {
                 </div>
               ))}
 
-            {/* List all other conditions to select based on the processor selected */}
             {currentPageIndex > 0 &&
               processorBasedDeductions[currentPageIndex - 1].conditions.map(
                 (condition, index) => (
                   <div key={index} className="px-4 py-4">
-                    {/* Condition Name Headings */}
-                    <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
-                      <h1>{condition.conditionName}</h1>
-                    </div>
-                    <div>
-                      {condition.conditionName
-                        .toLowerCase()
-                        .includes("age") && (
-                        <div className="text-center mb-5">
-                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
-                            Let us know how old your device is. Valid bill is
-                            needed for device less than 3 years.
-                          </p>
-                        </div>
-                      )}
-                      {condition.conditionName
-                        .toLowerCase()
-                        .includes("screen condition") && (
-                        <div className="text-center mb-5">
-                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
-                            The better condition your device is in, we will pay
-                            you more.
-                          </p>
-                        </div>
-                      )}
-                      {condition.conditionName
-                        .toLowerCase()
-                        .includes("graphic") && (
-                        <div className="text-center mb-5">
-                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
-                            Check your device's external graphics cards
-                          </p>
-                        </div>
-                      )}
-                      {condition.conditionName
-                        .toLowerCase()
-                        .includes("screen size") && (
-                        <div className="text-center mb-5">
-                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
-                            Check your device's screen size
-                          </p>
-                        </div>
-                      )}
-                      {condition.conditionName
-                        .toLowerCase()
-                        .includes("functional") && (
-                        <div className="text-center mb-5">
-                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
-                            Please choose appropriate condition to get accurate
-                            quote
-                          </p>
-                        </div>
-                      )}
-                      {condition.conditionName
-                        .toLowerCase()
-                        .includes("accessories") && (
-                        <div className="flex flex-col justify-start items-start">
-                          <p className="text-lg max-sm:[16px]">
-                            Do you have the following?
-                          </p>
-                          <span className="text-sm font-medium text-gray-600">
-                            please select accessories which are available
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                    <>
+                      {/* Condition Name Headings */}
+                      <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
+                        <h1>{condition.conditionName}</h1>
+                      </div>
+                      <div>
+                        {condition.conditionName
+                          .toLowerCase()
+                          .includes("age") && (
+                          <div className="text-center mb-5">
+                            <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
+                              Let us know how old your device is. Valid bill is
+                              needed for device less than 3 years.
+                            </p>
+                          </div>
+                        )}
+                        {condition.conditionName
+                          .toLowerCase()
+                          .includes("screen condition") && (
+                          <div className="text-center mb-5">
+                            <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                              The better condition your device is in, we will
+                              pay you more.
+                            </p>
+                          </div>
+                        )}
+                        {condition.conditionName
+                          .toLowerCase()
+                          .includes("graphic") && (
+                          <div className="text-center mb-5">
+                            <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                              Check your device's external graphics cards
+                            </p>
+                          </div>
+                        )}
+                        {condition.conditionName
+                          .toLowerCase()
+                          .includes("screen size") && (
+                          <div className="text-center mb-5">
+                            <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                              Check your device's screen size
+                            </p>
+                          </div>
+                        )}
+                        {condition.conditionName
+                          .toLowerCase()
+                          .includes("functional") && (
+                          <div className="text-center mb-5">
+                            <p className="text-lg font-medium text-gray-600 max-2sm:text-sm px-2">
+                              Please choose appropriate condition to get
+                              accurate quote
+                            </p>
+                          </div>
+                        )}
+                        {condition.conditionName
+                          .toLowerCase()
+                          .includes("accessories") && (
+                          <div className="flex flex-col justify-start items-start">
+                            <p className="text-lg max-sm:[16px]">
+                              Do you have the following?
+                            </p>
+                            <span className="text-sm font-medium text-gray-600">
+                              please select accessories which are available
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </>
 
                     {/* Condition Labels */}
                     <div>
-                      {/* {!condition.conditionName.includes("Age") && ( */}
-                      <>
-                        <LaptopDeductionItems
-                          // key={index}
-                          conditionName={condition.conditionName}
-                          conditionLabels={condition.conditionLabels}
-                          handleLabelSelection={handleLabelSelection}
-                          handleContinue={handleContinue}
-                          setScreenSize={setScreenSize}
-                          setGraphic={setGraphic}
-                          setScreenCondition={setScreenCondition}
-                          setPhysicalCondition={setPhysicalCondition}
-                          setAge={setAge}
-                        />
-                      </>
-
-                      {/* )} */}
+                      {!condition.conditionName.includes("Age") ? (
+                        <>
+                          <LaptopDeductionItems
+                            // key={index}
+                            conditionName={condition.conditionName}
+                            conditionLabels={condition.conditionLabels}
+                            handleLabelSelection={handleLabelSelection}
+                            handleContinue={handleContinue}
+                            setScreenSize={setScreenSize}
+                            setGraphic={setGraphic}
+                            setScreenCondition={setScreenCondition}
+                            setPhysicalCondition={setPhysicalCondition}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex flex-col">
+                            <div className="grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2">
+                              {condition.conditionLabels.map((label) => (
+                                <div
+                                  className={`${
+                                    //   selectedLabels.includes(label.conditionLabel)
+                                    data.productAge.conditionLabel ===
+                                    label.conditionLabel
+                                      ? "border-cyan-500"
+                                      : "bg-gray-100"
+                                  } flex pl-3 border rounded items-center`}
+                                  onClick={() =>
+                                    handleAge(
+                                      label.conditionLabel,
+                                      label.priceDrop,
+                                      label.operation
+                                    )
+                                  }
+                                >
+                                  <div className="flex text-sm items-center gap-1 py-4">
+                                    <span
+                                      className={`${
+                                        data.productAge.conditionLabel ===
+                                        label.conditionLabel
+                                          ? "border-cyan-500"
+                                          : "border-surface-dark"
+                                      } border border-solid rounded-full w-5 h-5 mr-1.5`}
+                                    ></span>
+                                    <span className="text-sm flex-1 flex justify-center">
+                                      {label.conditionLabel}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            <div>
+                              {age ? (
+                                <div className="flex items-center">
+                                  <button
+                                    onClick={handleContinue}
+                                    className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                                  >
+                                    Continue
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="flex items-center">
+                                  <button
+                                    className="px-2 py-1 text-white border mx-auto rounded w-[35%] mt-6 bg-gray-400 opacity-35"
+                                    disabled
+                                  >
+                                    Select Age To Continue
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 )
               )}
           </div>
 
-          {/* {!sortedConditions[0].conditions[0].conditionName.includes("Age") && ( */}
-          <div className="flex items-center">
-            <button
-              onClick={handleContinue}
-              className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-            >
-              Continue
-            </button>
-          </div>
-          {/* )} */}
+          {!sortedConditions[0].conditions[0].conditionName.includes("Age") && (
+            <div className="flex items-center">
+              <button
+                onClick={handleContinue}
+                className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+              >
+                Continue
+              </button>
+            </div>
+          )}
         </div>
         {showOTP ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

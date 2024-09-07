@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   useGetAllProductsQuery,
   useGetCategoryQuery,
@@ -7,8 +6,8 @@ import {
 } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import EditButton from "../../components/EditButton";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
@@ -255,11 +254,9 @@ const ProductsList = () => {
                     </td>
                     <td className="px-4 py-2">{product.status}</td>
                     <td className="px-4 py-2">
-                      <Link to={`/admin/update-product/${product.id}`}>
-                        <button className="bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                          Edit <FaEdit className="text-lg" />
-                        </button>
-                      </Link>
+                      <EditButton
+                        location={`/admin/update-product/${product.id}`}
+                      />
                     </td>
                     {/* DELETE */}
                     <td>
@@ -405,12 +402,10 @@ const ProductsList = () => {
                     </td>
                     <td className="px-4 py-2">{product.status}</td>
                     {/* EDIT */}
-                    <td className="px-4 py-2">
-                      <Link to={`/admin/update-product/${product.id}`}>
-                        <button className="bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                          Edit <FaEdit className="text-lg" />
-                        </button>
-                      </Link>
+                    <td className=" px-2 py-2">
+                      <EditButton
+                        location={`/admin/update-product/${product.id}`}
+                      />
                     </td>
                     {/* DELETE */}
                     <td>

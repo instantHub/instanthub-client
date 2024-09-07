@@ -6,6 +6,7 @@ import {
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import BackButton from "../../components/BackButton";
 
 function UpdateCategory() {
   const { catId } = useParams();
@@ -16,7 +17,8 @@ function UpdateCategory() {
   const [newImgSelected, setNewImgSelected] = useState(false);
   const [uploadCategoryImage, { isLoading: uploadLoading }] =
     useUploadCategoryImageMutation();
-  const [updateCategory] = useUpdateCategoryMutation();
+  const [updateCategory, { isLoading: updateCategoryLoading }] =
+    useUpdateCategoryMutation();
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
@@ -105,15 +107,7 @@ function UpdateCategory() {
             <div className="flex items-center gap-1">
               <h2>Home </h2>
               <h2 className="pl-1"> / Update Category</h2>
-              {/* <div className="py-3 px-2"> */}
-              <div>
-                <Link to={"/admin/categories-list"}>
-                  <button className="bg-blue-700 text-white px-2 py-1 rounded">
-                    Back
-                  </button>
-                </Link>
-              </div>
-              {/* </div> */}
+              <BackButton location={"/admin/categories-list"} />
             </div>
           </div>
           <div className="bg-white border rounded-md shadow-lg">
@@ -186,9 +180,10 @@ function UpdateCategory() {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="bg-green-600 text-white rounded-md px-4 py-1 cursor-pointer hover:bg-green-700"
+                  className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                  disabled={updateCategoryLoading}
                 >
-                  Update Category
+                  {!updateCategoryLoading ? "Update Category" : "Loading..."}
                 </button>
               </div>
             </form>

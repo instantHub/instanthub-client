@@ -200,8 +200,8 @@ export const api = createApi({
       invalidatesTags: ["Products"],
     }),
     updateLaptopConfigurationsPriceDrop: build.mutation({
-      query: ({ productId, data }) => ({
-        url: `/api/products/updateLaptopConfigurationsPriceDrop/${productId}`,
+      query: ({ productId, data, type }) => ({
+        url: `/api/products/updateLaptopConfigurationsPriceDrop/${productId}?type=${type}`,
         method: "PUT",
         body: data,
       }),

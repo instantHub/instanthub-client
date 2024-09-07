@@ -8,13 +8,18 @@ import {
 import { Link } from "react-router-dom";
 import CreateConditionLabels from "./CreateConditionLabels";
 import { toast } from "react-toastify";
+import ListButton from "../../components/ListButton";
 
 function Condtions() {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery();
   const [
     createConditions,
-    { isError: conditionFailed, isSuccess: conditionCreated },
+    {
+      isLoading: createConditonLoading,
+      isSuccess: conditionCreated,
+      isError: conditionFailed,
+    },
   ] = useCreateConditionsMutation();
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
@@ -55,18 +60,22 @@ function Condtions() {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const condition = await createConditions(JSON.stringify(formData)).unwrap();
-    console.log("condition created", condition);
-    if (condition.message.includes("Duplicate")) {
-      toast.warning(condition.message);
-      return;
-    }
-    toast.success("Conditions created successfull..!");
+    // console.log("handleSubmit", formData);
 
-    // } else if (conditionFailed) {
-    //   toast.error("Conditions creation failed..!");
-    // }
-    console.log("handleSubmit", formData);
+    try {
+      const condition = await createConditions(
+        JSON.stringify(formData)
+      ).unwrap();
+      console.log("condition created", condition);
+      if (condition.message?.includes("Duplicate")) {
+        toast.warning(condition.message);
+        return;
+      }
+      toast.success("Conditions created successfull..!");
+    } catch (error) {
+      console.log("Error while creating condition:- ", error);
+      toast.error("Conditions creation failed..!");
+    }
   };
 
   return (
@@ -79,14 +88,11 @@ function Condtions() {
               <div className="flex items-center gap-1">
                 <h2>Home </h2>
                 <h2 className="pl-1"> / Add Condition</h2>
-                <Link to="/admin/conditionsList">
-                  <button
-                    type="button"
-                    className=" mx-auto bg-blue-700 text-white px-2 rounded-md py-1 cursor-pointer"
-                  >
-                    Conditions List
-                  </button>
-                </Link>
+
+                <ListButton
+                  location={"/admin/conditionsList"}
+                  text={"Conditions List"}
+                />
               </div>
             </div>
             {/* Create Condition BOX */}
@@ -103,8 +109,6 @@ function Condtions() {
                   <div className="flex flex-col">
                     <label>Category:</label>
                     <select
-                      name=""
-                      id=""
                       className="border p-1 rounded"
                       onChange={(e) => {
                         setFormData({
@@ -126,22 +130,11 @@ function Condtions() {
                             {category.name}
                           </option>
                         ))}
-                    </select>{" "}
+                    </select>
                   </div>
                 </div>
 
-                <div className="mx-auto">
-                  {/* <button
-                    type="button"
-                    onClick={addConditionName}
-                    className="border border-black  bg-emerald-600 rounded-md px-4 py-2 text-white hover:text-black cursor-pointer hover:bg-white "
-                  >
-                    Add Condition
-                  </button> */}
-                </div>
-
                 <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
-                  {/* {formData.conditionNames.map((condition, index) => ( */}
                   <div className="flex items-center">
                     <div className="">
                       <label>Condition Name:</label>
@@ -154,19 +147,8 @@ function Condtions() {
                         onChange={(event) =>
                           handleChange(event, "name", "conditionName")
                         }
-                        // onChange={(e) => {
-                        //   setFormData(...formData, {
-                        //     conditionName: e.target.value,
-                        //   });
-                        // }}
                         required
                       />
-                      {/* <button
-                          type="button"
-                          onClick={() => deleteConditionName(index)}
-                        >
-                          x
-                        </button> */}
                     </div>
                     <div className="">
                       <label>Page:</label>
@@ -183,15 +165,15 @@ function Condtions() {
                       />
                     </div>
                   </div>
-                  {/* ))} */}
                 </div>
 
                 <div className="py-3 px-2">
                   <button
                     type="submit"
-                    className="w-[30%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    disabled={createConditonLoading}
                   >
-                    Create Condition
+                    {!createConditonLoading ? "Create Condition" : "Loading..."}
                   </button>
                 </div>
               </form>
@@ -199,7 +181,6 @@ function Condtions() {
               {/* condition List */}
               <div className="mt-5 ml-5 overflow-y-auto scrollbar max-h-[250px]">
                 <p className="w-full text-xl font-semibold">
-                  {" "}
                   List of selected category's conditions
                 </p>
                 <ul className="">
@@ -217,7 +198,7 @@ function Condtions() {
           </div>
         </div>
 
-        <hr className="" />
+        <hr />
 
         <CreateConditionLabels />
       </div>

@@ -2,15 +2,15 @@ import React, { useState, useRef } from "react";
 import {
   useGetConditionsQuery,
   useGetCategoryQuery,
-  useUploadFileHandlerMutation,
   useCreateConditionLabelsMutation,
   useUploadConditionLabelsImageMutation,
   useGetConditionLabelsQuery,
 } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import ListButton from "../../components/ListButton";
 
-const YourComponent = () => {
+const CreateConditionLabels = () => {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery();
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -19,15 +19,8 @@ const YourComponent = () => {
     useGetConditionLabelsQuery();
   const [uploadConditionLabelsImage, { isLoading: uploadLoading }] =
     useUploadConditionLabelsImageMutation();
-  const [createConditionLabels, { isLoading: clLoading }] =
+  const [createConditionLabels, { isLoading: createConditionLabelsLoading }] =
     useCreateConditionLabelsMutation();
-
-  if (categoryData) {
-    // console.log("cat", categoryData);
-  }
-  if (conditionsData) {
-    // console.log("con from conditionlabels", conditionsData);
-  }
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
@@ -41,14 +34,6 @@ const YourComponent = () => {
     conditionLabel: "",
     conditionLabelImg: undefined,
   });
-
-  // Function to handle changes in the form fields
-  // const handleChange = (event, index, field, arrayName) => {
-  //   const { value } = event.target;
-  //   const updatedFormData = { ...formData };
-  //   updatedFormData[arrayName][index][field] = value;
-  //   setFormData(updatedFormData);
-  // };
 
   // File handler
   const uploadFileHandler = async () => {
@@ -68,13 +53,12 @@ const YourComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handle submit");
-    console.log(formData);
 
     if (formData.conditionLabelImg) {
       formData.conditionLabelImg = await uploadFileHandler();
     }
 
-    console.log("conditionLabelData: ", formData);
+    // console.log("conditionLabelData: ", formData);
 
     try {
       const conditionLabel = await createConditionLabels(
@@ -104,10 +88,11 @@ const YourComponent = () => {
         "Error while creating conditionLabel using API call: ",
         error
       );
+      toast.error("Error while creating conditionLabel..!");
     }
   };
 
-  console.log("TEST", conditionsLabelsData && conditionsLabelsData);
+  // console.log("TEST", conditionsLabelsData && conditionsLabelsData);
 
   return (
     <div className="flex w-[90%] mt-[2%]">
@@ -118,14 +103,11 @@ const YourComponent = () => {
             <div className="flex items-center gap-1">
               <h2>Home </h2>
               <h2 className="pl-1"> / Add ConditionLabels</h2>
-              <Link to="/admin/conditionLabelsList">
-                <button
-                  type="button"
-                  className=" mx-auto bg-blue-700 text-white px-2 rounded-md py-1 cursor-pointer"
-                >
-                  ConditionLabels List
-                </button>
-              </Link>
+
+              <ListButton
+                location={"/admin/conditionLabelsList"}
+                text={"ConditionLabels List"}
+              />
             </div>
           </div>
           <div className="bg-white w-full flex border rounded-md shadow-lg">
@@ -245,16 +227,18 @@ const YourComponent = () => {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="w-[40%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                  className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                  disabled={createConditionLabelsLoading}
                 >
-                  Create ConditionLabel
+                  {!createConditionLabelsLoading
+                    ? "Create ConditionLabel"
+                    : "Loading..."}
                 </button>
               </div>
             </form>
             {/* condition List */}
             <div className="mt-5 ml-5 overflow-y-auto scrollbar max-h-[250px]">
               <p className="w-full text-xl font-semibold">
-                {" "}
                 List of selected condition's conditionLabels
               </p>
               <ul className="">
@@ -265,33 +249,17 @@ const YourComponent = () => {
                       (cl) => cl.conditionNameId?.id == formData.conditionNameId
                     )
                     .map((condition, index) => (
-                      <>
-                        <li key={index} className="bg-white text-lg px-4 py-2">
-                          {index + 1}. {condition.conditionLabel}
-                        </li>
-                      </>
+                      <li key={index} className="bg-white text-lg px-4 py-2">
+                        {index + 1}. {condition.conditionLabel}
+                      </li>
                     ))}
               </ul>
             </div>
           </div>
         </div>
-
-        {/* <div className="my-auto ml-[5%]">
-        <ul className="">
-          {!conditionsLoading &&
-            conditionsData.map(
-              (condition) =>
-                condition.category.id == formData.category && (
-                  <li className="bg-white text-lg px-4 py-2">
-                    {condition.conditionName}{" "}
-                  </li>
-                )
-            )}
-        </ul>
-      </div> */}
       </div>
     </div>
   );
 };
 
-export default YourComponent;
+export default React.memo(CreateConditionLabels);

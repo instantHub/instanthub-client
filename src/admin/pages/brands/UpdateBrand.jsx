@@ -6,6 +6,7 @@ import {
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import BackButton from "../../components/BackButton";
 
 function UpdateBrand() {
   const { brandId } = useParams();
@@ -17,10 +18,7 @@ function UpdateBrand() {
     useUploadBrandImageMutation();
   const [
     updateBrand,
-    {
-      isLoading: updateConditionLabelLoading,
-      isError: updateConditionLabelError,
-    },
+    { isLoading: updateBrandLoading, isError: updateBrandError },
   ] = useUpdateBrandMutation();
 
   // Create a ref to store the reference to the file input element
@@ -109,13 +107,8 @@ function UpdateBrand() {
             <div className="flex items-center gap-1">
               <h2>Home </h2>
               <h2 className="pl-1"> / Update Brand</h2>
-              <div>
-                <Link to={"/admin/brands-list"}>
-                  <button className="bg-blue-700 text-white px-2 py-1 rounded">
-                    Back
-                  </button>
-                </Link>
-              </div>
+
+              <BackButton location={"/admin/brands-list"} />
             </div>
           </div>
           <div className="bg-white border rounded-md shadow-lg">
@@ -190,9 +183,10 @@ function UpdateBrand() {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="w-[20%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                  className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                  disabled={updateBrandLoading}
                 >
-                  Update Brand
+                  {!updateBrandLoading ? "Update Brand" : "Loading..."}
                 </button>
               </div>
             </form>

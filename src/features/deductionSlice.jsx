@@ -11,7 +11,7 @@ const initialState = {
   productDisplayDefect: {},
   getUpTo: {
     variantName: "",
-    price: undefined,
+    price: null,
   },
   toBeDeducted: 0,
   toBeAdded: 0,
@@ -54,6 +54,7 @@ export const deductionSlice = createSlice({
       });
       if (!isExisting) {
         if (action.payload.operation === "Subtrack") {
+          console.log("state", state.productCategory);
           return {
             ...state,
             // Deduction based on Product Category
@@ -225,6 +226,7 @@ export const {
   clearDeductions,
   removeDeductions,
 } = deductionSlice.actions;
+
 export default deductionSlice.reducer;
 
 // ADD DEDUCTIONS

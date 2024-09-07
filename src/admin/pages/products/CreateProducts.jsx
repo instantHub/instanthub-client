@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import CreateSeries from "../../components/CreateSeries";
 import {
   useGetCategoryQuery,
-  useGetBrandQuery,
   useGetAllBrandQuery,
   useCreateProductMutation,
   useUploadProductImageMutation,
   useGetAllSeriesQuery,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { SubmitButton } from "../../components/SubmitButton";
+import ListButton from "../../components/ListButton";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -35,9 +34,9 @@ const CreateProducts = () => {
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
-  if (!seriesLoading) {
-    // console.log("series from products", seriesData);
-  }
+  // if (!seriesLoading) {
+  //   console.log("series from products", seriesData);
+  // }
   console.log("selected series from products", selectedSeries, seriesYes);
 
   let productId = undefined;
@@ -171,13 +170,10 @@ const CreateProducts = () => {
               <h2>Home </h2>
               <h2 className="pl-1"> / Add Products</h2>
             </div>
-            <div>
-              <Link to={"/admin/products-list"}>
-                <button className="bg-blue-700 text-white px-2 py-1 rounded">
-                  Products List
-                </button>
-              </Link>
-            </div>
+            <ListButton
+              location={"/admin/products-list"}
+              text={"Products List"}
+            />
           </div>
         </div>
         <div className="bg-white border rounded-md shadow-lg">
@@ -373,13 +369,18 @@ const CreateProducts = () => {
               </div>
             </div>
             <div className="py-3 px-2">
-              <button
+              {/* <button
                 type="submit"
-                className="bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
-                // onClick={handleSubmit}
+                className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                disabled={productCreationLoading}
               >
-                Create Product
-              </button>
+                {!productCreationLoading ? "Create Product" : "Loading..."}
+              </button> */}
+              <SubmitButton
+                handleLoading={productCreationLoading}
+                value="Create Product"
+                loading="Loading..."
+              />
             </div>
           </form>
         </div>

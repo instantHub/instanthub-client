@@ -5,8 +5,8 @@ import {
 } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import EditButton from "../../components/EditButton";
 
 const CategoriesList = () => {
   const { data: categoryData, isLoading: categoryDataLoading } =
@@ -104,11 +104,9 @@ const CategoriesList = () => {
                     />
                   </td>
                   <td className="flex justify-center px-4 py-2">
-                    <Link to={`/admin/update-category/${category.id}`}>
-                      <button className="bg-blue-500 flex items-center gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Edit <FaEdit />
-                      </button>
-                    </Link>
+                    <EditButton
+                      location={`/admin/update-category/${category.id}`}
+                    />
                   </td>
                   <td>
                     <button

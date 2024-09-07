@@ -5,8 +5,9 @@ import {
   useDeleteServiceMutation,
   useUpdateServiceMutation,
 } from "../../../features/api";
-import { Link } from "react-router-dom";
 import UpdateService from "./UpdateService";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 const ServicesList = () => {
   const { data: servicesData, isLoading: serviceDataLoading } =
@@ -30,6 +31,11 @@ const ServicesList = () => {
 
   const [updateData, setUpdateData] = useState({});
   const [updateModel, setUpdateModel] = useState(false);
+
+  const editBtnStyle =
+    "flex items-center gap-1 bg-blue-600 px-3 py-1 rounded-md";
+  const deleteBtnStyle =
+    "flex items-center gap-1 bg-red-600 px-3 py-1 rounded-md text-xl";
 
   const closeModal = () => {
     setIsOpen(false);
@@ -177,17 +183,20 @@ const ServicesList = () => {
                     <td className=" py-2">{serviceCategory.type}</td>
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
+                        {/* Edit Button */}
                         <button
-                          className="bg-blue-600 px-3 py-1 rounded-md"
+                          className={editBtnStyle}
                           onClick={() => {
                             setUpdateModel(true);
                             handleUpdate(serviceCategory, "serviceCategory");
                           }}
                         >
-                          Edit
+                          Edit <FaEdit />
                         </button>
+
+                        {/* Delete Button */}
                         <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
+                          className={deleteBtnStyle}
                           onClick={() => {
                             setIsOpen(true);
                             setSelectedService({
@@ -198,7 +207,7 @@ const ServicesList = () => {
                             });
                           }}
                         >
-                          Delete
+                          <MdDeleteForever />
                         </button>
                       </div>
                     </td>
@@ -278,16 +287,16 @@ const ServicesList = () => {
                         <td className="text-white py-2">
                           <div className="flex gap-2 justify-center">
                             <button
-                              className="bg-blue-600 px-3 py-1 rounded-md"
+                              className={editBtnStyle}
                               onClick={() => {
                                 setUpdateModel(true);
                                 handleUpdate(serviceBrand, "serviceBrand");
                               }}
                             >
-                              Edit
+                              Edit <FaEdit />
                             </button>
                             <button
-                              className="bg-red-600 px-3 py-1 rounded-md"
+                              className={deleteBtnStyle}
                               onClick={() => {
                                 setIsOpen(true);
                                 setSelectedService({
@@ -298,7 +307,7 @@ const ServicesList = () => {
                                 });
                               }}
                             >
-                              Delete
+                              <MdDeleteForever />
                             </button>
                           </div>
                         </td>
@@ -336,15 +345,28 @@ const ServicesList = () => {
                           </td>
                           <td className="text-white py-2">
                             <div className="flex gap-2 justify-center">
-                              <Link
-                                to={`/admin/updateCondition/${serviceBrand._id}`}
+                              <button
+                                className={editBtnStyle}
+                                onClick={() => {
+                                  setUpdateModel(true);
+                                  handleUpdate(serviceBrand, "serviceBrand");
+                                }}
                               >
-                                <button className="bg-blue-600 px-3 py-1 rounded-md">
-                                  Edit
-                                </button>
-                              </Link>
-                              <button className="bg-red-600 px-3 py-1 rounded-md">
-                                Delete
+                                Edit <FaEdit />
+                              </button>
+                              <button
+                                className={deleteBtnStyle}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedService({
+                                    id: serviceBrand._id,
+                                    name: serviceBrand.name,
+                                    type: serviceBrand.type,
+                                    from: "serviceBrand",
+                                  });
+                                }}
+                              >
+                                <MdDeleteForever />
                               </button>
                             </div>
                           </td>
@@ -394,16 +416,16 @@ const ServicesList = () => {
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
                         <button
-                          className="bg-blue-600 px-3 py-1 rounded-md"
+                          className={editBtnStyle}
                           onClick={() => {
                             setUpdateModel(true);
                             handleUpdate(problem, "serviceBrandProblem");
                           }}
                         >
-                          Edit
+                          Edit <FaEdit />
                         </button>
                         <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
+                          className={deleteBtnStyle}
                           onClick={() => {
                             setIsOpen(true);
                             setSelectedService({
@@ -414,7 +436,7 @@ const ServicesList = () => {
                             });
                           }}
                         >
-                          Delete
+                          <MdDeleteForever />
                         </button>
                       </div>
                     </td>
@@ -465,16 +487,16 @@ const ServicesList = () => {
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
                         <button
-                          className="bg-blue-600 px-3 py-1 rounded-md"
+                          className={editBtnStyle}
                           onClick={() => {
                             setUpdateModel(true);
                             handleUpdate(subService, "serviceSubCategory");
                           }}
                         >
-                          Edit
+                          Edit <FaEdit />
                         </button>
                         <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
+                          className={deleteBtnStyle}
                           onClick={() => {
                             setIsOpen(true);
                             setSelectedService({
@@ -485,7 +507,7 @@ const ServicesList = () => {
                             });
                           }}
                         >
-                          Delete
+                          <MdDeleteForever />
                         </button>
                       </div>
                     </td>
@@ -542,16 +564,16 @@ const ServicesList = () => {
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
                         <button
-                          className="bg-blue-600 px-3 py-1 rounded-md"
+                          className={editBtnStyle}
                           onClick={() => {
                             setUpdateModel(true);
                             handleUpdate(product, "serviceSubProduct");
                           }}
                         >
-                          Edit
+                          Edit <FaEdit />
                         </button>
                         <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
+                          className={deleteBtnStyle}
                           onClick={() => {
                             setIsOpen(true);
                             setSelectedService({
@@ -562,7 +584,7 @@ const ServicesList = () => {
                             });
                           }}
                         >
-                          Delete
+                          <MdDeleteForever />
                         </button>
                       </div>
                     </td>
@@ -585,7 +607,7 @@ const ServicesList = () => {
       )}
 
       {isOpen && (
-        <td>
+        <div>
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-8 rounded-lg shadow-lg w-2/4">
               <div className="flex justify-center">
@@ -636,7 +658,7 @@ const ServicesList = () => {
               </div>
             </div>
           </div>
-        </td>
+        </div>
       )}
     </>
   );

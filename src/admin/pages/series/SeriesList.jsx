@@ -7,6 +7,7 @@ import {
 import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import EditButton from "../../components/EditButton";
 
 const SeriesList = () => {
   const { data: seriesData, isLoading: seriesLoading } = useGetAllSeriesQuery();
@@ -70,11 +71,9 @@ const SeriesList = () => {
                           </div>
                         </td>
                         <td className="px-4 py-2">
-                          <Link to={`/admin/update-series/${series.id}`}>
-                            <button className="bg-blue-500 flex mx-auto items-center gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                              Edit <FaEdit />
-                            </button>
-                          </Link>
+                          <EditButton
+                            location={`/admin/update-series/${series.id}`}
+                          />
                         </td>
                         <td>
                           <button

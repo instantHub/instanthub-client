@@ -17,11 +17,7 @@ const ProductSeries = ({ brandId }) => {
                   key={i}
                   className="col-span-1 max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
                 >
-                  <Link
-                    // to={`/categories/brands/productDetails/${series.id}`}
-                    key={i}
-                    className="w-full h-full"
-                  >
+                  <Link key={i} className="w-full h-full">
                     <div
                       key={i}
                       className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-gray-200 p-2 sm:p-4 sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"

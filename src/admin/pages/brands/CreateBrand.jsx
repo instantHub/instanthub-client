@@ -7,13 +7,15 @@ import {
 } from "../../../features/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import ListButton from "../../components/ListButton";
 
 const CreateBrand = () => {
   const [brand, setBrand] = useState("");
   const [uniqueURL, setUniqueURL] = useState("");
   const [imageSelected, setImageSelected] = useState("");
   const [categorySelected, setCategorySelected] = useState();
-  const [createBrand, { isLoading: brandLoading }] = useCreateBrandMutation();
+  const [createBrand, { isLoading: createBrandLoading }] =
+    useCreateBrandMutation();
   const [uploadBrandImage, { isLoading: uploadLoadingNew }] =
     useUploadBrandImageMutation();
   // const [brandsData, setCategories] = useState([]);
@@ -89,18 +91,12 @@ const CreateBrand = () => {
             <h2>Home </h2>
             <h2 className="pl-1"> / Add Brands</h2>
           </div>
-          <div>
-            <Link to={"/admin/brands-list"}>
-              <button className="bg-blue-700 text-white px-2 py-1 rounded">
-                Brands List
-              </button>
-            </Link>
-          </div>
+
+          <ListButton location={"/admin/brands-list"} text={"Brands List"} />
         </div>
       </div>
       <div className="bg-white border rounded-md shadow-lg">
         <form
-          action=""
           method="post"
           className="flex flex-col gap-4  p-5"
           encType="multipart/form-data"
@@ -192,9 +188,10 @@ const CreateBrand = () => {
           <div className="py-3 px-2">
             <button
               type="submit"
-              className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+              className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+              disabled={createBrandLoading}
             >
-              Create Brand
+              {!createBrandLoading ? "Create Brand" : "Loading..."}
             </button>
           </div>
         </form>

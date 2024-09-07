@@ -6,6 +6,7 @@ const ProdDeductionsRight = () => {
   const laptopSlice = useSelector((state) => state.laptopDeductions);
 
   // console.log("productsData", productsData);
+  const laptopDesktop = ["laptop", "desktop"];
 
   return (
     // <div>
@@ -39,7 +40,10 @@ const ProdDeductionsRight = () => {
             <div>
               {/* Laptop selected items from laptopSlice */}
               {/* Laptop's Processor, HardDisk & Ram display */}
-              {productsData.productCategory === "Laptop" && (
+              {/* {productsData.productCategory === "Laptop" && ( */}
+              {laptopDesktop.includes(
+                productsData.productCategory.toLowerCase()
+              ) && (
                 <>
                   <div>
                     {laptopSlice.processor.conditionLabel ? (
@@ -90,6 +94,18 @@ const ProdDeductionsRight = () => {
                     <ul>
                       <li className="py-1 pl-2">
                         {laptopSlice.screenCondition.conditionLabel}
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Physical Condition */}
+                  <div>
+                    {laptopSlice.physicalCondition.conditionLabel ? (
+                      <h1 className="font-bold">Physical Condition</h1>
+                    ) : null}
+                    <ul>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.physicalCondition.conditionLabel}
                       </li>
                     </ul>
                   </div>

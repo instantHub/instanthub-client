@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import {
   useGetConditionLabelsQuery,
-  useUpdateConditionMutation,
   useUploadConditionLabelsImageMutation,
   useUpdateConditionLabelMutation,
   useDeleteCLImageMutation,
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import BackButton from "../../components/BackButton";
 
 function UpdateConditionLabel() {
   const { conditionLabelId } = useParams();
@@ -155,16 +155,8 @@ function UpdateConditionLabel() {
             <div className="flex items-center gap-1">
               <h2>Home </h2>
               <h2 className="pl-1"> / Update ConditionLabel</h2>
-              {/* <div className="py-3 px-2"> */}
-              <Link to="/admin/conditionLabelsList">
-                <button
-                  type="button"
-                  className="bg-blue-700 text-white px-2 py-1 rounded"
-                >
-                  Back
-                </button>
-              </Link>
-              {/* </div> */}
+
+              <BackButton location={"/admin/conditionLabelsList"} />
             </div>
           </div>
           <div className="bg-white border rounded-md shadow-lg">
@@ -257,9 +249,12 @@ function UpdateConditionLabel() {
               <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className="w-[30%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                  className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                  disabled={updateConditionLabelLoading}
                 >
-                  Update ConditionLabel
+                  {!updateConditionLabelLoading
+                    ? "Update ConditionLabel"
+                    : "Loading..."}
                 </button>
               </div>
             </form>

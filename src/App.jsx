@@ -44,11 +44,10 @@ import AdminSignUp from "./admin/pages/signIn & signup/SignUp";
 // import AdminProducts from "./admin/pages/products/Products";
 const UpdateAdminProfile = lazy(() => import("./admin/components/UpdateAdmin"));
 const AdminDashboard = lazy(() => import("./admin/pages/dashboard/Dashboard"));
-const AdminProducts = lazy(() => import("./admin/pages/products/Products"));
+// const AdminProducts = lazy(() => import("./admin/pages/products/Products"));
 
 import AdminCreateProducts from "./admin/pages/products/CreateProducts";
 import AdminUpdateProduct from "./admin/pages/products/UpdateProduct";
-import AdminBrands from "./admin/pages/brands/Brands";
 import AdminBrandsList from "./admin/pages/brands/BrandsList";
 import AdminUpdateBrand from "./admin/pages/brands/UpdateBrand";
 import AdminCreateBrand from "./admin/pages/brands/CreateBrand";
@@ -64,7 +63,8 @@ import AdminUpdateCondition from "./admin/pages/questions/UpdateCondition";
 import AdminUpdateConditionLabel from "./admin/pages/questions/UpdateConditionLabel";
 import AdminProductsList from "./admin/pages/products/ProductsList";
 import AdminProductQuestions from "./admin/pages/products/ProductQuestionsList";
-import AdminLaptopConfiguration from "./admin/pages/products/UpdateLaptopConfigurations";
+import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
+import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
 import AdminConditionsList from "./admin/pages/questions/ConditionsList";
 import AdminConditionLabelsList from "./admin/pages/questions/ConditionLabelsList";
 import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
@@ -302,10 +302,10 @@ function App() {
               path: "/admin/update-profile",
               element: <UpdateAdminProfile />,
             },
-            {
-              path: "/admin/products",
-              element: <AdminProducts />,
-            },
+            // {
+            //   path: "/admin/products",
+            //   element: <AdminProducts />,
+            // },
             {
               path: "/admin/products-list",
               element: <AdminProductsList />,
@@ -324,7 +324,11 @@ function App() {
             },
             {
               path: "/admin/products/laptop-configurations/:productId",
-              element: <AdminLaptopConfiguration />,
+              element: <AdminAllLaptopConfiguration />,
+            },
+            {
+              path: "/admin/products/laptop-configurations/:productId",
+              element: <AdminSingleLaptopConfiguration />,
             },
             {
               path: "/admin/categories",
@@ -342,10 +346,7 @@ function App() {
               path: "/admin/update-category/:catId",
               element: <AdminUpdateCategory />,
             },
-            {
-              path: "/admin/brands",
-              element: <AdminBrands />,
-            },
+
             {
               path: "/admin/add-brands",
               element: <AdminCreateBrand />,

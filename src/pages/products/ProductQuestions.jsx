@@ -271,6 +271,8 @@ const ProductDeductions = () => {
   const conditionNameSubHeading =
     "text-lg font-medium text-gray-600 max-2sm:text-sm";
 
+  const laptopDesktop = ["laptop", "desktop"];
+
   // console.log("deductions", deductions);
   // console.log("sortedConditions", sortedConditions);
 
@@ -377,7 +379,10 @@ const ProductDeductions = () => {
             {checkIsOn &&
             productsData &&
             deductions &&
-            productsData.category.name.toLowerCase() !== "laptop" ? (
+            // productsData.category.name.toLowerCase() !== "laptop" ? (
+            !laptopDesktop.includes(
+              productsData.category.name.toLowerCase()
+            ) ? (
               <div key={sortedConditions[currentPageIndex].page}>
                 {sortedConditions[currentPageIndex].conditions.map(
                   (condition) =>
@@ -562,7 +567,6 @@ const ProductDeductions = () => {
           {/* Right Side Div */}
           <ProdDeductionsRight />
         </div>
-        {/* ) : null} */}
 
         {showOTP ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

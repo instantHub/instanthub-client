@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import CreateSeries from "../../components/CreateSeries";
 import {
   useUploadConditionLabelsImageMutation,
   useUpdateProductMutation,
@@ -8,6 +7,8 @@ import {
 } from "../../../features/api";
 import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
+import { SubmitButton } from "../../components/SubmitButton";
+import BackButton from "../../components/BackButton";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -26,19 +27,13 @@ const UpdateProduct = () => {
     useUploadProductImageMutation();
   const { data: productData, isLoading: productDataLoading } =
     useGetProductDetailsQuery(productId);
-  const [updateProduct] = useUpdateProductMutation();
-
-  if (productData) {
-    console.log("productData from updateProduct", productData);
-  }
+  const [updateProduct, { isLoading: updateProductLoading }] =
+    useUpdateProductMutation();
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
   // VARIANTS
-  // const [variants, setVariants] = useState([
-  //   { name: "", price: "" },
-  // ]);
   const [variants, setVariants] = useState([
     { variantId: "", name: "", price: "" },
   ]);
@@ -96,8 +91,8 @@ const UpdateProduct = () => {
       imageURL = await uploadFileHandler();
       setImageSelected(imageURL);
     }
-    console.log("after imageSelected", imageSelected);
-    console.log("after imageURL", imageURL);
+    // console.log("after imageSelected", imageSelected);
+    // console.log("after imageURL", imageURL);
 
     const updatedProductData = {
       name: prodName,
@@ -111,7 +106,7 @@ const UpdateProduct = () => {
       oldVariants: oldVariants,
     };
 
-    console.log("updatedProductData: ", updatedProductData);
+    // console.log("updatedProductData: ", updatedProductData);
 
     try {
       const updatedProduct = await updateProduct({
@@ -166,11 +161,11 @@ const UpdateProduct = () => {
       setUpdatedVariantLen(extractedVariants.length);
     }
   }, [productData]);
-  console.log("Prod Status", status);
-  console.log("Variant", variants);
-  console.log("Old Variant", oldVariants);
-  console.log("variantLength", variantLen);
-  console.log("New variantLength", updatedVriantLen);
+  // console.log("Prod Status", status);
+  // console.log("Variant", variants);
+  // console.log("Old Variant", oldVariants);
+  // console.log("variantLength", variantLen);
+  // console.log("New variantLength", updatedVriantLen);
 
   return (
     <div className="flex px-[2%] pt-[2%]">
@@ -182,13 +177,8 @@ const UpdateProduct = () => {
               <h2>Home </h2>
               <h2 className="pl-1"> / Update Product</h2>
             </div>
-            <div>
-              <Link to={"/admin/products-list"}>
-                <button className="bg-blue-700 text-white px-2 py-1 rounded">
-                  Back
-                </button>
-              </Link>
-            </div>
+
+            <BackButton location={"/admin/products-list"} />
           </div>
         </div>
         <div className="bg-white border rounded-md shadow-lg">
@@ -317,13 +307,11 @@ const UpdateProduct = () => {
                 </div>
               </div>
               <div className="py-3 px-2">
-                <button
-                  type="submit"
-                  className="bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
-                  // onClick={handleSubmit}
-                >
-                  Update Product
-                </button>
+                <SubmitButton
+                  handleLoading={updateProductLoading}
+                  value="Update Product"
+                  loading="Loading..."
+                />
               </div>
             </form>
           )}

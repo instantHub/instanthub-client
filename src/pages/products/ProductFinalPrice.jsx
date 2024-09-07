@@ -22,6 +22,7 @@ const ProductFinalPrice = () => {
   const [couponPrice, setCouponPrice] = useState("");
   const [couponCodeApplied, setCouponCodeApplied] = useState(false);
   const selectedProdDetails = useSelector((state) => state.deductions);
+  const laptopSlice = useSelector((state) => state.laptopDeductions);
   const [formData, setFormData] = useState();
   const [addressDetails, setAddressDetails] = useState();
   const [offerPrice, setOfferPrice] = useState();
@@ -44,6 +45,7 @@ const ProductFinalPrice = () => {
   maxTime.setHours(22, 0, 0, 0);
 
   console.log("selectedProdDetails", selectedProdDetails);
+  // console.log("laptopSlice", laptopSlice);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -179,46 +181,51 @@ const ProductFinalPrice = () => {
 
   // UseEffect to handle page refresh
   useEffect(() => {
-    // console.log(
-    //   "!selectedProdDetails.productAge",
-    //   !selectedProdDetails.productAge.conditionLabel
-    // );
     if (selectedProdDetails.productName == "") {
-      // navigate(`/`);
       navigate(`/categories/brands/productDetails/${productId}`);
     } else if (!selectedProdDetails.productAge.conditionLabel) {
       navigate(`/categories/brands/productDetails/${productId}`);
-    } else if (
-      selectedProdDetails.productPhysicalCondition.conditionLabel === ""
-    ) {
-      navigate(`/categories/brands/productDetails/${productId}`);
     }
+    // else if (
+    //   selectedProdDetails.productPhysicalCondition.conditionLabel === ""
+    // ) {
+    //   navigate(`/categories/brands/productDetails/${productId}`);
+    // }
   }, [selectedProdDetails]);
 
   // UseEffect to get complete final data
   useEffect(() => {
     let prodDeductions;
+    let productCategory = productDetails?.category?.name?.toLowerCase();
     if (!productLoading) {
-      console.log("productDetails", productDetails);
-      if (productDetails.category.name === "Mobile") {
-        prodDeductions = productDetails.variantDeductions.find(
+      // console.log("productDetails", productDetails);
+      if (productCategory === "mobile") {
+        let prodVarDeduction = productDetails.variantDeductions.find(
           (vd) =>
             vd.variantName === String(selectedProdDetails.getUpTo.variantName)
         );
-        prodDeductions = prodDeductions.deductions;
-      } else if (productDetails.category.name !== "Mobile") {
+        prodDeductions = prodVarDeduction.deductions;
+      } else if (laptopDesktop.includes(productCategory)) {
+        let simpleDed = productDetails.simpleDeductions;
+
+        let processor = productDetails.processorBasedDeduction.find(
+          (pbd) => pbd.processorName === laptopSlice.processor.conditionLabel
+        );
+        // console.log("processor", processor);
+
+        let procBasDed = processor.deductions;
+        // console.log("procBasDed", procBasDed);
+
+        prodDeductions = [...simpleDed, ...procBasDed];
+      } else {
         prodDeductions = productDetails.simpleDeductions;
       }
     }
     // console.log("prodDeductions", prodDeductions);
-    const prodAccessories = prodDeductions.find(
-      (pd) => pd.conditionName === "Accessories"
+
+    const prodAccessories = prodDeductions.find((pd) =>
+      pd.conditionName.toLowerCase().includes("accessories")
     );
-    // console.log("prodAccessories", prodAccessories);
-    // console.log(
-    //   "selectedProdDetails.deductions",
-    //   selectedProdDetails.deductions
-    // );
 
     // Get the condition labels from selectedProdDetails.deductions
     const deductedConditionLabels = selectedProdDetails.deductions.map(
@@ -226,42 +233,38 @@ const ProductFinalPrice = () => {
     );
     // console.log("deductedConditionLabels",deductedConditionLabels);
 
-    // Filter out the prodAccessories that are not present in selectedProdDetails.deductions
-    const AccessoriesNotSelected = prodAccessories.conditionLabels.filter(
-      (accessory) => {
-        // Check if the conditionLabel of the accessory is not present in deductedConditionLabels
-        return !deductedConditionLabels.some(
-          (label) => label === accessory.conditionLabel
-        );
-      }
-    );
-    setAccessoriesNotSelected(AccessoriesNotSelected);
+    // Check and return if the conditionLabel of the accessory is present in deductedConditionLabels
+    function checkAccessory(accessory) {
+      return deductedConditionLabels.find(
+        (label) => label === accessory.conditionLabel
+      );
+    }
 
-    // console.log("deductedConditionLabels", deductedConditionLabels);
-    // Filter out the prodAccessories that are not present in selectedProdDetails.deductions
-    const AccessoriesSelected = prodAccessories.conditionLabels.filter(
-      (accessory) => {
-        // Check if the conditionLabel of the accessory is not present in deductedConditionLabels
-        // console.log(accessory);
-        return deductedConditionLabels.some(
-          (label) => label === accessory.conditionLabel
-        );
+    let AccessoriesSelected = [];
+    let AccessoriesNotSelected = [];
+    prodAccessories.conditionLabels.map((accessory) => {
+      // Filter out the prodAccessories that are present in deductedConditionLabels(selectedProdDetails.deductions)
+      if (checkAccessory(accessory)) {
+        AccessoriesSelected.push(accessory);
+      } else {
+        AccessoriesNotSelected.push(accessory);
       }
-    );
-    // console.log("AccessoriesSelected", AccessoriesSelected);
+    });
     setAccessoriesSelected(AccessoriesSelected);
+    setAccessoriesNotSelected(AccessoriesNotSelected);
+    console.log("AccessoriesSelected", AccessoriesSelected);
+    console.log("AccessoriesNotSelected", AccessoriesNotSelected);
 
     let deductedPrice =
       Number(selectedProdDetails.getUpTo.price) -
       Number(selectedProdDetails.toBeDeducted) +
       Number(selectedProdDetails.toBeAdded);
-    // console.log("selectedProdDetails", selectedProdDetails);
+
+    // console.log("deductedPrice initial", deductedPrice);
 
     if (AccessoriesNotSelected.length > 0) {
-      // console.log("deductedPrice before accessory deducted", deductedPrice);
-
       AccessoriesNotSelected.map((a) => {
-        if (productDetails.category.name.includes("Mobile")) {
+        if (productCategory.includes("mobile")) {
           deductedPrice =
             deductedPrice -
             Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
@@ -270,42 +273,44 @@ const ProductFinalPrice = () => {
         }
         console.log("AccessoriesNotSelected", a);
       });
-      // console.log("deductedPrice after accessory deducted", deductedPrice);
-
-      setFormData({
-        ...formData,
-        productId,
-        productName: selectedProdDetails.productName,
-        productBrand: productDetails.brand.name,
-        productCategory: selectedProdDetails.productCategory,
-        variant: selectedProdDetails.getUpTo,
-        deductions: selectedProdDetails.deductions,
-        // accessoriesNotAvailable: AccessoriesNotSelected,
-        accessoriesAvailable: AccessoriesSelected,
-        // offerPrice: Math.ceil(deductedPrice),
-        status: "pending",
-      });
-    } else {
-      setFormData({
-        ...formData,
-        productId,
-        productName: selectedProdDetails.productName,
-        productBrand: productDetails.brand.name,
-        productCategory: selectedProdDetails.productCategory,
-        variant: selectedProdDetails.getUpTo,
-        deductions: selectedProdDetails.deductions,
-        accessoriesAvailable: AccessoriesSelected,
-        // offerPrice: Math.ceil(deductedPrice),
-        status: "pending",
-      });
     }
+    // else {
+    //   setFormData({
+    //     ...formData,
+    //     productId,
+    //     productName: selectedProdDetails.productName,
+    //     productBrand: productDetails.brand.name,
+    //     productCategory: selectedProdDetails.productCategory,
+    //     variant: selectedProdDetails.getUpTo,
+    //     deductions: selectedProdDetails.deductions,
+    //     accessoriesAvailable: AccessoriesSelected,
+    //     status: "pending",
+    //     // offerPrice: Math.ceil(deductedPrice),
+    //   });
+    // }
 
+    setFormData({
+      ...formData,
+      productId,
+      productName: selectedProdDetails.productName,
+      productBrand: productDetails.brand.name,
+      productCategory: selectedProdDetails.productCategory,
+      variant: selectedProdDetails.getUpTo,
+      deductions: selectedProdDetails.deductions,
+      accessoriesAvailable: AccessoriesSelected,
+      status: "pending",
+      // accessoriesNotAvailable: AccessoriesNotSelected,
+      // offerPrice: Math.ceil(deductedPrice),
+    });
+
+    // Final Offer Price
     if (
       deductedPrice > 500 &&
-      deductedPrice < selectedProdDetails.getUpTo.price
+      deductedPrice <= selectedProdDetails.getUpTo.price
     ) {
       setOfferPrice(Math.ceil(deductedPrice));
     } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
+      console.log("Final price above product price");
       setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
       setOfferPrice(500);
@@ -313,6 +318,8 @@ const ProductFinalPrice = () => {
   }, [selectedProdDetails, productDetails]);
 
   // console.log("formData", formData);
+
+  const laptopDesktop = ["laptop", "desktop"];
 
   return (
     <>

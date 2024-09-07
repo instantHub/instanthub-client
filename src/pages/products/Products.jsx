@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  useGetBrandQuery,
   useGetProductsQuery,
   useGetCategoryQuery,
-  useGetAllProductsQuery,
   useGetBrandSeriesQuery,
 } from "../../features/api";
 import { useParams, Link } from "react-router-dom";
@@ -15,12 +13,18 @@ import { Helmet } from "react-helmet-async";
 
 const Products = () => {
   const { brandId } = useParams();
-  const { data: getCategories, isLoading: categoryLoading } =
+
+  const { data: categoriesData, isLoading: categoryLoading } =
     useGetCategoryQuery();
+
   const { data: brandSeries, isLoading: seriesLoading } =
     useGetBrandSeriesQuery(brandId);
+
   const [showSeries, setShowSeries] = useState(false);
   const [seriesSelected, setSeriesSelected] = useState("");
+
+  const [brand, setBrand] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const [search, setSearch] = useState("");
 
@@ -34,29 +38,6 @@ const Products = () => {
 
   // console.log("productsData", productsData);
 
-  // Finding Category of the Product
-  let category = { name: "", id: "" };
-  if (!categoryLoading && !productsLoading && productsData.length > 0) {
-    getCategories.map((cat) => {
-      if (productsData[0].category == cat.id) {
-        category = { name: cat.name, id: cat.id };
-      }
-    });
-  }
-
-  let { data: brandData, isLoading: brandLoading } = useGetBrandQuery(
-    category.id
-  );
-
-  // Finding Brand of the Product
-  let brand = { name: "", id: "" };
-  if (!categoryLoading && !productsLoading && !brandLoading) {
-    brandData.map((brandDetail) => {
-      if (brandDetail.id == brandId) {
-        brand = { name: brandDetail.name, id: brandDetail.id };
-      }
-    });
-  }
   // console.log("showSeries", showSeries);
   const handleSeries = (seriesId) => {
     setShowSeries(!showSeries);
@@ -64,12 +45,37 @@ const Products = () => {
     // console.log(seriesId);
   };
 
+  const handleSearch = async (e) => {
+    // console.log("handleSearch");
+    let searchValue = e.target.value;
+    setSearch(searchValue);
+  };
+
+  const debounce = useMemo(() => {
+    let timerId;
+    return (...args) => {
+      clearTimeout(timerId);
+      timerId = setTimeout(() => handleSearch(...args), 800);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!categoryLoading) {
+      let cat = categoriesData.find((cat) => {
+        let brand = cat.brands.find((brand) => brand.id === brandId);
+        setBrand(brand);
+        return brand;
+      });
+      setCategory(cat);
+    }
+  }, [categoriesData]);
+
+  console.log(brand);
+
   return (
     <>
-      {/* <ProductSeries brandId={brandId} /> */}
-
       <Helmet>
-        <title>{`Sell Old ${brand.name} ${category.name} | InstantCashPick`}</title>
+        <title>{`Sell Old ${brand?.name} ${category?.name} | InstantCashPick`}</title>
 
         <meta
           name="description"
@@ -78,7 +84,7 @@ const Products = () => {
 
         <meta
           name="keywords"
-          content={`sell products on online, sell old mobiles online, sell old ${brand.name} ${category.name} online, sell ${brand.name} ${category.name} online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick`}
+          content={`sell products on online, sell old mobiles online, sell old ${brand?.name} ${category?.name} online, sell ${brand?.name} ${category?.name} online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick`}
           // content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
@@ -160,11 +166,6 @@ const Products = () => {
             : null}
         </div>
       </div>
-      {/* {showSeries && series.id === seriesSelected ? (
-                  <span className="p-0 m-0 ml-[95%]">x</span>
-                ) : null} */}
-
-      {/*  */}
 
       {/* <div className="mt-5 w-4/5 max-sm:w-[90%] mx-auto"> */}
       <div className="mt-5 w-[90%] max-sm:w-[90%] mx-auto">
@@ -178,7 +179,8 @@ const Products = () => {
               id=""
               placeholder="Search a product"
               className="px-2 text-sm py-1 outline-none"
-              onChange={(e) => setSearch(e.target.value)}
+              // onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => debounce(e, "test1", "test2")}
             />
           </div>
           <div>
@@ -191,10 +193,8 @@ const Products = () => {
         <div>
           <p className="pb-5 text-2xl font-bold max-sm:text-xl">
             Sell your{" "}
-            {!categoryLoading && !brandLoading
-              ? `${brand.name} ${category.name}`
-              : null}{" "}
-            for Instant Cash
+            {category && brand ? `${brand.name} ${category.name}` : null} for
+            Instant Cash
           </p>
         </div>
 
@@ -203,12 +203,12 @@ const Products = () => {
             <h1 className="flex items-center opacity-60 gap-1">
               <Link to={"/"}>Home</Link>
               <FaAngleRight />
-              <Link to={`/categories/brands/${category.id}`}>
-                {category.name}
+              <Link to={`/categories/brands/${category?.id}`}>
+                {category?.name}
               </Link>
               <FaAngleRight />
             </h1>
-            {brand.name}
+            {brand?.name}
           </div>
           <hr className="text-black mt-1" />
         </div>

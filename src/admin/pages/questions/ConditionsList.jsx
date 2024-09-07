@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import {
   useGetConditionsQuery,
   useGetCategoryQuery,
   useDeleteConditionMutation,
 } from "../../../features/api";
-import { Link } from "react-router-dom";
+import BackButton from "../../components/BackButton";
+import EditButton from "../../components/EditButton";
 
 const ConditionsTable = () => {
   //   const [questions, setQuestions] = useState([]);
@@ -86,13 +86,11 @@ const ConditionsTable = () => {
           <h2 className="text-black text-lg font-bold mb-4">
             Conditions Table
           </h2>
-          <div>
-            <Link to={"/admin/create-questions"}>
-              <button className="bg-blue-700 text-white px-2 py-1 rounded">
-                Create Condition
-              </button>
-            </Link>
-          </div>
+
+          <BackButton
+            location={"/admin/create-questions"}
+            text={"Create Condtion"}
+          />
         </div>
 
         <table className="w-full">
@@ -121,11 +119,9 @@ const ConditionsTable = () => {
                       <td className=" py-2">{condition.page}</td>
                       <td className="text-white py-2">
                         <div className="flex gap-2 justify-center">
-                          <Link to={`/admin/updateCondition/${condition.id}`}>
-                            <button className="bg-blue-600 px-3 py-1 rounded-md">
-                              Edit
-                            </button>
-                          </Link>
+                          <EditButton
+                            location={`/admin/updateCondition/${condition.id}`}
+                          />
                           <button
                             className="bg-red-600 px-3 py-1 rounded-md"
                             // onClick={() =>
@@ -161,11 +157,9 @@ const ConditionsTable = () => {
                       <td className=" py-2">{condition.page}</td>
                       <td className="text-white py-2">
                         <div className="flex gap-2 justify-center">
-                          <Link to={`/admin/updateCondition/${condition.id}`}>
-                            <button className="bg-blue-600 px-3 py-1 rounded-md">
-                              Edit
-                            </button>
-                          </Link>
+                          <EditButton
+                            location={`/admin/updateCondition/${condition.id}`}
+                          />
                           <button
                             className="bg-red-600 px-3 py-1 rounded-md"
                             onClick={() =>

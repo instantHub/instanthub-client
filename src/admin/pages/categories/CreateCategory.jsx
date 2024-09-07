@@ -6,12 +6,14 @@ import {
 } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import ListButton from "../../components/ListButton";
 
 const CreateCategory = () => {
   const [category, setCategory] = useState("");
   const [uniqueURL, setUniqueURL] = useState("");
   const [imageSelected, setImageSelected] = useState("");
-  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const [createCategory, { isLoading: createCategoryloading }] =
+    useCreateCategoryMutation();
 
   const [uploadCategoryImage, { isLoading: uploadLoading }] =
     useUploadCategoryImageMutation();
@@ -70,7 +72,7 @@ const CreateCategory = () => {
 
       try {
         await createCategory(JSON.stringify(categoryData)).unwrap();
-        toast("Category created successfull..!");
+        toast.success("Category created successfull..!");
         setCategory("");
         setUniqueURL("");
         setImageSelected("");
@@ -80,6 +82,7 @@ const CreateCategory = () => {
         fileInputRef.current.required = true;
       } catch (error) {
         console.log("Error: ", error);
+        toast.error("Error Creating Category..!");
       }
     } else {
       console.log("All fields are required");
@@ -99,13 +102,11 @@ const CreateCategory = () => {
           <h2>Home </h2>
           <h2 className="pl-1"> / Add Category</h2>
         </div>
-        <div>
-          <Link to={"/admin/categories-list"}>
-            <button className="bg-blue-700 text-white px-2 py-1 rounded">
-              Categories List
-            </button>
-          </Link>
-        </div>
+
+        <ListButton
+          location={"/admin/categories-list"}
+          text={"Categories List"}
+        />
       </div>
       <div className="bg-white border rounded-md shadow-lg">
         <form
@@ -171,9 +172,10 @@ const CreateCategory = () => {
           <div className="py-3 px-2">
             <button
               type="submit"
-              className="border border-gray-100 bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
+              className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+              disabled={createCategoryloading}
             >
-              Create Category
+              {!createCategoryloading ? "Create Category" : "Loading..."}
             </button>
           </div>
         </form>

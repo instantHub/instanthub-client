@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   useGetConditionsQuery,
   useGetCategoryQuery,
   useGetConditionLabelsQuery,
   useDeleteConditionLabelMutation,
 } from "../../../features/api";
-import { Link } from "react-router-dom";
+import BackButton from "../../components/BackButton";
+import EditButton from "../../components/EditButton";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -29,10 +30,7 @@ const ConditionLabelsTable = () => {
     await deleteConditionLabel({ category, conditionLabelId });
   };
 
-
   return (
-    //ConditionLabelsTable based on the Condition selected
-
     <div className="p-4">
       <h2 className="text-black text-lg font-bold mb-4">
         ConditionLabels Table
@@ -82,44 +80,14 @@ const ConditionLabelsTable = () => {
                   ))}
             </select>
           </div>
-          {/* <div>
-          <p>{selectedCategory}</p>
-        </div> */}
         </div>
-        <div>
-          <Link to={"/admin/create-questions"}>
-            <button className="bg-blue-700 text-white px-2 py-1 rounded">
-              {/* Create ConditionLabels */}Back
-            </button>
-          </Link>
-        </div>
-      </div>{" "}
-      {/* <div className="mb-4">
-        <label htmlFor="condition" className=" mr-2">
-          Select Label:
-        </label>
-        <select
-          id="condition"
-          onChange={handleConditionChange}
-          value={selectedCondition}
-          className="p-2 rounded bg-gray-300 text-gray-800"
-        >
-          <option value="">Select</option>
 
-          {!conditionsLoading &&
-            conditionsData.map(
-              (condition, index) => (
-                <option
-                  key={`${condition.category.id}-${index}`}
-                  value={condition.conditionName}
-                >
-                  {condition.conditionName}
-                </option>
-              )
-              //   ))
-            )}
-        </select>
-      </div> */}
+        <BackButton
+          location={"/admin/create-questions"}
+          text={"Create ConditionLabels"}
+        />
+      </div>
+
       <table className="w-full">
         <thead>
           <tr>
@@ -163,13 +131,9 @@ const ConditionLabelsTable = () => {
                   </td>
                   <td className="text-white py-2">
                     <div className="flex gap-2 justify-center">
-                      <Link
-                        to={`/admin/updateConditionLabel/${conditionLabel.id}`}
-                      >
-                        <button className="bg-blue-600 px-3 py-1 rounded-md">
-                          Edit
-                        </button>
-                      </Link>
+                      <EditButton
+                        location={`/admin/updateConditionLabel/${conditionLabel.id}`}
+                      />
                       <button
                         className="bg-red-600 px-3 py-1 rounded-md"
                         onClick={() =>
@@ -214,13 +178,9 @@ const ConditionLabelsTable = () => {
                     </td>
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
-                        <Link
-                          to={`/admin/updateConditionLabel/${conditionLabel.id}`}
-                        >
-                          <button className="bg-blue-600 px-3 py-1 rounded-md">
-                            Edit
-                          </button>
-                        </Link>
+                        <EditButton
+                          location={`/admin/updateConditionLabel/${conditionLabel.id}`}
+                        />
                         <button
                           className="bg-red-600 px-3 py-1 rounded-md"
                           onClick={() =>
@@ -266,13 +226,9 @@ const ConditionLabelsTable = () => {
                     </td>
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
-                        <Link
-                          to={`/admin/updateConditionLabel/${conditionLabel.id}`}
-                        >
-                          <button className="bg-blue-600 px-3 py-1 rounded-md">
-                            Edit
-                          </button>
-                        </Link>
+                        <EditButton
+                          location={`/admin/updateConditionLabel/${conditionLabel.id}`}
+                        />
                         <button
                           className="bg-red-600 px-3 py-1 rounded-md"
                           onClick={() =>

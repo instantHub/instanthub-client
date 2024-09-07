@@ -85,7 +85,7 @@ const SearchBar = () => {
         );
       }
 
-      console.log("services from search", services.data);
+      // console.log("services from search", services.data);
 
       setProductsData(response.data);
       // console.log("products count", response.data.totalProducts);
