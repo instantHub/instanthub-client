@@ -38,7 +38,7 @@ function Condtions() {
     setFormData(updatedFormData);
   };
 
-  console.log("condition formData", formData);
+  // console.log("condition formData", formData);
 
   // Function to add a new condition name
   const addConditionName = () => {
@@ -68,6 +68,9 @@ function Condtions() {
       ).unwrap();
       console.log("condition created", condition);
       if (condition.message?.includes("Duplicate")) {
+        toast.warning(condition.message);
+        return;
+      } else if (condition.message?.includes("Create atleast one")) {
         toast.warning(condition.message);
         return;
       }

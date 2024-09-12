@@ -6,6 +6,7 @@ import {
 } from "../../../features/api";
 import BackButton from "../../components/BackButton";
 import EditButton from "../../components/EditButton";
+import { toast } from "react-toastify";
 
 const ConditionsTable = () => {
   //   const [questions, setQuestions] = useState([]);
@@ -46,8 +47,18 @@ const ConditionsTable = () => {
 
   const handleDelete = async (category, conditionId) => {
     console.log(category, conditionId);
-    await deleteCondition({ category, conditionId });
-    closeModal();
+    try {
+      await deleteCondition({ category, conditionId });
+      toast.success(
+        `Successfully deleted condition ${selectedCondition.conditionName}`
+      );
+      closeModal();
+    } catch (error) {
+      toast.error(
+        `Failed deleting condition ${selectedCondition.conditionName}`
+      );
+      console.log(error.message);
+    }
   };
 
   // if (!conditionsLoading) {
@@ -211,7 +222,8 @@ const ConditionsTable = () => {
                       selectedCondition.conditionId
                     )
                   }
-                  className="bg-red-600 text-white px-4 py-1 rounded"
+                  className="bg-red-600 text-white px-4 py-1 rounded disabled:cursor-none disabled:bg-gray-300"
+                  disabled={deleteLoading}
                 >
                   Yes
                 </button>

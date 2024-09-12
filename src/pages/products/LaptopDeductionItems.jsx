@@ -62,7 +62,8 @@ const LaptopDeductionItems = ({
       handleLabelSelection(
         label.conditionLabel,
         label.priceDrop,
-        label.operation
+        label.operation,
+        
       );
     }
 
@@ -72,6 +73,7 @@ const LaptopDeductionItems = ({
           conditionLabel: label.conditionLabel,
           priceDrop: label.priceDrop,
           operation: label.operation,
+          type: "Screen Size",
         })
       );
       setScreenSize({
@@ -85,6 +87,7 @@ const LaptopDeductionItems = ({
           conditionLabel: label.conditionLabel,
           priceDrop: label.priceDrop,
           operation: label.operation,
+          type: "Graphics",
         })
       );
       setGraphic({
@@ -98,6 +101,7 @@ const LaptopDeductionItems = ({
           conditionLabel: label.conditionLabel,
           priceDrop: label.priceDrop,
           operation: label.operation,
+          type: "Screen Condition",
         })
       );
       setScreenCondition({
@@ -111,6 +115,7 @@ const LaptopDeductionItems = ({
           conditionLabel: label.conditionLabel,
           priceDrop: label.priceDrop,
           operation: label.operation,
+          type: "Physical Condition",
         })
       );
       setPhysicalCondition({

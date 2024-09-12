@@ -46,19 +46,30 @@ export const deductionSlice = createSlice({
     },
     addDeductions: (state, action) => {
       console.log("addDeduction Reducer", action.payload);
-      console.log(state.productCategory);
+      // console.log(state.productCategory);
+
+      if (action.payload.type === "Processor") {
+        console.log("Processor", action.payload);
+        return {
+          ...state,
+          deductions: [...state.deductions, action.payload],
+        };
+      }
+
+      let productCategory = state.productCategory.toLowerCase();
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
         return condition.conditionLabel === action.payload.conditionLabel;
       });
+
       if (!isExisting) {
         if (action.payload.operation === "Subtrack") {
-          console.log("state", state.productCategory);
+          // console.log("state", state.productCategory);
           return {
             ...state,
             // Deduction based on Product Category
-            toBeDeducted: state.productCategory.toLowerCase().includes("mobile")
+            toBeDeducted: productCategory.includes("mobile")
               ? Math.ceil(
                   state.toBeDeducted +
                     (state.getUpTo.price * Number(action.payload.priceDrop)) /
@@ -72,7 +83,7 @@ export const deductionSlice = createSlice({
           return {
             ...state,
             // Deduction based on Product Category
-            toBeAdded: state.productCategory.toLowerCase().includes("mobile")
+            toBeAdded: productCategory.includes("mobile")
               ? Math.ceil(
                   state.toBeAdded +
                     (state.getUpTo.price * Number(action.payload.priceDrop)) /
@@ -120,14 +131,26 @@ export const deductionSlice = createSlice({
     },
     addProductDisplayDefect: (state, action) => {
       console.log("addProductDisplayDefect Slice");
-      return {
-        ...state,
-        productDisplayDefect: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-        },
-      };
+
+      // Check if action.payload already exists in deductions
+      const isExisting =
+        state.productDisplayDefect.conditionLabel ===
+        action.payload.conditionLabel;
+      if (isExisting) {
+        return {
+          ...state,
+          productDisplayDefect: {},
+        };
+      } else {
+        return {
+          ...state,
+          productDisplayDefect: {
+            conditionLabel: action.payload.conditionLabel,
+            priceDrop: action.payload.priceDrop,
+            operation: action.payload.operation,
+          },
+        };
+      }
     },
     removeDeductions: (state, action) => {
       // console.log("removeDeductions reducer", action.payload);

@@ -26,6 +26,8 @@ const ProductsList = () => {
     search: search,
   });
 
+  console.log(productsData && productsData);
+
   const { data: categoryData, isLoading: categoryDataLoading } =
     useGetCategoryQuery();
   const [deleteProduct, { isLoading: deleteLoading }] =

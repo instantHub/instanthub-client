@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   useGetConditionsQuery,
   useGetCategoryQuery,
   useCreateConditionLabelsMutation,
   useUploadConditionLabelsImageMutation,
   useGetConditionLabelsQuery,
+  useGetAllBrandQuery,
 } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,6 +14,7 @@ import ListButton from "../../components/ListButton";
 const CreateConditionLabels = () => {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery();
+  const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
   const { data: conditionsLabelsData, isLoading: conditionsLabelsLoading } =
@@ -22,18 +24,27 @@ const CreateConditionLabels = () => {
   const [createConditionLabels, { isLoading: createConditionLabelsLoading }] =
     useCreateConditionLabelsMutation();
 
+  const [processorId, setProcessorId] = useState(null);
+
+  // console.log(brandsData && brandsData );
+
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
-  const [imageSelected, setImageSelected] = useState();
+  // const [imageSelected, setImageSelected] = useState();
+  const [conditionSelection, setConditionSelection] = useState(null);
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [formData, setFormData] = useState({
     category: "",
+    brand: "",
     conditionNameId: "",
-    // condition: "",
     conditionLabel: "",
     conditionLabelImg: undefined,
   });
+
+  console.log("condition label formData", formData);
 
   // File handler
   const uploadFileHandler = async () => {
@@ -68,6 +79,9 @@ const CreateConditionLabels = () => {
       console.log("conditionLabel created", conditionLabel);
       if (conditionLabel.message?.toLowerCase().includes("duplicate")) {
         toast.warning(`${conditionLabel.message}`);
+      } else if (conditionLabel.message?.includes("Create atleast one")) {
+        toast.warning(conditionLabel.message);
+        return;
       } else {
         toast.success("conditionLabel created successfully..!");
       }
@@ -91,6 +105,37 @@ const CreateConditionLabels = () => {
       toast.error("Error while creating conditionLabel..!");
     }
   };
+
+  // useEffect To set processorId
+  useEffect(() => {
+    console.log("useEffect To set processorId");
+    if (conditionsData) {
+      // console.log(conditionsData);
+      let processor = conditionsData.find(
+        (condition) =>
+          condition.conditionName === "Processor" &&
+          condition.category.id === formData.category
+      );
+      console.log(processor);
+      setProcessorId(processor?.id);
+    }
+  }, [conditionsData, formData]);
+
+  // Use Effect To set clear brand from formData
+  useEffect(() => {
+    console.log("Form Data useEffect");
+
+    if (formData.conditionNameId !== processorId) {
+      console.log("Processor not selected");
+      setFormData({
+        ...formData,
+        brand: "",
+      });
+    }
+  }, [conditionSelection, processorId]);
+
+  console.log("processorId", processorId);
+  // console.log("conditionsData", conditionsData);
 
   // console.log("TEST", conditionsLabelsData && conditionsLabelsData);
 
@@ -131,6 +176,11 @@ const CreateConditionLabels = () => {
                       value={formData.category}
                       className="border p-1 rounded"
                       onChange={(e) => {
+                        let cat = categoryData.find(
+                          (c) => c.id === e.target.value
+                        );
+                        setSelectedCategory(cat);
+
                         setFormData({
                           ...formData,
                           category: e.target.value,
@@ -155,15 +205,14 @@ const CreateConditionLabels = () => {
 
                   {/* Select Condition */}
                   <div className="flex flex-col">
-                    <label>ConditionsLabel:</label>
+                    <label>Condition:</label>
                     <select
-                      name=""
-                      id=""
                       className="border p-1 rounded"
                       onChange={(e) => {
+                        setConditionSelection(e.target.value);
                         setFormData({
                           ...formData,
-                          // condition: e.target.value,
+                          conditionName: e.target.name,
                           conditionNameId: e.target.value,
                         });
                       }}
@@ -171,21 +220,69 @@ const CreateConditionLabels = () => {
                     >
                       <option value="">Select a condition</option>
                       {!conditionsLoading &&
-                        conditionsData.map(
-                          (condition) =>
-                            condition.category.id == formData.category && (
+                        conditionsData
+                          .filter(
+                            (cond) => cond.category.id === formData.category
+                          )
+                          .map((condition) => (
+                            // condition.category.id == formData.category && (
+                            <option
+                              key={condition.id}
+                              value={condition.id}
+                              name={condition.conditionName}
+                            >
+                              {condition.conditionName}
+                            </option>
+                          ))}
+                    </select>
+                  </div>
+
+                  {/* Select Brand */}
+                  {formData.conditionNameId === processorId && (
+                    <div className="flex flex-col">
+                      <label>Brand:</label>
+                      <select
+                        name=""
+                        id=""
+                        value={formData.brand}
+                        className="border p-1 rounded"
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            brand: e.target.value,
+                          });
+                        }}
+                      >
+                        <option value="">Select a Brand</option>
+                        <option
+                          value={`${
+                            (selectedCategory.name === "Laptop" && "Apple") ||
+                            (selectedCategory.name === "Desktop" && "iMac")
+                          }`}
+                        >
+                          {(selectedCategory.name === "Laptop" && "Apple") ||
+                            (selectedCategory.name === "Desktop" && "iMac")}
+                        </option>
+                        <option value="Others">Others</option>
+                        {/* {!brandsLoading &&
+                          brandsData
+                            .filter(
+                              (brand) =>
+                                brand.category.id === formData?.category
+                            )
+                            .map((brand) => (
                               <option
-                                key={condition.id}
-                                value={condition.id}
-                                name="condition"
+                                key={brand.id}
+                                value={brand.id}
+                                name="brand"
                                 className=""
                               >
-                                {condition.conditionName}
+                                {brand.name}
                               </option>
-                            )
-                        )}
-                    </select>{" "}
-                  </div>
+                            ))} */}
+                      </select>
+                    </div>
+                  )}
 
                   {/* Enter ConditionLabel */}
                   <div className="py-2">
@@ -244,7 +341,7 @@ const CreateConditionLabels = () => {
               <ul className="">
                 {!conditionsLabelsLoading &&
                   conditionsLabelsData
-                    .filter((cl) => cl.category.id == formData.category)
+                    .filter((cl) => cl.category?.id == formData.category)
                     .filter(
                       (cl) => cl.conditionNameId?.id == formData.conditionNameId
                     )

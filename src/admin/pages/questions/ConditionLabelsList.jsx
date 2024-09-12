@@ -7,6 +7,7 @@ import {
 } from "../../../features/api";
 import BackButton from "../../components/BackButton";
 import EditButton from "../../components/EditButton";
+import { toast } from "react-toastify";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -18,16 +19,22 @@ const ConditionLabelsTable = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetCategoryQuery();
 
-  if (conditionLabelsData) {
-    console.log("conditionLabelsData", conditionLabelsData);
-  }
+  // if (conditionLabelsData) {
+  //   console.log("conditionLabelsData", conditionLabelsData);
+  // }
 
   const [selectedCategory, setSelectedCategory] = useState(undefined);
   const [selectedCondition, setSelectedCondition] = useState(undefined);
 
-  const handleDelete = async (category, conditionLabelId) => {
+  const handleDelete = async (category, conditionLabelId, conditionLabel) => {
     console.log(category, conditionLabelId);
-    await deleteConditionLabel({ category, conditionLabelId });
+    try {
+      await deleteConditionLabel({ category, conditionLabelId });
+      toast.success(`Successfully deleted Condition Label ${conditionLabel}`);
+    } catch (error) {
+      toast.error(`Failed deleting Condition Label ${conditionLabel}`);
+      console.log(error.message);
+    }
   };
 
   return (
@@ -110,7 +117,7 @@ const ConditionLabelsTable = () => {
                   key={index}
                   className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
                 >
-                  <td className=" py-2">{conditionLabel.category.name}</td>
+                  <td className=" py-2">{conditionLabel.category?.name}</td>
                   <td className=" py-2">
                     {conditionLabel.conditionNameId?.conditionName}
                   </td>
@@ -135,13 +142,15 @@ const ConditionLabelsTable = () => {
                         location={`/admin/updateConditionLabel/${conditionLabel.id}`}
                       />
                       <button
-                        className="bg-red-600 px-3 py-1 rounded-md"
+                        className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
                         onClick={() =>
                           handleDelete(
                             conditionLabel.category.id,
-                            conditionLabel.id
+                            conditionLabel.id,
+                            conditionLabel.conditionLabel
                           )
                         }
+                        disabled={deleteLoading}
                       >
                         Delete
                       </button>
@@ -151,7 +160,7 @@ const ConditionLabelsTable = () => {
               ))
             : !conditionLabelsLoading && !selectedCondition
             ? conditionLabelsData
-                .filter((cl) => cl.category.id === selectedCategory)
+                .filter((cl) => cl.category?.id === selectedCategory)
                 .map((conditionLabel, index) => (
                   <tr
                     key={index}
@@ -182,13 +191,15 @@ const ConditionLabelsTable = () => {
                           location={`/admin/updateConditionLabel/${conditionLabel.id}`}
                         />
                         <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
+                          className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
                           onClick={() =>
                             handleDelete(
                               conditionLabel.category.id,
-                              conditionLabel.id
+                              conditionLabel.id,
+                              conditionLabel.conditionLabel
                             )
                           }
+                          disabled={deleteLoading}
                         >
                           Delete
                         </button>
@@ -230,13 +241,15 @@ const ConditionLabelsTable = () => {
                           location={`/admin/updateConditionLabel/${conditionLabel.id}`}
                         />
                         <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
+                          className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
                           onClick={() =>
                             handleDelete(
                               conditionLabel.category.id,
-                              conditionLabel.id
+                              conditionLabel.id,
+                              conditionLabel.conditionLabel
                             )
                           }
+                          disabled={deleteLoading}
                         >
                           Delete
                         </button>

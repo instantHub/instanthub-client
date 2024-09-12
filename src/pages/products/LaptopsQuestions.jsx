@@ -17,7 +17,7 @@ const LaptopsQuestions = (props) => {
   //   const { productsData, deductions } = props;
   const { productsData, deductions, handleLabelSelection } = props;
   // console.log("deductions", deductions);
-  console.log("productsData from laptop", productsData);
+  // console.log("productsData from laptop", productsData);
   const [processor, setProcessor] = useState(null);
   const [hardDisk, setHardDisk] = useState(null);
   const [ram, setRam] = useState(null);
@@ -83,7 +83,7 @@ const LaptopsQuestions = (props) => {
         conditions: grouped[page],
       }));
 
-    console.log("sortedPages", sortedPages);
+    // console.log("sortedPages", sortedPages);
 
     return sortedPages;
   };
@@ -165,14 +165,21 @@ const LaptopsQuestions = (props) => {
 
     if (conditionName === "Processor") {
       setProcessor({ conditionLabel, priceDrop, conditionLabelId });
-      dispatch(addProcessor({ conditionLabel, priceDrop, operation }));
+      dispatch(
+        addProcessor({
+          conditionLabel,
+          priceDrop,
+          operation,
+          type: "Processor",
+        })
+      );
 
       const procBasedDed = productsData.processorBasedDeduction.find(
         (pbd) => pbd.processorId === conditionLabelId
       );
 
       const sorted = groupConditionsByPage(procBasedDed.deductions);
-      console.log("sorted", sorted);
+      // console.log("sorted", sorted);
       setProcessorBasedDeductions(sorted);
 
       let maxIndex = procBasedDed.deductions.reduce((acc, condition) => {
@@ -191,10 +198,12 @@ const LaptopsQuestions = (props) => {
       dispatch(setGetUpto(getUpTo));
     } else if (conditionName === "Hard Disk") {
       setHardDisk({ conditionLabel, priceDrop });
-      dispatch(addHardDisk({ conditionLabel, priceDrop, operation }));
+      dispatch(
+        addHardDisk({ conditionLabel, priceDrop, operation, type: "Hard Disk" })
+      );
     } else if (conditionName === "Ram") {
       setRam({ conditionLabel, priceDrop });
-      dispatch(addRam({ conditionLabel, priceDrop, operation }));
+      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "RAM" }));
     }
   };
 

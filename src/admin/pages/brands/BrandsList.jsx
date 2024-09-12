@@ -6,6 +6,7 @@ import {
   useDeleteBrandMutation,
 } from "../../../features/api";
 import { Link } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import EditButton from "../../components/EditButton";
 

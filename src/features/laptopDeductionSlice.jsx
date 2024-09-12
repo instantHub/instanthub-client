@@ -24,6 +24,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
     addHardDisk: (state, action) => {
@@ -35,6 +36,7 @@ export const laptopDeductionSlice = createSlice({
           conditionLabel: action.payload.conditionLabel,
           priceDrop: action.payload.priceDrop,
           operation: action.payload.operation,
+          type: action.payload.type,
         },
       };
     },
@@ -44,6 +46,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
     addScreenSize: (state, action) => {
@@ -52,6 +55,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
     addGraphic: (state, action) => {
@@ -60,6 +64,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
 
@@ -69,6 +74,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
     addPhysicalCondition: (state, action) => {
@@ -77,6 +83,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
     addAge: (state, action) => {
@@ -85,6 +92,7 @@ export const laptopDeductionSlice = createSlice({
         conditionLabel: action.payload.conditionLabel,
         priceDrop: action.payload.priceDrop,
         operation: action.payload.operation,
+        type: action.payload.type,
       };
     },
 
@@ -92,10 +100,15 @@ export const laptopDeductionSlice = createSlice({
       // console.log("addLaptopDeductions Reducer");
       // console.log(action.payload);
 
+      // if (action.payload.type === "Processor") {
+      //   console.log("Proc", action.payload.type);
+      // }
+
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
         return condition.conditionLabel === action.payload.conditionLabel;
       });
+
       if (!isExisting) {
         return {
           ...state,
@@ -127,6 +140,7 @@ export const laptopDeductionSlice = createSlice({
         };
       }
     },
+
     clearLaptopDeductions: (state, action) => {
       // console.log("clearLaptopDeductions reducer");
 

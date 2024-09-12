@@ -305,7 +305,7 @@ const ProductQuestionsList = () => {
         const processorCondition = productDetail.simpleDeductions.find((d) =>
           d.conditionName.toLowerCase().includes("processor")
         );
-        setProcessorsList(processorCondition.conditionLabels);
+        setProcessorsList(processorCondition?.conditionLabels);
       } else {
         setSelectedOtherCat(true);
         setSelectedDeductions(productDetail.simpleDeductions);
@@ -322,7 +322,8 @@ const ProductQuestionsList = () => {
       <div className=" w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
         <div className=" flex justify-center m-2">
           <h3 className="absolute top-4 text-3xl font-serif font-bold">
-            {productData ? productData.name : "Loading.."} {selectedVariant}
+            {productData ? productData.name : "Loading.."}{" "}
+            {!selectedSystemCat && selectedVariant}
           </h3>
           {selectedSystemCat ? (
             <span className="text-lg">{productCategory} Deductions</span>
@@ -593,9 +594,14 @@ const ProductQuestionsList = () => {
                     onChange={() => handleProcessor(event)}
                   >
                     <option value="">Select Processor</option>
-                    {processorsList.map((processor, i) => (
+                    {/* {processorsList.map((processor, i) => (
                       <option value={processor.conditionLabelId} key={i}>
                         {processor.conditionLabel}
+                      </option>
+                    ))} */}
+                    {processorBasedDeductions.map((processor, i) => (
+                      <option value={processor.processorId} key={i}>
+                        {processor.processorName}
                       </option>
                     ))}
                   </select>
@@ -617,7 +623,7 @@ const ProductQuestionsList = () => {
                       </h3>
                     </div>
                     <hr />
-                    <div className="flex px-4 py-2 flex-col ">
+                    {/* <div className="flex px-4 py-2 flex-col ">
                       {productCategory === "Laptop" &&
                       productData.brand.name === "Apple" &&
                       condition.conditionName === "Processor"
@@ -702,6 +708,52 @@ const ProductQuestionsList = () => {
                                 </div>
                               </div>
                             ))}
+                    </div> */}
+
+                    <div className="flex px-4 py-2 flex-col ">
+                      {
+                        // productCategory === "Laptop" &&
+                        condition.conditionLabels &&
+                          condition.conditionLabels
+                            // .filter((label) =>
+                            //   label.conditionLabel
+                            //     .toLowerCase()
+                            //     .includes("apple")
+                            // )
+                            .map((conditionLabel, index) => (
+                              <div
+                                key={index}
+                                className="flex justify-around items-center mt-2 border-b-2 pb-1"
+                              >
+                                <div>
+                                  <h3 className="text-sm">
+                                    {conditionLabel.conditionLabel}
+                                  </h3>
+                                </div>
+
+                                <div className="flex items-center gap-1">
+                                  {productCategory !== "Mobile" ? (
+                                    <span className="text-lg">₹</span>
+                                  ) : null}
+                                  <span className="  px-3 py-1 mx-5 rounded text-[0.9rem]">
+                                    {conditionLabel.priceDrop}
+                                  </span>
+                                </div>
+
+                                <div className="w-[82px] text-center">
+                                  <h3
+                                    className={`${
+                                      conditionLabel.operation === "Subtrack"
+                                        ? "bg-red-200"
+                                        : "bg-blue-200"
+                                    } text-black font-bold px-2 py-1 rounded`}
+                                  >
+                                    {conditionLabel.operation}
+                                  </h3>
+                                </div>
+                              </div>
+                            ))
+                      }
                     </div>
                   </div>
                 ))}

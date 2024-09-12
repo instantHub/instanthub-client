@@ -252,8 +252,8 @@ const ProductFinalPrice = () => {
     });
     setAccessoriesSelected(AccessoriesSelected);
     setAccessoriesNotSelected(AccessoriesNotSelected);
-    console.log("AccessoriesSelected", AccessoriesSelected);
-    console.log("AccessoriesNotSelected", AccessoriesNotSelected);
+    // console.log("AccessoriesSelected", AccessoriesSelected);
+    // console.log("AccessoriesNotSelected", AccessoriesNotSelected);
 
     let deductedPrice =
       Number(selectedProdDetails.getUpTo.price) -
@@ -271,7 +271,7 @@ const ProductFinalPrice = () => {
         } else {
           deductedPrice = deductedPrice - Number(a.priceDrop);
         }
-        console.log("AccessoriesNotSelected", a);
+        // console.log("AccessoriesNotSelected", a);
       });
     }
     // else {
@@ -439,33 +439,7 @@ const ProductFinalPrice = () => {
                   <span>₹{offerPrice}</span>
                 )}
               </div>
-              {/* <div className="w-full flex justify-center">
-                {offerPrice > 500 ? (
-                  <button
-                    onClick={openModal}
-                    className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
-                  >
-                    Sell
-                  </button>
-                ) : (
-                  <div className="flex flex-col justify-center items-center gap-2">
-                    <button
-                      onClick={() =>
-                        navigate(
-                          `/recycle-categories/recycle-brands/recycle-productDetails/${productId}`
-                        )
-                      }
-                      className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded max-sm:text-sm"
-                    >
-                      Recycle this product
-                    </button>
-                    <p className="text-sm text-center text-gray-500 max-sm:text-xs">
-                      Since your product value is very low you can recycle this
-                      product with us.
-                    </p>
-                  </div>
-                )}
-              </div> */}
+
               <div className="w-full flex justify-center">
                 <button
                   onClick={openModal}
@@ -521,26 +495,6 @@ const ProductFinalPrice = () => {
                 </p>
               </div>
 
-              {/* Selected ConditionLabels Items List */}
-              {/* <div className="flex flex-col items-start">
-                <h2 className="text-lg font-semibold py-2">
-                  Selected Creteria
-                </h2>
-                {selectedProdDetails.deductions.map((deduction, index) => (
-                  <h2 key={index}>
-                    <span>{index + 1}. </span>{" "}
-                    <span
-                      className={`${
-                        deduction.operation.toLowerCase().includes("add")
-                          ? `text-green-600`
-                          : `text-red-500`
-                      } text-lg font-semibold`}
-                    >
-                      {deduction.conditionLabel}
-                    </span>
-                  </h2>
-                ))}
-              </div> */}
               <div className="flex flex-col items-start">
                 <h2 className="text-lg font-semibold py-2">
                   Positive Creteria
@@ -557,7 +511,7 @@ const ProductFinalPrice = () => {
                             : `text-red-500`
                         } text-lg font-semibold`}
                       >
-                        {deduction.conditionLabel}
+                        {deduction.type} - {deduction.conditionLabel}
                       </span>
                     </h2>
                   ))}
@@ -578,7 +532,7 @@ const ProductFinalPrice = () => {
                             : `text-red-500`
                         } text-lg font-semibold`}
                       >
-                        {deduction.conditionLabel}
+                        {deduction.type} - {deduction.conditionLabel}
                       </span>
                     </h2>
                   ))}
