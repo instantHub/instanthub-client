@@ -254,7 +254,8 @@ const CreateConditionLabels = () => {
                         }}
                       >
                         <option value="">Select a Brand</option>
-                        <option
+                        <option value={`Apple`}>Apple</option>
+                        {/* <option
                           value={`${
                             (selectedCategory.name === "Laptop" && "Apple") ||
                             (selectedCategory.name === "Desktop" && "iMac")
@@ -262,24 +263,7 @@ const CreateConditionLabels = () => {
                         >
                           {(selectedCategory.name === "Laptop" && "Apple") ||
                             (selectedCategory.name === "Desktop" && "iMac")}
-                        </option>
-                        <option value="Others">Others</option>
-                        {/* {!brandsLoading &&
-                          brandsData
-                            .filter(
-                              (brand) =>
-                                brand.category.id === formData?.category
-                            )
-                            .map((brand) => (
-                              <option
-                                key={brand.id}
-                                value={brand.id}
-                                name="brand"
-                                className=""
-                              >
-                                {brand.name}
-                              </option>
-                            ))} */}
+                        </option> */}
                       </select>
                     </div>
                   )}

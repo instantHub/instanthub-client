@@ -156,7 +156,7 @@ const CreateProducts = () => {
   useEffect(() => {
     if (!categoryLoading) {
       const found = categoryData.find((cat) => cat.name === "Mobile");
-      setMobileCategory(found.id);
+      setMobileCategory(found?.id);
     }
   }, [categoryData]);
 
@@ -268,15 +268,15 @@ const CreateProducts = () => {
                   {/* <option value="">General Product</option> */}
                   {!seriesLoading &&
                     seriesData.map((series) => {
-                      if (selectedBrand == series.brand.id) {
+                      if (selectedBrand == series.brand?.id) {
                         return (
                           <option
                             key={series.id}
-                            value={series.id}
+                            value={series?.id}
                             name="series"
                             className=""
                           >
-                            {series.name}
+                            {series?.name}
                           </option>
                         );
                       }

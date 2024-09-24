@@ -474,6 +474,7 @@ const ProductQuestionsList = () => {
           {/* Laptop category pricedrops */}
           {productData && selectedSystemCat ? (
             <>
+              {/* Buttons */}
               <div className="flex flex-col items- justify-around">
                 <div className="flex items-center justify-around">
                   <div
@@ -512,7 +513,10 @@ const ProductQuestionsList = () => {
                         });
                       }}
                     >
-                      Update Single {productCategory} Configurations
+                      Update Single{" "}
+                      <span className="font-bold">{productData.name}</span>{" "}
+                      {productCategory}{" "}
+                      <span className="font-semibold">Configurations</span>
                     </button>
                   </div>
                 </div>
@@ -534,7 +538,7 @@ const ProductQuestionsList = () => {
                         });
                       }}
                     >
-                      Update All {productCategory} Processors Conditions
+                      Update All {productCategory} Problems
                     </button>
                   </div>
                   <div
@@ -554,7 +558,10 @@ const ProductQuestionsList = () => {
                         });
                       }}
                     >
-                      Update Single {productCategory} Processors Conditions
+                      Update Single{" "}
+                      <span className="font-bold">{productData.name}</span>{" "}
+                      {productCategory}{" "}
+                      <span className="font-semibold">Problems</span>
                     </button>
                   </div>
                 </div>

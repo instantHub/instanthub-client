@@ -311,6 +311,7 @@ const ProductFinalPrice = () => {
       setOfferPrice(Math.ceil(deductedPrice));
     } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
       console.log("Final price above product price");
+      
       setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
       setOfferPrice(500);
