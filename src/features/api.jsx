@@ -236,7 +236,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Conditions"],
+      // invalidatesTags: ["Conditions"],
     }),
     deleteCondition: build.mutation({
       query: ({ category, conditionId }) => ({
@@ -274,7 +274,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["ConditionLabels"],
+      // invalidatesTags: ["ConditionLabels"],
     }),
     deleteConditionLabel: build.mutation({
       query: ({ category, conditionLabelId }) => ({
