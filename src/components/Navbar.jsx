@@ -89,7 +89,7 @@ const Navbar = () => {
 
             <div className="hidden md:flex max-14inch:text-sm">
               <ul className="flex space-x-4">
-                {data.map((d, i) => (
+                {data?.map((d, i) => (
                   <li
                     key={i}
                     className="px-2 py-1 border border-white rounded hover:border-cyan-500"
@@ -131,7 +131,7 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden  mt-2 text-center  float-right absolute right-0">
             <ul className="flex  flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
-              {data.map((d, i) => (
+              {data?.map((d, i) => (
                 <li
                   key={i}
                   className="px-2 py-1 border border-white rounded hover:border-cyan-500"
@@ -163,7 +163,7 @@ const Navbar = () => {
         <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
           <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 max-14inch:px-14">
             {!categoryLoading &&
-              categoryData.map((category, i) => (
+              categoryData?.map((category, i) => (
                 <Link
                   to={`/categories/brands/${category.id}`}
                   key={i}
@@ -204,7 +204,7 @@ const Navbar = () => {
                           <h2 className="py-2 font-bold">Brands</h2>
                           <ul>
                             {category.brands.length > 0 ? (
-                              category.brands.map((brand, index) => (
+                              category.brands?.map((brand, index) => (
                                 <Link
                                   to={`/categories/brands/products/${brand.id}`}
                                   onClick={() => setHoveredCategoryId(null)}

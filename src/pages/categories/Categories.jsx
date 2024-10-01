@@ -47,11 +47,11 @@ const Categories = () => {
                 >
                   {/* {console.log("from categories component ", category)} */}
                   <img
-                    src={import.meta.env.VITE_APP_BASE_URL + category.image}
+                    src={import.meta.env.VITE_APP_BASE_URL + category?.image}
                     alt="CAT"
-                    className="justify-center"
+                    className="justify-center "
                   />
-                  {/* <p className="size-4 pt-1">{category.name}</p> */}
+                  {/* <p className="size-4 pt-1">{category?.name}</p> */}
                 </div>
               </Link>
             ))}

@@ -145,7 +145,7 @@ const LaptopsQuestions = (props) => {
     setShowOTP(false);
   };
 
-  const handleSelectChange = (event) => {
+  const handleSelectChange = async (event) => {
     const selectedIndex = event.target.selectedIndex;
     const selectedOption = event.target.options[selectedIndex];
 
@@ -164,6 +164,11 @@ const LaptopsQuestions = (props) => {
     console.log("laptops handle change");
 
     if (conditionName === "Processor") {
+      const procBasedDed = await getProcessorDeductions(conditionLabelId);
+      console.log("procBasedDed", procBasedDed);
+
+      setPagesFunc(procBasedDed);
+
       setProcessor({ conditionLabel, priceDrop, conditionLabelId });
       dispatch(
         addProcessor({
@@ -174,9 +179,9 @@ const LaptopsQuestions = (props) => {
         })
       );
 
-      const procBasedDed = productsData.processorBasedDeduction.find(
-        (pbd) => pbd.processorId === conditionLabelId
-      );
+      // const procBasedDed = productsData.processorBasedDeduction.find(
+      //   (pbd) => pbd.processorId === conditionLabelId
+      // );
 
       const sorted = groupConditionsByPage(procBasedDed.deductions);
       // console.log("sorted", sorted);
@@ -207,12 +212,34 @@ const LaptopsQuestions = (props) => {
     }
   };
 
-  // UseEffect to set page number
-  useEffect(() => {
-    console.log("UseEffect to set page number");
-    // console.log("UseEffect", deductions);
-    // deductions.map((d) => {
-    productsData.processorBasedDeduction[0].deductions.map((d) => {
+  async function getProcessorDeductions(processorId) {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/products/processor-deductions/${processorId}`,
+        {
+          method: "GET", // HTTP method
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json(); // Parse the JSON response
+      console.log("Processor Deductions:", data);
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch processor deductions:", error);
+    }
+  }
+
+  async function setPagesFunc(selectedProcessor) {
+    console.log("Function to set page number");
+
+    selectedProcessor.deductions.map((d) => {
       if (d.conditionName.toLowerCase().includes("screen size")) {
         setScreenSizePage(d.page);
       } else if (d.conditionName.toLowerCase().includes("graphic")) {
@@ -225,7 +252,27 @@ const LaptopsQuestions = (props) => {
         setAgePage(d.page);
       }
     });
-  }, []);
+  }
+
+  // UseEffect to set page number
+  // useEffect(() => {
+  //   console.log("UseEffect to set page number");
+  //   // console.log("UseEffect", deductions);
+  //   // deductions.map((d) => {
+  //   productsData.processorBasedDeduction[0].deductions.map((d) => {
+  //     if (d.conditionName.toLowerCase().includes("screen size")) {
+  //       setScreenSizePage(d.page);
+  //     } else if (d.conditionName.toLowerCase().includes("graphic")) {
+  //       setGraphicPage(d.page);
+  //     } else if (d.conditionName.toLowerCase().includes("screen condition")) {
+  //       setScreenConditionPage(d.page);
+  //     } else if (d.conditionName.toLowerCase().includes("physical")) {
+  //       setPhysicalConditionPage(d.page);
+  //     } else if (d.conditionName.toLowerCase().includes("age")) {
+  //       setAgePage(d.page);
+  //     }
+  //   });
+  // }, []);
 
   //   console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);

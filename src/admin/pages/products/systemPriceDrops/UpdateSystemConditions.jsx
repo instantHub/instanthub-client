@@ -135,7 +135,6 @@ const UpdateSystemConditions = (props) => {
       <div>
         {/* Selected Processor Based Deductions */}
         {selectedProcessorDeductions && (
-          // <form onSubmit={() => handleSubmit(event)}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -144,13 +143,13 @@ const UpdateSystemConditions = (props) => {
           >
             <div>
               <span className="flex justify-center text-3xl font-serif font-bold">
-                {selectedProcessorDeductions.processorName}
+                {selectedProcessorDeductions?.processorName}
               </span>
               <span className="flex justify-center text-lg font-serif">
                 Update <span className="font-bold px-1"> {title} </span> Based
                 On The Selected Processor
               </span>
-              {selectedProcessorDeductions.deductions.map(
+              {selectedProcessorDeductions?.deductions.map(
                 (condition, index) => (
                   <div
                     key={index}
@@ -261,7 +260,8 @@ const UpdateSystemConditions = (props) => {
             </button>
             </div> */}
             <UpdateButton
-              text={`Update ${title}`}
+              // text={`Update ${title}`}
+              text={`Update ${selectedProcessorDeductions.processorName} Problems`}
               updateLoading={updateLoading}
             />
           </form>

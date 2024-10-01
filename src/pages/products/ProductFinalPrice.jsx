@@ -45,7 +45,7 @@ const ProductFinalPrice = () => {
   maxTime.setHours(22, 0, 0, 0);
 
   console.log("selectedProdDetails", selectedProdDetails);
-  // console.log("laptopSlice", laptopSlice);
+  console.log("laptopSlice", laptopSlice);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -193,12 +193,40 @@ const ProductFinalPrice = () => {
     // }
   }, [selectedProdDetails]);
 
-  // UseEffect to get complete final data
+  async function getProcessorDeductions(processorName, category) {
+    console.log("getProcessorDeductions function", processorName);
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/products/processor-deductions/${processorName}?from=finalPriceCal&category=${category}`,
+        {
+          method: "GET", // HTTP method
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json(); // Parse the JSON response
+      // console.log("Processor Deductions:", data);
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch processor deductions:", error);
+    }
+  }
+
   useEffect(() => {
+    completeFinalData();
+  }, [selectedProdDetails, productDetails]);
+
+  async function completeFinalData() {
     let prodDeductions;
     let productCategory = productDetails?.category?.name?.toLowerCase();
     if (!productLoading) {
-      // console.log("productDetails", productDetails);
+      console.log("productDetails", productDetails);
       if (productCategory === "mobile") {
         let prodVarDeduction = productDetails.variantDeductions.find(
           (vd) =>
@@ -208,12 +236,17 @@ const ProductFinalPrice = () => {
       } else if (laptopDesktop.includes(productCategory)) {
         let simpleDed = productDetails.simpleDeductions;
 
-        let processor = productDetails.processorBasedDeduction.find(
-          (pbd) => pbd.processorName === laptopSlice.processor.conditionLabel
+        // let processor = productDetails.processorBasedDeduction.find(
+        //   (pbd) => pbd.processorName === laptopSlice.processor.conditionLabel
+        // );
+
+        let processor = await getProcessorDeductions(
+          laptopSlice.processor.conditionLabel,
+          productDetails?.category?.id
         );
         // console.log("processor", processor);
 
-        let procBasDed = processor.deductions;
+        let procBasDed = processor?.deductions;
         // console.log("procBasDed", procBasDed);
 
         prodDeductions = [...simpleDed, ...procBasDed];
@@ -311,12 +344,148 @@ const ProductFinalPrice = () => {
       setOfferPrice(Math.ceil(deductedPrice));
     } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
       console.log("Final price above product price");
-      
+
       setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
       setOfferPrice(500);
     }
-  }, [selectedProdDetails, productDetails]);
+  }
+
+  // UseEffect to get complete final data
+  // useEffect(() => {
+  //   let prodDeductions;
+  //   let productCategory = productDetails?.category?.name?.toLowerCase();
+  //   if (!productLoading) {
+  //     console.log("productDetails", productDetails);
+  //     if (productCategory === "mobile") {
+  //       let prodVarDeduction = productDetails.variantDeductions.find(
+  //         (vd) =>
+  //           vd.variantName === String(selectedProdDetails.getUpTo.variantName)
+  //       );
+  //       prodDeductions = prodVarDeduction.deductions;
+  //     } else if (laptopDesktop.includes(productCategory)) {
+  //       let simpleDed = productDetails.simpleDeductions;
+
+  //       // let processor = productDetails.processorBasedDeduction.find(
+  //       //   (pbd) => pbd.processorName === laptopSlice.processor.conditionLabel
+  //       // );
+
+  //       let processor;
+
+  //       async function funcTest() {
+  //         let res = await getProcessorDeductions(
+  //           laptopSlice.processor.conditionLabel,
+  //           productDetails?.category?.id
+  //         );
+  //         processor = res;
+  //         console.log("processor", processor);
+  //       }
+  //       funcTest();
+
+  //       let procBasDed = processor?.deductions;
+  //       // console.log("procBasDed", procBasDed);
+
+  //       prodDeductions = [...simpleDed, ...procBasDed];
+  //     } else {
+  //       prodDeductions = productDetails.simpleDeductions;
+  //     }
+  //   }
+  //   // console.log("prodDeductions", prodDeductions);
+
+  //   const prodAccessories = prodDeductions.find((pd) =>
+  //     pd.conditionName.toLowerCase().includes("accessories")
+  //   );
+
+  //   // Get the condition labels from selectedProdDetails.deductions
+  //   const deductedConditionLabels = selectedProdDetails.deductions.map(
+  //     (item) => item.conditionLabel
+  //   );
+  //   // console.log("deductedConditionLabels",deductedConditionLabels);
+
+  //   // Check and return if the conditionLabel of the accessory is present in deductedConditionLabels
+  //   function checkAccessory(accessory) {
+  //     return deductedConditionLabels.find(
+  //       (label) => label === accessory.conditionLabel
+  //     );
+  //   }
+
+  //   let AccessoriesSelected = [];
+  //   let AccessoriesNotSelected = [];
+  //   prodAccessories.conditionLabels.map((accessory) => {
+  //     // Filter out the prodAccessories that are present in deductedConditionLabels(selectedProdDetails.deductions)
+  //     if (checkAccessory(accessory)) {
+  //       AccessoriesSelected.push(accessory);
+  //     } else {
+  //       AccessoriesNotSelected.push(accessory);
+  //     }
+  //   });
+  //   setAccessoriesSelected(AccessoriesSelected);
+  //   setAccessoriesNotSelected(AccessoriesNotSelected);
+  //   // console.log("AccessoriesSelected", AccessoriesSelected);
+  //   // console.log("AccessoriesNotSelected", AccessoriesNotSelected);
+
+  //   let deductedPrice =
+  //     Number(selectedProdDetails.getUpTo.price) -
+  //     Number(selectedProdDetails.toBeDeducted) +
+  //     Number(selectedProdDetails.toBeAdded);
+
+  //   // console.log("deductedPrice initial", deductedPrice);
+
+  //   if (AccessoriesNotSelected.length > 0) {
+  //     AccessoriesNotSelected.map((a) => {
+  //       if (productCategory.includes("mobile")) {
+  //         deductedPrice =
+  //           deductedPrice -
+  //           Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
+  //       } else {
+  //         deductedPrice = deductedPrice - Number(a.priceDrop);
+  //       }
+  //       // console.log("AccessoriesNotSelected", a);
+  //     });
+  //   }
+  //   // else {
+  //   //   setFormData({
+  //   //     ...formData,
+  //   //     productId,
+  //   //     productName: selectedProdDetails.productName,
+  //   //     productBrand: productDetails.brand.name,
+  //   //     productCategory: selectedProdDetails.productCategory,
+  //   //     variant: selectedProdDetails.getUpTo,
+  //   //     deductions: selectedProdDetails.deductions,
+  //   //     accessoriesAvailable: AccessoriesSelected,
+  //   //     status: "pending",
+  //   //     // offerPrice: Math.ceil(deductedPrice),
+  //   //   });
+  //   // }
+
+  //   setFormData({
+  //     ...formData,
+  //     productId,
+  //     productName: selectedProdDetails.productName,
+  //     productBrand: productDetails.brand.name,
+  //     productCategory: selectedProdDetails.productCategory,
+  //     variant: selectedProdDetails.getUpTo,
+  //     deductions: selectedProdDetails.deductions,
+  //     accessoriesAvailable: AccessoriesSelected,
+  //     status: "pending",
+  //     // accessoriesNotAvailable: AccessoriesNotSelected,
+  //     // offerPrice: Math.ceil(deductedPrice),
+  //   });
+
+  //   // Final Offer Price
+  //   if (
+  //     deductedPrice > 500 &&
+  //     deductedPrice <= selectedProdDetails.getUpTo.price
+  //   ) {
+  //     setOfferPrice(Math.ceil(deductedPrice));
+  //   } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
+  //     console.log("Final price above product price");
+
+  //     setOfferPrice(selectedProdDetails.getUpTo.price);
+  //   } else {
+  //     setOfferPrice(500);
+  //   }
+  // }, [selectedProdDetails, productDetails]);
 
   // console.log("formData", formData);
 

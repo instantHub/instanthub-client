@@ -5,40 +5,8 @@ import { SiXdadevelopers } from "react-icons/si";
 import { FcServices } from "react-icons/fc";
 
 const Footer = () => {
-  // useEffect(() => {
-  //   function handleScroll() {
-  //     var footer = document.querySelector(".footer");
-  //     var developedBy = document.querySelector(".developed-by");
-  //     if (isElementInViewport(footer)) {
-  //       developedBy.classList.remove("translate-x-full");
-  //     } else {
-  //       developedBy.classList.add("translate-x-full");
-  //     }
-  //   }
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   // Clean up the event listener when the component unmounts
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
-  // // Function to check if an element is in the viewport
-  // function isElementInViewport(el) {
-  //   var rect = el.getBoundingClientRect();
-  //   return (
-  //     rect.top >= 0 &&
-  //     rect.left >= 0 &&
-  //     rect.bottom <=
-  //       (window.innerHeight || document.documentElement.clientHeight) &&
-  //     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  //   );
-  // }
-
   return (
-    // JSX
-    <div className="w-full sm:pt-10 mt-2 bg-[#E27D60] bg-cyan-500 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-12">
+    <div className="w-full sm:pt-10 mt-2 bg-cyan-500 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-12">
       <div className="px-4 sm:px-0 flex flex-col items-center sm:hidden max-sm:flex-row max-sm:justify-center max-sm:gap-5">
         <div>
           <img
