@@ -60,17 +60,15 @@ const SearchBar = () => {
           }
         );
       } else if (import.meta.env.VITE_BUILD === "production") {
-        response = await axios.get(
-          "https://api.yusufqureshi.online/api/products",
-          {
-            params: {
-              //   search: search.trim() ? search : undefined,
-              search: searchValue.trim() ? searchValue : undefined,
-              page,
-              limit: 10,
-            },
-          }
-        );
+        // "https://api.yusufqureshi.online/api/products",
+        response = await axios.get("https://api.instantpick.in/api/products", {
+          params: {
+            //   search: search.trim() ? search : undefined,
+            search: searchValue.trim() ? searchValue : undefined,
+            page,
+            limit: 10,
+          },
+        });
 
         // SERVICES
         services = await axios.get(

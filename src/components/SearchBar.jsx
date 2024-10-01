@@ -25,7 +25,7 @@ const SearchBar = () => {
       let response;
       const loadProducts = async () => {
         if (import.meta.env.VITE_BUILD === "development") {
-          response = await axios.get("http://localhost:8000/api/products", {
+          response = await axios.get("", {
             params: {
               search: debouncedSearch.trim() ? debouncedSearch : undefined,
               page,
@@ -35,8 +35,9 @@ const SearchBar = () => {
           console.log("responce", response);
           setProductsData(response.data);
         } else if (import.meta.env.VITE_BUILD === "production") {
+          // "https://api.yusufqureshi.online/api/products",
           response = await axios.get(
-            "https://api.yusufqureshi.online/api/products",
+            "https://api.instantpick.in/api/products",
             {
               params: {
                 search: debouncedSearch.trim() ? debouncedSearch : undefined,
