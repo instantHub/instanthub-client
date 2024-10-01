@@ -196,15 +196,19 @@ const ProductFinalPrice = () => {
   async function getProcessorDeductions(processorName, category) {
     console.log("getProcessorDeductions function", processorName);
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/products/processor-deductions/${processorName}?from=finalPriceCal&category=${category}`,
-        {
-          method: "GET", // HTTP method
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      let URL =
+        import.meta.env.VITE_BUILD === "development"
+          ? `http://localhost:8000/api/products/processor-deductions/${processorName}?from=finalPriceCal&category=${category}`
+          : `https://api.instantpick.in/api/products/processor-deductions/${processorName}?from=finalPriceCal&category=${category}`;
+
+      console.log("URL of processor", URL);
+
+      const response = await fetch(URL, {
+        method: "GET", // HTTP method
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);

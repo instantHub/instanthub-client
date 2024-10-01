@@ -214,15 +214,19 @@ const LaptopsQuestions = (props) => {
 
   async function getProcessorDeductions(processorId) {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/products/processor-deductions/${processorId}`,
-        {
-          method: "GET", // HTTP method
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      let URL =
+        import.meta.env.VITE_BUILD === "development"
+          ? `http://localhost:8000/api/products/processor-deductions/${processorId}`
+          : `https://api.instantpick.in/api/products/processor-deductions/${processorId}`;
+
+      console.log("URL of processor", URL);
+
+      const response = await fetch(URL, {
+        method: "GET", // HTTP method
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
