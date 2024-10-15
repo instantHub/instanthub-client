@@ -41,7 +41,7 @@ const Home = () => {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>{`Sell Old Gadgets Online | InstantCashPick`}</title>
 
         <meta
@@ -54,7 +54,7 @@ const Home = () => {
           content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
-      </Helmet>
+      </Helmet> */}
       {/* <Slider images={images} /> */}
       <Slider />
       <Categories />

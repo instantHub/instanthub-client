@@ -12,9 +12,10 @@ import EditButton from "../../components/EditButton";
 const ProductsList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
   const [deductionSelected, setDeductionSelected] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   // console.log("deductionSelected", deductionSelected);
   const {
     data: productsData,
@@ -24,6 +25,7 @@ const ProductsList = () => {
     page,
     limit,
     search: search,
+    categoryId,
   });
 
   console.log(productsData && productsData);
@@ -108,7 +110,10 @@ const ProductsList = () => {
             </label>
             <select
               id="condition"
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => {
+                setCategoryId(e.target.value);
+                setSelectedCategory(e.target.value);
+              }}
               value={selectedCategory}
               className="p-2 rounded bg-gray-700 text-white"
             >

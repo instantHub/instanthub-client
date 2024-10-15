@@ -102,6 +102,13 @@ function App() {
       element: <ClientLayout />,
       children: [
         {
+          index: true,
+          errorElement: (
+            <ErrorComponent message={`Sorry please try after sometime..!`} />
+          ),
+          element: <ClientHome />,
+        },
+        {
           path: "/about",
           element: <AboutPage />,
         },
@@ -124,13 +131,7 @@ function App() {
           element: <ClientTermsAndPolicies />,
           // element: <ClientTermsOfUse />,
         },
-        {
-          index: true,
-          errorElement: (
-            <ErrorComponent message={`Sorry please try after sometime..!`} />
-          ),
-          element: <ClientHome />,
-        },
+
         {
           path: "/categories/brands/:catId",
           errorElement: (
@@ -322,14 +323,14 @@ function App() {
               path: "/admin/products/product-questions/:productId",
               element: <AdminProductQuestions />,
             },
-            {
-              path: "/admin/products/laptop-configurations/:productId",
-              element: <AdminAllLaptopConfiguration />,
-            },
-            {
-              path: "/admin/products/laptop-configurations/:productId",
-              element: <AdminSingleLaptopConfiguration />,
-            },
+            // {
+            //   path: "/admin/products/laptop-configurations/:productId",
+            //   element: <AdminAllLaptopConfiguration />,
+            // },
+            // {
+            //   path: "/admin/products/laptop-configurations/:productId",
+            //   element: <AdminSingleLaptopConfiguration />,
+            // },
             {
               path: "/admin/categories",
               element: <AdminCategories />,

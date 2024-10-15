@@ -25,10 +25,10 @@ const UpdateSystemConditions = (props) => {
     let text;
     switch (type) {
       case "AllLaptopConditions":
-        text = `All ${productData?.category?.name} Processors Problems`;
+        text = `All ${productData?.category?.name} Conditions`;
         break;
       case "SingleLaptopConditions":
-        text = `Single ${productData?.category?.name} Processor Problems`;
+        text = `Single ${productData?.category?.name} Conditions`;
         break;
       default:
         text = `Title Not Set`;
@@ -108,10 +108,9 @@ const UpdateSystemConditions = (props) => {
     try {
       await updatePriceDrop({
         productId: productData.id,
-        data: selectedProcessorDeductions,
-        // data: updatingSingleLaptop
-        //   ? updatedProduct
-        //   : selectedProcessorDeductions,
+        data: updatingSingleLaptop
+          ? updatedProduct
+          : selectedProcessorDeductions,
         type,
         brand: productData.brand.name,
       }).unwrap();
@@ -261,8 +260,8 @@ const UpdateSystemConditions = (props) => {
             </button>
             </div> */}
             <UpdateButton
-              text={`Update ${title}`}
-              // text={`Update ${selectedProcessorDeductions.processorName} Problems`}
+              // text={`Update ${title}`}
+              text={`Update ${selectedProcessorDeductions.processorName} Problems`}
               updateLoading={updateLoading}
             />
           </form>

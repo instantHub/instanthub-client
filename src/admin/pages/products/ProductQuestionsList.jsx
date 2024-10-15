@@ -40,8 +40,8 @@ const ProductQuestionsList = () => {
   const [toggle, setToggle] = useState({
     updateAllSystemConfig: false,
     updateSingleSystemConfig: false,
-    updateAllSystemCondition: false,
-    updateSingleSystemCondition: false,
+    updateAllProcessorsProblems: false,
+    updateSingleProcessorProblems: false,
     showSystemConfiguration: true,
   });
 
@@ -317,9 +317,12 @@ const ProductQuestionsList = () => {
   };
 
   const toggleBtnStyle =
-    "px-2 py-1 my-1 w-fit right-0 text-end flex justify-end items-end  border border-green-600 text-black rounded ";
+    "px-1 py-2 my-1 flex font-thin text-black bg-blue-200 border border-gray-600 transition-all duration-300";
+  // "px-2 py-1 my-1 w-fit right-0 text-end flex justify-end items-end  border border-green-600 text-black rounded ";
 
-  const toggleStyle = "bg-red-600 text-white font-thin text-2xl border-red-50";
+  const toggleStyle =
+    "bg-blue-800 border rounded text-white font-bold text-xl translate-y-12 mx-2";
+  // const toggleStyle = "bg-red-600 text-white font-thin text-lg border-red-50";
 
   //  UseEffect to set the Deductions what is selected
   useEffect(() => {
@@ -368,7 +371,7 @@ const ProductQuestionsList = () => {
           </h3>
           {selectedSystemCat ? (
             <span className="text-4xl font-bold font-serif ">
-              {productCategory} Deductions
+              {productCategory} Problems & Configuration
             </span>
           ) : null}
           {/* VariantsQuestions List */}
@@ -398,7 +401,7 @@ const ProductQuestionsList = () => {
           ) : null}
         </div>
 
-        <div className="bg-scroll">
+        <div className="bg-scroll relative">
           {/* Mobile category pricedrops */}
           {productData && selectedMobileCat ? (
             <form onSubmit={handleSubmit}>
@@ -518,8 +521,38 @@ const ProductQuestionsList = () => {
           {productData && selectedSystemCat ? (
             <>
               {/* Buttons */}
-              <div className="flex flex-col items- justify-around">
-                <div className="flex items-center justify-around">
+              {/* <div className="flex flex-col items- justify-around"> */}
+
+              <div className="flex flex-col">
+                {/* Buttons Wrapper */}
+                <div className="flex justify-center sticky top-0 bg-white z-10 border-b mb-12">
+                  {/* Update Single Configuration */}
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateSingleSystemConfig
+                        ? toggleStyle
+                        : `border rounded-tl rounded-bl`
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig:
+                            !toggle.updateSingleSystemConfig,
+                          updateAllProcessorsProblems: false,
+                          updateSingleProcessorProblems: false,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update Single{" "}
+                      <span className="font-bold">{productData.name}</span>{" "}
+                      <span className="font-semibold">Configurations</span>
+                    </button>
+                  </div>
+
+                  {/* Update All Configuration */}
                   <div
                     className={`${toggleBtnStyle} ${
                       toggle.updateAllSystemConfig ? toggleStyle : ``
@@ -530,91 +563,17 @@ const ProductQuestionsList = () => {
                         setToggle({
                           updateAllSystemConfig: !toggle.updateAllSystemConfig,
                           updateSingleSystemConfig: false,
-                          updateAllSystemCondition: false,
-                          updateSingleSystemCondition: false,
+                          updateAllProcessorsProblems: false,
+                          updateSingleProcessorProblems: false,
                           showSystemConfiguration: false,
                         });
                       }}
                     >
-                      Update All {productCategory} Configurations
+                      Update All Configurations
                     </button>
                   </div>
-                  <div
-                    className={`${toggleBtnStyle} ${
-                      toggle.updateSingleSystemConfig ? toggleStyle : ``
-                    }`}
-                  >
-                    <button
-                      onClick={() => {
-                        setToggle({
-                          updateAllSystemConfig: false,
-                          updateSingleSystemConfig:
-                            !toggle.updateSingleSystemConfig,
-                          updateAllSystemCondition: false,
-                          updateSingleSystemCondition: false,
-                          showSystemConfiguration: false,
-                        });
-                      }}
-                    >
-                      Update Single{" "}
-                      <span className="font-bold">{productData.name}</span>{" "}
-                      {productCategory}{" "}
-                      <span className="font-semibold">Configurations</span>
-                    </button>
-                  </div>
-                  <div
-                    className={`${toggleBtnStyle} ${
-                      toggle.updateAllSystemCondition ? toggleStyle : ``
-                    }`}
-                  >
-                    <button
-                      onClick={() => {
-                        setToggle({
-                          updateAllSystemConfig: false,
-                          updateSingleSystemConfig: false,
-                          updateAllSystemCondition:
-                            !toggle.updateAllSystemCondition,
-                          updateSingleSystemCondition: false,
-                          showSystemConfiguration: false,
-                        });
-                      }}
-                      className={`${
-                        toggle.updateAllSystemCondition ? ` ` : ``
-                      }`}
-                    >
-                      {/* Update All {productCategory} Problems */}
-                      Update Processor Based Problems
-                    </button>
-                  </div>
-                </div>
-                <div className="flex items-center justify-around">
-                  {/* <div
-                    className={`${toggleBtnStyle} ${
-                      toggle.updateSingleSystemCondition ? toggleStyle : ``
-                    }`}
-                  >
-                    <button
-                      onClick={() => {
-                        setToggle({
-                          updateAllSystemConfig: false,
-                          updateSingleSystemConfig: false,
-                          updateAllSystemCondition: false,
-                          updateSingleSystemCondition:
-                            !toggle.updateSingleSystemCondition,
-                          showSystemConfiguration: false,
-                        });
-                      }}
-                    >
-                      Update Single{" "}
-                      <span className="font-bold">{productData.name}</span>{" "}
-                      {productCategory}{" "}
-                      <span className="font-semibold">Problems</span>
-                    </button>
-                  </div> */}
-                </div>
 
-                {/* Show Config Details */}
-                <div className="flex items-center justify-around">
+                  {/* Show Config Details */}
                   <div
                     className={`${toggleBtnStyle} ${
                       toggle.showSystemConfiguration ? toggleStyle : ""
@@ -625,8 +584,8 @@ const ProductQuestionsList = () => {
                         setToggle({
                           updateAllSystemConfig: false,
                           updateSingleSystemConfig: false,
-                          updateAllSystemCondition: false,
-                          updateSingleSystemCondition: false,
+                          updateAllProcessorsProblems: false,
+                          updateSingleProcessorProblems: false,
                           showSystemConfiguration:
                             !toggle.showSystemConfiguration,
                         });
@@ -635,136 +594,181 @@ const ProductQuestionsList = () => {
                       Show {productCategory} Configuration
                     </button>
                   </div>
-                </div>
-              </div>
 
-              {/* Select Processor */}
-              {processorsList &&
-              (toggle.updateAllSystemCondition ||
-                toggle.updateSingleSystemCondition) ? (
-                <div className="flex items-center gap-2 my-2">
-                  <span>Processors List</span>
-                  <select
-                    name=""
-                    className="border border-black rounded"
-                    onChange={() => handleProcessor(event)}
+                  {/* Update Single Processor Problems */}
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateSingleProcessorProblems ? toggleStyle : ``
+                    }`}
                   >
-                    <option value="">Select Processor</option>
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig: false,
+                          updateAllProcessorsProblems: false,
+                          updateSingleProcessorProblems:
+                            !toggle.updateSingleProcessorProblems,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update Single Processor Problems
+                    </button>
+                  </div>
 
-                    {/* {productData.simpleDeductions
+                  {/* Update All Processors Problems */}
+                  <div
+                    className={`${toggleBtnStyle} ${
+                      toggle.updateAllProcessorsProblems
+                        ? toggleStyle
+                        : `border rounded-tr rounded-br`
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setToggle({
+                          updateAllSystemConfig: false,
+                          updateSingleSystemConfig: false,
+                          updateAllProcessorsProblems:
+                            !toggle.updateAllProcessorsProblems,
+                          showSystemConfiguration: false,
+                        });
+                      }}
+                    >
+                      Update All Processors Problems
+                    </button>
+                  </div>
+                </div>
+
+                {/* Select Processor */}
+                {processorsList &&
+                (toggle.updateAllProcessorsProblems ||
+                  toggle.updateSingleProcessorProblems) ? (
+                  <div className="flex items-center gap-2 my-2">
+                    <span>Processors List</span>
+                    <select
+                      name=""
+                      className="border border-black rounded"
+                      onChange={() => handleProcessor(event)}
+                    >
+                      <option value="">Select Processor</option>
+
+                      {/* {productData.simpleDeductions
                       .find((sd) => sd.conditionName.includes("Processor"))
                       .conditionLabels.map((cl, i) => (
                         <option value={cl.conditionLabelId} key={i}>
                           {cl.conditionLabel}
                         </option>
                       ))} */}
-                    {processorsList.map((processor, i) => (
-                      <option value={processor.conditionLabelId} key={i}>
-                        {processor.conditionLabel}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ) : null}
-
-              {/* Show Current Laptop Configuration */}
-              {toggle.showSystemConfiguration &&
-                selectedDeductions.map((condition, index) => (
-                  <div
-                    key={index}
-                    className={`w-1/2 mx-auto mb-10 border my-2 py- px- rounded ${
-                      index % 2 === 0 ? `` : `bg-gray-100`
-                    }`}
-                  >
-                    <div>
-                      <h3 className="text-2xl py-2 font-serif text-center font-extrabold bg-white">
-                        {condition.conditionName}
-                      </h3>
-                    </div>
-                    <hr />
-
-                    <div className="flex px-4 py-2 flex-col ">
-                      {condition.conditionLabels &&
-                        condition.conditionLabels.map(
-                          (conditionLabel, index) => (
-                            <div
-                              key={index}
-                              className="flex justify-around items-center mt-2 border-b-2 pb-1"
-                            >
-                              <div>
-                                <h3 className="text-sm">
-                                  {conditionLabel.conditionLabel}
-                                </h3>
-                              </div>
-
-                              <div className="flex items-center gap-1">
-                                {productCategory !== "Mobile" ? (
-                                  <span className="text-lg">₹</span>
-                                ) : null}
-                                <span className="  px-3 py-1 mx-5 rounded text-[0.9rem]">
-                                  {conditionLabel.priceDrop}
-                                </span>
-                              </div>
-
-                              <div className="w-[82px] text-center">
-                                <h3
-                                  className={`${
-                                    conditionLabel.operation === "Subtrack"
-                                      ? "bg-red-200"
-                                      : "bg-blue-200"
-                                  } text-black font-bold px-2 py-1 rounded`}
-                                >
-                                  {conditionLabel.operation}
-                                </h3>
-                              </div>
-                            </div>
-                          )
-                        )}
-                    </div>
+                      {processorsList.map((processor, i) => (
+                        <option value={processor.conditionLabelId} key={i}>
+                          {processor.conditionLabel}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                ))}
+                ) : null}
 
-              {toggle.updateAllSystemConfig && (
-                <UpdateSystemConfigurations
-                  type={"AllLaptopConfig"}
-                  productDetail={productDetail}
-                  productId={productId}
-                />
-              )}
+                {/* Show Current Laptop Configuration */}
+                {toggle.showSystemConfiguration &&
+                  selectedDeductions.map((condition, index) => (
+                    <div
+                      key={index}
+                      className={`w-1/2 mx-auto mb-10 border my-2 py- px- rounded ${
+                        index % 2 === 0 ? `` : `bg-gray-100`
+                      }`}
+                    >
+                      <div>
+                        <h3 className="text-2xl py-2 font-serif text-center font-extrabold bg-white">
+                          {condition.conditionName}
+                        </h3>
+                      </div>
+                      <hr />
 
-              {toggle.updateSingleSystemConfig && (
-                <UpdateSystemConfigurations
-                  type={"SingleLaptopConfig"}
-                  productDetail={productDetail}
-                  productId={productId}
-                />
-              )}
+                      <div className="flex px-4 py-2 flex-col ">
+                        {condition.conditionLabels &&
+                          condition.conditionLabels.map(
+                            (conditionLabel, index) => (
+                              <div
+                                key={index}
+                                className="flex justify-around items-center mt-2 border-b-2 pb-1"
+                              >
+                                <div>
+                                  <h3 className="text-sm">
+                                    {conditionLabel.conditionLabel}
+                                  </h3>
+                                </div>
 
-              {toggle.updateAllSystemCondition && (
-                <UpdateSystemConditions
-                  productData={productData}
-                  selectedProcessorDeductions={selectedProcessorDeductions}
-                  setSelectedProcessorDeductions={
-                    setSelectedProcessorDeductions
-                  }
-                  // handleLaptopPriceDropChange={handleLaptopPriceDropChange}
-                  setProductData={setProductData}
-                  type={"AllLaptopConditions"}
-                />
-              )}
+                                <div className="flex items-center gap-1">
+                                  {productCategory !== "Mobile" ? (
+                                    <span className="text-lg">₹</span>
+                                  ) : null}
+                                  <span className="  px-3 py-1 mx-5 rounded text-[0.9rem]">
+                                    {conditionLabel.priceDrop}
+                                  </span>
+                                </div>
 
-              {toggle.updateSingleSystemCondition && (
-                <UpdateSystemConditions
-                  productData={productData}
-                  selectedProcessorDeductions={selectedProcessorDeductions}
-                  setSelectedProcessorDeductions={
-                    setSelectedProcessorDeductions
-                  }
-                  // handleLaptopPriceDropChange={handleLaptopPriceDropChange}
-                  setProductData={setProductData}
-                  type={"SingleLaptopConditions"}
-                />
-              )}
+                                <div className="w-[82px] text-center">
+                                  <h3
+                                    className={`${
+                                      conditionLabel.operation === "Subtrack"
+                                        ? "bg-red-200"
+                                        : "bg-blue-200"
+                                    } text-black font-bold px-2 py-1 rounded`}
+                                  >
+                                    {conditionLabel.operation}
+                                  </h3>
+                                </div>
+                              </div>
+                            )
+                          )}
+                      </div>
+                    </div>
+                  ))}
+
+                {toggle.updateAllSystemConfig && (
+                  <UpdateSystemConfigurations
+                    type={"AllLaptopConfig"}
+                    productDetail={productDetail}
+                    productId={productId}
+                  />
+                )}
+
+                {toggle.updateSingleSystemConfig && (
+                  <UpdateSystemConfigurations
+                    type={"SingleLaptopConfig"}
+                    productDetail={productDetail}
+                    productId={productId}
+                  />
+                )}
+
+                {toggle.updateAllProcessorsProblems && (
+                  <UpdateSystemConditions
+                    productData={productData}
+                    selectedProcessorDeductions={selectedProcessorDeductions}
+                    setSelectedProcessorDeductions={
+                      setSelectedProcessorDeductions
+                    }
+                    // handleLaptopPriceDropChange={handleLaptopPriceDropChange}
+                    setProductData={setProductData}
+                    type={"AllLaptopConditions"}
+                  />
+                )}
+
+                {toggle.updateSingleProcessorProblems && (
+                  <UpdateSystemConditions
+                    productData={productData}
+                    selectedProcessorDeductions={selectedProcessorDeductions}
+                    setSelectedProcessorDeductions={
+                      setSelectedProcessorDeductions
+                    }
+                    // handleLaptopPriceDropChange={handleLaptopPriceDropChange}
+                    setProductData={setProductData}
+                    type={"SingleLaptopConditions"}
+                  />
+                )}
+              </div>
             </>
           ) : null}
 

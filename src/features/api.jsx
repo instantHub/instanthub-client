@@ -141,10 +141,10 @@ export const api = createApi({
     //   providesTags: ["Products"],
     // }),
     getAllProducts: build.query({
-      query: ({ page, limit, search }) => ({
+      query: ({ page, limit, search, categoryId }) => ({
         url: `/api/products`,
         method: "GET",
-        params: { page, limit, search },
+        params: { page, limit, search, categoryId },
       }),
       providesTags: ["Products"],
     }),
