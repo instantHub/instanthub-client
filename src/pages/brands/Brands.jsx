@@ -77,19 +77,21 @@ const Brands = () => {
           <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
             {!data.length == 0 ? (
               data.map((brand, i) => (
-                <Link to={`/categories/brands/products/${brand.id}`} key={i}>
-                  <div
-                    key={i}
-                    className="w-28 p-4 h-28 flex cursor-pointer border border-[#E27D60] border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-                  >
-                    <img
-                      src={import.meta.env.VITE_APP_BASE_URL + brand.image}
-                      alt="CAT"
-                      className="items-center justify-center"
-                    />
-                    {/* <p className="size-4 pt-1">{brand.name}</p> */}
-                  </div>
-                </Link>
+                <div className="flex justify-center">
+                  <Link to={`/categories/brands/products/${brand.id}`} key={i}>
+                    <div
+                      key={i}
+                      className="w-28 p-4 h-28 flex cursor-pointer border border-[#E27D60] border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                    >
+                      <img
+                        src={import.meta.env.VITE_APP_BASE_URL + brand.image}
+                        alt="CAT"
+                        className="items-center justify-center"
+                      />
+                      {/* <p className="size-4 pt-1">{brand.name}</p> */}
+                    </div>
+                  </Link>
+                </div>
               ))
             ) : (
               <h1>No Data Available</h1>

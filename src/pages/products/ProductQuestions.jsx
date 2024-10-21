@@ -67,11 +67,12 @@ const ProductDeductions = () => {
         conditionLabel: ageLabel,
         priceDrop: price,
         operation: operation,
+        type: "Age of the Device",
       })
     );
   };
 
-  const handleLabelSelection = (label, price, operation) => {
+  const handleLabelSelection = (label, price, operation, type) => {
     // console.log("handleLabelSelection");
     if (!selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels([
@@ -79,7 +80,12 @@ const ProductDeductions = () => {
         { conditionLabel: label, priceDrop: price },
       ]);
       dispatch(
-        addDeductions({ conditionLabel: label, priceDrop: price, operation })
+        addDeductions({
+          conditionLabel: label,
+          priceDrop: price,
+          operation,
+          type,
+        })
       );
     } else if (selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels(
@@ -88,7 +94,12 @@ const ProductDeductions = () => {
         )
       );
       dispatch(
-        removeDeductions({ conditionLabel: label, priceDrop: price, operation })
+        removeDeductions({
+          conditionLabel: label,
+          priceDrop: price,
+          operation,
+          type,
+        })
       );
     }
   };

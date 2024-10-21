@@ -25,12 +25,6 @@ export const deductionSlice = createSlice({
   reducers: {
     setGetUpto: (state, action) => {
       // console.log("setGetUpto reducer");
-      // console.log(
-      //   action.payload.productName,
-      //   action.payload.productImage,
-      //   action.payload.variantName,
-      //   action.payload.price
-      // );
       const { productName, productImage, productCategory, variantName, price } =
         action.payload;
       return {
@@ -46,9 +40,12 @@ export const deductionSlice = createSlice({
     },
     addDeductions: (state, action) => {
       console.log("addDeduction Reducer", action.payload);
-      // console.log(state.productCategory);
 
-      if (action.payload.type === "Processor") {
+      // let productCategory = state.productCategory.toLowerCase();
+      let laptopCategory = state.productCategory.toLowerCase() === "laptop";
+      const configItems = ["Hard Disk", "RAM"];
+
+      if (laptopCategory && action.payload.type === "Processor") {
         console.log("Processor", action.payload);
         return {
           ...state,
@@ -56,7 +53,24 @@ export const deductionSlice = createSlice({
         };
       }
 
-      let productCategory = state.productCategory.toLowerCase();
+      if (laptopCategory && configItems.includes(action.payload.type)) {
+        console.log("Hard Disk or RAM", action.payload);
+        if (action.payload.operation === "Subtrack") {
+          return {
+            ...state,
+            toBeDeducted: Math.ceil(
+              state.toBeDeducted + action.payload.priceDrop
+            ),
+            deductions: [...state.deductions, action.payload],
+          };
+        } else if (action.payload.operation === "Add") {
+          return {
+            ...state,
+            toBeAdded: Math.ceil(state.toBeAdded + action.payload.priceDrop),
+            deductions: [...state.deductions, action.payload],
+          };
+        }
+      }
 
       // Check if action.payload already exists in deductions
       const isExisting = state.deductions.some((condition) => {
@@ -68,28 +82,25 @@ export const deductionSlice = createSlice({
           // console.log("state", state.productCategory);
           return {
             ...state,
-            // Deduction based on Product Category
-            toBeDeducted: productCategory.includes("mobile")
-              ? Math.ceil(
-                  state.toBeDeducted +
-                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
-                      100
-                )
-              : Math.ceil(state.toBeDeducted + action.payload.priceDrop),
+
+            // DIRECT
+            // toBeDeducted: Math.ceil(state.toBeDeducted + action.payload.priceDrop),
+
+            // PERCENTAGE
+            toBeDeducted: Math.ceil(
+              state.toBeDeducted +
+                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+            ),
             // Push deduction into deductions array
             deductions: [...state.deductions, action.payload],
           };
         } else if (action.payload.operation === "Add") {
           return {
             ...state,
-            // Deduction based on Product Category
-            toBeAdded: productCategory.includes("mobile")
-              ? Math.ceil(
-                  state.toBeAdded +
-                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
-                      100
-                )
-              : Math.ceil(state.toBeAdded + action.payload.priceDrop),
+            toBeAdded: Math.ceil(
+              state.toBeAdded +
+                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
+            ),
             // Push deduction into deductions array
             deductions: [...state.deductions, action.payload],
           };
@@ -105,6 +116,7 @@ export const deductionSlice = createSlice({
           conditionLabel: action.payload.conditionLabel,
           priceDrop: action.payload.priceDrop,
           operation: action.payload.operation,
+          type: action.payload.type,
         },
       };
     },
@@ -115,6 +127,7 @@ export const deductionSlice = createSlice({
           conditionLabel: action.payload.conditionLabel,
           priceDrop: action.payload.priceDrop,
           operation: action.payload.operation,
+          type: action.payload.type,
         },
       };
     },
@@ -126,6 +139,7 @@ export const deductionSlice = createSlice({
           conditionLabel: action.payload.conditionLabel,
           priceDrop: action.payload.priceDrop,
           operation: action.payload.operation,
+          type: action.payload.type,
         },
       };
     },
@@ -148,6 +162,7 @@ export const deductionSlice = createSlice({
             conditionLabel: action.payload.conditionLabel,
             priceDrop: action.payload.priceDrop,
             operation: action.payload.operation,
+            type: action.payload.type,
           },
         };
       }

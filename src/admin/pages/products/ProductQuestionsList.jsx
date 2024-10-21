@@ -317,11 +317,11 @@ const ProductQuestionsList = () => {
   };
 
   const toggleBtnStyle =
-    "px-1 py-2 my-1 flex font-thin text-black bg-blue-200 border border-gray-600 transition-all duration-300";
+    "px-1 py-2 my-1 flex font-thin text-black bg-gray-200 border border-gray-600 transition-all duration-300";
   // "px-2 py-1 my-1 w-fit right-0 text-end flex justify-end items-end  border border-green-600 text-black rounded ";
 
   const toggleStyle =
-    "bg-blue-800 border rounded text-white font-bold text-xl translate-y-12 mx-2";
+    "bg-gray-800 border rounded text-white font-bold text-xl translate-y-5 mx-1";
   // const toggleStyle = "bg-red-600 text-white font-thin text-lg border-red-50";
 
   //  UseEffect to set the Deductions what is selected
@@ -575,7 +575,7 @@ const ProductQuestionsList = () => {
 
                   {/* Show Config Details */}
                   <div
-                    className={`${toggleBtnStyle} ${
+                    className={`px-2 ${toggleBtnStyle} ${
                       toggle.showSystemConfiguration ? toggleStyle : ""
                     }`}
                   >
@@ -591,7 +591,8 @@ const ProductQuestionsList = () => {
                         });
                       }}
                     >
-                      Show {productCategory} Configuration
+                      Configurations
+                      {/* Show {productCategory} Configuration */}
                     </button>
                   </div>
 

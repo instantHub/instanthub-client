@@ -180,9 +180,9 @@ const UpdateSystemConditions = (props) => {
                                 </div>
 
                                 <div className="flex items-center gap-1">
-                                  {productData.category.name !== "Mobile" ? (
+                                  {/* {productData.category.name !== "Mobile" ? (
                                     <span className="text-lg">₹</span>
-                                  ) : null}
+                                  ) : null} */}
                                   <input
                                     type="number"
                                     name="priceDrop"
@@ -198,6 +198,10 @@ const UpdateSystemConditions = (props) => {
                                     }
                                     required
                                   />
+                                  {productData.category.name !== "Mobile" ||
+                                  productData.category.name !== "Desktop" ? (
+                                    <span className="text-lg">%</span>
+                                  ) : null}
                                 </div>
                               </div>
 

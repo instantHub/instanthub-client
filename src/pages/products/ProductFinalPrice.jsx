@@ -29,6 +29,8 @@ const ProductFinalPrice = () => {
   const [specialPrice, setSpecialPrice] = useState();
   const [accessoriesNotSelected, setAccessoriesNotSelected] = useState([]);
   const [accessoriesSelected, setAccessoriesSelected] = useState([]);
+  const [deductionsByType, setDeductionsByType] = useState({});
+  const [recycleProduct, setRecycleProduct] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [couponView, setCouponView] = useState(false);
@@ -301,13 +303,16 @@ const ProductFinalPrice = () => {
 
     if (AccessoriesNotSelected.length > 0) {
       AccessoriesNotSelected.map((a) => {
-        if (productCategory.includes("mobile")) {
-          deductedPrice =
-            deductedPrice -
-            Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
-        } else {
-          deductedPrice = deductedPrice - Number(a.priceDrop);
-        }
+        deductedPrice =
+          deductedPrice -
+          Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
+        // if (productCategory.includes("mobile")) {
+        //   deductedPrice =
+        //     deductedPrice -
+        //     Number((a.priceDrop * selectedProdDetails.getUpTo.price) / 100);
+        // } else {
+        //   deductedPrice = deductedPrice - Number(a.priceDrop);
+        // }
         // console.log("AccessoriesNotSelected", a);
       });
     }
@@ -340,19 +345,35 @@ const ProductFinalPrice = () => {
       // offerPrice: Math.ceil(deductedPrice),
     });
 
+    const minPrice = productCategory === "laptop" ? 1500 : 500;
     // Final Offer Price
     if (
-      deductedPrice > 500 &&
+      deductedPrice > minPrice &&
       deductedPrice <= selectedProdDetails.getUpTo.price
     ) {
       setOfferPrice(Math.ceil(deductedPrice));
     } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
       console.log("Final price above product price");
-
       setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
-      setOfferPrice(500);
+      setOfferPrice(minPrice);
+      setRecycleProduct(true);
     }
+
+    let finalDeductionSet = selectedProdDetails.deductions.reduce(
+      (res, curr) => {
+        if (!res[curr.type]) {
+          res[curr.type] = [curr];
+        } else {
+          res[curr.type].push(curr);
+        }
+        return res;
+      },
+      {}
+    );
+    setDeductionsByType(finalDeductionSet);
+
+    console.log("finalDeductionSet", finalDeductionSet);
   }
 
   // UseEffect to get complete final data
@@ -615,12 +636,36 @@ const ProductFinalPrice = () => {
               </div>
 
               <div className="w-full flex justify-center">
-                <button
-                  onClick={openModal}
-                  className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
-                >
-                  Sell
-                </button>
+                {!recycleProduct && (
+                  <button
+                    onClick={openModal}
+                    className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
+                  >
+                    Sell
+                  </button>
+                )}
+
+                {recycleProduct &&
+                  (productDetails.category.name === "Laptop" ||
+                    productDetails.category.name === "Mobile") && (
+                    <div className="flex flex-col items-center">
+                      <button
+                        onClick={() => {
+                          navigate(
+                            `/recycle-categories/recycle-brands/recycle-productDetails/${productId}`
+                          );
+                        }}
+                        className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"
+                      >
+                        Recycle
+                      </button>
+                      <p className="text-xs font-semibold text-center text-wrap">
+                        Since your product has many issues price is lower then
+                        expected, You can recylce this product with us for the
+                        above price.
+                      </p>
+                    </div>
+                  )}
               </div>
             </div>
 
@@ -645,18 +690,6 @@ const ProductFinalPrice = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="flex flex-col items-center">
-            <h2>Want to sell?..</h2>
-            <h2 className="text-center">
-              Click on "Sell" below and book your order for Instant Cash Pick
-            </h2>
-            <button
-              onClick={openModal}
-              className="px-4 py-1 border text-white bg-[#E27D60] rounded"
-            >
-              Sell
-            </button>
-          </div> */}
           </div>
 
           {/* Right */}
@@ -669,48 +702,8 @@ const ProductFinalPrice = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col items-start">
-                <h2 className="text-lg font-semibold py-2">
-                  Positive Creteria
-                </h2>
-                {selectedProdDetails.deductions
-                  .filter((d) => d.operation.toLowerCase().includes("add"))
-                  .map((deduction, index) => (
-                    <h2 key={index}>
-                      <span>{index + 1}. </span>{" "}
-                      <span
-                        className={`${
-                          deduction.operation.toLowerCase().includes("add")
-                            ? `text-green-600`
-                            : `text-red-500`
-                        } text-lg font-semibold`}
-                      >
-                        {deduction.type} - {deduction.conditionLabel}
-                      </span>
-                    </h2>
-                  ))}
-              </div>
-              <div className="flex flex-col items-start">
-                <h2 className="text-lg font-semibold py-2">
-                  Negative Creteria
-                </h2>
-                {selectedProdDetails.deductions
-                  .filter((d) => d.operation.toLowerCase().includes("subtrack"))
-                  .map((deduction, index) => (
-                    <h2 key={index}>
-                      <span>{index + 1}. </span>{" "}
-                      <span
-                        className={`${
-                          deduction.operation.toLowerCase().includes("add")
-                            ? `text-green-600`
-                            : `text-red-500`
-                        } text-lg font-semibold`}
-                      >
-                        {deduction.type} - {deduction.conditionLabel}
-                      </span>
-                    </h2>
-                  ))}
-              </div>
+              <DisplayDeductions data={deductionsByType} />
+
               {accessoriesNotSelected.length > 0 ? (
                 <div className="flex flex-col items-start">
                   <h2 className="text-lg font-semibold py-2">
@@ -1064,6 +1057,45 @@ const ProductFinalPrice = () => {
         </div>
       )}
     </>
+  );
+};
+
+// Main component to render the entire data object
+const DisplayDeductions = ({ data }) => (
+  <div className="mt-5">
+    {Object.entries(data).map(([conditionName, conditionLabels]) => (
+      <Section
+        key={conditionName}
+        conditionName={conditionName}
+        conditionLabels={conditionLabels}
+      />
+    ))}
+  </div>
+);
+
+// Reusable component to display a group of items (like 'Age' or 'Accessories')
+const Section = ({ conditionName, conditionLabels }) => {
+  return (
+    <div className="mb-5">
+      <h2 className="py-1 text-xl text-green-600 font-bold">{conditionName}</h2>
+      <ul className="">
+        {conditionLabels.map((cl, i) => (
+          <Item key={i} clNo={i + 1} conditionLabel={cl.conditionLabel} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+// Reusable component to display individual items (Age, Accessores, Processors, etc.)
+const Item = ({ clNo, conditionLabel }) => {
+  // console.log("conditionLabel", conditionLabel);
+  return (
+    <li>
+      <p>
+        <strong>{clNo}</strong>. {conditionLabel}
+      </p>
+    </li>
   );
 };
 

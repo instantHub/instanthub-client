@@ -32,6 +32,7 @@ const DeductionItems = ({
   );
   // || conditionName.toLowerCase().includes("defects")
 
+  const type = conditionName;
   const functionalProblems = conditionName.toLowerCase().includes("functional");
 
   // console.log("shouldHideImage", shouldShowImage);
@@ -89,12 +90,13 @@ const DeductionItems = ({
           // } flex flex-col border rounded items-center`}
           onClick={() => {
             if (shouldShowImage) {
-              // 
+              //
               if (!conditionName.toLowerCase().includes("defects")) {
                 handleLabelSelection(
                   label.conditionLabel,
                   label.priceDrop,
-                  label.operation
+                  label.operation,
+                  type
                 );
               }
             }
@@ -106,6 +108,7 @@ const DeductionItems = ({
                   conditionLabel: label.conditionLabel,
                   priceDrop: label.priceDrop,
                   operation: label.operation,
+                  type,
                 })
               );
 
@@ -123,6 +126,7 @@ const DeductionItems = ({
                   conditionLabel: label.conditionLabel,
                   priceDrop: label.priceDrop,
                   operation: label.operation,
+                  type,
                 })
               );
 
@@ -139,6 +143,7 @@ const DeductionItems = ({
                   conditionLabel: label.conditionLabel,
                   priceDrop: label.priceDrop,
                   operation: label.operation,
+                  type,
                 })
               );
               setScreenCondition({

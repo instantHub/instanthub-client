@@ -12,7 +12,7 @@ import EditButton from "../../components/EditButton";
 const ProductsList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [deductionSelected, setDeductionSelected] = useState("");
   const [categoryId, setCategoryId] = useState("");

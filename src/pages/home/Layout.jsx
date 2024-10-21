@@ -21,13 +21,16 @@ const Layout = () => {
   };
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>{`Sell Your Gadgets Online | InstantCashPick`}</title>
-        {/* <meta
+      {/* <meta
       name="description"
       content="India's growing trusted platform to sell old Mobile Phone, Laptops etc, sell your used Mobile Phone, Laptops etc at InstantCashPick and get instant cash at your doorstep. Visit the website to know more!"
     /> */}
+      {/* <link rel="canonical" href={window.location.href} /> */}
+
+      {/* <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Sell Your Gadgets Online | InstantCashPick`}</title>
+       
         <meta
           name="description"
           // No more waiting for checks to clear or funds to transfer.
@@ -40,11 +43,10 @@ const Layout = () => {
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://instantcashpick.com/" />
-        {/* <link rel="canonical" href={window.location.href} /> */}
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-      </Helmet>
+      </Helmet> */}
       {/* <div className="flex flex-col min-h-screen items-center"> */}
       <div className="flex flex-col min-h-screen">
         <Navbar />

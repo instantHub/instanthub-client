@@ -38,6 +38,7 @@ const LaptopDeductionItems = ({
   );
   // || conditionName.toLowerCase().includes("screen")
 
+  const type = conditionName;
   const functionalProblems = conditionName.toLowerCase().includes("functional");
 
   const checkIfSelected = (conditionLabel) => {
@@ -63,7 +64,7 @@ const LaptopDeductionItems = ({
         label.conditionLabel,
         label.priceDrop,
         label.operation,
-        
+        type
       );
     }
 
