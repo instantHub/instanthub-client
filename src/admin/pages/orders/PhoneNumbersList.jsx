@@ -1,33 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import {
-  useGetSlidersListQuery,
-  useDeleteSliderMutation,
-  useGetPhoneNumbersQuery,
-} from "../../../features/api";
+import { useGetPhoneNumbersQuery } from "../../../features/api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import Table from "../../components/TableView";
 
-const SlidersList = () => {
-  const { data: slidersList, isLoading: slidersLoading } =
-    useGetSlidersListQuery();
+const PhoneNumbersList = () => {
   const { data: phoneNumbers, isLoading: phoneNumbersLoading } =
     useGetPhoneNumbersQuery();
 
-  const [deleteSlider] = useDeleteSliderMutation();
-
-  if (!slidersLoading) {
-    console.log(slidersList);
-  }
   if (!phoneNumbersLoading) {
-    console.log(phoneNumbers);
+    console.log("phoneNumbers", phoneNumbers);
   }
-
-  const handleDelete = async (sliderId) => {
-    console.log("delete slider", sliderId);
-    const deletedSlider = await deleteSlider(sliderId);
-    toast.success(deletedSlider.message);
-  };
 
   const convertUTCToIST = (dateString) => {
     const utcDate = new Date(dateString);
@@ -65,6 +48,20 @@ const SlidersList = () => {
     saveAs(blob, "phone_numbers.xlsx");
   };
 
+  const headers = [
+    "Phone Numbers",
+    "Total Visits to FinalPrice",
+    "Last Visited On",
+  ];
+
+  const rowRenderer = (number) => (
+    <>
+      <td className="px-4 py-2">{number.mobileNumber}</td>
+      <td className="px-4 py-2">{number.totalOTPsTaken}</td>
+      <td className="px-4 py-2">{convertUTCToIST(number.updatedAt)}</td>
+    </>
+  );
+
   return (
     <>
       <div className="flex mt-[5%] w-[80%] mx-auto">
@@ -82,39 +79,14 @@ const SlidersList = () => {
           </div>
 
           <div className="bg-white border rounded-md shadow-lg">
-            <form className="flex flex-col gap-4 p-5 ">
-              <div className="flex gap-2 items-center">
-                <h1 className="text-xl opacity-75">Numebrs</h1>
-              </div>
-              <hr />
-
-              <table className="w-full">
-                <thead>
-                  <tr className="px-4 py-2 text-white bg-gray-800">
-                    <th>Phone Numbers</th>
-                    <th className="py-5">Total Visits to FinalPrice</th>
-                    <th>Last Visited On</th>
-                    {/* <th className="px-4 py-2 text-black">Delete</th> */}
-                  </tr>
-                </thead>
-
-                <tbody className="text-center border">
-                  {!phoneNumbersLoading &&
-                    phoneNumbers.phoneNumbers.map((number, index) => (
-                      <tr
-                        key={index}
-                        className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
-                      >
-                        <td className="px-4 py-2">{number.mobileNumber}</td>
-                        <td className="px-4 py-2">{number.totalOTPsTaken}</td>
-                        <td className="px-4 py-2">
-                          {convertUTCToIST(number.updatedAt)}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </form>
+            {!phoneNumbersLoading && (
+              <Table
+                headers={headers}
+                data={phoneNumbers.phoneNumbers}
+                keyExtractor={(item) => item.id}
+                rowRenderer={rowRenderer}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -122,4 +94,4 @@ const SlidersList = () => {
   );
 };
 
-export default SlidersList;
+export default PhoneNumbersList;

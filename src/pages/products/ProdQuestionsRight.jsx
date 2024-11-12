@@ -9,7 +9,6 @@ const ProdDeductionsRight = () => {
   const laptopDesktop = ["laptop", "desktop"];
 
   return (
-    // <div>
     <div className="w-[25%] border rounded sm:h-[450px] max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">
       <>
         <div className="flex items-center justify-center gap-3 p-2">
@@ -23,7 +22,7 @@ const ProdDeductionsRight = () => {
             />{" "}
           </div>
           <div className="text-sm">
-            <h1>{productsData.productName}</h1>
+            <h2>{productsData.productName}</h2>
             {productsData.productCategory === "Mobile" && (
               <span>{productsData.getUpTo.variantName}</span>
             )}
@@ -34,7 +33,7 @@ const ProdDeductionsRight = () => {
         <div>
           <div className="mt-6 mx-auto px-4">
             <div className="py-3 font-bold text-gray-400">
-              <h1>Evaluation</h1>
+              <h2>Evaluation</h2>
             </div>
 
             <div>
@@ -47,7 +46,7 @@ const ProdDeductionsRight = () => {
                 <>
                   <div>
                     {laptopSlice.processor.conditionLabel ? (
-                      <h1 className="font-bold">Laptop Configuration</h1>
+                      <h2 className="font-bold">Laptop Configuration</h2>
                     ) : null}
                     <ul>
                       <li className="py-1 pl-2">
@@ -65,7 +64,7 @@ const ProdDeductionsRight = () => {
                   {/* Screen Size */}
                   <div>
                     {laptopSlice.screenSize.conditionLabel ? (
-                      <h1 className="font-bold">Screen Size</h1>
+                      <h2 className="font-bold">Screen Size</h2>
                     ) : null}
                     <ul>
                       <li className="py-1 pl-2">
@@ -77,7 +76,7 @@ const ProdDeductionsRight = () => {
                   {/* Graphic */}
                   <div>
                     {laptopSlice.graphic.conditionLabel ? (
-                      <h1 className="font-bold">Graphic</h1>
+                      <h2 className="font-bold">Graphic</h2>
                     ) : null}
                     <ul>
                       <li className="py-1 pl-2">
@@ -89,7 +88,7 @@ const ProdDeductionsRight = () => {
                   {/* Screen Condition */}
                   <div>
                     {laptopSlice.screenCondition.conditionLabel ? (
-                      <h1 className="font-bold">Screen Condition</h1>
+                      <h2 className="font-bold">Screen Condition</h2>
                     ) : null}
                     <ul>
                       <li className="py-1 pl-2">
@@ -101,7 +100,7 @@ const ProdDeductionsRight = () => {
                   {/* Physical Condition */}
                   <div>
                     {laptopSlice.physicalCondition.conditionLabel ? (
-                      <h1 className="font-bold">Physical Condition</h1>
+                      <h2 className="font-bold">Physical Condition</h2>
                     ) : null}
                     <ul>
                       <li className="py-1 pl-2">
@@ -115,23 +114,21 @@ const ProdDeductionsRight = () => {
               <ul>
                 {/* Displaying all selected deduction */}
                 {productsData.deductions.length !== 0 ? (
-                  <h1 className="font-bold">Selected Conditions</h1>
+                  <h2 className="font-bold">Selected Conditions</h2>
                 ) : null}
                 {productsData.deductions.map((label, index) => (
-                  <>
-                    <li key={index} className="py-1 pl-2 text-md">
-                      {label.conditionLabel}
-                    </li>
-                  </>
+                  <li key={index} className="py-1 pl-2 text-md">
+                    {label.conditionLabel}
+                  </li>
                 ))}
 
                 {/* Products Age display when selected */}
                 {productsData.productAge && (
                   <>
                     {productsData.productAge.conditionLabel ? (
-                      <h1 className="mt-2 mb-1 font-bold">
+                      <h2 className="mt-2 mb-1 font-bold">
                         {productsData.productCategory} Age
-                      </h1>
+                      </h2>
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productAge.conditionLabel}
@@ -143,9 +140,9 @@ const ProdDeductionsRight = () => {
                 {productsData.productPhysicalCondition && (
                   <>
                     {productsData.productPhysicalCondition.conditionLabel ? (
-                      <h1 className="mt-2 mb-1 font-bold">
+                      <h2 className="mt-2 mb-1 font-bold">
                         {productsData.productCategory} Physical Condition
-                      </h1>
+                      </h2>
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productPhysicalCondition.conditionLabel}
@@ -157,9 +154,9 @@ const ProdDeductionsRight = () => {
                 {productsData.productAge && (
                   <>
                     {productsData.productScreenCondition.conditionLabel ? (
-                      <h1 className="mt-2 mb-1 font-bold">
+                      <h2 className="mt-2 mb-1 font-bold">
                         {productsData.productCategory} Screen Condition
-                      </h1>
+                      </h2>
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productScreenCondition.conditionLabel}
@@ -171,9 +168,9 @@ const ProdDeductionsRight = () => {
                 {productsData.productDisplayDefect && (
                   <>
                     {productsData.productDisplayDefect.conditionLabel ? (
-                      <h1 className="mt-2 mb-1 font-bold">
+                      <h2 className="mt-2 mb-1 font-bold">
                         {productsData.productCategory} Display & Defect
-                      </h1>
+                      </h2>
                     ) : null}
                     <li className="py-1 pl-2 text-md">
                       {productsData.productDisplayDefect.conditionLabel}
@@ -186,7 +183,6 @@ const ProdDeductionsRight = () => {
         </div>
       </>
     </div>
-    // </div>
   );
 };
 

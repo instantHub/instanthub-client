@@ -56,7 +56,6 @@ const LaptopsQuestions = (props) => {
   const dispatch = useDispatch();
 
   const laptopSlice = useSelector((state) => state.laptopDeductions);
-  // const laptopsConList = useSelector((state) => state.laptopDeductionsList);
   const deductionData = useSelector((state) => state.deductions.deductions);
   const [showOTP, setShowOTP] = useState(false);
 
@@ -243,9 +242,9 @@ const LaptopsQuestions = (props) => {
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (
-            <h1 className="text-center font-semibold text-2xl max-2sm:text-xl mt-5">
+            <h2 className="text-center font-semibold text-2xl max-2sm:text-xl mt-5">
               Select the system configuration of your device?
-            </h1>
+            </h2>
           )}
           <div>
             {/* {laptopsConList.length !== 0 && */}
@@ -256,13 +255,13 @@ const LaptopsQuestions = (props) => {
                   <div key={index} className="px-4 py-4">
                     {currentPageIndex === 0 ? (
                       <div className="px-1 py-2 font-extrabold text-lg ">
-                        <h1>{condition.conditionName}</h1>
+                        <h2>{condition.conditionName}</h2>
                       </div>
                     ) : (
                       <>
                         {/* Condition Name Headings */}
                         <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
-                          <h1>{condition.conditionName}</h1>
+                          <h2>{condition.conditionName}</h2>
                         </div>
                         <div>
                           {condition.conditionName

@@ -12,6 +12,7 @@ import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import { FaGooglePay } from "react-icons/fa";
 import FormInput from "../../components/FormInput";
+import Loading from "../../components/Loading";
 
 const RecycleProductDetail = () => {
   const { prodId } = useParams();
@@ -311,10 +312,7 @@ const RecycleProductDetail = () => {
         </div>
         <div className="">
           {isLoading ? (
-            <div className="flex flex-col justify-center items-center h-32">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-              <span>Loading...</span>
-            </div>
+            <Loading />
           ) : (
             <>
               <div className="bg-white flex flex-col sm:flex-row px-3 sm:p-6 max-sm:pb-3 max-sm:flex-col bg-[url('/images/recycle1.png')] bg-center bg-no-repeat">

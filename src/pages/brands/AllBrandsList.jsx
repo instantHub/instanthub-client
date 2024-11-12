@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetCategoryQuery, useGetAllBrandQuery } from "../../features/api";
+import { useGetAllBrandQuery } from "../../features/api";
+import Loading from "../../components/Loading";
 
 const AllBrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
@@ -19,6 +19,7 @@ const AllBrandsList = () => {
   // if (!brandsLoading) {
   //   console.log(brandsData);
   // }
+
   return (
     <div>
       <div className="my-10">
@@ -34,14 +35,11 @@ const AllBrandsList = () => {
       </div>
       <div>
         {brandsLoading ? (
-          <div className="flex flex-col justify-center items-center h-32">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-            <span>Loading...</span>
-          </div>
+          <Loading />
         ) : (
           <div className="flex justify-center flex-wrap items-center h-full">
             <div className="grid grid-cols-6 justify-center gap-2 w-[80%] max-xl:grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 max-sm:w-full">
-              {!brandsData.length == 0 ? (
+              {brandsData.length > 0 ? (
                 <>
                   {brandsData
                     .slice(0, showAllBrands ? brandsData.length : 5)
@@ -85,7 +83,7 @@ const AllBrandsList = () => {
                   )}
                 </>
               ) : (
-                <h1>No Data Available</h1>
+                <p>No Data Available</p>
               )}
             </div>
           </div>

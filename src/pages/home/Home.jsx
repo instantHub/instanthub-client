@@ -55,7 +55,7 @@ const Home = () => {
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
-      {/* <Slider images={images} /> */}
+
       <Slider />
       <Categories />
       {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">

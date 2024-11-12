@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
 import { SubmitButton } from "../../components/SubmitButton";
 import BackButton from "../../components/BackButton";
+import CardHeader from "../../components/CardHeader";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -170,7 +171,7 @@ const UpdateProduct = () => {
   return (
     <div className="flex px-[2%] pt-[2%]">
       <div className="grow">
-        <div className="flex justify-between items-center">
+        {/* <div className="flex justify-between items-center">
           <h1 className="bold text-[1.4rem] mb-2">Update Product</h1>
           <div className="flex gap-2">
             <div className="flex items-center">
@@ -180,285 +181,244 @@ const UpdateProduct = () => {
 
             <BackButton location={"/admin/products-list"} />
           </div>
-        </div>
-        <div className="bg-white border rounded-md shadow-lg">
-          {!productDataLoading && (
-            <form
-              action=""
-              method="post"
-              className="flex flex-col gap-4  p-5 "
-              onSubmit={handleSubmit}
-            >
-              <div>
-                <h2 className="">
-                  Update Product{" "}
-                  <span className="text-lg font-semibold">{prodName}</span>{" "}
-                </h2>
-              </div>
-              <hr />
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col">
-                  <h1 htmlFor="category">
-                    Category{" "}
-                    <span className="text-lg font-semibold">
-                      {productData.category.name}
-                    </span>{" "}
-                  </h1>
-                </div>
+        </div> */}
 
-                <div className="flex flex-col">
-                  <h1 htmlFor="productType">
-                    Brand{" "}
-                    <span className="text-lg font-semibold">
-                      {productData.brand.name}
-                    </span>{" "}
-                  </h1>
-                </div>
+        <CardHeader
+          location={"/admin/products-list"}
+          text="Update Products"
+          source="update"
+        />
 
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <div>
-                      <label htmlFor="productName">Product Name :</label>
-                      <input
-                        type="text"
-                        id="productName"
-                        className=" border p-2 rounded-sm"
-                        placeholder="Enter Product Name"
-                        value={prodName}
-                        onChange={(e) => {
-                          setProdName(e.target.value);
-                        }}
-                        required
-                      />
-                    </div>
-                    <div className="flex items-center grow-0">
-                      <img
-                        src={import.meta.env.VITE_APP_BASE_URL + imageSelected}
-                        alt="ConditionLabel"
-                        className="w-[100px] h-[100px] mx-auto "
-                      />
-                    </div>
+        <div className="flex justify-center max-md:flex-col max-sm:text-sm">
+          <div className="w-[70%] max-md:w-full grow-1 bg-white border rounded-md shadow-lg">
+            {!productDataLoading && (
+              <form
+                action=""
+                method="post"
+                className="flex flex-col gap-4 p-5 max-sm:p-3"
+                onSubmit={handleSubmit}
+              >
+                <div>
+                  <h2 className="">
+                    Update Product{" "}
+                    <span className="text-lg font-semibold">{prodName}</span>{" "}
+                  </h2>
+                </div>
+                <hr />
+                <div className="grid grid-cols-2 gap-4 max-sm:gap-2 max-sm:grid-cols-1">
+                  <div className="flex flex-col">
+                    <h2 htmlFor="category">
+                      Category{" "}
+                      <span className="text-lg font-semibold max-sm:text-sm">
+                        {productData.category.name}
+                      </span>{" "}
+                    </h2>
                   </div>
-                  <div className="flex gap-2">
-                    {variants.map((variant, index) => (
-                      <div
-                        key={index}
-                        className="flex gap-1 border px-1 m-1 rounded-lg"
-                      >
-                        <span className="opacity-50">{variant.name}</span>
-                        <span>-</span>
-                        <span className="opacity-50">{variant.price}</span>
+
+                  <div className="flex flex-col">
+                    <h2 htmlFor="productType">
+                      Brand{" "}
+                      <span className="text-lg font-semibold max-sm:text-sm">
+                        {productData.brand.name}
+                      </span>{" "}
+                    </h2>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2 max-sm:flex-col">
+                      <div>
+                        <label htmlFor="productName">Product Name :</label>
+                        <input
+                          type="text"
+                          id="productName"
+                          className=" border p-2 rounded-sm max-sm:p-1"
+                          placeholder="Enter Product Name"
+                          value={prodName}
+                          onChange={(e) => {
+                            setProdName(e.target.value);
+                          }}
+                          required
+                        />
                       </div>
-                    ))}
+                      <div className="flex items-center grow-0">
+                        <img
+                          src={
+                            import.meta.env.VITE_APP_BASE_URL + imageSelected
+                          }
+                          alt="ConditionLabel"
+                          className="w-[100px] h-[100px] mx-auto"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      {variants.map((variant, index) => (
+                        <div
+                          key={index}
+                          className="flex gap-1 border px-1 m-1 rounded-lg"
+                        >
+                          <span className="opacity-50">{variant.name}</span>
+                          <span>-</span>
+                          <span className="opacity-50">{variant.price}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex flex-col">
-                  <label htmlFor="productName">Make Unique URL :</label>
-                  <input
-                    type="text"
-                    id="productName"
-                    className=" border p-2 rounded-sm"
-                    placeholder="Enter Unique URL"
-                    value={uniqueURL}
-                    onChange={(e) => {
-                      setUniqueURL(e.target.value);
-                    }}
-                    required
-                  />
-                </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="productName">Make Unique URL :</label>
+                    <input
+                      type="text"
+                      id="productName"
+                      className=" border p-2 rounded-sm max-sm:p-1"
+                      placeholder="Enter Unique URL"
+                      value={uniqueURL}
+                      onChange={(e) => {
+                        setUniqueURL(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
 
-                <div className="p-2 ">
-                  <label htmlFor="fileInput">File Input :</label>
-                  <div className="flex">
-                    <div className="flex flex-wrap grow shrink basis-auto w-[1%] items-center">
-                      <input
-                        type="file"
-                        name=""
-                        ref={fileInputRef}
-                        id=""
-                        onChange={(e) => {
-                          setImageSelected(e.target.files[0]);
-                          setNewImgSelected(true);
-                        }}
-                      />
+                  <div className="p-2">
+                    <label htmlFor="fileInput">File Input :</label>
+                    <div className="flex">
+                      <div className="flex flex-wrap grow shrink basis-auto w-[1%] items-center">
+                        <input
+                          type="file"
+                          name=""
+                          ref={fileInputRef}
+                          id=""
+                          onChange={(e) => {
+                            setImageSelected(e.target.files[0]);
+                            setNewImgSelected(true);
+                          }}
+                        />
 
-                      {/* {imageSelected && (
+                        {/* {imageSelected && (
                         <p className="absolute mt-[3.8rem]">
                           Selected file: {imageSelected}
                         </p>
                       )} */}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex flex-col">
-                  <label htmlFor="status">Status :</label>
-                  <select
-                    id="status"
-                    name="status"
-                    value={status}
-                    className="border rounded-sm p-2"
-                    onChange={(e) => setStatus(e.target.value)}
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Blocked">Blocked</option>
-                  </select>
+                  <div className="flex flex-col">
+                    <label htmlFor="status">Status :</label>
+                    <select
+                      id="status"
+                      name="status"
+                      value={status}
+                      className="border rounded-sm p-2 max-sm:p-1"
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Blocked">Blocked</option>
+                    </select>
+                  </div>
                 </div>
+                <div className="py-3 px-2">
+                  <SubmitButton
+                    handleLoading={updateProductLoading}
+                    value="Update Product"
+                    loading="Loading..."
+                  />
+                </div>
+              </form>
+            )}
+          </div>
+
+          <div className="grow-0">
+            {!productDataLoading && productData.category.name === "Mobile" ? (
+              <div className="m-1 flex flex-col items-center justify-center">
+                <h3 className="text-xl inline-block">Add Variants:</h3>
+                {variants.map((variant, index) => (
+                  <div
+                    key={index}
+                    className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        value={variant.name}
+                        placeholder="variant name"
+                        onChange={(e) =>
+                          handleVariantChange(index, "name", e.target.value)
+                        }
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                      />
+                      <input
+                        type="number"
+                        value={variant.price}
+                        placeholder="variant price"
+                        onChange={(e) =>
+                          handleVariantChange(index, "price", e.target.value)
+                        }
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      {variants.length != 1 && (
+                        <button
+                          className="bg-red-600 px-2 py-1 text-white rounded-md"
+                          onClick={() => {
+                            handleRemoveVariant(index);
+                          }}
+                        >
+                          remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={addVariant}
+                  className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
+                >
+                  Add Variant
+                </button>
               </div>
-              <div className="py-3 px-2">
-                <SubmitButton
-                  handleLoading={updateProductLoading}
-                  value="Update Product"
-                  loading="Loading..."
-                />
+            ) : (
+              <div className="m-1 flex flex-col items-center justify-center">
+                <h3 className="text-xl inline-block">Add Price:</h3>
+                {variants.map((variant, index) => (
+                  <div
+                    key={index}
+                    className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        value={variant.name}
+                        placeholder="variant name"
+                        // onChange={(e) =>
+                        //   handleVariantChange(index, "name", e.target.value)
+                        // }
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                        disabled
+                      />
+                      <input
+                        type="number"
+                        value={variant.price}
+                        placeholder="variant price"
+                        onChange={(e) =>
+                          handleVariantChange(index, "price", e.target.value)
+                        }
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
-            </form>
-          )}
+            )}
+          </div>
         </div>
       </div>
-
-      {/* {!productDataLoading && (
-        <div className="m-1 flex flex-col items-center justify-center">
-          <h3 className="text-xl inline-block">Add Variants:</h3>
-          {variants.map((variant, index) => (
-            <div
-              key={index}
-              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
-            >
-              <div>
-                <input
-                  type="text"
-                  value={variant.name}
-                  placeholder="variant name"
-                  onChange={(e) =>
-                    handleVariantChange(index, "name", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
-                <input
-                  type="number"
-                  value={variant.price}
-                  placeholder="variant price"
-                  onChange={(e) =>
-                    handleVariantChange(index, "price", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
-              </div>
-
-              <div>
-                {variants.length != 1 && (
-                  <button
-                    className="bg-red-600 px-2 py-1 text-white rounded-md"
-                    onClick={() => {
-                      handleRemoveVariant(index);
-                    }}
-                  >
-                    remove
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-          <button
-            onClick={addVariant}
-            className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
-          >
-            Add Variant
-          </button>
-        </div>
-      )} */}
-
-      {!productDataLoading && productData.category.name === "Mobile" ? (
-        <div className="m-1 flex flex-col items-center justify-center">
-          <h3 className="text-xl inline-block">Add Variants:</h3>
-          {variants.map((variant, index) => (
-            <div
-              key={index}
-              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
-            >
-              <div>
-                <input
-                  type="text"
-                  value={variant.name}
-                  placeholder="variant name"
-                  onChange={(e) =>
-                    handleVariantChange(index, "name", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
-                <input
-                  type="number"
-                  value={variant.price}
-                  placeholder="variant price"
-                  onChange={(e) =>
-                    handleVariantChange(index, "price", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
-              </div>
-
-              <div>
-                {variants.length != 1 && (
-                  <button
-                    className="bg-red-600 px-2 py-1 text-white rounded-md"
-                    onClick={() => {
-                      handleRemoveVariant(index);
-                    }}
-                  >
-                    remove
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-          <button
-            onClick={addVariant}
-            className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
-          >
-            Add Variant
-          </button>
-        </div>
-      ) : (
-        <div className="m-1 flex flex-col items-center justify-center">
-          <h3 className="text-xl inline-block">Add Price:</h3>
-          {variants.map((variant, index) => (
-            <div
-              key={index}
-              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
-            >
-              <div>
-                <input
-                  type="text"
-                  value={variant.name}
-                  placeholder="variant name"
-                  // onChange={(e) =>
-                  //   handleVariantChange(index, "name", e.target.value)
-                  // }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                  disabled
-                />
-                <input
-                  type="number"
-                  value={variant.price}
-                  placeholder="variant price"
-                  onChange={(e) =>
-                    handleVariantChange(index, "price", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* <div className="flex justify-evenly mx-6 gap-80 2sm:gap-5 items-center">
         <CreateSeries />

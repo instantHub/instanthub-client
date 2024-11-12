@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-// import "./Slider.css";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
@@ -62,11 +61,9 @@ function Slider() {
   }, [slidersData]);
 
   return (
-    // <div className="max-w-[1400px] h-[480px] w-full m-auto py-8 px-4 relative group">
     // TODO: need to set this div to relative for right and left arrow functionality, however navbar will be affected
     <div>
       {!slidersLoading && slidersList.length !== 0 && (
-        // <div className="max-w-[1400px] w-full h-[480px] mx-auto mt-10  max-md:h-[200px] group">
         <div
           className={`max-w-[1400px] w-full h-[380px] mx-auto mt-5
           max-md:h-[200px] max-lg:h-[300px] group  max-lg:px-0

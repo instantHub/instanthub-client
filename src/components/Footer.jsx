@@ -126,7 +126,7 @@ const Footer = () => {
         </div>
         <div className="flex flex-col items-center max-md:hidden">
           <div className="text-white font-bold py-2">
-            <label htmlFor="">Our Office</label>
+            <p>Our Office</p>
           </div>
           <div className="pl-2 flex flex-col items-start">
             <p className="text-xs">

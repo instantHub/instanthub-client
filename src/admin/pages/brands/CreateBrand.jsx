@@ -83,11 +83,11 @@ const CreateBrand = () => {
   };
 
   return (
-    <div className=" px-[2%] pt-[2%] ">
+    <div className=" px-[2%] pt-[2%] max-sm:text-sm">
       <div className="flex justify-between items-center">
-        <h1 className="bold text-[1.4rem] mb-2">Create Brand</h1>
+        <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">Create Brand</h1>
         <div className="flex gap-2">
-          <div className="flex items-center">
+          <div className="flex items-center max-sm:hidden">
             <h2>Home </h2>
             <h2 className="pl-1"> / Add Brands</h2>
           </div>
@@ -111,7 +111,7 @@ const CreateBrand = () => {
               <label htmlFor="productName">Select Category :</label>
 
               <select
-                className="border w-[40%]"
+                className="border w-[40%] max-sm:w-full "
                 value={categorySelected}
                 onChange={(e) => {
                   // console.log(e.target.value);
@@ -125,14 +125,7 @@ const CreateBrand = () => {
                       key={category.id}
                       value={category.id}
                       name="category"
-                      className=""
                     >
-                      {/* {console.log(
-                        "category: ",
-                        category.name,
-                        ", ID: ",
-                        category.id
-                      )} */}
                       {category.name}
                     </option>
                   ))}
@@ -143,7 +136,7 @@ const CreateBrand = () => {
               <input
                 type="text"
                 id="productName"
-                className=" border p-2 rounded-sm"
+                className=" border p-2 rounded-sm max-sm:p-1"
                 placeholder="Enter Category Name"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
@@ -158,7 +151,7 @@ const CreateBrand = () => {
                 id="uniqueURL"
                 value={uniqueURL}
                 onChange={(e) => setUniqueURL(e.target.value)}
-                className=" border p-2 rounded-sm"
+                className=" border p-2 rounded-sm max-sm:p-1"
                 placeholder="Enter Unique URL"
                 required
               />
@@ -177,7 +170,7 @@ const CreateBrand = () => {
                     name="image"
                     ref={fileInputRef}
                     accept="image/*"
-                    className="w-full border border-gray-300 p-2 rounded-md"
+                    className="w-full border border-gray-300 p-2 rounded-md max-sm:p-1"
                     onChange={(e) => setImageSelected(e.target.files[0])}
                     required
                   />
@@ -188,7 +181,7 @@ const CreateBrand = () => {
           <div className="py-3 px-2">
             <button
               type="submit"
-              className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+              className={`w-[20%] max-sm:w-full bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
               disabled={createBrandLoading}
             >
               {!createBrandLoading ? "Create Brand" : "Loading..."}
@@ -201,35 +194,3 @@ const CreateBrand = () => {
 };
 
 export default CreateBrand;
-
-// import React, { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   fetchCategories,
-//   selectAllCategories,
-// } from "../../features/categorySlice";
-
-// function CreateBrand() {
-//   const dispatch = useDispatch();
-//   const categories = useSelector(selectAllCategories);
-//   console.log("categories", categories);
-
-//   useEffect(() => {
-//     dispatch(fetchCategories());
-//   }, [dispatch]);
-
-//   return (
-//     <div>
-//       <h2>Select Category</h2>
-//       <select>
-//         {categories.map((category) => (
-//           <option key={category.id} value={category.id}>
-//             {category.name}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   );
-// }
-
-// export default CreateBrand;

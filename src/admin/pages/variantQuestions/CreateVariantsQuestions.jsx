@@ -152,7 +152,7 @@ function CreateVariantsQuestions() {
             </thead>
             <tbody className="text-center">
               {!variantsQuestionsDataLoading &&
-                variantsQuestionsData.map((variant, index) => (
+                variantsQuestionsData?.map((variant, index) => (
                   <tr
                     key={`${variant._id}-${index}`}
                     className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}

@@ -7,6 +7,8 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BackButton from "../../components/BackButton";
+import UpdateButton from "../../components/UpdateButton";
+import CardHeader from "../../components/CardHeader";
 
 function UpdateCategory() {
   const { catId } = useParams();
@@ -100,24 +102,39 @@ function UpdateCategory() {
 
   return (
     <>
-      <div className="flex mt-[5%] w-[80%] mx-auto">
+      <div className="flex mt-[5%] w-[80%] mx-auto max-sm:text-sm ">
         <div className="grow">
-          <div className="flex justify-between items-center">
-            <h1 className="bold text-[1.4rem] mb-2">Update Category</h1>
-            <div className="flex items-center gap-1">
-              <h2>Home </h2>
-              <h2 className="pl-1"> / Update Category</h2>
+          {/* <div className="flex justify-between items-center">
+            <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">
+              Update Category
+            </h1>
+            <div className="flex items-center gap-1 ">
+              <h2 className="max-sm:hidden">Home </h2>
+              <h2 className="pl-1 max-sm:hidden"> / Update Category</h2>
               <BackButton location={"/admin/categories-list"} />
             </div>
-          </div>
+          </div> */}
+
+          <CardHeader
+            location={"/admin/categories-list"}
+            text="Update Category"
+            source="update"
+          />
+
           <div className="bg-white border rounded-md shadow-lg">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
               <div className="flex gap-2 items-center">
-                <span className="text-xl opacity-75">Update </span>
+                <span className="text-xl opacity-75 max-sm:text-xs">
+                  Update
+                </span>
                 {!categoriesLoading && (
-                  <h1 className="text-2xl ">{categoryToUpdate[0].name} </h1>
+                  <h2 className="text-2xl max-sm:text-sm">
+                    {categoryToUpdate[0].name}{" "}
+                  </h2>
                 )}
-                <span className="text-xl opacity-75">Category</span>
+                <span className="text-xl opacity-75 max-sm:text-xs">
+                  Category
+                </span>
               </div>
               <hr />
 
@@ -125,16 +142,18 @@ function UpdateCategory() {
                 {!categoriesLoading && (
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-4">
-                      <label htmlFor="conditioName">Category Name</label>
-                      <h1
+                      <label htmlFor="conditioName" className="max-sm:text-xs">
+                        Category Name
+                      </label>
+                      <h2
                         name="conditioName"
-                        className="text-[1.7rem] text-red-700"
+                        className="text-[1.7rem] text-red-700 max-sm:text-sm"
                       >
                         {categoryToUpdate[0].name}
-                      </h1>
+                      </h2>
                     </div>
-                    <div className="flex items-center">
-                      <div className="flex w-full">
+                    <div className="flex items-center max-sm:flex-col">
+                      <div className="flex w-full max-sm:flex-col">
                         <label className="">Update Brand Name:</label>
                         <input
                           type="text"
@@ -177,15 +196,19 @@ function UpdateCategory() {
                 )}
               </div>
 
-              <div className="py-3 px-2">
+              {/* <div className="py-3 px-2">
                 <button
                   type="submit"
-                  className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                  className={`w-[20%] max-sm:w-full bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
                   disabled={updateCategoryLoading}
                 >
                   {!updateCategoryLoading ? "Update Category" : "Loading..."}
                 </button>
-              </div>
+              </div> */}
+              <UpdateButton
+                updateLoading={updateCategoryLoading}
+                text="Update Category"
+              />
             </form>
           </div>
         </div>

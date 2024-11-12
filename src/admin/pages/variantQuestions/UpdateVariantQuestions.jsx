@@ -120,11 +120,11 @@ const UpdateVariantQuestions = () => {
 
         <div className="bg-scroll">
           <div>
-            <h1>Variant Questions</h1>
+            <h2>Variant Questions</h2>
             <form onSubmit={handleSubmit}>
               {!variantsQuestionsDataLoading &&
                 selectedDeductions &&
-                selectedDeductions.map((condition, index) => (
+                selectedDeductions?.map((condition, index) => (
                   <div
                     key={index}
                     className={`mb-10 border my-2 py- px- rounded ${
@@ -139,7 +139,7 @@ const UpdateVariantQuestions = () => {
                     <hr />
                     <div className="flex px-4 py-2 flex-col">
                       {condition.conditionLabels &&
-                        condition.conditionLabels.map(
+                        condition.conditionLabels?.map(
                           (conditionLabel, index) => (
                             <div
                               key={index}
@@ -168,7 +168,7 @@ const UpdateVariantQuestions = () => {
                                     }
                                     required
                                   />
-                                  <h1>%</h1>
+                                  <span>%</span>
                                 </div>
                               </div>
 

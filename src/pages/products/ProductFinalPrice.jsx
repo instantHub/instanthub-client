@@ -48,6 +48,7 @@ const ProductFinalPrice = () => {
 
   console.log("selectedProdDetails", selectedProdDetails);
   console.log("laptopSlice", laptopSlice);
+  console.log("deductionsByType", deductionsByType);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -63,6 +64,8 @@ const ProductFinalPrice = () => {
 
   const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
   const [selectedDigitalPayment, setSelectedDigitalPayment] = useState("");
+
+  const laptopDesktop = ["laptop", "desktop"];
 
   const handlePaymentModeChange = (e) => {
     setSelectedPaymentMode(e.target.value);
@@ -354,6 +357,12 @@ const ProductFinalPrice = () => {
       setOfferPrice(Math.ceil(deductedPrice));
     } else if (deductedPrice > selectedProdDetails.getUpTo.price) {
       console.log("Final price above product price");
+
+      if (laptopDesktop.includes(productCategory)) {
+        console.log("Laptop/Desktop");
+        setOfferPrice(Math.ceil(deductedPrice));
+      }
+
       setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
       setOfferPrice(minPrice);
@@ -513,8 +522,6 @@ const ProductFinalPrice = () => {
   // }, [selectedProdDetails, productDetails]);
 
   // console.log("formData", formData);
-
-  const laptopDesktop = ["laptop", "desktop"];
 
   return (
     <>

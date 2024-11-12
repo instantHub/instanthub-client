@@ -230,7 +230,7 @@ const OrdersList = () => {
       <div className="p-4">
         <h2 className=" text-lg font-bold mb-4">Orders Table</h2>
         {/* <div className="mb-4">
-          <h1>Orders List</h1>
+          <h2>Orders List</h2>
         </div> */}
         <table className="w-full">
           <thead>
@@ -285,20 +285,20 @@ const OrdersList = () => {
                     </div>
                   </td>
                   <td className="px-4 py-2 flex flex-col items-center">
-                    <h1 className="text-xs">
+                    <h2 className="text-xs">
                       Customer Name:{" "}
                       <span className="text-sm font-bold">
                         {order.customerName}
                       </span>
-                    </h1>
-                    <h1 className="text-xs">
+                    </h2>
+                    <h2 className="text-xs">
                       Phone:{" "}
                       <span className="text-sm font-bold">{order.phone}</span>
-                    </h1>
-                    <h1 className="text-xs">
+                    </h2>
+                    <h2 className="text-xs">
                       Email:{" "}
                       <span className="text-sm font-bold">{order.email}</span>
-                    </h1>
+                    </h2>
                   </td>
 
                   <td className="w-[10%] px-4 py-2">
@@ -323,33 +323,33 @@ const OrdersList = () => {
                   {/* Order Picked Up time */}
                   <td className="w-[10%] px-1 py-2">
                     {order.status.toLowerCase() === "pending" ? (
-                      <h1>Pick Up is Pending</h1>
+                      <h2>Pick Up is Pending</h2>
                     ) : (
                       <div className="flex flex-col justify-center">
-                        <h1 className="text-sm">
+                        <h2 className="text-sm">
                           Agent Name:
                           <span className="font-bold">
                             {order.pickedUpDetails.agentName}
                           </span>
-                        </h1>
-                        <h1 className="text-sm">
+                        </h2>
+                        <h2 className="text-sm">
                           Purchased Price:
                           <span className="font-bold">{order.finalPrice}</span>
-                        </h1>
-                        <h1 className="text-sm">
+                        </h2>
+                        <h2 className="text-sm">
                           Time:
                           <span className="font-bold">
                             {order.pickedUpDetails.pickedUpDate}
                           </span>
-                        </h1>
+                        </h2>
                       </div>
                     )}
                   </td>
                   <td className="px-4 py-2">
                     {order.status.toLowerCase() === "pending" ? (
-                      <h1>{order.status.toUpperCase()}</h1>
+                      <h2>{order.status.toUpperCase()}</h2>
                     ) : (
-                      <h1>{order.status.toUpperCase()}</h1>
+                      <h2>{order.status.toUpperCase()}</h2>
                     )}
                   </td>
 
@@ -400,7 +400,7 @@ const OrdersList = () => {
             </div>
 
             <div className="text-center mb-2">
-              <h1 className="text-xl">Order Detail:</h1>
+              <h2 className="text-xl">Order Detail:</h2>
               <ul>
                 <li className="px-4 py-2">Order ID: {selectedOrder.orderId}</li>
                 <li className="px-4 py-2">
@@ -409,7 +409,7 @@ const OrdersList = () => {
                 <li className="px-4 py-2">
                   <div className="flex items-center justify-center gap-4">
                     <div>
-                      <h1 className="text-lg">Product:</h1>
+                      <h2 className="text-lg">Product:</h2>
                     </div>
                     <div className="">
                       {selectedOrder.productName}{" "}
@@ -446,9 +446,9 @@ const OrdersList = () => {
                 {/* Mandatory Images */}
                 <div className="flex flex-col gap-1 items-center">
                   <div className="">
-                    <h1 className="text-lg">
+                    <h2 className="text-lg">
                       Required Documents<span className="text-red-600">*</span>
-                    </h1>
+                    </h2>
                   </div>
                   <div className="flex">
                     {/* ID Front Image */}
@@ -496,7 +496,7 @@ const OrdersList = () => {
                 {/* Optional Images */}
                 <div className="flex flex-col gap-1">
                   <div className="">
-                    <h1 className="text-lg">Optional Documents</h1>
+                    <h2 className="text-lg">Optional Documents</h2>
                   </div>
                   <div className="flex items-center">
                     {/* Optional Image 1 */}
@@ -686,41 +686,41 @@ const OrdersList = () => {
             </div>
 
             <div className="text-center mb-2">
-              <h1 className="text-xl">Order Detail:</h1>
+              <h2 className="text-xl">Order Detail:</h2>
               <div>
                 <div className="flex justify-center">
-                  <h1 className="px-4 py-2">Order ID: {orderView.orderId}</h1>
-                  <h1 className="px-4 py-2">
+                  <h2 className="px-4 py-2">Order ID: {orderView.orderId}</h2>
+                  <h2 className="px-4 py-2">
                     Status: {orderView.status.toUpperCase()}
-                  </h1>
+                  </h2>
                 </div>
                 <div className="flex justify-center">
-                  <h1 className="px-4 py-2">
+                  <h2 className="px-4 py-2">
                     Schedule PickUp:{" "}
                     <span className="font-semibold">
                       {orderView.schedulePickUp}
                     </span>
-                  </h1>
-                  <h1 className="px-4 py-2">
+                  </h2>
+                  <h2 className="px-4 py-2">
                     Picked Up By:{" "}
                     <span className="font-semibold">
                       {orderView.pickedUpDetails.agentName}
                     </span>
-                  </h1>
-                  <h1 className="px-4 py-2">
+                  </h2>
+                  <h2 className="px-4 py-2">
                     Picked Up On:{" "}
                     <span className="font-semibold">
                       {orderView.pickedUpDetails.pickedUpDate}
                     </span>
-                  </h1>
+                  </h2>
                 </div>
-                <h1 className="px-4 py-2">
+                <h2 className="px-4 py-2">
                   <div className="flex flex-col items-center">
-                    <h1>Customer Name: {orderView.customerName}</h1>
+                    <h2>Customer Name: {orderView.customerName}</h2>
 
                     <div className="flex items-center justify-center gap-3 border p-1 rounded">
                       <div>
-                        <h1>Customer ID Front:</h1>
+                        <h2>Customer ID Front:</h2>
                         <img
                           src={
                             import.meta.env.VITE_APP_BASE_URL +
@@ -754,7 +754,7 @@ const OrdersList = () => {
                       </div>
 
                       <div>
-                        <h1>Customer ID Back:</h1>
+                        <h2>Customer ID Back:</h2>
                         <img
                           src={
                             import.meta.env.VITE_APP_BASE_URL +
@@ -781,7 +781,7 @@ const OrdersList = () => {
                       <div>
                         {orderView.customerOptional1 ? (
                           <>
-                            <h1>Optional Proof1:</h1>
+                            <h2>Optional Proof1:</h2>
                             <img
                               src={
                                 import.meta.env.VITE_APP_BASE_URL +
@@ -809,7 +809,7 @@ const OrdersList = () => {
                       <div>
                         {orderView.customerOptional2 ? (
                           <>
-                            <h1>Optional Proof2</h1>
+                            <h2>Optional Proof2</h2>
                             <img
                               src={
                                 import.meta.env.VITE_APP_BASE_URL +
@@ -836,11 +836,11 @@ const OrdersList = () => {
                       </div>
                     </div>
                   </div>
-                </h1>
-                <h1 className="px-4 py-2">
+                </h2>
+                <h2 className="px-4 py-2">
                   <div className="flex items-center justify-center gap-4">
                     <div>
-                      <h1 className="text-lg">Product:</h1>
+                      <h2 className="text-lg">Product:</h2>
                     </div>
                     <div className="">
                       {orderView.productId?.name}{" "}
@@ -855,7 +855,7 @@ const OrdersList = () => {
                   {orderView.deviceInfo ? (
                     <div className="flex items-center justify-center gap-4">
                       <div>
-                        <h1 className="text-lg">Device Info:</h1>
+                        <h2 className="text-lg">Device Info:</h2>
                       </div>
                       <div className="">
                         <div className="flex text-sm opacity-70 gap-2 justify-center">
@@ -880,23 +880,23 @@ const OrdersList = () => {
                       </div>
                     </div>
                   ) : null}
-                </h1>
-                <h1 className="px-4 py-2 flex gap-4 items-center justify-center">
+                </h2>
+                <h2 className="px-4 py-2 flex gap-4 items-center justify-center">
                   Offered Price:
                   <span className="font-bold"> {orderView.offerPrice}</span>
                   Final Price:
                   <span className="font-bold"> {orderView.finalPrice}</span>
-                </h1>
+                </h2>
                 <div className="flex justify-center">
-                  <h1 className="px-4 py-2">Email: {orderView.email}</h1>
-                  <h1 className="px-4 py-2">PH: {orderView.phone}</h1>
+                  <h2 className="px-4 py-2">Email: {orderView.email}</h2>
+                  <h2 className="px-4 py-2">PH: {orderView.phone}</h2>
                 </div>
-                <h1 className="px-4 py-2">
+                <h2 className="px-4 py-2">
                   Address: {orderView.addressDetails.address} <br />
                   State: {orderView.addressDetails.state}, City:{" "}
                   {orderView.addressDetails.city}, PinCode:{" "}
                   {orderView.addressDetails.pinCode}
-                </h1>
+                </h2>
               </div>
             </div>
           </div>

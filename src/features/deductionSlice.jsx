@@ -108,7 +108,7 @@ export const deductionSlice = createSlice({
       }
     },
     addProductAge: (state, action) => {
-      // console.log("addProductAge reducer", action.payload);
+      console.log("addProductAge reducer", action.payload);
       // console.log(initialState);
       return {
         ...state,

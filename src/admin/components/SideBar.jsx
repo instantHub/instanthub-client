@@ -1,19 +1,18 @@
 import React, { startTransition, Suspense, useEffect, useState } from "react";
-import { SiShopware } from "react-icons/si";
 import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 import {
   MdCategory,
   MdOutlineNumbers,
-  MdSlideshow,
   MdOutlineMultipleStop,
-  MdOutlineCancel,
 } from "react-icons/md";
-import { FaJediOrder } from "react-icons/fa6";
+import { FaJediOrder, FaCentSign } from "react-icons/fa6";
 import { PiGitDiff } from "react-icons/pi";
 import { GoMultiSelect } from "react-icons/go";
 import { GrMultiple } from "react-icons/gr";
 import { FcMultipleInputs } from "react-icons/fc";
+import { IoOpenOutline } from "react-icons/io5";
+import { LuPanelLeftClose } from "react-icons/lu";
 
 import {
   RiListCheck2,
@@ -21,28 +20,16 @@ import {
   RiListIndefinite,
   RiQuestionAnswerFill,
 } from "react-icons/ri";
-import {
-  TbBrandAirtable,
-  TbBrandPushover,
-  TbPasswordMobilePhone,
-} from "react-icons/tb";
-import { TiPuzzle, TiPointOfInterest, TiPlusOutline } from "react-icons/ti";
+import { TbBrandAirtable } from "react-icons/tb";
 import { SiAstro, SiDatabricks, SiSlides } from "react-icons/si";
-import { FaCentSign, FaPersonCircleQuestion } from "react-icons/fa6";
-import { BsBorderStyle } from "react-icons/bs";
 import { GiStockpiles, GiCash } from "react-icons/gi";
-import { TfiLayoutSliderAlt } from "react-icons/tfi";
 import { ImProfile } from "react-icons/im";
-import { CgProfile } from "react-icons/cg";
+import { isAction } from "@reduxjs/toolkit";
+// import { FaCentSign } from "react-icons/fa6";
 
-const SideBar = (props) => {
-  //   const { isSidebarOpen, setIsSidebarOpen, drawerWidth } = props;
-
-  const { user, isSidebarOpen } = props;
-
+const SideBar = ({ isSidebarOpen, toggleSidebar }) => {
   const { pathname } = useLocation();
   const [active, setActive] = useState(false);
-  const navigate = useNavigate();
 
   const handleActive = () => {
     setActive(!active);
@@ -58,18 +45,16 @@ const SideBar = (props) => {
     userProfile: false,
     notification: false,
   };
-  const [screenSize, setScreenSize] = useState(undefined);
+
   const [currentColor, setCurrentColor] = useState("#03C9D7");
-  const [currentMode, setCurrentMode] = useState("Light");
-  const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
   const handleClick = (event, to) => {
-    event.preventDefault(); // Prevent default behavior
-    startTransition(() => {
-      window.history.pushState({}, "", to); // Programmatic navigation
-    });
+    // event.preventDefault(); // Prevent default behavior
+    // startTransition(() => {
+    //   window.history.pushState({}, "", to); // Programmatic navigation
+    // });
   };
 
   const links = [
@@ -254,56 +239,51 @@ const SideBar = (props) => {
     },
   ];
 
-  const activeLink =
-    "flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2";
-  const normalLink =
-    "flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2";
-
-  // const handleCloseSideBar = () => {
-  //   if (activeMenu !== undefined && screenSize <= 900) {
-  //     setActiveMenu(false);
-  //   }
-  // };
+  const activeLink = `flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2 `;
+  const normalLink = `flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2`;
 
   return (
     <div
-      // ${isSidebarOpen ? "" : "hidden"}
-      className={`
-       md-[15%] lg:w-[12%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar`}
+      className={` ${
+        isSidebarOpen ? `lg:w-[12%] max-md:w-[40%]` : `lg:w-[4%] max-md:w-[13%]`
+      }
+        md-[15%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar z-50`}
     >
       <div className="flex justify-between items-center">
         <Link
           to="/admin"
-          // onClick={handleCloseSideBar}
           className="items-center gap-2 ml-3 mt-4 flex text-l font-extrabold tracking-tight dark:text-white text-slate-900"
         >
-          {/* <SiShopware />  */}
-          <GiCash />
-          <span>InstantCashPick</span>
+          <GiCash className="max-sm:hidden" />
+          {isSidebarOpen && (
+            <span className="max-2sm:hidden">InstantCashPick</span>
+          )}
         </Link>
-        {/* <button
-          type="button"
-          onClick={() => setActiveMenu(!activeMenu)}
-          style={{ color: currentColor }}
-          className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
+        <button
+          onClick={() => {
+            toggleSidebar();
+          }}
+          className="px-1"
         >
-          <MdOutlineCancel />
-        </button> */}
+          {isSidebarOpen ? (
+            <LuPanelLeftClose className="text-xl" />
+          ) : (
+            <IoOpenOutline className="text-xl" />
+          )}
+        </button>
       </div>
 
       <div className="mt-5">
         {links.map((item) => (
           <div key={item.title}>
             <p className="text-gray-400 text-sm dark:text-gray-400 mx-2 mt-2 uppercase">
-              {item.title}
+              {isSidebarOpen ? item.title : item.title.substring(0, 5)}
             </p>
-            <Suspense fallback={<div>Loading...</div>}>
+            {/* <Suspense fallback={<div>Loading...</div>}>
               {item.links.map((link) => (
                 <NavLink
                   to={`/admin/${link.name}`}
-                  // to={`/${link.name}`}
                   key={link.name}
-                  // onClick={handleCloseSideBar}
                   onClick={() => handleClick(e, `/admin/${link.name}`)}
                   style={({ isActive }) => ({
                     backgroundColor: isActive ? currentColor : "",
@@ -313,10 +293,32 @@ const SideBar = (props) => {
                   }
                 >
                   {link.icon}
-                  <span className="capitalize">{link.name}</span>
+                  {isSidebarOpen && (
+                    <span className="capitalize max-md:text-sm">
+                      {link.name}
+                    </span>
+                  )}
                 </NavLink>
               ))}
-            </Suspense>
+            </Suspense> */}
+            {item.links.map((link) => (
+              <NavLink
+                to={`/admin/${link.name}`}
+                key={link.name}
+                // onClick={() => handleClick(e, `/admin/${link.name}`)}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? currentColor : "",
+                })}
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+              >
+                {link.icon}
+                {isSidebarOpen && (
+                  <span className="capitalize max-md:text-sm">{link.name}</span>
+                )}
+              </NavLink>
+            ))}
           </div>
         ))}
       </div>

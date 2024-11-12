@@ -4,6 +4,7 @@ import {
   addProductScreenCondition,
   addProductPhysicalCondition,
   addProductDisplayDefect,
+  addProductAge,
 } from "../../features/deductionSlice";
 
 import { BsCircle } from "react-icons/bs";
@@ -16,21 +17,85 @@ const DeductionItems = ({
   handleContinue,
   setScreenCondition,
   setDisplayDefectCondition,
+  setAge,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
   const deductionSliceData = useSelector((state) => state.deductions);
   // console.log("deductionData", deductionData);
-  // console.log("deductionSliceData", deductionSliceData);
+  console.log("deductionSliceData", deductionSliceData);
 
   const dispatch = useDispatch();
 
   // Determine if the image should be shown based on the condition name
-  const shouldShowImage = !(
-    conditionName.toLowerCase().includes("screen size") ||
-    conditionName.toLowerCase().includes("physical condition") ||
-    conditionName.toLowerCase().includes("screen condition")
-  );
-  // || conditionName.toLowerCase().includes("defects")
+  const shouldShowImage = ![
+    "screen size",
+    "screen condition",
+    "physical condition",
+    "age",
+  ].some((c) => conditionName.toLowerCase().includes(c));
+
+  const isLabelSelected = (conditionLabel) => {
+    return [
+      deductionSliceData.productPhysicalCondition.conditionLabel,
+      deductionSliceData.productScreenCondition.conditionLabel,
+      deductionSliceData.productAge.conditionLabel,
+    ].includes(conditionLabel);
+  };
+
+  const handleOnClick = (label) => {
+    console.log("handleOnClick");
+    if (shouldShowImage) {
+      if (!conditionName.toLowerCase().includes("defects")) {
+        handleLabelSelection(
+          label.conditionLabel,
+          label.priceDrop,
+          label.operation,
+          type
+        );
+      }
+    }
+    dispatchConditionAction(label);
+  };
+
+  const dispatchConditionAction = (label) => {
+    const actionMap = {
+      defects: {
+        action: addProductDisplayDefect,
+        setState: setDisplayDefectCondition,
+        type: "Defects",
+      },
+      "screen condition": {
+        action: addProductScreenCondition,
+        setState: setScreenCondition,
+        type: "Screen Condition",
+      },
+      "physical condition": {
+        action: addProductPhysicalCondition,
+        setState: setPhysicalCondition,
+        type: "Physical Condition",
+      },
+      age: {
+        action: addProductAge,
+        setState: setAge,
+        type: "Age of the Device",
+      },
+    };
+
+    const matchedCondition = Object.entries(actionMap).find(([key]) =>
+      conditionName.toLowerCase().includes(key)
+    );
+
+    if (matchedCondition) {
+      const [, { action, setState, type }] = matchedCondition;
+      dispatch(action({ ...label, type }));
+      setState(label);
+
+      // Additional action for age
+      // if (matchedCondition[0] === "age") {
+      //   dispatch(addProductAge({ ...label, type }));
+      // }
+    }
+  };
 
   const type = conditionName;
   const functionalProblems = conditionName.toLowerCase().includes("functional");
@@ -38,15 +103,12 @@ const DeductionItems = ({
   // console.log("shouldHideImage", shouldShowImage);
 
   return (
-    // <div key={index}>
     <div
       className={`
       ${
         conditionName.toLowerCase().includes("screen condition")
           ? `grid lg:grid-cols-2 md:grid-cols-1 gap-2 items-center px-2`
-          : //grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2
-
-            `${
+          : `${
               !shouldShowImage
                 ? `grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-4 items-center px-4 `
                 : `grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 items-center px-4 `
@@ -74,13 +136,10 @@ const DeductionItems = ({
                   : ""
               }
                   `
-              : `flex px-2 ${
-                  deductionSliceData.productPhysicalCondition.conditionLabel ===
-                    label.conditionLabel ||
-                  deductionSliceData.productScreenCondition.conditionLabel ===
-                    label.conditionLabel
-                    ? "border-cyan-500 "
-                    : "bg-gray-100"
+              : `flex px-2 bg-slate-100 ${
+                  isLabelSelected(label.conditionLabel)
+                    ? "border-cyan-500 bg-white"
+                    : ""
                 }
                     
                 `
@@ -89,69 +148,7 @@ const DeductionItems = ({
            border rounded items-center`}
           // } flex flex-col border rounded items-center`}
           onClick={() => {
-            if (shouldShowImage) {
-              //
-              if (!conditionName.toLowerCase().includes("defects")) {
-                handleLabelSelection(
-                  label.conditionLabel,
-                  label.priceDrop,
-                  label.operation,
-                  type
-                );
-              }
-            }
-
-            if (conditionName.toLowerCase().includes("defects")) {
-              console.log("display defects");
-              dispatch(
-                addProductDisplayDefect({
-                  conditionLabel: label.conditionLabel,
-                  priceDrop: label.priceDrop,
-                  operation: label.operation,
-                  type,
-                })
-              );
-
-              setDisplayDefectCondition({
-                conditionLabel: label.conditionLabel,
-                priceDrop: label.priceDrop,
-                operation: label.operation,
-              });
-            } else if (
-              conditionName.toLowerCase().includes("physical condition")
-            ) {
-              // console.log("phyical condition");
-              dispatch(
-                addProductPhysicalCondition({
-                  conditionLabel: label.conditionLabel,
-                  priceDrop: label.priceDrop,
-                  operation: label.operation,
-                  type,
-                })
-              );
-
-              setPhysicalCondition({
-                conditionLabel: label.conditionLabel,
-                priceDrop: label.priceDrop,
-                operation: label.operation,
-              });
-            } else if (
-              conditionName.toLowerCase().includes("screen condition")
-            ) {
-              dispatch(
-                addProductScreenCondition({
-                  conditionLabel: label.conditionLabel,
-                  priceDrop: label.priceDrop,
-                  operation: label.operation,
-                  type,
-                })
-              );
-              setScreenCondition({
-                conditionLabel: label.conditionLabel,
-                priceDrop: label.priceDrop,
-                operation: label.operation,
-              });
-            }
+            handleOnClick(label);
           }}
         >
           {shouldShowImage && label.conditionLabelImg && (
@@ -177,13 +174,11 @@ const DeductionItems = ({
                 ? `bg-cyan-500 ${
                     shouldShowImage ? "text-white" : "text-black"
                   } `
-                : // : "bg-slate-100"
-                deductionSliceData.productPhysicalCondition.conditionLabel ===
-                    label.conditionLabel ||
-                  deductionSliceData.productScreenCondition.conditionLabel ===
-                    label.conditionLabel
-                ? "bg-white"
-                : "bg-slate-100 "
+                : `${
+                    isLabelSelected(label.conditionLabel)
+                      ? " bg-white"
+                      : "bg-slate-100"
+                  }`
             } 
             ${
               shouldShowImage
@@ -225,3 +220,118 @@ const DeductionItems = ({
 };
 
 export default DeductionItems;
+
+// if (conditionName.toLowerCase().includes("defects")) {
+//   console.log("display defects");
+//   dispatch(
+//     addProductDisplayDefect({
+//       conditionLabel: label.conditionLabel,
+//       priceDrop: label.priceDrop,
+//       operation: label.operation,
+//       type,
+//     })
+//   );
+
+//   setDisplayDefectCondition({
+//     conditionLabel: label.conditionLabel,
+//     priceDrop: label.priceDrop,
+//     operation: label.operation,
+//   });
+// } else if (conditionName.toLowerCase().includes("physical condition")) {
+//   // console.log("phyical condition");
+//   dispatch(
+//     addProductPhysicalCondition({
+//       conditionLabel: label.conditionLabel,
+//       priceDrop: label.priceDrop,
+//       operation: label.operation,
+//       type,
+//     })
+//   );
+
+//   setPhysicalCondition({
+//     conditionLabel: label.conditionLabel,
+//     priceDrop: label.priceDrop,
+//     operation: label.operation,
+//   });
+// } else if (conditionName.toLowerCase().includes("screen condition")) {
+//   dispatch(
+//     addProductScreenCondition({
+//       conditionLabel: label.conditionLabel,
+//       priceDrop: label.priceDrop,
+//       operation: label.operation,
+//       type,
+//     })
+//   );
+//   setScreenCondition({
+//     conditionLabel: label.conditionLabel,
+//     priceDrop: label.priceDrop,
+//     operation: label.operation,
+//   });
+// }
+
+// onClick={() => {
+//   // if (shouldShowImage) {
+//   //   //
+//   //   if (!conditionName.toLowerCase().includes("defects")) {
+//   //     handleLabelSelection(
+//   //       label.conditionLabel,
+//   //       label.priceDrop,
+//   //       label.operation,
+//   //       type
+//   //     );
+//   //   }
+//   // }
+
+//   // if (conditionName.toLowerCase().includes("defects")) {
+//   //   console.log("display defects");
+//   //   dispatch(
+//   //     addProductDisplayDefect({
+//   //       conditionLabel: label.conditionLabel,
+//   //       priceDrop: label.priceDrop,
+//   //       operation: label.operation,
+//   //       type,
+//   //     })
+//   //   );
+
+//   //   setDisplayDefectCondition({
+//   //     conditionLabel: label.conditionLabel,
+//   //     priceDrop: label.priceDrop,
+//   //     operation: label.operation,
+//   //   });
+//   // } else if (
+//   //   conditionName.toLowerCase().includes("physical condition")
+//   // ) {
+//   //   // console.log("phyical condition");
+//   //   dispatch(
+//   //     addProductPhysicalCondition({
+//   //       conditionLabel: label.conditionLabel,
+//   //       priceDrop: label.priceDrop,
+//   //       operation: label.operation,
+//   //       type,
+//   //     })
+//   //   );
+
+//   //   setPhysicalCondition({
+//   //     conditionLabel: label.conditionLabel,
+//   //     priceDrop: label.priceDrop,
+//   //     operation: label.operation,
+//   //   });
+//   // } else if (
+//   //   conditionName.toLowerCase().includes("screen condition")
+//   // ) {
+//   //   dispatch(
+//   //     addProductScreenCondition({
+//   //       conditionLabel: label.conditionLabel,
+//   //       priceDrop: label.priceDrop,
+//   //       operation: label.operation,
+//   //       type,
+//   //     })
+//   //   );
+//   //   setScreenCondition({
+//   //     conditionLabel: label.conditionLabel,
+//   //     priceDrop: label.priceDrop,
+//   //     operation: label.operation,
+//   //   });
+//   // }
+//   handleOnClick(label);
+// }}

@@ -190,7 +190,7 @@ const CreateConditionLabels = () => {
                     >
                       <option value="">Select a category</option>
                       {!categoryLoading &&
-                        categoryData.map((category) => (
+                        categoryData?.map((category) => (
                           <option
                             key={category.id}
                             value={category.id}
@@ -221,7 +221,7 @@ const CreateConditionLabels = () => {
                       <option value="">Select a condition</option>
                       {!conditionsLoading &&
                         conditionsData
-                          .filter(
+                          ?.filter(
                             (cond) => cond.category.id === formData.category
                           )
                           .map((condition) => (
@@ -325,7 +325,7 @@ const CreateConditionLabels = () => {
               <ul className="">
                 {!conditionsLabelsLoading &&
                   conditionsLabelsData
-                    .filter((cl) => cl.category?.id == formData.category)
+                    ?.filter((cl) => cl.category?.id == formData.category)
                     .filter(
                       (cl) => cl.conditionNameId?.id == formData.conditionNameId
                     )

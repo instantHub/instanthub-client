@@ -221,7 +221,7 @@ const RecycleOrdersList = () => {
       <div className="p-4">
         <h2 className=" text-lg font-bold mb-4">Recycle Orders Table</h2>
         {/* <div className="mb-4">
-          <h1>Orders List</h1>
+          <h2>Orders List</h2>
         </div> */}
         <table className="w-full">
           <thead>
@@ -268,20 +268,20 @@ const RecycleOrdersList = () => {
                     </div>
                   </td>
                   <td className="px-4 py-2 flex flex-col items-center">
-                    <h1 className="text-xs">
+                    <h2 className="text-xs">
                       Customer Name:{" "}
                       <span className="text-sm font-bold">
                         {order.customerName}
                       </span>
-                    </h1>
-                    <h1 className="text-xs">
+                    </h2>
+                    <h2 className="text-xs">
                       Phone:{" "}
                       <span className="text-sm font-bold">{order.phone}</span>
-                    </h1>
-                    <h1 className="text-xs">
+                    </h2>
+                    <h2 className="text-xs">
                       Email:{" "}
                       <span className="text-sm font-bold">{order.email}</span>
-                    </h1>
+                    </h2>
                   </td>
 
                   <td className="w-[10%] px-4 py-2">
@@ -306,33 +306,33 @@ const RecycleOrdersList = () => {
                   {/* Order Picked Up time */}
                   <td className="w-[10%] px-1 py-2">
                     {order.status.toLowerCase() === "pending" ? (
-                      <h1>Pick Up is Pending</h1>
+                      <h2>Pick Up is Pending</h2>
                     ) : (
                       <div className="flex flex-col justify-center">
-                        <h1 className="text-sm">
+                        <h2 className="text-sm">
                           Agent Name:
                           <span className="font-bold">
                             {order.pickedUpDetails.agentName}
                           </span>
-                        </h1>
-                        <h1 className="text-sm">
+                        </h2>
+                        <h2 className="text-sm">
                           Purchased Price:
                           <span className="font-bold">{order.finalPrice}</span>
-                        </h1>
-                        <h1 className="text-sm">
+                        </h2>
+                        <h2 className="text-sm">
                           Time:
                           <span className="font-bold">
                             {order.pickedUpDetails.pickedUpDate}
                           </span>
-                        </h1>
+                        </h2>
                       </div>
                     )}
                   </td>
                   <td className="px-4 py-2">
                     {order.status.toLowerCase() === "pending" ? (
-                      <h1>{order.status.toUpperCase()}</h1>
+                      <h2>{order.status.toUpperCase()}</h2>
                     ) : (
-                      <h1>{order.status.toUpperCase()}</h1>
+                      <h2>{order.status.toUpperCase()}</h2>
                     )}
                   </td>
 
@@ -510,9 +510,9 @@ const RecycleOrdersList = () => {
                 {/* Mandatory Images */}
                 <div className="flex flex-col gap-1 items-center">
                   <div className="">
-                    <h1 className="text-lg">
+                    <h2 className="text-lg">
                       Required Documents<span className="text-red-600">*</span>
-                    </h1>
+                    </h2>
                   </div>
                   <div className="flex">
                     {/* ID Front Image */}
@@ -560,7 +560,7 @@ const RecycleOrdersList = () => {
                 {/* Optional Images */}
                 <div className="flex flex-col gap-1">
                   <div className="">
-                    <h1 className="text-lg">Optional Documents</h1>
+                    <h2 className="text-lg">Optional Documents</h2>
                   </div>
                   <div className="flex items-center">
                     {/* Optional Image 1 */}
@@ -752,7 +752,7 @@ const RecycleOrdersList = () => {
             </div>
 
             <div className="mb-2">
-              {/* <h1 className="text-xl">Order Detail:</h1> */}
+              {/* <h2 className="text-xl">Order Detail:</h2> */}
               <table className="mx-auto border-collapse w-[90%]">
                 <tr className="border-b">
                   <th className="text-right bg-slate-100 w-[30%] px-5">
@@ -849,7 +849,7 @@ const RecycleOrdersList = () => {
                   <td className="p-2 border font-semibold">
                     <div className="flex items-center justify-center gap-2 p-1 rounded">
                       <div className="flex flex-col items-center gap-1">
-                        <h1>Customer ID Front:</h1>
+                        <h2>Customer ID Front:</h2>
                         <img
                           src={
                             import.meta.env.VITE_APP_BASE_URL +
@@ -873,7 +873,7 @@ const RecycleOrdersList = () => {
                       </div>
 
                       <div className="flex flex-col items-center gap-1">
-                        <h1>Customer ID Back:</h1>
+                        <h2>Customer ID Back:</h2>
                         <img
                           src={
                             import.meta.env.VITE_APP_BASE_URL +
@@ -900,7 +900,7 @@ const RecycleOrdersList = () => {
                       <div className="flex flex-col items-center gap-1">
                         {orderView.customerOptional1 ? (
                           <>
-                            <h1>Optional Proof1:</h1>
+                            <h2>Optional Proof1:</h2>
                             <img
                               src={
                                 import.meta.env.VITE_APP_BASE_URL +
@@ -929,7 +929,7 @@ const RecycleOrdersList = () => {
                       <div className="flex flex-col items-center gap-1">
                         {orderView.customerOptional2 ? (
                           <>
-                            <h1>Optional Proof2</h1>
+                            <h2>Optional Proof2</h2>
                             <img
                               src={
                                 import.meta.env.VITE_APP_BASE_URL +

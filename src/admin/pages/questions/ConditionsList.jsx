@@ -7,6 +7,8 @@ import {
 import BackButton from "../../components/BackButton";
 import EditButton from "../../components/EditButton";
 import { toast } from "react-toastify";
+import Table from "../../components/TableView";
+import { MdDeleteForever } from "react-icons/md";
 
 const ConditionsTable = () => {
   //   const [questions, setQuestions] = useState([]);
@@ -65,6 +67,34 @@ const ConditionsTable = () => {
   //   console.log(conditions);
   // }
 
+  const headers = ["Category", "Condition", "Page", "Edit & Delete"];
+
+  const rowRenderer = (condition) => (
+    <>
+      <td className=" py-2">{condition.category.name}</td>
+      <td className=" py-2">{condition.conditionName}</td>
+      <td className=" py-2">{condition.page}</td>
+      <td className="text-white py-2">
+        <div className="flex gap-2 justify-center">
+          <EditButton location={`/admin/updateCondition/${condition.id}`} />
+          <button
+            className="bg-red-600 px-3 py-1 rounded-md"
+            onClick={() =>
+              openModal(
+                condition.category.id,
+                condition.category.name,
+                condition.id,
+                condition.conditionName
+              )
+            }
+          >
+            Delete
+          </button>
+        </div>
+      </td>
+    </>
+  );
+
   return (
     //ConditionsListList
     <>
@@ -104,7 +134,7 @@ const ConditionsTable = () => {
           />
         </div>
 
-        <table className="w-full">
+        {/* <table className="w-full">
           <thead>
             <tr>
               <th className="px-4 py-2 text-white bg-gray-800">Category</th>
@@ -118,43 +148,36 @@ const ConditionsTable = () => {
 
           <tbody className="text-center">
             {!conditionsLoading && !selectedCategory
-              ? conditions.map(
-                  (condition, index) => (
-                    //   question.map((question) => (
-                    <tr
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
-                    >
-                      <td className=" py-2">{condition.category.name}</td>
-                      <td className=" py-2">{condition.conditionName}</td>
-                      <td className=" py-2">{condition.page}</td>
-                      <td className="text-white py-2">
-                        <div className="flex gap-2 justify-center">
-                          <EditButton
-                            location={`/admin/updateCondition/${condition.id}`}
-                          />
-                          <button
-                            className="bg-red-600 px-3 py-1 rounded-md"
-                            // onClick={() =>
-                            //   handleDelete(condition.category.id, condition.id)
-                            // }
-                            onClick={() =>
-                              openModal(
-                                condition.category.id,
-                                condition.category.name,
-                                condition.id,
-                                condition.conditionName
-                              )
-                            }
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                  //   ))
-                )
+              ? conditions.map((condition, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+                  >
+                    <td className=" py-2">{condition.category.name}</td>
+                    <td className=" py-2">{condition.conditionName}</td>
+                    <td className=" py-2">{condition.page}</td>
+                    <td className="text-white py-2">
+                      <div className="flex gap-2 justify-center">
+                        <EditButton
+                          location={`/admin/updateCondition/${condition.id}`}
+                        />
+                        <button
+                          className="bg-red-600 px-3 py-1 rounded-md"
+                          onClick={() =>
+                            openModal(
+                              condition.category.id,
+                              condition.category.name,
+                              condition.id,
+                              condition.conditionName
+                            )
+                          }
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
               : !conditionsLoading &&
                 conditions
                   .filter((cond) => cond.category.id === selectedCategory)
@@ -189,7 +212,22 @@ const ConditionsTable = () => {
                     </tr>
                   ))}
           </tbody>
-        </table>
+        </table> */}
+
+        {!conditionsLoading && (
+          <Table
+            headers={headers}
+            data={
+              !selectedCategory
+                ? conditions
+                : conditions.filter(
+                    (cond) => cond.category.id === selectedCategory
+                  )
+            }
+            keyExtractor={(item) => item.id}
+            rowRenderer={rowRenderer}
+          />
+        )}
       </div>
       {isOpen && (
         <div>
@@ -203,15 +241,15 @@ const ConditionsTable = () => {
               <div className="flex flex-col items-center">
                 <div className="flex gap-4 items-center">
                   <span>Category</span>
-                  <h1 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold">
                     {selectedCondition.categoryName}
-                  </h1>
+                  </h2>
                 </div>
                 <div className="flex gap-4 items-center">
                   <span>Condition</span>
-                  <h1 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold">
                     {selectedCondition.conditionName}
-                  </h1>
+                  </h2>
                 </div>
               </div>
               <div className="flex justify-around mt-8">

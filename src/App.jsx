@@ -1,4 +1,4 @@
-import { lazy, useState } from "react";
+import { lazy, Suspense } from "react";
 import "./App.css";
 import {
   createBrowserRouter as Router,
@@ -9,9 +9,9 @@ import {
 // Client side
 import ClientLayout from "./pages/home/Layout";
 import ClientHome from "./pages/home/Home";
-import ClientNavbar from "./components/Navbar";
+// import ClientNavbar from "./components/Navbar";
 import ClientBrands from "./pages/brands/Brands";
-import ClientProducts from "./pages/products/Products";
+// import ClientProducts from "./pages/products/Products";
 import ClientProductDetail from "./pages/products/ProductDetail";
 import ClientProductDeductions from "./pages/products/ProductQuestions";
 import ClientOtpGenerator from "./pages/otp/OTPGenerator";
@@ -27,12 +27,10 @@ import ClientRecycleBrands from "./pages/recycle/RecycleBrands";
 import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
 import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
 
+const ClientProducts = lazy(() => import("./pages/products/Products"));
+
 // POLICIES
 import ClientTermsAndPolicies from "./components/policies/AllTermsAndPolicies";
-// import ClientPrivacyPolicy from "./components/policies/PrivacyPolicy";
-// import ClientTermsAndConditions from "./components/policies/TermsAndConditions";
-// import ClientTermsOfUse from "./components/policies/TermsOfUse";
-// import emailcheck from './components/'
 
 // Admin side
 import PrivateRoute from "./admin/components/PrivateRoute";
@@ -63,8 +61,8 @@ import AdminUpdateCondition from "./admin/pages/questions/UpdateCondition";
 import AdminUpdateConditionLabel from "./admin/pages/questions/UpdateConditionLabel";
 import AdminProductsList from "./admin/pages/products/ProductsList";
 import AdminProductQuestions from "./admin/pages/products/ProductQuestionsList";
-import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
-import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
+// import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
+// import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
 import AdminConditionsList from "./admin/pages/questions/ConditionsList";
 import AdminConditionLabelsList from "./admin/pages/questions/ConditionLabelsList";
 import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
@@ -149,7 +147,11 @@ function App() {
               message={`Sorry unable to load Products, please try after sometime..!`}
             />
           ),
-          element: <ClientProducts />,
+          element: (
+            <Suspense fallback="Loading...">
+              <ClientProducts />
+            </Suspense>
+          ),
         },
         {
           path: "/categories/brands/productDetails/:prodId",
@@ -297,16 +299,20 @@ function App() {
             },
             {
               path: "/admin/dashboard",
-              element: <AdminDashboard />,
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <AdminDashboard />,
+                </Suspense>
+              ),
             },
             {
               path: "/admin/update-profile",
-              element: <UpdateAdminProfile />,
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <UpdateAdminProfile />
+                </Suspense>
+              ),
             },
-            // {
-            //   path: "/admin/products",
-            //   element: <AdminProducts />,
-            // },
             {
               path: "/admin/products-list",
               element: <AdminProductsList />,

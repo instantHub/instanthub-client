@@ -41,7 +41,7 @@ const Dashboard = () => {
     let countIn = 0,
       countOut = 0;
     if (!stocksDataLoading) {
-      stocksData.map((s) => {
+      stocksData?.map((s) => {
         if (s.stockStatus.toLowerCase().includes("in")) {
           countIn = countIn + 1;
         } else if (s.stockStatus.toLowerCase().includes("out")) {
@@ -55,13 +55,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!ordersLoading) {
-      const ordersPending = ordersData.filter(
+      const ordersPending = ordersData?.filter(
         (order) => order.status.toLowerCase() === "pending"
       );
       // console.log("ordersPending", ordersPending);
       setOrdersPendingCount(ordersPending.length);
 
-      const ordersReceived = ordersData.filter(
+      const ordersReceived = ordersData?.filter(
         (order) => order.status.toLowerCase() === "received"
       );
       // console.log("ordersReceived", ordersReceived);
@@ -75,11 +75,11 @@ const Dashboard = () => {
   return (
     <>
       <div className="grid grid-cols-4 mx-10 my-20 gap-2 items-center">
-        {/* {isLoading ? <h1>Loading...</h1> : <h3>bjhb {data.name}</h3>} */}
+        {/* {isLoading ? <h2>Loading...</h2> : <h3>bjhb {data.name}</h3>} */}
         {!categoryLoading && (
           <div className={` bg-orange-50 border-orange-500  ${divStyle}`}>
             <div className={`text-orange-500 ${divDesc}`}>
-              Total {categoryData.length} Categories
+              Total {categoryData?.length} Categories
             </div>
             <div className={`bg-orange-200 text-orange-500 ${divMoreBtn}`}>
               <Link to={"/admin/categories-list"}>More Info</Link>
@@ -90,7 +90,7 @@ const Dashboard = () => {
         {!brandsLoading && (
           <div className={` bg-green-50 border-green-500  ${divStyle}`}>
             <div className={`text-green-700 ${divDesc}`}>
-              Total {brandsData.length} Brands
+              Total {brandsData?.length} Brands
             </div>
             <div className={`bg-green-200 text-green-700 ${divMoreBtn}`}>
               <Link to={"/admin/brands-list"}>More Info</Link>
@@ -101,7 +101,7 @@ const Dashboard = () => {
         {!productsLoading && (
           <div className={`bg-blue-50 border-blue-500  ${divStyle}`}>
             <div className={`text-blue-700 ${divDesc}`}>
-              Total {productsData.totalProducts} Products
+              Total {productsData?.totalProducts} Products
             </div>
             <div className={`bg-blue-200 text-blue-700 ${divMoreBtn}`}>
               <Link to={"/admin/products-list"}>More Info</Link>
@@ -113,7 +113,7 @@ const Dashboard = () => {
           <>
             <div className={`bg-yellow-50 border-yellow-500 ${divStyle}`}>
               <div className={`text-yellow-700 ${divDesc}`}>
-                Total {ordersData.length} Orders
+                Total {ordersData?.length} Orders
               </div>
               <div className={`bg-yellow-200 text-yellow-700 ${divMoreBtn}`}>
                 <Link to={"/admin/orders"}>More Info</Link>
@@ -157,7 +157,7 @@ const Dashboard = () => {
         {!recycleOrdersDataloading && (
           <div className={`bg-amber-300 ${divStyle}`}>
             <div className={`${divDesc}`}>
-              Total {recycleOrdersData.length} Recycle Order
+              Total {recycleOrdersData?.length} Recycle Order
             </div>
             <div className={`bg-amber-500 ${divMoreBtn}`}>
               <Link to={"/admin/recycle-orders"}>More Info</Link>

@@ -18,7 +18,7 @@ export default function StocksIn() {
       <div className="p-4">
         <h2 className=" text-lg font-bold mb-4">Stocks Out Table</h2>
         {/* <div className="mb-4">
-          <h1>Orders List</h1>
+          <h2>Orders List</h2>
         </div> */}
         <table className="w-full">
           <thead>
@@ -133,7 +133,7 @@ export default function StocksIn() {
                       {stock.soldPrice ? stock.soldPrice : `PENDING`}
                     </td>
                     <td className="px-4 py-2">
-                      <h1>{stock.stockStatus}</h1>
+                      <h2>{stock.stockStatus}</h2>
                     </td>
                   </tr>
                 ))}

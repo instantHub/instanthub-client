@@ -9,6 +9,7 @@ import {
 import { toast } from "react-toastify";
 import { SubmitButton } from "../../components/SubmitButton";
 import ListButton from "../../components/ListButton";
+import CardHeader from "../../components/CardHeader";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -163,7 +164,7 @@ const CreateProducts = () => {
   return (
     <div className="flex px-[2%] pt-[2%]">
       <div className="grow">
-        <div className="flex justify-between items-center">
+        {/* <div className="flex justify-between items-center">
           <h1 className="bold text-[1.4rem] mb-2">Create Product</h1>
           <div className="flex gap-2">
             <div className="flex items-center">
@@ -175,308 +176,308 @@ const CreateProducts = () => {
               text={"Products List"}
             />
           </div>
-        </div>
-        <div className="bg-white border rounded-md shadow-lg">
-          <form
-            action=""
-            method="post"
-            className="flex flex-col gap-4  p-5 "
-            onSubmit={handleSubmit}
-          >
-            <div>
-              <h2 className="">Add Product</h2>
-            </div>
-            <hr />
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col">
-                <label htmlFor="category">Select Category :</label>
-                <select
-                  id="category"
-                  name="category"
-                  className="border rounded-sm p-2"
-                  value={selectedCategory}
-                  onChange={(e) => {
-                    setSelectedCategory(e.target.value);
-                  }}
-                  required
-                >
-                  <option value="">Select Category</option>
-                  {!categoryLoading &&
-                    categoryData.map((category) => (
-                      <option
-                        key={category.id}
-                        value={category.id}
-                        name="category"
-                        className=""
-                        onChange={(e) => {
-                          setSelectedCategory(e.target.value);
-                        }}
-                      >
-                        {category.name}
-                      </option>
-                    ))}
-                </select>
-              </div>
+        </div> */}
 
-              {/* Select a Brand */}
-              <div className="flex flex-col">
-                <label htmlFor="productType">Select Brand :</label>
-                <select
-                  id="productType"
-                  name="productType"
-                  className="border rounded-sm p-2"
-                  value={selectedBrand}
-                  onChange={(e) => {
-                    setSelectedBrand(e.target.value);
-                  }}
-                  required
-                >
-                  <option value="">Select Brand</option>
-                  {!BrandLoading &&
-                    BrandData.map((brand) => {
-                      // console.log("selectedCategory", selectedCategory);
-                      if (selectedCategory == brand.category.id) {
-                        return (
-                          <option
-                            key={brand.id}
-                            value={brand.id}
-                            name="brand"
-                            className=""
-                          >
-                            {brand.name}
-                          </option>
-                        );
-                      }
-                    })}
-                </select>
-              </div>
+        <CardHeader
+          location={"/admin/products-list"}
+          text="Add Products"
+          source="create"
+        />
 
-              {/* Select a series */}
-              <div className="flex flex-col">
-                <label htmlFor="productType">Select Series :</label>
-                <select
-                  id="productType"
-                  name="productType"
-                  className="border rounded-sm p-2"
-                  value={selectedSeries}
-                  onChange={(e) => {
-                    setSelectedSeries(e.target.value);
-                    setSeriesYes(true);
-                  }}
-                >
-                  <option value="">Select Series</option>
-                  {/* <option value="">General Product</option> */}
-                  {!seriesLoading &&
-                    seriesData.map((series) => {
-                      if (selectedBrand == series.brand?.id) {
-                        return (
-                          <option
-                            key={series.id}
-                            value={series?.id}
-                            name="series"
-                            className=""
-                          >
-                            {series?.name}
-                          </option>
-                        );
-                      }
-                    })}
-                </select>
-              </div>
-
-              {/* Product Name */}
-              <div className="flex flex-col">
-                <label htmlFor="productName">Product Name :</label>
-                <input
-                  type="text"
-                  id="productName"
-                  className=" border p-2 rounded-sm"
-                  placeholder="Enter Product Name"
-                  value={prodName}
-                  onChange={(e) => {
-                    setProdName(e.target.value);
-                  }}
-                  required
-                />
-                <div className="flex gap-2">
-                  {variants.map((variant, index) => (
-                    <div
-                      key={index}
-                      className="flex gap-1 border px-1 m-1 rounded-lg"
-                    >
-                      <span className="opacity-50">{variant.name}</span>
-                      <span>-</span>
-                      <span className="opacity-50">{variant.price}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="productName">Make Unique URL :</label>
-                <input
-                  type="text"
-                  id="productName"
-                  className=" border p-2 rounded-sm"
-                  placeholder="Enter Unique URL"
-                  value={uniqueURL}
-                  onChange={(e) => {
-                    setUniqueURL(e.target.value);
-                  }}
-                  required
-                />
-              </div>
-
-              <div className="p-2">
-                <label htmlFor="fileInput">File Input :</label>
-                <div className="flex">
-                  <div className="flex flex-wrap grow shrink basis-auto w-[1%] items-center">
-                    <input
-                      type="file"
-                      id="fileInput"
-                      name="fileInput"
-                      ref={fileInputRef}
-                      className="relative z-[2] w-full overflow-hidden m-0 opacity-0 cursor-pointer"
-                      onChange={(e) => setImageSelected(e.target.files[0])}
-                      required
-                    />
-                    <label
-                      htmlFor="fileInput"
-                      className="absolute z-[1] border p-1 rounded-sm overflow-hidden text-sm "
-                    >
-                      Choose a file
-                    </label>
-                    {imageSelected && (
-                      <p className="absolute mt-[3.8rem]">
-                        Selected file: {imageSelected.name}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="status">Status :</label>
-                <select
-                  id="status"
-                  name="status"
-                  className="border rounded-sm p-2"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="Active">Active</option>
-                  <option value="Blocked">Blocked</option>
-                </select>
-              </div>
-            </div>
-            <div className="py-3 px-2">
-              {/* <button
-                type="submit"
-                className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
-                disabled={productCreationLoading}
-              >
-                {!productCreationLoading ? "Create Product" : "Loading..."}
-              </button> */}
-              <SubmitButton
-                handleLoading={productCreationLoading}
-                value="Create Product"
-                loading="Loading..."
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-
-      {/* !categoryLoading &&
-        categoryData.some(
-          (cat) => cat.id === selectedCategory && cat.name === "Mobile" */}
-
-      {selectedCategory && selectedCategory === mobileCategory ? (
-        <div className="m-1 flex flex-col items-center justify-center">
-          <h3 className="text-xl inline-block">Add Variants:</h3>
-          {variants.map((variant, index) => (
-            <div
-              key={index}
-              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
+        <div className="flex justify-center max-md:flex-col">
+          <div className="w-[70%] max-md:w-full grow-1 bg-white border rounded-md shadow-lg">
+            <form
+              action=""
+              method="post"
+              className="flex flex-col gap-4  p-5 "
+              onSubmit={handleSubmit}
             >
               <div>
-                <input
-                  type="text"
-                  value={variant.name}
-                  placeholder="variant name"
-                  onChange={(e) =>
-                    handleVariantChange(index, "name", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
-                <input
-                  type="number"
-                  value={variant.price}
-                  placeholder="variant price"
-                  onChange={(e) =>
-                    handleVariantChange(index, "price", e.target.value)
-                  }
-                  className="m-1 p-2 border rounded-lg"
-                  required
-                />
+                <h2 className="">Add Product</h2>
               </div>
+              <hr />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col">
+                  <label htmlFor="category">Select Category :</label>
+                  <select
+                    id="category"
+                    name="category"
+                    className="border rounded-sm p-2 max-md:p-1"
+                    value={selectedCategory}
+                    onChange={(e) => {
+                      setSelectedCategory(e.target.value);
+                    }}
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    {!categoryLoading &&
+                      categoryData.map((category) => (
+                        <option
+                          key={category.id}
+                          value={category.id}
+                          name="category"
+                          className=""
+                          onChange={(e) => {
+                            setSelectedCategory(e.target.value);
+                          }}
+                        >
+                          {category.name}
+                        </option>
+                      ))}
+                  </select>
+                </div>
 
-              <div>
-                {variants.length != 1 && (
-                  <button
-                    className="bg-red-600 px-2 py-1 text-white rounded-md"
-                    onClick={() => {
-                      handleRemoveVariant(index);
+                {/* Select a Brand */}
+                <div className="flex flex-col">
+                  <label htmlFor="productType">Select Brand :</label>
+                  <select
+                    id="productType"
+                    name="productType"
+                    className="border rounded-sm p-2 max-md:p-1"
+                    value={selectedBrand}
+                    onChange={(e) => {
+                      setSelectedBrand(e.target.value);
+                    }}
+                    required
+                  >
+                    <option value="">Select Brand</option>
+                    {!BrandLoading &&
+                      BrandData.map((brand) => {
+                        // console.log("selectedCategory", selectedCategory);
+                        if (selectedCategory == brand.category.id) {
+                          return (
+                            <option
+                              key={brand.id}
+                              value={brand.id}
+                              name="brand"
+                              className=""
+                            >
+                              {brand.name}
+                            </option>
+                          );
+                        }
+                      })}
+                  </select>
+                </div>
+
+                {/* Select a series */}
+                <div className="flex flex-col">
+                  <label htmlFor="productType">Select Series :</label>
+                  <select
+                    id="productType"
+                    name="productType"
+                    className="border rounded-sm p-2 max-md:p-1"
+                    value={selectedSeries}
+                    onChange={(e) => {
+                      setSelectedSeries(e.target.value);
+                      setSeriesYes(true);
                     }}
                   >
-                    remove
-                  </button>
-                )}
+                    <option value="">Select Series</option>
+                    {/* <option value="">General Product</option> */}
+                    {!seriesLoading &&
+                      seriesData.map((series) => {
+                        if (selectedBrand == series.brand?.id) {
+                          return (
+                            <option
+                              key={series.id}
+                              value={series?.id}
+                              name="series"
+                              className=""
+                            >
+                              {series?.name}
+                            </option>
+                          );
+                        }
+                      })}
+                  </select>
+                </div>
+
+                {/* Product Name */}
+                <div className="flex flex-col">
+                  <label htmlFor="productName">Product Name :</label>
+                  <input
+                    type="text"
+                    id="productName"
+                    className=" border p-2 rounded-sm max-md:p-1"
+                    placeholder="Enter Product Name"
+                    value={prodName}
+                    onChange={(e) => {
+                      setProdName(e.target.value);
+                    }}
+                    required
+                  />
+                  <div className="flex gap-2">
+                    {variants.map((variant, index) => (
+                      <div
+                        key={index}
+                        className="flex gap-1 border px-1 m-1 rounded-lg"
+                      >
+                        <span className="opacity-50">{variant.name}</span>
+                        <span>-</span>
+                        <span className="opacity-50">{variant.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="productName">Make Unique URL :</label>
+                  <input
+                    type="text"
+                    id="productName"
+                    className=" border p-2 rounded-sm max-md:p-1"
+                    placeholder="Enter Unique URL"
+                    value={uniqueURL}
+                    onChange={(e) => {
+                      setUniqueURL(e.target.value);
+                    }}
+                    required
+                  />
+                </div>
+
+                <div className="p-2">
+                  <label htmlFor="fileInput">File Input :</label>
+                  <div className="flex">
+                    <div className="flex flex-wrap grow shrink basis-auto w-[1%] items-center">
+                      <input
+                        type="file"
+                        id="fileInput"
+                        name="fileInput"
+                        ref={fileInputRef}
+                        className="relative z-[2] w-full overflow-hidden m-0 opacity-0 cursor-pointer"
+                        onChange={(e) => setImageSelected(e.target.files[0])}
+                        required
+                      />
+                      <label
+                        htmlFor="fileInput"
+                        className="absolute z-[1] border p-1 rounded-sm overflow-hidden text-sm "
+                      >
+                        Choose a file
+                      </label>
+                      {imageSelected && (
+                        <p className="absolute mt-[3.8rem]">
+                          Selected file: {imageSelected.name}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="status">Status :</label>
+                  <select
+                    id="status"
+                    name="status"
+                    className="border rounded-sm p-2 max-md:p-1"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Blocked">Blocked</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          ))}
-          <button
-            onClick={addVariant}
-            className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
-          >
-            Add Variant
-          </button>
-        </div>
-      ) : (
-        <div className="m-1 flex flex-col items-center justify-center">
-          <h3 className="text-xl inline-block">Add Price:</h3>
-          {variants.map((variant, index) => (
-            <div
-              key={index}
-              className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-6"
-            >
-              <div>
-                <input
-                  type="text"
-                  value={`Price`}
-                  placeholder="Price"
-                  // onChange={(e) =>
-                  //   handleVariantChange(index, "name", e.target.value)
-                  // }
-                  className="m-1 p-2 border rounded-lg"
-                  disabled
-                />
-                <input
-                  type="number"
-                  value={variant.price}
-                  placeholder="Enter price"
-                  onChange={(e) => {
-                    handleVariantChange(index, "price", e.target.value);
-                    handleVariantChange(index, "name", "Price");
-                  }}
-                  className="m-1 p-2 border rounded-lg"
-                  required
+              <div className="py-3 px-2">
+                <SubmitButton
+                  handleLoading={productCreationLoading}
+                  value="Create Product"
+                  loading="Loading..."
                 />
               </div>
-            </div>
-          ))}
+            </form>
+          </div>
+
+          <div className="grow-0">
+            {selectedCategory && selectedCategory === mobileCategory ? (
+              <div className="m-1 flex flex-col items-center justify-center">
+                <h3 className="text-xl inline-block">Add Variants:</h3>
+                {variants.map((variant, index) => (
+                  <div
+                    key={index}
+                    className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        value={variant.name}
+                        placeholder="variant name"
+                        onChange={(e) =>
+                          handleVariantChange(index, "name", e.target.value)
+                        }
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                      />
+                      <input
+                        type="number"
+                        value={variant.price}
+                        placeholder="variant price"
+                        onChange={(e) =>
+                          handleVariantChange(index, "price", e.target.value)
+                        }
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      {variants.length != 1 && (
+                        <button
+                          className="bg-red-600 px-2 py-1 text-white rounded-md"
+                          onClick={() => {
+                            handleRemoveVariant(index);
+                          }}
+                        >
+                          remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={addVariant}
+                  className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
+                >
+                  Add Variant
+                </button>
+              </div>
+            ) : (
+              <div className="m-1 flex flex-col items-center justify-center">
+                <h3 className="text-xl inline-block">Add Price:</h3>
+                {variants.map((variant, index) => (
+                  <div
+                    key={index}
+                    className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        value={`Price`}
+                        placeholder="Price"
+                        // onChange={(e) =>
+                        //   handleVariantChange(index, "name", e.target.value)
+                        // }
+                        className="m-1 p-2 border rounded-lg"
+                        disabled
+                      />
+                      <input
+                        type="number"
+                        value={variant.price}
+                        placeholder="Enter price"
+                        onChange={(e) => {
+                          handleVariantChange(index, "price", e.target.value);
+                          handleVariantChange(index, "name", "Price");
+                        }}
+                        className="m-1 p-2 border rounded-lg"
+                        required
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
 
       {/* {!categoryLoading &&
         categoryData.some(

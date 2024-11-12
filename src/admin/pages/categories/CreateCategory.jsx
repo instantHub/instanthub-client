@@ -90,17 +90,15 @@ const CreateCategory = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     console.log("From useEffect()", categoryData);
-  //   }, [categoryData]);
-
   return (
-    <div className=" px-[2%] pt-[2%] ">
+    <div className="w-full px-[2%] pt-[2%] max-sm:text-sm">
       <div className="flex justify-between items-center">
-        <h1 className="bold text-[1.4rem] mb-2">Create Category</h1>
-        <div className="flex">
+        <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">
+          Create Category
+        </h1>
+        <div className="flex max-sm:hidden">
           <h2>Home </h2>
-          <h2 className="pl-1"> / Add Category</h2>
+          <h2 className="pl-1 "> / Add Category</h2>
         </div>
 
         <ListButton
@@ -126,7 +124,7 @@ const CreateCategory = () => {
               <input
                 type="text"
                 id="productName"
-                className=" border p-2 rounded-sm"
+                className=" border p-2 rounded-sm max-md:p-1"
                 placeholder="Enter Category Name"
                 value={category}
                 // value={name}
@@ -142,7 +140,7 @@ const CreateCategory = () => {
                 id="uniqueURL"
                 value={uniqueURL}
                 onChange={(e) => setUniqueURL(e.target.value)}
-                className=" border p-2 rounded-sm"
+                className=" border p-2 rounded-sm max-md:p-1"
                 placeholder="Enter Unique URL"
                 required
               />
@@ -152,7 +150,7 @@ const CreateCategory = () => {
               <label htmlFor="image">File Input</label>
               <div className="flex">
                 <div className="mb-4">
-                  <label htmlFor="image" className="block font-medium">
+                  <label htmlFor="image" className="block font-medium ">
                     Image:
                   </label>
                   <input
@@ -162,17 +160,17 @@ const CreateCategory = () => {
                     ref={fileInputRef}
                     accept="image/*"
                     onChange={(e) => setImageSelected(e.target.files[0])}
-                    className="w-full border border-gray-300 p-2 rounded-md"
+                    className="w-full border border-gray-300 p-2 rounded-md max-md:p-1"
                     required
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="py-3 px-2">
+          <div className="py-3 px-2 max-md:p-1">
             <button
               type="submit"
-              className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+              className={`w-[20%] max-sm:w-1/2 bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
               disabled={createCategoryloading}
             >
               {!createCategoryloading ? "Create Category" : "Loading..."}

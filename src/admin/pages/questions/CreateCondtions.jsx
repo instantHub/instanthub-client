@@ -123,7 +123,7 @@ function Condtions() {
                     >
                       <option value="">Select a category</option>
                       {!categoryLoading &&
-                        categoryData.map((category) => (
+                        categoryData?.map((category) => (
                           <option
                             key={category.id}
                             value={category.id}
@@ -189,7 +189,7 @@ function Condtions() {
                 <ul className="">
                   {!conditionsLoading &&
                     conditionsData
-                      .filter((cond) => cond.category.id == formData.category)
+                      ?.filter((cond) => cond.category.id == formData.category)
                       .map((condition) => (
                         <li className="bg-white text-lg px-4 py-2">
                           {condition.conditionName}

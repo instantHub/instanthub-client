@@ -3,16 +3,10 @@ import { useGenerateOTPMutation } from "../../features/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaIndianRupeeSign } from "react-icons/fa6";
-import { GiDialPadlock } from "react-icons/gi";
-import { BsUnlockFill } from "react-icons/bs";
 import { FaLock } from "react-icons/fa6";
 import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import {
-  addDeductions,
-  removeDeductions,
-  addProductAge,
-} from "../../features/deductionSlice";
+import { addDeductions } from "../../features/deductionSlice";
 
 const OtpGenerator = (props) => {
   const { closeModal } = props;
@@ -127,10 +121,6 @@ const OtpGenerator = (props) => {
   // END OTP Verification
 
   // useEffect(() => {
-  // console.log("OTP from useEffect", otp);
-  // }, [otp]);
-
-  // useEffect(() => {
   //   if (selectedProdDetails.productName == "") {
   //     navigate(`/categories/brands/productDetails/${productId}`);
   //     // /categories/brands/productDetails/6643523e84ef9ccb0a2ec86f
@@ -163,42 +153,41 @@ const OtpGenerator = (props) => {
             </div>
             <div className="flex flex-col gap-1 max-sm:px-2">
               <div className="text-xl flex gap-2 max-sm:flex-col max-sm:text-sm">
-                <h1>{selectedProdDetails.productName}</h1>
+                <h2>{selectedProdDetails.productName}</h2>
                 {selectedProdDetails.productCategory === "Mobile" ? (
                   <span>{selectedProdDetails.getUpTo.variantName}</span>
                 ) : null}
               </div>
               <div>
-                <h1 className="text-gray-500 text-sm max-sm:text-xs">
+                <h2 className="text-gray-500 text-sm max-sm:text-xs">
                   Selling Price
-                </h1>
+                </h2>
               </div>
               <div className="flex items-center text-2xl text-red-500 max-sm:text-sm">
                 <FaIndianRupeeSign />
-                <h1 className="">XX,XXX</h1>
+                <h2 className="">XX,XXX</h2>
               </div>
             </div>
           </div>
         </div>
-        {/* fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 */}
         <div className="relative w-fit flex flex-col inset-0 bg-black bg-opacity-50 px-4 max-sm:w-[90%] pointer-events-none py-4 rounded-lg">
           {/* <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <h1 className="text-whie text-xl z-10">Coming Soon</h1>
+            <h2 className="text-whie text-xl z-10">Coming Soon</h2>
           </div> */}
           {!otp ? (
             <>
               <div className="absolute flex flex-col items-center mt-8 max-2sm:mt-12">
-                <h1 className="text-white ml-20 text-2xl z-10 font-extrabold max-2sm:ml-6">
+                <h2 className="text-white ml-20 text-2xl z-10 font-extrabold max-2sm:ml-6">
                   OTP Verification
-                </h1>
-                <h1 className="text-white ml-20 text-xl z-10 font-bold max-2sm:ml-6">
+                </h2>
+                <h2 className="text-white ml-20 text-xl z-10 font-bold max-2sm:ml-6">
                   Coming Soon
-                </h1>
+                </h2>
               </div>
               <div className="flex items-center gap-1 bg-green-200 text-green-700 border mb-5 px-2 py-1 rounded ">
                 {/* <GiDialPadlock className="text-lg" /> */}
                 <FaLock className="" />
-                <h1 className="text-sm ">Generate to get the best price</h1>
+                <h2 className="text-sm ">Generate to get the best price</h2>
               </div>
               <div className="">
                 <h2 className="text-sm font-semibold">
@@ -218,7 +207,6 @@ const OtpGenerator = (props) => {
                       maxLength={10}
                       // value={phoneNumber}
                       onChange={handlePhoneNumberChange}
-                      // className="border-b rounded mr-2 px-2 focus:bg-transparent outline-none "
                       className="border-b rounded mr-2 px-2 focus:bg-transparent outline-none bg-black bg-opacity-50"
                       placeholder="Enter Mobile Number"
                       required
@@ -232,7 +220,6 @@ const OtpGenerator = (props) => {
 
                   <button
                     type="submit"
-                    // className="bg-green-600 text-white min-w-fit rounded py-1 px-2 max-sm:px-1"
                     className="bg-green-600 text-gray-400 min-w-fit rounded py-1 px-2 max-sm:px-1 bg-black bg-opacity-50"
                   >
                     Generate OTP
@@ -244,7 +231,7 @@ const OtpGenerator = (props) => {
             <>
               <div className="flex items-center gap-1 bg-green-200 text-green-700 border mb-5 px-2 py-1 rounded">
                 <FaLockOpen className="" />
-                <h1 className="text-sm ">Verify OTP to get the best price</h1>
+                <h2 className="text-sm ">Verify OTP to get the best price</h2>
               </div>
               <div>
                 {/* <h2 className="text-sm font-semibold">Verify OTP</h2> */}

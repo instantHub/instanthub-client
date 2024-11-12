@@ -14,6 +14,7 @@ import { Helmet } from "react-helmet-async";
 import LaptopDeductionItems from "./LaptopDeductionItems";
 
 const LaptopsQuestions = (props) => {
+  console.log("LaptopsQuestions");
   //   const { productsData, deductions } = props;
   const { productsData, deductions, handleLabelSelection } = props;
   // console.log("deductions", deductions);
@@ -42,7 +43,6 @@ const LaptopsQuestions = (props) => {
   const dispatch = useDispatch();
 
   const laptopSlice = useSelector((state) => state.laptopDeductions);
-  // const laptopsConList = useSelector((state) => state.laptopDeductionsList);
   const deductionData = useSelector((state) => state.deductions.deductions);
   const [showOTP, setShowOTP] = useState(false);
 
@@ -95,9 +95,9 @@ const LaptopsQuestions = (props) => {
     sortedConditions = groupConditionsByPage(deductions);
   }
 
+  console.log("sortedConditions LaptopQuestions", sortedConditions);
   // console.log("screenConditionPage", screenConditionPage, screenCondition);
-
-  const handleContinue = () => {
+  const handleContinueOld = () => {
     console.log("handleContinue");
     // If in 1st page all fields must be selected
     if (currentPageIndex === 0) {
@@ -137,6 +137,51 @@ const LaptopsQuestions = (props) => {
     } else {
       // Handle if there are no more conditions
       // console.log("No more conditions to display.");
+      setShowOTP(true);
+    }
+  };
+
+  const handleContinue = () => {
+    console.log("handleContinue");
+
+    const validationSteps = [
+      {
+        condition:
+          currentPageIndex === 0 &&
+          (processor === null || hardDisk === null || ram === null),
+        message: "Select all system configurations",
+      },
+      {
+        condition: currentPageIndex === agePage - 1 && age === null,
+        message: "Select Age to proceed..!",
+      },
+      {
+        condition:
+          currentPageIndex === screenSizePage - 1 && screenSize === null,
+        message: "Select ScreenSize to proceed..!",
+      },
+      {
+        condition: currentPageIndex === graphicPage - 1 && graphic === null,
+        message: "Select Graphics to proceed..!",
+      },
+      {
+        condition:
+          currentPageIndex === screenConditionPage - 1 &&
+          screenCondition === null,
+        message: "Select Screen Condition to proceed..!",
+      },
+    ];
+
+    for (let { condition, message } of validationSteps) {
+      if (condition) {
+        toast.error(message);
+        return;
+      }
+    }
+
+    if (currentPageIndex < lastPageIndex - 1) {
+      setCurrentPageIndex((prevIndex) => prevIndex + 1);
+    } else {
       setShowOTP(true);
     }
   };
@@ -258,27 +303,38 @@ const LaptopsQuestions = (props) => {
     });
   }
 
-  // UseEffect to set page number
-  // useEffect(() => {
-  //   console.log("UseEffect to set page number");
-  //   // console.log("UseEffect", deductions);
-  //   // deductions.map((d) => {
-  //   productsData.processorBasedDeduction[0].deductions.map((d) => {
-  //     if (d.conditionName.toLowerCase().includes("screen size")) {
-  //       setScreenSizePage(d.page);
-  //     } else if (d.conditionName.toLowerCase().includes("graphic")) {
-  //       setGraphicPage(d.page);
-  //     } else if (d.conditionName.toLowerCase().includes("screen condition")) {
-  //       setScreenConditionPage(d.page);
-  //     } else if (d.conditionName.toLowerCase().includes("physical")) {
-  //       setPhysicalConditionPage(d.page);
-  //     } else if (d.conditionName.toLowerCase().includes("age")) {
-  //       setAgePage(d.page);
-  //     }
-  //   });
-  // }, []);
+  function getConditionSubTitle(conditionName) {
+    const subTitleMap = {
+      functional:
+        "Please choose appropriate condition to get an accurate quote",
+      accessories: (
+        <>
+          <span className="block text-lg max-sm:[16px]">
+            Do you have the following?
+          </span>
+          <span className="text-sm font-medium text-gray-600">
+            Please select accessories which are available
+          </span>
+        </>
+      ),
+      graphic: "Check your device's external graphics cards",
+      age: " Let us know how old your device is. Valid bill is needed for device less than 3 years.",
+      "screen condition":
+        "The better condition your device is in, the more we will pay you.",
+      "physical condition": "Please provide correct details",
+      "screen size": "Check your device's screen size",
+    };
 
-  //   console.log("selectedLabels", selectedLabels);
+    for (const [condition, subTitle] of Object.entries(subTitleMap)) {
+      if (conditionName.toLowerCase().includes(condition)) {
+        return subTitle;
+      }
+    }
+
+    return null;
+  }
+
+  // console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);
 
   return (
@@ -304,22 +360,108 @@ const LaptopsQuestions = (props) => {
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (
-            <h1 className="text-center font-semibold text-2xl max-2sm:text-xl mt-5">
+            <h2 className="text-center font-semibold text-2xl max-2sm:text-xl mt-5">
               Select the system configuration of your device?
-            </h1>
+            </h2>
           )}
           <div>
-            {/* {laptopsConList.length !== 0 && */}
-
             {/* List of Configurations(Processor, Ram, Hard Disk) to select */}
             {currentPageIndex === 0 &&
               sortedConditions[0].conditions.map((condition, index) => (
                 <div key={index} className="px-4 py-4">
                   <div className="px-1 py-2 font-extrabold text-lg ">
-                    <h1>{condition.conditionName}</h1>
+                    <h2>{condition.conditionName}</h2>
                   </div>
                   <div className="flex">
                     <select
+                      className="block appearance-none w-full bg-white border border-gray-0 hover:border-gray-200 px-4 py-4 pr-8 rounded shadow-lg leading-tight focus:outline-none focus:shadow-outline"
+                      onChange={handleSelectChange}
+                    >
+                      <option
+                        value=""
+                        className="py-2 bg-transparent hover:bg-gray-200"
+                      >
+                        search
+                      </option>
+                      {condition.conditionLabels.map((label, index) => (
+                        <option
+                          key={index}
+                          data-arg1={label.conditionLabel}
+                          data-arg2={label.priceDrop}
+                          data-arg3={condition.conditionName}
+                          data-arg4={label.operation}
+                          data-arg5={label.conditionLabelId}
+                        >
+                          {label.conditionLabel}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              ))}
+
+            {/* List all other conditions to select based on the processor selected */}
+            {currentPageIndex > 0 &&
+              processorBasedDeductions[currentPageIndex - 1].conditions.map(
+                (condition, index) => (
+                  <div key={index} className="px-4 py-4">
+                    {/* Condition Name Headings */}
+                    <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
+                      <h2>{condition.conditionName}</h2>
+                    </div>
+
+                    <div>
+                      <div className="text-center mb-5">
+                        <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
+                          {getConditionSubTitle(condition.conditionName)}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Condition Labels */}
+                    <div>
+                      <>
+                        <LaptopDeductionItems
+                          // key={index}
+                          conditionName={condition.conditionName}
+                          conditionLabels={condition.conditionLabels}
+                          handleLabelSelection={handleLabelSelection}
+                          handleContinue={handleContinue}
+                          setScreenSize={setScreenSize}
+                          setGraphic={setGraphic}
+                          setScreenCondition={setScreenCondition}
+                          setPhysicalCondition={setPhysicalCondition}
+                          setAge={setAge}
+                        />
+                      </>
+                    </div>
+                  </div>
+                )
+              )}
+          </div>
+
+          <div className="flex items-center">
+            <button
+              onClick={handleContinue}
+              className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+        {showOTP ? (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <OtpGenerator closeModal={closeModal} />
+          </div>
+        ) : null}
+      </div>
+    </>
+  );
+};
+export default LaptopsQuestions;
+
+{
+  /* <select
                       className="block appearance-none w-full bg-white border border-gray-0 hover:border-gray-200 px-4 py-4 pr-8 rounded shadow-lg leading-tight focus:outline-none focus:shadow-outline"
                       onChange={handleSelectChange}
                     >
@@ -368,21 +510,11 @@ const LaptopsQuestions = (props) => {
                                 {label.conditionLabel}
                               </option>
                             ))}
-                    </select>
-                  </div>
-                </div>
-              ))}
+                    </select> */
+}
 
-            {/* List all other conditions to select based on the processor selected */}
-            {currentPageIndex > 0 &&
-              processorBasedDeductions[currentPageIndex - 1].conditions.map(
-                (condition, index) => (
-                  <div key={index} className="px-4 py-4">
-                    {/* Condition Name Headings */}
-                    <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
-                      <h1>{condition.conditionName}</h1>
-                    </div>
-                    <div>
+{
+  /* <div>
                       {condition.conditionName
                         .toLowerCase()
                         .includes("age") && (
@@ -443,51 +575,5 @@ const LaptopsQuestions = (props) => {
                           </span>
                         </div>
                       )}
-                    </div>
-
-                    {/* Condition Labels */}
-                    <div>
-                      {/* {!condition.conditionName.includes("Age") && ( */}
-                      <>
-                        <LaptopDeductionItems
-                          // key={index}
-                          conditionName={condition.conditionName}
-                          conditionLabels={condition.conditionLabels}
-                          handleLabelSelection={handleLabelSelection}
-                          handleContinue={handleContinue}
-                          setScreenSize={setScreenSize}
-                          setGraphic={setGraphic}
-                          setScreenCondition={setScreenCondition}
-                          setPhysicalCondition={setPhysicalCondition}
-                          setAge={setAge}
-                        />
-                      </>
-
-                      {/* )} */}
-                    </div>
-                  </div>
-                )
-              )}
-          </div>
-
-          {/* {!sortedConditions[0].conditions[0].conditionName.includes("Age") && ( */}
-          <div className="flex items-center">
-            <button
-              onClick={handleContinue}
-              className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-            >
-              Continue
-            </button>
-          </div>
-          {/* )} */}
-        </div>
-        {showOTP ? (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <OtpGenerator closeModal={closeModal} />
-          </div>
-        ) : null}
-      </div>
-    </>
-  );
-};
-export default LaptopsQuestions;
+                    </div> */
+}

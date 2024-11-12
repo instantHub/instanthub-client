@@ -44,11 +44,9 @@ const Navbar = (props) => {
 
   return (
     <>
-      {/* Appbar */}
       {/* Toolbar */}
       <nav className="flex justify-end  bg-gray-200 p-4 w-full">
         {/* LEFT SIDE */}
-        {/* FlexBetween 1*/}
 
         {/* RIGHT SIDE */}
         <div className="flex items-center">
@@ -69,9 +67,9 @@ const Navbar = (props) => {
                       to={"/admin/update-profile"}
                       onClick={() => handleClick(e, "/admin/update-profile")}
                     >
-                      <h1 className="block px-4 py-2 text-gray-800 hover:bg-gray-300">
+                      <h2 className="block px-4 py-2 text-gray-800 hover:bg-gray-300">
                         Profile
-                      </h1>
+                      </h2>
                     </Link>
                     <button
                       onClick={handleLogout}
@@ -86,7 +84,6 @@ const Navbar = (props) => {
           )}
         </div>
       </nav>
-      {/* </nav> */}
       {/* <Outlet /> */}
     </>
   );

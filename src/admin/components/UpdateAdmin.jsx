@@ -56,7 +56,7 @@ const UpdateAdmin = () => {
 
   return (
     <div>
-      <div className="mx-auto w-[40%] max-2sm:w-[90%] my-[10%] border rounded shadow-lg p-5">
+      <div className="mx-auto w-[40%] max-md:w-full my-[10%] border rounded shadow-lg p-5">
         <form
           action=""
           method="post"
@@ -113,7 +113,7 @@ const UpdateAdmin = () => {
               <input
                 type="submit"
                 value="Update"
-                className="border rounded px-2 py-1 mt-3 w-[50%] bg-green-600 text-white hover:border-black hover:bg-green-700 cursor-pointer"
+                className="border rounded px-2 py-1 mt-3 w-[50%] max-md:w-full bg-green-600 text-white hover:border-black hover:bg-green-700 cursor-pointer"
               />
             </div>
           </div>

@@ -1,14 +1,57 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { startTransition, Suspense, useEffect, useState } from "react";
 import { SiShopware } from "react-icons/si";
-import { MdOutlineCancel } from "react-icons/md";
+import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
+import { BiSolidDashboard } from "react-icons/bi";
+import {
+  MdCategory,
+  MdOutlineNumbers,
+  MdSlideshow,
+  MdOutlineMultipleStop,
+  MdOutlineCancel,
+} from "react-icons/md";
+import { FaJediOrder } from "react-icons/fa6";
+import { PiGitDiff } from "react-icons/pi";
+import { GoMultiSelect } from "react-icons/go";
+import { GrMultiple } from "react-icons/gr";
+import { FcMultipleInputs } from "react-icons/fc";
 
-// import { links } from "../data/dummy";
-// import { useStateContext } from "../contexts/ContextProvider";
+import {
+  RiListCheck2,
+  RiListCheck3,
+  RiListIndefinite,
+  RiQuestionAnswerFill,
+} from "react-icons/ri";
+import {
+  TbBrandAirtable,
+  TbBrandPushover,
+  TbPasswordMobilePhone,
+} from "react-icons/tb";
+import { TiPuzzle, TiPointOfInterest, TiPlusOutline } from "react-icons/ti";
+import { SiAstro, SiDatabricks, SiSlides } from "react-icons/si";
+import { FaCentSign, FaPersonCircleQuestion } from "react-icons/fa6";
+import { BsBorderStyle } from "react-icons/bs";
+import { GiStockpiles, GiCash } from "react-icons/gi";
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
+import { ImProfile } from "react-icons/im";
+import { CgProfile } from "react-icons/cg";
 
-const Sidebar = () => {
-  // const { currentColor, activeMenu, setActiveMenu, screenSize } =
-  //   useStateContext();
+const SideBar2 = (props) => {
+  //   const { isSidebarOpen, setIsSidebarOpen, drawerWidth } = props;
+
+  const { user, isSidebarOpen } = props;
+
+  const { pathname } = useLocation();
+  const [active, setActive] = useState(false);
+  const navigate = useNavigate();
+
+  const handleActive = () => {
+    setActive(!active);
+  };
+
+  useEffect(() => {
+    setActive(pathname.substring(1));
+  }, [pathname]);
+
   const initialState = {
     chat: false,
     cart: false,
@@ -22,189 +65,263 @@ const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
-  const setMode = (e) => {
-    setCurrentMode(e.target.value);
-    localStorage.setItem("themeMode", e.target.value);
+  const handleClick = (event, to) => {
+    event.preventDefault(); // Prevent default behavior
+    startTransition(() => {
+      window.history.pushState({}, "", to); // Programmatic navigation
+    });
   };
-
-  const setColor = (color) => {
-    setCurrentColor(color);
-    localStorage.setItem("colorMode", color);
-  };
-
-  const handleClick = (clicked) =>
-    setIsClicked({ ...initialState, [clicked]: true });
-
-  const handleCloseSideBar = () => {
-    if (activeMenu !== undefined && screenSize <= 900) {
-      setActiveMenu(false);
-    }
-  };
-
-  const sideBarLinks = [
-    {
-      text: "Dashboard",
-      url: "dashboard",
-    },
-    {
-      text: "Products",
-      url: "productsList",
-    },
-    {
-      text: "Add Products",
-      url: "add-products",
-    },
-
-    {
-      text: "Add Category",
-      url: "add-category",
-    },
-
-    {
-      text: "Add Brands",
-      url: "add-brands",
-    },
-    {
-      text: "Add Series",
-      url: "add-series",
-    },
-    {
-      text: "Questions",
-      url: "questions",
-    },
-    {
-      text: "Orders",
-      url: "orders",
-    },
-    {
-      text: "Sliders",
-      url: "add-sliders",
-    },
-    {
-      text: "Setting",
-      url: "update-profile",
-    },
-  ];
 
   const links = [
+    // DASHBOARD
     {
       title: "Dashboard",
       links: [
         {
           name: "dashboard",
-          // icon: <FiShoppingBag />,
+          icon: <BiSolidDashboard />,
         },
       ],
     },
 
+    // CATEGORY
     {
-      title: "Pages",
+      title: "Category",
+      links: [
+        {
+          name: "add-category",
+          icon: <MdCategory />,
+        },
+        {
+          name: "categories-list",
+          icon: <RiListCheck3 />,
+        },
+      ],
+    },
+
+    // BRANDS
+    {
+      title: "Brands",
+      links: [
+        {
+          name: "add-brands",
+          icon: <TbBrandAirtable />,
+        },
+        {
+          name: "brands-list",
+          icon: <RiListIndefinite />,
+        },
+      ],
+    },
+
+    // PRODUCTS
+    {
+      title: "Products",
+      links: [
+        {
+          name: "add-products",
+          // icon: <TbBrandPushover />,
+          icon: <SiAstro />,
+        },
+        {
+          name: "products-list",
+          icon: <RiListCheck2 />,
+        },
+      ],
+    },
+
+    // SERIES
+    {
+      title: "Series",
+      links: [
+        {
+          name: "add-series",
+          icon: <SiDatabricks />,
+        },
+      ],
+    },
+
+    // QUESTIONS
+    {
+      title: "Questions",
+      links: [
+        {
+          name: "create-questions",
+          icon: <RiQuestionAnswerFill />,
+        },
+      ],
+    },
+
+    // VARIANT QUESTIONS
+    {
+      title: "Variant Questions",
+      links: [
+        {
+          name: "variants-questions",
+          icon: <PiGitDiff />,
+        },
+      ],
+    },
+
+    // ORDERS
+    {
+      title: "Orders",
       links: [
         {
           name: "orders",
-          // icon: <AiOutlineShoppingCart />,
+          // icon: <BsBorderStyle />,
+          icon: <FcMultipleInputs />,
         },
         {
-          name: "employees",
-          // icon: <IoMdContacts />,
-        },
-        {
-          name: "customers",
-          // icon: <RiContactsLine />,
+          name: "phone-numbers",
+          icon: <MdOutlineNumbers />,
+          // icon: <TbPasswordMobilePhone />,
         },
       ],
     },
 
+    // MANAGE STOCKS
     {
-      title: "Charts",
+      title: "Manage Stocks",
       links: [
         {
-          name: "line",
-          // icon: <AiOutlineStock />,
+          name: "manage-stocks",
+          icon: <GiStockpiles />,
         },
-        {
-          name: "area",
-          // icon: <AiOutlineAreaChart />,
-        },
+      ],
+    },
 
+    // SLIDERS & COUPONS
+    {
+      title: "Sliders & Coupons",
+      links: [
         {
-          name: "bar",
-          // icon: <AiOutlineBarChart />,
+          name: "add-sliders",
+          icon: <SiSlides />,
+          // icon: <MdSlideshow />,
         },
         {
-          name: "pie",
-          // icon: <FiPieChart />,
+          name: "add-coupons",
+          icon: <FaCentSign />,
+          // icon: <MdSlideshow />,
+        },
+      ],
+    },
+
+    // SERVICES
+    {
+      title: "Services",
+      links: [
+        {
+          name: "add-services",
+          // icon: <CgProfile />,
+          icon: <GrMultiple />,
         },
         {
-          name: "financial",
-          // icon: <RiStockLine />,
+          name: "services-list",
+          // icon: <CgProfile />,
+          icon: <GoMultiSelect />,
         },
         {
-          name: "color-mapping",
-          // icon: <BsBarChart />,
+          name: "services-Orders",
+          // icon: <CgProfile />,
+          icon: <MdOutlineMultipleStop />,
+        },
+      ],
+    },
+
+    // RECYCLE
+    {
+      title: "Recycle Order",
+      links: [
+        {
+          name: "recycle-orders",
+          icon: <FaJediOrder />,
+        },
+      ],
+    },
+
+    // UPDATE PROFILE
+    {
+      title: "Settings",
+      links: [
+        {
+          name: "update-profile",
+          // icon: <CgProfile />,
+          icon: <ImProfile />,
         },
       ],
     },
   ];
 
   const activeLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2";
+    "flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2";
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
+    "flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2";
+
+  // const handleCloseSideBar = () => {
+  //   if (activeMenu !== undefined && screenSize <= 900) {
+  //     setActiveMenu(false);
+  //   }
+  // };
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
-      {activeMenu && (
-        <>
-          <div className="flex justify-between items-center">
-            <Link
-              to="/"
-              onClick={handleCloseSideBar}
-              className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
-            >
-              <SiShopware /> <span>Shoppy</span>
-            </Link>
-            {/* <TooltipComponent content="Menu" position="BottomCenter"> */}
-              <button
-                type="button"
-                onClick={() => setActiveMenu(!activeMenu)}
-                style={{ color: currentColor }}
-                className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
-              >
-                <MdOutlineCancel />
+    <div
+      className={`
+       md-[15%] lg:w-[12%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar`}
+    >
+      <div className="flex justify-between items-center">
+        <Link
+          to="/admin"
+          className="items-center gap-2 ml-3 mt-4 flex text-l font-extrabold tracking-tight dark:text-white text-slate-900"
+        >
+          <GiCash />
+          <span>InstantCashPick</span>
+        </Link>
+      </div>
+
+      <div className="mt-5">
+        {links.map((item) => (
+          <div key={item.title}>
+            <p className="text-gray-400 text-sm dark:text-gray-400 mx-2 mt-2 uppercase">
+              {item.title}
+            </p>
+            <Suspense fallback={<div>Loading...</div>}>
+              {item.links.map((link) => (
+                <NavLink
+                  to={`/admin/${link.name}`}
+                  key={link.name}
+                  // onClick={handleCloseSideBar}
+                  onClick={() => handleClick(e, `/admin/${link.name}`)}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  {link.icon}
+                  <span className="capitalize">{link.name}</span>
+                </NavLink>
+              ))}
+            </Suspense>
+          </div>
+        ))}
+      </div>
+
+      {/* <ul className="flex flex-col my-28 items-center">
+        {sideBarLinks.map(({ text, url }, i) => {
+          return (
+            <li className={`my-4 `} key={i}>
+              <button className="text-xl">
+                <Link to={`/admin/${url}`}>{text}</Link>
               </button>
-            {/* </TooltipComponent> */}
-          </div>
-          <div className="mt-10 ">
-            {links.map((item) => (
-              <div key={item.title}>
-                <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-                  {item.title}
-                </p>
-                {item.links.map((link) => (
-                  <NavLink
-                    to={`/admin/${link.name}`}
-                    // to={`/${link.name}`}
-                    key={link.name}
-                    onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : "",
-                    })}
-                    className={({ isActive }) =>
-                      isActive ? activeLink : normalLink
-                    }
-                  >
-                    {/* {link.icon} */}
-                    <span className="capitalize ">{link.name}</span>
-                  </NavLink>
-                ))}
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+            </li>
+          );
+        })}
+      </ul> */}
     </div>
   );
 };
 
-export default Sidebar;
+export default SideBar2;

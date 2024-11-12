@@ -402,15 +402,15 @@ const UpdateSystemConfigurations = (props) => {
               {/* <div className="flex flex-col items-center">
                 <div className="flex gap-4 items-center">
                   <span>Category</span>
-                  <h1 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold">
                     {selectedCondition.categoryName}
-                  </h1>
+                  </h2>
                 </div>
                 <div className="flex gap-4 items-center">
                   <span>Condition</span>
-                  <h1 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold">
                     {selectedCondition.conditionName}
-                  </h1>
+                  </h2>
                 </div>
               </div> */}
               <div className="flex justify-around mt-8">

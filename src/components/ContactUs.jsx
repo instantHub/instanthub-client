@@ -6,7 +6,11 @@ const ContactUs = () => {
     <>
       <Helmet>
         <title>{`Contact Us | InstantCashPick`}</title>
-        <meta name="description" content="Description of my page" />
+        <meta
+          name="description"
+          content="Contact Us to know more about InstantCashPick. Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+        />
+
         <meta
           name="keywords"
           content="Contact Us, Contact Us Instant Cash Pick, Instant Cash, Instant Pick,Contact Us InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
@@ -14,6 +18,7 @@ const ContactUs = () => {
         <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://instantcashpick.com/contact-us" />
       </Helmet>
+
       <div className="flex justify-center items-center mt-[5%]">
         <div className="max-w-lg p-8 bg-white shadow-md rounded-lg">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">

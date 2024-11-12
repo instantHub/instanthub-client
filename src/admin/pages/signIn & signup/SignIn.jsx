@@ -42,17 +42,16 @@ const SignIn = () => {
     }
   };
   return (
-    <div>
-      <div className="mx-auto w-[30%] my-[10%] border rounded shadow-lg p-5">
-        <form
-          action=""
-          method="post"
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4"
-        >
-          <h1 className="text-lg font-semibold">Create a New Admin</h1>
-          <hr />
-          <div className="flex flex-col gap-2 mx-10">
+    <div className="mx-auto flex justify-center items-center w-[30%] max-md:w-full my-[10%] border rounded shadow-lg p-5 max-md:p-2">
+      <form
+        method="post"
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4"
+      >
+        <h1 className="text-lg font-semibold">Create a New Admin</h1>
+        <hr />
+        <div className="flex flex-col gap-2 mx-10 max-md:mx-4 my-2">
+          <div className="grid grid-cols-2 place-content-baseline my-2">
             <label htmlFor="adminname">Admin</label>
             <input
               type="text"
@@ -62,6 +61,9 @@ const SignIn = () => {
               className="border rounded px-2 py-1"
               onChange={(e) => setEmail(e.target.value)}
             />
+          </div>
+
+          <div className="grid grid-cols-2 place-content-baseline my-2">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -71,23 +73,26 @@ const SignIn = () => {
               className="border rounded px-2 py-1"
               onChange={(e) => setPassword(e.target.value)}
             />
+          </div>
+
+          <div>
             <input
               type="submit"
               value="Login"
-              className="border rounded px-2 py-1 mt-3 w-[50%] bg-green-600 text-white hover:border-black hover:bg-green-700 cursor-pointer"
+              className="border rounded px-2 py-1 mt-3 w-full bg-green-600 text-white hover:border-black hover:bg-green-700 cursor-pointer"
             />
           </div>
-        </form>
+        </div>
+      </form>
 
-        {/* Undo for new admin registration */}
-        {/* <div className="text-end -mt-11">
+      {/* Undo for new admin registration */}
+      {/* <div className="text-end -mt-11">
           <Link to={"/admin/signup"}>
             <button className="text-sm bg-blue-500 px-2 py-1 mt-3 border rounded text-white">
               Register
             </button>
           </Link>
         </div> */}
-      </div>
     </div>
   );
 };

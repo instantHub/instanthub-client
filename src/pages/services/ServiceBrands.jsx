@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { useGetServicesQuery } from "../../features/api";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import { BsFileArrowDown } from "react-icons/bs";
-import { FaAnglesDown } from "react-icons/fa6";
 import { clearServiceProblems } from "../../features/serviceProblemsSlice";
 import { useDispatch } from "react-redux";
+import ItemGrid from "../../components/ItemGrid";
+import Loading from "../../components/Loading";
 
 const ServiceBrands = () => {
   const { serviceCategoryId } = useParams();
@@ -18,28 +18,10 @@ const ServiceBrands = () => {
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
 
-  // console.log("sub services api data", subServicesData);
-
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceBrands, setServiceBrand] = useState("");
   // console.log("serviceCategory", serviceCategory);
-  // console.log("subServices", serviceBrands);
-
-  const [showSubService, setShowSubService] = useState(false);
-
-  const determinePath = (service) => {
-    // const type = service.type.toLowerCase();
-    // const id = service._id;
-    // if (type === "directservice") {
-    //   return `/services/book-service/${id}`;
-    // } else if (type === "brand") {
-    //   return `/services/serviceBrands/${id}`;
-    // } else if (type === "servicesubcategory") {
-    //   return `/services/serviceSubCategory/${id}`;
-    // } else {
-    //   return "#"; // Default path if none of the conditions match
-    // }
-  };
+  // console.log("serviceBrands", serviceBrands);
 
   useEffect(() => {
     dispatch(clearServiceProblems());
@@ -89,11 +71,7 @@ const ServiceBrands = () => {
         </div>
 
         {!serviceBrands ? (
-          // <h1 className="text-5xl text-black opacity-40 mx-auto">Loading...</h1>
-          <div className="flex flex-col justify-center items-center h-32">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-            <span>Loading...</span>
-          </div>
+          <Loading />
         ) : (
           <div className="flex flex-col">
             <div className="mt-2 mb-5">
@@ -121,50 +99,44 @@ const ServiceBrands = () => {
             </div>
 
             <div className="grid grid-cols-8 gap-6 max-md:grid-cols-5 max-sm:grid-cols-3 max-2sm:grid-cols-2">
-              {serviceBrands &&
-                serviceBrands
-                  // .subCategory
-                  //   .filter(
-                  //     (sc) => sc.serviceCategoryId._id === serviceCategoryId
-                  //   )
-                  .map((serviceBrand, i) => (
-                    // <Link to={determinePath(serviceBrand)} key={i}>
-                    <Link
-                      to={`/services/serviceBrandProblems/${serviceBrand._id}`}
-                      // key={serviceBrand._id + i}
-                      key={i}
-                    >
-                      <div
-                        // key={i}
-                        // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-                        className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
-                      >
-                        <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
-                          <img
-                            src={
-                              import.meta.env.VITE_APP_BASE_URL +
-                              serviceBrand.image
-                            }
-                            alt="CAT"
-                            className="w-full h-full max-sm:w-32 max-sm:h-32"
-                          />
-                        </div>
-                        <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                          <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                            {serviceBrand.name}
-                          </div>
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+              <ItemGrid
+                items={serviceBrands}
+                linkPath="/services/serviceBrandProblems"
+                displayBig={true}
+                gridFor="services"
+              />
             </div>
           </div>
         )}
-
-        <div></div>
       </div>
     </>
   );
 };
 
 export default ServiceBrands;
+
+// {serviceBrands &&
+//   serviceBrands.map((serviceBrand, i) => (
+//     <Link
+//       to={`/services/serviceBrandProblems/${serviceBrand._id}`}
+//       key={serviceBrand._id + i}
+//     >
+//       <div className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500">
+//         <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
+//           <img
+//             src={
+//               import.meta.env.VITE_APP_BASE_URL +
+//               serviceBrand.image
+//             }
+//             alt="CAT"
+//             className="w-full h-full max-sm:w-32 max-sm:h-32"
+//           />
+//         </div>
+//         <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+//           <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+//             {serviceBrand.name}
+//           </div>
+//         </span>
+//       </div>
+//     </Link>
+//   ))}

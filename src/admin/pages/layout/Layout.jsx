@@ -5,7 +5,6 @@ import Navbar from "../../components/Navbar";
 import SideBar from "../../components/SideBar";
 
 const Layout = () => {
-  // const
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -15,9 +14,13 @@ const Layout = () => {
   return (
     <div className="flex sm:block ">
       <div className="h-full">
-        <SideBar isSidebarOpen={isSidebarOpen} />
+        <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
-      <div className={` ml-[12%] `}>
+      <div
+        className={`${
+          isSidebarOpen ? `max-sm:ml-[6%] ml-[12%]` : `max-sm:ml-[13%] ml-[5%]`
+        }  `}
+      >
         <Navbar isSidebarOpen={isSidebarOpen} />
         <Outlet />
       </div>

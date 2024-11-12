@@ -7,6 +7,8 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BackButton from "../../components/BackButton";
+import CardHeader from "../../components/CardHeader";
+import UpdateButton from "../../components/UpdateButton";
 
 function UpdateBrand() {
   const { brandId } = useParams();
@@ -102,7 +104,7 @@ function UpdateBrand() {
     <>
       <div className="flex mt-[5%] w-[80%] mx-auto">
         <div className="grow">
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             <h1 className="bold text-[1.4rem] mb-2">Update Brand</h1>
             <div className="flex items-center gap-1">
               <h2>Home </h2>
@@ -110,34 +112,40 @@ function UpdateBrand() {
 
               <BackButton location={"/admin/brands-list"} />
             </div>
-          </div>
+          </div> */}
+
+          <CardHeader
+            location={"/admin/brands-list"}
+            text="Update Brand"
+            source="update"
+          />
+
           <div className="bg-white border rounded-md shadow-lg">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
               <div className="flex gap-2 items-center">
                 <span className="text-xl opacity-75">Update </span>
                 {!brandsLoading && (
-                  <h1 className="text-2xl ">
+                  <h2 className="text-2xl ">
                     {brandToUpdate[0].category.name}{" "}
-                  </h1>
+                  </h2>
                 )}
                 <span className="text-xl opacity-75">Brand</span>
               </div>
               <hr />
-
               <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
                 {!brandsLoading && (
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-4">
                       <label htmlFor="conditioName">Brand Name</label>
-                      <h1
+                      <h2
                         name="conditioName"
                         className="text-[1.7rem] text-red-700"
                       >
                         {brandToUpdate[0].name}
-                      </h1>
+                      </h2>
                     </div>
-                    <div className="flex items-center">
-                      <div className="flex w-full">
+                    <div className="flex items-center max-sm:flex-col">
+                      <div className="flex w-full max-sm:flex-col">
                         <label className="">Update Brand Name:</label>
                         <input
                           type="text"
@@ -163,9 +171,7 @@ function UpdateBrand() {
                         />
                         <input
                           type="file"
-                          name=""
                           ref={fileInputRef}
-                          id=""
                           onChange={(e) => {
                             setFormData({
                               ...formData,
@@ -179,8 +185,7 @@ function UpdateBrand() {
                   </div>
                 )}
               </div>
-
-              <div className="py-3 px-2">
+              {/* <div className="py-3 px-2">
                 <button
                   type="submit"
                   className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
@@ -188,7 +193,11 @@ function UpdateBrand() {
                 >
                   {!updateBrandLoading ? "Update Brand" : "Loading..."}
                 </button>
-              </div>
+              </div> */}
+              <UpdateButton
+                updateLoading={updateBrandLoading}
+                text="Update Brand"
+              />
             </form>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdDeleteForever } from "react-icons/md";
 import EditButton from "../../components/EditButton";
+import Table from "../../components/TableView";
 
 const CategoriesList = () => {
   const { data: categoryData, isLoading: categoryDataLoading } =
@@ -39,11 +40,60 @@ const CategoriesList = () => {
     setIsOpen(false);
   };
 
+  const headers = [
+    "Category",
+    "Brands",
+    "Category Image",
+    "Edit/Update",
+    "Delete",
+  ];
+
+  const rowRenderer = (category) => (
+    <>
+      <td className="px-4 py-2">{category.name}</td>
+      {/* Brands list */}
+      {category.brands.length != 0 ? (
+        <td className="px-4 py-2 grid grid-cols-2 text-sm max-sm:text-xs max-sm:grid-cols-1">
+          {category.brands.map((brand) => (
+            <h3 key={`${category}-${brand.name}-${brand.id}`} className="py-1">
+              {brand.name}
+            </h3>
+          ))}
+        </td>
+      ) : (
+        <td className="px-4 py-2 text-xs text-red-700 opacity-70 ">
+          Brands <br />
+          not available
+        </td>
+      )}
+
+      <td className="px-4 py-2">
+        <img
+          src={import.meta.env.VITE_APP_BASE_URL + category.image}
+          alt="CAT"
+          className="w-[60px] h-[60px] mx-auto "
+        />
+      </td>
+      <td className="flex justify-center px-4 py-2">
+        <EditButton location={`/admin/update-category/${category.id}`} />
+      </td>
+      <td>
+        <button
+          onClick={() => openModal(category)}
+          className="bg-red-600 text-white px-3 py-1 rounded-md"
+        >
+          <MdDeleteForever className="text-2xl max-sm:text-lg" />
+        </button>
+      </td>
+    </>
+  );
+
   return (
-    //Products based on the Category selected
-    <div className="p-4 ">
+    <div className="p-4 max-sm:text-sm">
       <div className="flex justify-between">
-        <h2 className="text-black text-lg font-bold mb-4">Categories Table</h2>
+        <h2 className="text-black text-lg font-bold mb-4 max-sm:text-sm">
+          Categories Table
+        </h2>
         <div>
           <Link to={"/admin/add-category"}>
             <button className="bg-blue-700 text-white px-2 py-1 rounded">
@@ -53,73 +103,14 @@ const CategoriesList = () => {
         </div>
       </div>
 
-      <table className="w-full">
-        <thead>
-          <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
-            <th className="px-4 py-4 ">Category</th>
-            <th className="px-4 py-2 ">Brands</th>
-            <th className="px-4 py-2 ">Category IMG</th>
-            <th className="px-4 py-2 ">Edit/Update</th>
-            <th className="px-4 py-2 ">Delete</th>
-          </tr>
-        </thead>
-
-        <tbody className="text-center">
-          {/* Products when Category not selected */}
-          {!categoryDataLoading &&
-            categoryData
-              //   .filter((product) => product.category.id != selectedCondition)
-              .map((category, index) => (
-                <tr
-                  key={`${category._id}-${index}`}
-                  className={
-                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
-                  }
-                >
-                  <td className="px-4 py-2">{category.name}</td>
-                  {/* Brands list */}
-                  {category.brands.length != 0 ? (
-                    <td className="px-4 py-2 grid grid-cols-2 text-sm">
-                      {category.brands.map((brand) => (
-                        <h3
-                          key={`${category}-${brand.name}-${brand.id}`}
-                          className="py-1"
-                        >
-                          {brand.name}
-                        </h3>
-                      ))}
-                    </td>
-                  ) : (
-                    <td className="px-4 py-2 text-xs text-red-700 opacity-70">
-                      Brands <br />
-                      not available
-                    </td>
-                  )}
-
-                  <td className="px-4 py-2">
-                    <img
-                      src={import.meta.env.VITE_APP_BASE_URL + category.image}
-                      alt="CAT"
-                      className="w-[60px] h-[60px] mx-auto "
-                    />
-                  </td>
-                  <td className="flex justify-center px-4 py-2">
-                    <EditButton
-                      location={`/admin/update-category/${category.id}`}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => openModal(category)}
-                      className="bg-red-600 text-white px-3 py-1 rounded-md"
-                    >
-                      <MdDeleteForever className="text-2xl" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-        </tbody>
-      </table>
+      {!categoryDataLoading && (
+        <Table
+          headers={headers}
+          data={categoryData}
+          keyExtractor={(item) => item.id}
+          rowRenderer={rowRenderer}
+        />
+      )}
 
       {isOpen && (
         <div>
@@ -135,15 +126,15 @@ const CategoriesList = () => {
               <div className="flex flex-col items-center">
                 <div className="flex gap-4 items-center">
                   <span>Category</span>
-                  <h1 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold">
                     {selectedCategoryToDelete?.name}
-                  </h1>
+                  </h2>
                 </div>
                 <div className="flex gap-4 items-center">
                   <span>Total Number of Brands under this Category</span>
-                  <h1 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold">
                     {selectedCategoryToDelete?.brands.length}
-                  </h1>
+                  </h2>
                 </div>
               </div>
               <div className="flex justify-around mt-8">
