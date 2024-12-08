@@ -285,7 +285,7 @@ const ProductFinalPrice = () => {
 
     let AccessoriesSelected = [];
     let AccessoriesNotSelected = [];
-    prodAccessories.conditionLabels.map((accessory) => {
+    prodAccessories?.conditionLabels.map((accessory) => {
       // Filter out the prodAccessories that are present in deductedConditionLabels(selectedProdDetails.deductions)
       if (checkAccessory(accessory)) {
         AccessoriesSelected.push(accessory);
