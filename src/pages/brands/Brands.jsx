@@ -37,7 +37,8 @@ const Brands = () => {
 
       <div className="mt-8 w-4/5 mx-auto">
         <h1 className="pb-5 text-2xl font-bold max-sm:text-xl">
-          Sell your {category?.name} for Instant Cash
+          {/* Sell your {category?.name} for Instant Cash */}
+          Sell your Mobile for Instant Cash
         </h1>
 
         <div className="mb-6">

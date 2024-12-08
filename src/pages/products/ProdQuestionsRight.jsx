@@ -108,6 +108,18 @@ const ProdDeductionsRight = () => {
                       </li>
                     </ul>
                   </div>
+
+                  {/* Model Launch Year */}
+                  <div>
+                    {laptopSlice.modelYear.conditionLabel ? (
+                      <h2 className="font-bold">Model Launch Year</h2>
+                    ) : null}
+                    <ul>
+                      <li className="py-1 pl-2">
+                        {laptopSlice.modelYear.conditionLabel}
+                      </li>
+                    </ul>
+                  </div>
                 </>
               )}
 

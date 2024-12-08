@@ -24,7 +24,7 @@ import ClientServicesBrandsProblems from "./pages/services/ServiceBrandProblems"
 import ClientBookService from "./pages/services/BookService";
 import ClientRecycleCategories from "./pages/recycle/RecycleCategories";
 import ClientRecycleBrands from "./pages/recycle/RecycleBrands";
-import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
+// import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
 import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
 
 const ClientProducts = lazy(() => import("./pages/products/Products"));
@@ -44,6 +44,9 @@ const UpdateAdminProfile = lazy(() => import("./admin/components/UpdateAdmin"));
 const AdminDashboard = lazy(() => import("./admin/pages/dashboard/Dashboard"));
 // const AdminProducts = lazy(() => import("./admin/pages/products/Products"));
 
+import Admin from "./admin/Admin";
+import AdminLayout from "./admin/pages/layout/Layout";
+
 import AdminCreateProducts from "./admin/pages/products/CreateProducts";
 import AdminUpdateProduct from "./admin/pages/products/UpdateProduct";
 import AdminBrandsList from "./admin/pages/brands/BrandsList";
@@ -56,13 +59,12 @@ import AdminUpdateCategory from "./admin/pages/categories/UpdateCategory";
 import AdminCreateSeries from "./admin/pages/series/CreateSeries";
 import AdminUpdateSeries from "./admin/pages/series/UpdateSeries";
 import AdminSeriesList from "./admin/pages/series/SeriesList";
-import AdminCreateConditions from "./admin/pages/questions/CreateCondtions";
+import AdminCreateConditions from "./admin/pages/questions/old/CreateCondtions";
 import AdminUpdateCondition from "./admin/pages/questions/UpdateCondition";
 import AdminUpdateConditionLabel from "./admin/pages/questions/UpdateConditionLabel";
-import AdminProductsList from "./admin/pages/products/ProductsList";
-import AdminProductQuestions from "./admin/pages/products/ProductQuestionsList";
-// import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
-// import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
+// import AdminProductsList from "./admin/pages/products/ProductsList";
+// import AdminProductQuestions from "./admin/pages/products/ProductQuestionsList";
+
 import AdminConditionsList from "./admin/pages/questions/ConditionsList";
 import AdminConditionLabelsList from "./admin/pages/questions/ConditionLabelsList";
 import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
@@ -81,14 +83,25 @@ import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
 import AdminCreateVariantsQuestions from "./admin/pages/variantQuestions/CreateVariantsQuestions";
 import AdminUpdateVariantQuestions from "./admin/pages/variantQuestions/UpdateVariantQuestions";
 
-import Admin from "./admin/Admin";
-import AdminLayout from "./admin/pages/layout/Layout";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorComponent from "./components/ErrorComponent";
 import AboutPage from "./components/About";
 import ContactUs from "./components/ContactUs";
+import CreateQuestions from "./admin/pages/questions/CreateQuestions";
+
+// import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
+// import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
+
+// Helper function to wrap lazy-loaded components with Suspense
+const lazyLoad = (importFunc) => {
+  const LazyComponent = lazy(importFunc);
+  return (
+    <Suspense fallback={<div>Loading fallback...</div>}>
+      <LazyComponent />
+    </Suspense>
+  );
+};
 
 function App() {
   const router = Router([
@@ -117,17 +130,14 @@ function App() {
         {
           path: "/privacy-policies",
           element: <ClientTermsAndPolicies />,
-          // element: <ClientPrivacyPolicy />,
         },
         {
           path: "/terms-conditions",
           element: <ClientTermsAndPolicies />,
-          // element: <ClientTermsAndConditions />,
         },
         {
           path: "/terms-of-use",
           element: <ClientTermsAndPolicies />,
-          // element: <ClientTermsOfUse />,
         },
 
         {
@@ -263,7 +273,8 @@ function App() {
               message={`Sorry unable to load Products, please try after sometime..!`}
             />
           ),
-          element: <ClientRecycleProducts />,
+          // element: <ClientRecycleProducts />,
+          element: lazyLoad(() => import("./pages/recycle/RecycleProducts")),
         },
         {
           path: "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
@@ -292,6 +303,7 @@ function App() {
         {
           path: "/admin",
           element: <Admin />,
+
           children: [
             {
               index: true,
@@ -299,27 +311,24 @@ function App() {
             },
             {
               path: "/admin/dashboard",
-              element: (
-                <Suspense fallback={<div>Loading...</div>}>
-                  <AdminDashboard />,
-                </Suspense>
+              element: lazyLoad(() =>
+                import("./admin/pages/dashboard/Dashboard")
               ),
             },
             {
               path: "/admin/update-profile",
-              element: (
-                <Suspense fallback={<div>Loading...</div>}>
-                  <UpdateAdminProfile />
-                </Suspense>
-              ),
-            },
-            {
-              path: "/admin/products-list",
-              element: <AdminProductsList />,
+              element: lazyLoad(() => import("./admin/components/UpdateAdmin")),
             },
             {
               path: "/admin/add-products",
               element: <AdminCreateProducts />,
+            },
+            {
+              path: "/admin/products-list",
+              // element: <AdminProductsList />,
+              element: lazyLoad(() =>
+                import("./admin/pages/products/ProductsList")
+              ),
             },
             {
               path: "/admin/update-product/:productId",
@@ -327,20 +336,18 @@ function App() {
             },
             {
               path: "/admin/products/product-questions/:productId",
-              element: <AdminProductQuestions />,
+              // element: <AdminProductQuestions />,
+              element: lazyLoad(() =>
+                import("./admin/pages/products/ProductQuestionsList")
+              ),
             },
+
             // {
-            //   path: "/admin/products/laptop-configurations/:productId",
-            //   element: <AdminAllLaptopConfiguration />,
+            //   path: "/admin/categories",
+            //   element: <AdminCategories />,
             // },
-            // {
-            //   path: "/admin/products/laptop-configurations/:productId",
-            //   element: <AdminSingleLaptopConfiguration />,
-            // },
-            {
-              path: "/admin/categories",
-              element: <AdminCategories />,
-            },
+
+            // Categories
             {
               path: "/admin/add-category",
               element: <AdminCreateCategory />,
@@ -366,6 +373,8 @@ function App() {
               path: "/admin/update-brand/:brandId",
               element: <AdminUpdateBrand />,
             },
+
+            // Series
             {
               path: "/admin/add-series",
               element: <AdminCreateSeries />,
@@ -378,26 +387,31 @@ function App() {
               path: "/admin/update-series/:seriesId",
               element: <AdminUpdateSeries />,
             },
+
+            // Conditions
             {
               path: "/admin/create-questions",
-              element: <AdminCreateConditions />,
+              element: <CreateQuestions />,
+              // element: <AdminCreateConditions />,
             },
             {
               path: "/admin/conditionsList",
               element: <AdminConditionsList />,
             },
             {
-              path: "/admin/conditionLabelsList",
-              element: <AdminConditionLabelsList />,
-            },
-            {
               path: "/admin/updateCondition/:conditionId",
               element: <AdminUpdateCondition />,
+            },
+            {
+              path: "/admin/conditionLabelsList",
+              element: <AdminConditionLabelsList />,
             },
             {
               path: "/admin/updateConditionLabel/:conditionLabelId",
               element: <AdminUpdateConditionLabel />,
             },
+
+            // Slider
             {
               path: "/admin/add-sliders",
               element: <AdminCreateSlider />,
@@ -410,6 +424,8 @@ function App() {
               path: "/admin/update-sliders/:sliderId",
               element: <AdminUpdateSlider />,
             },
+
+            // Orders
             {
               path: "/admin/orders",
               element: <AdminOrdersList />,

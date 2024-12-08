@@ -30,6 +30,8 @@ const LaptopsQuestions = (props) => {
   const [screenConditionPage, setScreenConditionPage] = useState(null);
   const [physicalCondition, setPhysicalCondition] = useState(null);
   const [physicalConditionPage, setPhysicalConditionPage] = useState(null);
+  const [modelYear, setModelYear] = useState(null);
+  const [modelYearPage, setModelYearPage] = useState(null);
   const [age, setAge] = useState(null);
   const [agePage, setAgePage] = useState(null);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -170,6 +172,10 @@ const LaptopsQuestions = (props) => {
           screenCondition === null,
         message: "Select Screen Condition to proceed..!",
       },
+      {
+        condition: currentPageIndex === modelYearPage - 1 && modelYear === null,
+        message: "Select Model Launch Year to proceed..!",
+      },
     ];
 
     for (let { condition, message } of validationSteps) {
@@ -278,7 +284,13 @@ const LaptopsQuestions = (props) => {
       }
 
       const data = await response.json(); // Parse the JSON response
-      console.log("Processor Deductions:", data);
+      // console.log("Processor Deductions:", data);
+
+      if (productsData.brand.name !== "Apple") {
+        data.deductions = data.deductions.filter(
+          (condition) => condition.conditionName !== "Model Launch Year"
+        );
+      }
       return data;
     } catch (error) {
       console.error("Failed to fetch processor deductions:", error);
@@ -299,6 +311,8 @@ const LaptopsQuestions = (props) => {
         setPhysicalConditionPage(d.page);
       } else if (d.conditionName.toLowerCase().includes("age")) {
         setAgePage(d.page);
+      } else if (d.conditionName.toLowerCase().includes("model launch year")) {
+        setModelYearPage(d.page);
       }
     });
   }
@@ -336,7 +350,7 @@ const LaptopsQuestions = (props) => {
 
   // console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);
-
+  // console.log("productsData", productsData);
   return (
     <>
       <Helmet>
@@ -432,6 +446,7 @@ const LaptopsQuestions = (props) => {
                           setScreenCondition={setScreenCondition}
                           setPhysicalCondition={setPhysicalCondition}
                           setAge={setAge}
+                          setModelYear={setModelYear}
                         />
                       </>
                     </div>

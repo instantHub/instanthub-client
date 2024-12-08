@@ -2,7 +2,7 @@
 import React from "react";
 
 const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
-  console.log("data", data);
+  console.log("data frin TABLE component", data);
   return (
     <table className="w-full ">
       <thead>
@@ -17,7 +17,8 @@ const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
       <tbody className="text-center ">
         {data?.map((item, index) => (
           <tr
-            className={index % 2 === 0 ? "bg-white" : "bg-gray-100 border"}
+            // className={index % 2 === 0 ? "bg-white" : "bg-gray-100 border"}
+            className="odd:bg-white even:bg-gray-100 even:border"
             key={keyExtractor(item, index)}
           >
             {rowRenderer(item)}

@@ -5,22 +5,18 @@ import {
   useCreateConditionLabelsMutation,
   useUploadConditionLabelsImageMutation,
   useGetConditionLabelsQuery,
-  useGetAllBrandQuery,
-} from "../../../features/api";
-import { Link } from "react-router-dom";
+} from "../../../../features/api";
 import { toast } from "react-toastify";
-import ListButton from "../../components/ListButton";
+import ListButton from "../../../components/ListButton";
 
 const CreateConditionLabels = () => {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery();
-  const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
   const { data: conditionsLabelsData, isLoading: conditionsLabelsLoading } =
     useGetConditionLabelsQuery();
-  const [uploadConditionLabelsImage, { isLoading: uploadLoading }] =
-    useUploadConditionLabelsImageMutation();
+  const [uploadConditionLabelsImage] = useUploadConditionLabelsImageMutation();
   const [createConditionLabels, { isLoading: createConditionLabelsLoading }] =
     useCreateConditionLabelsMutation();
 

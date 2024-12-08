@@ -1,12 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import {user} from '../../../backend/routes/management'
 
 // console.log("env", import.meta.env.VITE_APP_BASE_URL);
+
+// const customFetch = async (url, options) => {
+//   return fetch(url, options); // You can customize this for SSR if needed
+// };
+
+// baseQuery: fetchBaseQuery({
+//   baseUrl: import.meta.env.VITE_APP_BASE_URL,
+//   fetchFn: customFetch, // Provide custom fetch function if needed
+// })
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_BASE_URL,
     // baseUrl: "http://localhost:8000/",
+    // fetchFn: customFetch, // Provide custom fetch function if needed
   }),
   // reducerPath: "adminApi",
   reducerPath: "API",
@@ -29,7 +38,6 @@ export const api = createApi({
   ],
   endpoints: (build) => ({
     getCategory: build.query({
-      // query: () => "/api/category?_sort=name&_order=desc",
       query: () => "/api/category",
       providesTags: ["Categories"],
     }),
@@ -87,7 +95,6 @@ export const api = createApi({
     }),
     getBrand: build.query({
       query: (catId) => `/api/brand/${catId}`,
-      // providesTags: ["Brands"],
       providesTags: ["CreateBrands", "Brands"],
     }),
     createBrand: build.mutation({
@@ -118,28 +125,6 @@ export const api = createApi({
       }),
       invalidatesTags: ["Brands"],
     }),
-    // getAllProducts: build.query({
-    //   query: ({ search, limit }) => ({
-    //     url: `/api/products?search=${search}`,
-    //     method: "GET",
-    //     // params: search,
-    //   }),
-    //   providesTags: ["Products"],
-    // }),
-    // getAllProducts: build.query({
-    //   query: ({ search, limit }) => {
-    //     const params = { search };
-    //     if (limit) {
-    //       params.limit = limit;
-    //     }
-    //     return {
-    //       url: `/api/products`,
-    //       method: "GET",
-    //       params,
-    //     };
-    //   },
-    //   providesTags: ["Products"],
-    // }),
     getAllProducts: build.query({
       query: ({ page, limit, search, categoryId }) => ({
         url: `/api/products`,
@@ -236,7 +221,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      // invalidatesTags: ["Conditions"],
+      invalidatesTags: ["Conditions"],
     }),
     deleteCondition: build.mutation({
       query: ({ category, conditionId }) => ({

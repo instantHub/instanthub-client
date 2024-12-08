@@ -10,7 +10,7 @@ import { FaTimes } from "react-icons/fa";
 import ProductCard from "../../components/ProductCard";
 import Loading from "../../components/Loading";
 
-const Products = () => {
+const RecycleProducts = () => {
   const { brandId } = useParams();
 
   const { data: brandSeries, isLoading: seriesLoading } =
@@ -32,7 +32,6 @@ const Products = () => {
     data: productsData,
     isLoading: productsLoading,
     isSuccess: productsLoaded,
-    isError,
   } = useGetProductsQuery({ brandId, search });
 
   console.log("productsData", productsData);
@@ -179,7 +178,7 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default RecycleProducts;
 
 const SeriesButton = ({ series, isSelected, onClick }) => (
   <div

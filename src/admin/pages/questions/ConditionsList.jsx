@@ -9,8 +9,10 @@ import EditButton from "../../components/EditButton";
 import { toast } from "react-toastify";
 import Table from "../../components/TableView";
 import { MdDeleteForever } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { filterCategory } from "../../features/filterSlice";
 
-const ConditionsTable = () => {
+const ConditionsList = () => {
   //   const [questions, setQuestions] = useState([]);
   const { data: conditions, isLoading: conditionsLoading } =
     useGetConditionsQuery();
@@ -22,8 +24,10 @@ const ConditionsTable = () => {
   const [selectedCondition, setSelectedCondition] = useState();
   const [isOpen, setIsOpen] = useState(false);
 
-  // console.log("conditions", conditions);
-  // 66840ed655ab1a29d1d8d7d1
+  const filterData = useSelector((state) => state.filter.conditionsList);
+  console.log("filterData from ConditionsList", filterData);
+
+  const dispatch = useDispatch();
 
   // Modal open for confirming Condition DELETE
   const openModal = (categoryId, categoryName, conditionId, conditionName) => {
@@ -41,11 +45,7 @@ const ConditionsTable = () => {
     setIsOpen(false);
   };
 
-  const [selectedCategory, setSelectedCategory] = useState(undefined);
-
-  // const handleConditionChange = (e) => {
-  //   setSelectedCondition(e.target.value);
-  // };
+  const [selectedCategory, setSelectedCategory] = useState(filterData.category);
 
   const handleDelete = async (category, conditionId) => {
     console.log(category, conditionId);
@@ -96,31 +96,35 @@ const ConditionsTable = () => {
   );
 
   return (
-    //ConditionsListList
     <>
       <div className="p-4">
         <div className="flex justify-between">
           <div className="flex items-center gap-4 mb-4">
             <div>
-              <label htmlFor="condition" className=" mr-2">
+              <label htmlFor="condition" className="mr-2">
                 Select Category:
               </label>
               <select
-                id="condition"
+                id="category"
                 onChange={(e) => {
                   setSelectedCategory(e.target.value);
                   setSelectedCondition("");
+                  dispatch(
+                    filterCategory({
+                      category: e.target.value,
+                      from: "conditionsList",
+                    })
+                  );
                 }}
                 value={selectedCategory}
                 className="px-2 py-1 rounded border text-black"
               >
                 <option value="">Search</option>
-                {!categoriesLoading &&
-                  categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
+                {categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -134,7 +138,79 @@ const ConditionsTable = () => {
           />
         </div>
 
-        {/* <table className="w-full">
+        {!conditionsLoading && (
+          <Table
+            headers={headers}
+            data={
+              // !selectedCategory
+              !filterData.category
+                ? conditions
+                : conditions.filter(
+                    (cond) => cond.category.id === filterData.category
+                    // (cond) => cond.category.id === selectedCategory
+                  )
+            }
+            keyExtractor={(item) => item.id}
+            rowRenderer={rowRenderer}
+          />
+        )}
+      </div>
+      {isOpen && (
+        <div>
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-2/4">
+              <div className="flex justify-center">
+                <h2 className="text-xl font-semibold mb-4 text-center">
+                  Sure want to delete this Condition?
+                </h2>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="flex gap-4 items-center">
+                  <span>Category</span>
+                  <h2 className="text-lg font-semibold">
+                    {selectedCondition.categoryName}
+                  </h2>
+                </div>
+                <div className="flex gap-4 items-center">
+                  <span>Condition</span>
+                  <h2 className="text-lg font-semibold">
+                    {selectedCondition.conditionName}
+                  </h2>
+                </div>
+              </div>
+              <div className="flex justify-around mt-8">
+                <button
+                  onClick={() =>
+                    handleDelete(
+                      selectedCondition.categoryId,
+                      selectedCondition.conditionId
+                    )
+                  }
+                  className="bg-red-600 text-white px-4 py-1 rounded disabled:cursor-none disabled:bg-gray-300"
+                  disabled={deleteLoading}
+                >
+                  Yes
+                </button>
+
+                <button
+                  onClick={closeModal}
+                  className="bg-green-700 text-white px-4 py-1 rounded"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default ConditionsList;
+
+{
+  /* <table className="w-full">
           <thead>
             <tr>
               <th className="px-4 py-2 text-white bg-gray-800">Category</th>
@@ -212,73 +288,5 @@ const ConditionsTable = () => {
                     </tr>
                   ))}
           </tbody>
-        </table> */}
-
-        {!conditionsLoading && (
-          <Table
-            headers={headers}
-            data={
-              !selectedCategory
-                ? conditions
-                : conditions.filter(
-                    (cond) => cond.category.id === selectedCategory
-                  )
-            }
-            keyExtractor={(item) => item.id}
-            rowRenderer={rowRenderer}
-          />
-        )}
-      </div>
-      {isOpen && (
-        <div>
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-2/4">
-              <div className="flex justify-center">
-                <h2 className="text-xl font-semibold mb-4 text-center">
-                  Sure want to delete this Condition?
-                </h2>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="flex gap-4 items-center">
-                  <span>Category</span>
-                  <h2 className="text-lg font-semibold">
-                    {selectedCondition.categoryName}
-                  </h2>
-                </div>
-                <div className="flex gap-4 items-center">
-                  <span>Condition</span>
-                  <h2 className="text-lg font-semibold">
-                    {selectedCondition.conditionName}
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-around mt-8">
-                <button
-                  onClick={() =>
-                    handleDelete(
-                      selectedCondition.categoryId,
-                      selectedCondition.conditionId
-                    )
-                  }
-                  className="bg-red-600 text-white px-4 py-1 rounded disabled:cursor-none disabled:bg-gray-300"
-                  disabled={deleteLoading}
-                >
-                  Yes
-                </button>
-
-                <button
-                  onClick={closeModal}
-                  className="bg-green-700 text-white px-4 py-1 rounded"
-                >
-                  No
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
-
-export default ConditionsTable;
+        </table> */
+}

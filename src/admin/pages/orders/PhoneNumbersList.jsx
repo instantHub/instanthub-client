@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useGetPhoneNumbersQuery } from "../../../features/api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -8,9 +8,7 @@ const PhoneNumbersList = () => {
   const { data: phoneNumbers, isLoading: phoneNumbersLoading } =
     useGetPhoneNumbersQuery();
 
-  if (!phoneNumbersLoading) {
-    console.log("phoneNumbers", phoneNumbers);
-  }
+  console.log("phoneNumbers", !phoneNumbersLoading && phoneNumbers);
 
   const convertUTCToIST = (dateString) => {
     const utcDate = new Date(dateString);

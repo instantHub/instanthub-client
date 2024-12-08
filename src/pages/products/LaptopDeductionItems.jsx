@@ -6,9 +6,11 @@ import {
   addScreenCondition,
   addPhysicalCondition,
   addAge,
+  addModelYear,
 } from "../../features/laptopDeductionSlice";
 import { BsCircle } from "react-icons/bs";
 import { addProductAge } from "../../features/deductionSlice";
+import { setMode } from "../../features/globalSlice";
 
 const LaptopDeductionItems = ({
   conditionName,
@@ -20,6 +22,7 @@ const LaptopDeductionItems = ({
   setScreenCondition,
   setPhysicalCondition,
   setAge,
+  setModelYear,
 }) => {
   const deductionData = useSelector((state) => state.deductions.deductions);
 
@@ -35,8 +38,8 @@ const LaptopDeductionItems = ({
     "screen condition",
     "physical",
     "age",
+    "model launch year",
   ].some((c) => conditionName.toLowerCase().includes(c));
-
 
   const type = conditionName;
   const functionalProblems = conditionName.toLowerCase().includes("functional");
@@ -63,6 +66,7 @@ const LaptopDeductionItems = ({
       laptopSliceData.screenCondition.conditionLabel,
       laptopSliceData.physicalCondition.conditionLabel,
       laptopSliceData.age.conditionLabel,
+      laptopSliceData.modelYear.conditionLabel,
     ].includes(conditionLabel);
   };
 
@@ -96,6 +100,11 @@ const LaptopDeductionItems = ({
         type: "Physical Condition",
       },
       age: { action: addAge, setState: setAge, type: "Age of the Device" },
+      "model launch year": {
+        action: addModelYear,
+        setState: setModelYear,
+        type: "Model Launch Year",
+      },
     };
 
     const matchedCondition = Object.entries(actionMap).find(([key]) =>

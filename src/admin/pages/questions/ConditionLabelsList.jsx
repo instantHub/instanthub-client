@@ -107,10 +107,13 @@ const ConditionLabelsTable = () => {
         ? conditionLabelsData.filter(
             (cl) => cl.category?.id === selectedCategory
           )
-        : conditionLabelsData
-            .filter((cl) => cl.category?.id === selectedCategory)
-            .filter((cl) => cl.conditionNameId?.id === selectedCondition)
-      : [];
+        : conditionLabelsData.filter(
+            (cl) =>
+              cl.category?.id === selectedCategory &&
+              cl.conditionNameId?.id === selectedCondition
+          )
+      : // .filter((cl) => cl.conditionNameId?.id === selectedCondition)
+        [];
 
   return (
     <div className="flex flex-col items-center p-4 max-sm:text-sm">
@@ -125,7 +128,7 @@ const ConditionLabelsTable = () => {
           {/* Select Category */}
           <div className="flex my-4 ">
             <select
-              id="condition"
+              id="category"
               onChange={(e) => {
                 // setSelectedCategory(e.target.value);
                 dispatch(

@@ -189,6 +189,7 @@ const ProductFinalPrice = () => {
     if (selectedProdDetails.productName == "") {
       navigate(`/categories/brands/productDetails/${productId}`);
     } else if (!selectedProdDetails.productAge.conditionLabel) {
+      if (selectedProdDetails.productCategory === "Desktop") return;
       navigate(`/categories/brands/productDetails/${productId}`);
     }
     // else if (
@@ -361,9 +362,9 @@ const ProductFinalPrice = () => {
       if (laptopDesktop.includes(productCategory)) {
         console.log("Laptop/Desktop");
         setOfferPrice(Math.ceil(deductedPrice));
+      } else {
+        setOfferPrice(selectedProdDetails.getUpTo.price);
       }
-
-      setOfferPrice(selectedProdDetails.getUpTo.price);
     } else {
       setOfferPrice(minPrice);
       setRecycleProduct(true);

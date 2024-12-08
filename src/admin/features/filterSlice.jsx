@@ -11,6 +11,10 @@ const initialState = {
     category: "",
     filtered: false,
   },
+  conditionsList: {
+    category: "",
+    filtered: false,
+  },
   conditionLabelsList: {
     category: "",
     condition: "",

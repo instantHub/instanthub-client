@@ -79,6 +79,7 @@ const OtpGenerator = (props) => {
         dispatch(addDeductions(laptopSlice.graphic));
         dispatch(addDeductions(laptopSlice.screenCondition));
         dispatch(addDeductions(laptopSlice.physicalCondition));
+        dispatch(addDeductions(laptopSlice.modelYear));
         dispatch(addDeductions({ ...data.productAge, type: "Age" }));
       } else if (data.productCategory.toLowerCase().includes("mobile")) {
         dispatch(addDeductions(data.productAge));

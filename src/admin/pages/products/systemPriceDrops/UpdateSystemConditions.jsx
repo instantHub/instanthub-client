@@ -150,10 +150,10 @@ const UpdateSystemConditions = (props) => {
                 Update <span className="font-bold px-1"> {title} </span> Based
                 On The Selected Processor
               </span>
-              {selectedProcessorDeductions?.deductions.map(
+              {selectedProcessorDeductions?.deductions?.map(
                 (condition, index) => (
                   <div
-                    key={index}
+                    key={condition.id}
                     className={`mb-10 border my-2 py- px- rounded ${
                       index % 2 === 0 ? `` : `bg-gray-100`
                     }`}
@@ -169,7 +169,7 @@ const UpdateSystemConditions = (props) => {
                         condition.conditionLabels.map(
                           (conditionLabel, index) => (
                             <div
-                              key={index}
+                              key={conditionLabel.id}
                               className={`flex gap-6 items-center mt-2`}
                             >
                               <div>

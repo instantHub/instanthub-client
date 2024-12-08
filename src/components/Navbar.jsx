@@ -27,7 +27,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const data = [
+  const navOptions = [
     {
       name: "Home",
       url: "/",
@@ -62,7 +62,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1">
+      {/* <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1"> */}
+      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1">
         {/* Main */}
         {/* <nav className="bg-gradient-to-r from-cyan-400  to-yellow-700 text-white p-4 rounded-xl mt-4 mx-4 sticky top-2 border-b border-[#E27D60] shadow-xl"> */}
         <div className="max-w-full mx-auto px-4 max-2sm:px-1">
@@ -72,10 +73,12 @@ const Navbar = () => {
               <Link to="/">
                 <h2>
                   <img
-                    src="/images/MainLogo.png"
+                    // src="/images/MainLogo.png"
+                    src="/images/NewLogo.png"
+                    // src="/images/NewLogo2.jpeg"
                     alt="logo"
-                    // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-                    className="w-[88px] h-[70px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
+                    className="w-[88px] h-[65px] my-[1px] max-2sm:w-[60px] max-2sm:h-[50px] max-2sm:py-[2px] "
+                    // className="w-[128px] h-[100px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
                   />
                 </h2>
               </Link>
@@ -89,7 +92,7 @@ const Navbar = () => {
 
             <div className="hidden md:flex max-14inch:text-sm">
               <ul className="flex space-x-4">
-                {data?.map((d, i) => (
+                {navOptions?.map((d, i) => (
                   <li
                     key={i}
                     className="px-2 py-1 border border-white rounded hover:border-cyan-500"
@@ -131,7 +134,7 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden  mt-2 text-center  float-right absolute right-0">
             <ul className="flex  flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
-              {data?.map((d, i) => (
+              {navOptions?.map((d, i) => (
                 <li
                   key={i}
                   className="px-2 py-1 border border-white rounded hover:border-cyan-500"
@@ -139,20 +142,6 @@ const Navbar = () => {
                   <Link to={`${d.url}`}>{d.name}</Link>
                 </li>
               ))}
-              {/* <li className="px-2 py-1 border border-white rounded hover:border-cyan-500">
-                <Link to="/">Home</Link>
-              </li>
-              <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <Link to={`/about`}>About</Link>
-              </li>
-              <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <a href="#" className="">
-                  Services
-                </a>
-              </li>
-              <li className="px-2 py-1 rounded hover:bg-cyan-500 hover:text-white">
-                <Link to={`/contact-us`}>Contact</Link>
-              </li> */}
             </ul>
           </div>
         )}
@@ -291,7 +280,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* <div className="min-w-0 flex sm:hidden mt-5 max-14inch:text-sm"> */}
       {/* <div className="grid grid-cols-3 bg-gray-100 justify-center w-[300px] items-center border rounded-full mx-auto sm:hidden"> */}
       <div className="min-w-0 flex sm:hidden mt-5 max-14inch:text-sm">
         <div className="grid grid-cols-3 bg-gray-50 bg-whit justify-center w-[300px] items-center border rounded-full mx-auto sm:hidden">

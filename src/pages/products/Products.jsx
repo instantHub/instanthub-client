@@ -29,12 +29,8 @@ const Products = () => {
   const [search, setSearch] = useState("");
 
   // Get Products by Brand
-  const {
-    data: productsData,
-    isLoading: productsLoading,
-    isSuccess: productsLoaded,
-    isError,
-  } = useGetProductsQuery({ brandId, search });
+  const { data: productsData, isLoading: productsLoading } =
+    useGetProductsQuery({ brandId, search });
 
   // console.log("productsData", productsData);
 

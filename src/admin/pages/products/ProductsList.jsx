@@ -16,6 +16,10 @@ import {
   filterPage,
   clearFilter,
 } from "../../features/filterSlice";
+import {
+  fetchSearchResults,
+  clearSearchResults,
+} from "../../features/searchSlice";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
@@ -28,7 +32,38 @@ const ProductsList = () => {
 
   const filterData = useSelector((state) => state.filter.productsList);
 
-  console.log("filterData", filterData);
+  // console.log("filterData", filterData);
+
+  // THUNK START
+  const [query, setQuery] = useState("");
+  const { results, loading, error } = useSelector((state) => state.search);
+  console.log(results.products, loading, error);
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      dispatch(
+        fetchSearchResults({
+          page: filterData.page,
+          limit,
+          search: query,
+          categoryId,
+        })
+      );
+    } else {
+      dispatch(clearSearchResults());
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+  // THUNK END
 
   const [categoryId, setCategoryId] = useState(filterData.category);
 
@@ -267,6 +302,22 @@ const ProductsList = () => {
               dispatch(filterPage({ page: 1, from: "productsList" }));
             }}
           />
+
+          {/* NEW THUNK */}
+          <input
+            type="text"
+            className="px-2 text-sm py-1 rounded border"
+            value={query}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown} // Trigger search on Enter key press
+            placeholder="Search for products"
+          />
+          <button
+            className="px-2  text-sm py-1 rounded border shadow-2xl"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
 
         {/* Pagination controls */}

@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import UpdateSystemConfigurations from "./systemPriceDrops/UpdateSystemConfigurations";
 import UpdateSystemConditions from "./systemPriceDrops/UpdateSystemConditions";
 import BackButton from "../../components/BackButton";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProcessorDeductions } from "../../features/processorSlice";
 
 const ProductQuestionsList = () => {
   const { productId } = useParams();
@@ -24,11 +26,11 @@ const ProductQuestionsList = () => {
 
   const [productCategory, setProductCategory] = useState(null);
   const [processorsList, setProcessorsList] = useState(null);
-  const [selectedProcessorId, setSelectedProcessorId] = useState(null);
+  // const [selectedProcessorId, setSelectedProcessorId] = useState(null);
   const [selectedProcessorDeductions, setSelectedProcessorDeductions] =
     useState(null);
-  const [processorBasedDeductions, setProcessorBasedDeductions] =
-    useState(null);
+  // const [processorBasedDeductions, setProcessorBasedDeductions] =
+  //   useState(null);
 
   const [selectedVariantToFill, setSelectedVariantToFill] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -255,9 +257,15 @@ const ProductQuestionsList = () => {
     }
   };
 
-  // if (!productsLoading) {
-  //   console.log("productDetail", productDetail);
-  // }
+  // THUNK SETUP
+  const {
+    results: processorThunk,
+    loading,
+    error,
+  } = useSelector((state) => state.processor);
+  // console.log("processorThunk", processorThunk);
+
+  const dispatch = useDispatch();
 
   const handleProcessor = async (event) => {
     console.log("handle processor");
@@ -265,56 +273,63 @@ const ProductQuestionsList = () => {
     const processorId = event.target.value;
     console.log("processorId", processorId);
 
-    setSelectedProcessorId(processorId);
-
-    console.log("processorBasedDeductions", processorBasedDeductions);
-
-    // const processor = processorBasedDeductions.find(
-    //   (pbd) => pbd.processorId === processorId
-    // );
-    // setSelectedProcessorDeductions(processor);
-    // console.log("selectedProcessorDeductions", selectedProcessorDeductions);
-
-    async function getProcessorDeductions(processorId) {
-      let URL =
-        import.meta.env.VITE_BUILD === "development"
-          ? `http://localhost:8000/api/products/processor-deductions/${processorId}`
-          : `https://api.instantpick.in/api/products/processor-deductions/${processorId}`;
-
-      console.log("URL of processor", URL);
-
-      try {
-        // `https://api.instantpick.in/api/products/processor-deductions/${processorId}`
-        const response = await fetch(URL, {
-          method: "GET", // HTTP method
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json(); // Parse the JSON response
-        console.log("Processor Deductions:", data);
-        return data;
-      } catch (error) {
-        console.error("Failed to fetch processor deductions:", error);
-      }
-    }
-
-    const result = await getProcessorDeductions(processorId);
-    setSelectedProcessorDeductions(result);
-    console.log(
-      "selectedProcessorDeductions",
-      result,
-      selectedProcessorDeductions
-    );
-
-    // Usage example:
-    // getProcessorDeductions(processorId)
+    dispatch(fetchProcessorDeductions(processorId));
   };
+
+  // const handleProcessor = async (event) => {
+  //   console.log("handle processor");
+
+  //   const processorId = event.target.value;
+  //   console.log("processorId", processorId);
+
+  //   setSelectedProcessorId(processorId);
+
+  //   console.log("processorBasedDeductions", processorBasedDeductions);
+
+  //   // const processor = processorBasedDeductions.find(
+  //   //   (pbd) => pbd.processorId === processorId
+  //   // );
+  //   // setSelectedProcessorDeductions(processor);
+  //   // console.log("selectedProcessorDeductions", selectedProcessorDeductions);
+
+  //   async function getProcessorDeductions(processorId) {
+  //     // let URL =
+  //     //   import.meta.env.VITE_BUILD === "development"
+  //     //     ? `http://localhost:8000/api/products/processor-deductions/${processorId}`
+  //     //     : `https://api.instantpick.in/api/products/processor-deductions/${processorId}`;
+
+  //     const URL = `${
+  //       import.meta.env.VITE_APP_BASE_URL
+  //     }/api/products/processor-deductions/${processorId}`;
+
+  //     try {
+  //       const response = await fetch(URL, {
+  //         method: "GET", // HTTP method
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error(`Error: ${response.status} ${response.statusText}`);
+  //       }
+
+  //       const data = await response.json(); // Parse the JSON response
+  //       // console.log("Processor Deductions:", data);
+  //       return data;
+  //     } catch (error) {
+  //       console.error("Failed to fetch processor deductions:", error);
+  //     }
+  //   }
+
+  //   const result = await getProcessorDeductions(processorId);
+  //   setSelectedProcessorDeductions(result);
+  //   console.log(
+  //     "selectedProcessorDeductions",
+  //     result,
+  //     selectedProcessorDeductions
+  //   );
+  // };
 
   const toggleBtnStyle =
     "px-1 py-2 my-1 flex font-thin text-black bg-gray-200 border border-gray-600 transition-all duration-300";
@@ -344,12 +359,11 @@ const ProductQuestionsList = () => {
       } else if (laptopDesktop.includes(productCat.toLowerCase())) {
         setSelectedSystemCat(true);
         setSelectedDeductions(productDetail.simpleDeductions);
-        setProcessorBasedDeductions(productDetail.processorBasedDeduction);
-
-        const processorCondition = productDetail.simpleDeductions.find((d) =>
+        // setProcessorBasedDeductions(productDetail.processorBasedDeduction);
+        const processors = productDetail.simpleDeductions.find((d) =>
           d.conditionName.toLowerCase().includes("processor")
         );
-        setProcessorsList(processorCondition?.conditionLabels);
+        setProcessorsList(processors?.conditionLabels);
       } else {
         setSelectedOtherCat(true);
         setSelectedDeductions(productDetail.simpleDeductions);
@@ -357,7 +371,14 @@ const ProductQuestionsList = () => {
     }
   }, [productDetail]);
 
-  console.log("processorsList", processorsList);
+  useEffect(() => {
+    console.log("thunk response in useEffect");
+    if (Object.keys(processorThunk).length > 0) {
+      setSelectedProcessorDeductions(processorThunk);
+    }
+  }, [processorThunk]);
+
+  // console.log("processorsList", processorsList);
 
   return (
     <div className="relative">
@@ -380,7 +401,7 @@ const ProductQuestionsList = () => {
               {!variantsQuestionsDataLoading &&
                 variantsQuestionsData.map((vq) => {
                   return (
-                    <div>
+                    <div key={vq.id}>
                       <button
                         onClick={() => {
                           setSelectedVariantToFill(vq);
@@ -408,7 +429,7 @@ const ProductQuestionsList = () => {
               {productData &&
                 selectedDeductions.deductions.map((condition, index) => (
                   <div
-                    key={index}
+                    key={condition.id}
                     className={`mb-10 border my-2 py- px- rounded ${
                       index % 2 === 0 ? `` : `bg-gray-100`
                     }`}
@@ -424,7 +445,7 @@ const ProductQuestionsList = () => {
                         condition.conditionLabels.map(
                           (conditionLabel, index) => (
                             <div
-                              key={index}
+                              key={conditionLabel.id}
                               className="flex gap-6 items-center mt-2"
                             >
                               <div>
@@ -675,7 +696,7 @@ const ProductQuestionsList = () => {
                 {toggle.showSystemConfiguration &&
                   selectedDeductions.map((condition, index) => (
                     <div
-                      key={index}
+                      key={condition.id}
                       className={`w-1/2 mx-auto mb-10 border my-2 py- px- rounded ${
                         index % 2 === 0 ? `` : `bg-gray-100`
                       }`}

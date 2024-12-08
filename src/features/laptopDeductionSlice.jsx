@@ -9,6 +9,7 @@ const initialState = {
   physicalCondition: {},
   age: {},
   graphic: {},
+  modelYear: {},
 };
 
 export const laptopDeductionSlice = createSlice({
@@ -93,6 +94,15 @@ export const laptopDeductionSlice = createSlice({
         type: action.payload.type,
       };
     },
+    addModelYear: (state, action) => {
+      console.log("modelYear Reducer", action.payload);
+      state.modelYear = {
+        conditionLabel: action.payload.conditionLabel,
+        priceDrop: action.payload.priceDrop,
+        operation: action.payload.operation,
+        type: action.payload.type,
+      };
+    },
 
     clearLaptopDeductions: (state, action) => {
       // console.log("clearLaptopDeductions reducer");
@@ -107,6 +117,7 @@ export const laptopDeductionSlice = createSlice({
         physicalCondition: {},
         age: {},
         graphic: {},
+        modelYear: {},
       };
     },
   },
@@ -121,6 +132,7 @@ export const {
   addScreenCondition,
   addPhysicalCondition,
   addAge,
+  addModelYear,
   clearLaptopDeductions,
 } = laptopDeductionSlice.actions;
 

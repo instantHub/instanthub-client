@@ -143,7 +143,7 @@ const UpdateSystemConfigurations = (props) => {
                     {productData &&
                       selectedDeductions.map((condition, index) => (
                         <div
-                          key={index}
+                          key={condition.id}
                           className={`mb-10 border my-2 py- px- rounded ${
                             index % 2 === 0 ? `` : `bg-gray-100`
                           }`}
@@ -315,7 +315,7 @@ const UpdateSystemConfigurations = (props) => {
                                 // )
                                 .map((conditionLabel, index) => (
                                   <div
-                                    key={index}
+                                    key={conditionLabel.id}
                                     className="flex justify-center items-center  gap-6  mt-2 pb-1"
                                   >
                                     <div>
