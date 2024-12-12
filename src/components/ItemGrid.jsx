@@ -17,7 +17,8 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
             <img
               src={import.meta.env.VITE_APP_BASE_URL + item?.image}
               alt={item?.name || "Item"}
-              className="justify-center aspect-[3/2] object-contain "
+              className="justify-center"
+              // className="justify-center aspect-[3/2] object-contain "
             />
             {/* Optional: display item name */}
             {/* <p className="size-4 pt-1">{item?.name}</p> */}

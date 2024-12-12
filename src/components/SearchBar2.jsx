@@ -37,51 +37,73 @@ const SearchBar = () => {
       setProductsLoading(true);
       setServicesLoading(true);
 
-      let response;
-      let services;
-      if (import.meta.env.VITE_BUILD === "development") {
-        response = await axios.get("http://localhost:8000/api/products", {
+      // let response;
+      // let services;
+      // if (import.meta.env.VITE_BUILD === "development") {
+      //   response = await axios.get("http://localhost:8000/api/products", {
+      //     params: {
+      //       search: searchValue.trim() ? searchValue : undefined,
+      //       page,
+      //       limit: 10,
+      //     },
+      //   });
+
+      //   // SERVICES
+      //   services = await axios.get(
+      //     "http://localhost:8000/api/services/search",
+      //     {
+      //       params: {
+      //         search: searchValue.trim() ? searchValue : undefined,
+      //         page,
+      //         limit: 10,
+      //       },
+      //     }
+      //   );
+      // } else if (import.meta.env.VITE_BUILD === "production") {
+      //   // "https://api.yusufqureshi.online/api/products",
+      //   response = await axios.get("https://api.instantpick.in/api/products", {
+      //     params: {
+      //       //   search: search.trim() ? search : undefined,
+      //       search: searchValue.trim() ? searchValue : undefined,
+      //       page,
+      //       limit: 10,
+      //     },
+      //   });
+
+      //   // SERVICES
+      //   services = await axios.get(
+      //     "https://api.instantpick.in/api/services/search",
+      //     {
+      //       params: {
+      //         search: searchValue.trim() ? searchValue : undefined,
+      //         page,
+      //         limit: 10,
+      //       },
+      //     }
+      //   );
+      // }
+
+      let response = await axios.get(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/products`,
+        {
           params: {
             search: searchValue.trim() ? searchValue : undefined,
             page,
             limit: 10,
           },
-        });
+        }
+      );
 
-        // SERVICES
-        services = await axios.get(
-          "http://localhost:8000/api/services/search",
-          {
-            params: {
-              search: searchValue.trim() ? searchValue : undefined,
-              page,
-              limit: 10,
-            },
-          }
-        );
-      } else if (import.meta.env.VITE_BUILD === "production") {
-        // "https://api.yusufqureshi.online/api/products",
-        response = await axios.get("https://api.instantpick.in/api/products", {
+      let services = await axios.get(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/services/search`,
+        {
           params: {
-            //   search: search.trim() ? search : undefined,
             search: searchValue.trim() ? searchValue : undefined,
             page,
             limit: 10,
           },
-        });
-
-        // SERVICES
-        services = await axios.get(
-          "https://api.yusufqureshi.online/api/services/search",
-          {
-            params: {
-              search: searchValue.trim() ? searchValue : undefined,
-              page,
-              limit: 10,
-            },
-          }
-        );
-      }
+        }
+      );
 
       // console.log("services from search", services.data);
 
