@@ -32,9 +32,9 @@ export default function ManageStocks() {
   }, [stocksData]);
 
   return (
-    <div className="text-center mt-10">
+    <div className="text-center mt-10 w-full">
       <div>
-        <h1 className="text-4xl">
+        <h1 className="text-4xl max-sm:text-xl">
           Total Stocks Count {stocksData ? stocksData.length : null}
         </h1>
       </div>
@@ -47,7 +47,7 @@ export default function ManageStocks() {
           <button
             className={`${
               viewStocksIn ? `bg-red-700` : `bg-blue-700`
-            }  px-6 py-3  text-white rounded`}
+            }  px-6 py-3 max-sm:px-5 max-sm:py-2 text-lg max-sm:text-xs text-white rounded`}
           >
             View Stocks In
           </button>
@@ -57,7 +57,9 @@ export default function ManageStocks() {
             </button>
           ) : null}
 
-          <div>Total Stocks In {totalStocksIn}</div>
+          <div className="text-lg max-sm:text-xs">
+            Total Stocks In {totalStocksIn}
+          </div>
         </div>
 
         {/* Stock Out Button */}
@@ -68,7 +70,7 @@ export default function ManageStocks() {
           <button
             className={`${
               viewStocksOut ? `bg-red-700` : `bg-blue-700`
-            }  px-6 py-3  text-white rounded`}
+            }  px-6 py-3 max-sm:px-5 max-sm:py-2 text-lg max-sm:text-xs text-white rounded`}
           >
             View Stocks Out
           </button>
@@ -77,7 +79,9 @@ export default function ManageStocks() {
               <FaTimes />
             </button>
           ) : null}
-          <div>Total Stocks Out {totalStocksOut}</div>
+          <div className="text-lg max-sm:text-xs">
+            Total Stocks Out {totalStocksOut}
+          </div>
         </div>
       </div>
 

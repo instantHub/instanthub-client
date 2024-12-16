@@ -55,8 +55,10 @@ const BrandsList = () => {
           className="w-[60px] h-[60px] mx-auto max-sm:w-[40px] max-sm:h-[40px]"
         />
       </td>
-      <td className="flex justify-center m-auto px-4 py-2 max-sm:px-2 max-sm:py-1">
-        <EditButton location={`/admin/update-brand/${brand.id}`} />
+      <td className="px-4 py-2 max-sm:px-2 max-sm:py-1">
+        <div className="flex items-center justify-center">
+          <EditButton location={`/admin/update-brand/${brand.id}`} />
+        </div>
       </td>
       <td>
         <button

@@ -142,23 +142,22 @@ const CreateConditionLabels = () => {
   // console.log("TEST", conditionsLabelsData && conditionsLabelsData);
 
   return (
-    // <div className="flex w-[90%] mt-[2%]">
     // <div className="flex gap-4 w-full">
-    <div className="flex flex-col">
+    <div className="flex flex-col max-sm:w-svw">
       <div className="flex justify-between items-center">
-        <h1 className="bold text-[1.4rem] mb-2">Create ConditionLabels</h1>
-        {/* <div className="flex items-center gap-1"> */}
+        <h1 className="bold text-sm max-sm:text-xs mb-2">
+          Create ConditionLabels
+        </h1>
         <ListButton
           location={"/admin/conditionLabelsList"}
           text={"ConditionLabels List"}
         />
-        {/* </div> */}
       </div>
       <div className="flex">
         <div className="bg-white w-full flex border rounded-md shadow-lg">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-4 p-5 w-full"
+            className="flex flex-col  gap-4 p-5 w-full"
           >
             <div>
               <h2 className="">Add ConditionLabels</h2>
@@ -166,9 +165,9 @@ const CreateConditionLabels = () => {
             <hr />
 
             <div className="flex">
-              <div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
+              <div className="grid grid-cols-2 items-center gap-2 max-sm:grid-cols-1">
                 {/* Select Category */}
-                <div className="flex flex-col">
+                <div className="flex flex-col text-lg max-sm:text-sm">
                   <label>Category:</label>
                   <select
                     value={formData.category}
@@ -209,7 +208,7 @@ const CreateConditionLabels = () => {
                 </div>
 
                 {/* Select Condition */}
-                <div className="flex flex-col">
+                <div className="flex flex-col text-lg max-sm:text-sm">
                   <label>Condition:</label>
                   <select
                     className="border p-1 rounded"
@@ -250,7 +249,7 @@ const CreateConditionLabels = () => {
 
                 {/* Select Brand */}
                 {formData.conditionNameId === processorId && (
-                  <div className="flex flex-col">
+                  <div className="flex flex-col text-lg max-sm:text-sm">
                     <label>Brand:</label>
                     <select
                       name=""
@@ -280,13 +279,13 @@ const CreateConditionLabels = () => {
                 )}
 
                 {/* Enter ConditionLabel */}
-                <div className="py-2">
+                <div className="flex flex-col justify-start py-2 text-lg max-sm:text-sm">
                   <label>ConditionLabel:</label>
                   <input
                     type="text"
                     name="label"
                     value={formData.conditionLabel.label}
-                    className="border mx-2 py-1 px-2 rounded text-[15px]"
+                    className="border py-1 px-2 max-sm:px-1 rounded text-[15px]"
                     placeholder="Enter Condition Label"
                     onChange={(e) => {
                       setFormData({
@@ -329,28 +328,8 @@ const CreateConditionLabels = () => {
             </div>
           </form>
         </div>
-        {/* condition List */}
-        {/* <div className="mt-5 ml-5 overflow-y-auto scrollbar max-h-[250px]">
-          <p className="w-full text-xl font-semibold">
-            List of selected condition's conditionLabels
-          </p>
-          <ul className="">
-            {!conditionsLabelsLoading &&
-              conditionsLabelsData
-                ?.filter((cl) => cl.category?.id == formData.category)
-                .filter(
-                  (cl) => cl.conditionNameId?.id == formData.conditionNameId
-                )
-                .map((condition, index) => (
-                  <li key={index} className="bg-white text-lg px-4 py-2">
-                    {index + 1}. {condition.conditionLabel}
-                  </li>
-                ))}
-          </ul>
-        </div> */}
       </div>
     </div>
-    // </div>
   );
 };
 

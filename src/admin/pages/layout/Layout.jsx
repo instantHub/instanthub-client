@@ -16,11 +16,14 @@ const Layout = () => {
         <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
       <div
-        className={`${
-          isSidebarOpen ? `max-sm:ml-[6%] ml-[12%]` : `max-sm:ml-[13%] ml-[5%]`
-        }  `}
+      // className={`${
+      //   isSidebarOpen ? `max-sm:ml-[6%] ml-[12%]` : `max-sm:ml-[13%] ml-[5%]`
+      // }  `}
+      // className={`${
+      //   isSidebarOpen ? `max-sm:ml-[6%] ml-[12%]` : `max-sm:ml-[13%] ml-[5%]`
+      // }  `}
       >
-        <Navbar isSidebarOpen={isSidebarOpen} />
+        <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Outlet />
       </div>
     </div>

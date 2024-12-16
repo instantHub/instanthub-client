@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
-  useGetSlidersListQuery,
   useDeleteSliderMutation,
+  useGetAllSlidersQuery,
 } from "../../../features/api";
 
 const SlidersList = () => {
   const { data: slidersList, isLoading: slidersLoading } =
-    useGetSlidersListQuery();
+    useGetAllSlidersQuery();
   const [deleteSlider] = useDeleteSliderMutation();
 
   if (!slidersLoading) {
@@ -38,6 +38,7 @@ const SlidersList = () => {
                 <thead>
                   <tr className="border">
                     <th className="px-4 py-2 text-black">Slider Image</th>
+                    <th className="px-4 py-2 text-black">Slider Status</th>
                     <th className="px-4 py-2 text-black">Update</th>
                     <th className="px-4 py-2 text-black">Delete</th>
                   </tr>
@@ -56,6 +57,7 @@ const SlidersList = () => {
                             className="w-[480px] h-[150px] mx-auto "
                           />
                         </td>
+                        <td className="px-4 py-2">{slider.status}</td>
                         <td className="px-4 py-2">
                           <Link to={`/admin/update-sliders/${slider.id}`}>
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

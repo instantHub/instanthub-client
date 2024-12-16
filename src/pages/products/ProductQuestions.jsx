@@ -258,19 +258,6 @@ const ProductQuestions = () => {
   }, [productsData]);
 
   // useEffect to set initial State(productName,productCategory,productImage,variantName,price) in reducer
-  // useEffect(() => {
-  //   let prodVariant = undefined;
-  //   if (productsData) {
-  //     prodVariant = {
-  //       productCategory: productsData.category.name,
-  //       productName: productsData.name,
-  //       productImage: productsData.image,
-  //       variantName: selectedVariant,
-  //       price: priceGetUpTo,
-  //     };
-  //     dispatch(setGetUpto(prodVariant));
-  //   }
-  // }, [priceGetUpTo]);
 
   // console.log("priceGetUpTo", priceGetUpTo);
   // console.log("Deductions", deductions);
@@ -315,10 +302,10 @@ const ProductQuestions = () => {
         "Please choose appropriate condition to get an accurate quote",
       accessories: (
         <>
-          <span className="block text-lg max-sm:[16px]">
+          <span className="block text-lg max-sm:text-sm">
             Do you have the following?
           </span>
-          <span className="text-sm font-medium text-gray-600">
+          <span className="text-sm max-sm:text-xs font-medium text-gray-600">
             Please select accessories which are available
           </span>
         </>
@@ -377,7 +364,7 @@ const ProductQuestions = () => {
       <div className=" mt-4 ">
         <div className="flex  gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
           <div className="w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] ">
-            <div className="mx-auto pb-0 font-semibold">
+            <div className="mx-auto pb-0 font-semibold text-xl max-sm:text-sm">
               <h2 className="">Tell Us More About Your Device</h2>
             </div>
 
@@ -403,10 +390,10 @@ const ProductQuestions = () => {
                       className="flex flex-col"
                       key={condition.conditionId + index}
                     >
-                      <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
+                      <div className="px-5 py-2 text-center font-extrabold text-2xl max-sm:text-lg">
                         <h2>{condition.conditionName}</h2>
                         <div>
-                          <div className="text-center mb-5">
+                          <div className="text-center text-lg max-sm:text-sm mb-5">
                             <p className={conditionNameSubHeading}>
                               {getConditionSubTitle(condition.conditionName)}
                             </p>
@@ -478,7 +465,7 @@ const SwitchedOff = ({ productsData }) => {
           <span className="font-semibold"> {productsData?.name} </span>
           is <span className="text-red-500 font-semibold">Switched Off.</span>
         </h2>
-        <span className="text-lg px-4 text-[#E27D60]">
+        <span className="text-lg max-sm:text-sm px-4 text-[#E27D60]">
           Please Contact Customer Support 8722288017
         </span>
         <button
@@ -506,15 +493,15 @@ const DeviceCheck = ({ productsData, setAboutDevice }) => {
             isDeviceChecked: true,
           })
         }
-        className={`flex pr-16 items-center border rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow hover:border-cyan-500`}
+        className={`flex pr-16 max-sm:pr-8 items-center border rounded-md cursor-pointer p-2.5 max-sm:p-1.5 ring-0 ring-transparent shadow hover:border-cyan-500`}
       >
-        <span className="border border-solid rounded-full w-5 h-5 mr-1.5"></span>
+        <span className="border border-solid rounded-full w-5 h-5 max-sm:w-4 max-sm:h-4 mr-1.5"></span>
         <span className="text-sm  flex-1 flex justify-center">{innerText}</span>
       </div>
     );
   }
   return (
-    <div className="px-5 py-2 mt-10">
+    <div className="px-5 py-2 mt-10 text-lg max-sm:text-sm">
       <h2 className="justify-center text-center pb-4">
         Is your {productsData?.category?.name} Switched On?
       </h2>

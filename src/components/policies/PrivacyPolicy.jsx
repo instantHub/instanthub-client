@@ -15,6 +15,7 @@ const PrivacyPolicy = () => {
       "query-input": "required name=search_term_string",
     },
   };
+
   return (
     <>
       <Helmet>
@@ -31,7 +32,7 @@ const PrivacyPolicy = () => {
         <meta name="author" content="Yusufulla Qureshi" />
         <link
           rel="canonical"
-          href="https://instantcashpick.com/terms-conditions"
+          href="https://instantcashpick.com/privacy-policies"
         />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -52,7 +53,6 @@ const PrivacyPolicy = () => {
             regards to your personal information, please contact us at
             8722288017.
           </p>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               1. Information We Collect
@@ -65,7 +65,6 @@ const PrivacyPolicy = () => {
               contact us.
             </p>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               2. How We Use Your Information
@@ -90,7 +89,6 @@ const PrivacyPolicy = () => {
               <li>To enforce our terms, conditions, and policies.</li>
             </ul>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               3. Will Your Information Be Shared With Anyone?
@@ -101,7 +99,6 @@ const PrivacyPolicy = () => {
               fulfill business obligations.
             </p>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               4. How Long Do We Keep Your Information?
@@ -112,7 +109,6 @@ const PrivacyPolicy = () => {
               by law.
             </p>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               5. How Do We Keep Your Information Safe?
@@ -122,7 +118,6 @@ const PrivacyPolicy = () => {
               organizational and technical security measures.
             </p>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               6. Do We Use Cookies and Other Tracking Technologies?
@@ -132,7 +127,6 @@ const PrivacyPolicy = () => {
               store information.
             </p>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               7. What Are Your Privacy Rights?
@@ -144,7 +138,6 @@ const PrivacyPolicy = () => {
               activities.
             </p>
           </section>
-
           <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               8. Updates to This Policy
@@ -155,7 +148,6 @@ const PrivacyPolicy = () => {
               operational, legal, or regulatory reasons.
             </p>
           </section>
-
           <section>
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               9. Contact Us

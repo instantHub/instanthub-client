@@ -7,6 +7,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import Table from "../../components/TableView";
 import OrderRecieved from "./OrderRecieved";
 import OrderView from "./OrderView";
+import { GiCardPickup } from "react-icons/gi";
+import { FaHandsHoldingCircle } from "react-icons/fa6";
+import { MdOutlineGridView } from "react-icons/md";
+import { IoMdOpen } from "react-icons/io";
 
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =
@@ -58,14 +62,23 @@ const OrdersList = () => {
     // const minDate = new Date(Math.max(schedulePickUpDate, schedulePickUpDate)); // Set minDate to the maximum of schedulePickUpDate and schedulePickUpDate
   }, [selectedOrder]);
 
+  // const headers = [
+  //   "Order Details",
+  //   "Product",
+  //   "Customer Details",
+  //   "Address",
+  //   "OfferPrice",
+  //   "Schedule Time",
+  //   "PickUp Details",
+  //   "Status",
+  //   "Update Order",
+  //   "Delete Order",
+  // ];
+
   const headers = [
-    "Order ID",
-    "Product",
+    "Order Details",
     "Customer Details",
-    "Address",
-    "OfferPrice",
     "Schedule Time",
-    "PickUp Details",
     "Status",
     "Update Order",
     "Delete Order",
@@ -73,36 +86,80 @@ const OrdersList = () => {
 
   const rowRenderer = (order) => (
     <>
-      <td className="px-4 py-2">{order.orderId}</td>
-      {/* Product & Price */}
-      <td className="px-4 py-2">
-        {order.productName}{" "}
-        <div className="flex gap-1 text-sm opacity-50 justify-center">
-          {order.category === "Mobile" ? (
-            <>
-              <span>Variant {order.variant?.variantName}</span>
-              <span>Price {order.variant?.price}</span>
-            </>
-          ) : (
-            <span>Price {order.variant?.price}</span>
-          )}
+      {/* Order Details: Order ID - Product Name - Variant - Product Price - Offer Price */}
+      <td className="px-4 py-2 max-sm:text-xs ">
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-start p-1 pl-2 rounded bg- text-[16px] max-sm:text-xs">
+            <p className="flex max-sm:flex-col items-center justify-center gap-1">
+              <span className="font-semibold">Order ID:</span>
+              <span>{order.orderId}</span>
+            </p>
+            <p>
+              <span className="font-semibold">Product: </span>
+              <span>{order.productName} </span>
+            </p>
+
+            {/* Product Variant and Price */}
+            <div className="flex gap-1 opacity-90 justify-center">
+              {order.productCategory === "Mobile" ? (
+                <div className="flex max-sm:flex-col items-center gap-1 pt-1">
+                  <p>
+                    <span className="font-semibold">Variant: </span>
+                    {order.variant?.variantName}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Product Price: </span>
+                    {order.variant?.price}
+                  </p>
+                </div>
+              ) : (
+                <p>
+                  <span className="font-semibold">Product Price: </span>
+                  {order.variant?.price}
+                </p>
+              )}
+            </div>
+            <p>
+              <span className="font-semibold">Offer Price: </span>
+              <span>{order.offerPrice}</span>
+            </p>
+          </div>
         </div>
       </td>
+
+      {/* Product & Price */}
+      {/* <td className="px-4 py-2 text-sm max-sm:text-xs">
+        <span>{order.productName} </span>
+        <div className="flex gap-1  opacity-50 justify-center">
+          {order.productCategory === "Mobile" ? (
+            <>
+              <span>Variant: {order.variant?.variantName}</span>
+              <span>Price: {order.variant?.price}</span>
+            </>
+          ) : (
+            <span>Price: {order.variant?.price}</span>
+          )}
+        </div>
+      </td> */}
+
       {/* Customer Details */}
-      <td className="px-4 py-2 flex flex-col items-center">
-        <h2 className="text-xs">
-          Customer Name:{" "}
-          <span className="text-sm font-bold">{order.customerName}</span>
-        </h2>
-        <h2 className="text-xs">
-          Phone: <span className="text-sm font-bold">{order.phone}</span>
-        </h2>
-        <h2 className="text-xs">
-          Email: <span className="text-sm font-bold">{order.email}</span>
-        </h2>
+      <td className="py-2 flex items-center justify-center">
+        <div className="flex flex-col items-start">
+          <h2 className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            Name:{" "}
+            <span className="text-sm font-bold ">{order.customerName}</span>
+          </h2>
+          <h2 className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            Phone: <span className="text-sm font-bold">{order.phone}</span>
+          </h2>
+          <h2 className="text-xs flex flex-col items-center gap-1 max-sm:gap-0 max-sm:hidden">
+            Email: <span className="text-xs font-bold">{order.email}</span>
+          </h2>
+        </div>
       </td>
+
       {/* Address */}
-      <td className="w-[10%] px-4 py-2">
+      {/* <td className="w-[10%] px-4 py-2">
         <div className="flex flex-col">
           <span className="text-xs opacity-70">
             Address: {order.addressDetails.address}
@@ -117,11 +174,38 @@ const OrdersList = () => {
             Pincode: {order.addressDetails.pinCode}
           </span>
         </div>
+      </td> */}
+
+      {/* Offer Price */}
+      {/* <td className="px-4 py-2 text-lg max-sm:text-sm">{order.offerPrice}</td> */}
+
+      {/* Schedule & Pickup Time */}
+      <td className=" px-1 py-3 text-sm max-sm:text-xs">
+        <div className="flex flex-col items-center justify-center gap-2 px-2">
+          <p className="flex flex-col border rounded overflow-hidden bg-black/40 w-full">
+            <span className="px-2 py-1 text-white">Order Schedule Time:</span>
+            <span className="bg-white px-2">{order.schedulePickUp}</span>
+          </p>
+
+          {order.status.toLowerCase() !== "pending" ? (
+            <p className="flex flex-col border shadow rounded overflow-hidden bg-black/50 w-full">
+              <span className="px-2 py-1 text-white">
+                Order Picked Up Time:
+              </span>
+              <span className="bg-white px-2">
+                {order.pickedUpDetails.pickedUpDate}
+              </span>
+            </p>
+          ) : (
+            <p className="px-4 py-1 bg-black/70 text-white shadow rounded w-full flex items-center justify-center gap-1">
+              Pickup Pending <GiCardPickup />
+            </p>
+          )}
+        </div>
       </td>
-      <td className="px-4 py-2">{order.offerPrice}</td>
-      <td className="px-1 py-2">{order.schedulePickUp}</td>
-      {/* Order Picked Up time */}
-      <td className="w-[10%] px-1 py-2">
+
+      {/* Order Picked Up time / Detail */}
+      {/* <td className="w-[10%] px-1 py-2">
         {order.status.toLowerCase() === "pending" ? (
           <h2>Pick Up is Pending</h2>
         ) : (
@@ -144,35 +228,46 @@ const OrdersList = () => {
             </h2>
           </div>
         )}
-      </td>
+      </td> */}
+
       {/* Status */}
-      <td className="px-4 py-2">
+      <td className="px-4 py-2 text-sm max-sm:text-xs">
         {order.status.toLowerCase() === "pending" ? (
           <h2>{order.status.toUpperCase()}</h2>
         ) : (
           <h2>{order.status.toUpperCase()}</h2>
         )}
       </td>
+
       {/* Recieved / View Button */}
-      {order.status.toLowerCase() !== "received" ? (
-        <td className="px-4 py-2 text-sm">
-          <button
-            onClick={() => handleOrderOpen(order.id)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
-          >
-            Received
-          </button>
-        </td>
-      ) : (
-        <td className="px-4 py-2 text-sm">
-          <button
-            onClick={() => handleOrderView(order.id)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
-          >
-            View
-          </button>
-        </td>
-      )}
+      <td className="px-4 py-2 text-sm ">
+        <div className="flex items-center justify-center">
+          {order.status.toLowerCase() !== "received" ? (
+            <button
+              onClick={() => handleOrderOpen(order.id)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded flex items-center justify-center gap-1"
+            >
+              <span>Received</span>
+              <span>
+                <FaHandsHoldingCircle />
+              </span>
+            </button>
+          ) : (
+            // </td>
+            // <td className="px-4 py-2 text-sm">
+            <button
+              onClick={() => handleOrderView(order.id)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded flex items-center justify-center gap-1"
+            >
+              <span>View</span>
+              <span>
+                <IoMdOpen />
+              </span>
+            </button>
+          )}
+        </div>
+      </td>
+
       {/* Delete Button */}
       <td>
         <button
@@ -188,7 +283,9 @@ const OrdersList = () => {
   return (
     <>
       <div className="p-4">
-        <h2 className=" text-lg font-bold mb-4">Orders Table</h2>
+        <h2 className=" text-2xl max-sm:text-lg text-center font-serif font-bold mb-4">
+          Orders Table
+        </h2>
         <Table
           headers={headers}
           data={ordersData}

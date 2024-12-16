@@ -15,6 +15,7 @@ import {
   filterCondition,
 } from "../../features/filterSlice";
 import Table from "../../components/TableView";
+import { MdDeleteForever } from "react-icons/md";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -58,10 +59,16 @@ const ConditionLabelsTable = () => {
 
   const rowRenderer = (conditionLabel) => (
     <>
-      <td className=" py-2">{conditionLabel.category?.name}</td>
-      <td className=" py-2">{conditionLabel.conditionNameId?.conditionName}</td>
-      <td className=" py-2">{conditionLabel.conditionLabel}</td>
-      <td className=" py-2">
+      <td className="text-lg max-sm:text-xs py-2">
+        {conditionLabel.category?.name}
+      </td>
+      <td className="text-lg max-sm:text-xs py-2">
+        {conditionLabel.conditionNameId?.conditionName}
+      </td>
+      <td className="text-lg max-sm:text-xs py-2">
+        {conditionLabel.conditionLabel}
+      </td>
+      <td className="text-lg max-sm:text-xs py-2">
         {conditionLabel.conditionLabelImg ? (
           <img
             src={
@@ -91,7 +98,10 @@ const ConditionLabelsTable = () => {
             }
             disabled={deleteLoading}
           >
-            Delete
+            <span className="max-sm:hidden">Delete</span>
+            <span className="lg:hidden">
+              <MdDeleteForever />
+            </span>
           </button>
         </div>
       </td>
@@ -122,11 +132,11 @@ const ConditionLabelsTable = () => {
       </h2>
 
       {/* Filter features */}
-      <div className="w-[96%] flex justify-between gap-2 border rounded-lg shadow-lg my-5 px-5">
+      <div className="w-[96%] flex justify-between max-sm:justify-center flex-wrap gap-2 border rounded-lg shadow-lg my-5 max-sm:py-2 px-5">
         {/* Category, Condition & Clear Filter */}
-        <div className="flex justify-evenly gap-2">
+        <div className="flex justify-evenly flex-wrap gap-2">
           {/* Select Category */}
-          <div className="flex my-4 ">
+          <div className="flex my-4 max-sm:my-2 ">
             <select
               id="category"
               onChange={(e) => {
@@ -153,7 +163,7 @@ const ConditionLabelsTable = () => {
           </div>
 
           {/* Select Condition */}
-          <div className="flex gap-2 my-4">
+          <div className="flex gap-2 my-4 max-sm:my-2">
             <select
               id="condition"
               onChange={(e) => {
@@ -194,6 +204,7 @@ const ConditionLabelsTable = () => {
           </div>
         </div>
 
+        {/* Create ConditionLabel Button */}
         <div className="flex items-center">
           <BackButton
             location={"/admin/create-questions"}

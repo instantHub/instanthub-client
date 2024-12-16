@@ -55,7 +55,7 @@ const LaptopsQuestions = (props) => {
   // console.log("useSelector", data);
 
   const groupConditionsByPage = (conditions) => {
-    console.log("IN groupConditionsByPage laptop");
+    // console.log("IN groupConditionsByPage laptop");
     //   console.log(conditions);
     const grouped = conditions.reduce((acc, condition) => {
       const { page } = condition;
@@ -97,7 +97,8 @@ const LaptopsQuestions = (props) => {
     sortedConditions = groupConditionsByPage(deductions);
   }
 
-  console.log("sortedConditions LaptopQuestions", sortedConditions);
+  // console.log("sortedConditions LaptopQuestions", sortedConditions);
+
   // console.log("screenConditionPage", screenConditionPage, screenCondition);
   const handleContinueOld = () => {
     console.log("handleContinue");
@@ -287,10 +288,22 @@ const LaptopsQuestions = (props) => {
       // console.log("Processor Deductions:", data);
 
       if (productsData.brand.name !== "Apple") {
-        data.deductions = data.deductions.filter(
-          (condition) => condition.conditionName !== "Model Launch Year"
-        );
+        // data.deductions = data.deductions.filter(
+        //   (condition) => condition.conditionName !== "Model Launch Year"
+        // );
+        data.deductions = data.deductions.map((condition) => {
+          if (condition.conditionName === "Model Launch Year") {
+            return {
+              conditionId: condition.conditionId,
+              conditionName: "Skip this Condition & Continue for the next!!",
+              page: condition.page,
+              conditionLabels: [],
+            };
+          } else return condition;
+        });
+        console.log("Checking for model Launch Year:", data.deductions);
       }
+
       return data;
     } catch (error) {
       console.error("Failed to fetch processor deductions:", error);
@@ -351,6 +364,12 @@ const LaptopsQuestions = (props) => {
   // console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);
   // console.log("productsData", productsData);
+
+  // console.log(
+  //   "processorBasedDeductions[currentPageIndex - 1]",
+  //   processorBasedDeductions && processorBasedDeductions[currentPageIndex - 1]
+  // );
+
   return (
     <>
       <Helmet>
@@ -374,7 +393,7 @@ const LaptopsQuestions = (props) => {
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (
-            <h2 className="text-center font-semibold text-2xl max-2sm:text-xl mt-5">
+            <h2 className="text-center font-semibold text-2xl max-sm:text-sm mt-5">
               Select the system configuration of your device?
             </h2>
           )}
@@ -382,13 +401,13 @@ const LaptopsQuestions = (props) => {
             {/* List of Configurations(Processor, Ram, Hard Disk) to select */}
             {currentPageIndex === 0 &&
               sortedConditions[0].conditions.map((condition, index) => (
-                <div key={index} className="px-4 py-4">
-                  <div className="px-1 py-2 font-extrabold text-lg ">
+                <div key={index} className="px-4 py-4 max-sm:py-2">
+                  <div className="px-1 py-2 font-extrabold text-lg max-sm:text-sm">
                     <h2>{condition.conditionName}</h2>
                   </div>
                   <div className="flex">
                     <select
-                      className="block appearance-none w-full bg-white border border-gray-0 hover:border-gray-200 px-4 py-4 pr-8 rounded shadow-lg leading-tight focus:outline-none focus:shadow-outline"
+                      className="block appearance-none w-full bg-white border border-gray-0 hover:border-gray-200 px-4 py-4 pr-8 max-sm:px-2 max-sm:py-2 rounded shadow-lg max-sm:text-xs leading-tight focus:outline-none focus:shadow-outline"
                       onChange={handleSelectChange}
                     >
                       <option
@@ -416,17 +435,17 @@ const LaptopsQuestions = (props) => {
 
             {/* List all other conditions to select based on the processor selected */}
             {currentPageIndex > 0 &&
-              processorBasedDeductions[currentPageIndex - 1].conditions.map(
+              processorBasedDeductions[currentPageIndex - 1]?.conditions?.map(
                 (condition, index) => (
                   <div key={index} className="px-4 py-4">
                     {/* Condition Name Headings */}
-                    <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
+                    <div className="px-5 py-2 text-center font-extrabold text-2xl max-sm:text-lg">
                       <h2>{condition.conditionName}</h2>
                     </div>
 
                     <div>
                       <div className="text-center mb-5">
-                        <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
+                        <p className="text-lg font-medium text-gray-600 max-sm:text-xs">
                           {getConditionSubTitle(condition.conditionName)}
                         </p>
                       </div>
@@ -458,7 +477,7 @@ const LaptopsQuestions = (props) => {
           <div className="flex items-center">
             <button
               onClick={handleContinue}
-              className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+              className="px-2 py-1 text-lg max-sm:text-sm bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
             >
               Continue
             </button>

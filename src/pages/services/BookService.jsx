@@ -602,7 +602,7 @@ export default function BookService() {
                         value={`${
                           !createServiceOrderLoading ? "Book Now" : "Loading..."
                         } `}
-                        className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
+                        className="border rounded px-2 py-1 w-1/5 max-sm:w-fit bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
                         disabled={createServiceOrderLoading}
                       />
                     </div>

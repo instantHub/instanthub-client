@@ -218,8 +218,10 @@ const ProductsList = () => {
           </div>
         )}
       </td>
-      <td className="flex justify-center py-2">
-        <EditButton location={`/admin/update-product/${product.id}`} />
+      <td className="py-2">
+        <div className="flex items-center justify-center">
+          <EditButton location={`/admin/update-product/${product.id}`} />
+        </div>
       </td>
       {/* DELETE */}
       <td>
@@ -268,7 +270,7 @@ const ProductsList = () => {
       </div>
 
       {/* Filter features */}
-      <div className="w-[96%] flex justify-evenly gap-2 border rounded-lg shadow-lg my-5 px-5">
+      <div className="w-[96%] flex justify-evenly flex-wrap gap-2 border rounded-lg shadow-lg my-5 px-5">
         {/* Select Category */}
         <div className="flex my-4 ">
           <select
@@ -304,7 +306,7 @@ const ProductsList = () => {
           />
 
           {/* NEW THUNK */}
-          <input
+          {/* <input
             type="text"
             className="px-2 text-sm py-1 rounded border"
             value={query}
@@ -317,7 +319,7 @@ const ProductsList = () => {
             onClick={handleSearch}
           >
             Search
-          </button>
+          </button> */}
         </div>
 
         {/* Pagination controls */}
@@ -386,19 +388,6 @@ const ProductsList = () => {
             Clear Filter
           </button>
         </div>
-
-        {/* Clear filter */}
-        {/* <div className="flex justify-around items-center gap-2 my-4">
-          <button
-            className="text-red-600 hover:border-b-[1px] border-red-600"
-            onClick={() => {
-              dispatch(clearFilter({ clear: "productsList" }));
-              setCategoryId("");
-            }}
-          >
-            Clear Filter
-          </button>
-        </div> */}
 
         {/* Create Product Button */}
         <div className="flex items-center">

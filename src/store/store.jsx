@@ -10,6 +10,7 @@ import serviceProblemsSlice from "../features/serviceProblemsSlice";
 import filterSlice from "../admin/features/filterSlice";
 import searchSlice from "../admin/features/searchSlice";
 import processorSlice from "../admin/features/processorSlice";
+import adminPanelSlice from "../admin/features/adminPanelSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     filter: filterSlice,
     search: searchSlice,
     processor: processorSlice,
+    adminPanel: adminPanelSlice,
 
     [api.reducerPath]: api.reducer,
     [adminApiSlice.reducerPath]: adminApiSlice.reducer,

@@ -306,8 +306,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
-    getSlidersList: build.query({
-      query: () => `/api/sliders`,
+
+    // Sliders
+    getActiveSlidersList: build.query({
+      query: () => `/api/sliders/active-sliders`,
+      providesTags: ["Sliders"],
+    }),
+    getAllSliders: build.query({
+      query: () => `/api/sliders/all-sliders`,
       providesTags: ["Sliders"],
     }),
     createSlider: build.mutation({
@@ -346,6 +352,8 @@ export const api = createApi({
       }),
       invalidatesTags: ["Sliders"],
     }),
+
+    // Series
     getAllSeries: build.query({
       query: () => `/api/series`,
       providesTags: ["Series"],
@@ -615,6 +623,9 @@ export const api = createApi({
       }),
       invalidatesTags: ["Variants Questions"],
     }),
+    dashboardDetails: build.query({
+      query: () => "/api/admin/dashboard",
+    }),
   }),
 });
 
@@ -655,7 +666,8 @@ export const {
   useUploadCustomerProofImageMutation,
   useOrderReceivedMutation,
   useDeleteOrderMutation,
-  useGetSlidersListQuery,
+  useGetActiveSlidersListQuery,
+  useGetAllSlidersQuery,
   useCreateSliderMutation,
   useUploadSliderImageMutation,
   useUpdateSliderMutation,
@@ -694,6 +706,7 @@ export const {
   useCreateVariantQuestionsMutation,
   useUpdateVariantQuestionsMutation,
   useDeleteVariantQuestionsMutation,
+  useDashboardDetailsQuery,
 } = api;
 
 // useGetAllQuestionsQuery,

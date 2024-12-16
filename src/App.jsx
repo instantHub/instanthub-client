@@ -83,12 +83,16 @@ import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
 import AdminCreateVariantsQuestions from "./admin/pages/variantQuestions/CreateVariantsQuestions";
 import AdminUpdateVariantQuestions from "./admin/pages/variantQuestions/UpdateVariantQuestions";
 
+// POSTS
+import AdminCreatePost from "./admin/pages/posts/CreatePost";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorComponent from "./components/ErrorComponent";
 import AboutPage from "./components/About";
 import ContactUs from "./components/ContactUs";
 import CreateQuestions from "./admin/pages/questions/CreateQuestions";
+import Loading from "./components/Loading";
 
 // import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
 // import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
@@ -97,7 +101,7 @@ import CreateQuestions from "./admin/pages/questions/CreateQuestions";
 const lazyLoad = (importFunc) => {
   const LazyComponent = lazy(importFunc);
   return (
-    <Suspense fallback={<div>Loading fallback...</div>}>
+    <Suspense fallback={<Loading />}>
       <LazyComponent />
     </Suspense>
   );
@@ -129,6 +133,10 @@ function App() {
         },
         {
           path: "/privacy-policies",
+          element: <ClientTermsAndPolicies />,
+        },
+        {
+          path: "/service-policy",
           element: <ClientTermsAndPolicies />,
         },
         {
@@ -469,6 +477,13 @@ function App() {
             {
               path: "/admin/update-variant-questions/:variantQuestionsId",
               element: <AdminUpdateVariantQuestions />,
+            },
+
+            // POSTS
+            {
+              path: "/admin/create-post",
+              // element: <AdminProductQuestions />,
+              element: lazyLoad(() => import("./admin/pages/posts/CreatePost")),
             },
           ],
         },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
-  useGetSlidersListQuery,
+  useGetAllSlidersQuery,
   useUpdateSliderMutation,
   useUploadSliderImageMutation,
 } from "../../../features/api";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const UpdateSlider = () => {
   const { sliderId } = useParams();
   const { data: slidersList, isLoading: slidersLoading } =
-    useGetSlidersListQuery();
+    useGetAllSlidersQuery();
   const [updateSlider] = useUpdateSliderMutation();
   const [uploadSliderImage, { isLoading: uploadLoading }] =
     useUploadSliderImageMutation();

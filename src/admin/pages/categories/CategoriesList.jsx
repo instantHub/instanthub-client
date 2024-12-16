@@ -53,15 +53,15 @@ const CategoriesList = () => {
       <td className="px-4 py-2">{category.name}</td>
       {/* Brands list */}
       {category.brands.length != 0 ? (
-        <td className="px-4 py-2 grid grid-cols-2 text-sm max-sm:text-xs max-sm:grid-cols-1">
+        <td className="px-4 py-2 max-sm:px-1 grid grid-cols-3 text-sm max-sm:text-[10px] max-sm:grid-cols-1 max-h-[250px] overflow-y-auto scrollbar">
           {category.brands.map((brand) => (
-            <h3 key={`${category}-${brand.name}-${brand.id}`} className="py-1">
+            <h3 key={`${category}-${brand.name}-${brand.id}`} className="pb-1">
               {brand.name}
             </h3>
           ))}
         </td>
       ) : (
-        <td className="px-4 py-2 text-xs text-red-700 opacity-70 ">
+        <td className="px-4 max-sm:px-2 py-2 text-xs text-red-700 opacity-70">
           Brands <br />
           not available
         </td>
@@ -71,11 +71,13 @@ const CategoriesList = () => {
         <img
           src={import.meta.env.VITE_APP_BASE_URL + category.image}
           alt="CAT"
-          className="w-[60px] h-[60px] mx-auto "
+          className="w-[60px] h-[60px] mx-auto"
         />
       </td>
-      <td className="flex justify-center px-4 py-2">
-        <EditButton location={`/admin/update-category/${category.id}`} />
+      <td className="">
+        <div className="flex items-center justify-center">
+          <EditButton location={`/admin/update-category/${category.id}`} />
+        </div>
       </td>
       <td>
         <button
@@ -96,7 +98,7 @@ const CategoriesList = () => {
         </h2>
         <div>
           <Link to={"/admin/add-category"}>
-            <button className="bg-blue-700 text-white px-2 py-1 rounded">
+            <button className="bg-blue-700 text-white text-lg max-sm:text-xs px-2 py-1 rounded">
               Create Category
             </button>
           </Link>

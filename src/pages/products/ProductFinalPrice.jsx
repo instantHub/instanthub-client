@@ -544,7 +544,7 @@ const ProductFinalPrice = () => {
       </Helmet>
 
       <div className="flex flex-col justify-between items- pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
-        <div className=" justify-start items-start mb-2">
+        <div className=" justify-start items-start mb-2 text-lg  max-sm:text-xs">
           <Link to={`/categories/brands/productDetails/${productDetails?.id}`}>
             <button className=" text-cyan-600 bg-white px-2 py-1 border border-cyan-600 rounded">
               Back
@@ -552,7 +552,7 @@ const ProductFinalPrice = () => {
           </Link>
         </div>
 
-        <div className="w-full flex gap-10 max-sm:flex-col">
+        <div className="w-full flex gap-10 max-sm:flex-col text-[16px] max-sm:text-xs">
           {/* Left */}
           <div
             className={`${
@@ -570,7 +570,7 @@ const ProductFinalPrice = () => {
                 />
               </div>
               <div className="flex flex-col items-center justify-center">
-                <div className="flex flex-col gap-2 text-lg text-yellow-500 font-semibold max-sm:text-xl">
+                <div className="flex flex-col gap-2 text-lg  max-sm:text-xs text-yellow-500 font-semibold">
                   <span>{selectedProdDetails.productName}</span>
                   {productDetails?.category.name === "Mobile" ? (
                     <span>{selectedProdDetails.getUpTo.variantName}</span>
@@ -601,7 +601,7 @@ const ProductFinalPrice = () => {
 
             {/* Price Summary */}
             <div className="flex flex-col w-full items-start mt-2 mb-7 gap-4 border rounded shadow-md px-4 py-2">
-              <h2 className="pb-2 border-b">Price Summary</h2>
+              <h2 className="pb-2 border-b font-semibold">Price Summary</h2>
               <div className="w-full flex justify-between gap-6 items-center pb-3 border-b">
                 <h2>Offered Price</h2>
                 <span>₹{offerPrice}</span>
@@ -677,7 +677,8 @@ const ProductFinalPrice = () => {
               </div>
             </div>
 
-            <div className="w-full px-4 py-4 border rounded shadow-md">
+            {/* Apply Coupon */}
+            <div className="w-full px-4 py-4 max-sm:py-3 border rounded shadow-md">
               <div
                 className="flex justify-between items-center"
                 onClick={() => setCouponView(true)}
@@ -713,15 +714,15 @@ const ProductFinalPrice = () => {
               <DisplayDeductions data={deductionsByType} />
 
               {accessoriesNotSelected.length > 0 ? (
-                <div className="flex flex-col items-start">
-                  <h2 className="text-lg font-semibold py-2">
+                <div className="flex flex-col items-start text-lg max-sm:text-xs">
+                  <h2 className="text-xl max-sm:text-sm font-semibold py-2">
                     Accessories Not Selected
                   </h2>
                   <div>
                     {accessoriesNotSelected.map((a, index) => (
                       <h2 key={index}>
                         <span>{index + 1}. </span>{" "}
-                        <span className="text-lg font-semibold text-red-600">
+                        <span className="text-lg max-sm:text-xs font-semibold text-red-600">
                           {a.conditionLabel}
                         </span>
                       </h2>
@@ -788,7 +789,10 @@ const ProductFinalPrice = () => {
       )}
 
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div
+          role="dialog"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        >
           <div className="bg-white p-8 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold mb-4">Enter your details</h2>
@@ -805,6 +809,7 @@ const ProductFinalPrice = () => {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-2 justify-center"
               >
+                {/* Name */}
                 <div>
                   <label htmlFor="name" className="max-sm:text-md">
                     Name:{" "}
@@ -821,6 +826,7 @@ const ProductFinalPrice = () => {
                     required
                   />
                 </div>
+                {/* Email */}
                 <div>
                   <label htmlFor="email">Email: </label>
                   <input
@@ -835,6 +841,7 @@ const ProductFinalPrice = () => {
                     required
                   />
                 </div>
+                {/* Phone Number */}
                 <div>
                   <label htmlFor="phone">Phone Number: </label>
                   <input
@@ -850,6 +857,7 @@ const ProductFinalPrice = () => {
                     required
                   />
                 </div>
+                {/* Address */}
                 <div>
                   <label htmlFor="address">Address: </label>
                   <input
@@ -924,6 +932,7 @@ const ProductFinalPrice = () => {
                   </div>
                 </div>
 
+                {/* Date Picker */}
                 <div className="flex items-center">
                   <h2 className="max-sm:text-md">Select Date and Time:</h2>{" "}
                   <DatePicker
@@ -960,8 +969,9 @@ const ProductFinalPrice = () => {
                     Select Payment Mode
                   </h2>
                   <div className="space-y-2">
-                    <label className="flex items-center">
+                    <div className="flex items-center">
                       <input
+                        role="radio"
                         id="instantCash"
                         type="radio"
                         name="paymentMode"
@@ -970,9 +980,9 @@ const ProductFinalPrice = () => {
                         onChange={handlePaymentModeChange}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                       />
-                      <span className="ml-2 text-sm font-medium text-gray-900">
+                      <label className="ml-2 text-sm font-medium text-gray-900">
                         Instant Cash
-                      </span>
+                      </label>
                       <div className="mx-2">
                         <img
                           src="/images/instantcash.webp"
@@ -980,9 +990,10 @@ const ProductFinalPrice = () => {
                           className="w-16 h-7"
                         />
                       </div>
-                    </label>
-                    <label className="flex items-center">
+                    </div>
+                    <div className="flex items-center">
                       <input
+                        role="radio"
                         id="digitalPayments"
                         type="radio"
                         name="paymentMode"
@@ -1001,12 +1012,13 @@ const ProductFinalPrice = () => {
                           className="w-14 h-7"
                         />
                       </div>
-                    </label>
+                    </div>
 
                     {selectedPaymentMode === "Digital Payments" && (
                       <div className="ml-6 mt-2 space-y-2">
                         <label className="flex items-center">
                           <input
+                            role="radio"
                             id="gpay"
                             type="radio"
                             name="digitalPaymentMode"
@@ -1021,6 +1033,7 @@ const ProductFinalPrice = () => {
                         </label>
                         <label className="flex items-center">
                           <input
+                            role="radio"
                             id="phonepe"
                             type="radio"
                             name="digitalPaymentMode"
@@ -1035,6 +1048,7 @@ const ProductFinalPrice = () => {
                         </label>
                         <label className="flex items-center">
                           <input
+                            role="radio"
                             id="upi"
                             type="radio"
                             name="digitalPaymentMode"
@@ -1055,9 +1069,10 @@ const ProductFinalPrice = () => {
                 <input
                   type="submit"
                   value={`${!ordersLoading ? "Sell" : "Loading..."} `}
-                  name=""
                   className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
+                  aria-label="Order Booking Submit Button"
                   disabled={ordersLoading}
+                  aria-disabled={ordersLoading}
                 />
               </form>
             </div>
@@ -1070,7 +1085,7 @@ const ProductFinalPrice = () => {
 
 // Main component to render the entire data object
 const DisplayDeductions = ({ data }) => (
-  <div className="mt-5">
+  <div className="mt-5 text-lg max-sm:text-sm">
     {Object.entries(data).map(([conditionName, conditionLabels]) => (
       <Section
         key={conditionName}
@@ -1085,7 +1100,7 @@ const DisplayDeductions = ({ data }) => (
 const Section = ({ conditionName, conditionLabels }) => {
   return (
     <div className="mb-5">
-      <h2 className="py-1 text-xl text-green-600 font-bold">{conditionName}</h2>
+      <h2 className="py-1 text-xl max-sm:text-sm text-green-600 font-bold">{conditionName}</h2>
       <ul className="">
         {conditionLabels.map((cl, i) => (
           <Item key={i} clNo={i + 1} conditionLabel={cl.conditionLabel} />

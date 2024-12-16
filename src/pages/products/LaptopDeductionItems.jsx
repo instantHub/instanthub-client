@@ -176,7 +176,7 @@ const LaptopDeductionItems = ({
 
           <div
             key={label.conditonLabelId}
-            className={`${
+            className={`text-lg  max-sm:text-xs ${
               deductionData.some(
                 (condLabel) => condLabel.conditionLabel == label.conditionLabel
               )
@@ -191,8 +191,8 @@ const LaptopDeductionItems = ({
             }
             ${
               shouldShowImage
-                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
-                : "flex text-sm items-center gap-1 py-4 bg-slate-100"
+                ? "py-2 text-center w-full h-[100px] max-sm:h-[80px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
+                : "flex text-sm h-[90px] max-sm:h-[65px] items-center gap-1 py-4 bg-slate-100"
               // : "flex text-sm items-center gap-1 py-4 bg-white"
             }
 
@@ -202,7 +202,7 @@ const LaptopDeductionItems = ({
             {!shouldShowImage ? (
               <>
                 <span
-                  className={`${
+                  className={` ${
                     deductionData.some(
                       (condLabel) =>
                         condLabel.conditionLabel == label.conditionLabel
@@ -215,7 +215,9 @@ const LaptopDeductionItems = ({
                 </span>
               </>
             ) : null}
-            {label.conditionLabel}
+            <span className="block max-sm:text-[11px] px-1">
+              {label.conditionLabel}
+            </span>
           </div>
         </div>
       ))}

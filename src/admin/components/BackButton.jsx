@@ -7,7 +7,7 @@ const BackButton = ({ location, text }) => {
     <div
       className={`${
         text ? `bg-blue-700 rounded` : `bg-black rounded hover:bg-gray-700`
-      }  text-white inline-block m-2 px-2 py-1  `}
+      }  text-white text-lg max-sm:text-xs inline-block m-2 px-2 py-1  `}
     >
       <Link className="flex items-center justify-between" to={location}>
         <IoIosArrowBack /> {text ? text : "Back"}

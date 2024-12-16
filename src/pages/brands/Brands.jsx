@@ -12,7 +12,7 @@ const Brands = () => {
   const [category, setCategory] = useState(null);
   const { data: brands = [], isLoading: brandsLoading } =
     useGetBrandQuery(catId);
-  console.log("brands", brands);
+  // console.log("brands", brands);
 
   useEffect(() => {
     if (!brandsLoading) setCategory(brands[0]?.category);
@@ -36,12 +36,12 @@ const Brands = () => {
       </Helmet>
 
       <div className="mt-8 w-4/5 mx-auto">
-        <h1 className="pb-5 text-2xl font-bold max-sm:text-xl">
+        <h1 className="pb-5 text-2xl font-bold max-sm:text-lg">
           {/* Sell your {category?.name} for Instant Cash */}
-          Sell your Mobile for Instant Cash
+          Sell your {category?.name} for Instant Cash
         </h1>
 
-        <div className="mb-6">
+        <div className="mb-6 text-lg max-sm:text-sm">
           {!brandsLoading && (
             <div className="flex items-center gap-1">
               <h2 className="flex items-center opacity-60 gap-1">

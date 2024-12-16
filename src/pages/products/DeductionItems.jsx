@@ -158,7 +158,7 @@ const DeductionItems = ({
                   label.conditionLabelImg
                 }`}
                 alt="LabelImg"
-                className="size-20 max-sm:size-24"
+                className="size-20 max-sm:size-20"
               />
             </div>
           )}
@@ -182,8 +182,8 @@ const DeductionItems = ({
             } 
             ${
               shouldShowImage
-                ? "py-2 text-center w-full h-[100px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs "
-                : "flex justify-between text-sm h-[90px] items-center gap-1 py-4"
+                ? "py-2 text-center w-full h-[100px] max-sm:h-[80px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs "
+                : "flex justify-between text-sm h-[90px] max-sm:h-[30px] items-center gap-1 py-4"
               // "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white"
             }
 
@@ -211,7 +211,9 @@ const DeductionItems = ({
                 </span>
               </>
             ) : null}
-            <span className="block">{label.conditionLabel}</span>
+            <span className="block text-sm max-sm:text-xs px-1">
+              {label.conditionLabel}
+            </span>
           </div>
         </div>
       ))}

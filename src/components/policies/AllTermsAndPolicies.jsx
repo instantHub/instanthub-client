@@ -3,11 +3,13 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import TermsAndConditions from "./TermsAndConditions";
 import TermsOfUse from "./TermsOfUse";
 import { useLocation, useNavigate } from "react-router-dom";
+import ServicePolicy from "./ServicePolicy";
 
 const TermsAndPolicies = () => {
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const [termsAndConditions, setTermsAndConditions] = useState(false);
   const [termsOfUse, setTermsOfUse] = useState(false);
+  const [servicePolicy, setServicePolicy] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const TermsAndPolicies = () => {
     setPrivacyPolicy(true);
     setTermsOfUse(false);
     setTermsAndConditions(false);
+    setServicePolicy(false);
   };
 
   useEffect(() => {
@@ -26,16 +29,24 @@ const TermsAndPolicies = () => {
       setTermsAndConditions(true);
       setPrivacyPolicy(false);
       setTermsOfUse(false);
+      setServicePolicy(false);
     } else if (location.pathname.includes("use")) {
       setTermsOfUse(true);
       setPrivacyPolicy(false);
+      setTermsAndConditions(false);
+      setServicePolicy(false);
+    } else if (location.pathname.includes("service-policy")) {
+      setServicePolicy(true);
+      setPrivacyPolicy(false);
+      setTermsOfUse(false);
       setTermsAndConditions(false);
     }
   });
 
   const activeSideBar =
     "text-green-600 font-extrabold text-[22px] max-md:text-2xl max-2sm:text-xl border-b border-dashed pb-2";
-  const nonActiveSideBar = "text-xl max-md:text-xl max-2sm:text-lg border-b border-dashed pb-2 text-gray-600 font-semibold";
+  const nonActiveSideBar =
+    "text-xl max-md:text-xl max-2sm:text-lg border-b border-dashed pb-2 text-gray-600 font-semibold";
 
   return (
     <div className="mx-10 flex items-center justify-center bg-white max-md:mx-5">
@@ -45,9 +56,19 @@ const TermsAndPolicies = () => {
           <div className="mt-[30px] h-[300px] w-[300px] max-md:w-[300px] max-2sm:w-[250px] flex flex-col gap-6 px-4 py-10 border-r shadow-inner text-2xl max-md:mt-5 max-md:h-fit max-sm:items-center">
             <div
               onClick={() => navigate("/privacy-policies")}
-              className={`${privacyPolicy ? activeSideBar : nonActiveSideBar} mt-10 max-sm:mt-0`}
+              className={`${
+                privacyPolicy ? activeSideBar : nonActiveSideBar
+              } mt-10 max-sm:mt-0`}
             >
               Privacy Policy
+            </div>
+            <div
+              onClick={() => navigate("/service-policy")}
+              className={`${
+                servicePolicy ? activeSideBar : nonActiveSideBar
+              }`}
+            >
+              Service Policy
             </div>
             <div
               onClick={() => navigate("/terms-conditions")}
@@ -68,6 +89,9 @@ const TermsAndPolicies = () => {
         <div className="flex-1">
           <div className="max-h-screen overflow-scroll scrollbar">
             {privacyPolicy ? <PrivacyPolicy /> : null}
+          </div>
+          <div className="max-h-screen overflow-scroll scrollbar">
+            {servicePolicy ? <ServicePolicy /> : null}
           </div>
           <div className="max-h-screen overflow-scroll scrollbar">
             {termsAndConditions ? <TermsAndConditions /> : null}

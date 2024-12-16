@@ -139,14 +139,15 @@ const Products = () => {
         </div>
 
         <div>
-          <p className="pb-5 text-2xl font-bold max-sm:text-xl">
+          <p className="pb-5 text-2xl font-bold max-sm:text-lg">
             Sell your{" "}
             {category && brand ? `${brand.name} ${category.name}` : null} for
             Instant Cash
           </p>
         </div>
 
-        <div className="mx-0 mb-6">
+        {/* Home > Cat > Brand */}
+        <div className="mx-0 mb-6 text-lg max-sm:text-sm">
           <div className="flex items-center gap-1">
             <h2 className="flex items-center opacity-60 gap-1">
               <Link to={"/"}>Home</Link>

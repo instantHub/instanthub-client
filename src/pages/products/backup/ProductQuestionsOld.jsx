@@ -58,7 +58,8 @@ const ProductQuestions = () => {
   //   screenConditionPage
   // );
 
-  const [age, setAge] = useState(false);
+  const [age, setAge] = useState(null);
+  const [agePage, setAgePage] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -126,6 +127,11 @@ const ProductQuestions = () => {
       screenCondition === undefined
     ) {
       toast.error("Select Screen Condition to proceed..!");
+      return;
+    }
+
+    if (currentPageIndex === agePage - 1 && age === null) {
+      toast.error("Select Age to proceed..!");
       return;
     }
 
@@ -221,6 +227,8 @@ const ProductQuestions = () => {
             setScreenConditionPage(d.page);
           } else if (d.conditionName.toLowerCase().includes("defect")) {
             setDisplayDefectConditionPage(d.page);
+          } else if (d.conditionName.toLowerCase().includes("age")) {
+            setAgePage(d.page);
           }
         });
       } else if (productsData.category.name !== "Mobile") {
@@ -307,7 +315,9 @@ const ProductQuestions = () => {
         "Please choose appropriate condition to get an accurate quote",
       accessories: (
         <>
-          <p className="text-lg max-sm:[16px]">Do you have the following?</p>
+          <span className="block text-lg max-sm:[16px]">
+            Do you have the following?
+          </span>
           <span className="text-sm font-medium text-gray-600">
             Please select accessories which are available
           </span>
@@ -341,7 +351,7 @@ const ProductQuestions = () => {
     return <SwitchedOff productsData={productsData} />;
 
   // console.log("deductions", deductions);
-  console.log("sortedConditions", sortedConditions);
+  console.log("sortedConditions ProductQuestions", sortedConditions);
 
   return (
     <>
@@ -363,6 +373,7 @@ const ProductQuestions = () => {
         />
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
+
       <div className=" mt-4 ">
         <div className="flex  gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
           <div className="w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] ">
@@ -379,7 +390,6 @@ const ProductQuestions = () => {
             )}
 
             {/* Products that are not under Laptop Category */}
-            {/* All conditions Except AGE */}
             {aboutDevice.isDeviceOn &&
             // productsData &&
             deductions &&
@@ -388,113 +398,43 @@ const ProductQuestions = () => {
             ) ? (
               <div key={sortedConditions[currentPageIndex].page}>
                 {sortedConditions[currentPageIndex].conditions.map(
-                  (condition, index) =>
-                    !condition.conditionName.includes("Age") ? (
-                      <div
-                        className="flex flex-col"
-                        key={condition.conditionId + index}
-                      >
-                        <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
-                          <h2>{condition.conditionName}</h2>
-                          <div>
-                            <div className="text-center mb-5">
-                              <p className={conditionNameSubHeading}>
-                                {getConditionSubTitle(condition.conditionName)}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <DeductionItems
-                          conditionName={condition.conditionName}
-                          conditionLabels={condition.conditionLabels}
-                          setPhysicalCondition={setPhysicalCondition}
-                          setScreenCondition={setScreenCondition}
-                          setDisplayDefectCondition={setDisplayDefectCondition}
-                          handleLabelSelection={handleLabelSelection}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <div className="flex flex-col">
-                          <div className="px-5 py-2 text-center font-extrabold text-2xl">
-                            <h2>{condition.conditionName}</h2>
-                          </div>
-                          <div className="text-center mb-8">
-                            <p className="text-lg max-sm:text-sm max-sm:px-2">
-                              Let us know how old your device is. Valid bill is
-                              needed for device less than 11 months.
+                  (condition, index) => (
+                    <div
+                      className="flex flex-col"
+                      key={condition.conditionId + index}
+                    >
+                      <div className="px-5 py-2 text-center font-extrabold text-2xl max-2sm:text-xl">
+                        <h2>{condition.conditionName}</h2>
+                        <div>
+                          <div className="text-center mb-5">
+                            <p className={conditionNameSubHeading}>
+                              {getConditionSubTitle(condition.conditionName)}
                             </p>
                           </div>
-
-                          <div className="grid grid-cols-2 gap-4 items-center px-4 max-sm:grid-cols-1 max-sm:gap-2">
-                            {condition.conditionLabels.map((label, index) => (
-                              <div
-                                key={label.id + index}
-                                className={`${
-                                  //   selectedLabels.includes(label.conditionLabel)
-                                  data.productAge.conditionLabel ===
-                                  label.conditionLabel
-                                    ? "border-cyan-500"
-                                    : "bg-gray-100"
-                                } flex pl-3 border rounded items-center`}
-                                onClick={() =>
-                                  handleAge(
-                                    label.conditionLabel,
-                                    label.priceDrop,
-                                    label.operation
-                                  )
-                                }
-                              >
-                                <div className="flex text-sm items-center gap-1 py-4">
-                                  <span
-                                    className={`${
-                                      //   selectedLabels.includes(label.conditionLabel)
-                                      data.productAge.conditionLabel ===
-                                      label.conditionLabel
-                                        ? "border-cyan-500"
-                                        : "border-surface-dark"
-                                    } border border-solid rounded-full w-5 h-5 mr-1.5`}
-                                  ></span>
-                                  <span className="text-sm flex-1 flex justify-center">
-                                    {label.conditionLabel}
-                                  </span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-
-                          {age ? (
-                            <button
-                              onClick={handleContinue}
-                              className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-                            >
-                              Continue
-                            </button>
-                          ) : (
-                            <button
-                              className="px-2 py-1 border rounded w-[35%] m-2 bg-gray-400 mx-auto opacity-35 mt-6"
-                              disabled
-                            >
-                              Select Age To Continue
-                            </button>
-                          )}
                         </div>
-                      </>
-                    )
+                      </div>
+
+                      <DeductionItems
+                        conditionName={condition.conditionName}
+                        conditionLabels={condition.conditionLabels}
+                        setPhysicalCondition={setPhysicalCondition}
+                        setScreenCondition={setScreenCondition}
+                        setDisplayDefectCondition={setDisplayDefectCondition}
+                        handleLabelSelection={handleLabelSelection}
+                        setAge={setAge}
+                      />
+                    </div>
+                  )
                 )}
-                {!sortedConditions[
-                  currentPageIndex
-                ].conditions[0].conditionName.includes("Age") && (
-                  <div className="flex items-center">
-                    <button
-                      onClick={handleContinue}
-                      className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
-                    >
-                      Continue
-                    </button>
-                  </div>
-                )}
+
+                <div className="flex items-center">
+                  <button
+                    onClick={handleContinue}
+                    className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                  >
+                    Continue
+                  </button>
+                </div>
               </div>
             ) : (
               aboutDevice.isDeviceOn &&

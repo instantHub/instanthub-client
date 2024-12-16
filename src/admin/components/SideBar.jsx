@@ -26,10 +26,16 @@ import { GiStockpiles, GiCash } from "react-icons/gi";
 import { ImProfile } from "react-icons/im";
 import { isAction } from "@reduxjs/toolkit";
 // import { FaCentSign } from "react-icons/fa6";
+import { IoMdMenu, IoMdClose } from "react-icons/io";
+import { MdOutlineMenuOpen } from "react-icons/md";
+import { setCurrentPage } from "../features/adminPanelSlice";
+import { useDispatch } from "react-redux";
 
 const SideBar = ({ isSidebarOpen, toggleSidebar }) => {
   const { pathname } = useLocation();
   const [active, setActive] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleActive = () => {
     setActive(!active);
@@ -226,6 +232,17 @@ const SideBar = ({ isSidebarOpen, toggleSidebar }) => {
       ],
     },
 
+    // POSTs
+    {
+      title: "Posts",
+      links: [
+        {
+          name: "create-post",
+          icon: <FaJediOrder />,
+        },
+      ],
+    },
+
     // UPDATE PROFILE
     {
       title: "Settings",
@@ -243,54 +260,62 @@ const SideBar = ({ isSidebarOpen, toggleSidebar }) => {
   const normalLink = `flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2`;
 
   return (
-    <div
-      className={` ${
-        isSidebarOpen ? `lg:w-[12%] max-md:w-[40%]` : `lg:w-[4%] max-md:w-[13%]`
-      }
-        md-[15%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar z-50`}
-    >
-      <div className="flex justify-between items-center">
-        <Link
-          to="/admin"
-          className="items-center gap-2 ml-3 mt-4 flex text-l font-extrabold tracking-tight dark:text-white text-slate-900"
-        >
-          <GiCash className="max-sm:hidden" />
-          {isSidebarOpen && (
-            <span className="max-2sm:hidden">InstantCashPick</span>
-          )}
-        </Link>
-        <button
-          onClick={() => {
-            toggleSidebar();
-          }}
-          className="px-1"
-        >
-          {isSidebarOpen ? (
-            <LuPanelLeftClose className="text-xl" />
-          ) : (
-            <IoOpenOutline className="text-xl" />
-          )}
-        </button>
-      </div>
+    <div className={`w-ful z-30 bg-gray-900/50 fixed `}>
+      {/* lg:w-[12%] max-md:w-[40%] */}
+      <div
+        // className={` ${isSidebarOpen ? `w-fit px-2` : `hidden`}
+        // md-[15%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar z-30`}
+        className={`
+            ${isSidebarOpen ? `w-full h-full` : `hidden`}
+             md h-full bg-gray-900/20 fixed overflow-y-auto scrollbar text-white z-30
+            `}
+      >
+        <div className="bg-gray-900 w-fit px-2">
+          {/* Instant Cash Pick Sidebar Name */}
+          <div className="flex items-center gap-2 bg-gray-900 w-fit pt-5 pb-2 pl-3 max-sm:pl-2">
+            <div>
+              <Link
+                to="/admin"
+                className="gap-2 flex items-center font-extrabold tracking-tight dark:text-white text-slate-900"
+              >
+                <GiCash />
+                <span className="max-sm:text-sm">InstantCashPick</span>
+              </Link>
+            </div>
+            <div className="relative flex flex-col items-center ">
+              <button
+                onClick={() => {
+                  toggleSidebar();
+                }}
+                className="text-3xl max-sm:text-2xl"
+              >
+                <IoMdClose />
+              </button>
+              <p className="absolute -bottom-2 text-[7px] opacity-80">close</p>
+            </div>
+          </div>
 
-      <div className="mt-5">
-        {links.map((item) => (
-          <div key={item.title}>
-            <p className="text-gray-400 text-sm dark:text-gray-400 mx-2 mt-2 uppercase">
-              {isSidebarOpen ? item.title : item.title.substring(0, 5)}
-            </p>
-            {/* <Suspense fallback={<div>Loading...</div>}>
+          {links.map((item) => (
+            <div key={item.title}>
+              <p className="text-gray-400 text-sm dark:text-gray-400 px-2 mt-2 uppercase">
+                {isSidebarOpen ? item.title : item.title.substring(0, 5)}
+              </p>
+
               {item.links.map((link) => (
                 <NavLink
                   to={`/admin/${link.name}`}
                   key={link.name}
-                  onClick={() => handleClick(e, `/admin/${link.name}`)}
+                  // onClick={() => handleClick(e, `/admin/${link.name}`)}
                   style={({ isActive }) => ({
                     backgroundColor: isActive ? currentColor : "",
                   })}
                   className={({ isActive }) =>
                     isActive ? activeLink : normalLink
                   }
+                  onClick={() => {
+                    dispatch(setCurrentPage({ currentPage: link.name }));
+                    toggleSidebar();
+                  }}
                 >
                   {link.icon}
                   {isSidebarOpen && (
@@ -300,42 +325,26 @@ const SideBar = ({ isSidebarOpen, toggleSidebar }) => {
                   )}
                 </NavLink>
               ))}
-            </Suspense> */}
-            {item.links.map((link) => (
-              <NavLink
-                to={`/admin/${link.name}`}
-                key={link.name}
-                // onClick={() => handleClick(e, `/admin/${link.name}`)}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : "",
-                })}
-                className={({ isActive }) =>
-                  isActive ? activeLink : normalLink
-                }
-              >
-                {link.icon}
-                {isSidebarOpen && (
-                  <span className="capitalize max-md:text-sm">{link.name}</span>
-                )}
-              </NavLink>
-            ))}
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
-
-      {/* <ul className="flex flex-col my-28 items-center">
-        {sideBarLinks.map(({ text, url }, i) => {
-          return (
-            <li className={`my-4 `} key={i}>
-              <button className="text-xl">
-                <Link to={`/admin/${url}`}>{text}</Link>
-              </button>
-            </li>
-          );
-        })}
-      </ul> */}
     </div>
   );
 };
 
 export default SideBar;
+
+{
+  /* <ul className="flex flex-col my-28 items-center">
+{sideBarLinks.map(({ text, url }, i) => {
+  return (
+    <li className={`my-4 `} key={i}>
+      <button className="text-xl">
+        <Link to={`/admin/${url}`}>{text}</Link>
+      </button>
+    </li>
+  );
+})}
+</ul> */
+}

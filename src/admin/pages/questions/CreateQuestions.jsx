@@ -51,10 +51,10 @@ const CreateQuestions = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10 m-10 h-full">
+    <div className="flex flex-col gap-10 m-10 h-full ">
       {/* Conditions */}
-      <div className="flex gap-5 max-md:flex-col">
-        <div className="flex-1 overflow-hidden max-md:overflow-visible">
+      <div className="flex gap-5 max-md:flex-col w-full">
+        <div className="flex-1 overflow-hidden max-md:overflow-visible w-full">
           <Condition />
         </div>
         {/* Condition SideList */}
@@ -79,7 +79,7 @@ const CreateQuestions = () => {
       </div>
 
       {/* ConditionLabels */}
-      <div className="flex gap-5 max-md:flex-col">
+      <div className="flex gap-5 max-md:flex-col w-full">
         <div className="flex-1 overflow-hidden max-md:overflow-visible">
           <ConditionLabel />
         </div>

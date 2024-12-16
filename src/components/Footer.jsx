@@ -9,13 +9,19 @@ const Footer = () => {
     <div className="w-full sm:pt-10 mt-2 bg-cyan-500 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-12">
       <div className="px-4 sm:px-0 flex flex-col items-center sm:hidden max-sm:flex-row max-sm:justify-center max-sm:gap-5">
         <div>
-          <img
+          {/* <img
             // src="/LOGO1.png"
             src="/images/footer-logo.png"
             alt="logo"
             // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
             className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
-          />
+          /> */}
+          <p className="flex flex-col gap-1">
+            <span className="font-serif text-3xl max-sm:text-lg">Instant</span>
+            <span className="font-serif text-2xl max-sm:text-sm">
+              Cash Pick
+            </span>
+          </p>
         </div>
         <div>
           <span className="text-xs text-center text-white max-sm:text-[10px]">
@@ -37,13 +43,21 @@ const Footer = () => {
       <div className="mx-auto max-w-screen-xl flex gap-4 justify-evenly max-md:gap-1 max-sm:flex-col max-sm:pl-5">
         <div className="px-4 sm:px-0 flex flex-col items-center max-sm:hidden">
           <div>
-            <img
+            {/* <img
               // src="/LOGO1.png"
               src="/images/footer-logo.png"
               alt="logo"
               // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
               className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
-            />
+            /> */}
+            <p className="flex flex-col gap-1">
+              <span className="font-serif text-3xl max-sm:text-lg">
+                Instant
+              </span>
+              <span className="font-serif text-2xl max-sm:text-sm">
+                Cash Pick
+              </span>
+            </p>
           </div>
           <div>
             <span className="text-xs text-center text-white max-sm:text-[10px]">
@@ -114,6 +128,11 @@ const Footer = () => {
               <li>
                 <Link to={`/privacy-policies`}>
                   <span>Privary Policy</span>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/service-policy`}>
+                  <span>Service Policy</span>
                 </Link>
               </li>
               <li>

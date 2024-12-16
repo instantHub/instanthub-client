@@ -10,6 +10,7 @@ import {
 
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Table from "../../components/TableView";
 
 function CreateVariantsQuestions() {
   const [deductionSelected, setDeductionSelected] = useState("");
@@ -70,6 +71,32 @@ function CreateVariantsQuestions() {
     toast.success("variant created successfull..!");
   };
 
+  const headers = ["Variant Name", "No of Deductions", "Update", "Delete"];
+
+  const rowRenderer = (variant) => (
+    <>
+      <td className="text-lg max-sm:text-sm px-4 py-2">{variant.name}</td>
+      <td className="text-lg max-sm:text-sm px-4 py-2">
+        {variant.deductions.length} deductions
+      </td>
+      <td className="text-sm max-sm:text-xs px-4 py-2">
+        <Link to={`/admin/update-variant-questions/${variant._id}`}>
+          <button className="bg-green-600 text-white px-2 py-1 border rounded">
+            Update
+          </button>
+        </Link>
+      </td>
+      <td className="px-4 py-2">
+        <button
+          onClick={() => handleDelete(variant._id)}
+          className="bg-red-600 text-white text-sm max-sm:text-xs px-2 py-1 border rounded"
+        >
+          Delete
+        </button>
+      </td>
+    </>
+  );
+
   useEffect(() => {
     if (product) {
       const deductions = product.variantDeductions[0].deductions;
@@ -83,23 +110,17 @@ function CreateVariantsQuestions() {
         <div className="flex gap-4">
           <div className="">
             <div className="flex justify-between items-center">
-              <h1 className="bold text-[1.4rem] mb-2">
-                Admin Create Variants Questions
+              <h1 className="bold text-lg max-sm:text-sm mb-2">
+                Create Variants Questions
               </h1>
-              <div className="flex items-center gap-1">
-                <h2>Home </h2>
-                <h2 className="pl-1"> / Add Variant</h2>
-              </div>
             </div>
             {/* Create Condition BOX */}
             <div className="bg-white flex border rounded-md shadow-lg">
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-4  p-5 "
+                className="flex flex-col gap-4 p-5 "
               >
-                <div>
-                  <h2 className="">Add Variant Name</h2>
-                </div>
+                <h2 className="">Add Variant Name</h2>
                 <hr />
 
                 <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
@@ -125,7 +146,7 @@ function CreateVariantsQuestions() {
                 <div className="py-3 px-2">
                   <button
                     type="submit"
-                    className="w-[30%] mx-auto bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                    className="w-[30%] max-sm:w-fit max-sm:px-3 max-sm:py-1 text-lg max-sm:text-sm bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
                   >
                     Create Variant
                   </button>
@@ -134,54 +155,21 @@ function CreateVariantsQuestions() {
             </div>
           </div>
         </div>
+
         {/* condition List */}
-        <div className="mt-[5%] ml-5 overflow-y-auto scrollbar max-h-[250px]">
-          <p className="w-full text-2xl text-center py-2 font-semibold">
+        <div className="mt-[5%] overflow-y-auto scrollbar mx-5">
+          <p className="font-serif text-2xl max-sm:text-lg text-center py-2 font-semibold">
             List of Variants Created
           </p>
-          <table className="w-full">
-            <thead>
-              <tr className="">
-                <th className="px-4 py-2 bg-blue-200 rounded-tl-lg">
-                  Variant Name
-                </th>
-                <th className="px-4 py-2 bg-blue-200">No of Deductions</th>
-                <th className="px-4 py-2 bg-blue-200">Update</th>
-                <th className="px-4 py-2 bg-blue-200 rounded-tr-lg">Delete</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">
-              {!variantsQuestionsDataLoading &&
-                variantsQuestionsData?.map((variant, index) => (
-                  <tr
-                    key={`${variant._id}-${index}`}
-                    className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
-                  >
-                    <td className="px-4 py-2">{variant.name}</td>
-                    <td className="px-4 py-2">
-                      {variant.deductions.length} deductions
-                    </td>
-                    <td className="px-4 py-2">
-                      <Link
-                        to={`/admin/update-variant-questions/${variant._id}`}
-                      >
-                        <button className="bg-green-600 text-white text-sm px-2 py-1 border rounded">
-                          Update
-                        </button>
-                      </Link>
-                    </td>
-                    <td className="px-4 py-2">
-                      <button
-                        onClick={() => handleDelete(variant._id)}
-                        className="bg-red-600 text-white text-sm px-2 py-1 border rounded"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+
+          {!variantsQuestionsDataLoading && (
+            <Table
+              headers={headers}
+              data={variantsQuestionsData}
+              keyExtractor={(item) => item.id}
+              rowRenderer={rowRenderer}
+            />
+          )}
         </div>
       </div>
     </>

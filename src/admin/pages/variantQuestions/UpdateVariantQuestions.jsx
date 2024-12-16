@@ -110,7 +110,7 @@ const UpdateVariantQuestions = () => {
 
       <div className="relative w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl">
         <div className="relative m-2">
-          <h1 className="text-4xl text-center font-serif font-bold text-green-700 mb-2">
+          <h1 className="text-4xl max-sm:text-xl text-center font-serif font-bold text-green-700 mb-2">
             {selectedVariantQuestions
               ? `${selectedVariantQuestions.name} Variant`
               : "Loading.."}
@@ -132,12 +132,12 @@ const UpdateVariantQuestions = () => {
                     }`}
                   >
                     <div>
-                      <h1 className="text-2xl py-2 text-center font-serif font-extrabold bg-white">
+                      <h1 className="text-2xl max-sm:text-xl py-2 text-center font-serif font-extrabold bg-white">
                         {condition.conditionName}
                       </h1>
                     </div>
                     <hr />
-                    <div className="flex px-4 py-2 flex-col">
+                    <div className="flex px-4  py-2 flex-col">
                       {condition.conditionLabels &&
                         condition.conditionLabels?.map(
                           (conditionLabel, index) => (
@@ -147,7 +147,7 @@ const UpdateVariantQuestions = () => {
                             >
                               <div>
                                 <div>
-                                  <h1 className="text-sm">
+                                  <h1 className="text-sm max-sm:text-xs">
                                     {conditionLabel.conditionLabel}
                                   </h1>
                                 </div>

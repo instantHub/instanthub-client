@@ -34,14 +34,13 @@ const SeriesList = () => {
 
   const rowRenderer = (series) => (
     <>
-      <td>{series.name}</td>
+      <td className="text-lg max-sm:text-xs">{series.name}</td>
       <td className="flex flex-col">
-        <div>
-          <span className="text-sm opacity-70">Category:</span>{" "}
-          {series?.category?.name}
+        <div className="text-lg max-sm:text-xs">
+          <span className="opacity-70">Category:</span> {series?.category?.name}
         </div>
-        <div>
-          <span className="text-sm opacity-70">Brand: </span>
+        <div className="text-lg max-sm:text-xs">
+          <span className="opacity-70">Brand: </span>
           {series?.brand?.name}
         </div>
       </td>
@@ -61,10 +60,10 @@ const SeriesList = () => {
 
   return (
     <>
-      <div className="flex mt-[5%] w-[80%] mx-auto">
+      <div className="flex mt-[5%] w-fit max-sm:w-[95%] mx-auto">
         <div className="grow">
           <div className="flex justify-between items-center">
-            <h1 className="bold text-[1.4rem] mb-2">Series List</h1>
+            <h1 className="bold text-lg max-sm:text-sm mb-2">Series List</h1>
           </div>
           <div className="bg-white border rounded-md shadow-lg">
             {!seriesLoading && (

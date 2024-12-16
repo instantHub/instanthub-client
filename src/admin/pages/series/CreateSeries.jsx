@@ -53,22 +53,21 @@ const CreateSeries = () => {
   return (
     <>
       <div className="flex flex-col justify-between items-center mt-10">
-        <h1 className="bold text-[1.4rem] mb-2">Add / Create Series</h1>
-
         <div className="bg-white border rounded-md shadow-lg w-[50%] max-2sm:w-[90%]">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4  p-5 ">
-            <div>
-              <h2 className="">Add/Create Series for the Product</h2>
-            </div>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
+            <h2 className="text-lg max-sm:text-sm">
+              Add / Create Series for the Product
+            </h2>
             <hr />
 
-            <div className="flex justify-around items-center content-center gap-4">
-              <div className="flex flex-col">
+            <div className="flex justify-around items-center max-sm:flex-col gap-4">
+              {/* select Category */}
+              <div className="flex items-center max-sm:items-start gap-2 max-sm:flex-col text-lg max-sm:text-sm">
                 <label htmlFor="category">Select Category :</label>
                 <select
                   id="category"
                   name="category"
-                  className="border rounded-sm p-2"
+                  className="border rounded-sm p-1 text-sm"
                   value={selectedCategory}
                   onChange={(e) => {
                     setSelectedCategory(e.target.value);
@@ -93,12 +92,13 @@ const CreateSeries = () => {
                 </select>
               </div>
 
-              <div className="flex flex-col">
+              {/* select Brand */}
+              <div className="flex items-center max-sm:items-start  gap-2 max-sm:flex-col text-lg max-sm:text-sm">
                 <label htmlFor="productType">Select Brand :</label>
                 <select
                   id="productType"
                   name="productType"
-                  className="border rounded-sm p-2"
+                  className="border rounded-sm p-1 text-sm"
                   value={selectedBrand}
                   onChange={(e) => {
                     setSelectedBrand(e.target.value);
@@ -125,24 +125,27 @@ const CreateSeries = () => {
               </div>
             </div>
 
-            <div className="flex gap-4 items-center mx-auto">
-              <div className="flex flex-col">
-                <label htmlFor="seriesName">Enter New Series Name :</label>
-                <input
-                  type="text"
-                  id="seriesName"
-                  value={seriesName}
-                  className=" border p-2 rounded-lg"
-                  placeholder="Series Name"
-                  onChange={(e) => setSeriesName(e.target.value)}
-                  required
-                />
-              </div>
+            {/* <div className="flex gap-4 items-center mx-auto"> */}
+            {/* Series Name */}
+            <div className="flex flex-col mx-auto w-fit text-lg max-sm:text-sm gap-2">
+              <label htmlFor="seriesName">Enter New Series Name :</label>
+              <input
+                type="text"
+                id="seriesName"
+                value={seriesName}
+                className=" border px-2 py-1 max-sm:px-1 rounded text-lg max-sm:text-sm"
+                placeholder="Series Name"
+                onChange={(e) => setSeriesName(e.target.value)}
+                required
+              />
             </div>
+            {/* </div> */}
+
+            {/* Create Button */}
             <div className="px-2">
               <button
                 type="submit"
-                className="bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
+                className="bg-green-600 text-white text-lg max-sm:text-sm rounded-md w-fit px-4 py-2 max-sm:px-2 max-sm:py-1 cursor-pointer hover:bg-green-700"
               >
                 Create Series
               </button>

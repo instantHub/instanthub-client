@@ -11,12 +11,17 @@ import { toast } from "react-toastify";
 import { FiAlignLeft } from "react-icons/fi";
 import { IoLogOut } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import { IoMdMenu } from "react-icons/io";
+import { setCurrentPage } from "../features/adminPanelSlice";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.auth);
   const { adminProfile, isLoading } = useAdminProfileQuery();
   // console.log("adminInfo", adminInfo);
+
+  const adminPanelData = useSelector((state) => state.adminPanel);
+  console.log("adminPanelData", adminPanelData);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -44,8 +49,38 @@ const Navbar = (props) => {
       window.history.pushState({}, "", to); // Programmatic navigation
     });
   };
+
+  useEffect(() => {
+    const currentPage = localStorage.getItem("currentPage");
+    // console.log("data from localStorage:", currentPage);
+    dispatch(setCurrentPage({ currentPage }));
+  }, []);
+
   return (
-    <nav className="flex justify-end p-4 w-full">
+    // <nav className="sticky flex justify-between items-center p-4 w-full  top-0 z-50">
+    <nav
+      className={`bg-white flex items-center py-3 max-sm:py-3 w-full sticky top-0 z-20 border-b max-14inch:py-0 max-2sm:mx-1
+              ${isSidebarOpen ? "justify-between" : "justify-between"}
+    `}
+    >
+      {/* SideBar Open Toggle */}
+      <button
+        className={`${isSidebarOpen ? "" : " pl-5 text-3xl max-sm:text-xl"}`}
+        onClick={() => {
+          toggleSidebar();
+        }}
+      >
+        <IoMdMenu />
+      </button>
+
+      {/* Current Page Name */}
+      <div>
+        <p className="text-xl max-sm:text-xs font-serif font-semibold">
+          {adminPanelData.currentPage.toUpperCase()}
+        </p>
+      </div>
+
+      {/* Admin Profile DropDown */}
       <div className="flex items-center ">
         {adminInfo && (
           <div className="flex items-center justify-between flex-wrap">

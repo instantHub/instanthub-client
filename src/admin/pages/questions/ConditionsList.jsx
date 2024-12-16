@@ -71,14 +71,14 @@ const ConditionsList = () => {
 
   const rowRenderer = (condition) => (
     <>
-      <td className=" py-2">{condition.category.name}</td>
-      <td className=" py-2">{condition.conditionName}</td>
-      <td className=" py-2">{condition.page}</td>
-      <td className="text-white py-2">
+      <td className="text-lg max-sm:text-xs py-2">{condition.category.name}</td>
+      <td className="text-lg max-sm:text-xs py-2">{condition.conditionName}</td>
+      <td className="text-lg max-sm:text-xs py-2">{condition.page}</td>
+      <td className="text-lg max-sm:text-xs text-white py-2">
         <div className="flex gap-2 justify-center">
           <EditButton location={`/admin/updateCondition/${condition.id}`} />
           <button
-            className="bg-red-600 px-3 py-1 rounded-md"
+            className="bg-red-600 px-3 py-1 max-sm:px-2 rounded-md"
             onClick={() =>
               openModal(
                 condition.category.id,
@@ -88,7 +88,10 @@ const ConditionsList = () => {
               )
             }
           >
-            Delete
+            <span className="max-sm:hidden">Delete</span>
+            <span className="lg:hidden">
+              <MdDeleteForever />
+            </span>
           </button>
         </div>
       </td>
@@ -98,10 +101,11 @@ const ConditionsList = () => {
   return (
     <>
       <div className="p-4">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-4 mb-4">
-            <div>
-              <label htmlFor="condition" className="mr-2">
+        <div className="flex justify-between items-center flex-wrap">
+          <div className="flex items-center gap-4 mb-4 max-sm:text-sm">
+
+            <div className="w-fit flex justify-around items-center max-sm:flex-col max-sm:items-start gap-2 max-sm:gap-1">
+              <label htmlFor="condition" className="text-lg max-sm:text-xs">
                 Select Category:
               </label>
               <select
@@ -117,7 +121,7 @@ const ConditionsList = () => {
                   );
                 }}
                 value={selectedCategory}
-                className="px-2 py-1 rounded border text-black"
+                className="px-2 py-1 w-fit max-sm:w-4/5 rounded border text-black text-lg max-sm:text-xs"
               >
                 <option value="">Search</option>
                 {categories?.map((category) => (
@@ -128,7 +132,9 @@ const ConditionsList = () => {
               </select>
             </div>
           </div>
-          <h2 className="text-black text-lg font-bold mb-4">
+
+
+          <h2 className="text-black text-xl max-sm:text-sm font-serif font-bold mb-4">
             Conditions Table
           </h2>
 

@@ -56,19 +56,21 @@ const Home = () => {
         <link rel="canonical" href="https://instantcashpick.com/" />
       </Helmet>
 
-      <Slider />
-      <Categories />
-      {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
+      <div className="">
+        <Slider />
+        <Categories />
+        {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
         <AllBrandsList />
-      </div> */}
-      <div className="mt-10 pt-5 pb-16 bg-cyan-50">
-        {/* <Services /> */}
-        <ServicesHome />
+        </div> */}
+        <div className="mt-10 pt-5 pb-16 bg-cyan-50">
+          {/* <Services /> */}
+          <ServicesHome />
+        </div>
+        <HowItWorks />
+        <TestimonialCarousel />
+        <WhyChooseInstantCashPicks />
+        <FAQ from={`home`} />
       </div>
-      <HowItWorks />
-      <TestimonialCarousel />
-      <WhyChooseInstantCashPicks />
-      <FAQ from={`home`} />
     </>
   );
 };
