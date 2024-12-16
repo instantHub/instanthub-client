@@ -198,7 +198,7 @@ const Dashboard = () => {
                 <p>Total {dashboardDetail?.categories.length} Categories</p>
               </div>
               {/* <PieChart dataProp={dashboardDetail?.categories} /> */}
-              <DoughnutChart dataProp={categoriesChartData} />
+              {/* <DoughnutChart dataProp={categoriesChartData} /> */}
             </div>
 
             <hr className="lg:hidden py-5" />
@@ -212,7 +212,7 @@ const Dashboard = () => {
               {/* <DoughnutChart dataProp={dashboardDetail?.detailedProductsCount}
               chartFor="Brands"
             /> */}
-              <DoughnutChart dataProp={brandsChartData} />
+              {/* <DoughnutChart dataProp={brandsChartData} /> */}
             </div>
           </div>
         </div>
@@ -227,7 +227,7 @@ const Dashboard = () => {
               <p>Total {dashboardDetail?.productsCount} Products</p>
             </div>
             {/* DoughnutChart */}
-            <DoughnutChart dataProp={productsChartData} />
+            {/* <DoughnutChart dataProp={productsChartData} /> */}
           </div>
 
           {/* Brand wise products */}
@@ -237,13 +237,13 @@ const Dashboard = () => {
                 <p className="text-center text-sm">
                   Brand Wise Products of {cat.category}
                 </p>
-                <BarChart
+                {/* <BarChart
                   category={cat.category}
                   data={cat.brands}
                   xTitle="Brands"
                   yTitle="Count"
                   color={colors[i]}
-                />
+                /> */}
               </div>
             ))}
           </div>
@@ -256,14 +256,15 @@ const Dashboard = () => {
             {/* ORDERS */}
             <div className="flex flex-col items-center">
               <p className="text-center text-sm">Month-on-Month Orders</p>
-              <BarChart
+              {/* <BarChart
                 data={monthlyOrders}
                 category="Orders"
                 xTitle="Orders"
                 yTitle="Count"
                 color={colors[0]}
                 chartFor="Orders"
-              />
+              /> */}
+
               {/* <div>
                 <p className="text-center text-sm">
                   Total {dashboardDetail?.ordersCount} Orders
@@ -274,26 +275,26 @@ const Dashboard = () => {
             {/* ORDER STATUS */}
             <div className="flex flex-col items-center">
               <p className="text-center text-sm">Orders Status</p>
-              <BarChart
+              {/* <BarChart
                 category={"Orders Status"}
                 data={ordersStatus}
                 xTitle="Pending / Completed"
                 yTitle="Count"
                 color={colors[0]}
                 chartFor="Orders"
-              />
+              /> */}
             </div>
             {/* ORDER STOCKS */}
             <div className="flex flex-col items-center">
               <p className="text-center text-sm">Stock Status</p>
-              <BarChart
+              {/* <BarChart
                 category={"Stocks Status"}
                 data={stockStatus}
                 xTitle="Stock In / Out"
                 yTitle="Count"
                 color={colors[0]}
                 chartFor="Orders"
-              />
+              /> */}
             </div>
           </div>
           <div>
@@ -312,14 +313,14 @@ const Dashboard = () => {
               <p className="text-center text-sm">
                 Month-on-Month Recycle Orders
               </p>
-              <BarChart
+              {/* <BarChart
                 data={monthlyRecycleOrders}
                 category="Recycle Orders"
                 xTitle="Recycle Orders"
                 yTitle="Count"
                 color={colors[1]}
                 chartFor="Orders"
-              />
+              /> */}
 
               {/* <div>
                 <p className="text-center text-sm">
