@@ -9,6 +9,10 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
         <div className="flex justify-center" key={item.id + index}>
           <Link
             to={`${linkPath}/${item[itemID]}`}
+            // className={`p-4 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl 
+            //     transition ease-in-out duration-500 ${
+            //       displayBig ? `w-32 h-32` : `w-28 h-28`
+            //     }`}
             className={`p-4 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl 
                 transition ease-in-out duration-500 ${
                   displayBig ? `w-32 h-32` : `w-28 h-28`
@@ -17,7 +21,7 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
             <img
               src={import.meta.env.VITE_APP_BASE_URL + item?.image}
               alt={item?.name || "Item"}
-              className="justify-center"
+              className="justify-center object-cover"
               // className="justify-center aspect-[3/2] object-contain "
             />
             {/* Optional: display item name */}

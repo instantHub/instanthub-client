@@ -10,7 +10,7 @@ const Categories = () => {
     useGetCategoryQuery();
 
   return (
-    <div className="mt-10 mx-auto">
+    <div className="mt-10 max-sm:mt-5 mx-auto">
       <div className="w-4/5 mx-auto">
         <div className="mx-0 mb-6">
           <h1 className="text-2xl pb-6 max-sm:text-lg">

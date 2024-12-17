@@ -117,7 +117,7 @@ const UpdateSystemConditions = (props) => {
       toast.success(
         `Updated PriceDrops for the ${
           productData.name
-        }, ${selectedProcessorDeductions.processorName.toUpperCase()} Processor`
+        }, ${selectedProcessorDeductions?.processorName.toUpperCase()} Processor`
       );
       setIsOpen(false);
       // Handle success

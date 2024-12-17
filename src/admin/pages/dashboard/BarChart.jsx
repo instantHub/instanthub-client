@@ -63,7 +63,7 @@ const BarChart = ({
     <div
       className={`${
         labels?.length > 5
-          ? `w-[500px] ${chartFor === "Orders" && "max-sm:w-[500px]"}`
+          ? `w-[500px] ${chartFor === "Orders" && "max-sm:w-[300px]"}`
           : `w-[300px] ${chartFor === "Orders" && "max-sm:w-[280px]"}`
       } h-fit`}
       // className={`w-[500px] h-fit`}

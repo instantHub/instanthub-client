@@ -145,6 +145,7 @@ const ProductQuestions = () => {
 
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       // console.log("No more conditions to display.");
       setShowOTP(true);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 function TermsAndConditions() {
@@ -15,6 +15,10 @@ function TermsAndConditions() {
       "query-input": "required name=search_term_string",
     },
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
       <Helmet>
@@ -40,15 +44,15 @@ function TermsAndConditions() {
       {/* <div className="mx-10 mb-5 mt-5 px-10 py-2 border rounded shadow-2xl flex flex-col gap-2 max-sm:mx-2 max-sm:px-5"> */}
       <div className="my-5 py-2 px-1 text-gray-600 flex flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <h1 className="text-center text-black text-3xl font-semibold py-2 max-sm:text-2xl">
+          <h1 className="text-center text-black text-3xl max-sm:text-xl font-semibold py-2">
             Terms and Conditions <br /> for InstantCashPick services
           </h1>
-          <p>
+          <p className="max-sm:text-sm">
             By using it, you are agreeing to these Terms & Conditions (defined
             below). Please read them carefully. Manak Waste Management Pvt Ltd.,
             formerly known as ReGlobe, doing business as “InstantCashPick”
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             “InstantCashPick” owns and operates the website,{" "}
             <a href="https://www.InstantCashPick.com">
               www.InstantCashPick.com
@@ -64,7 +68,7 @@ function TermsAndConditions() {
             whether provided through the Site or through other means, are
             collectively referred to as the services (the “Services”).
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             If you do not agree with any part of these Terms & Conditions, you
             must not use the Site or Services. Your continued use of the Site or
             Services will constitute your acceptance of these Terms &
@@ -74,10 +78,10 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
             1. InstantCashPick is a marketplace venue
           </h2>
-          <p>
+          <p className="max-sm:text-sm">
             InstantCashPick is a platform to allow users, subject to compliance
             with InstantCashPick’s policies, to sell/repair certain goods.
             InstantCashPick may not be directly involved in the transaction
@@ -88,10 +92,10 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
             2. Permitted Use and Compliance with Laws.
           </h2>
-          <p>
+          <p className="max-sm:text-sm">
             InstantCashPick authorizes you to access, view and use the Site
             content and software (collectively, the “Manak Waste Management Pvt
             Ltd Property”) solely to the extent necessary for you to use the
@@ -106,7 +110,7 @@ function TermsAndConditions() {
             Property, is strictly prohibited without the prior written
             permission of Manak Waste Management Pvt Ltd.
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             You agree that you will comply with all applicable laws, regulations
             and ordinances relating to the Site and Services, the
             InstantCashPick Property or your use of them, and that in using the
@@ -115,10 +119,10 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
             3. Copyright and trademarks.
           </h2>
-          <p>
+          <p className="max-sm:text-sm">
             Except as otherwise indicated, all materials in the Site, including,
             but not limited to text, software, photos, video, graphics, music,
             sound, the InstantCashPick Logo, ScreenPro logo, ReGlobe Logo and
@@ -132,7 +136,7 @@ function TermsAndConditions() {
             infringement that may subject you to civil and/or criminal
             penalties.
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             Other marks on the site not owned by InstantCashPick may be under
             license from the trademark owner thereof, in which case such license
             is for the exclusive benefit and use of InstantCashPick unless
@@ -143,10 +147,10 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
             4. InstantCashPick Services and Third Party Services and Sites
           </h2>
-          <p>
+          <p className="max-sm:text-sm">
             The information and materials provided in the Site and through the
             Services are intended for general reference only, and may not
             describe all of the terms, conditions, and exceptions applicable to
@@ -157,7 +161,7 @@ function TermsAndConditions() {
             Information”). InstantCashPick cannot control, and is not
             responsible for the accuracy of any Third Party Information.
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             You conduct your actual sales and other transactions directly with
             the Third Parties and, unless otherwise specifically and clearly
             indicated, not with InstantCashPick. InstantCashPick cannot control
@@ -165,7 +169,7 @@ function TermsAndConditions() {
             the Third Parties are solely responsible to you for all aspects of
             your sales and transactions with them.
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             At times, the InstantCashPick Site may have links to websites hosted
             by the Third Parties and other entities (the “Additional Sites”), or
             such Additional Sites may have links to the InstantCashPick Site.
@@ -182,8 +186,10 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">5. Privacy and Passwords</h2>
-          <p>
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            5. Privacy and Passwords
+          </h2>
+          <p className="max-sm:text-sm">
             InstantCashPick values and protects the privacy of your information.
             Please review the InstantCashPick privacy policy, as it contains
             important information relating to your use of the Site and Services.
@@ -202,16 +208,18 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">6. Membership</h2>
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            6. Membership
+          </h2>
           <h3>a. Registration and Basic Membership Terms:</h3>
-          <p>
+          <p className="max-sm:text-sm">
             Members are visitors to the site and or those using the Services
             that choose to register with InstantCashPick (“Members”). Once
             registered, an account is created for each Member (“Account”). If
             you choose to register as a Member, you represent and warrant to us
             that:
           </p>
-          <ul>
+          <ul className="max-sm:text-sm">
             <li>(i) you are of legal age to form a binding contract</li>
             <li>
               (ii) you will provide us with accurate, current and complete
@@ -223,20 +231,20 @@ function TermsAndConditions() {
               prohibited by law.
             </li>
           </ul>
-          <p>
+          <p className="max-sm:text-sm">
             We reserve the right to suspend or terminate your membership, or
             your access to the Site and or Services, in the event that you
             breach any of the Terms & Conditions or other applicable
             InstantCashPick policies.
           </p>
           <h3>b. Password and Account Security:</h3>
-          <p>
+          <p className="max-sm:text-sm">
             In connection with your Account, you will create a password and a
             user id. You are responsible for keeping your password and secure,
             and you are responsible for all actions taken using your password.
           </p>
           <h3>c. Age:</h3>
-          <p>
+          <p className="max-sm:text-sm">
             To create an Account or to otherwise use this Website, you must be
             at least eighteen (18) years old or the age of majority in your
             state or province of residence, whichever is greater.
@@ -244,18 +252,20 @@ function TermsAndConditions() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">7. Inactive Accounts</h2>
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            7. Inactive Accounts
+          </h2>
           <h3>a. Inactive Status:</h3>
-          <p>
+          <p className="max-sm:text-sm">
             A Member’s Account may be set to inactive if there is no activity
             associated with that Account for 180 days.
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
             8. Warranty Exclusions and Limitations of Liability
           </h2>
-          <p>
+          <p className="max-sm:text-sm">
             We warrant that the Services and InstantCashPick Property will
             conform substantially to the descriptions set forth on the Site. In
             the event of any breach of this warranty, the Customer’s sole and
@@ -269,7 +279,7 @@ function TermsAndConditions() {
             non-infringement, with respect to the Services, InstantCashPick
             Property, and any products or services provided through the Site.
           </p>
-          <p>
+          <p className="max-sm:text-sm">
             In no event will InstantCashPick be liable for any indirect,
             incidental, consequential, special, exemplary, or punitive damages
             of any kind in connection with these Terms & Conditions, even if
@@ -277,8 +287,8 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">9. Indemnity</h2>
-          <p>
+          <h2 className="font-semibold text-xl max-sm:text-lg">9. Indemnity</h2>
+          <p className="max-sm:text-sm">
             You agree to indemnify, defend and hold harmless InstantCashPick,
             its subsidiaries, affiliates, officers, agents, and other partners
             and employees, from any loss, liability, claim, or demand, including
@@ -288,10 +298,10 @@ function TermsAndConditions() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
             10. Changes to Terms & Conditions
           </h2>
-          <p>
+          <p className="max-sm:text-sm">
             Instant Cash Pick reserves the right to change these Terms &
             Conditions at any time without prior notice to you. The revised
             Terms & Conditions will be effective immediately upon posting on the

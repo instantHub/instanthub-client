@@ -38,7 +38,7 @@ const OrderView = ({ orderToView, setOrderViewOpen }) => {
             <div className="flex justify-center">
               <h2 className="px-4 py-2">Order ID: {orderToView.orderId}</h2>
               <h2 className="px-4 py-2">
-                Status: {orderToView.status.toUpperCase()}
+                Status: {orderToView?.status.toUpperCase()}
               </h2>
             </div>
             <div className="flex justify-center">

@@ -188,6 +188,7 @@ const LaptopsQuestions = (props) => {
 
     if (currentPageIndex < lastPageIndex - 1) {
       setCurrentPageIndex((prevIndex) => prevIndex + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setShowOTP(true);
     }

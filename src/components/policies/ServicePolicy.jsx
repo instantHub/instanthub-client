@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 const ServicePolicy = () => {
@@ -15,6 +15,10 @@ const ServicePolicy = () => {
       "query-input": "required name=search_term_string",
     },
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <div>
       <Helmet>
@@ -41,11 +45,13 @@ const ServicePolicy = () => {
       <div className="my-5 px-1 py-2 flex flex-col gap-2">
         {/* <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg"> */}
         <article className="">
-          <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          <h1 className="text-3xl max-sm:text-2xl font-bold mb-6 text-center text-gray-800">
             Service Policy
           </h1>
-          <p className="text-gray-600 mb-4">Effective date: 2024</p>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4 max-sm:text-sm">
+            Effective date: 2024
+          </p>
+          <p className="text-gray-600 mb-6 max-sm:text-sm">
             Welcome to Instant Cash Pick. We are committed to protecting your
             personal information and your right to privacy. If you have any
             questions or concerns about our policy, or our practices with
@@ -54,10 +60,10 @@ const ServicePolicy = () => {
           </p>
 
           <section className="flex flex-col gap-2 mb-8">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+            <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-3">
               1. InstantCashPick Services and Third Party Services and Sites
             </h2>
-            <p>
+            <p className="max-sm:text-sm">
               The information and materials provided in the Site and through the
               Services are intended for general reference only, and may not
               describe all of the terms, conditions, and exceptions applicable
@@ -69,7 +75,7 @@ const ServicePolicy = () => {
               control, and is not responsible for the accuracy of any Third
               Party Information.
             </p>
-            <p>
+            <p className="max-sm:text-sm">
               You conduct your actual sales and other transactions directly with
               the Third Parties and, unless otherwise specifically and clearly
               indicated, not with InstantCashPick. InstantCashPick cannot
@@ -77,7 +83,7 @@ const ServicePolicy = () => {
               Parties, and the Third Parties are solely responsible to you for
               all aspects of your sales and transactions with them.
             </p>
-            <p>
+            <p className="max-sm:text-sm">
               At times, the InstantCashPick Site may have links to websites
               hosted by the Third Parties and other entities (the “Additional
               Sites”), or such Additional Sites may have links to the
@@ -97,10 +103,10 @@ const ServicePolicy = () => {
 
           {/* Information We Collect */}
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+            <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-3">
               2. Information We Collect
             </h2>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed max-sm:text-sm">
               We collect personal details like your name, contact information,
               and product details during registration and transactions. This
               helps us process your requests and ensure seamless service.
@@ -109,10 +115,10 @@ const ServicePolicy = () => {
 
           {/* Use of Collected Information */}
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+            <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-3">
               3. Use of Collected Information
             </h2>
-            <ul className="list-disc pl-6 text-gray-600 leading-relaxed">
+            <ul className="list-disc pl-6 text-gray-600 leading-relaxed max-sm:text-sm">
               <li>Facilitating transactions on the platform.</li>
               <li>Sending order updates and promotional offers.</li>
               <li>Improving platform functionality through feedback.</li>
@@ -122,10 +128,10 @@ const ServicePolicy = () => {
 
           {/* Your Responsibilities */}
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+            <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-3">
               4. Your Responsibilities
             </h2>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed max-sm:text-sm">
               As a user, you agree to provide accurate information, maintain the
               confidentiality of your account details, and ensure compliance
               with our terms of service.
@@ -134,10 +140,10 @@ const ServicePolicy = () => {
 
           {/* Updates to the Policy */}
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+            <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-3">
               5. Updates to the Policy
             </h2>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed max-sm:text-sm">
               This policy is subject to updates to reflect changes in
               regulations, services, or other operational factors. Ensure to
               review it periodically.

@@ -186,16 +186,20 @@ const Dashboard = () => {
 
   return (
     <div className="mx-10 mt-5 max-sm:mx-2 pb-10">
-      <div className="flex flex-col gap-20 max-sm:gap-10 pl-10">
+      <div className="flex flex-col gap-20 max-sm:gap-10 pl-">
         {/* Categories and Brands Chart */}
         <div className="flex flex-col gap-2 justify-around items-center border px-3 py-10 rounded-xl shadow-lg">
-          <p className="font-serif text-3xl">Categories and Brand Chart</p>
+          <p className="font-serif text-3xl max-sm:text-xl">
+            Categories and Brand Chart
+          </p>
           <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2 items-center w-full">
             {/* Categories */}
             <div className="flex flex-col items-center">
-              <p className="text-center text-xl">Categories Chart</p>
-              <div>
-                <p>Total {dashboardDetail?.categories.length} Categories</p>
+              <p className="text-center text-xl max-sm:text-lg">
+                Categories Chart
+              </p>
+              <div className="max-sm:text-sm">
+                <p>Total {dashboardDetail?.categories?.length} Categories</p>
               </div>
               {/* <PieChart dataProp={dashboardDetail?.categories} /> */}
               {/* <DoughnutChart dataProp={categoriesChartData} /> */}
@@ -205,13 +209,11 @@ const Dashboard = () => {
 
             {/* Brands Chart */}
             <div className="flex flex-col items-center">
-              <p className="text-center text-xl">Brands Chart</p>
-              <div>
+              <p className="text-center text-xl ">Brands Chart</p>
+              <div className="max-sm:text-sm">
                 <p>Total {dashboardDetail?.brandsCount} Brands</p>
               </div>
-              {/* <DoughnutChart dataProp={dashboardDetail?.detailedProductsCount}
-              chartFor="Brands"
-            /> */}
+
               {/* <DoughnutChart dataProp={brandsChartData} /> */}
             </div>
           </div>
@@ -219,11 +221,13 @@ const Dashboard = () => {
 
         {/* Products Chart */}
         <div className="flex flex-col gap-10 items-center border py-10 rounded-xl shadow-lg px-3">
-          <p className="font-serif text-3xl">Products Chart</p>
+          <p className="font-serif text-3xl max-sm:text-xl">Products Chart</p>
           {/* PRODUCTS */}
           <div className="flex flex-col items-center">
-            <p className="text-center text-xl">Products Per Category Chart</p>
-            <div>
+            <p className="text-center text-xl max-sm:text-lg">
+              Products Per Category Chart
+            </p>
+            <div className="max-sm:text-sm">
               <p>Total {dashboardDetail?.productsCount} Products</p>
             </div>
             {/* DoughnutChart */}
@@ -251,11 +255,13 @@ const Dashboard = () => {
 
         {/* Orders Chart */}
         <div className="flex flex-col items-center border px-3 py-10 max-sm:py-5 rounded-xl shadow-lg">
-          <p className="font-serif text-3xl">Orders Chart</p>
+          <p className="font-serif text-3xl max-sm:text-xl">Orders Chart</p>
           <div className="flex max-sm:flex-col max-sm:gap-5 justify-center items-center">
             {/* ORDERS */}
             <div className="flex flex-col items-center">
-              <p className="text-center text-sm">Month-on-Month Orders</p>
+              <p className="text-center text-sm max-sm:text-xs">
+                Month-on-Month Orders
+              </p>
               {/* <BarChart
                 data={monthlyOrders}
                 category="Orders"
@@ -264,7 +270,6 @@ const Dashboard = () => {
                 color={colors[0]}
                 chartFor="Orders"
               /> */}
-
               {/* <div>
                 <p className="text-center text-sm">
                   Total {dashboardDetail?.ordersCount} Orders
@@ -298,7 +303,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div>
-            <p className="text-center font-serif text-xl max-sm:lg">
+            <p className="text-center font-serif text-xl max-sm:text-sm">
               Total {dashboardDetail?.ordersCount} Orders
             </p>
           </div>
@@ -306,11 +311,13 @@ const Dashboard = () => {
 
         {/* Recycle Orders Chart*/}
         <div className="flex flex-col items-center border px-3 py-10 max-sm:py-5 rounded-xl shadow-lg">
-          <p className="font-serif text-3xl">Recycle Orders Chart</p>
+          <p className="font-serif text-3xl max-sm:text-lg">
+            Recycle Orders Chart
+          </p>
           <div className="flex max-sm:flex-col max-sm:gap-5 justify-center items-center">
             {/* Recycle Orders */}
             <div className="flex flex-col items-center">
-              <p className="text-center text-sm">
+              <p className="text-center text-sm max-sm:text-xs">
                 Month-on-Month Recycle Orders
               </p>
               {/* <BarChart
@@ -330,7 +337,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div>
-            <p className="text-center font-serif text-xl max-sm:lg">
+            <p className="text-center font-serif text-xl max-sm:text-sm">
               Total {dashboardDetail?.recycleOrdersCount} Recycle Orders
             </p>
           </div>

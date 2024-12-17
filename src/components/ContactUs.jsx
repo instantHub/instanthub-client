@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 const ContactUs = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
       <Helmet>
@@ -20,26 +23,34 @@ const ContactUs = () => {
       </Helmet>
 
       <div className="flex justify-center items-center mt-[5%]">
-        <div className="max-w-lg p-8 bg-white shadow-md rounded-lg">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        <div className="max-w-lg p-8 max-sm:p-4 bg-white shadow-md rounded-lg">
+          <h2 className="text-3xl max-sm:text-2xl font-bold text-gray-800 mb-6 text-center">
             Contact Us
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-600 mb-4 text-lg max-sm:text-sm">
             Have questions or ready to sell your electronics? Get in touch with
             our friendly team today:
           </p>
-          <ul className="list-disc pl-6 mb-6">
-            <li>Phone: +91 8722288017</li>
-            <li>Email: support@instantcashpick.com</li>
-            <li>
+          <div className="list-disc pl-6 mb-6">
+            <p className="flex items-center gap-1">
+              <span className="opacity-60">Phone:</span>
+              <span>+91 8722288017</span>
+            </p>
+
+            <p className="flex items-center gap-1">
+              <span className="opacity-60">Email:</span>
+              <span>support@instantcashpick.com</span>
+            </p>
+            {/* <p>
               Live Chat: Visit our website to chat with a representative in
               real-time.
-            </li>
-          </ul>
-          <p className="text-gray-600">
+            </p> */}
+          </div>
+          <p className="text-gray-600 text-lg max-sm:text-sm">
             Join the thousands of satisfied customers who have chosen
-            InstantCashPicks for their electronic item selling needs. Experience
-            the convenience of instant cash payments today!
+            InstantCashPicks for their electronic item selling needs.{" "}
+            <br className="lg:hidden" /> Experience the convenience of instant
+            cash payments today!
           </p>
         </div>
       </div>

@@ -29,9 +29,9 @@ function Slider() {
 
   return (
     <div
-      className="max-w-[1400px] w-full h-auto mx-auto mt-5
-          group max-lg:px-0
-          max-2sm:px-0
+      className="max-w-[1400px] w-full h-auto mx-auto mt-10 max-sm:mt-7
+          group max-lg:px-2
+          max-sm:px-4
           max-14inch:px-24"
     >
       {/* Slider Image */}

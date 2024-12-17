@@ -300,7 +300,7 @@ const RecycleOrderView = ({ orderToView, setOrderViewOpen }) => {
             <tr className="border-b">
               <th className="text-right bg-slate-100 w-[30%] px-5">Status</th>
               <td className="p-2 border font-semibold">
-                {orderToView.status.toUpperCase()}
+                {orderToView?.status.toUpperCase()}
               </td>
             </tr>
 

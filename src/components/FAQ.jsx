@@ -59,8 +59,8 @@ const FAQ = (props) => {
       <h2
         className={`${
           from === "home"
-            ? `text-2xl pl-2 font-bold text-center mb-6`
-            : `text-2xl pl-2 font-bold text-start mb-6`
+            ? `text-2xl max-sm:text-xl pl-2 font-bold text-center mb-6`
+            : `text-2xl max-sm:text-xl pl-2 font-bold text-start mb-6`
         }`}
       >
         FAQs
@@ -71,7 +71,7 @@ const FAQ = (props) => {
             onClick={() => handleToggle(index)}
             className="w-full flex justify-between items-center p-4 focus:outline-none"
           >
-            <span className="text-l font-bold text-gray-700 max-sm:text-start">
+            <span className="text-lg max-sm:text-sm font-bold text-gray-700 max-sm:text-start">
               {faq.question}
             </span>
             {activeIndex === index ? (
@@ -81,14 +81,14 @@ const FAQ = (props) => {
             )}
           </button>
           {activeIndex === index && (
-            <div className="p-4 bg-gray-100 text-gray-600">{faq.answer}</div>
+            <div className="p-4 text-[16px] max-sm:text-xs bg-gray-100 text-gray-600">{faq.answer}</div>
           )}
         </div>
       ))}
       <div className="text-center mt-4">
         <button
           onClick={toggleShowAll}
-          className=" text-cyan-600 pt-2 pb-1 hover:border-b hover:border-cyan-600 hover:pb-[3px] transition"
+          className=" text-white rounded py-2 text-[16px] max-sm:text-xs pb-1 bg-cyan-500 px-4 hover:border-b hover:border-cyan-600 hover:pb-[3px] transition"
         >
           {showAll ? "Show Less FAQs" : "Show More FAQs"}
         </button>

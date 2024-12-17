@@ -78,10 +78,10 @@ const Testimonials = () => {
         <div className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500">
           <div className="bg-cyan-50 py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl max-sm:text-2xl">
+              <h2 className="text-3xl max-sm:text-2xl font-extrabold text-gray-900 sm:text-4xl ">
                 Testimonials
               </h2>
-              <p className="mt-4 text-lg text-gray-600 max-sm:text-[16px] max-14inch:text-sm">
+              <p className="mt-4 text-lg max-sm:text-sm text-gray-600 max-sm:text-[16px] max-14inch:text-sm">
                 Check out what our customers are saying about us.
               </p>
             </div>
@@ -112,12 +112,12 @@ const Testimonials = () => {
                           .join("")}
                       </p>
                     </div>
-                    <div className="mt-6 text-center sm:text-lg max-sm:text-sm">
+                    <div className="mt-6 text-center text-sm max-sm:text-xs">
                       <p>{testimonials[currentIndex].text}</p>
                     </div>
                   </div>
                   <div className="px-6 py-4 bg-gray-50 sm:px-10 sm:py-6">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm max-sm:text-xs text-gray-600">
                       - {testimonials[currentIndex].author}
                     </p>
                   </div>

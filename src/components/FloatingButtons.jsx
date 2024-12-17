@@ -141,13 +141,14 @@ const FloatingButtons = () => {
           >
             {showCategories && (
               <div
-                className={`absolute -top-[180px] flex flex-col items-center bg-white px-2 rounded py-2 transition-all duration-1000 ease-in `}
+                // className={`absolute -top-[180px] flex flex-col items-center bg-white px-2 rounded py-2 transition-all duration-1000 ease-in `}
+                className={`absolute bottom-12 flex flex-col items-center bg-slate-50 border border-black border-b-cyan-50 px-2 rounded-lg py-2 transition-all duration-1000 ease-in `}
               >
                 {categories?.map((cat) => (
                   <Link
                     key={cat.id}
                     to={`/categories/brands/${cat.id}`}
-                    className="py-1 hover:font-semibold text-xs border-b w-[100px]"
+                    className="py-1 font-[400] hover:font-semibold text-xs border-b w-[100px]"
                   >
                     {cat.name}
                   </Link>

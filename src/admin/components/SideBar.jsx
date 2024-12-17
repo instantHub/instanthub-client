@@ -1,4 +1,10 @@
-import React, { startTransition, Suspense, useEffect, useState } from "react";
+import React, {
+  startTransition,
+  Suspense,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 import {
@@ -30,10 +36,13 @@ import { IoMdMenu, IoMdClose } from "react-icons/io";
 import { MdOutlineMenuOpen } from "react-icons/md";
 import { setCurrentPage } from "../features/adminPanelSlice";
 import { useDispatch } from "react-redux";
+import { SideBarContext } from "../pages/layout/Layout";
 
-const SideBar = ({ isSidebarOpen, toggleSidebar }) => {
+const SideBar = () => {
   const { pathname } = useLocation();
   const [active, setActive] = useState(false);
+
+  const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);
 
   const dispatch = useDispatch();
 

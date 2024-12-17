@@ -1,4 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, { useContext, useDebugValue, useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,23 +13,25 @@ import { IoLogOut } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { IoMdMenu } from "react-icons/io";
 import { setCurrentPage } from "../features/adminPanelSlice";
+import { SideBarContext } from "../pages/layout/Layout";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.auth);
   const { adminProfile, isLoading } = useAdminProfileQuery();
   // console.log("adminInfo", adminInfo);
 
   const adminPanelData = useSelector((state) => state.adminPanel);
-  console.log("adminPanelData", adminPanelData);
+  // console.log("adminPanelData", adminPanelData);
+
+  // const { toggleSidebar, isSidebarOpen } = props;
+  const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
-  const { toggleSidebar, isSidebarOpen } = props;
 
   const [adminLogout] = useAdminLogoutMutation();
   const navigate = useNavigate();
@@ -76,7 +78,7 @@ const Navbar = (props) => {
       {/* Current Page Name */}
       <div>
         <p className="text-xl max-sm:text-xs font-serif font-semibold">
-          {adminPanelData.currentPage.toUpperCase()}
+          {adminPanelData?.currentPage?.toUpperCase()}
         </p>
       </div>
 

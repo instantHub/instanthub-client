@@ -290,13 +290,11 @@ const Navbar = () => {
                               {category.brands.length > 0 ? (
                                 category.brands?.map((brand, index) => (
                                   <Link
+                                    key={index}
                                     to={`/categories/brands/products/${brand.id}`}
                                     onClick={() => setHoveredCategoryId(null)}
                                   >
-                                    <li
-                                      key={index}
-                                      className="py-1 px-2 rounded hover:bg-gray-100"
-                                    >
+                                    <li className="py-1 px-2 rounded hover:bg-gray-100">
                                       {brand.name}
                                     </li>
                                   </Link>

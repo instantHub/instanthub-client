@@ -1,12 +1,34 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useReducer } from "react";
 import {
   useCreateCategoryMutation,
   useUploadFileHandlerMutation,
   useUploadCategoryImageMutation,
 } from "../../../features/api";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ListButton from "../../components/ListButton";
+
+const initialState = {
+  category: "",
+  uniqueURL: "",
+  imageSelected: "",
+};
+
+function reducer(state, action) {
+  console.log("reducer func:", action);
+  const { type, value } = action;
+  console.log(type, value);
+  switch (type) {
+    case "category":
+      // return (state[type] = value);
+      return { ...state, [type]: value };
+    case "uniqueURL":
+      return { ...state, [type]: value };
+    case "imageSelected":
+      return { ...state, [type]: value };
+    default:
+      throw new Error();
+  }
+}
 
 const CreateCategory = () => {
   const [category, setCategory] = useState("");
@@ -14,6 +36,9 @@ const CreateCategory = () => {
   const [imageSelected, setImageSelected] = useState("");
   const [createCategory, { isLoading: createCategoryloading }] =
     useCreateCategoryMutation();
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log("Reducer state:", state);
 
   const [uploadCategoryImage, { isLoading: uploadLoading }] =
     useUploadCategoryImageMutation();
@@ -123,12 +148,16 @@ const CreateCategory = () => {
               <label htmlFor="productName">Category Name :</label>
               <input
                 type="text"
-                id="productName"
+                id="category"
+                name="category"
                 className=" border p-2 rounded-sm max-md:p-1"
                 placeholder="Enter Category Name"
                 value={category}
                 // value={name}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  dispatch({ type: e.target.name, value: e.target.value });
+                }}
                 required
               />
             </div>
@@ -138,8 +167,12 @@ const CreateCategory = () => {
               <input
                 type="text"
                 id="uniqueURL"
+                name="uniqueURL"
                 value={uniqueURL}
-                onChange={(e) => setUniqueURL(e.target.value)}
+                onChange={(e) => {
+                  setUniqueURL(e.target.value);
+                  dispatch({ type: e.target.name, value: e.target.value });
+                }}
                 className=" border p-2 rounded-sm max-md:p-1"
                 placeholder="Enter Unique URL"
                 required
@@ -155,11 +188,17 @@ const CreateCategory = () => {
                   </label>
                   <input
                     type="file"
-                    id="image"
-                    name="image"
+                    id="imageSelected"
+                    name="imageSelected"
                     ref={fileInputRef}
                     accept="image/*"
-                    onChange={(e) => setImageSelected(e.target.files[0])}
+                    onChange={(e) => {
+                      setImageSelected(e.target.files[0]);
+                      dispatch({
+                        type: e.target.name,
+                        value: e.target.files[0],
+                      });
+                    }}
                     className="w-full border border-gray-300 p-2 rounded-md max-md:p-1"
                     required
                   />

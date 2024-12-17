@@ -654,8 +654,11 @@ const ProductFinalPrice = () => {
                 )}
 
                 {recycleProduct &&
-                  (productDetails.category.name === "Laptop" ||
-                    productDetails.category.name === "Mobile") && (
+                  // (productDetails.category.name === "Laptop" ||
+                  //   productDetails.category.name === "Mobile") && (
+                  ["Laptop", "Desktop", "Mobile"].includes(
+                    productDetails.category.name
+                  ) && (
                     <div className="flex flex-col items-center">
                       <button
                         onClick={() => {
@@ -1100,7 +1103,9 @@ const DisplayDeductions = ({ data }) => (
 const Section = ({ conditionName, conditionLabels }) => {
   return (
     <div className="mb-5">
-      <h2 className="py-1 text-xl max-sm:text-sm text-green-600 font-bold">{conditionName}</h2>
+      <h2 className="py-1 text-xl max-sm:text-sm text-green-600 font-bold">
+        {conditionName}
+      </h2>
       <ul className="">
         {conditionLabels.map((cl, i) => (
           <Item key={i} clNo={i + 1} conditionLabel={cl.conditionLabel} />

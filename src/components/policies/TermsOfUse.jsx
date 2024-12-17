@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 const TermsOfUse = () => {
@@ -15,6 +15,10 @@ const TermsOfUse = () => {
       "query-input": "required name=search_term_string",
     },
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
       <Helmet>
@@ -36,10 +40,10 @@ const TermsOfUse = () => {
       </Helmet>
       {/* <div className="mx-10 mb-5 mt-5 px-10 py-2 border rounded shadow-2xl  flex flex-col gap-2 max-sm:mx-2 max-sm:px-5"> */}
       <div className="my-5 px-1 py-2 flex flex-col gap-2">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        <h1 className="text-3xl max-sm:text-2xl font-bold mb-6 text-center text-gray-800">
           Terms of Use
         </h1>
-        <div className="flex flex-col gap-2 text-gray-600 mb-4">
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
           <p>
             Please read these terms of use carefully before using this website
             (“InstantCashPick”). These website terms of use (the “terms of use”)
@@ -71,10 +75,10 @@ const TermsOfUse = () => {
         </div>
 
         <div className="flex flex-col gap-2 text-gray-600 mb-4">
-          <h2 className="font-semibold text-gray-700 text-xl">
+          <h2 className="font-semibold text-gray-700 text-xl max-sm:text-lg">
             Seller Responsibilities
           </h2>
-          <ol className="pl-2">
+          <ol className="pl-2 max-sm:text-sm">
             <li>
               1. You certify that you are the legal owner of the gadget that you
               want to sell. All initial quotes are pending our evaluation of
@@ -145,8 +149,9 @@ const TermsOfUse = () => {
               InstantCashPick for any retrieval of the data.
             </li>
             <li>
-              7. You understand once a device is sold by you via InstantCashPick,
-              in no scenario can this device be returned back to you.
+              7. You understand once a device is sold by you via
+              InstantCashPick, in no scenario can this device be returned back
+              to you.
             </li>
             <li>
               8. You understand that Products distributed as gifts from state
@@ -154,22 +159,22 @@ const TermsOfUse = () => {
               InstantCashPick platform.
             </li>
             <li>
-              9. We reserve the right to modify this agreement at any time without
-              giving you prior notice. Your use of our website/app, any of our
-              tools and services, following any such modification constitutes
-              your agreement to follow and be bound by the Agreement as
-              modified. Terms and conditions modifying the Agreement are
+              9. We reserve the right to modify this agreement at any time
+              without giving you prior notice. Your use of our website/app, any
+              of our tools and services, following any such modification
+              constitutes your agreement to follow and be bound by the Agreement
+              as modified. Terms and conditions modifying the Agreement are
               effective immediately upon publication.
             </li>
             <li>
-              10. InstantCashPick reserves the right to cancel any transaction that
-              is deemed suspicious or fraudulent on the organisation’s own
+              10. InstantCashPick reserves the right to cancel any transaction
+              that is deemed suspicious or fraudulent on the organisation’s own
               discretion.
             </li>
           </ol>
         </div>
-        <div className="flex flex-col gap-2 text-gray-600 mb-4">
-          <h2 className="text-gray-700 font-semibold text-xl">
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="text-gray-700 font-semibold text-xl max-sm:text-lg">
             Terms of Use for Repair of Product
           </h2>
           <p>
@@ -210,8 +215,8 @@ const TermsOfUse = () => {
             or relationship with third party professionals.
           </p>
         </div>
-        <div className="flex flex-col gap-2 text-gray-600 mb-4">
-          <h2 className="text-gray-700 font-semibold text-xl">
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="text-gray-700 font-semibold text-xl max-sm:text-lg">
             Payment for Services
           </h2>
           <p>
@@ -263,8 +268,8 @@ const TermsOfUse = () => {
             Professional’s arrival.
           </p>
         </div>
-        <div className="flex flex-col gap-2 text-gray-600 mb-4">
-          <h2 className="text-gray-700 font-semibold text-xl">
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="text-gray-700 font-semibold text-xl max-sm:text-lg">
             Repair Clauses for iOS users
           </h2>
           <p>
@@ -306,8 +311,10 @@ const TermsOfUse = () => {
             any other service provider, the warranty gets void automatically.
           </p>
         </div>
-        <div className="flex flex-col gap-2 text-gray-600 mb-4">
-          <h2 className="font-semibold text-gray-700 text-xl">General</h2>
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="font-semibold text-gray-700 text-xl max-sm:text-lg">
+            General
+          </h2>
           <p>
             InstantCashPick does not warrant the suitability of the services
             offered on this website. Information on this website is provided on
