@@ -1,7 +1,7 @@
 import React from "react";
 
 export const SubmitButton = (props) => {
-  console.log("Submit Button", props.handleLoading);
+  // console.log("Submit Button", props.handleLoading);
   return (
     <div>
       <button

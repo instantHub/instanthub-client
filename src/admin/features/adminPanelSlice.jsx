@@ -10,7 +10,7 @@ const adminPanelSlice = createSlice({
   initialState,
   reducers: {
     setCurrentPage: (state, action) => {
-      console.log("currentPage reducer", action.payload);
+      // console.log("currentPage reducer", action.payload);
 
       const { currentPage } = action.payload;
       state.currentPage = currentPage;

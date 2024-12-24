@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
+import SellContent from "../../components/SellContent";
 
 const ProductDetail = () => {
   const { prodId } = useParams();
@@ -33,19 +34,24 @@ const ProductDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${productDetails?.name} ${productDetails?.category?.name} | InstantCashPick`}</title>
+        <title>{`Sell Old ${productDetails?.name} ${productDetails?.category?.name} | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
-        <link rel="canonical" href="https://instantcashpick.com/" />
+        <link
+          rel="canonical"
+          href={`https://instanthub.in/categories/brands/productDetails/${prodId}`}
+        />
       </Helmet>
 
       <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">
-        <p className="pb-5 text-2xl font-bold max-sm:text-lg">
-          Sell your{" "}
-          {`${productDetails?.brand?.name} ${productDetails?.name} ${productDetails?.category?.name}`}{" "}
-          for Instant Cash
+        <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
+          <span>Sell your </span>
+          <span>
+            {`${productDetails?.brand?.name} ${productDetails?.name} ${productDetails?.category?.name} `}
+          </span>
+          <span>for Instant Cash</span>
         </p>
 
         {/* Home > Cat > Brand > Product */}
@@ -152,7 +158,7 @@ const ProductDetail = () => {
                           } flex items-center rounded-md cursor-pointer p-2.5 max-sm:p-2 shadow`}
                         >
                           <span className="border border-solid border-surface-dark rounded-full w-5 h-5 max-sm:w-4 max-sm:h-4 mr-1.5"></span>
-                          <span className="text-lg max-sm:text-sm flex-1 text-center">
+                          <span className="text-sm max-sm:text-sm flex-1 text-center">
                             {variant.name}
                           </span>
                         </div>
@@ -199,6 +205,8 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
+
+        <SellContent />
       </div>
     </>
   );

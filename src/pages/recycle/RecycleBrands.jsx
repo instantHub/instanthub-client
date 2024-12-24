@@ -6,6 +6,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
 import ItemGrid from "../../components/ItemGrid";
+import RecycleContent from "./RecycleContent";
 
 const RecycleBrands = () => {
   const { catId } = useParams();
@@ -23,23 +24,23 @@ const RecycleBrands = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${category?.name}s | InstantCashPick`}</title>
+        <title>{`Sell Old ${category?.name}s | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on recycling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on recycling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
-          content={`Recycle ${category?.name} on Instant Cash Pick, Recycle on Instant Cash Pick, recycle on instant cash pick, recycle mobile, recycle laptop, recycle mobiles on instantcashpick`}
+          content={`Recycle ${category?.name} on Instant Hub, Recycle on Instant Hub, recycle on instant hub, recycle mobile, recycle laptop, recycle mobiles on instanthub`}
         />
         <link
           rel="canonical"
-          href={`https://instantcashpick.com/recycle-categories/recycle-brands/${catId}`}
+          href={`https://instanthub.in/recycle-categories/recycle-brands/${catId}`}
         />
       </Helmet>
       {/* <div className="mt-8 w-4/5 mx-auto"> */}
       <div className="pt-10 w-4/5 max-2sm:w-[90%] mx-auto">
-        <p className="pb-5 text-2xl font-bold max-sm:text-xl">
+        <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
           Recycle your {category?.name} to recycle and get Instant Cash
         </p>
         <div className="mx-0 mb-6">
@@ -72,6 +73,8 @@ const RecycleBrands = () => {
             )}
           </div>
         )}
+
+        <RecycleContent heading={false} />
       </div>
     </>
   );

@@ -7,42 +7,10 @@ import { FcServices } from "react-icons/fc";
 const Footer = () => {
   return (
     <div className="w-full sm:pt-10 sm:pb-5 mt-2 bg-cyan-500 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16">
-      <div className="px-4 sm:px-0 flex flex-col items-center sm:hidden max-sm:flex-row max-sm:justify-center max-sm:gap-5">
-        <div>
-          {/* <img
-            // src="/LOGO1.png"
-            src="/images/footer-logo.png"
-            alt="logo"
-            // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-            className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
-          /> */}
-          <p className="flex flex-col gap-1">
-            <span className="font-serif text-3xl max-sm:text-lg">Instant</span>
-            <span className="font-serif text-2xl max-sm:text-sm">
-              Cash Pick
-            </span>
-          </p>
-        </div>
-        <div>
-          <span className="text-xs text-center text-white max-sm:text-[10px]">
-            Follow Us On
-          </span>
-          <ul className="flex gap-3 text-md my-3">
-            <li className="hover:text-white">
-              <FaFacebookF />
-            </li>
-            <li className="hover:text-white">
-              <FaInstagram />
-            </li>
-            <li className="hover:text-white">
-              <FaWhatsapp />
-            </li>
-          </ul>
-        </div>
-      </div>
       <div className="mx-auto max-w-screen-xl flex gap-4 justify-evenly max-md:gap-1 max-sm:flex-col max-sm:pl-5">
+        {/* Large Screen */}
         <div className="px-4 sm:px-0 flex flex-col items-center max-sm:hidden">
-          <div>
+          <div className="pb-5">
             {/* <img
               // src="/LOGO1.png"
               src="/images/footer-logo.png"
@@ -50,38 +18,98 @@ const Footer = () => {
               // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
               className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
             /> */}
-            <p className="flex flex-col gap-1">
+            <p className="flex flex- items-center gap-1 text-white ">
               <span className="font-serif text-3xl max-sm:text-lg">
                 Instant
               </span>
-              <span className="font-serif text-2xl max-sm:text-sm">
-                Cash Pick
-              </span>
+              <span className="font-serif text-3xl max-sm:text-sm">Hub</span>
             </p>
           </div>
 
           {/* Follow Us */}
-          <div>
-            <span className="text-xs text-center text-white max-sm:text-[10px]">
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-xs text-center text-white max-sm:text-[10px]">
               Follow Us On
-            </span>
-            <ul className="flex gap-3 text-md my-3">
-              <li className="hover:text-white">
+            </p>
+            <ul className="flex items-center gap-3 text-md my-3 text-xl">
+              <li className="hover:text-white text-blue-600">
                 <FaFacebookF />
               </li>
-              <li className="hover:text-white">
+              <li className="hover:text-white text-orange-600">
                 <FaInstagram />
               </li>
-              <li className="hover:text-white">
+              <li className="hover:text-white bg-green-600 rounded-full text-white">
                 <FaWhatsapp />
               </li>
             </ul>
           </div>
         </div>
 
+        {/* Small Screen */}
+        {/* <div className="px-4 sm:px-0 flex flex-col items-center sm:hidden max-sm:flex-row max-sm:justify-center max-sm:gap-5">
+          <div className="flex flex-  gap-1 justify-between w-full">
+            <div className="">
+           
+              <p className="flex items-center gap-1 text-white">
+                <span className="font-serif text-3xl max-sm:text-lg">
+                  Instant
+                </span>
+                <span className="font-serif text-3xl max-sm:text-lg">Hub</span>
+              </p>
+            </div>
+            <div className="">
+              <span className="text-xs text-center text-white max-sm:text-[10px]">
+                Follow Us On
+              </span>
+              <ul className="flex gap-3 text-md my-3">
+                <li className="hover:text-white">
+                  <FaFacebookF />
+                </li>
+                <li className="hover:text-white">
+                  <FaInstagram />
+                </li>
+                <li className="hover:text-white">
+                  <FaWhatsapp />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> */}
+
+        {/* Small Screen */}
         {/* Company  - Support  - More */}
-        {/* <div className="flex justify-around w-full max-sm:flex-wrap"> */}
         <div className="grid grid-cols-4 w-full max-sm:grid-cols-2 max-sm:gap-2">
+          {/* Business Name */}
+          <div className="md:hidden flex items-center">
+            {/* <img
+            // src="/LOGO1.png"
+            src="/images/footer-logo.png"
+            alt="logo"
+            // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
+            className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
+          /> */}
+            <p className="flex items-center gap-1 font-serif text-2xl text-white">
+              <span className="">Instant</span>
+              <span className="">Hub</span>
+            </p>
+          </div>
+
+          {/* Follow Us */}
+          <div className="md:hidden flex flex-col gap-3 py-4">
+            <p className="text-xs text-white">Follow Us On</p>
+            <ul className="flex gap-3 text-md">
+              <li className="hover:text-white text-blue-600">
+                <FaFacebookF />
+              </li>
+              <li className="hover:text-white text-orange-600">
+                <FaInstagram />
+              </li>
+              <li className="hover:text-white bg-green-600 rounded-full text-white">
+                <FaWhatsapp />
+              </li>
+            </ul>
+          </div>
+
           {/* Company */}
           <div className="flex flex-col justify-start items-center max-sm:items-start">
             <div className="text-white font-bold py-1 max-sm:text-sm">
@@ -147,7 +175,7 @@ const Footer = () => {
                 <li>
                   <Link to={`/privacy-policies`}>
                     <span className="hover:text-white max-sm:text-xs">
-                      Privary Policy
+                      Privacy Policy
                     </span>
                   </Link>
                 </li>
@@ -174,15 +202,16 @@ const Footer = () => {
             <div className="text-white font-bold py-2 max-sm:text-sm">
               <p>Our Office</p>
             </div>
-            <div className="pl-2 flex flex-col font-thin text-sm max-sm:text-[10px]">
+            <div className="pl-2 flex flex-col font-thin text-sm max-sm:text-[11px]">
               <p className="">
                 Sy. No. 92, R Greens A.C, <br />
                 Sarjapur Outer Ring Road Marathahalli <br />
                 Bengaluru - 37
               </p>
+              <p className="text-[12px]">GST: 29CSJPA4571K1ZE</p>
               <p className="">Ph: +91 8722288017</p>
-              <p className="">sale@instantcashpick.com</p>
-              <p className="">info@instantcashpick.com</p>
+              <p className="">sale@instanthub.in</p>
+              <p className="">info@instanthub.in</p>
             </div>
           </div>
         </div>
@@ -199,8 +228,8 @@ const Footer = () => {
               Bengaluru - 37
             </p>
             <p className="text-xs">Ph: +91 8722288017</p>
-            <p className="text-xs">sale@instantcashpick.com</p>
-            <p className="text-xs">info@instantcashpick.com</p>
+            <p className="text-xs">sale@instanthub.in</p>
+            <p className="text-xs">info@instanthub.in</p>
           </div>
         </div> */}
       </div>

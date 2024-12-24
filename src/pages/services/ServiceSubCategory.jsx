@@ -41,16 +41,16 @@ const SubServices = () => {
   return (
     <>
       <Helmet>
-        <title>{`${serviceCategory?.name} Sub Categories | InstantCashPick`}</title>
+        <title>{`${serviceCategory?.name} Sub Categories | InstantHub`}</title>
         <meta
           name="description"
-          content="InstantCashPick offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantCashPick. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
+          content="InstantHub offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantHub. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
         />
         <meta
           name="keywords"
-          content="InstantCashPick, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
+          content="InstantHub, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
-        <link rel="canonical" href={`https://instantcashpick.com/services`} />
+        <link rel="canonical" href={`https://instanthub.in/services`} />
       </Helmet>
       <div className="mt-8 w-4/5 mx-auto">
         <div className="mx-0 mb-6">

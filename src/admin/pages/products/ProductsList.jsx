@@ -270,14 +270,14 @@ const ProductsList = () => {
       </div>
 
       {/* Filter features */}
-      <div className="w-[96%] flex justify-evenly flex-wrap gap-2 border rounded-lg shadow-lg my-5 px-5">
+      <div className="w-[96%] max-sm:w-full flex justify-evenly flex- gap-2 border rounded-lg shadow-lg my-5 px-5">
         {/* Select Category */}
-        <div className="flex my-4 ">
+        <div className="flex items-center">
           <select
             id="category"
             onChange={(e) => selectCategoryFunc(e)}
             value={filterData.category}
-            className="px-2 py-1 border rounded text-sm"
+            className="px-2 py-1 border rounded text-sm mmax-sm:text-xs"
           >
             <option value="">Select Category</option>
             {!categoryDataLoading &&
@@ -331,14 +331,14 @@ const ProductsList = () => {
                 filterPage({ page: filterData.page - 1, from: "productsList" })
               );
             }}
-            className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
+            className="bg-blue-700 flex items-center max-sm:text-xs gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
             disabled={productsData?.page === 1}
           >
             <FaAngleLeft />
             Previous
           </button>
 
-          <div className="text-center text-lg">
+          <div className="text-center text-lg max-sm:text-xs">
             Page {productsData?.page || "0"} of{" "}
             {productsData?.totalPages || "0"}
           </div>
@@ -350,7 +350,7 @@ const ProductsList = () => {
                 filterPage({ page: filterData.page + 1, from: "productsList" })
               );
             }}
-            className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
+            className="bg-blue-700 flex items-center max-sm:text-xs gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
             disabled={productsData?.page === productsData?.totalPages}
           >
             Next
@@ -364,7 +364,7 @@ const ProductsList = () => {
             type="number"
             value={filterData.page}
             placeholder="Search a Page"
-            className="px-2 text-sm py-1 rounded border"
+            className="px-2 text-sm py-1 rounded border max-sm:w-1/2"
             onChange={(e) => {
               // setPage(e.target.value);
               dispatch(
@@ -378,7 +378,7 @@ const ProductsList = () => {
           />
 
           <button
-            className="text-sm text-red-600 px-1 border border-red-600 rounded disabled:text-gray-400 disabled:border-gray-400"
+            className="text-sm max-sm:text-xs text-red-600 px-1 border border-red-600 rounded disabled:text-gray-400 disabled:border-gray-400"
             onClick={() => {
               dispatch(clearFilter({ clear: "productsList" }));
               setCategoryId("");
@@ -392,7 +392,7 @@ const ProductsList = () => {
         {/* Create Product Button */}
         <div className="flex items-center">
           <Link to={"/admin/add-products"}>
-            <button className="bg-blue-700 text-white px-2 py-1 rounded">
+            <button className="bg-blue-700 text-white px-2 py-1 rounded max-sm:text-xs">
               Create Product
             </button>
           </Link>

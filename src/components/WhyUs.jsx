@@ -1,12 +1,13 @@
 import React from "react";
-import FAQ from "./FAQ";
+// import FAQ from "./FAQ";
 
-const WhyChooseInstantCashPicks = () => {
+// const WhyChooseInstantCashPicks = () => {
+const WhyChooseInstantHubs = () => {
   const data = [
     {
       heading: "Instant Cash Payments",
       text: `Say goodbye to waiting for checks to clear or funds to transfer.
-        With InstantCashPick, you'll receive cash on the spot.`,
+        With InstantHub, you'll receive cash on the spot.`,
     },
     {
       heading: "Convenience",
@@ -30,7 +31,7 @@ const WhyChooseInstantCashPicks = () => {
     <>
       <div className="max-w-[85%] mx-auto py-8">
         <h2 className="text-2xl max-sm:text-xl font-bold text-center mb-8">
-          Why Choose InstantCashPick?
+          Why Choose InstantHub?
         </h2>
         <div className="">
           {data.map((d, index) => (
@@ -74,4 +75,4 @@ const WhyChooseInstantCashPicks = () => {
   );
 };
 
-export default WhyChooseInstantCashPicks;
+export default WhyChooseInstantHubs;

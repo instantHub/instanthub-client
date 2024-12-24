@@ -4,7 +4,7 @@ import React from "react";
 const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
   // console.log("data from TABLE component", data);
   return (
-    <table className="w-full ">
+    <table className="w-full">
       <thead>
         <tr className="py-10 font-serif text-xl max-sm:text-sm border shadow-xl text-green-800 font-bold ">
           {headers.map((header, index) => (

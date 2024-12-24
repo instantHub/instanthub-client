@@ -7,6 +7,10 @@ import {
   FaPhoneAlt,
   FaRecycle,
   FaHome,
+  FaAngleDown,
+  FaAngleUp,
+  FaChevronUp,
+  FaChevronDown,
 } from "react-icons/fa";
 import { GiSellCard } from "react-icons/gi";
 import { MdHomeRepairService } from "react-icons/md";
@@ -19,7 +23,7 @@ const FloatingButtons = () => {
     useGetCategoryQuery();
 
   const defaultMessage =
-    "Hi There! Need help to sell on https://instantcashpick.com/";
+    "Hi There! Need help to sell on https://instanthub.in/";
 
   const navigate = useNavigate();
   const pathSubStr = location.pathname.substring(0, 4);
@@ -32,9 +36,34 @@ const FloatingButtons = () => {
   });
 
   const [showCategories, setShowCategories] = useState(false);
+  const [scrollY, setScrollY] = useState(window.scrollY);
 
   const activeLink =
     "text-cyan-500 text-lg transition-colors transition-all duration-1000 ease-in-out";
+
+  const [isScrolled, setIsScrolled] = useState(false);
+  // console.log("isScrolled", isScrolled);
+
+  // Scroll handle
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0); // Updates state whenever the user scrolls
+    };
+
+    window.addEventListener("scroll", handleScroll); // Attaches the scroll listener
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
+    };
+  }, []); // Empty dependency array ensures the listener is added only once
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scrolls to the top
+  };
+
+  const scrollToBottom = () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); // Scrolls to the bottom
+  };
 
   useEffect(() => {
     // console.log("Updating Active Path");
@@ -88,8 +117,21 @@ const FloatingButtons = () => {
 
   return (
     <>
-      {/* Buttons on right of screen */}
-      <div className="fixed bottom-0 h-11 z-10 top-[65%] -translate-y-1/2 right-4 max-sm:right-2 w-auto flex flex-col space-y-4 bg-gray-800 bg-transparent">
+      {/* Buttons on right of screen - WhatsApp - Call - Email */}
+      <div
+        className={` ${isScrolled ? "top-[58%]" : "top-[63%]"} 
+        fixed bottom-0 h-11 z-10  -translate-y-1/2 right-4 max-sm:right-2 w-auto flex flex-col items-center space-y-4 bg-gray-800 bg-transparent`}
+      >
+        {isScrolled && (
+          <button
+            onClick={scrollToTop}
+            className="flex-none text-gray-500 max-sm:text-gray-900 text-2xl hover:text-gray-900
+                      w-fit flex justify-center items-center rounded-md transition-all ease-in-out duration-300"
+          >
+            <FaAngleUp />
+            {/* <FaChevronUp /> */}
+          </button>
+        )}
         <a
           href={`https://wa.me/+918722288017?text=${defaultMessage}`}
           target="_blank"
@@ -110,6 +152,14 @@ const FloatingButtons = () => {
         >
           <FaEnvelope size={24} />
         </a>
+        <button
+          onClick={scrollToBottom}
+          className="flex-none text-gray-700 text-2xl hover:text-[29px] hover:text-gray-900 hover:pt-1 
+                    w-fit flex justify-center items-center rounded-md transition-all ease-in-out duration-300 max-sm:hidden"
+        >
+          <FaAngleDown />
+          {/* <FaChevronDown /> */}
+        </button>
       </div>
 
       <div className="fixed bottom-0 h-[52px] w-full z-10 flex">

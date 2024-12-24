@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 import {
-  useUploadConditionLabelsImageMutation,
   useUpdateProductMutation,
   useGetProductDetailsQuery,
   useUploadProductImageMutation,
@@ -10,19 +9,65 @@ import { Link, useParams } from "react-router-dom";
 import { SubmitButton } from "../../components/SubmitButton";
 import BackButton from "../../components/BackButton";
 import CardHeader from "../../components/CardHeader";
+import Loading from "../../../components/Loading";
+
+const initialState = {
+  category: "",
+  brand: "",
+  prodName: "",
+  uniqueURL: "",
+  imageSelected: "",
+  newImgSelected: false,
+  status: "",
+  oldVariants: [],
+  variants: [],
+  variantLen: 0,
+  updatedVriantLen: 0,
+};
+
+function reducer(state, action) {
+  // console.log("Reducer Function");
+  const { type, value } = action;
+  // console.log("type, value", type, value);
+  switch (type) {
+    case "initial":
+      return { ...value };
+    case "name":
+      return { ...state, prodName: value };
+    case "uniqueURL":
+      return { ...state, [type]: value };
+    case "imageSelected":
+      return { ...state, [type]: value };
+    case "newImgSelected":
+      return { ...state, [type]: value };
+    case "status":
+      return { ...state, [type]: value };
+    case "handleVariantChange":
+      const updatedVariants = [...state.variants];
+      updatedVariants[value.index][value.key] = value.value;
+      return { ...state, variants: updatedVariants };
+    case "addVariant":
+      return {
+        ...state,
+        variants: value,
+        updatedVriantLen: state.updatedVriantLen + 1,
+      };
+    case "removeVariant":
+      return {
+        ...state,
+        variants: value,
+        updatedVriantLen: state.updatedVriantLen - 1,
+      };
+    default:
+      return state;
+  }
+}
 
 const UpdateProduct = () => {
   const { productId } = useParams();
-  const [category, setCategory] = useState("");
-  const [brand, setBrand] = useState("");
-  const [prodName, setProdName] = useState("");
-  const [imageSelected, setImageSelected] = useState("");
-  const [newImgSelected, setNewImgSelected] = useState(false);
-  const [status, setStatus] = useState("");
-  const [uniqueURL, setUniqueURL] = useState("");
-  const [oldVariants, setOldVariants] = useState();
-  const [variantLen, setVariantLen] = useState(0);
-  const [updatedVriantLen, setUpdatedVariantLen] = useState(0);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log("Reducer state:", state);
 
   const [uploadProductImage, { isLoading: uploadLoading }] =
     useUploadProductImageMutation();
@@ -34,34 +79,10 @@ const UpdateProduct = () => {
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
-  // VARIANTS
-  const [variants, setVariants] = useState([
-    { variantId: "", name: "", price: "" },
-  ]);
-  const handleVariantChange = (index, key, value) => {
-    const updatedVariants = [...variants];
-    updatedVariants[index][key] = value;
-    setVariants(updatedVariants);
-  };
-
-  const addVariant = () => {
-    setVariants([...variants, { variantId: "New", name: "", price: "" }]);
-    setUpdatedVariantLen(updatedVriantLen + 1);
-  };
-
-  const handleRemoveVariant = (index) => {
-    const newVariants = [...variants];
-    newVariants.splice(index, 1);
-    setVariants(newVariants);
-    setUpdatedVariantLen(updatedVriantLen - 1);
-  };
-
-  // console.log("variants", variants);
-
   // File handler
   const uploadFileHandler = async () => {
     const formData = new FormData();
-    formData.append("image", imageSelected);
+    formData.append("image", state.imageSelected);
 
     try {
       const res = await uploadProductImage(formData).unwrap();
@@ -77,7 +98,7 @@ const UpdateProduct = () => {
     e.preventDefault();
 
     // Check if any variant fields are empty
-    const isEmptyVariant = variants.some(
+    const isEmptyVariant = state.variants.some(
       (variant) => variant.name.trim() === "" || variant.price === ""
     );
 
@@ -87,27 +108,27 @@ const UpdateProduct = () => {
     }
 
     let imageURL;
-    if (newImgSelected) {
+    if (state.newImgSelected) {
       console.log("image changed");
       imageURL = await uploadFileHandler();
-      setImageSelected(imageURL);
+      dispatch({ type: "imageSelected", value: imageURL });
     }
-    // console.log("after imageSelected", imageSelected);
-    // console.log("after imageURL", imageURL);
+    // console.log("after imageSelected", state.imageSelected);
+    // console.log("after imageURL", state.imageURL);
 
     const updatedProductData = {
-      name: prodName,
-      uniqueURL: uniqueURL,
+      name: state.prodName,
+      uniqueURL: state.uniqueURL,
       //   image: imageSelected ? imageSelected : productData.image,
-      image: newImgSelected ? imageURL : imageSelected,
-      category,
-      brand,
-      status,
-      variants: variants,
-      oldVariants: oldVariants,
+      image: state.newImgSelected ? imageURL : state.imageSelected,
+      category: state.category,
+      brand: state.brand,
+      status: state.status,
+      variants: state.variants,
+      oldVariants: state.oldVariants,
     };
 
-    // console.log("updatedProductData: ", updatedProductData);
+    console.log("updatedProductData: ", updatedProductData);
 
     try {
       const updatedProduct = await updateProduct({
@@ -139,292 +160,415 @@ const UpdateProduct = () => {
   };
 
   useEffect(() => {
-    if (productData) {
-      setProdName(productData.name);
-      setCategory(productData.category.id);
-      setBrand(productData.brand.id);
-      setUniqueURL(productData.uniqueURL);
-      setImageSelected(productData.image);
-      setStatus(productData.status);
-      // Variants - Extract only name and price from each variant and create a new array
-      // const extractedVariants = productData.variants.map((variant) => ({
-      //   name: variant.name,
-      //   price: variant.price,
-      // }));
-      const extractedVariants = productData.variants.map((variant) => ({
-        variantId: variant.id,
-        name: variant.name,
-        price: variant.price,
-      }));
-      setVariants(extractedVariants);
-      setOldVariants(extractedVariants);
-      setVariantLen(extractedVariants.length);
-      setUpdatedVariantLen(extractedVariants.length);
-    }
+    if (productDataLoading) return;
+
+    const extractedVariants = productData?.variants.map((variant) => ({
+      variantId: variant.id,
+      name: variant.name,
+      price: variant.price,
+    }));
+
+    // Reducer
+    dispatch({
+      type: "initial",
+      value: {
+        prodName: productData?.name,
+        category: productData?.category.id,
+        brand: productData?.brand.id,
+        uniqueURL: productData?.uniqueURL,
+        imageSelected: productData?.image,
+        status: productData?.status,
+        newImgSelected: false,
+        variants: extractedVariants,
+        oldVariants: extractedVariants,
+        variantLen: extractedVariants.length,
+        updatedVriantLen: extractedVariants.length,
+      },
+    });
   }, [productData]);
-  // console.log("Prod Status", status);
-  // console.log("Variant", variants);
-  // console.log("Old Variant", oldVariants);
-  // console.log("variantLength", variantLen);
-  // console.log("New variantLength", updatedVriantLen);
+
+  if (productDataLoading) return <Loading />;
 
   return (
-    <div className="flex px-[2%] pt-[2%]">
-      <div className="grow">
-        {/* <div className="flex justify-between items-center">
-          <h1 className="bold text-[1.4rem] mb-2">Update Product</h1>
-          <div className="flex gap-2">
-            <div className="flex items-center">
-              <h2>Home </h2>
-              <h2 className="pl-1"> / Update Product</h2>
-            </div>
+    <div className="px-[2%] pt-[2%] w-full">
+      <CardHeader
+        location={"/admin/products-list"}
+        text="Update Products"
+        source="update"
+      />
 
-            <BackButton location={"/admin/products-list"} />
-          </div>
-        </div> */}
+      <div className="flex justify-center max-md:flex-col max-sm:text-sm">
+        {/* Product Details */}
+        <div className="w-[70%] max-md:w-full grow-1 bg-white border rounded-md shadow-lg">
+          {!productDataLoading && (
+            <form
+              //   method="post"
+              className="flex flex-col gap-4 p-5 max-sm:p-3"
+              onSubmit={handleSubmit}
+            >
+              <h2>
+                <span>Update Product </span>
+                <span className="text-lg font-semibold">{state.prodName}</span>
+              </h2>
+              <hr />
 
-        <CardHeader
-          location={"/admin/products-list"}
-          text="Update Products"
-          source="update"
-        />
+              <div className="grid grid-cols-2 gap-4 max-sm:gap-2 max-sm:grid-cols-1">
+                {/* Category */}
+                <h2>
+                  <span>Category </span>
+                  <span className="text-lg font-semibold max-sm:text-sm">
+                    {productData?.category?.name}
+                  </span>
+                </h2>
+                {/* Brand */}
+                <h2>
+                  <span>Brand </span>
+                  <span className="text-lg font-semibold max-sm:text-sm">
+                    {productData?.brand?.name}
+                  </span>
+                </h2>
 
-        <div className="flex justify-center max-md:flex-col max-sm:text-sm">
-          <div className="w-[70%] max-md:w-full grow-1 bg-white border rounded-md shadow-lg">
-            {!productDataLoading && (
-              <form
-                action=""
-                method="post"
-                className="flex flex-col gap-4 p-5 max-sm:p-3"
-                onSubmit={handleSubmit}
-              >
-                <div>
-                  <h2 className="">
-                    Update Product{" "}
-                    <span className="text-lg font-semibold">{prodName}</span>{" "}
-                  </h2>
+                {/* Product Name - Product Image - Variants */}
+                <div className="flex flex-col">
+                  {/* Product Name - Product Image */}
+                  <div className="flex items-center gap-2 max-sm:flex-col">
+                    {/* Product Name */}
+                    <div>
+                      <label htmlFor="productName">Product Name: </label>
+                      <input
+                        type="text"
+                        id="productName"
+                        className=" border p-2 rounded-sm max-sm:p-1"
+                        placeholder="Enter Product Name"
+                        // value={prodName}
+                        value={state.prodName}
+                        onChange={(e) => {
+                          dispatch({ type: "name", value: e.target.value });
+                        }}
+                        required
+                      />
+                    </div>
+                    {/* Product Image */}
+                    <div className="flex items-center grow-0">
+                      <img
+                        src={
+                          import.meta.env.VITE_APP_BASE_URL +
+                          state.imageSelected
+                        }
+                        alt="ConditionLabel"
+                        className="w-[100px] h-[100px] mx-auto"
+                      />
+                    </div>
+                  </div>
+                  {/* Variants */}
+                  <div className="flex gap-2">
+                    {state.variants?.map((variant, index) => (
+                      <div
+                        key={index}
+                        className="flex gap-1 border px-1 m-1 rounded-lg"
+                      >
+                        <span className="opacity-50">{variant.name}</span>
+                        <span>-</span>
+                        <span className="opacity-50">{variant.price}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <hr />
-                <div className="grid grid-cols-2 gap-4 max-sm:gap-2 max-sm:grid-cols-1">
-                  <div className="flex flex-col">
-                    <h2 htmlFor="category">
-                      Category{" "}
-                      <span className="text-lg font-semibold max-sm:text-sm">
-                        {productData.category.name}
-                      </span>{" "}
-                    </h2>
-                  </div>
 
-                  <div className="flex flex-col">
-                    <h2 htmlFor="productType">
-                      Brand{" "}
-                      <span className="text-lg font-semibold max-sm:text-sm">
-                        {productData.brand.name}
-                      </span>{" "}
-                    </h2>
-                  </div>
+                {/* Unique URL */}
+                <div className="flex flex-col">
+                  <label htmlFor="productName">Make Unique URL :</label>
+                  <input
+                    type="text"
+                    id="productName"
+                    className=" border p-2 rounded-sm max-sm:p-1"
+                    placeholder="Enter Unique URL"
+                    value={state.uniqueURL}
+                    onChange={(e) => {
+                      dispatch({ type: "uniqueURL", value: e.target.value });
+                    }}
+                    required
+                  />
+                </div>
 
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2 max-sm:flex-col">
-                      <div>
-                        <label htmlFor="productName">Product Name :</label>
-                        <input
-                          type="text"
-                          id="productName"
-                          className=" border p-2 rounded-sm max-sm:p-1"
-                          placeholder="Enter Product Name"
-                          value={prodName}
-                          onChange={(e) => {
-                            setProdName(e.target.value);
-                          }}
-                          required
-                        />
-                      </div>
-                      <div className="flex items-center grow-0">
-                        <img
-                          src={
-                            import.meta.env.VITE_APP_BASE_URL + imageSelected
-                          }
-                          alt="ConditionLabel"
-                          className="w-[100px] h-[100px] mx-auto"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      {variants.map((variant, index) => (
-                        <div
-                          key={index}
-                          className="flex gap-1 border px-1 m-1 rounded-lg"
-                        >
-                          <span className="opacity-50">{variant.name}</span>
-                          <span>-</span>
-                          <span className="opacity-50">{variant.price}</span>
-                        </div>
-                      ))}
+                {/* File Select */}
+                <div className="p-2">
+                  <label htmlFor="fileInput">File Input :</label>
+                  <div className="flex">
+                    <div className="flex flex-wrap grow shrink basis-auto w-[1%] items-center">
+                      <input
+                        type="file"
+                        name="productImage"
+                        ref={fileInputRef}
+                        id="productImage"
+                        onChange={(e) => {
+                          dispatch({
+                            type: "imageSelected",
+                            value: e.target.files[0],
+                          });
+                          dispatch({
+                            type: "newImgSelected",
+                            value: true,
+                          });
+                        }}
+                      />
+
+                      {/* {state.imageSelected && (
+                        <p className="absolute mt-[3.8rem]">
+                          Selected file: {state.imageSelected}
+                        </p>
+                      )} */}
                     </div>
                   </div>
+                </div>
 
-                  <div className="flex flex-col">
-                    <label htmlFor="productName">Make Unique URL :</label>
+                {/* Status */}
+                <div className="flex flex-col">
+                  <label htmlFor="status">Status :</label>
+                  <select
+                    id="status"
+                    name="status"
+                    value={state.status}
+                    className="border rounded-sm p-2 max-sm:p-1"
+                    onChange={(e) => {
+                      dispatch({ type: "status", value: e.target.value });
+                    }}
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Blocked">Blocked</option>
+                  </select>
+                </div>
+              </div>
+              <div className="py-3 px-2">
+                <SubmitButton
+                  handleLoading={updateProductLoading}
+                  value="Update Product"
+                  loading="Loading..."
+                />
+              </div>
+            </form>
+          )}
+        </div>
+
+        {/* Variants Data */}
+        {/* <div className="w-fit">
+          {!productDataLoading && productData?.category.name === "Mobile" ? (
+            <div className="m-2 flex flex-col items-center justify-center">
+              <h3 className="text-xl inline-block">Add Variants:</h3>
+              {state?.variants.map((variant, index) => (
+                <div
+                  key={index}
+                  className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
+                >
+                  <div>
                     <input
                       type="text"
-                      id="productName"
-                      className=" border p-2 rounded-sm max-sm:p-1"
-                      placeholder="Enter Unique URL"
-                      value={uniqueURL}
+                      value={variant.name}
+                      placeholder="variant name"
                       onChange={(e) => {
-                        setUniqueURL(e.target.value);
+                        dispatch({
+                          type: "handleVariantChange",
+                          value: {
+                            index,
+                            key: "name",
+                            value: e.target.value,
+                          },
+                        });
                       }}
+                      className="m-1 p-2 border rounded-lg"
+                      required
+                    />
+                    <input
+                      type="number"
+                      value={variant.price}
+                      placeholder="variant price"
+                      onChange={(e) => {
+                        dispatch({
+                          type: "handleVariantChange",
+                          value: {
+                            index,
+                            key: "price",
+                            value: e.target.value,
+                          },
+                        });
+                      }}
+                      className="m-1 p-2 border rounded-lg"
                       required
                     />
                   </div>
 
-                  <div className="p-2">
-                    <label htmlFor="fileInput">File Input :</label>
-                    <div className="flex">
-                      <div className="flex flex-wrap grow shrink basis-auto w-[1%] items-center">
-                        <input
-                          type="file"
-                          name=""
-                          ref={fileInputRef}
-                          id=""
-                          onChange={(e) => {
-                            setImageSelected(e.target.files[0]);
-                            setNewImgSelected(true);
-                          }}
-                        />
-
-                        {/* {imageSelected && (
-                        <p className="absolute mt-[3.8rem]">
-                          Selected file: {imageSelected}
-                        </p>
-                      )} */}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="status">Status :</label>
-                    <select
-                      id="status"
-                      name="status"
-                      value={status}
-                      className="border rounded-sm p-2 max-sm:p-1"
-                      onChange={(e) => setStatus(e.target.value)}
-                    >
-                      <option value="Active">Active</option>
-                      <option value="Blocked">Blocked</option>
-                    </select>
+                  <div>
+                    {state.variants.length != 1 && (
+                      <button
+                        className="bg-red-600 px-2 py-1 text-white rounded-md"
+                        onClick={() => {
+                          const newVariants = [...state.variants];
+                          newVariants.splice(index, 1);
+                          dispatch({
+                            type: "removeVariant",
+                            value: newVariants,
+                          });
+                        }}
+                      >
+                        remove
+                      </button>
+                    )}
                   </div>
                 </div>
-                <div className="py-3 px-2">
-                  <SubmitButton
-                    handleLoading={updateProductLoading}
-                    value="Update Product"
-                    loading="Loading..."
-                  />
-                </div>
-              </form>
-            )}
-          </div>
-
-          <div className="grow-0">
-            {!productDataLoading && productData.category.name === "Mobile" ? (
-              <div className="m-1 flex flex-col items-center justify-center">
-                <h3 className="text-xl inline-block">Add Variants:</h3>
-                {variants.map((variant, index) => (
-                  <div
-                    key={index}
-                    className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
-                  >
-                    <div>
-                      <input
-                        type="text"
-                        value={variant.name}
-                        placeholder="variant name"
-                        onChange={(e) =>
-                          handleVariantChange(index, "name", e.target.value)
-                        }
-                        className="m-1 p-2 border rounded-lg"
-                        required
-                      />
-                      <input
-                        type="number"
-                        value={variant.price}
-                        placeholder="variant price"
-                        onChange={(e) =>
-                          handleVariantChange(index, "price", e.target.value)
-                        }
-                        className="m-1 p-2 border rounded-lg"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      {variants.length != 1 && (
-                        <button
-                          className="bg-red-600 px-2 py-1 text-white rounded-md"
-                          onClick={() => {
-                            handleRemoveVariant(index);
-                          }}
-                        >
-                          remove
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                <button
-                  onClick={addVariant}
-                  className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
+              ))}
+              <button
+                onClick={() => {
+                  dispatch({
+                    type: "addVariant",
+                    value: [
+                      ...state.variants,
+                      { variantId: "New", name: "", price: "" },
+                    ],
+                  });
+                }}
+                className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
+              >
+                Add Variant
+              </button>
+            </div>
+          ) : (
+            <div className="m-1 flex flex-col items-center justify-center">
+              <h3 className="text-xl inline-block">Add Price:</h3>
+              {state.variants.map((variant, index) => (
+                <div
+                  key={index}
+                  className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
                 >
-                  Add Variant
-                </button>
-              </div>
-            ) : (
-              <div className="m-1 flex flex-col items-center justify-center">
-                <h3 className="text-xl inline-block">Add Price:</h3>
-                {variants.map((variant, index) => (
-                  <div
-                    key={index}
-                    className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
-                  >
-                    <div>
-                      <input
-                        type="text"
-                        value={variant.name}
-                        placeholder="variant name"
-                        // onChange={(e) =>
-                        //   handleVariantChange(index, "name", e.target.value)
-                        // }
-                        className="m-1 p-2 border rounded-lg"
-                        required
-                        disabled
-                      />
-                      <input
-                        type="number"
-                        value={variant.price}
-                        placeholder="variant price"
-                        onChange={(e) =>
-                          handleVariantChange(index, "price", e.target.value)
-                        }
-                        className="m-1 p-2 border rounded-lg"
-                        required
-                      />
-                    </div>
+                  <div>
+                    <input
+                      type="text"
+                      value={variant.name}
+                      placeholder="variant name"
+                      className="m-1 p-2 border rounded-lg"
+                      required
+                      disabled
+                    />
+                    <input
+                      type="number"
+                      value={variant.price}
+                      placeholder="variant price"
+                      onChange={(e) => {
+                        dispatch({
+                          type: "handleVariantChange",
+                          value: {
+                            index,
+                            key: "price",
+                            value: e.target.value,
+                          },
+                        });
+                      }}
+                      className="m-1 p-2 border rounded-lg"
+                      required
+                    />
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div> */}
+
+        <div className="w-fit">
+          {!productDataLoading && productData?.category.name === "Mobile" ? (
+            <VariantSection
+              title="Add Variants"
+              variants={state.variants}
+              dispatch={dispatch}
+              isEditable={true}
+            />
+          ) : (
+            <VariantSection
+              title="Add Price"
+              variants={state.variants}
+              dispatch={dispatch}
+              isEditable={false}
+            />
+          )}
         </div>
       </div>
-
-      {/* <div className="flex justify-evenly mx-6 gap-80 2sm:gap-5 items-center">
-        <CreateSeries />
-      </div> */}
     </div>
   );
 };
 
 export default UpdateProduct;
+
+const VariantSection = ({ title, variants, dispatch, isEditable }) => {
+  const handleInputChange = (index, key, value) => {
+    dispatch({
+      type: "handleVariantChange",
+      value: { index, key, value },
+    });
+  };
+
+  const handleRemoveVariant = (index) => {
+    const updatedVariants = [...variants];
+    updatedVariants.splice(index, 1);
+    dispatch({
+      type: "removeVariant",
+      value: updatedVariants,
+    });
+  };
+
+  const handleAddVariant = () => {
+    dispatch({
+      type: "addVariant",
+      value: [...variants, { variantId: "New", name: "", price: "" }],
+    });
+  };
+
+  return (
+    <div className="m-2 flex flex-col items-center justify-center">
+      <h3 className="text-xl inline-block">{title}:</h3>
+      {variants.map((variant, index) => (
+        <div
+          key={index}
+          className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
+        >
+          <div>
+            <input
+              type="text"
+              value={variant.name}
+              placeholder="Variant Name"
+              onChange={(e) =>
+                isEditable && handleInputChange(index, "name", e.target.value)
+              }
+              className="m-1 p-2 border rounded-lg"
+              required
+              disabled={!isEditable}
+            />
+            <input
+              type="number"
+              value={variant.price}
+              placeholder="Variant Price"
+              onChange={(e) =>
+                handleInputChange(index, "price", e.target.value)
+              }
+              className="m-1 p-2 border rounded-lg"
+              required
+            />
+          </div>
+          {isEditable && variants.length > 1 && (
+            <button
+              className="bg-red-600 px-2 py-1 text-white rounded-md"
+              onClick={() => handleRemoveVariant(index)}
+            >
+              Remove
+            </button>
+          )}
+        </div>
+      ))}
+      {isEditable && (
+        <button
+          onClick={handleAddVariant}
+          className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
+        >
+          Add Variant
+        </button>
+      )}
+    </div>
+  );
+};

@@ -27,7 +27,7 @@ export const adminApiSlice = api.injectEndpoints({
       query: () => ({
         url: `${ADMIN_URL}/admin-profile`,
         method: "GET",
-        // credentials: "include",
+        credentials: "include",
         // body: data,
       }),
     }),

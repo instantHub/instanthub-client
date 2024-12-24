@@ -18,11 +18,11 @@ const HowItWorks = () => {
       heading: "Submit Your Device",
       icon: <TbListDetails />,
       text: `Begin by selecting the electronic item you wish to sell. Whether
-            it's a smartphone, laptop, tablet, or gaming console, we accept
+            it's a smartphone, laptop, tablet, or gaming console and etc, we accept
             a wide range of devices.`,
     },
     {
-      heading: " Get an Instant Quote",
+      heading: "Get an Instant Quote",
       icon: <GiPriceTag />,
       text: `Once you've chosen your device, our intuitive platform will
       generate an instant quote based on its condition, age, and

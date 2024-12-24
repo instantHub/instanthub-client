@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUpdateAdminMutation } from "../../features/adminApiSlice";
 import { setCredentials } from "../../features/authSlice";
+import { BiSolidHide, BiShow } from "react-icons/bi";
 
 const UpdateAdmin = () => {
   const [name, setName] = useState("");
@@ -11,6 +12,8 @@ const UpdateAdmin = () => {
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -88,27 +91,67 @@ const UpdateAdmin = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <label htmlFor="password">Enter Password</label>
-            <input
-              type="password"
-              value={password}
-              name="password"
-              id="password"
-              placeholder="Password"
-              className="border rounded px-2 py-1"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <label htmlFor="confirmpassword">Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              name="confirmpassword"
-              id="confirmpassword"
-              placeholder="Confirm Password"
-              className="border rounded px-2 py-1"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
 
+            <label htmlFor="password">Enter Password</label>
+            <div className="flex justify-between items-center border rounded">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                name="password"
+                id="password"
+                placeholder="Password"
+                className="w-full px-4 py-2"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <button
+                className="px-2 text-xl"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowPassword((prev) => !prev);
+                }}
+              >
+                {showPassword ? (
+                  <span>
+                    <BiShow />
+                  </span>
+                ) : (
+                  <span>
+                    <BiSolidHide />
+                  </span>
+                )}
+              </button>
+            </div>
+            <label htmlFor="confirmpassword">Confirm Password</label>
+
+            <div className="flex justify-between items-center border rounded">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                name="confirmpassword"
+                id="confirmpassword"
+                placeholder="Confirm Password"
+                className="w-full px-4 py-2"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <button
+                className="px-2 text-xl"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowConfirmPassword((prev) => !prev);
+                }}
+              >
+                {showConfirmPassword ? (
+                  <span>
+                    <BiShow />
+                  </span>
+                ) : (
+                  <span>
+                    <BiSolidHide />
+                  </span>
+                )}
+              </button>
+            </div>
             <div className="">
               <input
                 type="submit"

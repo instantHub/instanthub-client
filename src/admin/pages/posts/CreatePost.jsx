@@ -3,7 +3,7 @@ import ListButton from "../../components/ListButton";
 
 const CreatePost = () => {
   return (
-    <div className="w-full px-[2%] pt-[2%] max-sm:text-sm">
+    <div className="w-full flex flex-col justify-center max-sm:w-fit px-[2%] pt-[2%] max-sm:text-sm">
       <div className="flex justify-between items-center">
         <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">Create Post</h1>
 
@@ -12,11 +12,9 @@ const CreatePost = () => {
           text={"Categories List"}
         /> */}
       </div>
-      <div className="bg-white border rounded-md shadow-lg">
+      <div className="bg-white border rounded-md shadow-lg max-sm:w-fit">
         <form
-          action=""
-          method="post"
-          className="flex flex-col gap-4  p-5"
+          className="flex flex-col gap-4 p-5"
           encType="multipart/form-data"
           //   onSubmit={handleSubmit}
         >
@@ -24,7 +22,7 @@ const CreatePost = () => {
             <h2 className="">Add Post</h2>
           </div>
           <hr />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
             <div className="flex flex-col">
               <label htmlFor="productName">Post Name:</label>
               <input

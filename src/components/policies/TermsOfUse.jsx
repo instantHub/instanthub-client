@@ -5,13 +5,13 @@ const TermsOfUse = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instantcashpick.com/terms-of-use",
-    name: "InstantCashPick",
+    url: "https://instanthub.in/terms-of-use",
+    name: "InstantHub",
     description:
-      "Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
+      "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/terms-of-use",
+      target: "https://instanthub.in/terms-of-use",
       "query-input": "required name=search_term_string",
     },
   };
@@ -23,17 +23,17 @@ const TermsOfUse = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Terms Of Use | InstantCashPick`}</title>
+        <title>{`Terms Of Use | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
-          content="Terms Of Use, terms of use, Terms Of Use of Instant Cash Pick, Terms Of Use of InstantCashPick"
+          content="Terms Of Use, terms of use, Terms Of Use of Instant Hub, Terms Of Use of InstantHub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instantcashpick.com/terms-of-use" />
+        <link rel="canonical" href="https://instanthub.in/terms-of-use" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
@@ -46,7 +46,7 @@ const TermsOfUse = () => {
         <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
           <p>
             Please read these terms of use carefully before using this website
-            (“InstantCashPick”). These website terms of use (the “terms of use”)
+            (“InstantHub”). These website terms of use (the “terms of use”)
             govern your access to and use of the website. The website is
             available for your use only on the condition that you agree to the
             terms of use set forth below. If you do not agree to all of the
@@ -57,19 +57,19 @@ const TermsOfUse = () => {
           </p>
           <p>
             This is a legally binding contract between “you” the “seller of the
-            goods”, InstantCashPick, and third-party buyers (“buyer”) which
+            goods”, InstantHub, and third-party buyers (“buyer”) which
             provides services for purchasing, recycling and/or donating of used
-            consumer products (the “buyer services”). InstantCashPick acts as a
+            consumer products (the “buyer services”). InstantHub acts as a
             platform to allow sellers who comply with their policies to sell
             certain goods. You conduct your actual sales and other transactions
             directly with the third parties and, unless otherwise specifically
-            and clearly indicated, not with InstantCashPick. As a result,
-            InstantCashPick cannot control any aspect of your sales and
+            and clearly indicated, not with InstantHub. As a result,
+            InstantHub cannot control any aspect of your sales and
             transactions with third parties, and the third parties are solely
             responsible to you for all aspects of your sales and transactions
-            with them and consequently InstantCashPick will have no liabilities
+            with them and consequently InstantHub will have no liabilities
             towards the sellers or buyers in this regard. In the document below
-            “we”, “our”, “us” is used for InstantCashPick and InstantCashPick’s
+            “we”, “our”, “us” is used for InstantHub and InstantHub
             third party buyer collectively.
           </p>
         </div>
@@ -130,7 +130,7 @@ const TermsOfUse = () => {
               restrictions. The article you sell (including all related
               materials, software and add on hardware) may not be counterfeited,
               stolen, or contain harmful or offensive content of any nature. You
-              agree to indemnify and hold InstantCashPick, our affiliates,
+              agree to indemnify and hold InstantHub, our affiliates,
               suppliers, licensors and partners, and the officers, directors,
               employees, agents and representatives of each of them harmless,
               including costs, liabilities and legal fees, from any claim or
@@ -140,23 +140,23 @@ const TermsOfUse = () => {
             </li>
             <li>
               6. It is also your responsibility to wipe, clean or delete data on
-              your Gadget being sold via InstantCashPick. You confirm that all
+              your Gadget being sold via InstantHub. You confirm that all
               the data in the said device will be erased before handing it over.
               You also confirm that in spite of erasing the data
               manually/electronically, if any data still accessible due any
-              technical reason, InstantCashPick or the Third party buyer shall
+              technical reason, InstantHub or the Third party buyer shall
               not be responsible for the same and you will not approach
-              InstantCashPick for any retrieval of the data.
+              InstantHub for any retrieval of the data.
             </li>
             <li>
               7. You understand once a device is sold by you via
-              InstantCashPick, in no scenario can this device be returned back
+              InstantHub, in no scenario can this device be returned back
               to you.
             </li>
             <li>
               8. You understand that Products distributed as gifts from state
               sponsored or NGO funded distribution programs are not accepted on
-              InstantCashPick platform.
+              InstantHub platform.
             </li>
             <li>
               9. We reserve the right to modify this agreement at any time
@@ -167,7 +167,7 @@ const TermsOfUse = () => {
               effective immediately upon publication.
             </li>
             <li>
-              10. InstantCashPick reserves the right to cancel any transaction
+              10. InstantHub reserves the right to cancel any transaction
               that is deemed suspicious or fraudulent on the organisation’s own
               discretion.
             </li>
@@ -179,38 +179,38 @@ const TermsOfUse = () => {
           </h2>
           <p>
             The Services constitute a technology platform that connects users of
-            InstantCashPick mobile applications or websites provided as part of
+            InstantHub mobile applications or websites provided as part of
             the Services (each, an “Application”) who are seeking gadget
             (Phones, tablet, Laptop etc.) repair services to a network of third
             party repair technicians, including, without limitation, independent
             third party repair technicians and third party logistics providers
-            under agreement with InstantCashPick (“Third Party Professionals”).
+            under agreement with InstantHub (“Third Party Professionals”).
             The Services are made available solely for your personal/
             non-commercial use unless agreed otherwise, in writing in a separate
             agreement with you.
           </p>
           <p>
-            You acknowledge and agree that InstantCashPick does not provide
+            You acknowledge and agree that InstantHub does not provide
             gadget repair services or logistics or function as a gadget repair
             services company. Our services are to be used by you, if at all, for
             the purpose of requesting and scheduling gadget repair services or
             logistics services with third party professionals, but you agree
-            that InstantCashPick has no responsibility or liability to you
+            that InstantHub has no responsibility or liability to you
             related to any gadget repair services or logistics provided to you
             by the third party professionals through the use of the services.
           </p>
           <p>
-            InstantCashPick does not guarantee the suitability, safety or
+          InstantHub does not guarantee the suitability, safety or
             ability of third party professionals. It is solely your
             responsibility to determine if a third party professional will meet
             your needs and expectations. under no circumstances will
-            InstantCashPick participate in disputes between you and a third
+            InstantHub participate in disputes between you and a third
             party professional. By using the services, you acknowledge that you
             may be exposed to situations involving third party professionals
             that are potentially unsafe, offensive, harmful to minors, or
             otherwise objectionable, and that your use of third party
             professionals arranged or scheduled using the services is at your
-            own risk and judgment. InstantCashPick shall not have any liability
+            own risk and judgment. InstantHub shall not have any liability
             whatsoever arising from or in any way related to your transactions
             or relationship with third party professionals.
           </p>
@@ -223,7 +223,7 @@ const TermsOfUse = () => {
             You understand and agree that usage of the Services may result in
             payments by you for the services you receive from a Third Party
             Professional (“Charges”). After you have received services,
-            InstantCashPick will facilitate payment of the applicable Charges on
+            InstantHub will facilitate payment of the applicable Charges on
             behalf of the Third Party Professional, solely as the Third Party
             Professional’s limited payment collection agent, using the preferred
             payment method you have designated while initiating or modifying
@@ -233,28 +233,28 @@ const TermsOfUse = () => {
             same as payment made directly by you to the Third Party
             Professional(s). Charges will be inclusive of applicable taxes
             wheresoever required by law. Charges paid by you are final and
-            non-refundable, unless otherwise determined by InstantCashPick in
+            non-refundable, unless otherwise determined by InstantHub in
             its sole discretion. While you do retain the right to request lower
             Charges from a Third Party Professional for services received by you
             from such Third Party Professional at the time you receive such
-            services from the Third Party Professional, InstantCashPick will
+            services from the Third Party Professional, InstantHub will
             respond accordingly to any request from a Third Party Professional
             to modify the Charges for a particular service.
           </p>
           <p>
             You understand and agree that (i) all Charges are due immediately
-            and (ii) payment will be facilitated by InstantCashPick using the
+            and (ii) payment will be facilitated by InstantHub using the
             preferred payment method you have designated while initiating or
             modifying your Account. If your primary account payment method is
             determined to not able to be charged for any reason whatsoever, you
-            agree that InstantCashPick may, as the Third Party Professional’s
+            agree that InstantHub may, as the Third Party Professional’s
             limited payment collection agent, use a secondary payment method in
             your account, if available.
           </p>
           <p>
-            InstantCashPick reserves the right to establish, remove and/or
+            InstantHub reserves the right to establish, remove and/or
             revise charges for any or all aspects of the Services at any time at
-            InstantCashPick’s sole discretion. InstantCashPick will use
+            InstantHub’s sole discretion. InstantHub will use
             reasonable efforts to inform you of charges that may apply, provided
             that you will be responsible for Charges incurred under your account
             regardless of your awareness of such charges or the amounts thereof.
@@ -316,18 +316,18 @@ const TermsOfUse = () => {
             General
           </h2>
           <p>
-            InstantCashPick does not warrant the suitability of the services
+          InstantHub does not warrant the suitability of the services
             offered on this website. Information on this website is provided on
-            an “as is” basis and InstantCashPick accepts no liability for
+            an “as is” basis and InstantHub accepts no liability for
             inaccuracies or typographical errors. Users are advised to carry out
             their own checks to ensure the suitability of the services being
-            offered. InstantCashPick disclaims all liability for any damage or
+            offered. InstantHub disclaims all liability for any damage or
             loss, whether direct or indirect, arising from use of this website.
           </p>
           <p>
             These terms and conditions are governed by and construed in
             accordance with the laws of the jurisdiction in which
-            InstantCashPick operates. Any disputes arising out of or in
+            InstantHub operates. Any disputes arising out of or in
             connection with these terms and conditions shall be subject to the
             exclusive jurisdiction of the courts of that jurisdiction.
           </p>

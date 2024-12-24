@@ -14,9 +14,10 @@ function UpdateService(props) {
   const [deleteImage, { isLoading: deleteLoading }] = useDeleteImageMutation();
   const [formData, setFormData] = useState({});
   const [newImage, setNewImage] = useState(false);
+  
 
   const { updateData, setUpdateModel } = props;
-  console.log("updateData from UpdateService", updateData);
+  // console.log("updateData from UpdateService", updateData);
 
   // handle Image Delete
   const handleImageDelete = async (e) => {
@@ -64,7 +65,7 @@ function UpdateService(props) {
     event.preventDefault();
 
     console.log("handleSubmit");
-    console.log(updateData.serviceToUpdate._id, formData);
+    // console.log(updateData.serviceToUpdate._id, formData);
 
     if (newImage) {
       formData.image = await uploadFileHandler(formData.image);
@@ -76,10 +77,17 @@ function UpdateService(props) {
         data: formData,
       });
       setNewImage(false);
-      console.log("serviceUpdated", serviceUpdated);
-      toast.success(`Service Updated Successfully`);
+      console.log("serviceUpdated:- ", serviceUpdated);
+      console.log("serviceUpdated:- ", serviceUpdated?.error?.status);
+
+      if (serviceUpdated.error && serviceUpdated?.error?.status === 500) {
+        toast.error(serviceUpdated.error.data.message);
+        return;
+      }
+      toast.success(serviceUpdated.data.message);
+      // toast.success(`Service Updated Successfully`);
     } catch (error) {
-      console.error("Error updating condition:", error);
+      console.error("Error updating service:", error);
       toast.error(`Something went wrong..!`);
     }
 

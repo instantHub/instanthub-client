@@ -9,6 +9,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import ProductCard from "../../components/ProductCard";
 import Loading from "../../components/Loading";
+import RecycleContent from "./RecycleContent";
 
 const RecycleProducts = () => {
   const { brandId } = useParams();
@@ -86,7 +87,7 @@ const RecycleProducts = () => {
   return (
     <>
       {/* Series */}
-      <div className="mt-8">
+      <div className={`${displayedSeries?.length > 0 ? "mt-10" : "mt-0"}`}>
         <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {displayedSeries?.map((series) => (
             <SeriesButton
@@ -102,7 +103,11 @@ const RecycleProducts = () => {
         </div>
       </div>
 
-      <div className="pt-10 w-4/5 max-2sm:w-[90%] mx-auto ">
+      <div
+        className={`${
+          displayedSeries.length > 0 ? "pt-7 max-sm:py-2" : "pt-5 max-sm:pt-0"
+        } w-4/5 max-2sm:w-[90%] mx-auto `}
+      >
         {/* Search Bar */}
         <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
           <div className="flex pl-4 items-center border rounded">
@@ -126,7 +131,7 @@ const RecycleProducts = () => {
 
         {/* Recycle Text */}
         <div>
-          <p className="pb-5 text-2xl font-bold max-sm:text-xl">
+          <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
             Recycle your {`${brand?.name} ${category?.name}`} to recycle and get
             Instant Cash
           </p>
@@ -173,6 +178,7 @@ const RecycleProducts = () => {
               />
             ))}
         </div>
+        <RecycleContent heading={false} />
       </div>
     </>
   );
@@ -183,16 +189,19 @@ export default RecycleProducts;
 const SeriesButton = ({ series, isSelected, onClick }) => (
   <div
     key={series.id}
-    className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
+    className="relative col-span-1 max-h-44  sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
   >
     <button onClick={onClick} className="w-full h-full">
       <div
         className={`${
           isSelected ? "bg-cyan-500 text-white" : "bg-gray-200 max-sm:bg-white"
-        } flex flex-col items-center justify-center cursor-pointer w-full h-full p-2 sm:p-2 sm:min-w-full rounded sm:rounded-md sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+        } flex flex-col items-center justify-center cursor-pointer w-full h-full p-2 sm:p-2 sm:min-w-full rounded sm:rounded-md 
+          sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
       >
         <span className="text-center mt-2 flex-1 line-clamp-3 flex items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-          <div className="text-[14px] font-[500] leading-7">{series.name}</div>
+          <div className="text-[14px] max-sm:text-xs font-[500] max-sm:font-[400] leading-7">
+            {series.name}
+          </div>
         </span>
       </div>
     </button>

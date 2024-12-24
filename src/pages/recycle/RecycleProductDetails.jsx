@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { FaGooglePay } from "react-icons/fa";
 import FormInput from "../../components/FormInput";
 import Loading from "../../components/Loading";
+import RecycleContent from "./RecycleContent";
 
 const RecycleProductDetail = () => {
   const { prodId } = useParams();
@@ -233,29 +234,31 @@ const RecycleProductDetail = () => {
           productDetails
             ? `${productDetails.name} ${productDetails.category.name}`
             : null
-        }| InstantCashPick`}</title>
+        }| InstantHub`}</title>
 
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
 
         <meta
           name="keywords"
-          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
         />
-        <link rel="canonical" href="https://instantcashpick.com/" />
+        <link rel="canonical" href="https://instanthub.in/" />
       </Helmet>
-      <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 bg-[url('/images/recycle1.png')] bg-center bg-no-repeat">
-        {/* <div className="bg-white px-10 pt-10 pb-24 rounded-md shadow-lg"> */}
-        {/* Header Links: Home > Category > Brand > Products > ProductName */}
-        <p className="pb-5 text-2xl font-bold max-sm:text-xl">
-          Sell your{" "}
-          {productDetails
-            ? `${productDetails.brand.name} ${productDetails.name} ${productDetails.category.name} `
-            : null}{" "}
-          to recycle and get Instant Cash
+      {/* <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 bg-[url('/images/recycle1.png')] bg-center bg-no-repeat"> */}
+      <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 ">
+        <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
+          <span>Sell your </span>
+          <span>
+            {productDetails
+              ? `${productDetails?.brand?.name} ${productDetails?.name} ${productDetails?.category?.name} `
+              : null}
+          </span>
+          <span>to recycle and get Instant Cash</span>
         </p>
+        {/* Header Links: Home > Category > Brand > Products > ProductName */}
         <div className="mx-0 mb-6">
           {productDetails && (
             <div className="flex items-center gap-1">
@@ -465,6 +468,8 @@ const RecycleProductDetail = () => {
             </>
           )}
         </div>
+
+        <RecycleContent heading={false} />
 
         {checkMobileOn && (
           <div>

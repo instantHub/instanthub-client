@@ -18,7 +18,7 @@ import { SideBarContext } from "../pages/layout/Layout";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.auth);
-  const { adminProfile, isLoading } = useAdminProfileQuery();
+  const { adminProfile, isLoading, isError } = useAdminProfileQuery();
   // console.log("adminInfo", adminInfo);
 
   const adminPanelData = useSelector((state) => state.adminPanel);
@@ -44,6 +44,11 @@ const Navbar = () => {
       navigate("/admin/login");
     } catch (error) {}
   };
+
+  if (isError) {
+    console.log("Error in Admin Profile mainfly fro JWT Token Expiry", isError);
+    dispatch(logout());
+  }
 
   const handleClick = (event) => {
     event.preventDefault(); // Prevent default behavior

@@ -276,7 +276,7 @@ const SideBar2 = (props) => {
           className="items-center gap-2 ml-3 mt-4 flex text-l font-extrabold tracking-tight dark:text-white text-slate-900"
         >
           <GiCash />
-          <span>InstantCashPick</span>
+          <span>InstantHub</span>
         </Link>
       </div>
 

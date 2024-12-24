@@ -5,6 +5,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
 import ItemGrid from "../../components/ItemGrid";
+import SellContent from "../../components/SellContent";
 
 const Brands = () => {
   const { catId } = useParams();
@@ -21,22 +22,22 @@ const Brands = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${category?.name}s | InstantCashPick`}</title>
+        <title>{`Sell Old ${category?.name}s | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
           content={`Sell ${
             category?.name
-          } on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, sell ${category?.name.toLowerCase()} on instantcashpick`}
+          } on Instant Hub, Instant Cash, Instant Pick, InstantHub, sell ${category?.name.toLowerCase()} on InstantHub`}
         />
-        <link rel="canonical" href={`https://instantcashpick.com/${catId}`} />
+        <link rel="canonical" href={`https://instanthub.in/${catId}`} />
       </Helmet>
 
-      <div className="mt-8 w-4/5 mx-auto">
-        <h1 className="pb-5 text-2xl font-bold max-sm:text-lg">
+      <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">
+        <h1 className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
           {/* Sell your {category?.name} for Instant Cash */}
           Sell your {category?.name} for Instant Cash
         </h1>
@@ -84,6 +85,8 @@ const Brands = () => {
             )}
           </div>
         )}
+
+        <SellContent />
       </div>
     </>
   );

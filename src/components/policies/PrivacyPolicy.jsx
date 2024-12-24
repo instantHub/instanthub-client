@@ -5,13 +5,13 @@ const PrivacyPolicy = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instantcashpick.com/privacy-policy",
-    name: "InstantCashPick",
+    url: "https://instanthub.in/privacy-policy",
+    name: "InstantHub",
     description:
-      "Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
+      "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/privacy-policy",
+      target: "https://instanthub.in/privacy-policy",
       "query-input": "required name=search_term_string",
     },
   };
@@ -24,20 +24,17 @@ const PrivacyPolicy = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Privacy Policy | InstantCashPick`}</title>
+        <title>{`Privacy Policy | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
-          content="Privacy Policy, Privacy Policy of Instant Cash Pick, Privacy Policy of InstantCashPick, privacy policy of InstantCashPick"
+          content="Privacy Policy, Privacy Policy of Instant Hub, Privacy Policy of InstantHub, privacy policy of instanthub, privacy policy of instant hub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link
-          rel="canonical"
-          href="https://instantcashpick.com/privacy-policies"
-        />
+        <link rel="canonical" href="https://instanthub.in/privacy-policies" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
@@ -53,7 +50,7 @@ const PrivacyPolicy = () => {
             Effective date: 2024
           </p>
           <p className="text-gray-600 mb-6 max-sm:text-sm">
-            Welcome to Instant Cash Pick. We are committed to protecting your
+            Welcome to Instant Hub. We are committed to protecting your
             personal information and your right to privacy. If you have any
             questions or concerns about our policy, or our practices with
             regards to your personal information, please contact us at
@@ -160,10 +157,10 @@ const PrivacyPolicy = () => {
             </h2>
             <p className="text-gray-600 mb-4 max-sm:text-sm">
               If you have questions or comments about this policy, you may email
-              us at support@instantcashpick.com or by post to:
+              us at support@instanthub.in or by post to:
             </p>
             <address className="text-gray-600 max-sm:text-sm not-italic">
-              Instant Cash Pick <br />
+              Instant Hub <br />
               Sy. No. 92, R Greens A.C, <br />
               Sarjapur Outer Ring Road Marathahalli <br />
               <br />

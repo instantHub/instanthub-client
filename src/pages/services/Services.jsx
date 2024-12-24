@@ -32,13 +32,13 @@ const Services = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instantcashpick.com/services",
-    name: "InstantCashPick",
+    url: "https://instanthub.in/services",
+    name: "InstantHub",
     description:
-      "InstantCashPick offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantCashPick. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs.",
+      "InstantHub offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantHub. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs.",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/services",
+      target: "https://instanthub.in/services",
       "query-input": "required name=search_term_string",
     },
   };
@@ -46,17 +46,17 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>{`Services | InstantCashPick`}</title>
+        <title>{`Services | InstantHub`}</title>
         <meta
           name="description"
-          content="InstantCashPick offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantCashPick. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
+          content="InstantHub offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantHub. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
         />
         <meta
           name="keywords"
-          content="InstantCashPick Service, Instant Service, instant service, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
+          content="InstantHub Service, Instant Service, instant service, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instantcashpick.com/services" />
+        <link rel="canonical" href="https://instanthub.in/services" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>

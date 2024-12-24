@@ -21,19 +21,14 @@ const FAQ = (props) => {
         "We evaluate devices on the basis of their condition, age, supply, demand & value in the resale market. All these factors are accounted for by our in house expertise to determine the best resale value of your device.",
     },
     {
-      question: "Is it safe to sell my phone on InstantCashPick?",
+      question: "Is it safe to sell my phone on InstantHub?",
       answer:
-        "It’s the safest out there. First and foremost, we ensure your device data is erased completely. You will also receive an invoice for the transaction, as a proof of device ownership transfer.",
+        "It's the safest out there. First and foremost, we ensure your device data is erased completely. You will also receive an invoice for the transaction, as a proof of device ownership transfer.",
     },
-    // {
-    //   question: "How does Voucher payment work?",
-    //   answer:
-    //     "We have special vouchers available like Amazon, Flipkart, Croma, etc. to offer extra value for your device. In case you choose one of these vouchers, the complete payment (including the quote price and any additional offer) will be made through the voucher alone. You can redeem at its respective e-store/store.",
-    // },
     {
       question: "When & how do I get paid?",
       answer:
-        "You’ll be paid via your chosen mode of payment like UPI, bank transfer, Wallet transfer etc as soon as your device is picked up by our executive.",
+        "You'll be paid via your chosen mode of payment like UPI, bank transfer, Wallet transfer etc as soon as your device is picked up by our executive.",
     },
     {
       question: "How do I proceed from here?",
@@ -43,8 +38,22 @@ const FAQ = (props) => {
     {
       question: "Do I need to provide any documents?",
       answer:
-        "We’ll require copies of your address and identity proof to validate the ownership of device. Additionally, sharing a valid invoice for your device is mandatory if you’re selling from other cities than Bengaluru",
-      // "We’ll require copies of your address and identity proof to validate the ownership of device. Additionally, sharing a valid invoice for your device is mandatory if you’re selling in Bengaluru, Mangalore, Noida & Ghaziabad.",
+        "We'll require copies of your address and identity proof to validate the ownership of device. Additionally, sharing a valid invoice for your device is mandatory if you're selling from other cities than Bengaluru",
+    },
+    {
+      question: "What does the Recycle my device mean?",
+      answer:
+        "Various metals like copper, lead, gold, etc. are used for making a mobile device. Recycling is when these components are extracted from the phone and are used again for manufacturing new devices.",
+    },
+    {
+      question: "Why should I Recycle my device?",
+      answer:
+        "It is ideal to recycle devices that are no longer in use. Idle devices are usually dumped in landfills or kept unused, resulting in more e-waste and increased carbon footprint. Recycling is a great way to reduce greenhouse emissions that results from mining.",
+    },
+    {
+      question: "How is Recycling different from Selling my X device?",
+      answer:
+        "Whenever you recycle a device, it directly goes to scrap and then is processed further. It aids in e-waste reduction. However, when you sell a device, it must hold some market value and should be in good condition.",
     },
   ];
 
@@ -71,7 +80,7 @@ const FAQ = (props) => {
             onClick={() => handleToggle(index)}
             className="w-full flex justify-between items-center p-4 focus:outline-none"
           >
-            <span className="text-lg max-sm:text-sm font-bold text-gray-700 max-sm:text-start">
+            <span className="text-[1rem] max-sm:text-sm font-bold text-gray-700 max-sm:text-start">
               {faq.question}
             </span>
             {activeIndex === index ? (
@@ -81,7 +90,9 @@ const FAQ = (props) => {
             )}
           </button>
           {activeIndex === index && (
-            <div className="p-4 text-[16px] max-sm:text-xs bg-gray-100 text-gray-600">{faq.answer}</div>
+            <div className="p-4 text-[15px] max-sm:text-xs bg-gray-100 text-gray-600">
+              {faq.answer}
+            </div>
           )}
         </div>
       ))}

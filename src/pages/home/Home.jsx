@@ -4,7 +4,7 @@ import Categories from "../categories/Categories";
 import Testimonials from "../../components/Testimonials";
 import TestimonialCarousel from "../../components/TestimonialsCorousel";
 import HowItWorks from "../../components/HowItWorks";
-import WhyChooseInstantCashPicks from "../../components/WhyUs";
+import WhyChooseInstantHubs from "../../components/WhyUs";
 import { Helmet } from "react-helmet-async";
 import FloatingButtons from "../../components/FloatingButtons";
 import FAQ from "../../components/FAQ";
@@ -15,26 +15,26 @@ import ServicesHome from "../services/ServicesHome";
 const Home = () => {
   const images = [
     {
-      url: "https://instantcashpick.com/admin/uploads/sliders/2023-06-27-01-22-2420230627012224pickmyphonepickmyphone%20banner-01.jpg",
+      url: "https://instanthub.in/admin/uploads/sliders/2023-06-27-01-22-2420230627012224pickmyphonepickmyphone%20banner-01.jpg",
     },
     {
-      url: "https://instantcashpick.com/admin/uploads/sliders/2023-06-27-01-22-3220230627012232pickmyphonepickmyphone%20banner-02.jpg",
+      url: "https://instanthub.in/admin/uploads/sliders/2023-06-27-01-22-3220230627012232pickmyphonepickmyphone%20banner-02.jpg",
     },
     {
-      url: "https://instantcashpick.com/admin/uploads/sliders/2024-03-17-10-03-3820240317100338pickmyphonepexels-lukas-kloeppel-466685.jpg",
+      url: "https://instanthub.in/admin/uploads/sliders/2024-03-17-10-03-3820240317100338pickmyphonepexels-lukas-kloeppel-466685.jpg",
     },
   ];
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instantcashpick.com/",
-    name: "InstantCashPick",
+    url: "https://instanthub.in/",
+    name: "InstantHub",
     description:
-      "Get instant cash payments with InstantCashPick. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily.",
+      "Get instant cash payments with InstantHub. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily.",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/search?q={search_term_string}",
+      target: "https://instanthub.in/search?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   };
@@ -42,18 +42,18 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old Gadgets Online | InstantCashPick`}</title>
+        <title>{`Sell Old Gadgets Online | InstantHub`}</title>
 
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
 
         <meta
           name="keywords"
-          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
         />
-        <link rel="canonical" href="https://instantcashpick.com/" />
+        <link rel="canonical" href="https://instanthub.in/" />
       </Helmet>
 
       <div className="">
@@ -68,7 +68,7 @@ const Home = () => {
         </div>
         <HowItWorks />
         <TestimonialCarousel />
-        <WhyChooseInstantCashPicks />
+        <WhyChooseInstantHubs />
         <FAQ from={`home`} />
       </div>
     </>

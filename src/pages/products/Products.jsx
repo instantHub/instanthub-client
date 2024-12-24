@@ -10,6 +10,7 @@ import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
 import ProductCard from "../../components/ProductCard";
+import SellContent from "../../components/SellContent";
 
 const Products = () => {
   const { brandId } = useParams();
@@ -62,7 +63,7 @@ const Products = () => {
     }
   }, [productsData]);
 
-  console.log(brand);
+  // console.log(brand);
 
   const displayedSeries = seriesAction.showSeries
     ? brandSeries.filter((series) => series.id === seriesAction.selectedSeries)
@@ -76,30 +77,38 @@ const Products = () => {
       )
     : productsData;
 
-  if (productsData?.length === 0) return <h2>Not Available</h2>;
+  // if (productsData?.length === 0)
+  //   return (
+  //     <div className="flex items-center justify-center w-full h-dvh">
+  //       <h1>Not Available</h1>
+  //     </div>
+  //   );
 
   if (productsLoading) return <Loading />;
 
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${brand?.name} ${category?.name} | InstantCashPick`}</title>
+        <title>{`Sell Old ${brand?.name} ${category?.name} | InstantHub`}</title>
 
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
 
         <meta
           name="keywords"
-          content={`sell products on online, sell old mobiles online, sell old ${brand?.name} ${category?.name} online, sell ${brand?.name} ${category?.name} online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick`}
-          // content="Instant Cash Pick, Instant Cash, Instant Pick, InstantCashPick, instant cash pick, instant cash, instant pick, instantcashpick"
+          content={`sell products on online, sell old mobiles online, sell old ${brand?.name} ${category?.name} online, sell ${brand?.name} ${category?.name} online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub`}
+          // content="Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, InstantHub"
         />
-        <link rel="canonical" href="https://instantcashpick.com/" />
+        <link
+          rel="canonical"
+          href={`https://instanthub.in/categories/brands/products/${brandId}`}
+        />
       </Helmet>
 
       {/* Series */}
-      <div className="mt-8">
+      <div className={`${displayedSeries?.length > 0 ? "mt-10" : "mt-0"}`}>
         <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {displayedSeries?.map((series) => (
             <SeriesButton
@@ -119,8 +128,8 @@ const Products = () => {
       <div className="mt-5 w-[90%] max-sm:w-[90%] mx-auto">
         {/* Search Bar */}
         <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
-          <div className="flex pl-4 items-center border rounded">
-            <BsSearch className="text-black" />
+          <div className="flex items-center gap-1 px-2 border rounded-md">
+            <BsSearch className="text-gray-700 text-sm" />
             <input
               type="search"
               name=""
@@ -139,7 +148,7 @@ const Products = () => {
         </div>
 
         <div>
-          <p className="pb-5 text-2xl font-bold max-sm:text-lg">
+          <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
             Sell your{" "}
             {category && brand ? `${brand.name} ${category.name}` : null} for
             Instant Cash
@@ -163,6 +172,14 @@ const Products = () => {
         </div>
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+          {filteredProducts.filter(
+            (product) => product.status.toLowerCase() !== "blocked"
+          ).length === 0 && (
+            <div className="flex items-center justify-center">
+              <h1>{brand?.name} Products Not Available</h1>
+            </div>
+          )}
+
           {filteredProducts
             .filter((product) => product.status.toLowerCase() !== "blocked")
             .map((product) => (
@@ -173,6 +190,8 @@ const Products = () => {
               />
             ))}
         </div>
+
+        <SellContent />
       </div>
     </>
   );

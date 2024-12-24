@@ -280,17 +280,22 @@ const SideBar = () => {
             `}
       >
         <div className="bg-gray-900 w-fit px-2">
-          {/* Instant Cash Pick Sidebar Name */}
-          <div className="flex items-center gap-2 bg-gray-900 w-fit pt-5 pb-2 pl-3 max-sm:pl-2">
+          {/* Instant Hub Sidebar Name */}
+          <div className="flex justify-between items-center font-serif gap-2 bg-gray-900 w-full pt-5 pb-2 pl-3 max-sm:pl-2">
+            {/* InstantHub Name */}
             <div>
               <Link
                 to="/admin"
                 className="gap-2 flex items-center font-extrabold tracking-tight dark:text-white text-slate-900"
               >
                 <GiCash />
-                <span className="max-sm:text-sm">InstantCashPick</span>
+                <span className="max-sm:text-sm text-lg tracking-widest">
+                  Instant Hub
+                </span>
               </Link>
             </div>
+
+            {/* Close button */}
             <div className="relative flex flex-col items-center ">
               <button
                 onClick={() => {

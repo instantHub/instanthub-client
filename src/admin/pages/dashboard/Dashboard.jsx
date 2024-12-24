@@ -76,10 +76,10 @@ const Dashboard = () => {
 
   // monthlyOrders & monthlyRecycleOrders
   useEffect(() => {
-    console.log("UseEffect ordersData");
-    if (ordersLoading) return;
+    // console.log("UseEffect Dashboard Dates Segregation");
+    // if (ordersLoading) return;
 
-    const orderDates = ordersData.reduce((acc, curr) => {
+    const orderDates = ordersData?.reduce((acc, curr) => {
       const date = new Date(curr.createdAt);
       const month = date.getMonth() + 1; // Months are zero-indexed
       const year = date.getFullYear();
@@ -116,7 +116,7 @@ const Dashboard = () => {
     }, []);
     setMonthlyRecycleOrders(recycleOrderDates);
     // console.log("recycleOrderDates", recycleOrderDates);
-  }, [ordersData]);
+  }, [ordersData, recycleOrdersData]);
 
   // Chart data for Categories, Brands and Products
   // Category has {name, default set Count = 1} // Brands has {category, brands[Array]} // Products has {categoryName, count}
@@ -202,7 +202,7 @@ const Dashboard = () => {
                 <p>Total {dashboardDetail?.categories?.length} Categories</p>
               </div>
               {/* <PieChart dataProp={dashboardDetail?.categories} /> */}
-              {/* <DoughnutChart dataProp={categoriesChartData} /> */}
+              <DoughnutChart dataProp={categoriesChartData} />
             </div>
 
             <hr className="lg:hidden py-5" />
@@ -214,7 +214,7 @@ const Dashboard = () => {
                 <p>Total {dashboardDetail?.brandsCount} Brands</p>
               </div>
 
-              {/* <DoughnutChart dataProp={brandsChartData} /> */}
+              <DoughnutChart dataProp={brandsChartData} />
             </div>
           </div>
         </div>
@@ -231,7 +231,7 @@ const Dashboard = () => {
               <p>Total {dashboardDetail?.productsCount} Products</p>
             </div>
             {/* DoughnutChart */}
-            {/* <DoughnutChart dataProp={productsChartData} /> */}
+            <DoughnutChart dataProp={productsChartData} />
           </div>
 
           {/* Brand wise products */}
@@ -241,13 +241,13 @@ const Dashboard = () => {
                 <p className="text-center text-sm">
                   Brand Wise Products of {cat.category}
                 </p>
-                {/* <BarChart
+                <BarChart
                   category={cat.category}
                   data={cat.brands}
                   xTitle="Brands"
                   yTitle="Count"
                   color={colors[i]}
-                /> */}
+                />
               </div>
             ))}
           </div>
@@ -262,14 +262,14 @@ const Dashboard = () => {
               <p className="text-center text-sm max-sm:text-xs">
                 Month-on-Month Orders
               </p>
-              {/* <BarChart
+              <BarChart
                 data={monthlyOrders}
                 category="Orders"
                 xTitle="Orders"
                 yTitle="Count"
                 color={colors[0]}
                 chartFor="Orders"
-              /> */}
+              />
               {/* <div>
                 <p className="text-center text-sm">
                   Total {dashboardDetail?.ordersCount} Orders
@@ -280,26 +280,26 @@ const Dashboard = () => {
             {/* ORDER STATUS */}
             <div className="flex flex-col items-center">
               <p className="text-center text-sm">Orders Status</p>
-              {/* <BarChart
+              <BarChart
                 category={"Orders Status"}
                 data={ordersStatus}
                 xTitle="Pending / Completed"
                 yTitle="Count"
                 color={colors[0]}
                 chartFor="Orders"
-              /> */}
+              />
             </div>
             {/* ORDER STOCKS */}
             <div className="flex flex-col items-center">
               <p className="text-center text-sm">Stock Status</p>
-              {/* <BarChart
+              <BarChart
                 category={"Stocks Status"}
                 data={stockStatus}
                 xTitle="Stock In / Out"
                 yTitle="Count"
                 color={colors[0]}
                 chartFor="Orders"
-              /> */}
+              />
             </div>
           </div>
           <div>
@@ -320,14 +320,14 @@ const Dashboard = () => {
               <p className="text-center text-sm max-sm:text-xs">
                 Month-on-Month Recycle Orders
               </p>
-              {/* <BarChart
+              <BarChart
                 data={monthlyRecycleOrders}
                 category="Recycle Orders"
                 xTitle="Recycle Orders"
                 yTitle="Count"
                 color={colors[1]}
                 chartFor="Orders"
-              /> */}
+              />
 
               {/* <div>
                 <p className="text-center text-sm">

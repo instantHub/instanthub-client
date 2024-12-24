@@ -5,13 +5,13 @@ const ServicePolicy = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instantcashpick.com/service-policy",
-    name: "InstantCashPick",
+    url: "https://instanthub.in/service-policy",
+    name: "InstantHub",
     description:
-      "Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
+      "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/service-policy",
+      target: "https://instanthub.in/service-policy",
       "query-input": "required name=search_term_string",
     },
   };
@@ -23,19 +23,19 @@ const ServicePolicy = () => {
     <div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Service Policy | InstantCashPick`}</title>
+        <title>{`Service Policy | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
-          content="Service Policy, Service Policy of Instant Cash Pick, Service Policy of InstantCashPick, service policy of InstantCashPick"
+          content="Service Policy, Service Policy of Instant Hub, Service Policy of InstantHub, service policy of InstantHub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link
           rel="canonical"
-          href="https://instantcashpick.com/service-policy"
+          href="https://instanthub.in/service-policy"
         />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -52,7 +52,7 @@ const ServicePolicy = () => {
             Effective date: 2024
           </p>
           <p className="text-gray-600 mb-6 max-sm:text-sm">
-            Welcome to Instant Cash Pick. We are committed to protecting your
+            Welcome to Instant Hub. We are committed to protecting your
             personal information and your right to privacy. If you have any
             questions or concerns about our policy, or our practices with
             regards to your personal information, please contact us at
@@ -61,38 +61,38 @@ const ServicePolicy = () => {
 
           <section className="flex flex-col gap-2 mb-8">
             <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-3">
-              1. InstantCashPick Services and Third Party Services and Sites
+              1. InstantHub Services and Third Party Services and Sites
             </h2>
             <p className="max-sm:text-sm">
               The information and materials provided in the Site and through the
               Services are intended for general reference only, and may not
               describe all of the terms, conditions, and exceptions applicable
-              to InstantCashPick’s Services. InstantCashPick presents
-              information from Third Parties through the InstantCashPick Site
+              to InstantHub’s Services. InstantHub presents
+              information from Third Parties through the InstantHub Site
               and Services, including prices offered for your items, item
               descriptions, certain Third Party terms of service, and other
-              information (“Third Party Information”). InstantCashPick cannot
+              information (“Third Party Information”). InstantHub cannot
               control, and is not responsible for the accuracy of any Third
               Party Information.
             </p>
             <p className="max-sm:text-sm">
               You conduct your actual sales and other transactions directly with
               the Third Parties and, unless otherwise specifically and clearly
-              indicated, not with InstantCashPick. InstantCashPick cannot
+              indicated, not with InstantHub. InstantHub cannot
               control any aspect of your sales and transactions with Third
               Parties, and the Third Parties are solely responsible to you for
               all aspects of your sales and transactions with them.
             </p>
             <p className="max-sm:text-sm">
-              At times, the InstantCashPick Site may have links to websites
+              At times, the InstantHub Site may have links to websites
               hosted by the Third Parties and other entities (the “Additional
               Sites”), or such Additional Sites may have links to the
-              InstantCashPick Site. These links are offered as a convenience and
+              InstantHub Site. These links are offered as a convenience and
               for informational purposes only, not as referrals or endorsements
-              by InstantCashPick of the Additional Sites. The Additional Sites
+              by InstantHub of the Additional Sites. The Additional Sites
               are maintained by their respective organizations, and those
               organizations are solely responsible for the content of their own
-              websites. InstantCashPick does not verify nor make any warranty or
+              websites. InstantHub does not verify nor make any warranty or
               representation about the content, accuracy, opinions expressed,
               warranties, products or services, intellectual property
               compliance, or links of such Additional Sites. You should read the

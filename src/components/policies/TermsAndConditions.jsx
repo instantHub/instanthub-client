@@ -5,13 +5,13 @@ function TermsAndConditions() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instantcashpick.com/terms-conditions",
-    name: "InstantCashPick",
+    url: "https://instanthub.in/terms-conditions",
+    name: "InstantHub",
     description:
-      "Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
+      "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instantcashpick.com/terms-conditions",
+      target: "https://instanthub.in/terms-conditions",
       "query-input": "required name=search_term_string",
     },
   };
@@ -23,19 +23,19 @@ function TermsAndConditions() {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Terms & Conditions | InstantCashPick`}</title>
+        <title>{`Terms & Conditions | InstantHub`}</title>
         <meta
           name="description"
-          content="Get instant cash payments with InstantCashPick on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
+          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
         <meta
           name="keywords"
-          content="Terms & Conditions, Terms & Conditions of Instant Cash Pick, Terms & Conditions of InstantCashPick"
+          content="Terms & Conditions, Terms & Conditions of Instant Hub, Terms & Conditions of InstantHub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link
           rel="canonical"
-          href="https://instantcashpick.com/terms-conditions"
+          href="https://instanthub.in/terms-conditions"
         />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -45,26 +45,26 @@ function TermsAndConditions() {
       <div className="my-5 py-2 px-1 text-gray-600 flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <h1 className="text-center text-black text-3xl max-sm:text-xl font-semibold py-2">
-            Terms and Conditions <br /> for InstantCashPick services
+            Terms and Conditions <br /> for InstantHub services
           </h1>
           <p className="max-sm:text-sm">
             By using it, you are agreeing to these Terms & Conditions (defined
             below). Please read them carefully. Manak Waste Management Pvt Ltd.,
-            formerly known as ReGlobe, doing business as “InstantCashPick”
+            formerly known as ReGlobe, doing business as InstantHub
           </p>
           <p className="max-sm:text-sm">
-            “InstantCashPick” owns and operates the website,{" "}
-            <a href="https://www.InstantCashPick.com">
-              www.InstantCashPick.com
+            “InstantHub” owns and operates the website,{" "}
+            <a href="https://www.instanthub.in">
+              www.instanthub.in
             </a>
             . The mobile touch versions, App on Play store and Apple App store
             and/or any site(s) we have now or in the future that reference these
-            Terms & Conditions (collectively, “InstantCashPick”), provides a
+            Terms & Conditions (collectively, “InstantHub”), provides a
             marketplace and platform for consumers and organizations to sell or
             repair their used, old and other articles, and conduct varied
             transactions and activities, with third-party companies and other
             entities and persons (collectively, “Third Parties”). The
-            InstantCashPick marketplace, platform, and related functionality,
+            InstantHub marketplace, platform, and related functionality,
             whether provided through the Site or through other means, are
             collectively referred to as the services (the “Services”).
           </p>
@@ -74,17 +74,17 @@ function TermsAndConditions() {
             Services will constitute your acceptance of these Terms &
             Conditions, as they may be modified by us from time to time, with or
             without notice to you. Please check this page regularly for updates
-            to the InstantCashPick Terms & Conditions.
+            to the InstantHub Terms & Conditions.
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="font-semibold text-xl max-sm:text-lg">
-            1. InstantCashPick is a marketplace venue
+            1. InstantHub is a marketplace venue
           </h2>
           <p className="max-sm:text-sm">
-            InstantCashPick is a platform to allow users, subject to compliance
-            with InstantCashPick’s policies, to sell/repair certain goods.
-            InstantCashPick may not be directly involved in the transaction
+            InstantHub is a platform to allow users, subject to compliance
+            with InstantHub’s policies, to sell/repair certain goods.
+            InstantHub may not be directly involved in the transaction
             between user(s) and third party professional(s), ensuing no control
             by reasons whatsoever in any aspect of your transactions with Third
             Parties, and the Third Parties are solely responsible to you for all
@@ -96,24 +96,24 @@ function TermsAndConditions() {
             2. Permitted Use and Compliance with Laws.
           </h2>
           <p className="max-sm:text-sm">
-            InstantCashPick authorizes you to access, view and use the Site
+          InstantHub authorizes you to access, view and use the Site
             content and software (collectively, the “Manak Waste Management Pvt
             Ltd Property”) solely to the extent necessary for you to use the
             Services. You may not remove any copyright, trademark or other
-            proprietary notices that have been placed on the InstantCashPick
+            proprietary notices that have been placed on the InstantHub
             Property. You may not engage in systematic retrieval of data or
-            other content from the InstantCashPick Property. Except as expressly
+            other content from the InstantHub Property. Except as expressly
             permitted by these Terms & Conditions, any modification,
             reproduction, redistribution, republication, uploading, posting,
             transmitting, distributing or otherwise exploiting in any way the
-            InstantCashPick Property, or any portion of the InstantCashPick
+            InstantHub Property, or any portion of the InstantHub
             Property, is strictly prohibited without the prior written
             permission of Manak Waste Management Pvt Ltd.
           </p>
           <p className="max-sm:text-sm">
             You agree that you will comply with all applicable laws, regulations
             and ordinances relating to the Site and Services, the
-            InstantCashPick Property or your use of them, and that in using the
+            InstantHub Property or your use of them, and that in using the
             Site and Services you will not engage in any conduct that restricts
             or inhibits any other person from using or enjoying the Services.
           </p>
@@ -125,8 +125,8 @@ function TermsAndConditions() {
           <p className="max-sm:text-sm">
             Except as otherwise indicated, all materials in the Site, including,
             but not limited to text, software, photos, video, graphics, music,
-            sound, the InstantCashPick Logo, ScreenPro logo, ReGlobe Logo and
-            other InstantCashPick ,ScreenPro and ReGlobe trademarks and service
+            sound, the InstantHub Logo, ScreenPro logo, ReGlobe Logo and
+            other InstantHub ,ScreenPro and ReGlobe trademarks and service
             marks and the entire contents of the Site are the property of Manak
             Waste Management Pvt Ltd and/or its affiliates or licensors,
             including the Third Parties, and are protected by
@@ -137,9 +137,9 @@ function TermsAndConditions() {
             penalties.
           </p>
           <p className="max-sm:text-sm">
-            Other marks on the site not owned by InstantCashPick may be under
+            Other marks on the site not owned by InstantHub may be under
             license from the trademark owner thereof, in which case such license
-            is for the exclusive benefit and use of InstantCashPick unless
+            is for the exclusive benefit and use of InstantHub unless
             otherwise stated, or may be the property of their respective owners.
             You may not use any of the trademark name, logos, trademarks or
             brands, or trademarks or brands of others on the Site without Manak
@@ -148,36 +148,36 @@ function TermsAndConditions() {
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="font-semibold text-xl max-sm:text-lg">
-            4. InstantCashPick Services and Third Party Services and Sites
+            4. InstantHub Services and Third Party Services and Sites
           </h2>
           <p className="max-sm:text-sm">
             The information and materials provided in the Site and through the
             Services are intended for general reference only, and may not
             describe all of the terms, conditions, and exceptions applicable to
-            InstantCashPick’s Services. InstantCashPick presents information
-            from Third Parties through the InstantCashPick Site and Services,
+            InstantHub’s Services. InstantHub presents information
+            from Third Parties through the InstantHub Site and Services,
             including prices offered for your items, item descriptions, certain
             Third Party terms of service, and other information (“Third Party
-            Information”). InstantCashPick cannot control, and is not
+            Information”). InstantHub cannot control, and is not
             responsible for the accuracy of any Third Party Information.
           </p>
           <p className="max-sm:text-sm">
             You conduct your actual sales and other transactions directly with
             the Third Parties and, unless otherwise specifically and clearly
-            indicated, not with InstantCashPick. InstantCashPick cannot control
+            indicated, not with InstantHub. InstantHub cannot control
             any aspect of your sales and transactions with Third Parties, and
             the Third Parties are solely responsible to you for all aspects of
             your sales and transactions with them.
           </p>
           <p className="max-sm:text-sm">
-            At times, the InstantCashPick Site may have links to websites hosted
+            At times, the InstantHub Site may have links to websites hosted
             by the Third Parties and other entities (the “Additional Sites”), or
-            such Additional Sites may have links to the InstantCashPick Site.
+            such Additional Sites may have links to the InstantHub Site.
             These links are offered as a convenience and for informational
-            purposes only, not as referrals or endorsements by InstantCashPick
+            purposes only, not as referrals or endorsements by InstantHub
             of the Additional Sites. The Additional Sites are maintained by
             their respective organizations, and those organizations are solely
-            responsible for the content of their own websites. InstantCashPick
+            responsible for the content of their own websites. InstantHub
             does not verify nor make any warranty or representation about the
             content, accuracy, opinions expressed, warranties, products or
             services, intellectual property compliance, or links of such
@@ -190,19 +190,19 @@ function TermsAndConditions() {
             5. Privacy and Passwords
           </h2>
           <p className="max-sm:text-sm">
-            InstantCashPick values and protects the privacy of your information.
-            Please review the InstantCashPick privacy policy, as it contains
+            InstantHub values and protects the privacy of your information.
+            Please review the InstantHub privacy policy, as it contains
             important information relating to your use of the Site and Services.
             Some portions of the Site are protected and require a user
             identification code (“User ID”) and password for access.
             Unauthorized access or use of such portions of the Site is
-            prohibited. You agree that you will notify InstantCashPick
+            prohibited. You agree that you will notify InstantHub
             immediately if you believe that a third party has obtained your User
             ID or password, or if you believe that any unauthorized access or
             use may occur or has occurred. For your protection, if
-            InstantCashPick believes that any unauthorized access may occur or
-            has occurred, InstantCashPick may terminate access without prior
-            notice to you. You also agree that InstantCashPick is permitted to
+            InstantHub believes that any unauthorized access may occur or
+            has occurred, InstantHub may terminate access without prior
+            notice to you. You also agree that InstantHub is permitted to
             act upon any instructions received such instructions as authorized
             by you.
           </p>
@@ -214,7 +214,7 @@ function TermsAndConditions() {
           <h3>a. Registration and Basic Membership Terms:</h3>
           <p className="max-sm:text-sm">
             Members are visitors to the site and or those using the Services
-            that choose to register with InstantCashPick (“Members”). Once
+            that choose to register with InstantHub (“Members”). Once
             registered, an account is created for each Member (“Account”). If
             you choose to register as a Member, you represent and warrant to us
             that:
@@ -235,7 +235,7 @@ function TermsAndConditions() {
             We reserve the right to suspend or terminate your membership, or
             your access to the Site and or Services, in the event that you
             breach any of the Terms & Conditions or other applicable
-            InstantCashPick policies.
+            InstantHub policies.
           </p>
           <h3>b. Password and Account Security:</h3>
           <p className="max-sm:text-sm">
@@ -266,30 +266,30 @@ function TermsAndConditions() {
             8. Warranty Exclusions and Limitations of Liability
           </h2>
           <p className="max-sm:text-sm">
-            We warrant that the Services and InstantCashPick Property will
+            We warrant that the Services and InstantHub Property will
             conform substantially to the descriptions set forth on the Site. In
             the event of any breach of this warranty, the Customer’s sole and
-            exclusive remedy, and InstantCashPick’s sole and exclusive
-            liability, shall be (at InstantCashPick’s sole option) to remedy the
+            exclusive remedy, and InstantHub’s sole and exclusive
+            liability, shall be (at InstantHub’s sole option) to remedy the
             failure or to refund the amount paid by the customer, if any. Except
-            as set forth in the foregoing, InstantCashPick disclaims all
+            as set forth in the foregoing, InstantHub disclaims all
             warranties of any kind, whether express, implied, or statutory,
             including, but not limited to, any implied warranties of
             merchantability, fitness for a particular purpose, title, and
-            non-infringement, with respect to the Services, InstantCashPick
+            non-infringement, with respect to the Services, InstantHub
             Property, and any products or services provided through the Site.
           </p>
           <p className="max-sm:text-sm">
-            In no event will InstantCashPick be liable for any indirect,
+            In no event will InstantHub be liable for any indirect,
             incidental, consequential, special, exemplary, or punitive damages
             of any kind in connection with these Terms & Conditions, even if
-            InstantCashPick has been advised of the possibility of such damages.
+            InstantHub has been advised of the possibility of such damages.
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="font-semibold text-xl max-sm:text-lg">9. Indemnity</h2>
           <p className="max-sm:text-sm">
-            You agree to indemnify, defend and hold harmless InstantCashPick,
+            You agree to indemnify, defend and hold harmless InstantHub,
             its subsidiaries, affiliates, officers, agents, and other partners
             and employees, from any loss, liability, claim, or demand, including
             reasonable attorneys' fees, arising out of or relating to your use
@@ -302,7 +302,7 @@ function TermsAndConditions() {
             10. Changes to Terms & Conditions
           </h2>
           <p className="max-sm:text-sm">
-            Instant Cash Pick reserves the right to change these Terms &
+            Instant Hub reserves the right to change these Terms &
             Conditions at any time without prior notice to you. The revised
             Terms & Conditions will be effective immediately upon posting on the
             Site, and your continued use of the Site and Services will
@@ -314,8 +314,8 @@ function TermsAndConditions() {
           <p>
             If you have any questions about these Terms & Conditions, please
             contact us at{" "}
-            <a href="mailto:info@instantcashpick.com">
-              info@instantcashpick.com
+            <a href="mailto:info@instanthub.in">
+              info@instanthub.in
             </a>
             .
           </p>

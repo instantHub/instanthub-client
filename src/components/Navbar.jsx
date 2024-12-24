@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import SearchBar2 from "./SearchBar2";
 import Logo from "../assets/LOGO.png";
-import Slider from "./Slider";
-import Categories from "../pages/categories/Categories";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "../features/api";
-// import LOGO 'LOGO1.png'
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
-import { GiSellCard } from "react-icons/gi";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +64,10 @@ const Navbar = () => {
   const activeLink =
     "text-cyan-500 text-xl transition-colors transition-all duration-1000 ease-in-out";
 
+  function handleScrollTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   useEffect(() => {
     // console.log("Updating Active Path");
     switch (pathSubStr) {
@@ -110,12 +110,12 @@ const Navbar = () => {
   return (
     <>
       {/* <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1"> */}
-      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1">
+      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 sticky top-0 z-50 border-b max-14inch:py-0">
         <div className="max-w-full mx-auto px-4 max-2sm:px-1">
           <div className="flex items-center">
             {/* <div className="grid grid-cols-3 items-center"> */}
             <div className="flex items-center grow">
-              <Link to="/">
+              <Link to="/" onClick={handleScrollTop}>
                 <h2>
                   <img
                     // src="/images/MainLogo.png"
@@ -136,11 +136,15 @@ const Navbar = () => {
             <SearchBar2 />
 
             <div className="hidden md:flex max-14inch:text-sm">
-              <ul className="flex space-x-4">
+              <ul className="flex items-center space-x-4 text-[16px] max-sm:text-sm">
                 {navOptions?.map((d, i) => (
                   <li
                     key={i}
-                    className="px-2 py-1 border border-white rounded hover:border-cyan-500"
+                    className={`px-2 py-1 border border-white rounded ${
+                      location.pathname === d.url
+                        ? "bg-cyan-500 text-white "
+                        : ""
+                    }  hover:border-cyan-500`}
                   >
                     <Link to={`${d.url}`}>{d.name}</Link>
                   </li>
@@ -178,11 +182,13 @@ const Navbar = () => {
         </div>
         {isOpen && (
           <div className="md:hidden  mt-2 text-center  float-right absolute right-0">
-            <ul className="flex  flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded">
+            <ul className="flex  flex-col bg-white text-black border p-4 items-center justify-around space-y-2 rounded text-[16px] max-sm:text-sm">
               {navOptions?.map((d, i) => (
                 <li
                   key={i}
-                  className="px-2 py-1 border border-white rounded hover:border-cyan-500"
+                  className={`px-2 py-1 border border-white rounded ${
+                    location.pathname === d.url ? "bg-cyan-500 text-white " : ""
+                  }  hover:border-cyan-500`}
                 >
                   <Link to={`${d.url}`}>{d.name}</Link>
                 </li>
@@ -193,7 +199,7 @@ const Navbar = () => {
       </nav>
 
       <header>
-        {/* BUTTONS -> Services - Sell - Recylce as Small Screen */}
+        {/* BUTTONS -> Services - Home - Recylce as Small Screen */}
         <div className="max-sm:hidden h-12 grid grid-cols-3 border-t border bg-white w-full text-sm font-thin">
           {/* Service */}
           <button
@@ -243,7 +249,7 @@ const Navbar = () => {
         </div>
 
         {/* All Categories row list */}
-        <div className="relative min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full pb-3 border-b max-14inch:text-sm">
+        <div className="relative min-w-0 hidden sm:flex basis-0 sm:basis-full md:basis-full pb-3 border-b max-14inch:text-sm text-sm">
           <div className="hidden sm:flex flex-col items-center bg-primary-bg shadow-bottom1 w-full flex">
             <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 max-14inch:px-14">
               {!categoryLoading &&
@@ -314,7 +320,7 @@ const Navbar = () => {
                   </Link>
                 ))}
 
-              <Link to={`/services`}>
+              {/* <Link to={`/services`}>
                 <div className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-cyan-500 hover:pt-[13px]">
                   <span className="">
                     <div className="hover:text-cyan-500 flex items-center gap-1">
@@ -322,56 +328,10 @@ const Navbar = () => {
                     </div>
                   </span>
                 </div>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
-
-        {/* BUTTONS -> Services - Sell - Recylce OLD */}
-        {/* <div className="max-sm:hidden relative bg-white px-1 mt-5 shadow-xl mx-auto w-full max-w-2xl rounded-2xl border-dashed border-2 border-gray-500">
-        <div className="mx-auto flex w-full max-w-md flex-row items-center justify-around">
-          <div
-            className={`text-center py-2 w-1/2 ${
-              location.pathname.substring(0, 6).includes("/ser")
-                ? `text-green-600 text-2xl transition-colors duration-1000 ease-in-out w-full`
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/services");
-            }}
-          >
-            <button>Services</button>
-          </div>
-          <div
-            className={`text-center p-2 w-1/2 ${
-              location.pathname.substring(0, 6).includes("/cat")
-                ? `text-green-600 text-2xl rounded transition-colors duration-1000 ease-in-out w-full`
-                : location.pathname === "/" ||
-                  location.pathname.substring(0, 6).includes("/sell")
-                ? `text-green-600 text-2xl rounded transition-colors duration-1000 ease-in-out w-full`
-                : // ? `bg-green-600 text-white rounded transition-colors duration-1000 ease-in-out `
-                  ``
-            }`}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <button>Sell</button>
-          </div>
-          <div
-            className={`text-center p-2 w-1/2  ${
-              location.pathname.includes("/recycle-categories")
-                ? `text-green-600 text-2xl p-2 transition-colors duration-1000 ease-in-out w-full`
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/recycle-categories");
-            }}
-          >
-            <button>Recycle</button>
-          </div>
-        </div>
-      </div> */}
 
         {/* Small Screen - Services - Sell - Recylce  */}
         {/* <div className="min-w-0 flex sm:hidden mt-1 max-14inch:text-sm">

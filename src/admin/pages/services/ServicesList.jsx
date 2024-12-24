@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import {
   useGetServicesQuery,
@@ -9,22 +9,52 @@ import UpdateService from "./UpdateService";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 
+const initialState = {
+  showList: {
+    listServiceCategories: false,
+    listServiceBrands: false,
+    listBrandProblems: false,
+    listSubServices: false,
+    listSubServicesProducts: false,
+  },
+};
+
+function reducer(state, action) {
+  const { type, key, value } = action;
+  switch (type) {
+    case "toggle":
+      const updatedToggle = Object.entries(state.showList).reduce(
+        (acc, [k]) => {
+          if (k === key) acc[k] = true;
+          else acc[k] = false;
+
+          return acc;
+        },
+        {}
+      );
+      return {
+        ...state,
+        showList: updatedToggle,
+      };
+
+    default:
+      return state;
+  }
+}
+
 const ServicesList = () => {
   const { data: servicesData, isLoading: serviceDataLoading } =
     useGetServicesQuery();
 
-  console.log("servicesData", servicesData);
+  // console.log("servicesData", servicesData);
 
   const [deleteService, { isLoading: deleteServiceLoading }] =
     useDeleteServiceMutation();
   const [updateService, { isLoading: updateServiceLoading }] =
     useUpdateServiceMutation();
 
-  const [listServiceCategories, setListServiceCategories] = useState(false);
-  const [listServiceBrands, setListServiceBrands] = useState(false);
-  const [listBrandProblems, setListBrandProblems] = useState(false);
-  const [listSubServices, setListSubServices] = useState(false);
-  const [listSubServicesProducts, setListSubServicesProducts] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log("Reducer State :-", state);
 
   const [selectedService, setSelectedService] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -77,75 +107,103 @@ const ServicesList = () => {
         <div className="flex justify-between items-center mb-10">
           <button
             onClick={() => {
-              setListServiceBrands(false);
-              setListSubServices(false);
-              setListBrandProblems(false);
-              setListSubServicesProducts(false);
-              setListServiceCategories(!listServiceCategories);
-              // setServiceType("DirectService");
+              // setListServiceBrands(false);
+              // setListSubServices(false);
+              // setListBrandProblems(false);
+              // setListSubServicesProducts(false);
+              // setListServiceCategories(!listServiceCategories);
+              dispatch({
+                type: "toggle",
+                key: "listServiceCategories",
+                value: !state.showList.listServiceCategories,
+              });
             }}
             // className={`${
             //   listServiceCategories ? `bg-red-700` : `bg-blue-700`
             // } mx-auto  text-white px-4 rounded-md py-2 cursor-pointer`}
-            className={createButtonStyle(listServiceCategories)}
+            className={createButtonStyle(state.showList.listServiceCategories)}
           >
             List Service Categories
           </button>
           <button
             onClick={() => {
-              setListServiceCategories(false);
-              setListSubServices(false);
-              setListBrandProblems(false);
-              setListSubServicesProducts(false);
-              setListServiceBrands(!listServiceBrands);
+              // setListServiceCategories(false);
+              // setListSubServices(false);
+              // setListBrandProblems(false);
+              // setListSubServicesProducts(false);
+              // setListServiceBrands(!listServiceBrands);
+
+              dispatch({
+                type: "toggle",
+                key: "listServiceBrands",
+                value: !state.showList.listServiceBrands,
+              });
             }}
-            className={createButtonStyle(listServiceBrands)}
+            className={createButtonStyle(state.showList.listServiceBrands)}
           >
             List Service Brands
           </button>
           <button
             type="button"
             onClick={() => {
-              setListServiceCategories(false);
-              setListServiceBrands(false);
-              setListSubServices(false);
-              setListSubServicesProducts(false);
-              setListBrandProblems(!listBrandProblems);
+              // setListServiceCategories(false);
+              // setListServiceBrands(false);
+              // setListSubServices(false);
+              // setListSubServicesProducts(false);
+              // setListBrandProblems(!listBrandProblems);
+
+              dispatch({
+                type: "toggle",
+                key: "listBrandProblems",
+                value: !state.showList.listBrandProblems,
+              });
             }}
-            className={createButtonStyle(listBrandProblems)}
+            className={createButtonStyle(state.showList.listBrandProblems)}
           >
             List Brand Problems
           </button>
           <button
             type="button"
             onClick={() => {
-              setListServiceCategories(false);
-              setListServiceBrands(false);
-              setListBrandProblems(false);
-              setListSubServicesProducts(false);
-              setListSubServices(!listSubServices);
+              // setListServiceCategories(false);
+              // setListServiceBrands(false);
+              // setListBrandProblems(false);
+              // setListSubServicesProducts(false);
+              // setListSubServices(!listSubServices);
+
+              dispatch({
+                type: "toggle",
+                key: "listSubServices",
+                value: !state.showList.listSubServices,
+              });
             }}
-            className={createButtonStyle(listSubServices)}
+            className={createButtonStyle(state.showList.listSubServices)}
           >
             List Service Sub Category
           </button>
           <button
             type="button"
             onClick={() => {
-              setListServiceCategories(false);
-              setListServiceBrands(false);
-              setListBrandProblems(false);
-              setListSubServices(false);
-              setListSubServicesProducts(!listSubServicesProducts);
+              // setListServiceCategories(false);
+              // setListServiceBrands(false);
+              // setListBrandProblems(false);
+              // setListSubServices(false);
+              // setListSubServicesProducts(!listSubServicesProducts);
+
+              dispatch({
+                type: "toggle",
+                key: "listSubServicesProducts",
+                value: !state.showList.listSubServicesProducts,
+              });
             }}
-            className={createButtonStyle(listSubServicesProducts)}
+            className={createButtonStyle(state.showList.listSubServicesProducts)}
           >
             List Service Sub Products
           </button>
         </div>
 
         {/* Service Categories List */}
-        {listServiceCategories && (
+        {state.showList.listServiceCategories && (
           <table className="w-full">
             <thead>
               <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
@@ -218,7 +276,7 @@ const ServicesList = () => {
         )}
 
         {/* Service Brands List */}
-        {listServiceBrands && (
+        {state.showList.listServiceBrands && (
           <>
             <div className="flex justify-between">
               <div className="flex items-center gap-4 mb-4">
@@ -378,7 +436,7 @@ const ServicesList = () => {
         )}
 
         {/* Service Brands Problems List */}
-        {listBrandProblems && (
+        {state.showList.listBrandProblems && (
           <table className="w-full">
             <thead>
               <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
@@ -447,7 +505,7 @@ const ServicesList = () => {
         )}
 
         {/* Service Sub Categories List */}
-        {listSubServices && (
+        {state.showList.listSubServices && (
           <table className="w-full">
             <thead>
               <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
@@ -518,7 +576,7 @@ const ServicesList = () => {
         )}
 
         {/* Service Sub Categories List */}
-        {listSubServicesProducts && (
+        {state.showList.listSubServicesProducts && (
           <table className="w-full">
             <thead>
               <tr className="py-10 font-serif text-lg border shadow-xl text-green-800 font-bold">
