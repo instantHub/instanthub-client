@@ -33,7 +33,7 @@ const Brands = () => {
             category?.name
           } on Instant Hub, Instant Cash, Instant Pick, InstantHub, sell ${category?.name.toLowerCase()} on InstantHub`}
         />
-        <link rel="canonical" href={`https://instanthub.in/${catId}`} />
+        <link rel="canonical" href={`https://www.instanthub.in/${catId}`} />
       </Helmet>
 
       <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">

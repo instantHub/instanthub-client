@@ -19,7 +19,7 @@ const ContactUs = () => {
           content="Contact Us, Contact Us Instant Hub, Instant Hub, Instant Pick, Contact Us InstantHub, instant hub, Instant Hub, instant pick, InstantHub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instanthub.in/contact-us" />
+        <link rel="canonical" href="https://www.instanthub.in/contact-us" />
       </Helmet>
 
       <div className="flex justify-center items-center mt-[5%]">

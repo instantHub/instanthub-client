@@ -103,7 +103,7 @@ const Products = () => {
         />
         <link
           rel="canonical"
-          href={`https://instanthub.in/categories/brands/products/${brandId}`}
+          href={`https://www.instanthub.in/categories/brands/products/${brandId}`}
         />
       </Helmet>
 

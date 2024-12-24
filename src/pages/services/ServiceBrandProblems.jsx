@@ -100,7 +100,7 @@ const ServiceBrands = () => {
           name="keywords"
           content="InstantHub, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
-        <link rel="canonical" href={`https://instanthub.in/services`} />
+        <link rel="canonical" href={`https://www.instanthub.in/services`} />
       </Helmet>
       <div className="mt-8 w-4/5 mx-auto">
         <div className="mx-0 mb-6">

@@ -5,13 +5,13 @@ const PrivacyPolicy = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instanthub.in/privacy-policy",
+    url: "https://www.instanthub.in/privacy-policy",
     name: "InstantHub",
     description:
       "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instanthub.in/privacy-policy",
+      target: "https://www.instanthub.in/privacy-policy",
       "query-input": "required name=search_term_string",
     },
   };
@@ -34,7 +34,10 @@ const PrivacyPolicy = () => {
           content="Privacy Policy, Privacy Policy of Instant Hub, Privacy Policy of InstantHub, privacy policy of instanthub, privacy policy of instant hub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instanthub.in/privacy-policies" />
+        <link
+          rel="canonical"
+          href="https://www.instanthub.in/privacy-policies"
+        />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
@@ -50,11 +53,10 @@ const PrivacyPolicy = () => {
             Effective date: 2024
           </p>
           <p className="text-gray-600 mb-6 max-sm:text-sm">
-            Welcome to Instant Hub. We are committed to protecting your
-            personal information and your right to privacy. If you have any
-            questions or concerns about our policy, or our practices with
-            regards to your personal information, please contact us at
-            8722288017.
+            Welcome to Instant Hub. We are committed to protecting your personal
+            information and your right to privacy. If you have any questions or
+            concerns about our policy, or our practices with regards to your
+            personal information, please contact us at 8722288017.
           </p>
           <section className="mb-6">
             <h2 className="text-2xl max-sm:text-lg font-semibold text-gray-700 mb-2">

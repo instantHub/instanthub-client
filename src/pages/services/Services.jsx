@@ -32,13 +32,13 @@ const Services = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instanthub.in/services",
+    url: "https://www.instanthub.in/services",
     name: "InstantHub",
     description:
       "InstantHub offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantHub. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs.",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instanthub.in/services",
+      target: "https://www.instanthub.in/services",
       "query-input": "required name=search_term_string",
     },
   };
@@ -56,7 +56,7 @@ const Services = () => {
           content="InstantHub Service, Instant Service, instant service, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instanthub.in/services" />
+        <link rel="canonical" href="https://www.instanthub.in/services" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>

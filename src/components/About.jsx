@@ -48,7 +48,7 @@ const AboutPage = () => {
           content="About, About Instant Hub, Instant Cash, Instant Pick, About InstantHub, instant hub, Instant Hub, instant pick, InstantHub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instanthub.in/about" />
+        <link rel="canonical" href="https://www.instanthub.in/about" />
       </Helmet>
 
       <div className="min-h-screen px-8 py-4 max-sm:p-2 ">

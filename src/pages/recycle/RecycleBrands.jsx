@@ -35,7 +35,7 @@ const RecycleBrands = () => {
         />
         <link
           rel="canonical"
-          href={`https://instanthub.in/recycle-categories/recycle-brands/${catId}`}
+          href={`https://www.instanthub.in/recycle-categories/recycle-brands/${catId}`}
         />
       </Helmet>
       {/* <div className="mt-8 w-4/5 mx-auto"> */}

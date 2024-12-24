@@ -26,13 +26,13 @@ const RecycleCategories = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instanthub.in/recycle-categories",
+    url: "https://www.instanthub.in/recycle-categories",
     name: "InstantHub",
     description:
       "Get instant cash payments with InstantHub on recycling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instanthub.in/recycle-categories",
+      target: "https://www.instanthub.in/recycle-categories",
       "query-input": "required name=search_term_string",
     },
   };
@@ -50,7 +50,10 @@ const RecycleCategories = () => {
           content={`Recycle on Instant Hub, Recycle on Instant Hub, recycle on instant hub, recycle mobile, recycle laptop, recycle mobiles on instanthub`}
         />
         <meta name="author" content="Yusufulla Qureshi" />
-        <link rel="canonical" href="https://instanthub.in/recycle-categories" />
+        <link
+          rel="canonical"
+          href="https://www.instanthub.in/recycle-categories"
+        />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>

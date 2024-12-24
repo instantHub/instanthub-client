@@ -84,7 +84,7 @@ const SellContent = () => {
       {/* Why Recycle With Us */}
       <div className="w-5/6 max-sm:w-[90%] mx-auto py-8">
         <p className="text-2xl max-sm:text-lg font-bold text-center mb-8">
-          Why Recycle with InstantHub?
+          Why Sell with InstantHub?
         </p>
         <div className="">
           {WhyUs?.map((item, index) => (

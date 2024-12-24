@@ -294,7 +294,7 @@ const OrdersList = () => {
         />
       </div>
 
-      {/* {isOpen && (
+      {isOpen && (
         <OrderRecieved setIsOpen={setIsOpen} selectedOrder={selectedOrder} />
       )}
 
@@ -303,7 +303,7 @@ const OrdersList = () => {
           orderToView={orderToView}
           setOrderViewOpen={setOrderViewOpen}
         />
-      )} */}
+      )}
     </>
   );
 };

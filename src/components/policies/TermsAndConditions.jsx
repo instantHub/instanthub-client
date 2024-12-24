@@ -5,13 +5,13 @@ function TermsAndConditions() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://instanthub.in/terms-conditions",
+    url: "https://www.instanthub.in/terms-conditions",
     name: "InstantHub",
     description:
       "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://instanthub.in/terms-conditions",
+      target: "https://www.instanthub.in/terms-conditions",
       "query-input": "required name=search_term_string",
     },
   };
@@ -35,7 +35,7 @@ function TermsAndConditions() {
         <meta name="author" content="Yusufulla Qureshi" />
         <link
           rel="canonical"
-          href="https://instanthub.in/terms-conditions"
+          href="https://www.instanthub.in/terms-conditions"
         />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -54,19 +54,17 @@ function TermsAndConditions() {
           </p>
           <p className="max-sm:text-sm">
             “InstantHub” owns and operates the website,{" "}
-            <a href="https://www.instanthub.in">
-              www.instanthub.in
-            </a>
-            . The mobile touch versions, App on Play store and Apple App store
-            and/or any site(s) we have now or in the future that reference these
-            Terms & Conditions (collectively, “InstantHub”), provides a
-            marketplace and platform for consumers and organizations to sell or
-            repair their used, old and other articles, and conduct varied
-            transactions and activities, with third-party companies and other
-            entities and persons (collectively, “Third Parties”). The
-            InstantHub marketplace, platform, and related functionality,
-            whether provided through the Site or through other means, are
-            collectively referred to as the services (the “Services”).
+            <a href="https://www.instanthub.in">www.instanthub.in</a>. The
+            mobile touch versions, App on Play store and Apple App store and/or
+            any site(s) we have now or in the future that reference these Terms
+            & Conditions (collectively, “InstantHub”), provides a marketplace
+            and platform for consumers and organizations to sell or repair their
+            used, old and other articles, and conduct varied transactions and
+            activities, with third-party companies and other entities and
+            persons (collectively, “Third Parties”). The InstantHub marketplace,
+            platform, and related functionality, whether provided through the
+            Site or through other means, are collectively referred to as the
+            services (the “Services”).
           </p>
           <p className="max-sm:text-sm">
             If you do not agree with any part of these Terms & Conditions, you
@@ -82,13 +80,13 @@ function TermsAndConditions() {
             1. InstantHub is a marketplace venue
           </h2>
           <p className="max-sm:text-sm">
-            InstantHub is a platform to allow users, subject to compliance
-            with InstantHub’s policies, to sell/repair certain goods.
-            InstantHub may not be directly involved in the transaction
-            between user(s) and third party professional(s), ensuing no control
-            by reasons whatsoever in any aspect of your transactions with Third
-            Parties, and the Third Parties are solely responsible to you for all
-            aspects of your transactions with them.
+            InstantHub is a platform to allow users, subject to compliance with
+            InstantHub’s policies, to sell/repair certain goods. InstantHub may
+            not be directly involved in the transaction between user(s) and
+            third party professional(s), ensuing no control by reasons
+            whatsoever in any aspect of your transactions with Third Parties,
+            and the Third Parties are solely responsible to you for all aspects
+            of your transactions with them.
           </p>
         </div>
         <div className="flex flex-col gap-2">
@@ -96,9 +94,9 @@ function TermsAndConditions() {
             2. Permitted Use and Compliance with Laws.
           </h2>
           <p className="max-sm:text-sm">
-          InstantHub authorizes you to access, view and use the Site
-            content and software (collectively, the “Manak Waste Management Pvt
-            Ltd Property”) solely to the extent necessary for you to use the
+            InstantHub authorizes you to access, view and use the Site content
+            and software (collectively, the “Manak Waste Management Pvt Ltd
+            Property”) solely to the extent necessary for you to use the
             Services. You may not remove any copyright, trademark or other
             proprietary notices that have been placed on the InstantHub
             Property. You may not engage in systematic retrieval of data or
@@ -106,16 +104,16 @@ function TermsAndConditions() {
             permitted by these Terms & Conditions, any modification,
             reproduction, redistribution, republication, uploading, posting,
             transmitting, distributing or otherwise exploiting in any way the
-            InstantHub Property, or any portion of the InstantHub
-            Property, is strictly prohibited without the prior written
-            permission of Manak Waste Management Pvt Ltd.
+            InstantHub Property, or any portion of the InstantHub Property, is
+            strictly prohibited without the prior written permission of Manak
+            Waste Management Pvt Ltd.
           </p>
           <p className="max-sm:text-sm">
             You agree that you will comply with all applicable laws, regulations
-            and ordinances relating to the Site and Services, the
-            InstantHub Property or your use of them, and that in using the
-            Site and Services you will not engage in any conduct that restricts
-            or inhibits any other person from using or enjoying the Services.
+            and ordinances relating to the Site and Services, the InstantHub
+            Property or your use of them, and that in using the Site and
+            Services you will not engage in any conduct that restricts or
+            inhibits any other person from using or enjoying the Services.
           </p>
         </div>
         <div className="flex flex-col gap-2">
@@ -125,25 +123,24 @@ function TermsAndConditions() {
           <p className="max-sm:text-sm">
             Except as otherwise indicated, all materials in the Site, including,
             but not limited to text, software, photos, video, graphics, music,
-            sound, the InstantHub Logo, ScreenPro logo, ReGlobe Logo and
-            other InstantHub ,ScreenPro and ReGlobe trademarks and service
-            marks and the entire contents of the Site are the property of Manak
-            Waste Management Pvt Ltd and/or its affiliates or licensors,
-            including the Third Parties, and are protected by
-            international/Indian copyright and trademark laws, all rights
-            reserved. Any violation of these restrictions may result in a
-            copyright, trademark, or other intellectual property right
-            infringement that may subject you to civil and/or criminal
-            penalties.
+            sound, the InstantHub Logo, ScreenPro logo, ReGlobe Logo and other
+            InstantHub ,ScreenPro and ReGlobe trademarks and service marks and
+            the entire contents of the Site are the property of Manak Waste
+            Management Pvt Ltd and/or its affiliates or licensors, including the
+            Third Parties, and are protected by international/Indian copyright
+            and trademark laws, all rights reserved. Any violation of these
+            restrictions may result in a copyright, trademark, or other
+            intellectual property right infringement that may subject you to
+            civil and/or criminal penalties.
           </p>
           <p className="max-sm:text-sm">
-            Other marks on the site not owned by InstantHub may be under
-            license from the trademark owner thereof, in which case such license
-            is for the exclusive benefit and use of InstantHub unless
-            otherwise stated, or may be the property of their respective owners.
-            You may not use any of the trademark name, logos, trademarks or
-            brands, or trademarks or brands of others on the Site without Manak
-            Waste Management Pvt Ltd’s express permission.
+            Other marks on the site not owned by InstantHub may be under license
+            from the trademark owner thereof, in which case such license is for
+            the exclusive benefit and use of InstantHub unless otherwise stated,
+            or may be the property of their respective owners. You may not use
+            any of the trademark name, logos, trademarks or brands, or
+            trademarks or brands of others on the Site without Manak Waste
+            Management Pvt Ltd’s express permission.
           </p>
         </div>
         <div className="flex flex-col gap-2">
@@ -154,31 +151,31 @@ function TermsAndConditions() {
             The information and materials provided in the Site and through the
             Services are intended for general reference only, and may not
             describe all of the terms, conditions, and exceptions applicable to
-            InstantHub’s Services. InstantHub presents information
-            from Third Parties through the InstantHub Site and Services,
-            including prices offered for your items, item descriptions, certain
-            Third Party terms of service, and other information (“Third Party
-            Information”). InstantHub cannot control, and is not
-            responsible for the accuracy of any Third Party Information.
+            InstantHub’s Services. InstantHub presents information from Third
+            Parties through the InstantHub Site and Services, including prices
+            offered for your items, item descriptions, certain Third Party terms
+            of service, and other information (“Third Party Information”).
+            InstantHub cannot control, and is not responsible for the accuracy
+            of any Third Party Information.
           </p>
           <p className="max-sm:text-sm">
             You conduct your actual sales and other transactions directly with
             the Third Parties and, unless otherwise specifically and clearly
-            indicated, not with InstantHub. InstantHub cannot control
-            any aspect of your sales and transactions with Third Parties, and
-            the Third Parties are solely responsible to you for all aspects of
-            your sales and transactions with them.
+            indicated, not with InstantHub. InstantHub cannot control any aspect
+            of your sales and transactions with Third Parties, and the Third
+            Parties are solely responsible to you for all aspects of your sales
+            and transactions with them.
           </p>
           <p className="max-sm:text-sm">
-            At times, the InstantHub Site may have links to websites hosted
-            by the Third Parties and other entities (the “Additional Sites”), or
-            such Additional Sites may have links to the InstantHub Site.
-            These links are offered as a convenience and for informational
-            purposes only, not as referrals or endorsements by InstantHub
-            of the Additional Sites. The Additional Sites are maintained by
-            their respective organizations, and those organizations are solely
-            responsible for the content of their own websites. InstantHub
-            does not verify nor make any warranty or representation about the
+            At times, the InstantHub Site may have links to websites hosted by
+            the Third Parties and other entities (the “Additional Sites”), or
+            such Additional Sites may have links to the InstantHub Site. These
+            links are offered as a convenience and for informational purposes
+            only, not as referrals or endorsements by InstantHub of the
+            Additional Sites. The Additional Sites are maintained by their
+            respective organizations, and those organizations are solely
+            responsible for the content of their own websites. InstantHub does
+            not verify nor make any warranty or representation about the
             content, accuracy, opinions expressed, warranties, products or
             services, intellectual property compliance, or links of such
             Additional Sites. You should read the privacy policies and Terms &
@@ -196,15 +193,14 @@ function TermsAndConditions() {
             Some portions of the Site are protected and require a user
             identification code (“User ID”) and password for access.
             Unauthorized access or use of such portions of the Site is
-            prohibited. You agree that you will notify InstantHub
-            immediately if you believe that a third party has obtained your User
-            ID or password, or if you believe that any unauthorized access or
-            use may occur or has occurred. For your protection, if
-            InstantHub believes that any unauthorized access may occur or
-            has occurred, InstantHub may terminate access without prior
-            notice to you. You also agree that InstantHub is permitted to
-            act upon any instructions received such instructions as authorized
-            by you.
+            prohibited. You agree that you will notify InstantHub immediately if
+            you believe that a third party has obtained your User ID or
+            password, or if you believe that any unauthorized access or use may
+            occur or has occurred. For your protection, if InstantHub believes
+            that any unauthorized access may occur or has occurred, InstantHub
+            may terminate access without prior notice to you. You also agree
+            that InstantHub is permitted to act upon any instructions received
+            such instructions as authorized by you.
           </p>
         </div>
         <div className="flex flex-col gap-2">
@@ -234,8 +230,8 @@ function TermsAndConditions() {
           <p className="max-sm:text-sm">
             We reserve the right to suspend or terminate your membership, or
             your access to the Site and or Services, in the event that you
-            breach any of the Terms & Conditions or other applicable
-            InstantHub policies.
+            breach any of the Terms & Conditions or other applicable InstantHub
+            policies.
           </p>
           <h3>b. Password and Account Security:</h3>
           <p className="max-sm:text-sm">
@@ -266,32 +262,32 @@ function TermsAndConditions() {
             8. Warranty Exclusions and Limitations of Liability
           </h2>
           <p className="max-sm:text-sm">
-            We warrant that the Services and InstantHub Property will
-            conform substantially to the descriptions set forth on the Site. In
-            the event of any breach of this warranty, the Customer’s sole and
-            exclusive remedy, and InstantHub’s sole and exclusive
-            liability, shall be (at InstantHub’s sole option) to remedy the
-            failure or to refund the amount paid by the customer, if any. Except
-            as set forth in the foregoing, InstantHub disclaims all
-            warranties of any kind, whether express, implied, or statutory,
-            including, but not limited to, any implied warranties of
-            merchantability, fitness for a particular purpose, title, and
-            non-infringement, with respect to the Services, InstantHub
-            Property, and any products or services provided through the Site.
+            We warrant that the Services and InstantHub Property will conform
+            substantially to the descriptions set forth on the Site. In the
+            event of any breach of this warranty, the Customer’s sole and
+            exclusive remedy, and InstantHub’s sole and exclusive liability,
+            shall be (at InstantHub’s sole option) to remedy the failure or to
+            refund the amount paid by the customer, if any. Except as set forth
+            in the foregoing, InstantHub disclaims all warranties of any kind,
+            whether express, implied, or statutory, including, but not limited
+            to, any implied warranties of merchantability, fitness for a
+            particular purpose, title, and non-infringement, with respect to the
+            Services, InstantHub Property, and any products or services provided
+            through the Site.
           </p>
           <p className="max-sm:text-sm">
-            In no event will InstantHub be liable for any indirect,
-            incidental, consequential, special, exemplary, or punitive damages
-            of any kind in connection with these Terms & Conditions, even if
-            InstantHub has been advised of the possibility of such damages.
+            In no event will InstantHub be liable for any indirect, incidental,
+            consequential, special, exemplary, or punitive damages of any kind
+            in connection with these Terms & Conditions, even if InstantHub has
+            been advised of the possibility of such damages.
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="font-semibold text-xl max-sm:text-lg">9. Indemnity</h2>
           <p className="max-sm:text-sm">
-            You agree to indemnify, defend and hold harmless InstantHub,
-            its subsidiaries, affiliates, officers, agents, and other partners
-            and employees, from any loss, liability, claim, or demand, including
+            You agree to indemnify, defend and hold harmless InstantHub, its
+            subsidiaries, affiliates, officers, agents, and other partners and
+            employees, from any loss, liability, claim, or demand, including
             reasonable attorneys' fees, arising out of or relating to your use
             of the Site or Services, including any violation of these Terms &
             Conditions, any law or regulation, or the rights of any third party.
@@ -302,22 +298,19 @@ function TermsAndConditions() {
             10. Changes to Terms & Conditions
           </h2>
           <p className="max-sm:text-sm">
-            Instant Hub reserves the right to change these Terms &
-            Conditions at any time without prior notice to you. The revised
-            Terms & Conditions will be effective immediately upon posting on the
-            Site, and your continued use of the Site and Services will
-            constitute your acceptance of the revised Terms & Conditions. It is
-            your responsibility to review these Terms & Conditions regularly.
+            Instant Hub reserves the right to change these Terms & Conditions at
+            any time without prior notice to you. The revised Terms & Conditions
+            will be effective immediately upon posting on the Site, and your
+            continued use of the Site and Services will constitute your
+            acceptance of the revised Terms & Conditions. It is your
+            responsibility to review these Terms & Conditions regularly.
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <p>
             If you have any questions about these Terms & Conditions, please
             contact us at{" "}
-            <a href="mailto:info@instanthub.in">
-              info@instanthub.in
-            </a>
-            .
+            <a href="mailto:info@instanthub.in">info@instanthub.in</a>.
           </p>
         </div>
       </div>

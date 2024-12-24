@@ -23,7 +23,7 @@ const FloatingButtons = () => {
     useGetCategoryQuery();
 
   const defaultMessage =
-    "Hi There! Need help to sell on https://instanthub.in/";
+    "Hi There! Need help to sell on https://www.instanthub.in/";
 
   const navigate = useNavigate();
   const pathSubStr = location.pathname.substring(0, 4);
