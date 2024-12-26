@@ -38,8 +38,7 @@ const TermsOfUse = () => {
           {JSON.stringify(structuredData)}
         </script>
       </Helmet>
-      {/* <div className="mx-10 mb-5 mt-5 px-10 py-2 border rounded shadow-2xl  flex flex-col gap-2 max-sm:mx-2 max-sm:px-5"> */}
-      <div className="my-5 px-1 py-2 flex flex-col gap-2">
+      {/* <div className="my-5 px-1 py-2 flex flex-col gap-2">
         <h1 className="text-3xl max-sm:text-2xl font-bold mb-6 text-center text-gray-800">
           Terms of Use
         </h1>
@@ -326,6 +325,140 @@ const TermsOfUse = () => {
             operates. Any disputes arising out of or in connection with these
             terms and conditions shall be subject to the exclusive jurisdiction
             of the courts of that jurisdiction.
+          </p>
+        </div>
+      </div> */}
+
+      <div className="my-5 px-1 py-2 flex flex-col gap-2">
+        <h1 className="text-3xl max-sm:text-2xl font-bold mb-6 text-center text-gray-800">
+          Terms of Use
+        </h1>
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <p>
+            Please thoroughly review these Terms of Use before utilizing this
+            website ("InstantHub"). These Terms of Use (the "Terms") regulate
+            your access and use of this website. Access to the website is
+            granted only if you agree to comply with the Terms outlined below.
+            Should you disagree with any part of these Terms, please refrain
+            from accessing or using the website. By accessing or using the
+            website, you confirm your acceptance of the Terms on behalf of
+            yourself or the entity you represent ("you" or "your").
+          </p>
+          <p>
+            This agreement constitutes a legally binding contract among "you"
+            (the seller of goods), InstantHub, and third-party buyers ("buyer"),
+            facilitating services such as purchasing, recycling, and donating
+            used consumer products ("buyer services"). InstantHub serves as a
+            platform enabling sellers to transact goods with third parties while
+            adhering to platform policies. Transactions occur solely between
+            sellers and third parties; InstantHub does not partake in such
+            transactions unless explicitly stated. Consequently, InstantHub
+            assumes no liability for disputes arising from these transactions.
+            The terms "we," "our," and "us" refer collectively to InstantHub and
+            its third-party buyers.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2 text-gray-600 mb-4">
+          <h2 className="font-semibold text-gray-700 text-xl max-sm:text-lg">
+            Seller Responsibilities
+          </h2>
+          <ol className="pl-2 max-sm:text-sm">
+            <li>
+              1. You affirm legal ownership of the gadget you intend to sell.
+              Initial quotes provided are subject to evaluation, and no binding
+              offers are made until gadget inspection is completed. InstantHub
+              reserves the right to reject any offer based on its discretion.
+            </li>
+            <li>
+              2. Upon agreement to pay the quoted amount post-inspection, you
+              are contractually bound to sell the gadget at the agreed price.
+            </li>
+            <li>
+              3. If the gadget's model, condition, or components differ from
+              initial disclosures, InstantHub may revise the quote accordingly.
+            </li>
+            <li>
+              4. The following documents must accompany all gadgets sold:
+              <ul className="pl-4 list-inside">
+                <li>
+                  i. Self-attested government-issued ID proof of the owner.
+                </li>
+                <li>ii. Self-attested indemnity bond (if required).</li>
+              </ul>
+            </li>
+            <li>
+              5. Only lawful sales are permitted. You must own the legal title
+              and ensure the gadget is free from restrictions or violations of
+              applicable laws.
+            </li>
+            <li>
+              6. Data must be erased from gadgets before sale. InstantHub and
+              third-party buyers are not liable for any residual data.
+            </li>
+            <li>7. Sold devices cannot be returned under any circumstances.</li>
+            <li>
+              8. Products distributed via government or NGO programs are not
+              accepted.
+            </li>
+            <li>
+              9. Terms may be modified without prior notice. Continued use
+              signifies acceptance of updated Terms.
+            </li>
+            <li>
+              10. Suspicious or fraudulent transactions may be canceled at
+              InstantHub's discretion.
+            </li>
+          </ol>
+        </div>
+
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="text-gray-700 font-semibold text-xl max-sm:text-lg">
+            Terms of Use for Repair of Product
+          </h2>
+          <p>
+            InstantHub provides a platform connecting users with third-party
+            repair technicians for gadget repairs. InstantHub itself does not
+            offer repair services but facilitates scheduling and payments. Users
+            must assess the suitability of technicians independently, and
+            InstantHub is not responsible for any disputes or liabilities
+            arising from repair services.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="text-gray-700 font-semibold text-xl max-sm:text-lg">
+            Payment for Services
+          </h2>
+          <p>
+            Payments for services are facilitated by InstantHub on behalf of
+            third-party professionals. Charges are non-refundable unless
+            determined otherwise by InstantHub. Promotions and discounts may
+            vary, and users are responsible for charges incurred.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="text-gray-700 font-semibold text-xl max-sm:text-lg">
+            Repair Clauses for iOS users
+          </h2>
+          <p>
+            Repairs for iOS devices include genuine parts with a one-year
+            warranty. Users are advised to back up data beforehand. Prices are
+            finalized post-diagnosis. InstantHub is not liable for data loss or
+            warranty issues arising from third-party interventions.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2 text-gray-600 mb-4 max-sm:text-sm">
+          <h2 className="font-semibold text-gray-700 text-xl max-sm:text-lg">
+            General
+          </h2>
+          <p>
+            InstantHub provides services on an "as is" basis without warranties.
+            Users should verify service suitability independently. Disputes are
+            governed by applicable laws and under the jurisdiction of courts in
+            InstantHub's operational region.
           </p>
         </div>
       </div>

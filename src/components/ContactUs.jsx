@@ -63,7 +63,7 @@ const ContactUs = () => {
             </p> */}
           </div>
 
-          <p className="text-gray-600 text-lg max-sm:text-sm">
+          <p className="text-gray-600 text-lg max-sm:text-[13px] max-sm:leading-5">
             Join the thousands of satisfied customers who have chosen InstantHub
             for their electronic item selling needs.{" "}
             <br className="lg:hidden" /> Experience the convenience of instant

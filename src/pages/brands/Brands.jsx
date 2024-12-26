@@ -31,7 +31,7 @@ const Brands = () => {
           name="keywords"
           content={`Sell ${
             category?.name
-          } on Instant Hub, Instant Cash, Instant Pick, InstantHub, sell ${category?.name.toLowerCase()} on InstantHub`}
+          } on Instant Hub, Instant Hub, instant hub, instanthub, Instant Pick, InstantHub, sell ${category?.name.toLowerCase()} on instanthub`}
         />
         <link rel="canonical" href={`https://www.instanthub.in/${catId}`} />
       </Helmet>

@@ -47,7 +47,7 @@ const RecycleCategories = () => {
         />
         <meta
           name="keywords"
-          content={`Recycle on Instant Hub, Recycle on Instant Hub, recycle on instant hub, recycle mobile, recycle laptop, recycle mobiles on instanthub`}
+          content={`Recycle on Instant Hub, recycle on instant hub, recycle on instanthub, recycle mobile, recycle laptop, recycle mobiles on instanthub`}
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link

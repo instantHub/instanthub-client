@@ -13,7 +13,7 @@ const TermsAndPolicies = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("locaiton", location.pathname);
+  // console.log("locaiton", location.pathname);
 
   const showPrivacyPolicy = () => {
     setPrivacyPolicy(true);
@@ -46,7 +46,7 @@ const TermsAndPolicies = () => {
   const activeSideBar =
     "text-green-600 font-extrabold text-[22px] max-md:text-2xl max-sm:text-sm border-b border-dashed pb-2";
   const nonActiveSideBar =
-    "text-xl max-md:text-xl max-sm:text-sm border-b border-dashed pb-2 text-gray-600 font-semibold";
+    "text-xl max-md:text-xl max-sm:text-sm border-b border-dashed pb-2 text-gray-600 font-semibold hover:text-green-600";
 
   return (
     <div className="mx-10 flex items-center justify-center bg-white max-md:mx-5">

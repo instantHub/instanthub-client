@@ -51,7 +51,7 @@ const Home = () => {
 
         <meta
           name="keywords"
-          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
+          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Hub, instant hub, InstantHub, instanthub, sell on instant hub, instant pick, Instant Pick, instant cash pick, Instant Cash Pick"
         />
         <link rel="canonical" href="https://www.instanthub.in/" />
       </Helmet>
@@ -59,9 +59,7 @@ const Home = () => {
       <div className="">
         <Slider />
         <Categories />
-        {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
-        <AllBrandsList />
-        </div> */}
+
         <div className="mt-10 pt-5 pb-16 bg-cyan-50">
           {/* <Services /> */}
           <ServicesHome />

@@ -41,16 +41,14 @@ function TermsAndConditions() {
           {JSON.stringify(structuredData)}
         </script>
       </Helmet>
-      {/* <div className="mx-10 mb-5 mt-5 px-10 py-2 border rounded shadow-2xl flex flex-col gap-2 max-sm:mx-2 max-sm:px-5"> */}
-      <div className="my-5 py-2 px-1 text-gray-600 flex flex-col gap-2">
+      {/* <div className="my-5 py-2 px-1 text-gray-600 flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <h1 className="text-center text-black text-3xl max-sm:text-xl font-semibold py-2">
             Terms and Conditions <br /> for InstantHub services
           </h1>
           <p className="max-sm:text-sm">
-            By using it, you are agreeing to these Terms & Conditions (defined
-            below). Please read them carefully. Manak Waste Management Pvt Ltd.,
-            formerly known as ReGlobe, doing business as InstantHub
+            You acknowledge and agree to the terms and conditions listed below
+            by using it. Read them carefully, please.
           </p>
           <p className="max-sm:text-sm">
             “InstantHub” owns and operates the website,{" "}
@@ -310,6 +308,158 @@ function TermsAndConditions() {
           <p>
             If you have any questions about these Terms & Conditions, please
             contact us at{" "}
+            <a href="mailto:info@instanthub.in">info@instanthub.in</a>.
+          </p>
+        </div>
+      </div> */}
+
+      <div className="my-5 py-2 px-1 text-gray-600 flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-center text-black text-3xl max-sm:text-xl font-semibold py-2">
+            InstantHub Terms & Conditions
+          </h1>
+          <p className="max-sm:text-sm">
+            By accessing this platform, you confirm your agreement to these
+            terms. Please review them carefully.
+          </p>
+          <p className="max-sm:text-sm">
+            InstantHub, accessible at{" "}
+            <a href="https://www.instanthub.in">www.instanthub.in</a>, along
+            with its apps and associated platforms, serves as a marketplace. It
+            enables users to sell, repair, or manage items and engage with
+            third-party services and businesses.
+          </p>
+          <p className="max-sm:text-sm">
+            If you disagree with any section of these terms, you must
+            discontinue using our site or services. Your continued usage
+            indicates acceptance, including any updates made without prior
+            notice. Stay informed by revisiting this page regularly.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            1. Marketplace Platform
+          </h2>
+          <p className="max-sm:text-sm">
+            InstantHub offers users a venue to sell or repair items, subject to
+            compliance with policies. Transactions occur directly between users
+            and third-party professionals, with InstantHub not involved in their
+            management or outcomes.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            2. Authorized Usage
+          </h2>
+          <p className="max-sm:text-sm">
+            Access to InstantHub’s content and tools is limited to using the
+            platform as intended. Unauthorized use, data extraction, or content
+            modification is prohibited without prior permission.
+          </p>
+          <p className="max-sm:text-sm">
+            Users must adhere to applicable laws while using the platform and
+            refrain from activities that hinder others' access or experience.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            3. Intellectual Property
+          </h2>
+          <p className="max-sm:text-sm">
+            All site materials, including logos, text, and visuals, are
+            protected under copyright and trademark laws. Unauthorized use,
+            duplication, or distribution may lead to penalties.
+          </p>
+          <p className="max-sm:text-sm">
+            Marks not owned by InstantHub belong to their respective owners and
+            require their consent for usage.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            4. Third-Party Services
+          </h2>
+          <p className="max-sm:text-sm">
+            InstantHub provides information on third-party offerings but does
+            not guarantee accuracy or endorse them. Transactions occur solely
+            between users and third parties.
+          </p>
+          <p className="max-sm:text-sm">
+            Links to external sites are provided for convenience and do not
+            signify endorsements. Review the terms and privacy policies of such
+            sites independently.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            5. Privacy and Security
+          </h2>
+          <p className="max-sm:text-sm">
+            InstantHub values user privacy. Portions of the site requiring
+            authentication are protected. Notify us immediately if you suspect
+            unauthorized access to your account.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            6. Membership Requirements
+          </h2>
+          <h3>a. Registration:</h3>
+          <p className="max-sm:text-sm">
+            Registering as a member requires accurate information and compliance
+            with applicable laws. Membership may be suspended for policy
+            violations.
+          </p>
+          <h3>b. Account Security:</h3>
+          <p className="max-sm:text-sm">
+            Keep your credentials secure, as you’re responsible for all actions
+            under your account.
+          </p>
+          <h3>c. Age Restriction:</h3>
+          <p className="max-sm:text-sm">
+            Users must be at least 18 years old or the legal age of majority in
+            their jurisdiction.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            7. Inactive Accounts
+          </h2>
+          <p className="max-sm:text-sm">
+            Accounts with no activity for over 180 days may be marked inactive.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            8. Warranties and Limitations
+          </h2>
+          <p className="max-sm:text-sm">
+            While we strive to ensure service quality, warranties are limited.
+            InstantHub is not liable for indirect damages arising from platform
+            usage.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            9. Indemnification
+          </h2>
+          <p className="max-sm:text-sm">
+            Users agree to indemnify InstantHub against claims arising from
+            improper platform use, policy violations, or third-party disputes.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-semibold text-xl max-sm:text-lg">
+            10. Terms Updates
+          </h2>
+          <p className="max-sm:text-sm">
+            InstantHub reserves the right to amend these terms. Changes take
+            effect upon posting, and continued use signifies acceptance.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p>
+            For queries, email us at{" "}
             <a href="mailto:info@instanthub.in">info@instanthub.in</a>.
           </p>
         </div>

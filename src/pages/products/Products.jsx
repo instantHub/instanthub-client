@@ -65,8 +65,8 @@ const Products = () => {
 
   // console.log(brand);
 
-  const displayedSeries = seriesAction.showSeries
-    ? brandSeries.filter((series) => series.id === seriesAction.selectedSeries)
+  const displayedSeries = seriesAction?.showSeries
+    ? brandSeries?.filter((series) => series.id === seriesAction.selectedSeries)
     : brandSeries;
 
   // if (seriesLoading || displayedSeries.length === 0) return null;
@@ -172,7 +172,7 @@ const Products = () => {
         </div>
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
-          {filteredProducts.filter(
+          {filteredProducts?.filter(
             (product) => product.status.toLowerCase() !== "blocked"
           ).length === 0 && (
             <div className="flex items-center justify-center">
@@ -181,8 +181,8 @@ const Products = () => {
           )}
 
           {filteredProducts
-            .filter((product) => product.status.toLowerCase() !== "blocked")
-            .map((product) => (
+            ?.filter((product) => product.status.toLowerCase() !== "blocked")
+            ?.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
