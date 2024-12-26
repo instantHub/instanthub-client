@@ -254,10 +254,13 @@ const Navbar = () => {
             <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 max-14inch:px-14">
               {!categoryLoading &&
                 categoryData?.map((category, i) => (
-                  <Link
-                    to={`/categories/brands/${category.id}`}
+                  <div
+                    // to={`/categories/brands/${category.id}`}
                     key={i}
-                    onClick={() => setHoveredCategoryId(null)}
+                    onClick={() => {
+                      setHoveredCategoryId(null);
+                      navigate(`/categories/brands/${category.id}`);
+                    }}
                   >
                     <div
                       key={i}
@@ -317,7 +320,7 @@ const Navbar = () => {
                         )}
                       </span>
                     </div>
-                  </Link>
+                  </div>
                 ))}
 
               {/* <Link to={`/services`}>

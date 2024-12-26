@@ -8,6 +8,8 @@ import { clearServiceProblems } from "../../features/serviceProblemsSlice";
 import { useDispatch } from "react-redux";
 import ItemGrid from "../../components/ItemGrid";
 import Loading from "../../components/Loading";
+import ServiceFAQs from "./ServiceFAQs";
+import ServiceContent from "./ServiceContent";
 
 const ServiceBrands = () => {
   const { serviceCategoryId } = useParams();
@@ -109,6 +111,9 @@ const ServiceBrands = () => {
           </div>
         )}
       </div>
+
+      {/* <ServiceFAQs /> */}
+      <ServiceContent />
     </>
   );
 };

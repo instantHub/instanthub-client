@@ -14,6 +14,8 @@ import { FaAngleRight } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import ServiceFAQs from "./ServiceFAQs";
+import ServiceContent from "./ServiceContent";
 
 export default function BookService() {
   const { serviceId } = useParams();
@@ -234,6 +236,7 @@ export default function BookService() {
         />
         <link rel="canonical" href={`https://www.instanthub.in/services`} />
       </Helmet>
+
       <div className="mt-8 w-4/5 mx-auto">
         <div className="mx-0 mb-6">
           <div className="flex items-center gap-1">
@@ -638,6 +641,12 @@ export default function BookService() {
           </div>
         </div>
       </div>
+
+      <div className="mt-20">
+        <hr className="w-4/5 max-sm:w-[90%] mx-auto mt-20 mb-10" />
+        <ServiceFAQs />
+      </div>
+      {/* <ServiceContent /> */}
     </>
   );
 }

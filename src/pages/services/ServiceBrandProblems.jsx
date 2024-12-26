@@ -12,6 +12,8 @@ import { Helmet } from "react-helmet-async";
 import { BsFileArrowDown } from "react-icons/bs";
 import { FaAnglesDown } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import ServiceFAQs from "./ServiceFAQs";
+import ServiceContent from "./ServiceContent";
 
 const ServiceBrands = () => {
   const { serviceBrandId } = useParams();
@@ -194,13 +196,13 @@ const ServiceBrands = () => {
                     onClick={() =>
                       handleProblemSelection(serviceBrandProblem.name)
                     }
-                    className={`${
+                    className={`overflow-hidden ${
                       serviceProblemsData.some(
                         (sp) => sp.serviceProblem === serviceBrandProblem.name
                       )
-                        ? `text-cyan-500 shadow-2xl rounded-xl shadow-cyan-500 transition ease-in-out duration-500`
-                        : `sm:rounded-sm border sm:shadow-sm transition ease-in-out duration-1000`
-                    } flex flex-col items-center py-2 justify-center cursor-pointer w-full h-full bg-white sm:min-w-full rounded-0 sm:ring-0 sm:ring-transparent sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
+                        ? `text-cyan-500 shadow-2xl border border-cyan-500 rounded-xl  shadow-cyan-500 transition-all ease-in-out duration-500`
+                        : `sm:rounded-sm border rounded-md sm:shadow-sm transition ease-in-out duration-1000`
+                    } flex flex-col items-center my-2 justify-center cursor-pointer w-full h-full bg-white sm:min-w-full sm:ring-0 sm:ring-transparent sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                   >
                     <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
                       <img
@@ -213,11 +215,19 @@ const ServiceBrands = () => {
                         className="w-28 h-28 max-sm:w-32 max-sm:h-24"
                       />
                     </div>
-                    <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                      <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+
+                    <div
+                      className={`${
+                        serviceProblemsData.some(
+                          (sp) => sp.serviceProblem === serviceBrandProblem.name
+                        ) &&
+                        "bg-cyan-500 text-white border-cyan-500 transition-all ease-in-out duration-500"
+                      } text-center mt-2 border-t  flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full w-full sm:max-h-12`}
+                    >
+                      <span className="text-[12px] font-[500] leading-7 max-sm:text-xs">
                         {serviceBrandProblem.name}
-                      </div>
-                    </span>
+                      </span>
+                    </div>
                   </div>
                 ))}
             </div>
@@ -238,9 +248,10 @@ const ServiceBrands = () => {
             )}
           </div>
         )}
-
-        <div></div>
       </div>
+
+      {/* <ServiceFAQs /> */}
+      <ServiceContent />
     </>
   );
 };

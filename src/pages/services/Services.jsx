@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useGetServicesQuery } from "../../features/api";
 import ServicesBrands from "./ServiceBrands";
 import { Helmet } from "react-helmet-async";
+import ServiceFAQs from "./ServiceFAQs";
+import ServiceContent from "./ServiceContent";
 
 const Services = () => {
   const { data: servicesData, serviceLoading: serviceLoading } =
@@ -210,6 +212,9 @@ const Services = () => {
             </>
           )}
         </div>
+
+        {/* <ServiceFAQs /> */}
+        <ServiceContent />
       </div>
     </>
   );

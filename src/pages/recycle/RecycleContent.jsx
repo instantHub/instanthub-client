@@ -1,4 +1,5 @@
 import React from "react";
+import RecycleFAQs from "./RecycleFAQs";
 
 const RecycleContent = ({ heading }) => {
   const whyRecycle = [
@@ -19,6 +20,7 @@ const RecycleContent = ({ heading }) => {
       text: "Receive payments directly into your account after successful pickup and verification.",
     },
   ];
+
   const howItWorks = [
     {
       heading: "What We Accept",
@@ -115,6 +117,8 @@ const RecycleContent = ({ heading }) => {
           ))}
         </div>
       </div>
+
+      <RecycleFAQs />
     </>
   );
 };

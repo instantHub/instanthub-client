@@ -313,6 +313,7 @@ const RecycleProductDetail = () => {
           )}
           <hr className="text-black mt-1" />
         </div>
+
         <div className="">
           {isLoading ? (
             <Loading />
@@ -472,7 +473,7 @@ const RecycleProductDetail = () => {
         <RecycleContent heading={false} />
 
         {checkMobileOn && (
-          <div>
+          <>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
                 <div className="flex justify-center">
@@ -498,8 +499,9 @@ const RecycleProductDetail = () => {
                 </div>
                 <div className="flex justify-around items-center gap-4 my-4">
                   <div
-                    // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
-                    className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    // className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    className="shadow-xl bg-white text-green-600 border border-green-600 shadow-green-300 text-center px-4 py-1 rounded 
+                            cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
                     onClick={() => {
                       setRecyclePrice(700);
                       setMobileStatus("Switched On");
@@ -511,7 +513,8 @@ const RecycleProductDetail = () => {
                   </div>
                   <div
                     // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
-                    className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    className="shadow-xl text-red-600 border border-red-600 shadow-red-300 bg-white  text-center px-4 py-1 rounded 
+                          cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
                     onClick={() => {
                       setRecyclePrice(500);
                       setMobileStatus("Switched Off");
@@ -524,7 +527,7 @@ const RecycleProductDetail = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
 
         {checkLaptopOn && (
@@ -554,8 +557,9 @@ const RecycleProductDetail = () => {
                 </div>
                 <div className="flex justify-around items-center gap-4 my-4">
                   <div
-                    // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
-                    className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    // className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    className="shadow-md shadow-green-300 hover:shadow-green-500 hover:shadow-inner bg-white text-green-600 border border-green-600  text-center px-4 py-1 rounded 
+                    cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
                     onClick={() => {
                       // setRecyclePrice(700);
                       setLaptopStatus("Switched On");
@@ -567,8 +571,9 @@ const RecycleProductDetail = () => {
                     <span>Switched On</span>
                   </div>
                   <div
-                    // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
-                    className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    // className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    className="shadow-md shadow-red-300 hover:shadow-red-500 hover:shadow-inner text-red-600 border border-red-600  bg-white text-center px-4 py-1 rounded 
+                          cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
                     onClick={() => {
                       setRecyclePrice(500);
                       setLaptopStatus("Switched Off");
@@ -610,7 +615,8 @@ const RecycleProductDetail = () => {
                 <div className="flex justify-around items-center gap-4 my-4">
                   <div
                     // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
-                    className="border shadow-xl shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    className="border-2 hover:border-green-800 shadow-md rounded-lg text-center px-4 py-1 cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1
+                            transition-all ease-linear duration-1000"
                     onClick={() => {
                       setRecyclePrice(1500);
                       setAgeSelected("Between 1-3 Years");
@@ -621,8 +627,8 @@ const RecycleProductDetail = () => {
                     <span>Between 1-3 Years</span>
                   </div>
                   <div
-                    // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
-                    className="border shadow-xl shadow-red-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    className="border-2 hover:border-green-800 shadow-md rounded-lg text-center px-4 py-1 cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1
+                            transition-all ease-linear duration-1000"
                     onClick={() => {
                       setRecyclePrice(500);
                       // setAgeSelected(laptopAge[1]);
@@ -697,8 +703,9 @@ const RecycleProductDetail = () => {
                   )}
                 </div>
                 {/* <div className="flex justify-around mt-8"> */}
-                <div className="flex items-center justify-center">
-                  <div className="grid grid-cols-3 mt-8 items-center">
+                <div className="w-full flex items-center justify-center">
+                  {/* <div className="grid grid-cols-3 mt-8 items-center"> */}
+                  <div className="w-full flex justify-around mt-8 items-center">
                     <button
                       onClick={() => {
                         setOrderOpen(true);
@@ -746,7 +753,7 @@ const RecycleProductDetail = () => {
                   className="flex flex-col gap-3 justify-center"
                 >
                   <FormInput
-                    name="customerName"
+                    name="Name"
                     pattern="^[A-Za-z]{3,16}"
                     placeholder="Enter Name"
                     errorMessage="Min 3 characters required..!"
@@ -788,7 +795,7 @@ const RecycleProductDetail = () => {
                   </div>
 
                   <div className="flex items-center">
-                    <h2 className="max-sm:text-md">Select Date and Time:</h2>{" "}
+                    <h2 className="max-sm:text-sm">Select Date and Time: </h2>
                     <DatePicker
                       selected={selectedDate}
                       onChange={handleTimeChange}
@@ -816,21 +823,23 @@ const RecycleProductDetail = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <FormInput
-                      type="radio"
-                      name="paymentMode"
-                      value="Instant Cash"
-                      checked={selectedPaymentMode === "Instant Cash"}
-                      handlePayment={handlePaymentModeChange}
-                    />
-
-                    <div className="mx-2">
-                      <img
-                        src="/images/instantcash.webp"
-                        alt="upi"
-                        className="w-16 h-7"
+                    <label className="flex items-center">
+                      <FormInput
+                        type="radio"
+                        name="paymentMode"
+                        value="Instant Cash"
+                        checked={selectedPaymentMode === "Instant Cash"}
+                        handlePayment={handlePaymentModeChange}
                       />
-                    </div>
+
+                      <div className="mx-2">
+                        <img
+                          src="/images/instantcash.webp"
+                          alt="upi"
+                          className="w-16 h-7"
+                        />
+                      </div>
+                    </label>
 
                     <label className="flex items-center">
                       <FormInput
