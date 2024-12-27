@@ -40,7 +40,7 @@ const ServicesHome = () => {
           <div className="mx-0 mb-6">
             <h1 className="text-lg pb-6">
               Avail Our Service..{" "}
-              <span className="text-xl text-cyan-500 font-semibold">
+              <span className="text-xl text-secondary font-semibold">
                 Let's make you life hustle free!
               </span>
             </h1>
@@ -48,7 +48,7 @@ const ServicesHome = () => {
 
           {serviceLoading ? (
             <div className="flex flex-col justify-center items-center h-32">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-cyan-500"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-secondary"></div>
               <span>Loading...</span>
             </div>
           ) : (
@@ -85,7 +85,7 @@ const ServicesHome = () => {
                 <div className="relative text-center mt-4">
                   <button
                     onClick={toggleShowAll}
-                    className="absolute bottom-0 left-0 text-cyan-600 pt-2 pb-1 hover:border-b hover:border-cyan-600 hover:pb-[3px] transition"
+                    className="absolute bottom-0 left-0 text-secondary pt-2 pb-1 hover:border-b hover:border-secondary hover:pb-[3px] transition"
                   >
                     show all services...
                   </button>
@@ -134,7 +134,7 @@ const ServicesHome = () => {
                       <Link to={`/services/subServices/${sc._id}`} key={i}>
                         <div
                           key={i}
-                          className="bg-white w-fit h-24 flex items-center justify-center cursor-pointer border border-cyan-500 rounded shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                          className="bg-white w-fit h-24 flex items-center justify-center cursor-pointer border border-secondary rounded shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                           onClick={() => setServiceCategorySelected(sc._id)}
                         >
                           <p className="p-2 text-center">{sc.name}</p>

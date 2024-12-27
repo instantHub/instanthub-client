@@ -64,7 +64,7 @@ const ServiceContent = ({ heading = "" }) => {
           {howItWorks.map((d, index) => (
             <div
               key={index}
-              className="flex flex-col items-center shadow-lg max-sm:shadow-md text-sm px-2 py-5 border border-cyan-500 rounded-2xl max-sm:text-sm"
+              className="flex flex-col items-center shadow-lg max-sm:shadow-md text-sm px-2 py-5 border border-secondary rounded-2xl max-sm:text-sm"
             >
               {/* <div className="flex items-center justify-center text-center flex-shrink-0 mr-4 mb-4 pb-2"> */}
               <h3 className="text-lg pb-5 max-sm:pb-3 max-sm:text-sm font-semibold text-gray-800 max-14inch:text-lg">

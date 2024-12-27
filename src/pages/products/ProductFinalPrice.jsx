@@ -546,7 +546,7 @@ const ProductFinalPrice = () => {
       <div className="flex flex-col justify-between items- pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
         <div className=" justify-start items-start mb-2 text-lg  max-sm:text-xs">
           <Link to={`/categories/brands/productDetails/${productDetails?.id}`}>
-            <button className=" text-cyan-600 bg-white px-2 py-1 border border-cyan-600 rounded">
+            <button className=" text-secondary bg-white px-2 py-1 border border-secondary rounded">
               Back
             </button>
           </Link>

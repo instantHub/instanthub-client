@@ -15,7 +15,7 @@ const Categories = () => {
         <div className="mx-0 mb-6">
           <h1 className="text-2xl pb-6 max-sm:text-lg">
             Ready to sell?{" "}
-            <span className="text-3xl text-cyan-500 font-semibold max-sm:text-xl">
+            <span className="text-3xl text-secondary font-semibold max-sm:text-xl">
               Let's turn your gadgets into cash!
             </span>
           </h1>
@@ -36,7 +36,7 @@ const Categories = () => {
             <div className="flex justify-center">
               <Link
                 to={`/recycle-categories`}
-                className="w-32 p-4 h-32 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                className="w-32 p-4 h-32 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
               >
                 <img
                   src="/images/recycle1.png"
@@ -50,7 +50,7 @@ const Categories = () => {
         )}
       </div>
 
-      {/* <div className="mt-16 pt-8 pb-16 bg-cyan-50 px-[10%]">
+      {/* <div className="mt-16 pt-8 pb-16 bg-secondary-light px-[10%]">
         <AllBrandsList />
       </div> */}
     </div>

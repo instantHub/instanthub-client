@@ -257,7 +257,7 @@ const SideBar2 = (props) => {
   const activeLink =
     "flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2";
   const normalLink =
-    "flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2";
+    "flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-secondary hover:bg-light-gray m-2";
 
   // const handleCloseSideBar = () => {
   //   if (activeMenu !== undefined && screenSize <= 900) {

@@ -200,7 +200,7 @@ const ServiceBrands = () => {
                       serviceProblemsData.some(
                         (sp) => sp.serviceProblem === serviceBrandProblem.name
                       )
-                        ? `text-cyan-500 shadow-2xl border border-cyan-500 rounded-xl  shadow-cyan-500 transition-all ease-in-out duration-500`
+                        ? `text-secondary shadow-2xl border border-secondary rounded-xl  shadow-secondary transition-all ease-in-out duration-500`
                         : `sm:rounded-sm border rounded-md sm:shadow-sm transition ease-in-out duration-1000`
                     } flex flex-col items-center my-2 justify-center cursor-pointer w-full h-full bg-white sm:min-w-full sm:ring-0 sm:ring-transparent sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                   >
@@ -221,7 +221,7 @@ const ServiceBrands = () => {
                         serviceProblemsData.some(
                           (sp) => sp.serviceProblem === serviceBrandProblem.name
                         ) &&
-                        "bg-cyan-500 text-white border-cyan-500 transition-all ease-in-out duration-500"
+                        "bg-secondary text-white border-secondary transition-all ease-in-out duration-500"
                       } text-center mt-2 border-t  flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full w-full sm:max-h-12`}
                     >
                       <span className="text-[12px] font-[500] leading-7 max-sm:text-xs">
@@ -233,10 +233,10 @@ const ServiceBrands = () => {
             </div>
 
             {serviceProblemsData.length > 0 ? (
-              // <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cyan to Blue</button>
+              // <button type="button" class="text-white bg-gradient-to-r from-secondary to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-secondary dark:focus:ring-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Dark to Blue</button>
 
-              // <div className="mx-auto mt-10 bg-cyan-500 py-1 px-8 text-xl text-white rounded">
-              <div className="mx-auto mt-10 px-8 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm py-2.5 text-center mb-2">
+              // <div className="mx-auto mt-10 bg-secondary py-1 px-8 text-xl text-white rounded">
+              <div className="mx-auto mt-10 px-8 text-white bg-gradient-to-r from-secondary to-secondary-light hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-secondary dark:focus:ring-secondary font-medium rounded-lg text-sm py-2.5 text-center mb-2">
                 <Link to={`/services/book-service/${serviceBrand._id}?st=b`}>
                   <button>Continue</button>
                 </Link>

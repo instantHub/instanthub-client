@@ -131,14 +131,14 @@ const DeductionItems = ({
                 deductionSliceData.productDisplayDefect.conditionLabel ===
                   label.conditionLabel
                   ? ` ${
-                      functionalProblems ? "border-red-500" : "border-cyan-500"
+                      functionalProblems ? "border-red-500" : "border-secondary"
                     }`
                   : ""
               }
                   `
               : `flex px-2 bg-slate-100 ${
                   isLabelSelected(label.conditionLabel)
-                    ? "border-cyan-500 bg-white"
+                    ? "border-secondary bg-white"
                     : ""
                 }
                     
@@ -171,7 +171,7 @@ const DeductionItems = ({
               ) ||
               deductionSliceData.productDisplayDefect.conditionLabel ===
                 label.conditionLabel
-                ? `bg-cyan-500 ${
+                ? `${functionalProblems ? "bg-red-500" : "bg-secondary"}  ${
                     shouldShowImage ? "text-white" : "text-black"
                   } `
                 : `${
@@ -187,7 +187,7 @@ const DeductionItems = ({
               // "flex justify-between text-sm h-[90px] items-center gap-1 py-4 bg-white"
             }
 
-            ${functionalProblems && "bg-red-500"}
+            
             `}
           >
             {!shouldShowImage ? (
@@ -198,12 +198,12 @@ const DeductionItems = ({
                       (condLabel) =>
                         condLabel.conditionLabel == label.conditionLabel
                     )
-                      ? "text-cyan-500"
+                      ? "text-secondary"
                       : deductionSliceData.productPhysicalCondition
                           .conditionLabel === label.conditionLabel ||
                         deductionSliceData.productScreenCondition
                           .conditionLabel === label.conditionLabel
-                      ? "text-cyan-500 bg-white"
+                      ? "text-secondary bg-white"
                       : "opacity-30 "
                   } `}
                 >

@@ -68,7 +68,7 @@ const SellContent = () => {
           {howItWorks?.map((d, index) => (
             <div
               key={index}
-              className="flex flex-col items-center shadow-lg max-sm:shadow-md text-sm py-5 border border-cyan-500 rounded-2xl max-sm:text-sm"
+              className="flex flex-col items-center shadow-lg max-sm:shadow-md text-sm py-5 border border-secondary rounded-2xl max-sm:text-sm"
             >
               <h3 className="text-lg pb-5 max-sm:pb-3 px-2 max-sm:text-sm font-semibold text-gray-800 max-14inch:text-lg">
                 {d.heading}

@@ -418,7 +418,7 @@ const ProductQuestions = () => {
                 <div className="flex items-center">
                   <button
                     onClick={handleContinue}
-                    className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                    className="px-2 py-1 bg-secondary text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
                   >
                     Continue
                   </button>
@@ -494,7 +494,7 @@ const DeviceCheck = ({ productsData, setAboutDevice }) => {
             isDeviceChecked: true,
           })
         }
-        className={`flex pr-16 max-sm:pr-8 items-center border rounded-md cursor-pointer p-2.5 max-sm:p-1.5 ring-0 ring-transparent shadow hover:border-cyan-500`}
+        className={`flex pr-16 max-sm:pr-8 items-center border rounded-md cursor-pointer p-2.5 max-sm:p-1.5 ring-0 ring-transparent shadow hover:border-secondary`}
       >
         <span className="border border-solid rounded-full w-5 h-5 max-sm:w-4 max-sm:h-4 mr-1.5"></span>
         <span className="text-sm  flex-1 flex justify-center">{innerText}</span>

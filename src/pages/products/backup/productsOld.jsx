@@ -107,8 +107,8 @@ const Products = () => {
                       <div
                         className={`${
                           showSeries && series.id === seriesSelected
-                            ? "bg-cyan-500 text-white"
-                            : "bg-gray-200 max-sm:bg-white"
+                            ? "bg-secondary text-white"
+                            : "bg-secondary max-sm:bg-white"
                         } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-2 sm:min-w-full rounded-0 sm:rounded-md sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                       >
                         <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
@@ -142,7 +142,7 @@ const Products = () => {
                         <div
                           className={`${
                             showSeries && series.id === seriesSelected
-                              ? "bg-cyan-500 text-white"
+                              ? "bg-secondary text-white"
                               : "bg-gray-200 max-sm:bg-white"
                           } flex flex-col items-center justify-center cursor-pointer w-full h-full  p-2 sm:p-2 sm:min-w-full rounded sm:rounded sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
                         >

@@ -15,7 +15,7 @@ import { TbListDetails } from "react-icons/tb";
 const HowItWorks = () => {
   const data = [
     {
-      heading: "Submit Your Device",
+      heading: "Select Your Device",
       icon: <TbListDetails />,
       text: `Begin by selecting the electronic item you wish to sell. Whether
             it's a smartphone, laptop, tablet, or gaming console and etc, we accept
@@ -54,7 +54,7 @@ const HowItWorks = () => {
           {data.map((d, index) => (
             <div
               key={index}
-              className="flex flex-col items-center px-2 py-10 border border-cyan-500 rounded-2xl max-sm:text-sm"
+              className="flex flex-col items-center px-2 py-10 border border-secondary rounded-2xl max-sm:text-sm"
             >
               <div className="flex items-center justify-center text-center flex-shrink-0 mr-4 mb-4 pb-2">
                 <div className="flex gap-1 max-sm:gap-0 items-center mb-2">

@@ -9,11 +9,11 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
         <div className="flex justify-center" key={item.id + index}>
           <Link
             to={`${linkPath}/${item[itemID]}`}
-            // className={`p-4 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl 
+            // className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
             //     transition ease-in-out duration-500 ${
             //       displayBig ? `w-32 h-32` : `w-28 h-28`
             //     }`}
-            className={`p-4 flex bg-white cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl 
+            className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
                 transition ease-in-out duration-500 ${
                   displayBig ? `w-32 h-32` : `w-28 h-28`
                 }`}
@@ -35,5 +35,5 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
 
 export default ItemGrid;
 
-// className="w-28 p-4 h-28 flex cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-// className="w-32 p-4 h-32 flex cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500 bg-white"
+// className="w-28 p-4 h-28 flex cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+// className="w-32 p-4 h-32 flex cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500 bg-white"

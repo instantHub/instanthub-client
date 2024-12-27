@@ -207,7 +207,7 @@ const SeriesButton = ({ series, isSelected, onClick }) => (
     <button onClick={onClick} className="w-full h-full">
       <div
         className={`${
-          isSelected ? "bg-cyan-500 text-white" : "bg-gray-200 max-sm:bg-white"
+          isSelected ? "bg-secondary text-white" : "bg-gray-200 max-sm:bg-white"
         } flex flex-col items-center justify-center cursor-pointer w-full h-full p-2 sm:p-2 sm:min-w-full rounded sm:rounded-md sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
       >
         <span className="text-center mt-2 flex-1 line-clamp-3 flex items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">

@@ -113,14 +113,14 @@ export default function BookService() {
     if (!servicesDataLoading) {
       if (st === "b") {
         service = servicesData.serviceBrands.find((sb) => sb._id === serviceId);
-        // console.log("service", service);
+        console.log("brand service", service);
         setSelectedService(service);
         // setInspectionCharges(149);
       } else if (st === "ds") {
         service = servicesData.serviceCategories.find(
           (sc) => sc._id === serviceId
         );
-        // console.log("service", service);
+        console.log("direct service", service);
         setSelectedService(service);
         if (service.name.toLowerCase().includes("interior")) {
           setInspectionCharges(499);
@@ -129,7 +129,7 @@ export default function BookService() {
         service = servicesData.serviceSubProducts.find(
           (sc) => sc._id === serviceId
         );
-        // console.log("service", service);
+        console.log("sub service", service);
         let price = service.price - (service.discount * service.price) / 100;
         setProdPrice(price);
         setSelectedService(service);
@@ -394,7 +394,7 @@ export default function BookService() {
               {/* FORM TO COLLECT DETAILS */}
               <div className="mx-auto w-1/2 border pb-5 max-sm:w-full">
                 <div className="flex flex-col ">
-                  <div className="py-2 text-center bg-cyan-500 text-lg text-white">
+                  <div className="py-2 text-center bg-secondary text-lg text-white">
                     <p>Provide Details For Booking</p>
                   </div>
 

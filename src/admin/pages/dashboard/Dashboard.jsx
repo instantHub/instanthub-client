@@ -405,11 +405,11 @@ export default React.memo(Dashboard);
           <Link to={"/admin/orders"}>More Info</Link>
         </div>
       </div>
-      <div className={`bg-cyan-500 ${divStyle}`}>
+      <div className={`bg-secondary ${divStyle}`}>
         <div className={`${divDesc}`}>
           Total {ordersReceivedCount} Orders Received / Completed
         </div>
-        <div className={`bg-cyan-600 ${divMoreBtn}`}>
+        <div className={`bg-secondary ${divMoreBtn}`}>
           <Link to={"/admin/orders"}>More Info</Link>
         </div>
       </div>
@@ -485,11 +485,11 @@ export default React.memo(Dashboard);
   //       <Link to={"/admin/orders"}>More Info</Link>
   //     </div>
   //   </div>
-  //   <div className={`bg-cyan-500 ${divStyle}`}>
+  //   <div className={`bg-secondary ${divStyle}`}>
   //     <div className={`${divDesc}`}>
   //       Total {dashboardDetail.ordersCompletedCount} Orders Received / Completed
   //     </div>
-  //     <div className={`bg-cyan-600 ${divMoreBtn}`}>
+  //     <div className={`bg-secondary ${divMoreBtn}`}>
   //       <Link to={"/admin/orders"}>More Info</Link>
   //     </div>
   //   </div>

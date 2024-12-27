@@ -63,7 +63,7 @@ const Brands = () => {
               // brands?.map((brand) => (
               //   <div key={brand.id} className="flex justify-center">
               //     <Link to={`/categories/brands/products/${brand.id}`}>
-              //       <div className="w-28 p-4 h-28 flex cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500">
+              //       <div className="w-28 p-4 h-28 flex cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500">
               //         <img
               //           src={`${import.meta.env.VITE_APP_BASE_URL}${
               //             brand.image

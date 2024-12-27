@@ -23,10 +23,10 @@ const AllBrandsList = () => {
   return (
     <div>
       <div className="my-10">
-        <h2 className="text-2xl flex gap-2 items-center border-b-[1px] border-b-cyan-300 w-fit max-sm:text-xl">
+        <h2 className="text-2xl flex gap-2 items-center border-b-[1px] border-b-secondary w-fit max-sm:text-xl">
           Explore{" "}
           {!brandsLoading && (
-            <span className="text-4xl font-semibold text-cyan-500">
+            <span className="text-4xl font-semibold text-secondary">
               {brandsData.length}
             </span>
           )}{" "}
@@ -49,7 +49,7 @@ const AllBrandsList = () => {
                         key={i}
                         className=""
                       >
-                        <div className="w-32 p-4 h-[136px] bg-white flex flex-col cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500">
+                        <div className="w-32 p-4 h-[136px] bg-white flex flex-col cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500">
                           <div key={i}>
                             <img
                               src={
@@ -68,7 +68,7 @@ const AllBrandsList = () => {
                   {!showAllBrands && brandsData.length > 5 && (
                     <button
                       onClick={handleShowMoreBrands}
-                      className="w-fit px-2  h-fit my-auto cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                      className="w-fit px-2  h-fit my-auto cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                     >
                       Show More...
                     </button>
@@ -76,7 +76,7 @@ const AllBrandsList = () => {
                   {showAllBrands && (
                     <button
                       onClick={handleShowLessBrands}
-                      className="w-fit px-2  h-fit my-auto cursor-pointer border border-cyan-500 rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                      className="w-fit px-2  h-fit my-auto cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
                     >
                       Show Less..
                     </button>

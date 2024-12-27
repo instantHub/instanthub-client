@@ -266,7 +266,7 @@ const SideBar = () => {
   ];
 
   const activeLink = `flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2 `;
-  const normalLink = `flex items-center gap-3 pl-4 pt- pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-cyan-500 hover:bg-light-gray m-2`;
+  const normalLink = `flex items-center gap-3 pl-4 pt-1 pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-secondary dark:hover:bg-secondary-light hover:bg-light-gray m-2`;
 
   return (
     <div className={`w-ful z-30 bg-gray-900/50 fixed `}>
@@ -276,12 +276,12 @@ const SideBar = () => {
         // md-[15%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar z-30`}
         className={`
             ${isSidebarOpen ? `w-full h-full` : `hidden`}
-             md h-full bg-gray-900/20 fixed overflow-y-auto scrollbar text-white z-30
+             md h-full bg-secondary/20 fixed overflow-y-auto scrollbar text-white z-30
             `}
       >
-        <div className="bg-gray-900 w-fit px-2">
+        <div className=" bg-secondary w-fit px-2">
           {/* Instant Hub Sidebar Name */}
-          <div className="flex justify-between items-center font-serif gap-2 bg-gray-900 w-full pt-5 pb-2 pl-3 max-sm:pl-2">
+          <div className="flex justify-between items-center font-serif gap-2 bg-secondary w-full pt-5 pb-2 pl-3 max-sm:pl-2">
             {/* InstantHub Name */}
             <div>
               <Link
@@ -321,7 +321,8 @@ const SideBar = () => {
                   key={link.name}
                   // onClick={() => handleClick(e, `/admin/${link.name}`)}
                   style={({ isActive }) => ({
-                    backgroundColor: isActive ? currentColor : "",
+                    backgroundColor: isActive ? 'lightgray' : "",
+                    color: isActive ? 'black' : "",
                   })}
                   className={({ isActive }) =>
                     isActive ? activeLink : normalLink

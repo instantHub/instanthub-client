@@ -76,7 +76,7 @@ const Testimonials = () => {
     <div>
       <div className="group">
         <div className="w-full h-full rounded-2xl bg-cover bg-center bg-no-repeat duration-500">
-          <div className="bg-cyan-50 py-16 px-4 sm:px-6 lg:px-8">
+          <div className="bg-secondary-light/40 py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl max-sm:text-2xl font-extrabold text-gray-900 sm:text-4xl ">
                 Testimonials
@@ -104,7 +104,7 @@ const Testimonials = () => {
                         src={testimonials[currentIndex].image}
                         alt={testimonials[currentIndex].author}
                       /> */}
-                      <p className="px-4 py-2 text-black text-3xl bg-cyan-50 shadow-lg rounded-full max-sm:text-xl">
+                      <p className="px-4 py-2 text-black text-3xl bg-secondary-light shadow-lg rounded-full max-sm:text-xl">
                         {/* {testimonials[currentIndex].author[0]} */}
                         {testimonials[currentIndex].author
                           .split(" ")

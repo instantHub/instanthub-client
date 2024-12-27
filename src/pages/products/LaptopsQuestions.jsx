@@ -478,7 +478,7 @@ const LaptopsQuestions = (props) => {
           <div className="flex items-center">
             <button
               onClick={handleContinue}
-              className="px-2 py-1 text-lg max-sm:text-sm bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+              className="px-2 py-1 text-lg max-sm:text-sm bg-secondary text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
             >
               Continue
             </button>

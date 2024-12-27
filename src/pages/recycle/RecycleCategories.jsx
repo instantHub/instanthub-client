@@ -64,7 +64,7 @@ const RecycleCategories = () => {
           <div className="w-5/6 max-sm:text-center mx-auto mb-6">
             <h1 className="text-2xl pb-6 max-sm:text-lg">
               Ready to recycle?{" "}
-              <span className="text-3xl text-cyan-500 font-semibold max-sm:text-xl">
+              <span className="text-3xl text-secondary font-semibold max-sm:text-xl">
                 Let's recycle your gadgets!
               </span>
             </h1>

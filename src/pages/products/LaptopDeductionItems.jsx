@@ -150,13 +150,13 @@ const LaptopDeductionItems = ({
                     ? ` ${
                         functionalProblems
                           ? "border-red-500"
-                          : "border-cyan-500"
+                          : "border-secondary"
                       }`
                     : ""
                 }`
               : `flex px-2 bg-slate-100  ${
                   isLabelSelected(label.conditionLabel)
-                    ? "border-cyan-500 bg-white"
+                    ? "border-secondary bg-white"
                     : ""
                 }`
           }  border rounded items-center`}
@@ -180,9 +180,8 @@ const LaptopDeductionItems = ({
               deductionData.some(
                 (condLabel) => condLabel.conditionLabel == label.conditionLabel
               )
-                ? `bg-cyan-500  ${
-                    shouldShowImage ? "text-white " : "text-black"
-                  } `
+                ? `${functionalProblems ? "bg-red-500" : "bg-secondary"}   
+                ${shouldShowImage ? "text-white " : "text-black"} `
                 : `${
                     isLabelSelected(label.conditionLabel)
                       ? " bg-white"
@@ -196,7 +195,7 @@ const LaptopDeductionItems = ({
               // : "flex text-sm items-center gap-1 py-4 bg-white"
             }
 
-            ${functionalProblems && "bg-red-500"}
+            
             `}
           >
             {!shouldShowImage ? (
@@ -207,7 +206,7 @@ const LaptopDeductionItems = ({
                       (condLabel) =>
                         condLabel.conditionLabel == label.conditionLabel
                     )
-                      ? "border-cyan-500 "
+                      ? "border-secondary "
                       : "border-surface-dark"
                   } `}
                 >

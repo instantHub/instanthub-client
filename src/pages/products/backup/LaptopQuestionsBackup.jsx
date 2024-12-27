@@ -402,7 +402,7 @@ const LaptopsQuestions = (props) => {
                             {/* <div>
                               <button
                                 onClick={handleContinue}
-                                className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                                className="px-2 py-1 bg-secondary text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
                               >
                                 Continue
                               </button>
@@ -418,7 +418,7 @@ const LaptopsQuestions = (props) => {
                                       //   selectedLabels.includes(label.conditionLabel)
                                       data.productAge.conditionLabel ===
                                       label.conditionLabel
-                                        ? "border-cyan-500"
+                                        ? "border-secondary"
                                         : "bg-gray-100"
                                     } flex pl-3 border rounded items-center`}
                                     onClick={() =>
@@ -434,7 +434,7 @@ const LaptopsQuestions = (props) => {
                                         className={`${
                                           data.productAge.conditionLabel ===
                                           label.conditionLabel
-                                            ? "border-cyan-500"
+                                            ? "border-secondary"
                                             : "border-surface-dark"
                                         } border border-solid rounded-full w-5 h-5 mr-1.5`}
                                       ></span>
@@ -450,7 +450,7 @@ const LaptopsQuestions = (props) => {
                                   <div className="flex items-center">
                                     <button
                                       onClick={handleContinue}
-                                      className="px-2 py-1 bg-cyan-500 text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                                      className="px-2 py-1 bg-secondary text-white border mx-auto  rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
                                     >
                                       Continue
                                     </button>
@@ -483,7 +483,7 @@ const LaptopsQuestions = (props) => {
             <div className="flex items-center">
               <button
                 onClick={handleContinue}
-                className="px-2 py-1 bg-cyan-500 text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-cyan-500 hover:text-cyan-500"
+                className="px-2 py-1 bg-secondary text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
               >
                 Continue
               </button>

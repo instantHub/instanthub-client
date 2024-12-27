@@ -45,7 +45,7 @@ const AboutPage = () => {
         <meta name="description" content="Description of my page" />
         <meta
           name="keywords"
-          content="About, About Instant Hub, Instant Cash, Instant Pick, About InstantHub, instant hub, Instant Hub, instant pick, InstantHub"
+          content="About, About Instant Hub, about instant hub, About InstantHub, about instanthub"
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://www.instanthub.in/about" />
@@ -116,7 +116,7 @@ const AboutPage = () => {
                 <div
                   key={i}
                   className="flex items-center p-4 max-sm:px-2 max-sm:py-4 bg-slate-200/10 border shadow-md
-                              rounded-lg hover:scale-105 hover:bg-cyan-600 hover:text-white transition-all ease-in-out duration-1000"
+                              rounded-lg hover:scale-105 hover:bg-secondary hover:text-white transition-all ease-in-out duration-1000"
                 >
                   <div className="flex flex-col gap-4 justify-center text-center ">
                     <strong className="text-xl max-sm:text-[1rem]">

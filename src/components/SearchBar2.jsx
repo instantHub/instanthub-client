@@ -277,6 +277,9 @@ const SearchBar = () => {
                 </div>
               </Link>
             ))}
+          {search && servicesData && (
+            <div className="text-sm max-sm:text-sm">No such item</div>
+          )}
         </div>
       )}
     </div>

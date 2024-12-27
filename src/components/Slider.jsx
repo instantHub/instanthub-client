@@ -51,7 +51,7 @@ function Slider() {
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`text-2xl cursor-pointer ${
-                index === currentIndex ? "text-cyan-500" : "text-gray-500"
+                index === currentIndex ? "text-secondary" : "text-gray-500"
               }`}
             >
               <RxDotFilled />

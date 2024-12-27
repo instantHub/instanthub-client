@@ -62,7 +62,10 @@ const Navbar = () => {
   const pathSubStr = location.pathname.substring(0, 4);
 
   const activeLink =
-    "text-cyan-500 text-xl transition-colors transition-all duration-1000 ease-in-out";
+    "text-secondary text-xl transition-colors transition-all duration-1000 ease-in-out";
+  const activeLinkName = "font-extrabold text-secondary";
+  const activeButton =
+    "bg-secondary-light/40 transition-all ease-in-out duration-1000";
 
   function handleScrollTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -118,11 +121,11 @@ const Navbar = () => {
               <Link to="/" onClick={handleScrollTop}>
                 <h2>
                   <img
-                    // src="/images/MainLogo.png"
-                    src="/images/NewLogo.png"
-                    // src="/images/NewLogo2.jpeg"
+                    // src="/images/NewLogo.png"
+                    src="/images/NewLogo00.png"
                     alt="logo"
-                    className="w-[88px] h-[65px] my-[1px] max-2sm:w-[60px] max-2sm:h-[50px] max-2sm:py-[2px] "
+                    // className="w-[88px] h-[65px] my-[1px] max-2sm:w-[60px] max-2sm:h-[50px] max-2sm:py-[2px] "
+                    className="w-[115px] h-[60px] my-[1px] max-2sm:w-[60px] max-2sm:h-[45px] max-2sm:py-[2px] "
                     // className="w-[128px] h-[100px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
                   />
                 </h2>
@@ -142,9 +145,9 @@ const Navbar = () => {
                     key={i}
                     className={`px-2 py-1 border border-white rounded ${
                       location.pathname === d.url
-                        ? "bg-cyan-500 text-white "
+                        ? "bg-secondary text-white "
                         : ""
-                    }  hover:border-cyan-500`}
+                    }  hover:border-secondary`}
                   >
                     <Link to={`${d.url}`}>{d.name}</Link>
                   </li>
@@ -187,8 +190,10 @@ const Navbar = () => {
                 <li
                   key={i}
                   className={`px-2 py-1 border border-white rounded ${
-                    location.pathname === d.url ? "bg-cyan-500 text-white " : ""
-                  }  hover:border-cyan-500`}
+                    location.pathname === d.url
+                      ? "bg-secondary text-white "
+                      : ""
+                  }  hover:border-secondary`}
                 >
                   <Link to={`${d.url}`}>{d.name}</Link>
                 </li>
@@ -199,20 +204,24 @@ const Navbar = () => {
       </nav>
 
       <header>
-        {/* BUTTONS -> Services - Home - Recylce as Small Screen */}
+        {/* BUTTONS -> Services - Home - Recylce on Large Screen */}
         <div className="max-sm:hidden h-12 grid grid-cols-3 border-t border bg-white w-full text-sm font-thin">
           {/* Service */}
           <button
             aria-label="Service button"
-            className={`flex justify-center items-center gap-1 text-center py-2 border-r`}
+            className={`flex justify-center items-center gap-1 text-center py-2 border-r ${
+              activePath.service && activeButton
+            }`}
             onClick={() => {
               navigate("/services");
             }}
           >
-            <span className={`${activePath.service && activeLink}`}>
+            <span
+              className={`${activePath.service && activeLink} text-gray-400`}
+            >
               <MdHomeRepairService />
             </span>
-            <span className={`${activePath.service && "font-medium "}`}>
+            <span className={`${activePath.service && activeLinkName}`}>
               Services
             </span>
           </button>
@@ -220,29 +229,35 @@ const Navbar = () => {
           {/* Home */}
           <button
             aria-label="Home button"
-            className={`flex justify-center items-center text-center gap-1 p-2 border-r`}
+            className={`flex justify-center items-center text-center gap-1 p-2 border-r ${
+              activePath.home && activeButton
+            }`}
             onClick={() => {
               navigate("/");
             }}
           >
-            <span className={`${activePath.home && activeLink}`}>
+            <span className={`${activePath.home && activeLink} text-gray-400`}>
               <FaHome />
             </span>
-            <span className={`${activePath.home && "font-medium "}`}>Home</span>
+            <span className={`${activePath.home && activeLinkName}`}>Home</span>
           </button>
 
           {/* Recycle */}
           <button
             aria-label="Recycle button"
-            className={`flex justify-center items-center gap-1 text-center p-2`}
+            className={`flex justify-center items-center gap-1 text-center p-2 ${
+              activePath.recycle && activeButton
+            }`}
             onClick={() => {
               navigate("/recycle-categories");
             }}
           >
-            <span className={`${activePath.recycle && activeLink}`}>
+            <span
+              className={`${activePath.recycle && activeLink} text-gray-400`}
+            >
               <FaRecycle />
             </span>
-            <span className={`${activePath.recycle && "font-medium "}`}>
+            <span className={`${activePath.recycle && activeLinkName}`}>
               Recycle
             </span>
           </button>
@@ -264,14 +279,14 @@ const Navbar = () => {
                   >
                     <div
                       key={i}
-                      className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-cyan-500 hover:pt-[13px]"
+                      className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-secondary hover:pt-[13px]"
                       onMouseEnter={() => handleMouseEnter(category.id)}
                       onMouseLeave={() => handleMouseLeave()}
                     >
                       <span className="flex flex-col items-center justify-center w-full h-full no-underline">
                         <div
                           key={i}
-                          className="hover:text-cyan-500 flex items-center gap-1"
+                          className="hover:text-secondary flex items-center gap-1"
                         >
                           <span>Sell {category.name}</span>
                           {hoveredCategoryId === category.id ? (
@@ -324,9 +339,9 @@ const Navbar = () => {
                 ))}
 
               {/* <Link to={`/services`}>
-                <div className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-cyan-500 hover:pt-[13px]">
+                <div className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-secondary-light hover:pt-[13px]">
                   <span className="">
-                    <div className="hover:text-cyan-500 flex items-center gap-1">
+                    <div className="hover:text-secondary flex items-center gap-1">
                       <span>Services</span>
                     </div>
                   </span>

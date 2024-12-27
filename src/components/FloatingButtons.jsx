@@ -27,6 +27,7 @@ const FloatingButtons = () => {
 
   const navigate = useNavigate();
   const pathSubStr = location.pathname.substring(0, 4);
+  console.log("pathSubStr", pathSubStr);
 
   const [activePath, setActivePath] = useState({
     home: false,
@@ -36,10 +37,13 @@ const FloatingButtons = () => {
   });
 
   const [showCategories, setShowCategories] = useState(false);
-  const [scrollY, setScrollY] = useState(window.scrollY);
 
   const activeLink =
-    "text-cyan-500 text-lg transition-colors transition-all duration-1000 ease-in-out";
+    "text-secondary text-lg transition-colors transition-all duration-1000 ease-in-out";
+  const activeLinkName = "font-extrabold text-xs text-secondary";
+
+  const activeLinkButton =
+    "bg-secondary-light/40 transition-all duration-1000 ease-linear";
 
   const [isScrolled, setIsScrolled] = useState(false);
   // console.log("isScrolled", isScrolled);
@@ -84,7 +88,7 @@ const FloatingButtons = () => {
           recycle: false,
         });
         break;
-      case "/sell":
+      case "/sel":
         setActivePath({
           home: false,
           sell: true,
@@ -162,20 +166,25 @@ const FloatingButtons = () => {
         </button>
       </div>
 
+      {/* Home - Sell */}
       <div className="fixed bottom-0 h-[52px] w-full z-10 flex">
         <div className="grid grid-cols-4 border-t shadow-xl bg-white w-full sm:hidden text-sm font-thin">
           {/* Home */}
           <div
-            className={`flex justify-center text-center p-2 border-r`}
+            className={`flex justify-center text-center p-2 border-r ${
+              activePath.home && activeLinkButton
+            }`}
             onClick={() => {
               navigate("/");
             }}
           >
             <button className="flex flex-col items-center gap-1 text-center">
-              <span className={`${activePath.home && activeLink}`}>
+              <span
+                className={`${activePath.home && activeLink} text-gray-400`}
+              >
                 <FaHome />
               </span>
-              <span className={`${activePath.home && "font-medium text-xs"}`}>
+              <span className={`${activePath.home && activeLinkName} `}>
                 Home
               </span>
             </button>
@@ -183,7 +192,9 @@ const FloatingButtons = () => {
 
           {/* Sell */}
           <div
-            className={`relative flex justify-center text-center p-2 border-r`}
+            className={`relative flex justify-center text-center p-2 border-r ${
+              activePath.sell && activeLinkButton
+            }`}
             onClick={() => {
               // navigate("/");
               setShowCategories((prev) => !prev);
@@ -191,14 +202,14 @@ const FloatingButtons = () => {
           >
             {showCategories && (
               <div
-                // className={`absolute -top-[180px] flex flex-col items-center bg-white px-2 rounded py-2 transition-all duration-1000 ease-in `}
-                className={`absolute bottom-12 flex flex-col items-center bg-slate-50 border border-black border-b-cyan-50 px-2 rounded-lg py-2 transition-all duration-1000 ease-in `}
+                // className={`absolute bottom-12 flex flex-col items-center bg-slate-50 border border-black border-b-secondary-light px-2 rounded-lg py-2 transition-all duration-1000 ease-in `}
+                className={`absolute bottom-12 flex flex-col items-center bg-secondary text-white border border-black border-b-secondary-light px-2 rounded-lg py-2 transition-all duration-1000 ease-in `}
               >
                 {categories?.map((cat) => (
                   <Link
                     key={cat.id}
                     to={`/categories/brands/${cat.id}`}
-                    className="py-1 font-[400] hover:font-semibold text-xs border-b w-[100px]"
+                    className="py-2 font-[400] hover:font-semibold text-sm border-b w-[130px]"
                   >
                     {cat.name}
                   </Link>
@@ -206,10 +217,12 @@ const FloatingButtons = () => {
               </div>
             )}
             <button className="flex flex-col items-center gap-1 text-center">
-              <span className={`${activePath.sell && activeLink}`}>
+              <span
+                className={`${activePath.sell && activeLink} text-gray-400`}
+              >
                 <GiSellCard />
               </span>
-              <span className={`${activePath.sell && "font-medium text-xs"}`}>
+              <span className={`${activePath.sell && activeLinkName}`}>
                 Sell
               </span>
             </button>
@@ -217,18 +230,20 @@ const FloatingButtons = () => {
 
           {/* Service */}
           <div
-            className={`flex justify-center text-center py-2 border-r`}
+            className={`flex justify-center text-center py-2 border-r ${
+              activePath.service && activeLinkButton
+            }`}
             onClick={() => {
               navigate("/services");
             }}
           >
             <button className="flex flex-col items-center gap-1 text-center">
-              <span className={`${activePath.service && activeLink}`}>
+              <span
+                className={`${activePath.service && activeLink} text-gray-400`}
+              >
                 <MdHomeRepairService />
               </span>
-              <span
-                className={`${activePath.service && "font-medium text-xs"}`}
-              >
+              <span className={`${activePath.service && activeLinkName}`}>
                 Services
               </span>
             </button>
@@ -236,18 +251,20 @@ const FloatingButtons = () => {
 
           {/* Recycle */}
           <div
-            className={`flex justify-center text-center p-2`}
+            className={`flex justify-center text-center p-2 ${
+              activePath.recycle && activeLinkButton
+            }`}
             onClick={() => {
               navigate("/recycle-categories");
             }}
           >
             <button className="flex flex-col items-center gap-1 text-center">
-              <span className={`${activePath.recycle && activeLink}`}>
+              <span
+                className={`${activePath.recycle && activeLink} text-gray-400`}
+              >
                 <FaRecycle />
               </span>
-              <span
-                className={`${activePath.recycle && "font-medium text-xs"}`}
-              >
+              <span className={`${activePath.recycle && activeLinkName}`}>
                 Recycle
               </span>
             </button>
@@ -311,9 +328,9 @@ export default FloatingButtons;
 
 // className={`flex justify-center text-center p-2 border-r ${
 //   location.pathname.substring(0, 6).includes("/cat")
-//     ? ` text-cyan-500 transition-colors duration-1000 ease-in-out `
+//     ? ` text-secondary transition-colors duration-1000 ease-in-out `
 //     : location.pathname === "/" ||
 //       location.pathname.substring(0, 6).includes("/sell")
-//     ? ` text-cyan-500 transition-colors duration-1000 ease-in-out `
+//     ? ` text-secondary transition-colors duration-1000 ease-in-out `
 //     : ``
 // }`}

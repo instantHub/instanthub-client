@@ -5,8 +5,13 @@ import { SiXdadevelopers } from "react-icons/si";
 import { FcServices } from "react-icons/fc";
 
 const Footer = () => {
+  const listItemStyle =
+    "hover:text-white px-2 py-1 max-sm:text-xs text-sm hover:text-[16px] hover:bg-secondary-light hover:text-secondary rounded-md transition-all ease-in-out duration-1000";
   return (
-    <div className="w-full sm:pt-10 sm:pb-5 mt-2 bg-cyan-500 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16">
+    // <div className="w-full sm:pt-10 sm:pb-5 mt-2 bg-secondary px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16">
+    <div
+      className={`bg-secondary w-full sm:pt-10 sm:pb-5 mt-2 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16`}
+    >
       <div className="mx-auto max-w-screen-xl flex gap-4 justify-evenly max-md:gap-1 max-sm:flex-col max-sm:pl-5">
         {/* Large Screen */}
         <div className="px-4 sm:px-0 flex flex-col items-center max-sm:hidden">
@@ -116,19 +121,15 @@ const Footer = () => {
               <span>Company</span>
             </div>
             <div className="pl-2">
-              <ul className="flex flex-col text-[13px] leading-8 font-thin max-sm:leading-6">
+              <ul className="flex flex-col text-[13px] text-white leading-8 font-thin max-sm:leading-6">
                 <li>
                   <Link to={`/about`}>
-                    <span className="hover:text-white max-sm:text-xs">
-                      About Us
-                    </span>
+                    <span className={`${listItemStyle}`}>About Us</span>
                   </Link>
                 </li>
                 <li>
                   <Link>
-                    <span className="hover:text-white max-sm:text-xs">
-                      Partner with Us
-                    </span>
+                    <span className={`${listItemStyle}`}>Partner with Us</span>
                   </Link>
                 </li>
               </ul>
@@ -141,17 +142,15 @@ const Footer = () => {
               <label htmlFor="">Support</label>
             </div>
             <div className="pl-2">
-              <ul className="flex flex-col text-[13px] leading-8 font-thin max-sm:leading-6">
+              <ul className="flex flex-col text-white text-[13px] leading-8 font-thin max-sm:leading-6">
                 <li>
                   <Link>
-                    <span className="hover:text-white max-sm:text-xs">FAQ</span>
+                    <span className={`${listItemStyle}`}>FAQ</span>
                   </Link>
                 </li>
                 <li>
                   <Link to={`/contact-us`}>
-                    <span className="hover:text-white max-sm:text-xs">
-                      Contact Us
-                    </span>
+                    <span className={`${listItemStyle}`}>Contact Us</span>
                   </Link>
                 </li>
               </ul>
@@ -164,33 +163,27 @@ const Footer = () => {
               <label htmlFor="">More</label>
             </div>
             <div className="pl-2">
-              <ul className="flex flex-col text-[13px] leading-8 font-thin max-sm:leading-6">
+              <ul className="flex text-white flex-col text-[13px] leading-8 font-thin max-sm:leading-6">
                 <li>
                   <Link to={`/terms-conditions`}>
-                    <span className="hover:text-white max-sm:text-xs">
+                    <span className={`${listItemStyle}`}>
                       Terms & Conditions
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link to={`/privacy-policies`}>
-                    <span className="hover:text-white max-sm:text-xs">
-                      Privacy Policy
-                    </span>
+                    <span className={`${listItemStyle}`}>Privacy Policy</span>
                   </Link>
                 </li>
                 <li>
                   <Link to={`/service-policy`}>
-                    <span className="hover:text-white max-sm:text-xs">
-                      Service Policy
-                    </span>
+                    <span className={`${listItemStyle}`}>Service Policy</span>
                   </Link>
                 </li>
                 <li>
                   <Link to={`/terms-of-use`}>
-                    <span className="hover:text-white max-sm:text-xs">
-                      Terms Of Use
-                    </span>
+                    <span className={`${listItemStyle}`}>Terms Of Use</span>
                   </Link>
                 </li>
               </ul>
@@ -202,7 +195,7 @@ const Footer = () => {
             <div className="text-white font-bold py-2 max-sm:text-sm">
               <p>Our Office</p>
             </div>
-            <div className="pl-2 flex flex-col font-thin text-sm max-sm:text-[11px]">
+            <div className="pl-2 text-white flex flex-col font-thin text-sm max-sm:text-[11px]">
               <p className="">
                 Sy. No. 92, R Greens A.C, <br />
                 Sarjapur Outer Ring Road Marathahalli <br />
