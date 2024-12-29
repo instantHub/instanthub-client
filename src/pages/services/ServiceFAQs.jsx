@@ -39,6 +39,16 @@ const ServiceFAQs = () => {
       answer:
         "Most repairs are completed within 1 to 2 days. For complex issues, we'll keep you informed about the timeline.",
     },
+    {
+      question: "what is the minimum waiting time for services?",
+      answer:
+        "Normally, we respond to service requests within a minimum of one hour, but in certain exceptional circumstances, it may take up to twenty-four hours.",
+    },
+    {
+      question: "what are the inspection policy and there charges?",
+      answer:
+        "As per our policy, we do virtual inspections; however, charges will be applicable if the customer requests a physical inspection.",
+    },
   ];
 
   const displayedFAQs = showAll ? faqData : faqData.slice(0, 3);

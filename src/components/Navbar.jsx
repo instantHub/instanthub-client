@@ -121,12 +121,12 @@ const Navbar = () => {
               <Link to="/" onClick={handleScrollTop}>
                 <h2>
                   <img
-                    // src="/images/NewLogo.png"
-                    src="/images/NewLogo00.png"
-                    alt="logo"
+                    // src="/images/NewLogoW.jpeg"
+                    src="/images/NavLogo.jpg"
+                    alt="InstantHub"
                     // className="w-[88px] h-[65px] my-[1px] max-2sm:w-[60px] max-2sm:h-[50px] max-2sm:py-[2px] "
-                    className="w-[115px] h-[60px] my-[1px] max-2sm:w-[60px] max-2sm:h-[45px] max-2sm:py-[2px] "
-                    // className="w-[128px] h-[100px] my-[1px] max-2sm:w-[60px] max-2sm:h-[55px] "
+                    // className="w-[115px] h-[60px] my-[1px] max-2sm:w-[60px] max-2sm:h-[45px] max-2sm:py-[2px] "
+                    className="w-[90%] h-[65px] my-[1px] max-sm:w-[85%] max-sm:h-[55px] max-sm:p-[5px] p-[5px]"
                   />
                 </h2>
               </Link>

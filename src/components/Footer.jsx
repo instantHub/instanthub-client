@@ -16,19 +16,19 @@ const Footer = () => {
         {/* Large Screen */}
         <div className="px-4 sm:px-0 flex flex-col items-center max-sm:hidden">
           <div className="pb-5">
-            {/* <img
-              // src="/LOGO1.png"
-              src="/images/footer-logo.png"
+            <img
+              // src="/images/FooterLogo.jpg"
+              src="/images/NewLogoB.jpeg"
               alt="logo"
               // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-              className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
-            /> */}
-            <p className="flex flex- items-center gap-1 text-white ">
+              className="w-full h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
+            />
+            {/* <p className="flex flex- items-center gap-1 text-white ">
               <span className="font-serif text-3xl max-sm:text-lg">
                 Instant
               </span>
               <span className="font-serif text-3xl max-sm:text-sm">Hub</span>
-            </p>
+            </p> */}
           </div>
 
           {/* Follow Us */}
@@ -86,17 +86,16 @@ const Footer = () => {
         <div className="grid grid-cols-4 w-full max-sm:grid-cols-2 max-sm:gap-2">
           {/* Business Name */}
           <div className="md:hidden flex items-center">
-            {/* <img
-            // src="/LOGO1.png"
-            src="/images/footer-logo.png"
-            alt="logo"
-            // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-            className="w-[95px] h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
-          /> */}
-            <p className="flex items-center gap-1 font-serif text-2xl text-white">
+            <img
+              src="/images/NewLogoB.jpeg"
+              alt="logo"
+              className="w-full h-[75px] my-[1px] max-sm:w-[75%] max-sm:h-[75px] p-1"
+            />
+
+            {/* <p className="flex items-center gap-1 font-serif text-2xl text-white">
               <span className="">Instant</span>
               <span className="">Hub</span>
-            </p>
+            </p> */}
           </div>
 
           {/* Follow Us */}
