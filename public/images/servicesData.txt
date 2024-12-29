@@ -1,6 +1,0 @@
-const services = [
-    {
-        serviceName: "Electronics & Appliances"
-        categories: ["Computer Services","Mobile Repair","CCTV Installation & Repair"]
-    }
-]

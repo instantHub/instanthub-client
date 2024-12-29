@@ -117,7 +117,7 @@ const Navbar = () => {
         <div className="max-w-full mx-auto px-4 max-2sm:px-1">
           <div className="flex items-center">
             {/* <div className="grid grid-cols-3 items-center"> */}
-            <div className="flex items-center grow">
+            <div className="flex items-center sm:grow">
               <Link to="/" onClick={handleScrollTop}>
                 <h2>
                   <img
@@ -126,7 +126,8 @@ const Navbar = () => {
                     alt="InstantHub"
                     // className="w-[88px] h-[65px] my-[1px] max-2sm:w-[60px] max-2sm:h-[50px] max-2sm:py-[2px] "
                     // className="w-[115px] h-[60px] my-[1px] max-2sm:w-[60px] max-2sm:h-[45px] max-2sm:py-[2px] "
-                    className="w-[90%] h-[65px] my-[1px] max-sm:w-[85%] max-sm:h-[55px] max-sm:p-[5px] p-[5px]"
+                    className="w-[90%] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
+                    // className="w-full h-[75px] my-[1px] max-sm:w-[75%] max-sm:h-[75px] p-1"
                   />
                 </h2>
               </Link>
