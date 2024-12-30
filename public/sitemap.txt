@@ -20,7 +20,7 @@
 <priority>0.80</priority>
 </url>
 <url>
-<loc>https://www.instanthub.in/contact</loc>
+<loc>https://www.instanthub.in/contact-us</loc>
 <lastmod>2024-12-26T11:37:01.109Z</lastmod>
 <priority>0.64</priority>
 </url>
