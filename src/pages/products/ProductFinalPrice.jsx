@@ -650,7 +650,7 @@ const ProductFinalPrice = () => {
                 {recycleProduct &&
                   // (productDetails.category.name === "Laptop" ||
                   //   productDetails.category.name === "Mobile") && (
-                  ["Laptop", "Desktop", "Mobile"].includes(
+                  ["Laptop", "Mobile"].includes(
                     productDetails.category.name
                   ) && (
                     <div className="flex flex-col items-center">

@@ -7,6 +7,7 @@ import { useGetCategoryQuery } from "../features/api";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
+import LocationSelector from "./LocationSelector";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,10 +114,10 @@ const Navbar = () => {
   return (
     <>
       {/* <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 mx-4 sticky top-0 z-50 border-b max-14inch:py-0 max-2sm:mx-1"> */}
-      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 sticky top-0 z-50 border-b max-14inch:py-0">
+      <nav className="bg-white text-black py-2 pr-4 pl-2 w-full rounded-xl mt-4 sticky top-0 z-50 border-b max-14inch:py-0 font-serif">
         <div className="max-w-full mx-auto px-4 max-2sm:px-1">
           <div className="flex items-center">
-            {/* <div className="grid grid-cols-3 items-center"> */}
+            {/* LOGO Image */}
             <div className="flex items-center sm:grow">
               <Link to="/" onClick={handleScrollTop}>
                 <h2>
@@ -124,10 +125,8 @@ const Navbar = () => {
                     // src="/images/NewLogoW.jpeg"
                     src="/images/NavLogo.jpg"
                     alt="InstantHub"
-                    // className="w-[88px] h-[65px] my-[1px] max-2sm:w-[60px] max-2sm:h-[50px] max-2sm:py-[2px] "
                     // className="w-[115px] h-[60px] my-[1px] max-2sm:w-[60px] max-2sm:h-[45px] max-2sm:py-[2px] "
                     className="w-[90%] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
-                    // className="w-full h-[75px] my-[1px] max-sm:w-[75%] max-sm:h-[75px] p-1"
                   />
                 </h2>
               </Link>
@@ -135,6 +134,8 @@ const Navbar = () => {
 
             {/* custom debounce hook */}
             {/* <SearchBar /> */}
+
+            <LocationSelector />
 
             {/* Debounce used in below search */}
             <SearchBar2 />
@@ -204,7 +205,7 @@ const Navbar = () => {
         )}
       </nav>
 
-      <header>
+      <header className="">
         {/* BUTTONS -> Services - Home - Recylce on Large Screen */}
         <div className="max-sm:hidden h-12 grid grid-cols-3 border-t border bg-white w-full text-sm font-thin">
           {/* Service */}

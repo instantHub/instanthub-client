@@ -7,7 +7,7 @@ import FloatingButtons from "../../components/FloatingButtons";
 const Layout = () => {
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen font-serif">
         <Navbar />
         <FloatingButtons />
 

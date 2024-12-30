@@ -160,7 +160,7 @@ const RecycleProductDetail = () => {
 
     const data = new FormData(e.target);
     const formData = Object.fromEntries(data.entries());
-    // console.log("formData", formData);
+    console.log("formData", formData);
 
     for (const i in formData) {
       // console.log(`${i}: ${formData[i]}`);
@@ -224,7 +224,6 @@ const RecycleProductDetail = () => {
 
   // console.log("formData", formData);
   // console.log("addressDetails", addressDetails);
-
 
   return (
     <>
@@ -755,7 +754,7 @@ const RecycleProductDetail = () => {
                   className="flex flex-col gap-3 justify-center"
                 >
                   <FormInput
-                    name="Name"
+                    name="customerName"
                     pattern="^[A-Za-z]{3,16}"
                     placeholder="Enter Name"
                     errorMessage="Min 3 characters required..!"

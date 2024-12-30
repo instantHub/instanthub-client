@@ -95,9 +95,9 @@ const ConditionsTable = () => {
     setIsOpen(false);
   };
 
-  const handleDelete = async (orderId) => {
-    console.log("handleDelete", orderId);
-    await deleteServiceOrder(orderId);
+  const handleDelete = async (serviceOrderId) => {
+    console.log("handleDelete serviceOrderId", serviceOrderId);
+    await deleteServiceOrder(serviceOrderId);
   };
 
   const handleServiceComplete = async (
@@ -114,7 +114,7 @@ const ConditionsTable = () => {
     );
 
     let formData = {
-      serviceOrderId: selectedServiceOrderId,
+      // serviceOrderId: selectedServiceOrderId,
       serviceFinalPrice,
       serviceAgent,
       serviceCompletedOn,
@@ -133,7 +133,16 @@ const ConditionsTable = () => {
     console.log("formData from handleServiceComplete", formData);
 
     try {
-      const serviceOrderCompleted = await serviceOrderComplete(formData);
+      // const updatedBrand = await updateBrand({
+      //   brandId: brandId,
+      //   data: formData,
+      // }).unwrap();
+
+      const serviceOrderCompleted = await serviceOrderComplete({
+        serviceOrderId: selectedServiceOrderId,
+        data: formData,
+      }).unwrap();
+
       console.log("serviceOrderCompleted", serviceOrderCompleted);
       setIsOpen(false);
       setServiceFinalPrice("");

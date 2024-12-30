@@ -23,9 +23,9 @@ const RecycleOrdersList = () => {
   const [orderToView, setOrderToView] = useState("");
   const [orderViewOpen, setOrderViewOpen] = useState(false);
 
-  const handleDelete = async (orderId) => {
-    console.log("handledelete", orderId);
-    await deleteRecycleOrder(orderId);
+  const handleDelete = async (recycleOrderId) => {
+    console.log("handledelete recycleOrderId:", recycleOrderId);
+    await deleteRecycleOrder(recycleOrderId);
   };
 
   const handleOrderOpen = (recycleOrder) => {
@@ -181,7 +181,7 @@ const RecycleOrdersList = () => {
 
   return (
     <>
-      <div className="p-4">
+      <div className={`p-4 ${isOpen && 'hidden'}`}>
         <h2 className=" text-lg font-bold mb-4">Recycle Orders Table</h2>
 
         {!recycleOrdersDataloading && (
@@ -195,10 +195,12 @@ const RecycleOrdersList = () => {
       </div>
 
       {isOpen && (
-        <RecycleOrderRecieved
-          selectedOrder={selectedOrder}
-          setIsOpen={setIsOpen}
-        />
+        <div className="flex items-center justify-center ">
+          <RecycleOrderRecieved
+            selectedOrder={selectedOrder}
+            setIsOpen={setIsOpen}
+          />
+        </div>
       )}
 
       {orderViewOpen && (

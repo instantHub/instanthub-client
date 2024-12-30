@@ -11,6 +11,7 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Inter", sans-serif;
+  /* font-family: "Arial", sans-serif; Changed to a generic sans-serif font */
   background-color: white;
 }
 

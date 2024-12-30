@@ -167,7 +167,7 @@ const FloatingButtons = () => {
       </div>
 
       {/* Home - Sell */}
-      <div className="fixed bottom-0 h-[52px] w-full z-10 flex">
+      <div className="fixed bottom-0 h-[52px] w-full z-10 flex font-serif">
         <div className="grid grid-cols-4 border-t shadow-xl bg-white w-full sm:hidden text-sm font-thin">
           {/* Home */}
           <div

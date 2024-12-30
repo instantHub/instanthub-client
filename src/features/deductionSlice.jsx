@@ -43,9 +43,13 @@ export const deductionSlice = createSlice({
 
       // let productCategory = state.productCategory.toLowerCase();
       let laptopCategory = state.productCategory.toLowerCase() === "laptop";
+      let desktopCategory = state.productCategory.toLowerCase() === "desktop";
       const configItems = ["Hard Disk", "RAM"];
 
-      if (laptopCategory && action.payload.type === "Processor") {
+      if (
+        (laptopCategory || desktopCategory) &&
+        action.payload.type === "Processor"
+      ) {
         console.log("Processor", action.payload);
         return {
           ...state,

@@ -105,7 +105,7 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
     };
 
     const formData = {
-      recycleOrderId: selectedOrder.id,
+      // recycleOrderId: selectedOrder.id,
       customerProofFront: imageURL1,
       customerProofBack: imageURL2,
       customerOptional1: imageURL3 ? imageURL3 : null,
@@ -119,7 +119,11 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
     console.log("formData from OrderList handleSubmit", formData);
 
     try {
-      const orderData = await recycleOrderReceived(formData);
+      const orderData = await recycleOrderReceived({
+        recycleOrderId: selectedOrder.id,
+        data: formData,
+      }).unwrap();
+
       console.log("orderData", orderData);
 
       setIsOpen(false);
@@ -140,33 +144,39 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
       console.log("Error: ", error);
     }
   };
+
+  const infoHeading =
+    "text-[16px] text-right bg-slate-100 w-[30%] px-5 max-sm:text-xs";
+  const infoDetail = "text-sm max-sm:text-xs p-2";
+  const subData = "max-sm:text-xs text-sm";
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-fit">
+    // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
+    <div className=" ">
+      <div className="bg-white p-8 max-sm:p-2 rounded-lg shadow-lg w-full">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold mb-4">Recycle Order Received</h2>
+          <h2 className="text-xl font-semibold mb-4 max-sm:text-sm">
+            Recycle Order Received
+          </h2>
           <button
             onClick={() => setIsOpen(false)}
-            className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+            className=" bg-secondary hover:bg-red-700 text-secondary-light max-sm:text-xs py-1 px-3 rounded"
           >
-            x
+            Back
           </button>
         </div>
 
-        <table className="mx-auto border-collapse w-[90%]">
+        {/* Detail Table */}
+        <table className="mx-auto border-collapse w-[90%] max-sm:w-full">
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">
-              Recycle Order ID
-            </th>
-            <td className="p-2 border font-semibold">
-              {selectedOrder.recycleOrderId}
-            </td>
+            <th className={` ${infoHeading}`}> Recycle Order ID</th>
+            <td className={`${infoDetail}`}>{selectedOrder.recycleOrderId}</td>
           </tr>
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">Product</th>
+            <th className={` ${infoHeading}`}>Product</th>
             <td className="p-2 border">
               <div className="flex items-center gap-2">
-                <span className="font-semibold">
+                <span className={`${subData}`}>
                   {selectedOrder.productDetails.productName}
                 </span>
 
@@ -174,8 +184,8 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                   .toLowerCase()
                   .includes("mobile") ? (
                   <div>
-                    <span className="">Variant: </span>
-                    <span className="font-semibold">
+                    <span className={`${subData}`}>Variant: </span>
+                    <span className={`${subData}`}>
                       {selectedOrder.productDetails.productVariant}
                     </span>
                   </div>
@@ -183,60 +193,55 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
               </div>
             </td>
           </tr>
+
+          {/* Customer detail */}
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">
-              Customer Details
-            </th>
-            <td className="p-2 border text-lg">
+            <th className={` ${infoHeading}`}> Customer Details</th>
+            <td className={`p-2 border ${infoDetail}`}>
               <div className="flex flex-col">
                 <div>
-                  Customer Name:
-                  <span className="text-lg font-semibold">
+                  Customer Name:{" "}
+                  <span className={`${subData}`}>
                     {selectedOrder.customerName}
                   </span>
                 </div>
                 <div>
                   Email:{" "}
-                  <span className="text-lg font-semibold">
-                    {selectedOrder.email}
-                  </span>
+                  <span className={`${subData}`}>{selectedOrder.email}</span>
                 </div>
                 <div>
                   Phone:{" "}
-                  <span className="text-lg font-semibold">
-                    {selectedOrder.phone}
-                  </span>
+                  <span className={`${subData}`}>{selectedOrder.phone}</span>
                 </div>
               </div>
             </td>
           </tr>
 
+          {/* Address Detail */}
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">
-              Address Details
-            </th>
-            <td className="p-2 border text-lg">
+            <th className={` ${infoHeading}`}> Address Details</th>
+            <td className={`p-2 border ${infoDetail}`}>
               <div>
-                <span className="text-lg font-semibold">
+                <span className={`${subData}`}>
                   {selectedOrder.addressDetails.address},{" "}
                 </span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center max-sm:flex-col max-sm:gap-1 max-sm:items-start">
                 <div>
                   City:{" "}
-                  <span className="text-lg font-semibold">
+                  <span className={`${subData}`}>
                     {selectedOrder.addressDetails.city},{" "}
                   </span>
                 </div>
                 <div>
                   State:{" "}
-                  <span className="text-lg font-semibold">
+                  <span className={`${subData}`}>
                     {selectedOrder.addressDetails.state},{" "}
                   </span>
                 </div>
                 <div>
                   PinCode:
-                  <span className="text-lg font-semibold">
+                  <span className={`${subData}`}>
                     {selectedOrder.addressDetails.pinCode}.
                   </span>
                 </div>
@@ -244,27 +249,24 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
             </td>
           </tr>
 
+          {/* Schedule timings */}
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">
-              Schedule PickUp Date
-            </th>
-            <td className="p-2 border text-lg font-semibold">
+            <th className={` ${infoHeading}`}>PickUp Date</th>
+            <td className={`p-2 border font-semibold ${infoDetail} `}>
               {selectedOrder.schedulePickUp}
             </td>
           </tr>
 
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">Status</th>
-            <td className="p-2 border text-lg font-semibold">
+            <th className={` ${infoHeading}`}>Status</th>
+            <td className={`p-2 border font-semibold ${infoDetail}`}>
               {selectedOrder.status}
             </td>
           </tr>
 
           <tr className="border-b">
-            <th className="text-right bg-slate-100 w-[30%] px-5">
-              Recycle Price:
-            </th>
-            <td className="p-2 border text-lg font-semibold">
+            <th className={` ${infoHeading}`}>Recycle Price</th>
+            <td className={`p-2 border font-semibold ${infoDetail} `}>
               {selectedOrder.recyclePrice}
             </td>
           </tr>
@@ -273,7 +275,7 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
         <hr />
 
         <div className="text-center mt-4">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-sm">
             {/* Mandatory Images */}
             <div className="flex flex-col gap-1 items-center">
               <div className="">
@@ -281,46 +283,46 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                   Required Documents<span className="text-red-600">*</span>
                 </h2>
               </div>
-              <div className="flex">
+              <div className="flex items-center justify-center max-sm:flex-col max-sm:gap-5">
                 {/* ID Front Image */}
-                {/* <div> */}
-                <label htmlFor="name">
-                  Upload Front of Customer ID
-                  <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="file"
-                  name="name"
-                  id=""
-                  ref={fileInputRef1}
-                  placeholder="Enter Name"
-                  className="border rounded px-2 py-1 w-1/3 mx-auto"
-                  onChange={(e) => {
-                    setImageSelected1(e.target.files[0]);
-                  }}
-                  required
-                />
-                {/* </div> */}
+                <div>
+                  <p htmlFor="name">
+                    Upload Front of Customer ID
+                    <span className="text-red-600">*</span>
+                  </p>
+                  <input
+                    type="file"
+                    name="name"
+                    id=""
+                    ref={fileInputRef1}
+                    placeholder="Enter Name"
+                    className="border rounded px-2 py-1 w-4/5 mx-auto"
+                    onChange={(e) => {
+                      setImageSelected1(e.target.files[0]);
+                    }}
+                    required
+                  />
+                </div>
 
                 {/* ID Back Image */}
-                {/* <div> */}
-                <label htmlFor="name">
-                  Upload Back of Customer ID
-                  <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="file"
-                  name="name"
-                  id=""
-                  ref={fileInputRef2}
-                  placeholder="Enter Name"
-                  className="border rounded px-2 py-1 w-1/3 mx-auto"
-                  onChange={(e) => {
-                    setImageSelected2(e.target.files[0]);
-                  }}
-                  required
-                />
-                {/* </div> */}
+                <div>
+                  <p htmlFor="name">
+                    Upload Back of Customer ID
+                    <span className="text-red-600">*</span>
+                  </p>
+                  <input
+                    type="file"
+                    name="name"
+                    id=""
+                    ref={fileInputRef2}
+                    placeholder="Enter Name"
+                    className="border rounded px-2 py-1 w-4/5 mx-auto"
+                    onChange={(e) => {
+                      setImageSelected2(e.target.files[0]);
+                    }}
+                    required
+                  />
+                </div>
               </div>
             </div>
             <hr className="w-1/3 mx-auto" />
@@ -329,41 +331,47 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
               <div className="">
                 <h2 className="text-lg">Optional Documents</h2>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center justify-center max-sm:flex-col max-sm:gap-5">
                 {/* Optional Image 1 */}
-                <label htmlFor="name">Upload Optional Doc 1</label>
-                <input
-                  type="file"
-                  name="name"
-                  id=""
-                  ref={fileInputRef4}
-                  placeholder=""
-                  className="border rounded px-2 py-1 w-1/3 mx-auto"
-                  onChange={(e) => {
-                    setImageSelected3(e.target.files[0]);
-                  }}
-                />
+                <div>
+                  <p htmlFor="name">Upload Optional Doc 1</p>
+                  <input
+                    type="file"
+                    name="name"
+                    id=""
+                    ref={fileInputRef4}
+                    placeholder=""
+                    className="border rounded px-2 py-1 w-4/5 mx-auto"
+                    onChange={(e) => {
+                      setImageSelected3(e.target.files[0]);
+                    }}
+                  />
+                </div>
 
                 {/* Optional Image 2 */}
-                <label htmlFor="name">Upload Optional Doc 2</label>
-                <input
-                  type="file"
-                  name="name"
-                  id=""
-                  ref={fileInputRef3}
-                  placeholder=""
-                  className="border rounded px-2 py-1 w-1/3 mx-auto"
-                  onChange={(e) => {
-                    setImageSelected4(e.target.files[0]);
-                  }}
-                />
+                <div>
+                  <p htmlFor="name">Upload Optional Doc 2</p>
+                  <input
+                    type="file"
+                    name="name"
+                    id=""
+                    ref={fileInputRef3}
+                    placeholder=""
+                    className="border rounded px-2 py-1 w-4/5 mx-auto"
+                    onChange={(e) => {
+                      setImageSelected4(e.target.files[0]);
+                    }}
+                  />
+                </div>
               </div>
-              <div className="flex items-center justify-center gap-2 mt-5">
-                <div className="flex items-center">
-                  <label htmlFor="pickedUpBy">
-                    Order Picked Up By:
+
+              {/* Order Pickup - Purchase Price - Date Picker */}
+              <div className="flex items-center justify-center max-sm:flex-col gap-2 max-sm:gap-5 mt-5">
+                <div className="flex items-center max-sm:flex-col max-sm:gap-1">
+                  <p htmlFor="pickedUpBy">
+                    Picked Up Agen:
                     <span className="text-red-600">* </span>
-                  </label>
+                  </p>
                   <input
                     type="text"
                     name="pickedUpBy"
@@ -377,21 +385,23 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                     required
                   />
                 </div>
+
+                {/* Recycle Purchase Price */}
                 <div className="flex flex-col items-center">
                   <div>
-                    <label htmlFor="finalPrice">
+                    <p htmlFor="finalPrice">
                       Recycle Offered Price:{" "}
                       <span className="font-bold">
                         {selectedOrder.recyclePrice}
                       </span>
-                    </label>
+                    </p>
                   </div>
 
-                  <div className="flex items-center">
-                    <label htmlFor="finalPrice">
+                  <div className="flex items-center max-sm:flex-col max-sm:gap-1">
+                    <p htmlFor="finalPrice">
                       Purchase Price:
                       <span className="text-red-600">* </span>
-                    </label>
+                    </p>
                     <input
                       type="number"
                       name="finalPrice"
@@ -406,11 +416,12 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="datepicker">
-                    Select Date and Time:
+                {/* Date Picker */}
+                <div className="relative flex max-sm:flex-col max-sm:gap-1">
+                  <p htmlFor="datepicker">
+                    Select Pick Up Time:
                     <span className="text-red-600">* </span>
-                  </label>
+                  </p>
                   <DatePicker
                     selected={selectedDate}
                     onChange={handleTimeChange}
@@ -430,7 +441,7 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                   />
 
                   {selectedDate && (
-                    <p className="py-2 text-xl">
+                    <p className="absolute top-4 py-2 text-sm max-sm:hidden">
                       Picket Up time: `
                       {selectedDate.toLocaleString("en-US", {
                         month: "long",
@@ -446,7 +457,9 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                   )}
                 </div>
               </div>
-              <div className="flex justify-center mt-5 gap-2 items-center">
+
+              {/* Serial No and IMEI No */}
+              <div className="flex justify-center mt-5 gap-2 items-center max-sm:flex-col max-sm:gap-4">
                 <div>
                   <label htmlFor="finalPrice">Serial No:</label>
                   <input
@@ -487,14 +500,14 @@ const RecycleOrderRecieved = ({ selectedOrder, setIsOpen }) => {
                 type="submit"
                 value="Mark Received"
                 name=""
-                className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-600 mx-auto"
+                className="border rounded px-2 py-1 w-fit bg-green-600 text-white cursor-pointer hover:bg-green-600 mx-auto"
               />
             ) : (
               <input
                 type="submit"
                 value="Loading"
                 name=""
-                className="border rounded px-2 py-1 w-1/5 bg-green-300 text-white cursor-none mx-auto"
+                className="border rounded px-2 py-1 w-fit bg-green-300 text-white cursor-none mx-auto"
               />
             )}
           </form>

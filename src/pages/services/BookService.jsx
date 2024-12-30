@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import ServiceFAQs from "./ServiceFAQs";
 import ServiceContent from "./ServiceContent";
+import PriceModal from "./PriceModal";
 
 export default function BookService() {
   const { serviceId } = useParams();
@@ -33,6 +34,8 @@ export default function BookService() {
   const [selectedService, setSelectedService] = useState("");
 
   const [selectedDate, setSelectedDate] = useState(null);
+  const [schedulePickUp, setSchedulePickUp] = useState(null);
+
   const currentDate = new Date();
 
   const [prodPrice, setProdPrice] = useState("");
@@ -50,6 +53,8 @@ export default function BookService() {
 
   const navigate = useNavigate();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const serviceProblemsData = useSelector(
     (state) => state.serviceProblems.serviceProblems
   );
@@ -65,6 +70,15 @@ export default function BookService() {
 
   const handleTimeChange = (date) => {
     setSelectedDate(date);
+
+    const formattedDate = `${date.toLocaleString("en-US", {
+      month: "long",
+    })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
+      "en-US",
+      { hour: "numeric", minute: "numeric", hour12: true }
+    )}`;
+    // console.log("formattedDate", formattedDate);
+    setSchedulePickUp(formattedDate);
   };
 
   const handlePinCodeChange = (e) => {
@@ -170,7 +184,8 @@ export default function BookService() {
       email: email,
       phone: phone,
       address: address,
-      scheduleDate: selectedDate,
+      // scheduleDate: selectedDate,
+      scheduleDate: schedulePickUp,
       scheduleTime: time,
       status: "PENDING",
       inspectionCharges,
@@ -232,7 +247,7 @@ export default function BookService() {
         />
       </Helmet>
 
-      <div className="mt-8 w-4/5 mx-auto">
+      <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">
         <div className="mx-0 mb-6">
           <div className="flex items-center gap-1">
             <div className="flex items-center opacity-60 gap-1 max-sm:text-sm">
@@ -389,7 +404,7 @@ export default function BookService() {
               {/* FORM TO COLLECT DETAILS */}
               <div className="mx-auto w-1/2 border pb-5 max-sm:w-full">
                 <div className="flex flex-col ">
-                  <div className="py-2 text-center bg-secondary text-lg text-white">
+                  <div className="relative py-2 text-center bg-secondary text-lg text-white">
                     <p>Provide Details For Booking</p>
                   </div>
 
@@ -435,6 +450,30 @@ export default function BookService() {
                           </div>
                         </div>
                       </div>
+                    </div>
+                  )}
+
+                  {st === "b" && (
+                    <div className="w-full py-2 px-4 max-sm:px-2">
+                      <div className="flex items-center justify-around gap-2">
+                        {/* Button to Open Modal */}
+                        <button
+                          onClick={() => setIsModalOpen(true)}
+                          className="text-sm max-sm:text-xs bg-green-600 text-white px-3 py-1 max-sm:px-2 rounded-full font-semibold"
+                        >
+                          See Prices
+                        </button>
+
+                        <span className="block text-sm max-sm:text-[10px]">
+                          * Know the approx prices for the service
+                        </span>
+                      </div>
+                      {isModalOpen && (
+                        <PriceModal
+                          isModalOpen={isModalOpen}
+                          setIsModalOpen={setIsModalOpen}
+                        />
+                      )}
                     </div>
                   )}
 

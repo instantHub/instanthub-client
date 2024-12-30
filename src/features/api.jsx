@@ -33,6 +33,7 @@ export const api = createApi({
     "Stocks",
     "Coupons",
     "Services",
+    "Services Orders",
     "Recycle",
     "Variants Questions",
   ],
@@ -459,6 +460,8 @@ export const api = createApi({
       }),
       invalidatesTags: ["Coupons"],
     }),
+
+    // SERVICES
     getAllServices: build.query({
       query: ({ page, limit, search }) => ({
         // url: `/api/search-services`,
@@ -513,34 +516,36 @@ export const api = createApi({
       invalidatesTags: ["Services"],
     }),
     getServicesOrders: build.query({
-      query: () => `/api/services/get-orders`,
-      providesTags: ["Orders"],
+      query: () => `/api/services/orders`,
+      providesTags: ["Services Orders"],
     }),
+
+    // Service Orders
     createServiceOrder: build.mutation({
       query: (data) => ({
-        url: `/api/services/create-order`,
+        url: `/api/services/orders`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: data,
       }),
-      invalidatesTags: ["Orders"],
-    }),
-    deleteServiceOrder: build.mutation({
-      query: (orderId) => ({
-        url: `/api/services/delete-order/${orderId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Services Orders"],
     }),
     serviceOrderComplete: build.mutation({
-      query: (data) => ({
-        url: `/api/services/completed-service-order`,
+      query: ({ serviceOrderId, data }) => ({
+        url: `/api/services/orders/${serviceOrderId}`,
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Services Orders"],
+    }),
+    deleteServiceOrder: build.mutation({
+      query: (serviceOrderId) => ({
+        url: `/api/services/orders/${serviceOrderId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Services Orders"],
     }),
 
     // DELETE IMAGE
@@ -558,12 +563,12 @@ export const api = createApi({
 
     // Recycle
     getRecycleOrders: build.query({
-      query: () => `/api/recycle/get-orders`,
+      query: () => `/api/recycle/orders`,
       providesTags: ["Recycle"],
     }),
     createRecycleOrder: build.mutation({
       query: (data) => ({
-        url: `/api/recycle/create-order`,
+        url: `/api/recycle/orders`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -573,16 +578,16 @@ export const api = createApi({
       invalidatesTags: ["Recycle"],
     }),
     recycleOrderComplete: build.mutation({
-      query: (data) => ({
-        url: `/api/recycle/order-received`,
+      query: ({ recycleOrderId, data }) => ({
+        url: `/api/recycle/orders/${recycleOrderId}`,
         method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Recycle"],
     }),
     deleteRecycleOrder: build.mutation({
-      query: (orderId) => ({
-        url: `/api/recycle/delete-order/${orderId}`,
+      query: (recycleOrderId) => ({
+        url: `/api/recycle/orders/${recycleOrderId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Recycle"],
