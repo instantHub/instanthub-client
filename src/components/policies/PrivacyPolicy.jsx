@@ -5,13 +5,13 @@ const PrivacyPolicy = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://www.instanthub.in/privacy-policy",
+    url: "https://www.instanthub.in/privacy-policies",
     name: "InstantHub",
     description:
       "Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more..!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://www.instanthub.in/privacy-policy",
+      target: "https://www.instanthub.in/privacy-policies",
       "query-input": "required name=search_term_string",
     },
   };

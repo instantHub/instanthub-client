@@ -230,11 +230,6 @@ export default function BookService() {
           name="description"
           content="InstantHub offers a comprehensive range of services including laptop repairs, mobile repairs, painting services, interior designs, pest control services, and more. Experience fast, reliable, and professional services with InstantHub. Visit our website to learn more about our extensive service offerings and how we can help you with all your repair and maintenance needs."
         />
-        <meta
-          name="keywords"
-          content="InstantHub, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
-        />
-        <link rel="canonical" href={`https://www.instanthub.in/services`} />
       </Helmet>
 
       <div className="mt-8 w-4/5 mx-auto">

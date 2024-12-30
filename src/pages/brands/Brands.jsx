@@ -58,7 +58,8 @@ const Brands = () => {
         {brandsLoading ? (
           <Loading />
         ) : (
-          <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
+          // <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
+          <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3">
             {brands?.length > 0 ? (
               // brands?.map((brand) => (
               //   <div key={brand.id} className="flex justify-center">

@@ -339,7 +339,8 @@ const ProductQuestions = () => {
     return <SwitchedOff productsData={productsData} />;
 
   // console.log("deductions", deductions);
-  console.log("sortedConditions ProductQuestions", sortedConditions);
+  // console.log("sortedConditions ProductQuestions", sortedConditions);
+ 
 
   return (
     <>
@@ -359,7 +360,10 @@ const ProductQuestions = () => {
           name="keywords"
           content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
         />
-        <link rel="canonical" href="https://www.instanthub.in/" />
+        <link
+          rel="canonical"
+          href={`https://www.instanthub.in/sell/deductions?productId=${productsData?.id}&variant=${selectedVariant}`}
+        />
       </Helmet>
 
       <div className=" mt-4 ">

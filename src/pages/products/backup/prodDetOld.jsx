@@ -58,20 +58,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{`Sell Old ${`${productDetails?.name} ${productDetails?.category?.name}`}| InstantHub`}</title>
-
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-
-        <meta
-          name="keywords"
-          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
-        />
-        <link rel="canonical" href="https://www.instanthub.in/" />
-      </Helmet>
+      
       <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">
         {/* Header Links: Home > Category > Brand > Products > ProductName */}
         <p className="pb-5 text-2xl font-bold max-sm:text-xl">

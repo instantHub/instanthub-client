@@ -535,12 +535,6 @@ const ProductFinalPrice = () => {
           name="description"
           content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
         />
-
-        <meta
-          name="keywords"
-          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
-        />
-        <link rel="canonical" href="https://www.instanthub.in/" />
       </Helmet>
 
       <div className="flex flex-col justify-between items- pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">

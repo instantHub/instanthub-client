@@ -225,7 +225,6 @@ const RecycleProductDetail = () => {
   // console.log("formData", formData);
   // console.log("addressDetails", addressDetails);
 
-  //   const location = useLocation();
 
   return (
     <>
@@ -245,7 +244,10 @@ const RecycleProductDetail = () => {
           name="keywords"
           content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
         />
-        <link rel="canonical" href="https://www.instanthub.in/" />
+        <link
+          rel="canonical"
+          href={`https://www.instanthub.in/recycle-categories/recycle-brands/recycle-productDetails/${prodId}`}
+        />
       </Helmet>
       {/* <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 bg-[url('/images/recycle1.png')] bg-center bg-no-repeat"> */}
       <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5 ">

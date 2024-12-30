@@ -14,7 +14,6 @@ function UpdateService(props) {
   const [deleteImage, { isLoading: deleteLoading }] = useDeleteImageMutation();
   const [formData, setFormData] = useState({});
   const [newImage, setNewImage] = useState(false);
-  
 
   const { updateData, setUpdateModel } = props;
   // console.log("updateData from UpdateService", updateData);
@@ -92,7 +91,7 @@ function UpdateService(props) {
     }
 
     // Send formData to backend or perform any other action
-    console.log("handleSubmit", formData);
+    // console.log("handleSubmit", formData);
   };
 
   useEffect(() => {
@@ -116,7 +115,8 @@ function UpdateService(props) {
     }
   }, [updateData]);
 
-  console.log(formData);
+  // console.log("test", updateData, formData);
+  // console.log("formData fron update service", formData);
 
   return (
     <>

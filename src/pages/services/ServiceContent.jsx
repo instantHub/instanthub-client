@@ -72,7 +72,7 @@ const ServiceContent = ({ heading = "" }) => {
               </h3>
               {/* </div> */}
               <div>
-                <p className="text-gray-600 px-4 max-14inch:text-sm max-sm:text-xs">
+                <p className="text-gray-600 px-4 max-sm:px-1 max-14inch:text-sm max-sm:text-xs">
                   {d.text}
                 </p>
               </div>

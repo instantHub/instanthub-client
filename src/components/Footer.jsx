@@ -17,8 +17,8 @@ const Footer = () => {
         <div className="px-4 sm:px-0 flex flex-col items-center max-sm:hidden">
           <div className="pb-5">
             <img
-              // src="/images/FooterLogo.jpg"
               src="/images/NewLogoB.jpeg"
+              // src="/images/NavLogo.jpg"
               alt="logo"
               // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
               className="w-full h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"

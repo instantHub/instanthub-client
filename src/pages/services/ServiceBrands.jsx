@@ -22,7 +22,7 @@ const ServiceBrands = () => {
 
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceBrands, setServiceBrand] = useState("");
-  // console.log("serviceCategory", serviceCategory);
+  console.log("serviceCategory", serviceCategory);
   // console.log("serviceBrands", serviceBrands);
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const ServiceBrands = () => {
     }
   }, [servicesData]);
 
+
   return (
     <>
       <Helmet>
@@ -52,9 +53,12 @@ const ServiceBrands = () => {
           name="keywords"
           content="InstantHub, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
-        <link rel="canonical" href={`https://www.instanthub.in/services`} />
+        <link
+          rel="canonical"
+          href={`https://www.instanthub.in/services/serviceBrands/${serviceCategory?._id}`}
+        />
       </Helmet>
-      <div className="mt-8 w-4/5 mx-auto">
+      <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">
         <div className="mx-0 mb-6">
           {
             <div className="flex items-center gap-1 max-sm:text-xs">
@@ -100,7 +104,7 @@ const ServiceBrands = () => {
               <h2 className="text-xl font-semibold">Select a Brand below</h2>
             </div>
 
-            <div className="grid grid-cols-8 gap-6 max-md:grid-cols-5 max-sm:grid-cols-3 max-2sm:grid-cols-2">
+            <div className="grid grid-cols-8 gap-6 max-md:grid-cols-5 max-sm:grid-cols-3">
               <ItemGrid
                 items={serviceBrands}
                 linkPath="/services/serviceBrandProblems"

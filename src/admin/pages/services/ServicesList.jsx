@@ -82,8 +82,8 @@ const ServicesList = () => {
 
   // UPDATE Handler
   const handleUpdate = async (serviceToUpdate, serviceFrom) => {
-    console.log("handleUpdate for service");
-    console.log(serviceToUpdate, serviceFrom);
+    // console.log("handleUpdate for service");
+    // console.log(serviceToUpdate, serviceFrom);
 
     const formData = serviceToUpdate;
     setUpdateData({

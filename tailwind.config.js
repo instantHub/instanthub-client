@@ -22,6 +22,20 @@ export default {
           dark: "#D97706", // Darker shade
         },
       },
+      animation: {
+        marquee: "marquee 30s linear infinite",
+        "marquee-fast": "marquee-fast 25s linear infinite",
+      },
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-150%)" },
+        },
+        'marquee-fast': {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-450%)" },
+        },
+      },
     },
   },
   plugins: [],

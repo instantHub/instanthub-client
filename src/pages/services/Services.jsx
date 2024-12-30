@@ -65,11 +65,11 @@ const Services = () => {
       </Helmet>
 
       <div className="mt-5 mx-auto">
-        <div className="w-4/5 mx-auto">
-          <div className="mx-0 mb-6">
-            <h1 className="text-lg pb-6">
+        <div className="w-4/5 max-sm:w-[95%] mx-auto">
+          <div className="mx-0 px-5">
+            <h1 className="text-xl max-sm:text-[16px] pb-6">
               Avail Our Service..{" "}
-              <span className="text-xl text-secondary font-semibold">
+              <span className="text-2xl max-sm:text-lg text-secondary font-semibold">
                 Let's make you life hustle free!
               </span>
             </h1>
@@ -82,7 +82,7 @@ const Services = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-7 gap-4 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 max-2sm:grid-cols-2">
+              <div className="grid grid-cols-7 gap-4 max-sm:gap-[6px] max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3">
                 {!serviceLoading &&
                   servicesData?.serviceCategories
                     // ?.filter((sc) => sc.type.toLowerCase() === "directservice")
@@ -92,16 +92,16 @@ const Services = () => {
                           <div
                             key={i}
                             // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-                            className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
+                            className="flex flex-col items-center justify-center border p-1 cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-md sm:rounded-xl sm:ring-0 sm:ring-transparent shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
                           >
-                            <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
+                            <div className="flex horizontal w-28 h-28 items-center justify-center max-sm:w-24 max-sm:h-24">
                               <img
                                 src={
                                   import.meta.env.VITE_APP_BASE_URL +
                                   service.image
                                 }
                                 alt="CAT"
-                                className="w-28 h-28 max-sm:w-32 max-sm:h-24"
+                                className="w-28 h-28 max-sm:w-20 max-sm:h-20"
                               />
                             </div>
                             <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">

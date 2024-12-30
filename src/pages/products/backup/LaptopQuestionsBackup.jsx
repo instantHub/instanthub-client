@@ -221,24 +221,6 @@ const LaptopsQuestions = (props) => {
 
   return (
     <>
-      <Helmet>
-        <title>{`Sell Old ${
-          productsData ? `${productsData.category.name}` : null
-        } Online and Get Instant Cash for used ${
-          productsData ? `${productsData.category.name}s` : null
-        } | InstantHub`}</title>
-
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-
-        <meta
-          name="keywords"
-          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
-        />
-        <link rel="canonical" href="https://www.instanthub.in/" />
-      </Helmet>
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (

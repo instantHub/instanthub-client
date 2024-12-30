@@ -355,25 +355,7 @@ const ProductQuestions = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{`Sell Old ${
-          productsData ? `${productsData.category.name}` : null
-        } Online and Get Instant Cash for used ${
-          productsData ? `${productsData.category.name}s` : null
-        } | InstantHub`}</title>
-
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-
-        <meta
-          name="keywords"
-          content="sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub"
-        />
-        <link rel="canonical" href="https://www.instanthub.in/" />
-      </Helmet>
-
+      
       <div className=" mt-4 ">
         <div className="flex  gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
           <div className="w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] ">

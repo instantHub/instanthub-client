@@ -373,12 +373,9 @@ const LaptopsQuestions = (props) => {
 
   return (
     <>
-      <Helmet>
-        <title>{`Sell Old ${
-          productsData ? `${productsData.category.name}` : null
-        } Online and Get Instant Cash for used ${
-          productsData ? `${productsData.category.name}s` : null
-        } | InstantHub`}</title>
+      {/* <Helmet>
+        <title>{`Sell Old ${productsData?.category?.name}
+         Online and Get Instant Cash for used ${productsData?.category?.name} | InstantHub`}</title>
 
         <meta
           name="description"
@@ -389,8 +386,11 @@ const LaptopsQuestions = (props) => {
           name="keywords"
           content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant hub, instanthub"
         />
-        <link rel="canonical" href="https://www.instanthub.in/" />
-      </Helmet>
+        <link
+          rel="canonical"
+          href={`https://www.instanthub.in/sell/deductions?productId=${productsData?.id}&variant=${selectedVariant}`}
+        />
+      </Helmet> */}
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (

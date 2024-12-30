@@ -27,7 +27,7 @@ const FloatingButtons = () => {
 
   const navigate = useNavigate();
   const pathSubStr = location.pathname.substring(0, 4);
-  console.log("pathSubStr", pathSubStr);
+  // console.log("pathSubStr", pathSubStr);
 
   const [activePath, setActivePath] = useState({
     home: false,

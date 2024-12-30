@@ -6,16 +6,18 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
   return (
     <>
       {items?.map((item, index) => (
-        <div className="flex justify-center" key={item.id + index}>
+        <div className="flex justify-center" key={item[itemID]}>
           <Link
             to={`${linkPath}/${item[itemID]}`}
-            // className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
+            // className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl
             //     transition ease-in-out duration-500 ${
             //       displayBig ? `w-32 h-32` : `w-28 h-28`
             //     }`}
             className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
                 transition ease-in-out duration-500 ${
-                  displayBig ? `w-32 h-32` : `w-28 h-28`
+                  displayBig
+                    ? `w-32 h-32 max-sm:w-24 max-sm:h-24`
+                    : `w-28 h-28 max-sm:w-24 max-sm:h-24`
                 }`}
           >
             <img
