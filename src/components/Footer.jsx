@@ -6,7 +6,7 @@ import { FcServices } from "react-icons/fc";
 
 const Footer = () => {
   const listItemStyle =
-    "hover:text-white px-2 py-1 max-sm:text-xs text-sm hover:text-[16px] hover:bg-secondary-light hover:text-secondary rounded-md transition-all ease-in-out duration-1000";
+    "hover:text-white px-2 py-1 max-sm:text-xs text-sm hover:text-[16px] hover:bg-secondary-light hover:text-black rounded-md transition-all ease-in-out duration-1000";
   return (
     // <div className="w-full sm:pt-10 sm:pb-5 mt-2 bg-secondary px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16">
     <div
@@ -31,7 +31,7 @@ const Footer = () => {
             </p> */}
           </div>
 
-          {/* Follow Us */}
+          {/* Follow Us for large screen */}
           <div className="flex flex-col justify-center items-center">
             <p className="text-xs text-center text-white max-sm:text-[10px]">
               Follow Us On
@@ -51,37 +51,6 @@ const Footer = () => {
         </div>
 
         {/* Small Screen */}
-        {/* <div className="px-4 sm:px-0 flex flex-col items-center sm:hidden max-sm:flex-row max-sm:justify-center max-sm:gap-5">
-          <div className="flex flex-  gap-1 justify-between w-full">
-            <div className="">
-           
-              <p className="flex items-center gap-1 text-white">
-                <span className="font-serif text-3xl max-sm:text-lg">
-                  Instant
-                </span>
-                <span className="font-serif text-3xl max-sm:text-lg">Hub</span>
-              </p>
-            </div>
-            <div className="">
-              <span className="text-xs text-center text-white max-sm:text-[10px]">
-                Follow Us On
-              </span>
-              <ul className="flex gap-3 text-md my-3">
-                <li className="hover:text-white">
-                  <FaFacebookF />
-                </li>
-                <li className="hover:text-white">
-                  <FaInstagram />
-                </li>
-                <li className="hover:text-white">
-                  <FaWhatsapp />
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> */}
-
-        {/* Small Screen */}
         {/* Company  - Support  - More */}
         <div className="grid grid-cols-4 w-full max-sm:grid-cols-2 max-sm:gap-2">
           {/* Business Name */}
@@ -98,7 +67,7 @@ const Footer = () => {
             </p> */}
           </div>
 
-          {/* Follow Us */}
+          {/* Follow Us for small screen */}
           <div className="md:hidden flex flex-col gap-3 py-4">
             <p className="text-xs text-white">Follow Us On</p>
             <ul className="flex gap-3 text-md">
@@ -128,7 +97,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link>
-                    <span className={`${listItemStyle}`}>Partner with Us</span>
+                    <p className={`${listItemStyle} flex flex-col`}>
+                      <span>Partner with Us</span>
+                      <span className="text-[9px] p-0 m-0">coming soon</span>
+                    </p>
                   </Link>
                 </li>
               </ul>

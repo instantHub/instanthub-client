@@ -13,16 +13,6 @@ const RecycleCategories = () => {
 
   const [filteredCategories, setFilteredCategories] = useState(null);
 
-  useEffect(() => {
-    if (!categoriesLoading) {
-      let filterData = categories.filter(
-        (category) =>
-          category.name.includes("Mobile") || category.name.includes("Laptop")
-      );
-      setFilteredCategories(filterData);
-    }
-  }, [categories]);
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -36,6 +26,20 @@ const RecycleCategories = () => {
       "query-input": "required name=search_term_string",
     },
   };
+
+  useEffect(() => {
+    if (!categoriesLoading) {
+      let filterData = categories.filter(
+        (category) =>
+          category.name.includes("Mobile") || category.name.includes("Laptop")
+      );
+      setFilteredCategories(filterData);
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <>

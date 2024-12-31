@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "../../components/Slider";
 import Categories from "../categories/Categories";
 import Testimonials from "../../components/Testimonials";
@@ -28,6 +28,10 @@ const Home = () => {
   //   },
   // };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -46,7 +50,8 @@ const Home = () => {
       </Helmet>
 
       <div className="">
-        <div className="relative overflow-hidden whitespace-nowrap py-2 max-sm:py-1 w-full bg-secondary text-secondary-light my-4 max-sm:my-2">
+        {/* Bill Board Advertisement */}
+        <div className="relative overflow-hidden whitespace-nowrap py-2 max-sm:py-1 w-full bg-secondary text-secondary-light my-3 max-sm:my-2">
           <div className="absolute px-2 max-sm:px-1 left-0 bg-secondary z-10 top-2 max-sm:top-1">
             <div className="flex items-center gap-1 ">
               <span className="animate-pulse max-sm:text-[10px]">Offers</span>
@@ -82,6 +87,17 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        {/* Temporary note for customers */}
+        {/* <div className=" flex items-center justify-center gap-20 sm:gap-96 text-[16px] max-sm:text-[10px]">
+          <p className="flex items-center gap-1 ">
+            <span className="animate-puls">
+              🚨 We are currently operating in
+            </span>
+            <strong>Bangalore</strong>
+            <span className="animate-">only. Stay tuned for updates!</span>
+          </p>
+        </div> */}
 
         <Slider />
 

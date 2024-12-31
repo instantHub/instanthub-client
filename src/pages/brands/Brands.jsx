@@ -19,6 +19,10 @@ const Brands = () => {
     if (!brandsLoading) setCategory(brands[0]?.category);
   }, [brands]);
 
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+
   return (
     <>
       <Helmet>

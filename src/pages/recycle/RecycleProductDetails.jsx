@@ -135,6 +135,50 @@ const RecycleProductDetail = () => {
     setSchedulePickUp(formattedDate);
   };
 
+  function handleLaptopSwitchOn() {
+    // setRecyclePrice(700);
+    setLaptopStatus("Switched On");
+    setCheckLaptopOn(false);
+    setCheckLaptopAge(true);
+  }
+
+  function handleLaptopSwitchOff() {
+    setRecyclePrice(500);
+    setLaptopStatus("Switched Off");
+    setCheckLaptopOn(false);
+    setIsOpen(true);
+    // setCheckLaptopAge(true);
+  }
+
+  function handleMobileSwitchOn() {
+    setRecyclePrice(700);
+    setMobileStatus("Switched On");
+    setCheckMobileOn(false);
+    setIsOpen(true);
+  }
+
+  function handleMobileSwitchOff() {
+    setRecyclePrice(500);
+    setMobileStatus("Switched Off");
+    setCheckMobileOn(false);
+    setIsOpen(true);
+  }
+
+  function handleLaptopAge1() {
+    setRecyclePrice(1500);
+    setAgeSelected("Between 1-3 Years");
+    setCheckLaptopAge(false);
+    setIsOpen(true);
+  }
+
+  function handleLaptopAge2() {
+    setRecyclePrice(500);
+    // setAgeSelected(laptopAge[1]);
+    setAgeSelected("More Than 3 Years");
+    setCheckLaptopAge(false);
+    setIsOpen(true);
+  }
+
   // useEffect to select product variant
   useEffect(() => {
     if (!isLoading) {
@@ -144,6 +188,10 @@ const RecycleProductDetail = () => {
     }
     // setLoadedInitially(true);
   }, [productDetails]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -474,184 +522,50 @@ const RecycleProductDetail = () => {
         <RecycleContent heading={false} />
 
         {checkMobileOn && (
-          <>
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
-                <div className="flex justify-center">
-                  <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
-                    Is Your {productDetails.category.name} Switched On?
-                  </h2>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="flex gap-4 items-center">
-                    <span className="max-sm:text-sm">
-                      {productDetails.category.name} Name
-                    </span>
-                    <span className="text-lg font-semibold max-sm:text-sm">
-                      {productDetails.name}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-center mt-4">
-                  <span>
-                    Is Your {productDetails.category.name} Switched On?
-                  </span>
-                </div>
-                <div className="flex justify-around items-center gap-4 my-4">
-                  <div
-                    // className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
-                    className="shadow-xl bg-white text-green-600 border border-green-600 shadow-green-300 text-center px-4 py-1 rounded 
-                            cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
-                    onClick={() => {
-                      setRecyclePrice(700);
-                      setMobileStatus("Switched On");
-                      setCheckMobileOn(false);
-                      setIsOpen(true);
-                    }}
-                  >
-                    <span>Switched On</span>
-                  </div>
-                  <div
-                    // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
-                    className="shadow-xl text-red-600 border border-red-600 shadow-red-300 bg-white  text-center px-4 py-1 rounded 
-                          cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
-                    onClick={() => {
-                      setRecyclePrice(500);
-                      setMobileStatus("Switched Off");
-                      setCheckMobileOn(false);
-                      setIsOpen(true);
-                    }}
-                  >
-                    <span>Switched Off</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
+          <Modal
+            heading={`Is Your ${productDetails.category.name} Switched On?`}
+            categoryName={`${productDetails.category.name} Name`}
+            productName={`${productDetails.name}`}
+            leftHandler={handleMobileSwitchOn}
+            leftHandlerText={`Switched On`}
+            rightHandler={handleMobileSwitchOff}
+            rightHandlerText={`Switched Off`}
+          />
         )}
 
         {checkLaptopOn && (
-          <div>
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
-                <div className="flex justify-center">
-                  <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
-                    Is Your {productDetails.category.name} Switched On?
-                  </h2>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="flex gap-4 items-center">
-                    <span className="max-sm:text-sm">
-                      {productDetails.category.name} Name
-                    </span>
-                    <span className="text-lg font-semibold max-sm:text-sm">
-                      {productDetails.name}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-center mt-4">
-                  <span>
-                    Is Your {productDetails.category.name} Switched On?
-                  </span>
-                </div>
-                <div className="flex justify-around items-center gap-4 my-4">
-                  <div
-                    // className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
-                    className="shadow-md shadow-green-300 hover:shadow-green-500 hover:shadow-inner bg-white text-green-600 border border-green-600  text-center px-4 py-1 rounded 
-                    cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
-                    onClick={() => {
-                      // setRecyclePrice(700);
-                      setLaptopStatus("Switched On");
-                      setCheckLaptopOn(false);
-                      // setIsOpen(true);
-                      setCheckLaptopAge(true);
-                    }}
-                  >
-                    <span>Switched On</span>
-                  </div>
-                  <div
-                    // className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
-                    className="shadow-md shadow-red-300 hover:shadow-red-500 hover:shadow-inner text-red-600 border border-red-600  bg-white text-center px-4 py-1 rounded 
-                          cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
-                    onClick={() => {
-                      setRecyclePrice(500);
-                      setLaptopStatus("Switched Off");
-                      setCheckLaptopOn(false);
-                      setIsOpen(true);
-                      // setCheckLaptopAge(true);
-                    }}
-                  >
-                    <span>Switched Off</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Modal
+            heading={`Is Your ${productDetails.category.name} Switched On?`}
+            categoryName={`${productDetails.category.name} Name`}
+            productName={`${productDetails.name}`}
+            leftHandler={handleLaptopSwitchOn}
+            leftHandlerText={`Switched On`}
+            rightHandler={handleLaptopSwitchOff}
+            rightHandlerText={`Switched Off`}
+          />
         )}
 
         {checkLaptopAge && (
           <div>
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
-                <div className="flex justify-center">
-                  <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
-                    What is the age of your
-                    {productDetails.category.name}?
-                  </h2>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="flex gap-4 items-center">
-                    <span className="max-sm:text-sm">Laptop Name</span>
-                    <span className="text-lg font-semibold max-sm:text-sm">
-                      {productDetails.name}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-center mt-4">
-                  <span>Select Age Below to proceed</span>
-                </div>
-                <div className="flex justify-around items-center gap-4 my-4">
-                  <div
-                    // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
-                    className="border-2 hover:border-green-800 shadow-md rounded-lg text-center px-4 py-1 cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1
-                            transition-all ease-linear duration-1000"
-                    onClick={() => {
-                      setRecyclePrice(1500);
-                      setAgeSelected("Between 1-3 Years");
-                      setCheckLaptopAge(false);
-                      setIsOpen(true);
-                    }}
-                  >
-                    <span>Between 1-3 Years</span>
-                  </div>
-                  <div
-                    className="border-2 hover:border-green-800 shadow-md rounded-lg text-center px-4 py-1 cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1
-                            transition-all ease-linear duration-1000"
-                    onClick={() => {
-                      setRecyclePrice(500);
-                      // setAgeSelected(laptopAge[1]);
-                      setAgeSelected("More Than 3 Years");
-                      setCheckLaptopAge(false);
-                      setIsOpen(true);
-                    }}
-                  >
-                    <span>More Than 3 Years</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Modal
+              heading={` What is the age of your ${productDetails.category.name}?`}
+              categoryName={`Laptop Name`}
+              productName={`${productDetails.name}`}
+              leftHandler={handleLaptopAge1}
+              leftHandlerText={`Between 1-3 Years`}
+              rightHandler={handleLaptopAge2}
+              rightHandlerText={`More Than 3 Years`}
+            />
           </div>
         )}
 
+        {/* Would you like to recycle this item? */}
         {isOpen && (
           <div>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-[30%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+              <div className="bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-[30%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
                 <div className="flex justify-center">
-                  <h2 className="text-xl font-semibold mb-4 text-center">
+                  <h2 className="text-xl max-sm:text-lg font-semibold mb-4 text-center">
                     Would You Like to Recycle this{" "}
                     {productDetails.category.name}?
                   </h2>
@@ -660,7 +574,7 @@ const RecycleProductDetail = () => {
                 <div className="flex flex-col items-center">
                   <div className="flex gap-2 items-center">
                     <span>{productDetails.category.name} is</span>
-                    <span className="text-lg font-semibold">
+                    <span className="text-lg max-sm:text-sm font-semibold">
                       {productDetails.category.name
                         .toLowerCase()
                         .includes("laptop")
@@ -675,7 +589,7 @@ const RecycleProductDetail = () => {
                     laptopStatus.toLowerCase().includes("on") && (
                       <div className="flex gap-2 items-center my-2">
                         <span>{productDetails.category.name} Age</span>
-                        <span className="text-lg font-semibold border-b">
+                        <span className="text-lg max-sm:text-sm font-semibold border-b">
                           {ageSelected}
                         </span>
                       </div>
@@ -697,7 +611,7 @@ const RecycleProductDetail = () => {
                     .includes("mobile") && (
                     <div className="flex gap-4 items-center">
                       <span>Variant</span>
-                      <span className="text-lg font-semibold">
+                      <span className="text-lg max-sm:text-sm font-semibold">
                         {variantSelected.name}
                       </span>
                     </div>
@@ -734,9 +648,10 @@ const RecycleProductDetail = () => {
           </div>
         )}
 
+        {/* Fill out the details to book order */}
         {orderOpen && (
           <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-[50%] max-lg:w-[90%]">
+            <div className="bg-white p-8 max-sm:px-4 max-sm:py-2 rounded-lg shadow-lg w-[50%] max-lg:w-[90%]">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold mb-4">
                   Enter your details
@@ -837,7 +752,7 @@ const RecycleProductDetail = () => {
                         <img
                           src="/images/instantcash.webp"
                           alt="upi"
-                          className="w-16 h-7"
+                          className="w-16 h-7 max-sm:w-12 max-sm:h-5"
                         />
                       </div>
                     </label>
@@ -854,7 +769,7 @@ const RecycleProductDetail = () => {
                         <img
                           src="/images/upi2.webp"
                           alt="upi"
-                          className="w-14 h-7"
+                          className="w-14 h-7 max-sm:w-12 max-sm:h-5"
                         />
                       </div>
                     </label>
@@ -913,6 +828,226 @@ const RecycleProductDetail = () => {
 };
 
 export default RecycleProductDetail;
+
+const Modal = ({
+  heading,
+  categoryName,
+  productName,
+  leftHandler,
+  leftHandlerText,
+  rightHandler,
+  rightHandlerText,
+}) => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white p-8 max-sm:px-2 max-sm:py-5 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+        <div className="flex justify-center">
+          <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
+            {heading}
+          </h2>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="flex gap-4 items-center">
+            <span className="max-sm:text-sm">{categoryName}</span>
+            <span className="text-lg font-semibold max-sm:text-sm">
+              {productName}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex justify-around items-center gap-4 my-4 text-[16px] max-sm:text-sm">
+          <div
+            className="shadow-md shadow-green-300 hover:shadow-green-500 hover:shadow-inner bg-white text-green-600
+            border border-green-600  text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white 
+            transition-all ease-in-out duration-1000"
+            onClick={leftHandler}
+          >
+            <span>{leftHandlerText}</span>
+          </div>
+          <div
+            className="shadow-md shadow-red-300 hover:shadow-red-500 hover:shadow-inner text-red-600 border border-red-600 
+            bg-white text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white 
+            transition-all ease-in-out duration-1000"
+            onClick={rightHandler}
+          >
+            <span>{rightHandlerText}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// CheckMobileOn
+{
+  // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  //   <div className="bg-white p-8 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+  //     <div className="flex justify-center">
+  //       <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
+  //         Is Your {productDetails.category.name} Switched On?
+  //       </h2>
+  //     </div>
+  //     <div className="flex flex-col items-center">
+  //       <div className="flex gap-4 items-center">
+  //         <span className="max-sm:text-sm">
+  //           {productDetails.category.name} Name
+  //         </span>
+  //         <span className="text-lg font-semibold max-sm:text-sm">
+  //           {productDetails.name}
+  //         </span>
+  //       </div>
+  //     </div>
+  //     <div className="text-center mt-4">
+  //       <span>Is Your {productDetails.category.name} Switched On?</span>
+  //     </div>
+  //     <div className="flex justify-around items-center gap-4 my-4">
+  //       <div
+  //         // className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+  //         className="shadow-xl bg-white text-green-600 border border-green-600 shadow-green-300 text-center px-4 py-1 rounded
+  //                   cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
+  //         onClick={() => {
+  //           setRecyclePrice(700);
+  //           setMobileStatus("Switched On");
+  //           setCheckMobileOn(false);
+  //           setIsOpen(true);
+  //         }}
+  //       >
+  //         <span>Switched On</span>
+  //       </div>
+  //       <div
+  //         // className="bg-red-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-red-700"
+  //         className="shadow-xl text-red-600 border border-red-600 shadow-red-300 bg-white  text-center px-4 py-1 rounded
+  //                 cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1 transition-all ease-in-out duration-1000"
+  //         onClick={() => {
+  //           setRecyclePrice(500);
+  //           setMobileStatus("Switched Off");
+  //           setCheckMobileOn(false);
+  //           setIsOpen(true);
+  //         }}
+  //       >
+  //         <span>Switched Off</span>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
+}
+
+// CheckLaptopOn
+{
+  /* <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-8 max-sm:px-2 max-sm:py-5 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+                <div className="flex justify-center">
+                  <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
+                    Is Your {productDetails.category.name} Switched On?
+                  </h2>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-4 items-center">
+                    <span className="max-sm:text-sm">
+                      {productDetails.category.name} Name
+                    </span>
+                    <span className="text-lg font-semibold max-sm:text-sm">
+                      {productDetails.name}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-center mt-4">
+                  <span>
+                    Is Your {productDetails.category.name} Switched On?
+                  </span>
+                </div>
+                <div className="flex justify-around items-center gap-4 my-4 text-[16px] max-sm:text-sm">
+                  <div
+                    // className="border shadow-xl bg-green-600 text-slate-200 shadow-green-300 text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white max-2sm:px-1"
+                    className="shadow-md shadow-green-300 hover:shadow-green-500 hover:shadow-inner bg-white text-green-600
+                    border border-green-600  text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white 
+                    transition-all ease-in-out duration-1000"
+                    onClick={() => {
+                      // setRecyclePrice(700);
+                      setLaptopStatus("Switched On");
+                      setCheckLaptopOn(false);
+                      // setIsOpen(true);
+                      setCheckLaptopAge(true);
+                    }}
+                  >
+                    <span>Switched On</span>
+                  </div>
+                  <div
+                    // className="border shadow-xl shadow-red-300 bg-red-600 text-slate-200 text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white max-2sm:px-1"
+                    className="shadow-md shadow-red-300 hover:shadow-red-500 hover:shadow-inner text-red-600 border border-red-600 
+                    bg-white text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white 
+                    transition-all ease-in-out duration-1000"
+                    onClick={() => {
+                      setRecyclePrice(500);
+                      setLaptopStatus("Switched Off");
+                      setCheckLaptopOn(false);
+                      setIsOpen(true);
+                      // setCheckLaptopAge(true);
+                    }}
+                  >
+                    <span>Switched Off</span>
+                  </div>
+                </div>
+              </div>
+            </div> */
+}
+
+// checkLaptopAge
+{
+  {
+    /* <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div className="bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+    <div className="flex justify-center">
+      <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
+        What is the age of your
+        {productDetails.category.name}?
+      </h2>
+    </div>
+    <div className="flex flex-col items-center">
+      <div className="flex gap-4 items-center">
+        <span className="max-sm:text-sm">Laptop Name</span>
+        <span className="text-lg font-semibold max-sm:text-sm">
+          {productDetails.name}
+        </span>
+      </div>
+    </div>
+
+    <div className="text-center mt-4">
+      <span>Select Age Below to proceed</span>
+    </div>
+    <div className="flex justify-around items-center gap-4 my-4 text-[16px] max-sm:text-sm">
+      <div
+        // className="bg-blue-600 text-white text-center px-2 py-1 rounded cursor-pointer hover:bg-blue-700"
+        className="border-2 hover:border-green-800 shadow-md rounded-lg text-center px-4 py-1 cursor-pointer 
+                  hover:bg-green-700 hover:text-white transition-all ease-linear duration-1000"
+        onClick={() => {
+          setRecyclePrice(1500);
+          setAgeSelected("Between 1-3 Years");
+          setCheckLaptopAge(false);
+          setIsOpen(true);
+        }}
+      >
+        <span>Between 1-3 Years</span>
+      </div>
+      <div
+        className="border-2 hover:border-green-800 shadow-md rounded-lg text-center px-4 py-1 cursor-pointer 
+                  hover:bg-green-700 hover:text-white transition-all ease-linear duration-1000"
+        onClick={() => {
+          setRecyclePrice(500);
+          // setAgeSelected(laptopAge[1]);
+          setAgeSelected("More Than 3 Years");
+          setCheckLaptopAge(false);
+          setIsOpen(true);
+        }}
+      >
+        <span>More Than 3 Years</span>
+      </div>
+    </div>
+  </div>
+</div> */
+  }
+}
 
 // OLD FORM
 {

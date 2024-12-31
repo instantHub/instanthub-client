@@ -84,8 +84,11 @@ const Products = () => {
   //     </div>
   //   );
 
-  if (productsLoading) return <Loading />;
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
+  if (productsLoading) return <Loading />;
 
   return (
     <>

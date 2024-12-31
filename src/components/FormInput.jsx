@@ -60,16 +60,18 @@ const FormInput = ({
   handleChange,
   handlePayment,
 }) => {
-  console.log("FormInput");
+  // console.log("FormInput");
   const isAddressField = ["state", "city", "pincode"].includes(name);
   const isPaymentMode = ["paymentMode", "digitalPaymentMode"].includes(name);
 
   return (
     <div>
       {!isPaymentMode ? (
-        <>
+        <div className="flex items-center gap-1">
           <label htmlFor={name} className="text-sm">
-            {name.toUpperCase()}:{" "}
+            {/* {name.toUpperCase()}: */}
+            {name.slice(0, 1).toUpperCase()}
+            {name.slice(1)}:
           </label>
           <input
             type={type}
@@ -81,7 +83,7 @@ const FormInput = ({
             }`}
             onChange={handleChange}
           />
-        </>
+        </div>
       ) : (
         <label className="flex items-center">
           <input

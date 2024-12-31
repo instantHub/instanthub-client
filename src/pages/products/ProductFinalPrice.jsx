@@ -790,9 +790,9 @@ const ProductFinalPrice = () => {
           role="dialog"
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         >
-          <div className="bg-white p-8 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
+          <div className="bg-white p-8 max-sm:py-2 max-sm:px-4 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold mb-4">Enter your details</h2>
+              <h2 className="text-xl max-sm:text-lg font-semibold mb-4">Enter your details</h2>
               <button
                 onClick={closeModal}
                 className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
@@ -931,7 +931,7 @@ const ProductFinalPrice = () => {
 
                 {/* Date Picker */}
                 <div className="flex items-center">
-                  <h2 className="max-sm:text-md">Select Date and Time:</h2>{" "}
+                  <h2 className="max-sm:text-sm">Select Date and Time:</h2>{" "}
                   <DatePicker
                     selected={selectedDate}
                     onChange={handleTimeChange}
@@ -962,7 +962,7 @@ const ProductFinalPrice = () => {
 
                 {/* Payment */}
                 <div className="pb-2">
-                  <h2 className="text-xl mb-4 max-sm:text-lg">
+                  <h2 className="text-xl mb-4 max-sm:text-[16px]">
                     Select Payment Mode
                   </h2>
                   <div className="space-y-2">
@@ -984,7 +984,7 @@ const ProductFinalPrice = () => {
                         <img
                           src="/images/instantcash.webp"
                           alt="upi"
-                          className="w-16 h-7"
+                          className="w-16 h-7 max-sm:w-12 max-sm:h-5"
                         />
                       </div>
                     </div>
@@ -1006,7 +1006,7 @@ const ProductFinalPrice = () => {
                         <img
                           src="/images/upi2.webp"
                           alt="upi"
-                          className="w-14 h-7"
+                          className="w-14 h-7 max-sm:w-12 max-sm:h-5"
                         />
                       </div>
                     </div>

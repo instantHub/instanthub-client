@@ -338,6 +338,10 @@ const ProductQuestions = () => {
   if (aboutDevice.isDeviceChecked && !aboutDevice.isDeviceOn)
     return <SwitchedOff productsData={productsData} />;
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   // console.log("deductions", deductions);
   // console.log("sortedConditions ProductQuestions", sortedConditions);
 

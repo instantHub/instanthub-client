@@ -29,7 +29,12 @@ const ProductDetail = () => {
     }
   }, [productDetails, isLoading]);
 
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+
   if (isLoading) return <Loading />;
+
 
   return (
     <>
