@@ -253,6 +253,11 @@ const RecycleProductDetail = () => {
         ? selectedPaymentMode
         : selectedDigitalPayment,
       recyclePrice,
+      status: {
+        pending: true,
+        completed: false,
+        cancelled: false,
+      },
     };
     // console.log("orderData", orderData);
 

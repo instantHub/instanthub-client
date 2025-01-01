@@ -1,10 +1,11 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import {
   createBrowserRouter as Router,
   RouterProvider,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 // Client side
 import ClientLayout from "./pages/home/Layout";
@@ -71,6 +72,7 @@ import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
 import AdminSlidersList from "./admin/pages/sliders/SlidersList";
 import AdminUpdateSlider from "./admin/pages/sliders/UpdateSlider";
 import AdminOrdersList from "./admin/pages/orders/OrdersList";
+import AdminOrderDetail from "./admin/pages/orders/OrderDetail";
 import AdminPhoneNumbers from "./admin/pages/orders/PhoneNumbersList";
 import AdminManageStocks from "./admin/pages/stocks/ManageStocks";
 import AdminCreateCoupon from "./admin/pages/coupons/CreateCoupon";
@@ -78,6 +80,7 @@ import AdminCreateServiceForm from "./admin/pages/services/CreateServices";
 import AdminServicesList from "./admin/pages/services/ServicesList";
 import AdminServicesOrdersList from "./admin/pages/services/ServicesOrders";
 import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
+import AdminRecycleOrderDetail from "./admin/pages/recycle/RecycleOrderDetail";
 
 // VARIANTS QUESTIONS
 import AdminCreateVariantsQuestions from "./admin/pages/variantQuestions/CreateVariantsQuestions";
@@ -93,6 +96,7 @@ import AboutPage from "./components/About";
 import ContactUs from "./components/ContactUs";
 import CreateQuestions from "./admin/pages/questions/CreateQuestions";
 import Loading from "./components/Loading";
+import useGoogleAnalytics from "./hooks/useGoogleAnalytics";
 
 // import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
 // import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";
@@ -114,7 +118,7 @@ function App() {
       // errorElement: (
       //   <ErrorComponent message={`Sorry please try after sometime..!`} />
       // ),
-      element: <ClientLayout />,
+      element: <ClientLayout />, // Google Analytics is used here
       children: [
         {
           index: true,
@@ -439,6 +443,10 @@ function App() {
               element: <AdminOrdersList />,
             },
             {
+              path: "/admin/order-detail/:orderId",
+              element: <AdminOrderDetail />,
+            },
+            {
               path: "/admin/manage-stocks",
               element: <AdminManageStocks />,
             },
@@ -464,9 +472,15 @@ function App() {
               path: "/admin/services-orders",
               element: <AdminServicesOrdersList />,
             },
+
+            // Recycle Orders
             {
               path: "/admin/recycle-orders",
               element: <AdminRecycleOrdersList />,
+            },
+            {
+              path: "/admin/recycleOrder-detail/:recycleOrderId",
+              element: <AdminRecycleOrderDetail />,
             },
 
             // VARIANTS QUESTIONS
@@ -490,12 +504,22 @@ function App() {
       ],
     },
   ]);
+
   return (
     <>
-      <RouterProvider router={router} />
+      {/* <RouterProvider router={router} /> */}
+      <RouterProvider router={router}>
+        <AnalyticsWrapper />
+      </RouterProvider>
       <ToastContainer />
     </>
   );
 }
+
+const AnalyticsWrapper = () => {
+  console.log("AnalyticsWrapper rendered");
+  useGoogleAnalytics();
+  return null; // This component only exists to run the hook
+};
 
 export default App;

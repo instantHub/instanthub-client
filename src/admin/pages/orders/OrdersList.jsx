@@ -11,6 +11,8 @@ import { GiCardPickup } from "react-icons/gi";
 import { FaHandsHoldingCircle } from "react-icons/fa6";
 import { MdOutlineGridView } from "react-icons/md";
 import { IoMdOpen } from "react-icons/io";
+import { Link } from "react-router-dom";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =
@@ -27,6 +29,10 @@ const OrdersList = () => {
   const [orderToView, setOrderToView] = useState("");
   const [orderViewOpen, setOrderViewOpen] = useState(false);
 
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState("");
+
   const handleDelete = async (orderId) => {
     console.log("handledelete", orderId);
     await deleteOrder(orderId);
@@ -37,6 +43,52 @@ const OrdersList = () => {
     setSelectedOrder(selectedOrder);
     setIsOpen(true);
     console.log("selectedOrder", selectedOrder);
+  };
+
+  const handleOrderStatus = (order) => {
+    if (order.status.pending) {
+      return (
+        <p className="px-4 py-1 bg-blue-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+          Pickup Pending <GiCardPickup />
+        </p>
+      );
+    }
+
+    if (order.status.completed) {
+      return (
+        <p className="flex flex-col border shadow rounded overflow-hidden bg-green-600 w-full">
+          <span className="px-2 py-1 text-white">Order Completed On:</span>
+          <span className="bg-white px-2">
+            {order.pickedUpDetails.pickedUpDate}
+          </span>
+        </p>
+      );
+    }
+
+    if (order.status.cancelled) {
+      return (
+        <p className="px-4 py-1 bg-red-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+          Order Cancelled <GiCardPickup />
+        </p>
+      );
+    }
+
+    // Return null or some default content if none of the conditions match
+    return null;
+  };
+
+  const orderCurrentStatus = (status) => {
+    if (status.pending) return "Pending";
+    if (status.completed) return "Completed";
+    if (status.cancelled) return "Cancelled";
+    return "Unknown";
+  };
+
+  const handleViewBtnColor = (status) => {
+    if (status.pending) return "bg-blue-500 hover:bg-blue-700";
+    if (status.completed) return "bg-green-600 hover:bg-green-700";
+    if (status.cancelled) return "bg-red-600 hover:bg-red-700";
+    return "bg-black text-white";
   };
 
   const handleOrderView = (orderId) => {
@@ -145,16 +197,26 @@ const OrdersList = () => {
       {/* Customer Details */}
       <td className="py-2 flex items-center justify-center">
         <div className="flex flex-col items-start">
-          <h2 className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-            Name:{" "}
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>Name:</span>
             <span className="text-sm font-bold ">{order.customerName}</span>
-          </h2>
-          <h2 className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-            Phone: <span className="text-sm font-bold">{order.phone}</span>
-          </h2>
-          <h2 className="text-xs flex flex-col items-center gap-1 max-sm:gap-0 max-sm:hidden">
-            Email: <span className="text-xs font-bold">{order.email}</span>
-          </h2>
+          </p>
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>Phone:</span>
+            <span className="text-sm font-bold">{order.phone}</span>
+          </p>
+          <p className="text-xs flex flex-col items-center gap-1 max-sm:gap-0 max-sm:hidden">
+            <span>Email:</span>
+            <span className="text-xs font-bold">{order.email}</span>
+          </p>
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>City:</span>
+            <span className=" font-bold">{order.addressDetails.city}</span>
+          </p>
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>State:</span>
+            <span className=" font-bold">{order.addressDetails.state}</span>
+          </p>
         </div>
       </td>
 
@@ -187,20 +249,7 @@ const OrdersList = () => {
             <span className="bg-white px-2">{order.schedulePickUp}</span>
           </p>
 
-          {order.status.toLowerCase() !== "pending" ? (
-            <p className="flex flex-col border shadow rounded overflow-hidden bg-black/50 w-full">
-              <span className="px-2 py-1 text-white">
-                Order Picked Up Time:
-              </span>
-              <span className="bg-white px-2">
-                {order.pickedUpDetails.pickedUpDate}
-              </span>
-            </p>
-          ) : (
-            <p className="px-4 py-1 bg-black/70 text-white shadow rounded w-full flex items-center justify-center gap-1">
-              Pickup Pending <GiCardPickup />
-            </p>
-          )}
+          {handleOrderStatus(order)}
         </div>
       </td>
 
@@ -231,30 +280,37 @@ const OrdersList = () => {
       </td> */}
 
       {/* Status */}
-      <td className="px-4 py-2 text-sm max-sm:text-xs">
-        {order.status.toLowerCase() === "pending" ? (
-          <h2>{order.status.toUpperCase()}</h2>
-        ) : (
-          <h2>{order.status.toUpperCase()}</h2>
-        )}
+      <td className="px-4 py-2 text-lg max-sm:text-sm font-bold">
+        <span>{orderCurrentStatus(order.status)}</span>
       </td>
 
       {/* Recieved / View Button */}
       <td className="px-4 py-2 text-sm ">
         <div className="flex items-center justify-center">
-          {order.status.toLowerCase() !== "received" ? (
+          <Link
+            to={`/admin/order-detail/${order.id}`}
+            className={`text-white font-bold p-2 rounded flex items-center justify-center gap-1
+                          ${handleViewBtnColor(order.status)}`}
+          >
+            <span>View Detail</span>
+            <span>
+              <FaHandsHoldingCircle />
+            </span>
+          </Link>
+
+          {/* {order?.status?.pending ? (
             <button
-              onClick={() => handleOrderOpen(order.id)}
+              // onClick={() => handleOrderOpen(order.id)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded flex items-center justify-center gap-1"
             >
-              <span>Received</span>
+              <Link to={`/admin/order-detail/${order.id}`}>
+                View Detail
+              </Link>
               <span>
                 <FaHandsHoldingCircle />
               </span>
             </button>
           ) : (
-            // </td>
-            // <td className="px-4 py-2 text-sm">
             <button
               onClick={() => handleOrderView(order.id)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded flex items-center justify-center gap-1"
@@ -264,14 +320,18 @@ const OrdersList = () => {
                 <IoMdOpen />
               </span>
             </button>
-          )}
+          )} */}
         </div>
       </td>
 
       {/* Delete Button */}
       <td>
         <button
-          onClick={() => handleDelete(order.id)}
+          // onClick={() => handleDelete(order.id)}
+          onClick={() => {
+            setModalOpen(true);
+            setOrderToDelete(order.id);
+          }}
           className="bg-red-600 text-white px-3 py-1 rounded-md"
         >
           Delete
@@ -294,16 +354,27 @@ const OrdersList = () => {
         />
       </div>
 
-      {isOpen && (
-        <OrderRecieved setIsOpen={setIsOpen} selectedOrder={selectedOrder} />
-      )}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={orderToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
 
-      {orderViewOpen && (
+      {/* {isOpen && (
+        <OrderRecieved setIsOpen={setIsOpen} selectedOrder={selectedOrder} />
+      )} */}
+
+      {/* {orderViewOpen && (
         <OrderView
           orderToView={orderToView}
           setOrderViewOpen={setOrderViewOpen}
         />
-      )}
+      )} */}
     </>
   );
 };

@@ -129,7 +129,7 @@ const OtpGenerator = (props) => {
   // });
 
   return (
-    <div className="flex bg-white max-sm:w-[90%] justify-center rounded-xl">
+    <div className="flex bg-white max-sm:w-[95%] justify-center rounded-xl">
       <div className="">
         <img
           src="/images/OTP2.png"
@@ -139,7 +139,7 @@ const OtpGenerator = (props) => {
         />
       </div>
       {/* <div className="flex flex-col justify-center items-center bg-white max-sm:w-[90%] rounded-xl"> */}
-      <div className="flex flex-col grow-1 mt-6 items-center max-sm:mb-8">
+      <div className="flex flex-col grow-1 mt-6 max-sm:mt-2 items-center max-sm:mb-8">
         <div className="flex">
           <div className="flex m-4 border grow-1 rounded-lg py-2 items-center justify-center gap-2 px-20 max-2sm:px-10">
             <div>

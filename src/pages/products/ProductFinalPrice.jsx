@@ -172,7 +172,7 @@ const ProductFinalPrice = () => {
         : selectedDigitalPayment,
       offerPrice: couponCodeApplied ? specialPrice : offerPrice,
     };
-    // console.log("orderData", orderData);
+    console.log("orderData", orderData);
 
     // const order = await createOrder(formData);
     const order = await createOrder(orderData);
@@ -344,7 +344,13 @@ const ProductFinalPrice = () => {
       variant: selectedProdDetails.getUpTo,
       deductions: selectedProdDetails.deductions,
       accessoriesAvailable: AccessoriesSelected,
-      status: "pending",
+      status: {
+        pending: true,
+        completed: false,
+        cancelled: false,
+      },
+      // status: "pending",
+
       // accessoriesNotAvailable: AccessoriesNotSelected,
       // offerPrice: Math.ceil(deductedPrice),
     });
@@ -792,7 +798,9 @@ const ProductFinalPrice = () => {
         >
           <div className="bg-white p-8 max-sm:py-2 max-sm:px-4 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl max-sm:text-lg font-semibold mb-4">Enter your details</h2>
+              <h2 className="text-xl max-sm:text-lg font-semibold mb-4">
+                Enter your details
+              </h2>
               <button
                 onClick={closeModal}
                 className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
@@ -953,7 +961,7 @@ const ProductFinalPrice = () => {
                   {selectedDate && (
                     <p>
                       Scheduled time:{" "}
-                      <span className="font-semibold">
+                      <span className="text-sm max-sm:text-xs font-semibold">
                         {formData.schedulePickUp}
                       </span>{" "}
                     </p>

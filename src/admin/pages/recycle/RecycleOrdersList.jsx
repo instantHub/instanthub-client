@@ -6,6 +6,10 @@ import {
 import RecycleOrderRecieved from "./RecycleOrderRecieved";
 import RecycleOrderView from "./RecycleOrderView";
 import Table from "../../components/TableView";
+import { Link } from "react-router-dom";
+import { FaHandsHoldingCircle } from "react-icons/fa6";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import { GiCardPickup } from "react-icons/gi";
 
 const RecycleOrdersList = () => {
   const { data: recycleOrdersData, isLoading: recycleOrdersDataloading } =
@@ -22,6 +26,10 @@ const RecycleOrdersList = () => {
   const [selectedOrder, setSelectedOrder] = useState("");
   const [orderToView, setOrderToView] = useState("");
   const [orderViewOpen, setOrderViewOpen] = useState(false);
+
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState("");
 
   const handleDelete = async (recycleOrderId) => {
     console.log("handledelete recycleOrderId:", recycleOrderId);
@@ -40,14 +48,69 @@ const RecycleOrdersList = () => {
     console.log("setOrderToView", selectedOrder);
   };
 
+  const handleOrderStatus = (order) => {
+    if (order.status.pending) {
+      return (
+        <p className="px-4 py-1 bg-blue-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+          Pickup Pending <GiCardPickup />
+        </p>
+      );
+    }
+
+    if (order.status.completed) {
+      return (
+        <p className="flex flex-col border shadow rounded overflow-hidden bg-green-600 w-full">
+          <span className="px-2 py-1 text-white">Order Completed On:</span>
+          <span className="bg-white px-2">
+            {order.pickedUpDetails.pickedUpDate}
+          </span>
+        </p>
+      );
+    }
+
+    if (order.status.cancelled) {
+      return (
+        <p className="px-4 py-1 bg-red-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+          Order Cancelled <GiCardPickup />
+        </p>
+      );
+    }
+
+    // Return null or some default content if none of the conditions match
+    return null;
+  };
+
+  const orderCurrentStatus = (status) => {
+    if (status.pending) return "Pending";
+    if (status.completed) return "Completed";
+    if (status.cancelled) return "Cancelled";
+    return "Unknown";
+  };
+
+  const handleViewBtnColor = (status) => {
+    if (status.pending) return "bg-blue-500 hover:bg-blue-700";
+    if (status.completed) return "bg-green-600 hover:bg-green-700";
+    if (status.cancelled) return "bg-red-600 hover:bg-red-700";
+    return "bg-black text-white";
+  };
+
+  // const headers = [
+  //   "Recycle Order ID",
+  //   "Product Details",
+  //   "Customer Details",
+  //   "Address Details",
+  //   "Schedule Time",
+  //   "Recycle Price",
+  //   "PickUp Details",
+  //   "Status",
+  //   "Update Order",
+  //   "Delete Order",
+  // ];
+
   const headers = [
-    "Recycle Order ID",
-    "Product Details",
+    "Recycle Order Details",
     "Customer Details",
-    "Address Details",
     "Schedule Time",
-    "Recycle Price",
-    "PickUp Details",
     "Status",
     "Update Order",
     "Delete Order",
@@ -55,106 +118,124 @@ const RecycleOrdersList = () => {
 
   const rowRenderer = (recycleOrder) => (
     <>
-      <td className="px-4 py-2">{recycleOrder.recycleOrderId}</td>
-      <td className="px-4 py-2">
-        {recycleOrder.productDetails.productName}{" "}
-        <div className="flex gap-1 text-sm opacity-50 justify-center">
-          {recycleOrder.productDetails.productCategory
-            .toLowerCase()
-            .includes("mobile") ? (
-            <>
-              <span>Variant {recycleOrder.productDetails.productVariant}</span>
-            </>
-          ) : null}
-        </div>
-      </td>
-      <td className="px-4 py-2 flex flex-col items-center">
-        <h2 className="text-xs">
-          Customer Name:{" "}
-          <span className="text-sm font-bold">{recycleOrder.customerName}</span>
-        </h2>
-        <h2 className="text-xs">
-          Phone: <span className="text-sm font-bold">{recycleOrder.phone}</span>
-        </h2>
-        <h2 className="text-xs">
-          Email: <span className="text-sm font-bold">{recycleOrder.email}</span>
-        </h2>
-      </td>
+      {/* Order Details: Order ID - Product Name - Variant - Product Price - Offer Price */}
+      <td className="px-4 py-2 max-sm:text-xs ">
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-start p-1 pl-2 rounded bg- text-[16px] max-sm:text-xs">
+            <p className="flex max-sm:flex-col items-center justify-center gap-1">
+              <span className="font-semibold">Order ID:</span>
+              <span>{recycleOrder.recycleOrderId}</span>
+            </p>
+            <p>
+              <span className="font-semibold">Product: </span>
+              <span>{recycleOrder.productDetails.productName} </span>
+            </p>
 
-      <td className="w-[10%] px-4 py-2">
-        <div className="flex flex-col">
-          <span className="text-xs opacity-70">
-            Address: {recycleOrder.addressDetails.address}
-          </span>
-          <span className="text-xs opacity-70">
-            State: {recycleOrder.addressDetails.state}
-          </span>
-          <span className="text-xs opacity-70">
-            City: {recycleOrder.addressDetails.city}
-          </span>
-          <span className="text-xs opacity-70">
-            Pincode: {recycleOrder.addressDetails.pinCode}
-          </span>
-        </div>
-      </td>
+            <p>
+              <span className="font-semibold">Product Category: </span>
+              <span>{recycleOrder.productDetails.productCategory}</span>
+            </p>
 
-      <td className="px-1 py-2">{recycleOrder.schedulePickUp}</td>
-      <td className="px-4 py-2">{recycleOrder.recyclePrice}</td>
-      {/* Order Picked Up time */}
-      <td className="w-[10%] px-1 py-2">
-        {recycleOrder.status.toLowerCase() === "pending" ? (
-          <h2>Pick Up is Pending</h2>
-        ) : (
-          <div className="flex flex-col justify-center">
-            <h2 className="text-sm">
-              Agent Name:
-              <span className="font-bold">
-                {recycleOrder.pickedUpDetails.agentName}
-              </span>
-            </h2>
-            <h2 className="text-sm">
-              Purchased Price:
-              <span className="font-bold">{recycleOrder.finalPrice}</span>
-            </h2>
-            <h2 className="text-sm">
-              Time:
-              <span className="font-bold">
-                {recycleOrder.pickedUpDetails.pickedUpDate}
-              </span>
-            </h2>
+            {/* Product Variant and Price */}
+            <div className="flex gap-1 opacity-90 justify-center">
+              {recycleOrder?.productDetails?.productCategory === "Mobile" ? (
+                <div className="flex max-sm:flex-col items-center gap-1 pt-1">
+                  <p>
+                    <span className="font-semibold">Variant: </span>
+                    {recycleOrder?.productDetails?.productVariant}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Recycle Price: </span>
+                    {recycleOrder.recyclePrice}
+                  </p>
+                </div>
+              ) : (
+                <p>
+                  <span className="font-semibold">Recycle Price: </span>
+                  {recycleOrder.recyclePrice}
+                </p>
+              )}
+            </div>
+            <p>
+              <span className="font-semibold">Device Status: </span>
+              <span>{recycleOrder.productDetails.productStatus}</span>
+            </p>
           </div>
-        )}
-      </td>
-      <td className="px-4 py-2">
-        {recycleOrder.status.toLowerCase() === "pending" ? (
-          <h2>{recycleOrder.status.toUpperCase()}</h2>
-        ) : (
-          <h2>{recycleOrder.status.toUpperCase()}</h2>
-        )}
+        </div>
       </td>
 
-      {recycleOrder.status.toLowerCase() !== "received" ? (
-        <td className="px-4 py-2 text-sm">
-          <button
-            onClick={() => handleOrderOpen(recycleOrder)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
+      {/* Customer Details */}
+      <td className="py-2 flex items-center justify-center">
+        <div className="flex flex-col items-start">
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>Name:</span>
+            <span className="text-sm font-bold ">
+              {recycleOrder.customerName}
+            </span>
+          </p>
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>Phone:</span>
+            <span className="text-sm font-bold">{recycleOrder.phone}</span>
+          </p>
+          <p className="text-xs flex flex-col items-center gap-1 max-sm:gap-0 max-sm:hidden">
+            <span>Email:</span>
+            <span className="text-xs font-bold">{recycleOrder.email}</span>
+          </p>
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>City:</span>
+            <span className=" font-bold">
+              {recycleOrder.addressDetails.city}
+            </span>
+          </p>
+          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+            <span>State:</span>
+            <span className=" font-bold">
+              {recycleOrder.addressDetails.state}
+            </span>
+          </p>
+        </div>
+      </td>
+
+      {/* Schedule & Pickup Time */}
+      <td className=" px-1 py-3 text-sm max-sm:text-xs">
+        <div className="flex flex-col items-center justify-center gap-2 px-2">
+          <p className="flex flex-col border rounded overflow-hidden bg-black/40 w-full">
+            <span className="px-2 py-1 text-white">Order Schedule Time:</span>
+            <span className="bg-white px-2">{recycleOrder.schedulePickUp}</span>
+          </p>
+
+          {handleOrderStatus(recycleOrder)}
+        </div>
+      </td>
+
+      {/* Status */}
+      <td className="px-4 py-2 text-lg max-sm:text-sm font-bold">
+        <span>{orderCurrentStatus(recycleOrder.status)}</span>
+      </td>
+
+      {/* Recieved / View Button */}
+      <td className="px-4 py-2 text-sm ">
+        <div className="flex items-center justify-center">
+          <Link
+            to={`/admin/recycleOrder-detail/${recycleOrder.id}`}
+            className={`text-white font-bold p-2 rounded flex items-center justify-center gap-1
+                             ${handleViewBtnColor(recycleOrder.status)}`}
           >
-            Received
-          </button>
-        </td>
-      ) : (
-        <td className="px-4 py-2 text-sm">
-          <button
-            onClick={() => handleOrderView(recycleOrder)}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
-          >
-            View
-          </button>
-        </td>
-      )}
+            <span>View Detail</span>
+            <span>
+              <FaHandsHoldingCircle />
+            </span>
+          </Link>
+        </div>
+      </td>
+
+      {/* Delete Button */}
       <td>
         <button
-          onClick={() => handleDelete(recycleOrder.id)}
+          onClick={() => {
+            setModalOpen(true);
+            setOrderToDelete(recycleOrder.id);
+          }}
           className="bg-red-600 text-white px-3 py-1 rounded-md"
         >
           Delete
@@ -181,7 +262,7 @@ const RecycleOrdersList = () => {
 
   return (
     <>
-      <div className={`p-4 ${isOpen && 'hidden'}`}>
+      <div className={`p-4`}>
         <h2 className=" text-lg font-bold mb-4">Recycle Orders Table</h2>
 
         {!recycleOrdersDataloading && (
@@ -194,7 +275,18 @@ const RecycleOrdersList = () => {
         )}
       </div>
 
-      {isOpen && (
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={orderToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
+
+      {/* {isOpen && (
         <div className="flex items-center justify-center ">
           <RecycleOrderRecieved
             selectedOrder={selectedOrder}
@@ -208,12 +300,122 @@ const RecycleOrdersList = () => {
           orderToView={orderToView}
           setOrderViewOpen={setOrderViewOpen}
         />
-      )}
+      )} */}
     </>
   );
 };
 
 export default RecycleOrdersList;
+
+// Old RowRenderer
+{
+  // const rowRenderer = (recycleOrder) => (
+  //   <>
+  //     <td className="px-4 py-2">{recycleOrder.recycleOrderId}</td>
+  //     <td className="px-4 py-2">
+  //       {recycleOrder.productDetails.productName}{" "}
+  //       <div className="flex gap-1 text-sm opacity-50 justify-center">
+  //         {recycleOrder.productDetails.productCategory
+  //           .toLowerCase()
+  //           .includes("mobile") ? (
+  //           <>
+  //             <span>Variant {recycleOrder.productDetails.productVariant}</span>
+  //           </>
+  //         ) : null}
+  //       </div>
+  //     </td>
+  //     <td className="px-4 py-2 flex flex-col items-center">
+  //       <h2 className="text-xs">
+  //         Customer Name:{" "}
+  //         <span className="text-sm font-bold">{recycleOrder.customerName}</span>
+  //       </h2>
+  //       <h2 className="text-xs">
+  //         Phone: <span className="text-sm font-bold">{recycleOrder.phone}</span>
+  //       </h2>
+  //       <h2 className="text-xs">
+  //         Email: <span className="text-sm font-bold">{recycleOrder.email}</span>
+  //       </h2>
+  //     </td>
+  //     <td className="w-[10%] px-4 py-2">
+  //       <div className="flex flex-col">
+  //         <span className="text-xs opacity-70">
+  //           Address: {recycleOrder.addressDetails.address}
+  //         </span>
+  //         <span className="text-xs opacity-70">
+  //           State: {recycleOrder.addressDetails.state}
+  //         </span>
+  //         <span className="text-xs opacity-70">
+  //           City: {recycleOrder.addressDetails.city}
+  //         </span>
+  //         <span className="text-xs opacity-70">
+  //           Pincode: {recycleOrder.addressDetails.pinCode}
+  //         </span>
+  //       </div>
+  //     </td>
+  //     <td className="px-1 py-2">{recycleOrder.schedulePickUp}</td>
+  //     <td className="px-4 py-2">{recycleOrder.recyclePrice}</td>
+  //     {/* Order Picked Up time */}
+  //     <td className="w-[10%] px-1 py-2">
+  //       {recycleOrder.status.toLowerCase() === "pending" ? (
+  //         <h2>Pick Up is Pending</h2>
+  //       ) : (
+  //         <div className="flex flex-col justify-center">
+  //           <h2 className="text-sm">
+  //             Agent Name:
+  //             <span className="font-bold">
+  //               {recycleOrder.pickedUpDetails.agentName}
+  //             </span>
+  //           </h2>
+  //           <h2 className="text-sm">
+  //             Purchased Price:
+  //             <span className="font-bold">{recycleOrder.finalPrice}</span>
+  //           </h2>
+  //           <h2 className="text-sm">
+  //             Time:
+  //             <span className="font-bold">
+  //               {recycleOrder.pickedUpDetails.pickedUpDate}
+  //             </span>
+  //           </h2>
+  //         </div>
+  //       )}
+  //     </td>
+  //     <td className="px-4 py-2">
+  //       {recycleOrder.status.toLowerCase() === "pending" ? (
+  //         <h2>{recycleOrder.status.toUpperCase()}</h2>
+  //       ) : (
+  //         <h2>{recycleOrder.status.toUpperCase()}</h2>
+  //       )}
+  //     </td>
+  //     {recycleOrder.status.toLowerCase() !== "received" ? (
+  //       <td className="px-4 py-2 text-sm">
+  //         <button
+  //           onClick={() => handleOrderOpen(recycleOrder)}
+  //           className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
+  //         >
+  //           Received
+  //         </button>
+  //       </td>
+  //     ) : (
+  //       <td className="px-4 py-2 text-sm">
+  //         <button
+  //           onClick={() => handleOrderView(recycleOrder)}
+  //           className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
+  //         >
+  //           View
+  //         </button>
+  //       </td>
+  //     )}
+  //     <td>
+  //       <button
+  //         onClick={() => handleDelete(recycleOrder.id)}
+  //         className="bg-red-600 text-white px-3 py-1 rounded-md"
+  //       >
+  //         Delete
+  //       </button>
+  //     </td>
+  //   </>
+  // );
+}
 
 // Orders list table
 {

@@ -270,13 +270,20 @@ export const api = createApi({
       }),
       invalidatesTags: ["ConditionLabels"],
     }),
+
+    // Orders
     getOrdersList: build.query({
       query: () => `/api/orders`,
       providesTags: ["Orders"],
     }),
+    getOrder: build.query({
+      query: (orderId) => `/api/orders/${orderId}`,
+      providesTags: ["Orders"],
+    }),
     createOrder: build.mutation({
       query: (data) => ({
-        url: "/api/orders/create-order",
+        // url: "/api/orders/create-order",
+        url: "/api/orders",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -294,11 +301,20 @@ export const api = createApi({
     }),
     orderReceived: build.mutation({
       query: (data) => ({
-        url: `/api/orders/order-received`,
+        // url: `/api/orders/order-received`,
+        url: `/api/orders/complete`,
         method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Orders"],
+    }),
+    orderCancel: build.mutation({
+      query: ({ orderId, data }) => ({
+        url: `/api/orders/cancel/${orderId}`,
+        method: "PUT",
+        body: data,
+      }),
+      // invalidatesTags: ["Orders"],
     }),
     deleteOrder: build.mutation({
       query: (orderId) => ({
@@ -562,6 +578,10 @@ export const api = createApi({
     }),
 
     // Recycle
+    getRecycleOrder: build.query({
+      query: (recycleOrderId) => `/api/recycle/orders/${recycleOrderId}`,
+      providesTags: ["Recycle"],
+    }),
     getRecycleOrders: build.query({
       query: () => `/api/recycle/orders`,
       providesTags: ["Recycle"],
@@ -584,6 +604,14 @@ export const api = createApi({
         body: data,
       }),
       invalidatesTags: ["Recycle"],
+    }),
+    recycleOrderCancel: build.mutation({
+      query: ({ recycleOrderId, data }) => ({
+        url: `/api/recycle/orders/cancel/${recycleOrderId}`,
+        method: "PUT",
+        body: data,
+      }),
+      // invalidatesTags: ["Orders"],
     }),
     deleteRecycleOrder: build.mutation({
       query: (recycleOrderId) => ({
@@ -666,10 +694,12 @@ export const {
   useUploadConditionLabelsImageMutation,
   useUpdateConditionLabelMutation,
   useDeleteConditionLabelMutation,
+  useGetOrderQuery,
   useGetOrdersListQuery,
   useCreateOrderMutation,
   useUploadCustomerProofImageMutation,
   useOrderReceivedMutation,
+  useOrderCancelMutation,
   useDeleteOrderMutation,
   useGetActiveSlidersListQuery,
   useGetAllSlidersQuery,
@@ -703,8 +733,10 @@ export const {
   useDeleteServiceMutation,
   useDeleteImageMutation,
   useGetRecycleOrdersQuery,
+  useGetRecycleOrderQuery,
   useCreateRecycleOrderMutation,
   useRecycleOrderCompleteMutation,
+  useRecycleOrderCancelMutation,
   useDeleteRecycleOrderMutation,
   useGetSingleProductQuery,
   useGetVariantsQuestionsQuery,

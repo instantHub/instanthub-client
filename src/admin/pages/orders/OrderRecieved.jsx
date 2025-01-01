@@ -5,6 +5,7 @@ import {
 } from "../../../features/api";
 import DatePicker from "react-datepicker";
 import Table from "../../components/TableView";
+import OrderDetail from "./OrderDetail";
 
 const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
   const [uploadCustomerProof, { isLoading: uploadLoading }] =
@@ -212,8 +213,10 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
   );
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-fit">
+    // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-white">
+      {/* <div className="bg-white p-8 rounded-lg shadow-lg w-fit"> */}
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full h-full mt-20">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold mb-4">Order Received</h2>
           <button
@@ -224,12 +227,14 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
           </button>
         </div>
 
-        <Table
+        {/* <Table
           headers={orderDetailHeader}
           data={[selectedOrder]}
           keyExtractor={(item) => item.id}
           rowRenderer={detailsRowRenderer}
-        />
+        /> */}
+
+        {/* <OrderDetail order={selectedOrder} /> */}
 
         <hr />
 
@@ -243,51 +248,54 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
                 </h2>
               </div>
               {/* ID Proof Images */}
-              <div className="flex">
+              <div className="flex max-sm:flex-col gap-2">
                 {/* ID Front Image */}
-                <label htmlFor="name">
-                  Upload Front of Customer ID
-                  <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="file"
-                  name="name"
-                  ref={fileInputRef1}
-                  placeholder="Enter Name"
-                  className="border rounded px-2 py-1 w-1/3 mx-auto"
-                  onChange={(e) => {
-                    setImageSelected1(e.target.files[0]);
-                  }}
-                  required
-                />
+                <div className="flex items-center max-sm:flex-col gap-2">
+                  <label htmlFor="name">
+                    Upload Front of Customer ID
+                    <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="file"
+                    name="name"
+                    ref={fileInputRef1}
+                    placeholder="Enter Name"
+                    className="border rounded px-2 py-1 w-3/4 mx-auto"
+                    onChange={(e) => {
+                      setImageSelected1(e.target.files[0]);
+                    }}
+                    required
+                  />
+                </div>
 
                 {/* ID Back Image */}
-                <label htmlFor="name">
-                  Upload Back of Customer ID
-                  <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="file"
-                  name="name"
-                  id=""
-                  ref={fileInputRef2}
-                  placeholder="Enter Name"
-                  className="border rounded px-2 py-1 w-1/3 mx-auto"
-                  onChange={(e) => {
-                    setImageSelected2(e.target.files[0]);
-                  }}
-                  required
-                />
-                {/* </div> */}
+                <div className="flex items-center max-sm:flex-col gap-2">
+                  <label htmlFor="name">
+                    Upload Back of Customer ID
+                    <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="file"
+                    name="name"
+                    id=""
+                    ref={fileInputRef2}
+                    placeholder="Enter Name"
+                    className="border rounded px-2 py-1 w-3/4 mx-auto"
+                    onChange={(e) => {
+                      setImageSelected2(e.target.files[0]);
+                    }}
+                    required
+                  />
+                </div>
               </div>
             </div>
             <hr className="w-1/3 mx-auto" />
             {/* Optional Images & Other details */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 ">
               <div className="">
                 <h2 className="text-lg">Optional Documents</h2>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center max-sm:flex-col gap-2">
                 {/* Optional Image 1 */}
                 <label htmlFor="name">Upload Optional Doc 1</label>
                 <input
@@ -314,9 +322,11 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
                   }}
                 />
               </div>
-              <div className="flex items-center justify-center gap-2 mt-5">
+
+              {/* Order Picked Up By: */}
+              <div className="flex items-center max-sm:flex-col justify-center gap-2 mt-5">
                 {/* Pickup details */}
-                <div className="flex items-center">
+                <div className="flex items-center max-sm:flex-col">
                   <label htmlFor="pickedUpBy">
                     Order Picked Up By:
                     <span className="text-red-600">* </span>
@@ -345,7 +355,7 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
                   </div>
 
                   {/* Purchase Price */}
-                  <div className="flex items-center">
+                  <div className="flex items-center max-sm:flex-col">
                     <label htmlFor="finalPrice">
                       Purchase Price:
                       <span className="text-red-600">* </span>
@@ -364,7 +374,7 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
                 </div>
 
                 {/* Date Picker */}
-                <div>
+                <div className="max-sm:flex max-sm:flex-col">
                   <label htmlFor="datepicker">
                     Select Date and Time:
                     <span className="text-red-600">* </span>
@@ -404,8 +414,9 @@ const OrderRecieved = ({ setIsOpen, selectedOrder }) => {
                   )}
                 </div>
               </div>
+
               {/* serialNo & IMEI */}
-              <div className="flex justify-center mt-5 gap-2 items-center">
+              <div className="flex justify-center max-sm:flex-col mt-5 gap-2 items-center">
                 <div>
                   <label htmlFor="finalPrice">Serial No:</label>
                   <input
