@@ -30,63 +30,28 @@ const LocationSelector = () => {
   }, []);
 
   return (
-    <div className="relative flex items-center bg-white text-black p-4 max-sm:p-0 font-serif">
-      {/* Mobile view icon */}
-      <div className="block md:hidden">
-        <button
-          ref={iconRef}
-          onClick={handleToggle}
-          className={`p-2 rounded-full ${showLocations && "p-0"}`}
-        >
-          <IoLocationSharp
-            className={`text-lg ${
-              showLocations &&
-              "text-xl bg-secondary text-secondary-light rounded-full p-[2px]"
-            }`}
-          />
-        </button>
-      </div>
+    <>
+      <div className="hidden">
+        {/* <div className="relative flex items-center bg-white text-black p-4 max-sm:p-0 font-serif">
+         {/* Mobile view icon *
+        <div className="block md:hidden">
+          <button
+            ref={iconRef}
+            onClick={handleToggle}
+            className={`p-2 rounded-full ${showLocations && "p-0"}`}
+          >
+            <IoLocationSharp
+              className={`text-lg ${
+                showLocations &&
+                "text-xl bg-secondary text-secondary-light rounded-full p-[2px]"
+              }`}
+            />
+          </button>
+        </div>
 
-      {/* Location selection dropdown (Desktop) */}
-      <div className="hidden md:block">
-        <select className="w-full bg-white text-black border border-gray-300 rounded-md p-2">
-          <option defaultValue="bangalore">Bangalore</option>
-          <option value="delhi" disabled>
-            Delhi
-          </option>
-          <option value="mumbai" disabled>
-            Mumbai
-          </option>
-          <option value="chennai" disabled>
-            Chennai
-          </option>
-          <option value="kolkata" disabled>
-            Kolkata
-          </option>
-          <option value="pune" disabled>
-            Pune
-          </option>
-          <option value="hyderabad" disabled>
-            Hyderabad
-          </option>
-          {/* Add more states here */}
-        </select>
-      </div>
-
-      {/* Large Screen view icon */}
-      <div className="block max-sm:hidden">
-        <button className="p-2 rounded-full">
-          <IoLocationSharp className="text-lg max-sm:text-lg" />
-        </button>
-      </div>
-
-      {/* Mobile dropdown (Visible when icon is clicked) */}
-      {showLocations && (
-        <div
-          ref={dropdownRef}
-          className="md:hidden top-[120%] bg-white text-black p-0 border border-secondary-light rounded-md absolute w-fit"
-        >
-          <select className="w-fit bg-white text-black border border-gray-300 rounded-md p-1">
+        {/* Location selection dropdown (Desktop) *
+        <div className="hidden md:block">
+          <select className="w-full bg-white text-black border border-gray-300 rounded-md p-2">
             <option defaultValue="bangalore">Bangalore</option>
             <option value="delhi" disabled>
               Delhi
@@ -106,11 +71,58 @@ const LocationSelector = () => {
             <option value="hyderabad" disabled>
               Hyderabad
             </option>
-            {/* Add more states here */}
+            {/* Add more states here *
           </select>
         </div>
-      )}
-    </div>
+
+        {/* Large Screen view icon *
+        <div className="block max-sm:hidden">
+          <button className="p-2 rounded-full">
+            <IoLocationSharp className="text-lg max-sm:text-lg" />
+          </button>
+        </div>
+
+        {/* Mobile dropdown (Visible when icon is clicked) *
+        {showLocations && (
+          <div
+            ref={dropdownRef}
+            className="md:hidden top-[120%] bg-white text-black p-0 border border-secondary-light rounded-md absolute w-fit"
+          >
+            <select className="w-fit bg-white text-black border border-gray-300 rounded-md p-1">
+              <option defaultValue="bangalore">Bangalore</option>
+              <option value="delhi" disabled>
+                Delhi
+              </option>
+              <option value="mumbai" disabled>
+                Mumbai
+              </option>
+              <option value="chennai" disabled>
+                Chennai
+              </option>
+              <option value="kolkata" disabled>
+                Kolkata
+              </option>
+              <option value="pune" disabled>
+                Pune
+              </option>
+              <option value="hyderabad" disabled>
+                Hyderabad
+              </option>
+              {/* Add more states here *
+            </select>
+          </div>
+        )}
+      </div> */}
+      </div>
+
+      <div
+        className="w-fit flex gap-1 items-center bg-white text-black border text-[16px] max-sm:text-[8px] 
+                    border-gray-300 rounded-md px-2 py-1 max-sm:hidden select-none"
+      >
+        <span>Bangalore</span>
+        <IoLocationSharp className="text-green-600" />
+      </div>
+    </>
   );
 };
 

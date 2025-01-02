@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaUser, FaWhatsapp } from "react-icons/fa";
-import { SiXdadevelopers } from "react-icons/si";
-import { FcServices } from "react-icons/fc";
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   const listItemStyle =
@@ -20,8 +18,8 @@ const Footer = () => {
               src="/images/NewLogoB.jpeg"
               // src="/images/NavLogo.jpg"
               alt="logo"
-              // className="w-[88%] h-16 my-[1px] max-sm:w-[95%]"
-              className="w-full h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
+              // className="w-full h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
+              className="w-[150px] h-[80px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
             />
             {/* <p className="flex flex- items-center gap-1 text-white ">
               <span className="font-serif text-3xl max-sm:text-lg">
@@ -58,7 +56,8 @@ const Footer = () => {
             <img
               src="/images/NewLogoB.jpeg"
               alt="logo"
-              className="w-full h-[75px] my-[1px] max-sm:w-[75%] max-sm:h-[75px] p-1"
+              // className="w-full h-[75px] my-[1px] max-sm:w-[75%] max-sm:h-[75px] p-1"
+              className="w-[60px] h-[75px] my-[1px] max-sm:w-[150px] max-sm:h-[80px] p-1"
             />
 
             {/* <p className="flex items-center gap-1 font-serif text-2xl text-white">

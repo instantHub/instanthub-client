@@ -314,7 +314,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      // invalidatesTags: ["Orders"],
+      invalidatesTags: ["Orders"],
     }),
     deleteOrder: build.mutation({
       query: (orderId) => ({
@@ -611,7 +611,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      // invalidatesTags: ["Orders"],
+      invalidatesTags: ["Recycle"],
     }),
     deleteRecycleOrder: build.mutation({
       query: (recycleOrderId) => ({

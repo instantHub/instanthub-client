@@ -125,8 +125,8 @@ const Navbar = () => {
                     // src="/images/NewLogoW.jpeg"
                     src="/images/NavLogo.jpg"
                     alt="InstantHub"
-                    // className="w-[115px] h-[60px] my-[1px] max-2sm:w-[60px] max-2sm:h-[45px] max-2sm:py-[2px] "
-                    className="w-[90%] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
+                    // className="w-[90%] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
+                    className="w-[120px] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
                   />
                 </h2>
               </Link>
