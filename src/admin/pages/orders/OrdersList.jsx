@@ -142,6 +142,7 @@ const OrdersList = () => {
     <>
       {/* Order Details: Order ID - Product Name - Variant - Product Price - Offer Price */}
       <td className="px-4 py-2 max-sm:text-xs ">
+        {/* Order Detail */}
         <div className="flex items-center justify-center">
           <div className="flex flex-col items-start p-1 pl-2 rounded bg- text-[16px] max-sm:text-xs">
             <p className="flex max-sm:flex-col items-center justify-center gap-1">

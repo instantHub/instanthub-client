@@ -69,10 +69,6 @@ const ServiceOrderDetail = () => {
   const maxTime = new Date();
   maxTime.setHours(22, 0, 0, 0);
 
-  const [pickedUpBy, setPickedUpBy] = useState("");
-  const [finalPrice, setFinalPrice] = useState("");
-  //   console.log("pickedUpBy", pickedUpBy);
-
   const handleTimeChange = (date) => {
     setSelectedDate(date);
 
@@ -100,11 +96,11 @@ const ServiceOrderDetail = () => {
       };
       console.log(formData);
 
-        const orderCancelData = await cancelServiceOrder({
-          serviceOrderId,
-          data: formData,
-        }).unwrap();
-        console.log("orderCancelData", orderCancelData);
+      const orderCancelData = await cancelServiceOrder({
+        serviceOrderId,
+        data: formData,
+      }).unwrap();
+      console.log("orderCancelData", orderCancelData);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -176,7 +172,7 @@ const ServiceOrderDetail = () => {
   if (serviceOrderDetailLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col justify-center items-center w-full mt-10">
+    <div className="flex flex-col justify-center items-center w-full py-10">
       {/* Order Detail */}
       <div className="">
         {/* Back Button */}
