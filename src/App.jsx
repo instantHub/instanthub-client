@@ -76,9 +76,14 @@ import AdminOrderDetail from "./admin/pages/orders/OrderDetail";
 import AdminPhoneNumbers from "./admin/pages/orders/PhoneNumbersList";
 import AdminManageStocks from "./admin/pages/stocks/ManageStocks";
 import AdminCreateCoupon from "./admin/pages/coupons/CreateCoupon";
+
+// Services
 import AdminCreateServiceForm from "./admin/pages/services/CreateServices";
 import AdminServicesList from "./admin/pages/services/ServicesList";
-import AdminServicesOrdersList from "./admin/pages/services/ServicesOrders";
+import AdminServicesOrdersList from "./admin/pages/services/ServicesOrdersList";
+import AdminServiceOrderDetail from "./admin/pages/services/ServiceOrderDetail";
+
+// Recycle Orders
 import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "./admin/pages/recycle/RecycleOrderDetail";
 
@@ -471,6 +476,10 @@ function App() {
             {
               path: "/admin/services-orders",
               element: <AdminServicesOrdersList />,
+            },
+            {
+              path: "/admin/serviceOrder-detail/:serviceOrderId",
+              element: <AdminServiceOrderDetail />,
             },
 
             // Recycle Orders

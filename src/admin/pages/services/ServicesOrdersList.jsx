@@ -8,8 +8,12 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
+import Table from "../../components/TableView";
+import { useNavigate } from "react-router-dom";
+import { GiCardPickup } from "react-icons/gi";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
-const ConditionsTable = () => {
+const ServicesOrdersList = () => {
   const { data: servicesOrders, isLoading: servicesOrdersLoading } =
     useGetServicesOrdersQuery();
 
@@ -18,6 +22,8 @@ const ConditionsTable = () => {
 
   const [serviceOrderComplete, { isLoading: orderCompleteLoading }] =
     useServiceOrderCompleteMutation();
+
+  const navigate = useNavigate();
 
   const [selectedServiceOrder, setSelectedServiceOrder] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +38,10 @@ const ConditionsTable = () => {
   const currentDate = new Date();
   const [serviceCompletedOn, setServiceCompletedOn] = useState();
 
-  console.log("selectedDate", selectedDate);
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState("");
+  const [orderIDToDelete, setOrderIDToDelete] = useState("");
 
   // Set the minimum time to 10:00 AM
   const minTime = new Date();
@@ -68,27 +77,16 @@ const ConditionsTable = () => {
   };
 
   const handleTimeChange = (date) => {
-    console.log("date", date);
-
-    let dateToString =
-      date.toLocaleString("en-US", {
-        month: "long",
-      }) +
-      " " +
-      date.getDate() +
-      " " +
-      date.getFullYear() +
-      " " +
-      date.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      });
-    console.log("dateToString", dateToString);
-
-    // schedulePickUpDate = dateToString;
-    setServiceCompletedOn(dateToString);
     setSelectedDate(date);
+
+    const formattedDate = `${date.toLocaleString("en-US", {
+      month: "long",
+    })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
+      "en-US",
+      { hour: "numeric", minute: "numeric", hour12: true }
+    )}`;
+    // console.log("formattedDate", formattedDate);
+    setServiceCompletedOn(formattedDate);
   };
 
   const closeModal = () => {
@@ -97,7 +95,12 @@ const ConditionsTable = () => {
 
   const handleDelete = async (serviceOrderId) => {
     console.log("handleDelete serviceOrderId", serviceOrderId);
-    await deleteServiceOrder(serviceOrderId);
+    try {
+      await deleteServiceOrder(serviceOrderId);
+      toast.success("Service Order deleted successfully");
+    } catch (error) {
+      toast.error("Service Order couldn't be deleted..!!");
+    }
   };
 
   const handleServiceComplete = async (
@@ -157,118 +160,181 @@ const ConditionsTable = () => {
 
   console.log("selected service", selectedServiceOrder);
 
+  const handleOrderStatus = (order) => {
+    if (order.status.pending) {
+      return (
+        <p className="px-4 py-1 bg-blue-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+          Pickup Pending <GiCardPickup />
+        </p>
+      );
+    }
+
+    if (order.status.completed) {
+      return (
+        <p className="flex flex-col border shadow rounded overflow-hidden bg-green-600 w-full">
+          <span className="px-2 py-1 text-white">Order Completed On:</span>
+          <span className="bg-white px-2">
+            {order.pickedUpDetails.pickedUpDate}
+          </span>
+        </p>
+      );
+    }
+
+    if (order.status.cancelled) {
+      return (
+        <p className="px-4 py-1 bg-red-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+          Order Cancelled <GiCardPickup />
+        </p>
+      );
+    }
+
+    // Return null or some default content if none of the conditions match
+    return null;
+  };
+
+  const orderCurrentStatus = (status) => {
+    if (status?.pending) return <span className="text-blue-600">Pending</span>;
+    if (status?.completed)
+      return <span className="text-green-600">Completed</span>;
+    if (status?.cancelled)
+      return <span className="text-red-600">Cancelled</span>;
+    return "Unknown";
+  };
+
+  const handleViewBtnColor = (status) => {
+    if (status.pending) return "bg-blue-500 hover:bg-blue-700";
+    if (status.completed) return "bg-green-600 hover:bg-green-700";
+    if (status.cancelled) return "bg-red-600 hover:bg-red-700";
+    return "bg-black text-white";
+  };
+
+  const headers = [
+    "Service Order Details",
+    "Customer Details",
+    "Service Detail",
+    "Schedule Time",
+    "Status",
+    "Update Order",
+    "Delete Order",
+  ];
+
+  const rowRenderer = (servicesOrder) => (
+    <>
+      <td className=" py-2">
+        <div>{servicesOrder.serviceOrderId}</div>
+
+        {/* Serve Detail */}
+        <div className="flex flex-col">
+          {servicesOrder.serviceType !== "DirectService" ? (
+            <span className="font-semibold">
+              {servicesOrder.selectedService.serviceCategoryId.name}
+            </span>
+          ) : null}
+          <span>{servicesOrder.selectedService.name}</span>
+        </div>
+      </td>
+      <td className=" py-2">
+        <div className="flex flex-col">
+          <span>{servicesOrder.customerName}</span>
+          <span>{servicesOrder.email}</span>
+          <span>{servicesOrder.phone}</span>
+        </div>
+      </td>
+
+      {/* Serve Detail */}
+      {/* <td className="py-2"></td> */}
+
+      {/* Problems */}
+      {/* <td className="flex flex-col py-2">
+        {servicesOrder.problems.length > 0 ? (
+          servicesOrder.problems.map((p, i) => (
+            <span key={i}>{p.serviceProblem}</span>
+          ))
+        ) : (
+          <p className="text-red-500">-</p>
+        )}
+      </td> */}
+      {/* <td className=" py-2">{servicesOrder.inspectionCharges}</td> */}
+      <td className=" py-2">{servicesOrder.address}</td>
+      <td className=" py-2">
+        <div className="flex flex-col">
+          <span>{servicesOrder.scheduleDate}</span>
+          <span>{servicesOrder.scheduleTime}</span>
+        </div>
+      </td>
+      <td className=" py-2">{orderCurrentStatus(servicesOrder.status)}</td>
+      <td className="text-white py-2">
+        <button
+          className={`${handleViewBtnColor(servicesOrder.status)} p-1 rounded`}
+          onClick={() => {
+            // setSelectedServiceOrder(servicesOrder);
+            // setIsOpen(true);
+            navigate(`/admin/serviceOrder-detail/${servicesOrder.id}`);
+          }}
+        >
+          View Order
+        </button>
+
+        {/* {servicesOrder.status.toLowerCase().includes("pending") && (
+          <div className="text-sm">
+            <button
+              className="bg-blue-600 px-3 py-1 rounded-md"
+              onClick={() => {
+                // setSelectedServiceOrder(servicesOrder);
+                // setIsOpen(true);
+                navigate(`/admin/serviceOrder-detail/${servicesOrder.id}`);
+              }}
+            >
+              Mark <br /> Completed
+            </button>
+          </div>
+        )}
+        {servicesOrder.status.toLowerCase().includes("complete") && (
+          <div className="text-sm">
+            <button
+              className="bg-green-600 px-3 py-1 rounded-md"
+              onClick={() => {
+                // setSelectedServiceOrder(servicesOrder);
+                // setViewOrder(true);
+                navigate(`/admin/serviceOrder-detail/${servicesOrder.id}`);
+              }}
+            >
+              View Service
+            </button>
+          </div>
+        )} */}
+      </td>
+      <td className="text-white py-2">
+        <div className="flex gap-2 justify-center">
+          <button
+            className="bg-red-600 px-3 py-1 rounded-md"
+            onClick={() => {
+              // handleDelete(servicesOrder.id);
+              setModalOpen(true);
+              setOrderToDelete(servicesOrder.id);
+              setOrderIDToDelete(servicesOrder.serviceOrderId);
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      </td>
+    </>
+  );
+
   return (
     <>
       <div className="p-4">
         {/* Service Orders List */}
-        <table className="w-full">
-          <thead>
-            <tr className="py-10 font-serif text-lg border shadow-xl text-green-800">
-              <th className="px-4 py-4 ">ServiceOrderId</th>
-              <th className="px-4 py-2 ">Customer Details</th>
-              <th className="px-4 py-2 ">Service Details</th>
-              <th className="px-4 py-2 ">Problems</th>
-              <th className="px-4 py-2 ">
-                Inspection <br />
-                Charges
-              </th>
-              <th className="px-4 py-2 ">Address</th>
-              <th className="px-4 py-2 ">Schedule Date & Time</th>
-              <th className="px-4 py-2 ">Status</th>
-              <th className="px-4 py-2 ">Edit</th>
-              <th className="px-4 py-2 ">Delete</th>
-            </tr>
-          </thead>
 
-          <tbody className="text-center">
-            {!servicesOrdersLoading &&
-              servicesOrders.map((servicesOrder, index) => (
-                <tr
-                  key={index}
-                  className={
-                    index % 2 === 0 ? "bg-white" : "bg-gray-100 border"
-                  }
-                >
-                  <td className=" py-2">{servicesOrder.serviceOrderId}</td>
-                  <td className=" py-2">
-                    <div className="flex flex-col">
-                      <span>{servicesOrder.customerName}</span>
-                      <span>{servicesOrder.email}</span>
-                      <span>{servicesOrder.phone}</span>
-                    </div>
-                  </td>
-                  <td className="py-2">
-                    <div className="flex flex-col">
-                      {servicesOrder.serviceType !== "DirectService" ? (
-                        <span className="font-semibold">
-                          {servicesOrder.selectedService.serviceCategoryId.name}
-                        </span>
-                      ) : null}
-                      <span>{servicesOrder.selectedService.name}</span>
-                    </div>
-                  </td>
-                  <td className="flex flex-col py-2">
-                    {servicesOrder.problems.length > 0 ? (
-                      servicesOrder.problems.map((p, i) => (
-                        <span key={i}>{p.serviceProblem}</span>
-                      ))
-                    ) : (
-                      <p className="text-red-500">-</p>
-                    )}
-                  </td>
-                  <td className=" py-2">{servicesOrder.inspectionCharges}</td>
-                  <td className=" py-2">{servicesOrder.address}</td>
-                  <td className=" py-2">
-                    <div className="flex flex-col">
-                      <span>{servicesOrder.scheduleDate}</span>
-                      <span>{servicesOrder.scheduleTime}</span>
-                    </div>
-                  </td>
-                  <td className=" py-2">{servicesOrder.status}</td>
-                  <td className="text-white py-2">
-                    {servicesOrder.status.toLowerCase().includes("pending") && (
-                      <div className="text-sm">
-                        <button
-                          className="bg-blue-600 px-3 py-1 rounded-md"
-                          onClick={() => {
-                            setSelectedServiceOrder(servicesOrder);
-                            setIsOpen(true);
-                          }}
-                        >
-                          Mark <br /> Completed
-                        </button>
-                      </div>
-                    )}
-                    {servicesOrder.status
-                      .toLowerCase()
-                      .includes("complete") && (
-                      <div className="text-sm">
-                        <button
-                          className="bg-green-600 px-3 py-1 rounded-md"
-                          onClick={() => {
-                            setSelectedServiceOrder(servicesOrder);
-                            setViewOrder(true);
-                          }}
-                        >
-                          View Service
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                  <td className="text-white py-2">
-                    <div className="flex gap-2 justify-center">
-                      <button
-                        className="bg-red-600 px-3 py-1 rounded-md"
-                        onClick={() => handleDelete(servicesOrder.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {!servicesOrdersLoading && (
+          <Table
+            headers={headers}
+            data={servicesOrders}
+            keyExtractor={(item) => item.id}
+            rowRenderer={rowRenderer}
+          />
+        )}
       </div>
 
       {isOpen && (
@@ -723,8 +789,20 @@ const ConditionsTable = () => {
           </div>
         </div>
       )}
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={orderToDelete}
+        title="Confirm Deletion"
+        detail={`You are about to delete an Service Order: ${orderIDToDelete}`}
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </>
   );
 };
 
-export default ConditionsTable;
+export default ServicesOrdersList;

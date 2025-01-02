@@ -531,12 +531,17 @@ export const api = createApi({
       }),
       invalidatesTags: ["Services"],
     }),
+
+    // Service Orders
     getServicesOrders: build.query({
       query: () => `/api/services/orders`,
       providesTags: ["Services Orders"],
     }),
+    getServiceOrder: build.query({
+      query: (serviceOrderId) => `/api/services/orders/${serviceOrderId}`,
+      providesTags: ["Services Orders"],
+    }),
 
-    // Service Orders
     createServiceOrder: build.mutation({
       query: (data) => ({
         url: `/api/services/orders`,
@@ -552,6 +557,14 @@ export const api = createApi({
       query: ({ serviceOrderId, data }) => ({
         url: `/api/services/orders/${serviceOrderId}`,
         method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Services Orders"],
+    }),
+    cancelServiceOrder: build.mutation({
+      query: ({ serviceOrderId, data }) => ({
+        url: `/api/services/orders/cancel/${serviceOrderId}`,
+        method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Services Orders"],
@@ -727,8 +740,10 @@ export const {
   useUpdateServiceMutation,
   useGetAllServicesQuery,
   useGetServicesOrdersQuery,
+  useGetServiceOrderQuery,
   useCreateServiceOrderMutation,
   useServiceOrderCompleteMutation,
+  useCancelServiceOrderMutation,
   useDeleteServiceOrderMutation,
   useDeleteServiceMutation,
   useDeleteImageMutation,

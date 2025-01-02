@@ -753,20 +753,34 @@ const OrderDetail = () => {
               />
             </form>
 
+            <hr className="py-5" />
+
             {/* Order Cancel Form */}
             <div className="text-sm max-sm:text-xs py-1 text-center">
               Provide Mandatory Reason If You Are Cancelling the Order.
             </div>
             <form
               onSubmit={handleCancelOrder}
-              className="flex justify-center max-sm:flex-col items-center gap-4 pb-10 "
+              className="flex justify-center flex-col items-center gap-4 pb-10 "
             >
-              <div className="flex items-center gap-1 text-[16px] max-sm:text-sm">
+              <div className="flex max-sm:flex-col items-center gap-1 text-[16px] max-sm:text-sm">
                 <label htmlFor="reason">
                   <span>Reason:</span>
                   <span className="text-red-600">*</span>
                 </label>
-                <input
+
+                <textarea
+                  type="textarea"
+                  name="reason"
+                  placeholder="Reason for cancellation"
+                  className="px-2 py-1 text-sm max-sm:text-xs h-[100px] w-[300px] max-sm:w-[250px] border rounded"
+                  onChange={(e) => {
+                    setCancelReason(e.target.value);
+                  }}
+                  required
+                />
+
+                {/* <input
                   type="text"
                   name="reason"
                   placeholder="Reason for cancellation"
@@ -775,7 +789,7 @@ const OrderDetail = () => {
                     setCancelReason(e.target.value);
                   }}
                   required
-                />
+                /> */}
               </div>
               <div className="text-[16px] max-sm:text-sm">
                 <input

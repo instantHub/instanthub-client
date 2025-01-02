@@ -536,7 +536,7 @@ const RecycleOrderDetail = () => {
         {recycleOrderDetail.status.cancelled && (
           <div className={`${heading}`}>
             <span className={`${subHeading}`}>Cancel Reason: </span>
-            <span className={`${detailImp}`}>
+            <span className={`${detailImp} text-wrap`}>
               {recycleOrderDetail.cancelReason}
             </span>
           </div>
@@ -802,7 +802,19 @@ const RecycleOrderDetail = () => {
                   <span>Reason:</span>
                   <span className="text-red-600">*</span>
                 </label>
-                <input
+
+                <textarea
+                  type="textarea"
+                  name="reason"
+                  placeholder="Reason for cancellation"
+                  className="px-2 py-1 text-sm max-sm:text-xs h-[100px] w-[300px] max-sm:w-[250px] border rounded"
+                  onChange={(e) => {
+                    setCancelReason(e.target.value);
+                  }}
+                  required
+                />
+
+                {/* <input
                   type="text"
                   name="reason"
                   placeholder="Reason for cancellation"
@@ -811,7 +823,7 @@ const RecycleOrderDetail = () => {
                     setCancelReason(e.target.value);
                   }}
                   required
-                />
+                /> */}
               </div>
               <div className="text-[16px] max-sm:text-sm">
                 <input

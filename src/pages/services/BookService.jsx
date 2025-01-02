@@ -187,7 +187,11 @@ export default function BookService() {
       // scheduleDate: selectedDate,
       scheduleDate: schedulePickUp,
       scheduleTime: time,
-      status: "PENDING",
+      status: {
+        pending: true,
+        completed: false,
+        cancelled: false,
+      },
       inspectionCharges,
     };
 
@@ -580,7 +584,7 @@ export default function BookService() {
                       {/* <label htmlFor="">Name</label> */}
                       <input
                         type="text"
-                        name=""
+                        name="name"
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Full Name"
                         className="border-b w-full"
@@ -590,7 +594,7 @@ export default function BookService() {
                     <div>
                       <input
                         type="text"
-                        name=""
+                        name="address"
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Flat / Building / Street"
                         className="border-b w-full"
@@ -599,8 +603,19 @@ export default function BookService() {
                     </div>
                     <div>
                       <input
+                        type="number"
+                        name="pincode"
+                        value={pincode}
+                        onInput={handlePinCodeChange}
+                        placeholder="Enter Area PinCode here"
+                        className="border-b w-full"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <input
                         type="email"
-                        name=""
+                        name="email"
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                         className="border-b w-full"
@@ -610,23 +625,12 @@ export default function BookService() {
                     <div>
                       <input
                         type="number"
-                        name=""
+                        name="phone"
                         value={phone}
                         // onChange={(e) => handlePhoneChange(e)}
                         // onKeyPress={handleKeyPress}
                         onChange={handlePhoneChange}
                         placeholder="Mobile No"
-                        className="border-b w-full"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="number"
-                        name=""
-                        value={pincode}
-                        onInput={handlePinCodeChange}
-                        placeholder="Enter Area PinCode here"
                         className="border-b w-full"
                         required
                       />

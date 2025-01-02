@@ -78,9 +78,11 @@ const OrdersList = () => {
   };
 
   const orderCurrentStatus = (status) => {
-    if (status.pending) return "Pending";
-    if (status.completed) return "Completed";
-    if (status.cancelled) return "Cancelled";
+    if (status.pending) return <span className="text-blue-600">Pending</span>;
+    if (status.completed)
+      return <span className="text-green-600">Completed</span>;
+    if (status.cancelled)
+      return <span className="text-red-600">Cancelled</span>;
     return "Unknown";
   };
 
@@ -281,7 +283,7 @@ const OrdersList = () => {
 
       {/* Status */}
       <td className="px-4 py-2 text-lg max-sm:text-sm font-bold">
-        <span>{orderCurrentStatus(order.status)}</span>
+        {orderCurrentStatus(order.status)}
       </td>
 
       {/* Recieved / View Button */}

@@ -81,9 +81,11 @@ const RecycleOrdersList = () => {
   };
 
   const orderCurrentStatus = (status) => {
-    if (status.pending) return "Pending";
-    if (status.completed) return "Completed";
-    if (status.cancelled) return "Cancelled";
+    if (status?.pending) return <span className="text-blue-600">Pending</span>;
+    if (status?.completed)
+      return <span className="text-green-600">Completed</span>;
+    if (status?.cancelled)
+      return <span className="text-red-600">Cancelled</span>;
     return "Unknown";
   };
 
@@ -121,6 +123,7 @@ const RecycleOrdersList = () => {
       {/* Order Details: Order ID - Product Name - Variant - Product Price - Offer Price */}
       <td className="px-4 py-2 max-sm:text-xs ">
         <div className="flex items-center justify-center">
+          {/* Order ID - Product Details */}
           <div className="flex flex-col items-start p-1 pl-2 rounded bg- text-[16px] max-sm:text-xs">
             <p className="flex max-sm:flex-col items-center justify-center gap-1">
               <span className="font-semibold">Order ID:</span>
