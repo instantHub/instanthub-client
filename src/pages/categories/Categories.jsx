@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "../../features/api";
-import AllBrandsList from "../brands/AllBrandsList";
 import Loading from "../../components/Loading";
 import ItemGrid from "../../components/ItemGrid";
 
@@ -10,7 +9,8 @@ const Categories = () => {
     useGetCategoryQuery();
 
   return (
-    <div className="mt-10 max-sm:mt-5 mx-auto">
+    // <div className="mt-10 max-sm:mt-5 mx-auto">
+    <div className="w-full mx-auto">
       <div className="w-4/5 max-sm:w-[92%] mx-auto">
         <div className="mx-0 mb-6">
           <h1 className="text-2xl pb-6 max-sm:text-lg">

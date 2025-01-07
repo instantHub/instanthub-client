@@ -1,13 +1,10 @@
 import React, { startTransition, Suspense, useEffect, useState } from "react";
-import { SiShopware } from "react-icons/si";
 import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 import {
   MdCategory,
   MdOutlineNumbers,
-  MdSlideshow,
   MdOutlineMultipleStop,
-  MdOutlineCancel,
 } from "react-icons/md";
 import { FaJediOrder } from "react-icons/fa6";
 import { PiGitDiff } from "react-icons/pi";
@@ -21,19 +18,11 @@ import {
   RiListIndefinite,
   RiQuestionAnswerFill,
 } from "react-icons/ri";
-import {
-  TbBrandAirtable,
-  TbBrandPushover,
-  TbPasswordMobilePhone,
-} from "react-icons/tb";
-import { TiPuzzle, TiPointOfInterest, TiPlusOutline } from "react-icons/ti";
+import { TbBrandAirtable } from "react-icons/tb";
 import { SiAstro, SiDatabricks, SiSlides } from "react-icons/si";
-import { FaCentSign, FaPersonCircleQuestion } from "react-icons/fa6";
-import { BsBorderStyle } from "react-icons/bs";
+import { FaCentSign } from "react-icons/fa6";
 import { GiStockpiles, GiCash } from "react-icons/gi";
-import { TfiLayoutSliderAlt } from "react-icons/tfi";
 import { ImProfile } from "react-icons/im";
-import { CgProfile } from "react-icons/cg";
 
 const SideBar2 = (props) => {
   //   const { isSidebarOpen, setIsSidebarOpen, drawerWidth } = props;

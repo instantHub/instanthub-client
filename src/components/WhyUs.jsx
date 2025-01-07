@@ -39,7 +39,7 @@ const WhyChooseInstantHubs = () => {
               <h3 className="text-lg max-sm:text-[16px] font-bold text-gray-700 ">
                 {d.heading}
               </h3>
-              <p className="opacity-70 text-sm text-gray-600 max-sm:text-xs">
+              <p className="opacity-90 text-sm text-gray-600 max-sm:text-xs">
                 {" "}
                 {d.text}
               </p>
@@ -47,30 +47,6 @@ const WhyChooseInstantHubs = () => {
           ))}
         </div>
       </div>
-      {/* FAQ */}
-      {/* <div className="max-w-[85%] mx-auto py-8">
-        <h2 className="text-3xl font-bold text-center mb-8 max-sm:text-2xl">
-          Frequently Asked Questions
-        </h2>
-        <div className="bg-white mb-4">
-          <h3 className="text-xl font-semibold opacity-90 max-sm:text-lg">
-            How do I sell my gadget?
-          </h3>
-          <p className="opacity-70 max-sm:text-sm">
-            Simply visit our website, choose your gadget, and follow the
-            instructions to get an instant quote.
-          </p>
-        </div>
-        <div className="bg-white mb-4">
-          <h3 className="text-xl font-semibold opacity-90 max-sm:text-lg">
-            How will I receive payment?
-          </h3>
-          <p className="opacity-70 max-sm:text-sm">
-            You will receive cash on the spot after we verify the condition of
-            your gadget.
-          </p>
-        </div>
-      </div> */}
     </>
   );
 };

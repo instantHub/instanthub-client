@@ -25,6 +25,7 @@ const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
               alt={item?.name || "Item"}
               className="justify-center"
               // className="justify-center aspect-[3/2] object-contain "
+              loading="lazy" // Native lazy loading
             />
             {/* Optional: display item name */}
             {/* <p className="size-4 pt-1">{item?.name}</p> */}

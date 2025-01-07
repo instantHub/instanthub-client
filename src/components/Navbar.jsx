@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import SearchBar2 from "./SearchBar2";
-import Logo from "../assets/LOGO.png";
-import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "../features/api";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
 import LocationSelector from "./LocationSelector";
 
@@ -120,15 +118,12 @@ const Navbar = () => {
             {/* LOGO Image */}
             <div className="flex items-center sm:grow">
               <Link to="/" onClick={handleScrollTop}>
-                <h2>
-                  <img
-                    // src="/images/NewLogoW.jpeg"
-                    src="/images/NavLogo.jpg"
-                    alt="InstantHub"
-                    // className="w-[90%] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
-                    className="w-[120px] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
-                  />
-                </h2>
+                <img
+                  src="/images/NavLogo.jpg"
+                  alt="InstantHub"
+                  className="w-[120px] h-[65px] my-[1px] max-sm:w-[80px] max-sm:h-[55px] max-sm:p-[7px] p-[5px]"
+                  loading="lazy" // Native lazy loading
+                />
               </Link>
             </div>
 
@@ -141,9 +136,10 @@ const Navbar = () => {
             <SearchBar2 />
 
             <div className="hidden md:flex max-14inch:text-sm">
-              <ul className="flex items-center space-x-4 text-[16px] max-sm:text-sm">
+              <div className="flex items-center space-x-4 text-[16px] max-sm:text-sm">
                 {navOptions?.map((d, i) => (
-                  <li
+                  <span
+                    aria-label={`${d.name} Button`}
                     key={i}
                     className={`px-2 py-1 border border-white rounded ${
                       location.pathname === d.url
@@ -152,12 +148,18 @@ const Navbar = () => {
                     }  hover:border-secondary`}
                   >
                     <Link to={`${d.url}`}>{d.name}</Link>
-                  </li>
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
             <div className="md:hidden ">
-              <button onClick={toggleMenu} className=" focus:outline-none">
+              <button
+                aria-label="menu"
+                aria-expanded="false"
+                aria-controls="menu"
+                onClick={toggleMenu}
+                className=" focus:outline-none"
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -272,7 +274,7 @@ const Navbar = () => {
               {!categoryLoading &&
                 categoryData?.map((category, i) => (
                   <div
-                    // to={`/categories/brands/${category.id}`}
+                    aria-label={`Hover or Click on Category ${category.name}`}
                     key={i}
                     onClick={() => {
                       setHoveredCategoryId(null);
@@ -352,72 +354,6 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-
-        {/* Small Screen - Services - Sell - Recylce  */}
-        {/* <div className="min-w-0 flex sm:hidden mt-1 max-14inch:text-sm">
-        <div className="grid grid-cols-3 bg-gray-50 bg-white mx-1 w-full shadow border-l border-r border-b-0 rounded-xl sm:hidden">
-          <div
-            className={`flex justify-center text-center py-2 rounded-tl-xl rounded-bl-xl ${
-              location.pathname.substring(0, 6).includes("/ser")
-                ? `bg-green-600 text-white transition-colors duration-1000 ease-in-out `
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/services");
-            }}
-          >
-            <button className="flex items-center gap-1 text-center">
-              <span className="">Services</span>
-              <span>
-                <MdHomeRepairService />
-              </span>
-            </button>
-          </div>
-
-          <div
-            className={`flex justify-center text-center p-2 ${
-              location.pathname.substring(0, 6).includes("/cat")
-                ? `bg-green-600 text-white rounded transition-colors duration-1000 ease-in-out `
-                : location.pathname === "/" ||
-                  location.pathname.substring(0, 6).includes("/sell")
-                ? `bg-green-600 text-white rounded transition-colors duration-1000 ease-in-out `
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <button className="flex items-center gap-1 text-center">
-              <span>Sell</span>
-              <span>
-                <GiSellCard />
-              </span>
-            </button>
-          </div>
-
-          <div
-            // className={`text-center p-2 rounded-tr-full rounded-br-full  ${
-            className={`flex justify-center text-center p-2 rounded-tr-xl rounded-br-xl  ${
-              location.pathname.includes("/recycle-categories")
-                ? `bg-green-600 text-white p-2 transition-colors duration-1000 ease-in-out `
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/recycle-categories");
-            }}
-          >
-            <button className="flex items-center gap-1 text-center">
-              <span>Recycle</span>
-              <span>
-                <FaRecycle />
-              </span>
-            </button>
-          </div>
-        </div>
-      </div> */}
-
-        {/* <Outlet />
-      <div>Footer</div> */}
       </header>
     </>
   );

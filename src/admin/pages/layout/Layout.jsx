@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import SideBar from "../../components/SideBar";

@@ -59,7 +59,7 @@ const Services = () => {
         />
         <meta
           name="keywords"
-          content="InstantHub Service, Instant Service, instant service, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
+          content="InstantHub Service, Instant Service, instant service, Instant Mobile Service, Instant Laptop Repair Service, Quick Mobile Repair Service Bangalore, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
         <meta name="author" content="Yusufulla Qureshi" />
         <link rel="canonical" href="https://www.instanthub.in/services" />

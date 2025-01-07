@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   useGetCategoryQuery,
   useCreateBrandMutation,
-  useUploadFileHandlerMutation,
   useUploadBrandImageMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import ListButton from "../../components/ListButton";
 
 const CreateBrand = () => {

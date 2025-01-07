@@ -9,6 +9,7 @@ const ProductCard = ({ product, URL }) => (
             src={`${import.meta.env.VITE_APP_BASE_URL}${product.image}`}
             alt="Product"
             className="w-[105px] h-[105px] max-sm:w-20 max-sm:h-20"
+            loading="lazy" // Native lazy loading
           />
         </div>
         <span className="text-center mt-1 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">

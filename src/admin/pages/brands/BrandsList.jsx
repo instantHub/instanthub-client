@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import {
   useGetCategoryQuery,
   useGetAllBrandQuery,
   useDeleteBrandMutation,
 } from "../../../features/api";
 import { Link } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import EditButton from "../../components/EditButton";
 import { filterCategory } from "../../features/filterSlice";
@@ -53,6 +51,7 @@ const BrandsList = () => {
           src={import.meta.env.VITE_APP_BASE_URL + brand.image}
           alt="BrandImg"
           className="w-[60px] h-[60px] mx-auto max-sm:w-[40px] max-sm:h-[40px]"
+          loading="lazy" // Native lazy loading
         />
       </td>
       <td className="px-4 py-2 max-sm:px-2 max-sm:py-1">

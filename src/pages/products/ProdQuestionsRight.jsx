@@ -19,6 +19,7 @@ const ProdDeductionsRight = () => {
               }
               alt="ProductImg"
               className="size-20"
+              loading="lazy" // Native lazy loading
             />{" "}
           </div>
           <div className="text-sm">

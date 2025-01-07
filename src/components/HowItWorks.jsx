@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  HiOutlineClipboardList,
-  HiOutlineCurrencyDollar,
-  HiOutlineClock,
-  HiOutlineCash,
-} from "react-icons/hi";
-import { FcMoneyTransfer } from "react-icons/fc";
-import { MdPriceCheck } from "react-icons/md";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import { GiPriceTag } from "react-icons/gi";

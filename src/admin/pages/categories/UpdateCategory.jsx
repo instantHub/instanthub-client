@@ -4,9 +4,8 @@ import {
   useUploadCategoryImageMutation,
   useUpdateCategoryMutation,
 } from "../../../features/api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "../../components/BackButton";
 import UpdateButton from "../../components/UpdateButton";
 import CardHeader from "../../components/CardHeader";
 

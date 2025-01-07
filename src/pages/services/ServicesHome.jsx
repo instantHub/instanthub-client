@@ -73,6 +73,7 @@ const ServicesHome = () => {
                               }
                               alt="CAT"
                               className="w-28 h-28 max-sm:w-20 max-sm:h-20 "
+                              loading="lazy"
                             />
                           </div>
                           <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">

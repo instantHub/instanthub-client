@@ -4,9 +4,8 @@ import {
   useUpdateBrandMutation,
   useUploadBrandImageMutation,
 } from "../../../features/api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "../../components/BackButton";
 import CardHeader from "../../components/CardHeader";
 import UpdateButton from "../../components/UpdateButton";
 
@@ -168,6 +167,7 @@ function UpdateBrand() {
                           }
                           alt="ConditionLabel"
                           className="w-[100px] h-[100px] mx-auto "
+                          loading="lazy" // Native lazy loading
                         />
                         <input
                           type="file"

@@ -15,7 +15,6 @@ import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import ServiceFAQs from "./ServiceFAQs";
-import ServiceContent from "./ServiceContent";
 import PriceModal from "./PriceModal";
 
 export default function BookService() {

@@ -2,15 +2,12 @@
 import React, { useEffect, useState } from "react";
 import {
   FaWhatsapp,
-  FaPhone,
   FaEnvelope,
   FaPhoneAlt,
   FaRecycle,
   FaHome,
   FaAngleDown,
   FaAngleUp,
-  FaChevronUp,
-  FaChevronDown,
 } from "react-icons/fa";
 import { GiSellCard } from "react-icons/gi";
 import { MdHomeRepairService } from "react-icons/md";
@@ -128,6 +125,7 @@ const FloatingButtons = () => {
       >
         {isScrolled && (
           <button
+            aria-label="Scroll to Top"
             onClick={scrollToTop}
             className="flex-none text-gray-500 max-sm:text-gray-900 text-2xl hover:text-gray-900
                       w-fit flex justify-center items-center rounded-md transition-all ease-in-out duration-300"
@@ -157,6 +155,7 @@ const FloatingButtons = () => {
           <FaEnvelope size={24} />
         </a>
         <button
+          aria-label="Scroll to Bottom"
           onClick={scrollToBottom}
           className="flex-none text-gray-700 text-2xl hover:text-[29px] hover:text-gray-900 hover:pt-1 
                     w-fit flex justify-center items-center rounded-md transition-all ease-in-out duration-300 max-sm:hidden"

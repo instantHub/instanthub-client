@@ -1,11 +1,5 @@
-import React, {
-  startTransition,
-  Suspense,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { useLocation, useNavigate, Link, NavLink } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 import {
   MdCategory,
@@ -17,8 +11,6 @@ import { PiGitDiff } from "react-icons/pi";
 import { GoMultiSelect } from "react-icons/go";
 import { GrMultiple } from "react-icons/gr";
 import { FcMultipleInputs } from "react-icons/fc";
-import { IoOpenOutline } from "react-icons/io5";
-import { LuPanelLeftClose } from "react-icons/lu";
 
 import {
   RiListCheck2,
@@ -30,10 +22,7 @@ import { TbBrandAirtable } from "react-icons/tb";
 import { SiAstro, SiDatabricks, SiSlides } from "react-icons/si";
 import { GiStockpiles, GiCash } from "react-icons/gi";
 import { ImProfile } from "react-icons/im";
-import { isAction } from "@reduxjs/toolkit";
-// import { FaCentSign } from "react-icons/fa6";
-import { IoMdMenu, IoMdClose } from "react-icons/io";
-import { MdOutlineMenuOpen } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 import { setCurrentPage } from "../features/adminPanelSlice";
 import { useDispatch } from "react-redux";
 import { SideBarContext } from "../pages/layout/Layout";
@@ -321,8 +310,8 @@ const SideBar = () => {
                   key={link.name}
                   // onClick={() => handleClick(e, `/admin/${link.name}`)}
                   style={({ isActive }) => ({
-                    backgroundColor: isActive ? 'lightgray' : "",
-                    color: isActive ? 'black' : "",
+                    backgroundColor: isActive ? "lightgray" : "",
+                    color: isActive ? "black" : "",
                   })}
                   className={({ isActive }) =>
                     isActive ? activeLink : normalLink

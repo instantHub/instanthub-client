@@ -72,6 +72,22 @@ const Testimonials = () => {
     return () => clearInterval(intervalId);
   }, [currentIndex]);
 
+  // Google reviews
+  // useEffect(() => {
+  //   const fetchReviews = async () => {
+  //     const placeId = "YOUR_PLACE_ID";
+  //     const apiKey = "YOUR_API_KEY";
+  //     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${apiKey}`;
+
+  //     const response = await fetch(url);
+  //     const data = await response.json();
+  //     const reviews = data.result.reviews;
+  //     console.log(reviews); // Array of reviews
+  //   };
+
+  //   fetchReviews();
+  // }, []);
+
   return (
     <div>
       <div className="group">
@@ -87,6 +103,7 @@ const Testimonials = () => {
             </div>
             <div className="flex justify-center mt-8">
               <button
+                aria-label="Scroll Left"
                 className="mr-4 text-black px-4 py-2 rounded focus:outline-none"
                 onClick={goToPrevSlide}
               >
@@ -124,6 +141,7 @@ const Testimonials = () => {
                 </div>
               </div>
               <button
+                aria-label="Scroll Right"
                 className="ml-4 text-black px-4 py-2 rounded focus:outline-none"
                 onClick={goToNextSlide}
               >

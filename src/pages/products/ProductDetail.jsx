@@ -101,6 +101,7 @@ const ProductDetail = () => {
                 src={import.meta.env.VITE_APP_BASE_URL + productDetails?.image}
                 alt="CAT"
                 className="size-48 max-sm:size-28"
+                loading="lazy" // Native lazy loading
               />
             </div>
           </div>

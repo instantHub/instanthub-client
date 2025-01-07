@@ -198,15 +198,14 @@ const SearchBar = () => {
 
   return (
     <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 max-2sm:w-[58%] max-2sm:mx-2">
-      {/* <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:mx-1 3sm:w-[100px]"> */}
       <div className="flex pl- items-center bg-gray-100 pl-2">
         <BsSearch className="text-gray-500" />
         <input
+          aria-label="Search"
           type="search"
           name="search"
           value={search}
           id="search"
-          // className="text-black grow pl-2 pr-5 py-2 w-full rounded-full md:w-72 sm:w-64 2sm:w-3/4 3sm:w-3/4 focus:bg-transparent outline-none"
           className="text-black grow bg-gray-100 px-2 text-sm py-2 focus:bg-transparent outline-none"
           placeholder={`Search for Mobiles, Laptops etc.. `}
           onChange={(e) => {
@@ -220,7 +219,6 @@ const SearchBar = () => {
 
       {search && !productsLoading && productsData && (
         <div
-          //   className="absolute bg-white text-black flex flex-col p-4 rounded max-w-500px max-h-[250px] overflow-y-auto scrollbar md:w-72 sm:w-64 2sm:w-3/4 3sm:w-3/4"
           //   className="absolute bg-white text-black flex flex-col p-4 rounded max-w-[500px] max-h-[270px] overflow-y-auto scrollbar w-fit "
           className="absolute bg-white text-black flex flex-col p-4 rounded max-h-[270px] overflow-y-auto scrollbar "
           // style={{ maxHeight: "200px", overflowY: "scroll" }}

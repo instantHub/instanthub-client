@@ -20,6 +20,7 @@ const Footer = () => {
               alt="logo"
               // className="w-full h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
               className="w-[150px] h-[80px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
+              loading="lazy" // Native lazy loading
             />
             {/* <p className="flex flex- items-center gap-1 text-white ">
               <span className="font-serif text-3xl max-sm:text-lg">
@@ -58,6 +59,7 @@ const Footer = () => {
               alt="logo"
               // className="w-full h-[75px] my-[1px] max-sm:w-[75%] max-sm:h-[75px] p-1"
               className="w-[60px] h-[75px] my-[1px] max-sm:w-[150px] max-sm:h-[80px] p-1"
+              loading="lazy" // Native lazy loading
             />
 
             {/* <p className="flex items-center gap-1 font-serif text-2xl text-white">

@@ -1,7 +1,6 @@
 import React, { useState, useRef, useReducer } from "react";
 import {
   useCreateCategoryMutation,
-  useUploadFileHandlerMutation,
   useUploadCategoryImageMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";

@@ -170,6 +170,7 @@ const LaptopDeductionItems = ({
                 }`}
                 alt="LabelImg"
                 className="size-20 max-sm:size-24"
+                loading="lazy" // Native lazy loading
               />
             </div>
           )}

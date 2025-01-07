@@ -136,6 +136,7 @@ const OtpGenerator = (props) => {
           alt=""
           // className="w-full h-auto transform transition-transform hover:scale-110"
           className="max-sm:hidden"
+          loading="lazy" // Native lazy loading
         />
       </div>
       {/* <div className="flex flex-col justify-center items-center bg-white max-sm:w-[90%] rounded-xl"> */}
@@ -150,6 +151,7 @@ const OtpGenerator = (props) => {
                 }
                 alt="ProductImg"
                 className="size-20 rounded-xl"
+                loading="lazy" // Native lazy loading
               />{" "}
             </div>
             <div className="flex flex-col gap-1 max-sm:px-2">

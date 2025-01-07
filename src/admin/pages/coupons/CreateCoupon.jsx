@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useState } from "react";
 import {
   useDeleteSeriesMutation,
   useCreateCouponMutation,
-  useGetCouponQuery,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import CouponsList from "./CouponsList";
 
 const CreateCoupon = () => {

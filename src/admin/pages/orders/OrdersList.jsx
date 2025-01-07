@@ -5,12 +5,10 @@ import {
 } from "../../../features/api";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from "../../components/TableView";
-import OrderRecieved from "./OrderRecieved";
-import OrderView from "./OrderView";
+// import OrderRecieved from "./OrderRecieved";
+// import OrderView from "./OrderView";
 import { GiCardPickup } from "react-icons/gi";
 import { FaHandsHoldingCircle } from "react-icons/fa6";
-import { MdOutlineGridView } from "react-icons/md";
-import { IoMdOpen } from "react-icons/io";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../../components/ConfirmationModal";
 

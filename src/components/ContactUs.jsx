@@ -51,11 +51,12 @@ const ContactUs = () => {
 
             <div className="flex items-start gap-2">
               <span className="opacity-60 w-[60px] text-end">Adress:</span>
-              <p className="">
+              <p className="">Bengaluru, Karnataka</p>
+              {/* <p className="">
                 Sy. No. 92, R Greens A.C, <br />
                 Sarjapur Outer Ring Road Marathahalli <br />
                 Bengaluru - 37
-              </p>
+              </p> */}
             </div>
             {/* <p>
               Live Chat: Visit our website to chat with a representative in

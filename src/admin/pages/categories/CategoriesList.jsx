@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   useGetCategoryQuery,
   useDeleteCategoryMutation,
@@ -72,6 +72,7 @@ const CategoriesList = () => {
           src={import.meta.env.VITE_APP_BASE_URL + category.image}
           alt="CAT"
           className="w-[60px] h-[60px] mx-auto"
+          loading="lazy" // Native lazy loading
         />
       </td>
       <td className="">

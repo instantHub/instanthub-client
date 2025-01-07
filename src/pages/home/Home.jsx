@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
 import Slider from "../../components/Slider";
 import Categories from "../categories/Categories";
-import Testimonials from "../../components/Testimonials";
 import TestimonialCarousel from "../../components/TestimonialsCorousel";
 import HowItWorks from "../../components/HowItWorks";
 import WhyChooseInstantHubs from "../../components/WhyUs";
 import { Helmet } from "react-helmet-async";
-import FloatingButtons from "../../components/FloatingButtons";
 import FAQ from "../../components/FAQ";
-import Services from "../services/Services";
-import AllBrandsList from "../brands/AllBrandsList";
 import ServicesHome from "../services/ServicesHome";
 import { FaHandPointLeft, FaHandPointRight } from "react-icons/fa";
 
@@ -23,7 +19,7 @@ const Home = () => {
   //     "Get instant cash payments with InstantHub. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily.",
   //   potentialAction: {
   //     "@type": "SearchAction",
-  //     target: "https://www.instanthub.in/search?q={search_term_string}",
+  //     target: "https://www.instanthub.in/",
   //     "query-input": "required name=search_term_string",
   //   },
   // };
@@ -44,12 +40,18 @@ const Home = () => {
 
         <meta
           name="keywords"
-          content="Instant Hub, instant hub, InstantHub, instanthub, sell old products on Instant Hub, sell on instant hub, sell old products on InstantHub, sell old products on instanthub, instant pick, Instant Pick, instant cash pick, Instant Cash Pick, sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online."
+          content="Instant Hub, instant hub, InstantHub, instanthub, Sell Instant Laptop in Bangalore, Instant Mobile Selling in Bangalore, Get Instant Cash for Your Mobile, 
+                  sell mobile instantly, sell laptop instantly,
+                  Sell Your Phone Instantly for Cash, Sell My Mobile Quickly, Quick Laptop Selling in Bangalore, Sell My Phone for Instant Cash, Sell Mobile Phones Instantly for Cash,
+                  sell old products on Instant Hub, sell on instant hub, sell old products on InstantHub, sell old products on instanthub, instant pick, Instant Pick, instant cash pick, 
+                  Instant Cash Pick, sell products on online, sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online."
         />
+
         <link rel="canonical" href="https://www.instanthub.in/" />
+        
       </Helmet>
 
-      <div className="">
+      <div className="flex flex-col w-full">
         {/* Bill Board Advertisement */}
         <div className="relative overflow-hidden whitespace-nowrap py-2 max-sm:py-1 w-full bg-secondary text-secondary-light my-3 max-sm:my-2">
           <div className="absolute px-2 max-sm:px-1 left-0 bg-secondary z-10 top-2 max-sm:top-1">
@@ -88,29 +90,20 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Temporary note for customers */}
-        {/* <div className=" flex items-center justify-center gap-20 sm:gap-96 text-[16px] max-sm:text-[10px]">
-          <p className="flex items-center gap-1 ">
-            <span className="animate-puls">
-              🚨 We are currently operating in
-            </span>
-            <strong>Bangalore</strong>
-            <span className="animate-">only. Stay tuned for updates!</span>
-          </p>
-        </div> */}
+        <div className="flex flex-col gap-10 max-sm:gap-5 w-full">
+          <Slider />
 
-        <Slider />
+          <Categories />
 
-        <Categories />
-
-        <div className="mt-10 pt-5 pb-16 bg-secondary-light/40">
-          {/* <Services /> */}
-          <ServicesHome />
+          <div className="mt-10 pt-5 pb-16 bg-secondary-light/40">
+            {/* <Services /> */}
+            <ServicesHome />
+          </div>
+          <HowItWorks />
+          <TestimonialCarousel />
+          <WhyChooseInstantHubs />
+          <FAQ from={`home`} />
         </div>
-        <HowItWorks />
-        <TestimonialCarousel />
-        <WhyChooseInstantHubs />
-        <FAQ from={`home`} />
       </div>
     </>
   );

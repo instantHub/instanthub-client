@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import UpdateButton from "./UpdateButton";
-import {
-  useGetProductDetailsQuery,
-  useUpdateLaptopConfigurationsPriceDropMutation,
-} from "../../../../features/api";
+import { useUpdateLaptopConfigurationsPriceDropMutation } from "../../../../features/api";
 import { toast } from "react-toastify";
 
 const UpdateSystemConfigurations = (props) => {
