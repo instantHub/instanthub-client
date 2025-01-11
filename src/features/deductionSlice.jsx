@@ -57,7 +57,10 @@ export const deductionSlice = createSlice({
         };
       }
 
-      if (laptopCategory && configItems.includes(action.payload.type)) {
+      if (
+        (laptopCategory || desktopCategory) &&
+        configItems.includes(action.payload.type)
+      ) {
         console.log("Hard Disk or RAM", action.payload);
         if (action.payload.operation === "Subtrack") {
           return {

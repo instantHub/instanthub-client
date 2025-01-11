@@ -63,26 +63,15 @@ const Products = () => {
     }
   }, [productsData]);
 
-  // console.log(brand);
-
   const displayedSeries = seriesAction?.showSeries
     ? brandSeries?.filter((series) => series.id === seriesAction.selectedSeries)
     : brandSeries;
-
-  // if (seriesLoading || displayedSeries.length === 0) return null;
 
   const filteredProducts = seriesAction.showSeries
     ? productsData?.filter(
         (product) => product.series === seriesAction.selectedSeries
       )
     : productsData;
-
-  // if (productsData?.length === 0)
-  //   return (
-  //     <div className="flex items-center justify-center w-full h-dvh">
-  //       <h1>Not Available</h1>
-  //     </div>
-  //   );
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -128,8 +117,7 @@ const Products = () => {
         </div>
       </div>
 
-      {/* <div className="mt-5 w-4/5 max-sm:w-[90%] mx-auto"> */}
-      <div className="mt-5 w-[90%] max-sm:w-[90%] mx-auto">
+      <div className="mt-5 w-[90%] max-sm:w-[90%] mx-auto bg-white">
         {/* Search Bar */}
         <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
           <div className="flex items-center gap-1 px-2 border rounded-md">
@@ -139,8 +127,7 @@ const Products = () => {
               name=""
               id=""
               placeholder="Search a product"
-              className="px-2 text-sm py-1 outline-none"
-              // onChange={(e) => setSearch(e.target.value)}
+              className="px-2 bg-white text-sm py-1 outline-none"
               onChange={(e) => debounce(e, "test1", "test2")}
             />
           </div>

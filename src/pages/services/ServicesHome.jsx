@@ -58,7 +58,7 @@ const ServicesHome = () => {
                 {!serviceLoading &&
                   servicesData?.serviceCategories
                     // ?.filter((sc) => sc.type.toLowerCase() === "directservice")
-                    .slice(0, 20)
+                    .slice(0, 10)
                     .map((service, i) => (
                       <Link to={determinePath(service)} key={i}>
                         <div

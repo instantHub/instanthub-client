@@ -28,15 +28,19 @@ const ConditionLabelsTable = () => {
     useGetCategoryQuery();
 
   const filterData = useSelector((state) => state.filter.conditionLabelsList);
-  console.log("filterData", filterData);
+  // console.log("filterData", filterData);
 
   const dispatch = useDispatch();
 
   const selectedCategory = filterData.category;
-  console.log("selectedCategory", selectedCategory);
+  // console.log("selectedCategory", selectedCategory);
 
   const selectedCondition = filterData.condition;
-  console.log("selectedCondition", selectedCondition);
+  // console.log("selectedCondition", selectedCondition);
+
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [labelToDelete, setLabelToDelete] = useState("");
 
   const handleDelete = async (category, conditionLabelId, conditionLabel) => {
     console.log(category, conditionLabelId);
@@ -89,13 +93,19 @@ const ConditionLabelsTable = () => {
           />
           <button
             className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
-            onClick={() =>
-              handleDelete(
+            onClick={() => {
+              // handleDelete(
+              //   conditionLabel.category.id,
+              //   conditionLabel.id,
+              //   conditionLabel.conditionLabel
+              // );
+              setModalOpen(true);
+              setLabelToDelete([
                 conditionLabel.category.id,
                 conditionLabel.id,
-                conditionLabel.conditionLabel
-              )
-            }
+                conditionLabel.conditionLabel,
+              ]);
+            }}
             disabled={deleteLoading}
           >
             <span className="max-sm:hidden">Delete</span>
@@ -221,260 +231,62 @@ const ConditionLabelsTable = () => {
           rowRenderer={rowRenderer}
         />
       )}
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={labelToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this Condition Label? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 };
 
 export default ConditionLabelsTable;
 
-{
-  /* Filter features */
-  // <div className="flex justify-between">
-  //   <div className="flex items-center gap-4 mb-4">
-  //     {/* Select Category */}
-  //     <div>
-  //       <label htmlFor="condition" className=" mr-2">
-  //         Select Category:
-  //       </label>
-  //       <select
-  //         id="condition"
-  //         onChange={(e) => {
-  //           // setSelectedCategory(e.target.value);
-  //           dispatch(
-  //             filterCategory({
-  //               category: e.target.value,
-  //               from: "conditionLabelsList",
-  //             })
-  //           );
-  //           // setSelectedCondition("");
-  //         }}
-  //         value={selectedCategory}
-  //         className="px-2 py-1 rounded border text-black"
-  //       >
-  //         <option value="">Search</option>
-  //         {!categoriesLoading &&
-  //           categories.map((category) => (
-  //             <option key={category.id} value={category.id}>
-  //               {category.name}
-  //             </option>
-  //           ))}
-  //       </select>
-  //     </div>
-  //     {/* Select Condition */}
-  //     <div className=" overflow-hidden">
-  //       <label htmlFor="condition" className=" mr-2">
-  //         Select Condition:
-  //       </label>
-  //       <select
-  //         id="condition"
-  //         onChange={(e) => {
-  //           // setSelectedCondition(e.target.value);
-  //           dispatch(
-  //             filterCondition({
-  //               condition: e.target.value,
-  //               from: "conditionLabelsList",
-  //             })
-  //           );
-  //         }}
-  //         value={selectedCondition}
-  //         className="px-2 py-1 rounded border text-black"
-  //       >
-  //         <option value="">Search</option>
-  //         {!conditionsLoading &&
-  //           conditionsData
-  //             .filter((c) => c.category.id === selectedCategory)
-  //             .map((cond) => (
-  //               <option key={cond.id} value={cond.id}>
-  //                 {cond.conditionName}
-  //               </option>
-  //             ))}
-  //       </select>
-  //     </div>
-  //     {/* Clear button */}
-  //     <div>
-  //       <button
-  //         className="text-red-600 hover:border-b-[1px] border-red-600"
-  //         onClick={(e) => {
-  //           e.preventDefault();
-  //           dispatch(clearFilter({ clear: "conditionLabelsList" }));
-  //         }}
-  //       >
-  //         Clear Filter
-  //       </button>
-  //     </div>
-  //   </div>
-  //   <BackButton
-  //     location={"/admin/create-questions"}
-  //     text={"Create ConditionLabels"}
-  //   />
-  // </div>;
-  // if (conditionLabelsData) {
-  //   console.log("conditionLabelsData", conditionLabelsData);
-  // }
-  // const [selectedCategory, setSelectedCategory] = useState(undefined);
-  // const [selectedCondition, setSelectedCondition] = useState(undefined);
-  /* <table className="w-full">
-<thead>
-  <tr>
-    <th className="px-4 py-2 text-white bg-gray-800">Category</th>
-    <th className="px-4 py-2 text-white bg-gray-800">Condition</th>
-    <th className="px-4 py-2 text-white bg-gray-800">
-      Condition Label
-    </th>
-    <th className="px-4 py-2 text-white bg-gray-800">
-      Condition Label Image
-    </th>
-    <th className="px-4 py-2 text-white bg-gray-800">Edit & Delete</th>
-  </tr>
-</thead>
+const ConfirmationModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  itemToDelete,
+  title = "Are you sure?",
+  description = "This action cannot be undone.",
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  detail = null,
+}) => {
+  if (!isOpen) return null;
 
-<tbody className="text-center">
-  {!conditionLabelsLoading && !categoriesLoading && !selectedCategory
-    ? conditionLabelsData.map((conditionLabel, index) => (
-        <tr
-          key={index}
-          className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
-        >
-          <td className=" py-2">{conditionLabel.category?.name}</td>
-          <td className=" py-2">
-            {conditionLabel.conditionNameId?.conditionName}
-          </td>
-          <td className=" py-2">{conditionLabel.conditionLabel}</td>
-          <td className=" py-2">
-            {conditionLabel.conditionLabelImg ? (
-              <img
-                src={
-                  import.meta.env.VITE_APP_BASE_URL +
-                  conditionLabel.conditionLabelImg
-                }
-                alt="CAT"
-                className="w-[60px] h-[60px] mx-auto "
-              />
-            ) : (
-              <p className="text-red-500">No Image</p>
-            )}
-          </td>
-          <td className="text-white py-2">
-            <div className="flex gap-2 justify-center">
-              <EditButton
-                location={`/admin/updateConditionLabel/${conditionLabel.id}`}
-              />
-              <button
-                className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
-                onClick={() =>
-                  handleDelete(
-                    conditionLabel.category.id,
-                    conditionLabel.id,
-                    conditionLabel.conditionLabel
-                  )
-                }
-                disabled={deleteLoading}
-              >
-                Delete
-              </button>
-            </div>
-          </td>
-        </tr>
-      ))
-    : !conditionLabelsLoading && !selectedCondition
-    ? conditionLabelsData
-        .filter((cl) => cl.category?.id === selectedCategory)
-        .map((conditionLabel, index) => (
-          <tr
-            key={index}
-            className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+  console.log("itemToDelete", itemToDelete);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-white w-full max-w-md rounded shadow-lg p-6">
+        <h2 className="text-lg font-semibold mb-4">{title}</h2>
+        <p className="text-gray-800 mb-2">{detail && detail}</p>
+        <p className="text-gray-600 mb-6">{description}</p>
+        <div className="flex justify-end space-x-4">
+          <button
+            className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded"
+            onClick={onClose}
           >
-            <td className=" py-2">{conditionLabel.category.name}</td>
-            <td className=" py-2">
-              {conditionLabel.conditionNameId?.conditionName}
-            </td>
-            <td className=" py-2">{conditionLabel.conditionLabel}</td>
-            <td className=" py-2">
-              {conditionLabel.conditionLabelImg ? (
-                <img
-                  src={
-                    import.meta.env.VITE_APP_BASE_URL +
-                    conditionLabel.conditionLabelImg
-                  }
-                  alt="CAT"
-                  className="w-[60px] h-[60px] mx-auto "
-                />
-              ) : (
-                <p className="text-red-500">No Image</p>
-              )}
-            </td>
-            <td className="text-white py-2">
-              <div className="flex gap-2 justify-center">
-                <EditButton
-                  location={`/admin/updateConditionLabel/${conditionLabel.id}`}
-                />
-                <button
-                  className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
-                  onClick={() =>
-                    handleDelete(
-                      conditionLabel.category.id,
-                      conditionLabel.id,
-                      conditionLabel.conditionLabel
-                    )
-                  }
-                  disabled={deleteLoading}
-                >
-                  Delete
-                </button>
-              </div>
-            </td>
-          </tr>
-        ))
-    : !conditionLabelsLoading &&
-      conditionLabelsData
-        .filter((cl) => cl.category.id === selectedCategory)
-        .filter((cl) => cl.conditionNameId?.id === selectedCondition)
-        .map((conditionLabel, index) => (
-          <tr
-            key={index}
-            className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
+            {cancelText}
+          </button>
+          <button
+            className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded"
+            onClick={() => {
+              onConfirm(...itemToDelete);
+              onClose();
+            }}
           >
-            <td className=" py-2">{conditionLabel.category.name}</td>
-            <td className=" py-2">
-              {conditionLabel.conditionNameId?.conditionName}
-            </td>
-            <td className=" py-2">{conditionLabel.conditionLabel}</td>
-            <td className=" py-2">
-              {conditionLabel.conditionLabelImg ? (
-                <img
-                  src={
-                    import.meta.env.VITE_APP_BASE_URL +
-                    conditionLabel.conditionLabelImg
-                  }
-                  alt="CAT"
-                  className="w-[60px] h-[60px] mx-auto "
-                />
-              ) : (
-                <p className="text-red-500">No Image</p>
-              )}
-            </td>
-            <td className="text-white py-2">
-              <div className="flex gap-2 justify-center">
-                <EditButton
-                  location={`/admin/updateConditionLabel/${conditionLabel.id}`}
-                />
-                <button
-                  className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
-                  onClick={() =>
-                    handleDelete(
-                      conditionLabel.category.id,
-                      conditionLabel.id,
-                      conditionLabel.conditionLabel
-                    )
-                  }
-                  disabled={deleteLoading}
-                >
-                  Delete
-                </button>
-              </div>
-            </td>
-          </tr>
-        ))}
-</tbody>
-</table> */
-}
+            {confirmText}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

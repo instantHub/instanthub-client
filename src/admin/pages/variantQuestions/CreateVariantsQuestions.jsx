@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Table from "../../components/TableView";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 function CreateVariantsQuestions() {
   const [deductionSelected, setDeductionSelected] = useState("");
@@ -53,6 +54,10 @@ function CreateVariantsQuestions() {
     }
   };
 
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [itemToDelete, setItemoDelete] = useState("");
+
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,7 +93,11 @@ function CreateVariantsQuestions() {
       </td>
       <td className="px-4 py-2">
         <button
-          onClick={() => handleDelete(variant._id)}
+          onClick={() => {
+            // handleDelete(variant._id);
+            setModalOpen(true);
+            setItemoDelete(variant._id);
+          }}
           className="bg-red-600 text-white text-sm max-sm:text-xs px-2 py-1 border rounded"
         >
           Delete
@@ -171,6 +180,17 @@ function CreateVariantsQuestions() {
             />
           )}
         </div>
+
+        <ConfirmationModal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          onConfirm={handleDelete}
+          itemToDelete={itemToDelete}
+          title="Confirm Deletion"
+          description="Are you sure you want to delete this item? This action cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+        />
       </div>
     </>
   );

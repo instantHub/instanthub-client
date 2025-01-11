@@ -508,6 +508,14 @@ function App() {
               // element: <AdminProductQuestions />,
               element: lazyLoad(() => import("./admin/pages/posts/CreatePost")),
             },
+
+            // Complaints
+            {
+              path: "/admin/complaints",
+              element: lazyLoad(() =>
+                import("./admin/pages/complaints/Complaints")
+              ),
+            },
           ],
         },
       ],

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import ComplaintBox from "./ComplaintBox";
 
 const Footer = () => {
+  const [openComplaintBox, setOpenComplaintBox] = useState(false);
+
   const listItemStyle =
-    "hover:text-white px-2 py-1 max-sm:text-xs text-sm hover:text-[16px] hover:bg-secondary-light hover:text-black rounded-md transition-all ease-in-out duration-1000";
+    "px-2 py-1 max-sm:text-xs text-sm hover:text-[16px] hover:bg-secondary-light hover:text-secondary rounded-md transition-all ease-in-out duration-1000";
   return (
     // <div className="w-full sm:pt-10 sm:pb-5 mt-2 bg-secondary px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16">
     <div
@@ -86,7 +89,7 @@ const Footer = () => {
 
           {/* Company */}
           <div className="flex flex-col justify-start items-center max-sm:items-start">
-            <div className="text-white font-bold py-1 max-sm:text-sm">
+            <div className="text-white hover:text-secondary font-bold py-1 max-sm:text-sm">
               <span>Company</span>
             </div>
             <div className="pl-2">
@@ -124,6 +127,14 @@ const Footer = () => {
                   <Link to={`/contact-us`}>
                     <span className={`${listItemStyle}`}>Contact Us</span>
                   </Link>
+                </li>
+                <li>
+                  <span
+                    className={`${listItemStyle}`}
+                    onClick={() => setOpenComplaintBox(!openComplaintBox)}
+                  >
+                    Drop Your Complaint
+                  </span>
                 </li>
               </ul>
             </div>
@@ -168,49 +179,23 @@ const Footer = () => {
               <p>Our Office</p>
             </div>
             <div className="pl-2 text-white flex flex-col font-thin text-sm max-sm:text-[11px]">
-              <p className="">
-                Sy. No. 92, R Greens A.C, <br />
+              <p>
+                {/* Sy. No. 92, R Greens A.C, <br /> */}
                 Sarjapur Outer Ring Road Marathahalli <br />
                 Bengaluru - 37
               </p>
-              <p className="text-[12px]">GST: 29CSJPA4571K1ZE</p>
-              <p className="">Ph: +91 8722288017</p>
-              <p className="">sale@instanthub.in</p>
-              <p className="">info@instanthub.in</p>
+              <p>Ph: +91 8722288017</p>
+              <p>support@instanthub.in</p>
+              <p>info@instanthub.in</p>
+              <p>GST: 29CSJPA4571K1ZE</p>
             </div>
           </div>
         </div>
-
-        {/* Address */}
-        {/* <div className="flex flex-col items-center max-md:hidden">
-          <div className="text-white font-bold py-2">
-            <p>Our Office</p>
-          </div>
-          <div className="pl-2 flex flex-col items-start">
-            <p className="text-xs">
-              Sy. No. 92, R Greens A.C, <br />
-              Sarjapur Outer Ring Road Marathahalli <br />
-              Bengaluru - 37
-            </p>
-            <p className="text-xs">Ph: +91 8722288017</p>
-            <p className="text-xs">sale@instanthub.in</p>
-            <p className="text-xs">info@instanthub.in</p>
-          </div>
-        </div> */}
       </div>
-      {/* <div className="text-end p-0 m-0 text-xs text-white developed-by transition-transform duration-3000 transform translate-x-full md:translate-x-0">
-        <h2>Developed by: Yusufulla Qureshi</h2>
-      </div> */}
-      {/* <div className="flex items-center justify-end p-0 text-white">
-        <div className="flex flex-col items-center">
-          <div className="flex items-center">
-            <FcServices />
-            <p className="text-sm flex items-center justify-center max-sm:text-[10px]">
-              Developed by: Yusufulla Qureshi
-            </p>
-          </div>
-        </div>
-      </div> */}
+
+      {openComplaintBox && (
+        <ComplaintBox setOpenComplaintBox={setOpenComplaintBox} />
+      )}
     </div>
   );
 };

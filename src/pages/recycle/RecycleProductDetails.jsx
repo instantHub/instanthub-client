@@ -736,9 +736,9 @@ const RecycleProductDetail = () => {
                   </div>
                   <div>
                     {selectedDate && (
-                      <p>
+                      <p className="max-sm:text-sm">
                         Scheduled time:{" "}
-                        <span className="font-semibold">{schedulePickUp}</span>{" "}
+                        <span className="font-semibold max-sm:text-xs">{schedulePickUp}</span>{" "}
                       </p>
                     )}
                   </div>

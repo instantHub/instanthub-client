@@ -62,9 +62,6 @@ const RecycleOrderDetail = () => {
     console.log("date", typeof date);
 
     setSelectedDate(date);
-
-    // console.log("formattedDate", formattedDate);
-    // setFormData({ ...formData, schedulePickUp: formattedDate });
   };
 
   const uploadFileHandler = async (image) => {
@@ -704,12 +701,10 @@ const RecycleOrderDetail = () => {
                       selected={selectedDate}
                       onChange={handleTimeChange}
                       showTimeSelect
-                      // timeFormat="HH:mm" // 24 hours
                       timeFormat="h:mm aa" // 12 hours
                       timeIntervals={30}
                       dateFormat="MMMM d, yyyy h:mm aa"
                       timeCaption="Time"
-                      // minDate={schedulePickUpDate}
                       minDate={currentDate}
                       minTime={minTime}
                       maxTime={maxTime}

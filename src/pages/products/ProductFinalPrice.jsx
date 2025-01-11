@@ -14,6 +14,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import FAQ from "../../components/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
+import LocationSelector from "../../components/LocationSelector";
 
 const ProductFinalPrice = () => {
   const { data: couponsData, isLoading: couponsDataLoading } =
@@ -24,7 +25,13 @@ const ProductFinalPrice = () => {
   const selectedProdDetails = useSelector((state) => state.deductions);
   const laptopSlice = useSelector((state) => state.laptopDeductions);
   const [formData, setFormData] = useState();
-  const [addressDetails, setAddressDetails] = useState();
+  const [addressDetails, setAddressDetails] = useState({
+    address: "",
+    state: "",
+    city: "",
+    pinCode: "",
+  });
+  console.log("addressDetails", addressDetails);
   const [offerPrice, setOfferPrice] = useState();
   const [specialPrice, setSpecialPrice] = useState();
   const [accessoriesNotSelected, setAccessoriesNotSelected] = useState([]);
@@ -46,9 +53,9 @@ const ProductFinalPrice = () => {
   const maxTime = new Date();
   maxTime.setHours(22, 0, 0, 0);
 
-  console.log("selectedProdDetails", selectedProdDetails);
-  console.log("laptopSlice", laptopSlice);
-  console.log("deductionsByType", deductionsByType);
+  // console.log("selectedProdDetails", selectedProdDetails);
+  // console.log("laptopSlice", laptopSlice);
+  // console.log("deductionsByType", deductionsByType);
 
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -76,8 +83,11 @@ const ProductFinalPrice = () => {
     setSelectedDigitalPayment(e.target.value);
   };
 
+  const [showLocation, setShowLocation] = useState();
+
   const openModal = () => {
-    setIsOpen(true);
+    // setIsOpen(true);
+    setShowLocation(true);
   };
 
   const closeModal = () => {
@@ -111,6 +121,12 @@ const ProductFinalPrice = () => {
     } else {
       toast.error("Phone Number cannot be more than 10 digits");
     }
+  };
+
+  const handleAddress = (state, city) => {
+    setAddressDetails((prev) => {
+      return { ...prev, state, city };
+    });
   };
 
   const handleTimeChange = (date) => {
@@ -320,40 +336,6 @@ const ProductFinalPrice = () => {
         // console.log("AccessoriesNotSelected", a);
       });
     }
-    // else {
-    //   setFormData({
-    //     ...formData,
-    //     productId,
-    //     productName: selectedProdDetails.productName,
-    //     productBrand: productDetails.brand.name,
-    //     productCategory: selectedProdDetails.productCategory,
-    //     variant: selectedProdDetails.getUpTo,
-    //     deductions: selectedProdDetails.deductions,
-    //     accessoriesAvailable: AccessoriesSelected,
-    //     status: "pending",
-    //     // offerPrice: Math.ceil(deductedPrice),
-    //   });
-    // }
-
-    setFormData({
-      ...formData,
-      productId,
-      productName: selectedProdDetails.productName,
-      productBrand: productDetails.brand.name,
-      productCategory: selectedProdDetails.productCategory,
-      variant: selectedProdDetails.getUpTo,
-      deductions: selectedProdDetails.deductions,
-      accessoriesAvailable: AccessoriesSelected,
-      status: {
-        pending: true,
-        completed: false,
-        cancelled: false,
-      },
-      // status: "pending",
-
-      // accessoriesNotAvailable: AccessoriesNotSelected,
-      // offerPrice: Math.ceil(deductedPrice),
-    });
 
     const minPrice = productCategory === "laptop" ? 1500 : 500;
     // Final Offer Price
@@ -387,10 +369,39 @@ const ProductFinalPrice = () => {
       },
       {}
     );
+    finalDeductionSet.AccessoriesNotSelected = AccessoriesNotSelected;
     setDeductionsByType(finalDeductionSet);
 
     console.log("finalDeductionSet", finalDeductionSet);
+
+    const finalDeductionArray = Object.entries(finalDeductionSet).reduce(
+      (acc, ite) => {
+        acc.push({ type: ite[0], conditions: ite[1] });
+        return acc;
+      },
+      []
+    );
+    console.log("finalDeductionArray", finalDeductionArray);
+
+    setFormData({
+      ...formData,
+      productId,
+      productName: selectedProdDetails.productName,
+      productBrand: productDetails.brand.name,
+      productCategory: selectedProdDetails.productCategory,
+      variant: selectedProdDetails.getUpTo,
+      deductions: selectedProdDetails.deductions,
+      accessoriesAvailable: AccessoriesSelected,
+      status: {
+        pending: true,
+        completed: false,
+        cancelled: false,
+      },
+      finalDeductionSet: finalDeductionArray,
+    });
   }
+
+  console.log("accessoriesNotSelected", accessoriesNotSelected);
 
   // UseEffect to get complete final data
   // useEffect(() => {
@@ -552,6 +563,18 @@ const ProductFinalPrice = () => {
           </Link>
         </div>
 
+        {showLocation && (
+          <div className="fixed inset-0 flex justify-center items-center bg-black/50">
+            <div className="relative bg-white p-6 max-sm:p-4 w-fit max-md:w-[90%] rounded-lg">
+              <LocationSelector
+                handleAddress={handleAddress}
+                setShowLocation={setShowLocation}
+                setIsOpen={setIsOpen}
+              />
+            </div>
+          </div>
+        )}
+
         <div className="w-full flex gap-10 max-sm:flex-col text-[16px] max-sm:text-xs">
           {/* Left */}
           <div
@@ -576,13 +599,6 @@ const ProductFinalPrice = () => {
                     <span>{selectedProdDetails.getUpTo.variantName}</span>
                   ) : null}
                 </div>
-                {/* <h2 className="text-xl">
-                Offered Price{" "}
-                <span className="text-[30px] text-green-600 font-bold">
-                  {offerPrice}
-                  /-
-                </span>
-              </h2> */}
               </div>
             </div>
 
@@ -654,8 +670,6 @@ const ProductFinalPrice = () => {
                 )}
 
                 {recycleProduct &&
-                  // (productDetails.category.name === "Laptop" ||
-                  //   productDetails.category.name === "Mobile") && (
                   ["Laptop", "Mobile"].includes(
                     productDetails.category.name
                   ) && (
@@ -716,7 +730,7 @@ const ProductFinalPrice = () => {
 
               <DisplayDeductions data={deductionsByType} />
 
-              {accessoriesNotSelected.length > 0 ? (
+              {/* {accessoriesNotSelected.length > 0 ? (
                 <div className="flex flex-col items-start text-lg max-sm:text-xs">
                   <h2 className="text-xl max-sm:text-sm font-semibold py-2">
                     Accessories Not Selected
@@ -732,7 +746,7 @@ const ProductFinalPrice = () => {
                     ))}
                   </div>
                 </div>
-              ) : null}
+              ) : null} */}
             </div>
 
             <div className="w-3/4 mt-5 flex items-center justify-center max-lg:w-full">
@@ -796,16 +810,17 @@ const ProductFinalPrice = () => {
           role="dialog"
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         >
-          <div className="bg-white p-8 max-sm:py-2 max-sm:px-4 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
+          <div className="relative bg-white p-8 max-sm:py-2 max-sm:px-4 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl max-sm:text-lg font-semibold mb-4">
                 Enter your details
               </h2>
               <button
                 onClick={closeModal}
-                className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+                // className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+                className=" absolute top-0 right-0 max-sm:text-sm bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
               >
-                x
+                close
               </button>
             </div>
             <p></p>
@@ -816,13 +831,12 @@ const ProductFinalPrice = () => {
               >
                 {/* Name */}
                 <div>
-                  <label htmlFor="name" className="max-sm:text-md">
+                  <label htmlFor="name" className="max-sm:text-sm">
                     Name:{" "}
                   </label>
                   <input
                     type="text"
                     name="name"
-                    id=""
                     placeholder="Enter Name"
                     className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2 max-sm:text-sm max-sm:px-1 max-sm:py-0"
                     onChange={(e) =>
@@ -833,11 +847,12 @@ const ProductFinalPrice = () => {
                 </div>
                 {/* Email */}
                 <div>
-                  <label htmlFor="email">Email: </label>
+                  <label htmlFor="email" className="max-sm:text-sm">
+                    Email:{" "}
+                  </label>
                   <input
                     type="email"
                     name="email"
-                    id=""
                     placeholder="Enter email"
                     className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2 max-sm:text-sm max-sm:px-1 max-sm:py-0"
                     onChange={(e) =>
@@ -848,28 +863,28 @@ const ProductFinalPrice = () => {
                 </div>
                 {/* Phone Number */}
                 <div>
-                  <label htmlFor="phone">Phone Number: </label>
+                  <label htmlFor="phone" className="max-sm:text-sm">
+                    Phone Number:{" "}
+                  </label>
                   <input
                     type="number"
                     name="phone"
                     value={formData.phone}
                     placeholder="Enter phone number"
                     className="border rounded px-2 py-1 w-1/3 max-sm:w-1/2 max-sm:text-sm max-sm:px-1 max-sm:py-0"
-                    // onChange={(e) =>
-                    //   setFormData({ ...formData, phone: Number(e.target.value) })
-                    // }
                     onChange={handlePhoneChange}
                     required
                   />
                 </div>
                 {/* Address */}
                 <div>
-                  <label htmlFor="address">Address: </label>
+                  <label htmlFor="address" className="max-sm:text-sm">
+                    Address:{" "}
+                  </label>
                   <input
                     type="text"
                     name="address"
-                    // value={addressDetails.address}
-                    id=""
+                    value={addressDetails.address}
                     placeholder="Add your address"
                     className="border w-[75%] rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
                     onChange={(e) =>
@@ -885,50 +900,40 @@ const ProductFinalPrice = () => {
                 {/* State, City, Pincode */}
                 <div className="flex gap-4 items-center max-lg:flex-col max-sm:items-start max-sm:gap-1">
                   <div>
-                    <label htmlFor="city">State: </label>
+                    <label htmlFor="city" className="max-sm:text-sm">
+                      State:{" "}
+                    </label>
                     <input
                       type="text"
-                      // value={addressDetails.state}
-                      id=""
+                      value={addressDetails.state}
                       placeholder="Enter State"
-                      className="border rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
-                      onChange={(e) =>
-                        setAddressDetails({
-                          ...addressDetails,
-                          state: e.target.value,
-                        })
-                      }
-                      required
+                      className="border rounded px-2 py-1 bg-secondary-light cursor-not-allowed max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                      readOnly
                     />
                   </div>
 
                   <div className="">
-                    <label htmlFor="pincode">City: </label>
+                    <label htmlFor="pincode" className="max-sm:text-sm">
+                      City:{" "}
+                    </label>
                     <input
                       type="text"
                       name="city"
-                      // value={addressDetails.city}
+                      value={addressDetails.city}
                       placeholder="Enter City"
-                      className="border rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
-                      onChange={(e) =>
-                        setAddressDetails({
-                          ...addressDetails,
-                          city: e.target.value,
-                        })
-                      }
-                      required
+                      className="border rounded px-2 py-1 bg-secondary-light cursor-not-allowed max-sm:text-sm max-sm:px-1 max-sm:py-0"
+                      readOnly
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="state" className="max-sm:text-md">
+                    <label htmlFor="state" className="max-sm:text-sm">
                       PinCode:{" "}
                     </label>
                     <input
                       type="number"
                       name="pinCode"
-                      // value={addressDetails.pinCode}
-                      id=""
+                      value={addressDetails.pinCode}
                       placeholder="Add PinCode"
                       className="border rounded px-2 py-1 max-sm:text-sm max-sm:px-1 max-sm:py-0"
                       onChange={handlePinCodeChange}
@@ -959,7 +964,7 @@ const ProductFinalPrice = () => {
                 </div>
                 <div>
                   {selectedDate && (
-                    <p>
+                    <p className="max-sm:text-sm">
                       Scheduled time:{" "}
                       <span className="text-sm max-sm:text-xs font-semibold">
                         {formData.schedulePickUp}

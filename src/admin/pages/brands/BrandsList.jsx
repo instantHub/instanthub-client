@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   useGetCategoryQuery,
   useGetAllBrandQuery,
@@ -10,6 +10,7 @@ import EditButton from "../../components/EditButton";
 import { filterCategory } from "../../features/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "../../components/TableView";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const BrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
@@ -25,6 +26,10 @@ const BrandsList = () => {
     // setSelectedCategory(e.target.value);
     dispatch(filterCategory({ category: e.target.value, from: "brandsList" }));
   };
+
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [brandToDelete, setBrandToDelete] = useState("");
 
   const handleDelete = async (brandId) => {
     console.log("handledelete", brandId);
@@ -61,7 +66,11 @@ const BrandsList = () => {
       </td>
       <td>
         <button
-          onClick={() => handleDelete(brand.id)}
+          onClick={() => {
+            // handleDelete(brand.id);
+            setModalOpen(true);
+            setBrandToDelete(brand.id);
+          }}
           className="bg-red-600 text-white px-3 py-1 rounded-md"
         >
           <MdDeleteForever className="text-2xl max-sm:text-lg" />
@@ -119,6 +128,17 @@ const BrandsList = () => {
           rowRenderer={rowRenderer}
         />
       )}
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={brandToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 };

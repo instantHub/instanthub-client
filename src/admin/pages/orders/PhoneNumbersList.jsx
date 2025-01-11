@@ -1,14 +1,24 @@
-import React from "react";
-import { useGetPhoneNumbersQuery } from "../../../features/api";
+import React, { useState } from "react";
+import {
+  useDeletePhoneNumberMutation,
+  useGetPhoneNumbersQuery,
+} from "../../../features/api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Table from "../../components/TableView";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const PhoneNumbersList = () => {
   const { data: phoneNumbers, isLoading: phoneNumbersLoading } =
     useGetPhoneNumbersQuery();
 
+  const [deleteNumber] = useDeletePhoneNumberMutation();
+
   console.log("phoneNumbers", !phoneNumbersLoading && phoneNumbers);
+
+  // Delete Number
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [numberToDelete, setNumberToDelete] = useState("");
 
   const convertUTCToIST = (dateString) => {
     const utcDate = new Date(dateString);
@@ -32,7 +42,7 @@ const PhoneNumbersList = () => {
     console.log("phoneNumbers", phoneNumbers);
     const data = phoneNumbers.map((number, index) => ({
       "Mobile Number": number.mobileNumber,
-      // "Total OTPs Taken": number.totalOTPsTaken,
+      "Total OTPs Taken": number.totalOTPsTaken,
       // "Updated At": convertUTCToIST(number.updatedAt),
     }));
 
@@ -46,48 +56,86 @@ const PhoneNumbersList = () => {
     saveAs(blob, "phone_numbers.xlsx");
   };
 
-  const headers = [
-    "Phone Numbers",
-    "Total Visits to FinalPrice",
-    "Last Visited On",
-  ];
-
-  const rowRenderer = (number) => (
-    <>
-      <td className="px-4 py-2">{number.mobileNumber}</td>
-      <td className="px-4 py-2">{number.totalOTPsTaken}</td>
-      <td className="px-4 py-2">{convertUTCToIST(number.updatedAt)}</td>
-    </>
-  );
+  const handleDelete = async (numberId) => {
+    console.log("handledelete", numberId);
+    await deleteNumber(numberId);
+  };
 
   return (
     <>
-      <div className="flex mt-[5%] w-[80%] mx-auto">
-        <div className="grow">
-          <div className="flex justify-between items-center">
-            <h1 className="bold text-[1.4rem] mb-2">Phone Numbers List</h1>
-            <button
-              onClick={() =>
-                downloadPhoneNumbersAsXLSX(phoneNumbers.phoneNumbers)
-              }
-              className="bg-blue-600 text-white px-4 py-2 rounded-md mb-4"
-            >
-              Download as XLSX
-            </button>
-          </div>
+      <div className="flex flex-col gap-5 max-sm:gap-2 mt-5 max-sm:mt-2 px-5 max-sm:px-2">
+        {/* <div className="grow"> */}
+        <div className="flex justify-between items-center text-lg max-sm:text-xs">
+          {/* <h1 className="bold  mb-2">Phone Numbers List</h1> */}
+          <p className="flex gap-1">
+            Total
+            <b>{phoneNumbers?.phoneNumbers?.length}</b>
+            Phone Numbers
+          </p>
+          <button
+            onClick={() =>
+              downloadPhoneNumbersAsXLSX(phoneNumbers.phoneNumbers)
+            }
+            className="bg-blue-600 text-white px-4 max-sm:px-2 py-2 rounded-md"
+          >
+            Download as XLSX
+          </button>
+        </div>
 
-          <div className="bg-white border rounded-md shadow-lg">
-            {!phoneNumbersLoading && (
-              <Table
-                headers={headers}
-                data={phoneNumbers.phoneNumbers}
-                keyExtractor={(item) => item.id}
-                rowRenderer={rowRenderer}
-              />
-            )}
-          </div>
+        {/* Phone Numbers Cards */}
+        <div className="w-full mx-auto grid grid-cols-3 gap-4 max-sm:gap-2 max-sm:grid-cols-2">
+          {phoneNumbers?.phoneNumbers?.map((number) => (
+            <div
+              key={number.id}
+              className="flex flex-col gap-2 max-sm:gap-1 shadow rounded-md px-4 max-sm:px-2 py-2 border text-sm max-sm:text-xs"
+            >
+              {/* Schedule time */}
+              <div>
+                <b>Number: </b>
+                <span>{number.mobileNumber}</span>
+              </div>
+
+              {/* Pin Code */}
+              <div>
+                <b>Total Visits: </b>
+                <span>{number.totalOTPsTaken}</span>
+              </div>
+
+              {/* Status */}
+              <div className="flex max-sm:flex-col">
+                <b>Last Updated: </b>
+                <span>{convertUTCToIST(number.updatedAt)}</span>
+              </div>
+
+              {/* View or Delete */}
+              <div className="flex justify-center gap-2 mt-2">
+                <button
+                  onClick={() => {
+                    setModalOpen(true);
+                    setNumberToDelete(number.id);
+                    // deleteNumber(number.id);
+                  }}
+                  className="bg-red-600 text-white px-3 py-1 rounded-md"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+      {/* </div> */}
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={numberToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </>
   );
 };

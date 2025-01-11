@@ -1,129 +1,79 @@
-import { useEffect, useRef, useState } from "react";
-import { IoLocationSharp } from "react-icons/io5";
+import React from "react";
+import { BiSolidCity } from "react-icons/bi";
 
-const LocationSelector = () => {
-  const [showLocations, setShowLocations] = useState(false);
-  const dropdownRef = useRef(null); // Ref to the dropdown
-  const iconRef = useRef(null); // Ref to the icon button
+const cities = [
+  {
+    city: "Bangalore",
+    state: "Karnataka",
+    icon: <BiSolidCity />,
+    available: true,
+  },
+  {
+    city: "Mumbai",
+    state: "Maharashtra",
+    icon: <BiSolidCity />,
+    available: false,
+  },
+  { city: "Delhi", state: "Delhi", icon: <BiSolidCity />, available: false },
+  {
+    city: "Hyderabad",
+    state: "Telangana",
+    icon: <BiSolidCity />,
+    available: false,
+  },
+  // { city: "Chennai", state: "Tamil Nadu" },
+  // { city: "Hyderabad", state: "Telangana" },
+  // { city: "Pune", state: "Maharashtra" },
+  // { city: "Ahmedabad", state: "Gujarat" },
+];
 
-  const handleToggle = () => setShowLocations(!showLocations);
-
-  // Close the dropdown if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        !iconRef.current.contains(event.target)
-      ) {
-        setShowLocations(false);
-      }
-    };
-
-    // Add event listener for clicks
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Clean up the event listener when component unmounts
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+function LocationSelector({ handleAddress, setShowLocation, setIsOpen }) {
+  const handleSelectCity = (city, state) => {
+    handleAddress(state, city);
+    setShowLocation(false); // Close the modal
+    setIsOpen(true);
+  };
 
   return (
-    <>
-      <div className="hidden">
-        {/* <div className="relative flex items-center bg-white text-black p-4 max-sm:p-0 font-serif">
-         {/* Mobile view icon *
-        <div className="block md:hidden">
-          <button
-            ref={iconRef}
-            onClick={handleToggle}
-            className={`p-2 rounded-full ${showLocations && "p-0"}`}
-          >
-            <IoLocationSharp
-              className={`text-lg ${
-                showLocations &&
-                "text-xl bg-secondary text-secondary-light rounded-full p-[2px]"
-              }`}
-            />
-          </button>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="relative bg-white p-4 rounded w-fit max-sm:w-[90%]">
+        <h2 className="text-lg max-sm:text-sm font-bold mb-4">Select a City</h2>
+        <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 flex-wrap space-y-2">
+          {cities.map(({ city, state, icon, available }) => (
+            <div
+              key={city}
+              onClick={() => {
+                if (available) handleSelectCity(city, state);
+              }}
+              className={`relative flex flex-col justify-center items-center w-full cursor-pointer p-2 rounded 
+                          ${
+                            available
+                              ? "hover:bg-gray-200"
+                              : "cursor-not-allowed bg-black/40"
+                          }`}
+            >
+              {!available && (
+                <p className="absolute top-6 text-xs max-sm:text-[10px] text-white">
+                  Coming Soon
+                </p>
+              )}
+              <p className="text-3xl text-green-600"> {icon}</p>
+              <div className="flex flex-col">
+                <p className="font-semibold max-sm:text-sm">{city}</p>
+                <p className="text-sm max-sm:text-xs text-gray-500">{state}</p>
+              </div>
+            </div>
+          ))}
         </div>
-
-        {/* Location selection dropdown (Desktop) *
-        <div className="hidden md:block">
-          <select className="w-full bg-white text-black border border-gray-300 rounded-md p-2">
-            <option defaultValue="bangalore">Bangalore</option>
-            <option value="delhi" disabled>
-              Delhi
-            </option>
-            <option value="mumbai" disabled>
-              Mumbai
-            </option>
-            <option value="chennai" disabled>
-              Chennai
-            </option>
-            <option value="kolkata" disabled>
-              Kolkata
-            </option>
-            <option value="pune" disabled>
-              Pune
-            </option>
-            <option value="hyderabad" disabled>
-              Hyderabad
-            </option>
-            {/* Add more states here *
-          </select>
-        </div>
-
-        {/* Large Screen view icon *
-        <div className="block max-sm:hidden">
-          <button className="p-2 rounded-full">
-            <IoLocationSharp className="text-lg max-sm:text-lg" />
-          </button>
-        </div>
-
-        {/* Mobile dropdown (Visible when icon is clicked) *
-        {showLocations && (
-          <div
-            ref={dropdownRef}
-            className="md:hidden top-[120%] bg-white text-black p-0 border border-secondary-light rounded-md absolute w-fit"
-          >
-            <select className="w-fit bg-white text-black border border-gray-300 rounded-md p-1">
-              <option defaultValue="bangalore">Bangalore</option>
-              <option value="delhi" disabled>
-                Delhi
-              </option>
-              <option value="mumbai" disabled>
-                Mumbai
-              </option>
-              <option value="chennai" disabled>
-                Chennai
-              </option>
-              <option value="kolkata" disabled>
-                Kolkata
-              </option>
-              <option value="pune" disabled>
-                Pune
-              </option>
-              <option value="hyderabad" disabled>
-                Hyderabad
-              </option>
-              {/* Add more states here *
-            </select>
-          </div>
-        )}
-      </div> */}
+        <button
+          className="absolute top-0 right-0 text-sm px-2 py-1 bg-red-500 text-white rounded"
+          onClick={() => setShowLocation(false)}
+        >
+          Close
+        </button>
       </div>
-
-      <div
-        className="w-fit flex gap-1 items-center bg-white text-black border text-[16px] max-sm:text-[8px] 
-                    border-gray-300 rounded-md px-2 py-1 max-sm:hidden select-none"
-      >
-        <span>Bangalore</span>
-        <IoLocationSharp className="text-green-600" />
-      </div>
-    </>
+    </div>
   );
-};
+}
 
 export default LocationSelector;

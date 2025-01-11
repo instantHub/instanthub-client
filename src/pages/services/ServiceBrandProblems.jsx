@@ -228,7 +228,7 @@ const ServiceBrands = () => {
                         "bg-secondary text-white border-secondary transition-all ease-in-out duration-500"
                       } text-center mt-2 border-t  flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full w-full sm:max-h-12`}
                     >
-                      <span className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+                      <span className="text-[12px] font-[500] leading-7 max-sm:text-[10px]">
                         {serviceBrandProblem.name}
                       </span>
                     </div>

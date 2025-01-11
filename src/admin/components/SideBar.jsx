@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation, Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 import {
   MdCategory,
@@ -28,38 +28,9 @@ import { useDispatch } from "react-redux";
 import { SideBarContext } from "../pages/layout/Layout";
 
 const SideBar = () => {
-  const { pathname } = useLocation();
-  const [active, setActive] = useState(false);
-
   const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);
 
   const dispatch = useDispatch();
-
-  const handleActive = () => {
-    setActive(!active);
-  };
-
-  useEffect(() => {
-    setActive(pathname.substring(1));
-  }, [pathname]);
-
-  const initialState = {
-    chat: false,
-    cart: false,
-    userProfile: false,
-    notification: false,
-  };
-
-  const [currentColor, setCurrentColor] = useState("#03C9D7");
-  const [activeMenu, setActiveMenu] = useState(true);
-  const [isClicked, setIsClicked] = useState(initialState);
-
-  const handleClick = (event, to) => {
-    // event.preventDefault(); // Prevent default behavior
-    // startTransition(() => {
-    //   window.history.pushState({}, "", to); // Programmatic navigation
-    // });
-  };
 
   const links = [
     // DASHBOARD
@@ -169,6 +140,17 @@ const SideBar = () => {
       ],
     },
 
+    // RECYCLE
+    {
+      title: "Recycle Order",
+      links: [
+        {
+          name: "recycle-orders",
+          icon: <FaJediOrder />,
+        },
+      ],
+    },
+
     // MANAGE STOCKS
     {
       title: "Manage Stocks",
@@ -219,17 +201,6 @@ const SideBar = () => {
       ],
     },
 
-    // RECYCLE
-    {
-      title: "Recycle Order",
-      links: [
-        {
-          name: "recycle-orders",
-          icon: <FaJediOrder />,
-        },
-      ],
-    },
-
     // POSTs
     {
       title: "Posts",
@@ -237,6 +208,17 @@ const SideBar = () => {
         {
           name: "create-post",
           icon: <FaJediOrder />,
+        },
+      ],
+    },
+
+    // Complaints
+    {
+      title: "Complaints",
+      links: [
+        {
+          name: "complaints",
+          icon: <SiSlides />,
         },
       ],
     },
@@ -259,10 +241,7 @@ const SideBar = () => {
 
   return (
     <div className={`w-ful z-30 bg-gray-900/50 fixed `}>
-      {/* lg:w-[12%] max-md:w-[40%] */}
       <div
-        // className={` ${isSidebarOpen ? `w-fit px-2` : `hidden`}
-        // md-[15%] h-full bg-gray-900 text-white fixed overflow-y-auto scrollbar z-30`}
         className={`
             ${isSidebarOpen ? `w-full h-full` : `hidden`}
              md h-full bg-secondary/20 fixed overflow-y-auto scrollbar text-white z-30
@@ -338,17 +317,3 @@ const SideBar = () => {
 };
 
 export default SideBar;
-
-{
-  /* <ul className="flex flex-col my-28 items-center">
-{sideBarLinks.map(({ text, url }, i) => {
-  return (
-    <li className={`my-4 `} key={i}>
-      <button className="text-xl">
-        <Link to={`/admin/${url}`}>{text}</Link>
-      </button>
-    </li>
-  );
-})}
-</ul> */
-}

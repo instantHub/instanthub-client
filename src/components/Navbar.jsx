@@ -5,7 +5,6 @@ import { useGetCategoryQuery } from "../features/api";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
-import LocationSelector from "./LocationSelector";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +69,11 @@ const Navbar = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function handleNavigation(to, id) {
+    if (to === "brands") navigate(`/categories/brands/${id}`);
+    else if (to === "products") navigate(`/categories/brands/products/${id}`);
+  }
+
   useEffect(() => {
     // console.log("Updating Active Path");
     switch (pathSubStr) {
@@ -129,8 +133,6 @@ const Navbar = () => {
 
             {/* custom debounce hook */}
             {/* <SearchBar /> */}
-
-            <LocationSelector />
 
             {/* Debounce used in below search */}
             <SearchBar2 />
@@ -278,7 +280,8 @@ const Navbar = () => {
                     key={i}
                     onClick={() => {
                       setHoveredCategoryId(null);
-                      navigate(`/categories/brands/${category.id}`);
+                      // navigate(`/categories/brands/${category.id}`);
+                      handleNavigation("brands", category.id);
                     }}
                   >
                     <div
@@ -319,8 +322,11 @@ const Navbar = () => {
                                 category.brands?.map((brand, index) => (
                                   <Link
                                     key={index}
-                                    to={`/categories/brands/products/${brand.id}`}
-                                    onClick={() => setHoveredCategoryId(null)}
+                                    // to={`/categories/brands/products/${brand.id}`}
+                                    onClick={() => {
+                                      setHoveredCategoryId(null);
+                                      handleNavigation("products", brand.id);
+                                    }}
                                   >
                                     <li className="py-1 px-2 rounded hover:bg-gray-100">
                                       {brand.name}
@@ -341,16 +347,6 @@ const Navbar = () => {
                     </div>
                   </div>
                 ))}
-
-              {/* <Link to={`/services`}>
-                <div className="relative flex flex-row items-center cursor-pointer group/navigation pt-4 hover:border-t-[3px] hover:border-t-secondary-light hover:pt-[13px]">
-                  <span className="">
-                    <div className="hover:text-secondary flex items-center gap-1">
-                      <span>Services</span>
-                    </div>
-                  </span>
-                </div>
-              </Link> */}
             </div>
           </div>
         </div>

@@ -1,43 +1,53 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  useDeleteOrderMutation,
   useGetOrderQuery,
-  useOrderCancelMutation,
   useOrderReceivedMutation,
   useUploadCustomerProofImageMutation,
 } from "../../../features/api";
 import { useNavigate, useParams } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import Loading from "../../../components/Loading";
+import OrderCompleteForm from "../../components/OrderCompleteForm";
+import { orderCurrentStatus } from "../../helpers/helper";
+import { FaRegImages } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
+import { SiTicktick } from "react-icons/si";
+import { MdCancel, MdDeleteForever, MdOutlineDevices } from "react-icons/md";
+import { BsInfoCircle } from "react-icons/bs";
+import { RiContactsLine } from "react-icons/ri";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { TiArrowBackOutline } from "react-icons/ti";
+import { BsBoxSeam } from "react-icons/bs";
+import { TbListDetails } from "react-icons/tb";
+import { toast } from "react-toastify";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
+
+  // Delete Order
+  const [deleteOrder] = useDeleteOrderMutation();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState("");
 
   const navigate = useNavigate();
 
   const { data: orderDetail, isLoading: orderDetailLoading } =
     useGetOrderQuery(orderId);
-  console.log("orderDetail", orderDetail);
-
-  const [uploadCustomerProof, { isLoading: uploadLoading }] =
-    useUploadCustomerProofImageMutation();
+  // console.log("orderDetail", orderDetail);
 
   const [orderReceived, { isLoading: orderReceivedLoading }] =
     useOrderReceivedMutation();
 
-  const [orderCancel, { isLoading: orderCancelLoading }] =
-    useOrderCancelMutation();
+  const [finalDeductionSet, setFinalDeductionSet] = useState([]);
 
-  const [cancelReason, setCancelReason] = useState("");
-  console.log("cancelReason", cancelReason);
-
-  const [imageSelected1, setImageSelected1] = useState("");
-  const [imageSelected2, setImageSelected2] = useState("");
-  const [imageSelected3, setImageSelected3] = useState("");
-  const [imageSelected4, setImageSelected4] = useState("");
-  // console.log("imageSelected1", imageSelected1);
-  // console.log("imageSelected2", imageSelected2);
-  // console.log("imageSelected3", imageSelected3);
-  // console.log("imageSelected4", imageSelected4);
+  // File Upload
+  const [uploadCustomerProof, { isLoading: uploadLoading }] =
+    useUploadCustomerProofImageMutation();
+  const [imageSelected1, setImageSelected1] = useState(null);
+  const [imageSelected2, setImageSelected2] = useState(null);
+  const [imageSelected3, setImageSelected3] = useState(null);
+  const [imageSelected4, setImageSelected4] = useState(null);
 
   // Create a ref to store the reference to the file input element
   const fileInputRef1 = useRef(null);
@@ -46,30 +56,25 @@ const OrderDetail = () => {
   const fileInputRef4 = useRef(null);
 
   const [deviceInfo, setDeviceInfo] = useState();
-
   const [pickedUpBy, setPickedUpBy] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
 
-  // CALENDER
+  // // CALENDER
   const [selectedDate, setSelectedDate] = useState(null);
-  const currentDate = new Date();
-  let schedulePickUpDate;
-
-  // Set the minimum time to 10:00 AM
-  const minTime = new Date();
-  minTime.setHours(10, 0, 0, 0);
-
-  // Set the maximum time to 10:00 PM
-  const maxTime = new Date();
-  maxTime.setHours(22, 0, 0, 0);
 
   const handleTimeChange = (date) => {
-    console.log("date", typeof date);
+    // console.log("date", date);
+    // const formattedDate = {
+    //   agentName: pickedUpBy,
+    //   pickedUpDate: `${selectedDate.toLocaleString("en-US", {
+    //     month: "long",
+    //   })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
+    //     "en-US",
+    //     { hour: "numeric", minute: "numeric", hour12: true }
+    //   )}`,
+    // };
 
     setSelectedDate(date);
-
-    // console.log("formattedDate", formattedDate);
-    // setFormData({ ...formData, schedulePickUp: formattedDate });
   };
 
   const uploadFileHandler = async (image) => {
@@ -95,63 +100,103 @@ const OrderDetail = () => {
     }
   };
 
+  const handleDelete = async (orderId) => {
+    console.log("handledelete", orderId);
+    await deleteOrder(orderId);
+    navigate("/admin/orders");
+  };
+
+  const setPickUpHandler = (e) => {
+    setPickedUpBy(e.target.value);
+  };
+
+  const finalPriceHandler = (e) => {
+    setFinalPrice(e.target.value);
+  };
+
+  const deviceInfoHandler = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    setDeviceInfo((prev) => {
+      return { ...prev, [key]: value };
+    });
+  };
+  // console.log("device info", deviceInfo);
+
+  const downloadImage = (imageUrl, imageName) => {
+    console.log(imageName);
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        // link.setAttribute("download", "image.jpg"); // Change the filename if needed
+        link.setAttribute("download", `${imageName}.jpg`); // Change the filename if needed
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch((error) => {
+        console.error("Error downloading image:", error);
+      });
+  };
+
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Image upload handler call
-    // const imageURL = await uploadFileHandler();
-    const imageURL1 = await uploadFileHandler("front");
-    const imageURL2 = await uploadFileHandler("back");
-
-    let imageURL3, imageURL4;
-    if (imageSelected3) {
-      imageURL3 = await uploadFileHandler("optional1");
-      console.log("imageURL3", imageURL3);
-    }
-    if (imageSelected4) {
-      imageURL4 = await uploadFileHandler("optional2");
-      console.log("imageURL4", imageURL4);
-    }
-
-    console.log("handlesubmit ", imageURL1, imageURL2);
-
-    // const formData = {
-    //   orderId: selectedOrder.id,
-    //   customerProof: imageURL,
-    //   status: "received",
-    // };
-    const formattedDate = {
-      agentName: pickedUpBy,
-      pickedUpDate: `${selectedDate.toLocaleString("en-US", {
-        month: "long",
-      })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
-        "en-US",
-        { hour: "numeric", minute: "numeric", hour12: true }
-      )}`,
-    };
-
-    const formData = {
-      // orderId: selectedOrder.id,
-      orderId,
-      customerProofFront: imageURL1,
-      customerProofBack: imageURL2,
-      customerOptional1: imageURL3 ? imageURL3 : null,
-      customerOptional2: imageURL4 ? imageURL4 : null,
-      pickedUpDetails: formattedDate,
-      deviceInfo,
-      finalPrice,
-      status: {
-        pending: false,
-        completed: true,
-        cancelled: false,
-      },
-      // status: "received",
-    };
-
-    console.log("formData from OrderList handleSubmit", formData);
-
     try {
+      if (!imageSelected1 || !imageSelected2) {
+        toast.warning("Upload Mandatory Images");
+        return;
+      }
+
+      // Image upload handler call
+      const imageURL1 = await uploadFileHandler("front");
+      const imageURL2 = await uploadFileHandler("back");
+
+      let imageURL3, imageURL4;
+      if (imageSelected3) {
+        imageURL3 = await uploadFileHandler("optional1");
+        console.log("imageURL3", imageURL3);
+      }
+      if (imageSelected4) {
+        imageURL4 = await uploadFileHandler("optional2");
+        console.log("imageURL4", imageURL4);
+      }
+
+      console.log("handlesubmit ", imageURL1, imageURL2);
+
+      const pickedUpDetails = {
+        agentName: pickedUpBy,
+        pickedUpDate: `${selectedDate.toLocaleString("en-US", {
+          month: "long",
+        })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
+          "en-US",
+          { hour: "numeric", minute: "numeric", hour12: true }
+        )}`,
+      };
+
+      const formData = {
+        orderId,
+        customerProofFront: imageURL1,
+        customerProofBack: imageURL2,
+        customerOptional1: imageURL3 ? imageURL3 : null,
+        customerOptional2: imageURL4 ? imageURL4 : null,
+        pickedUpDetails,
+        deviceInfo,
+        finalPrice,
+        status: {
+          pending: false,
+          completed: true,
+          cancelled: false,
+        },
+      };
+
+      console.log("formData from OrderList handleSubmit", formData);
+
+      // try {
       const orderData = await orderReceived(formData);
       console.log("orderData", orderData);
 
@@ -174,636 +219,418 @@ const OrderDetail = () => {
     }
   };
 
-  async function handleCancelOrder(e) {
-    e.preventDefault();
-    console.log("handleCancelOrder");
-    try {
-      const formData = {
-        status: {
-          pending: false,
-          completed: false,
-          cancelled: true,
-        },
-        cancelReason: cancelReason || null,
+  // Updating Deductions Name to Shorter Names
+  useEffect(() => {
+    if (orderDetail) {
+      const finalDeductionSet = JSON.parse(
+        JSON.stringify(orderDetail.finalDeductionSet)
+      );
+
+      console.log("finalDeductionSet", finalDeductionSet);
+
+      const conditionMapping = {
+        flawless: "Flawless Condition",
+        good: "Good Condition",
+        average: "Average Condition",
+        damage: "Damaged Condition",
+        bill: "Product Bill",
+        box: "Product Box",
+        "charger available": "Product Charger",
+        "original charger": "Product Charger",
       };
 
-      const orderCancelData = await orderCancel({
-        orderId,
-        data: formData,
-      }).unwrap();
-      console.log("orderCancelData", orderCancelData);
-    } catch (error) {
-      console.log("Error: ", error);
+      const updatedData = finalDeductionSet.map((item) => {
+        const type = item.type.toLowerCase();
+        if (type.includes("problem")) {
+          item.type = "Problem";
+        }
+        item.conditions.forEach((condition) => {
+          if (condition.conditionLabel) {
+            const lowerLabel = condition.conditionLabel.toLowerCase();
+            for (const key in conditionMapping) {
+              if (lowerLabel.includes(key)) {
+                condition.conditionLabel = conditionMapping[key];
+                break; // Exit the loop once a match is found
+              }
+            }
+          }
+        });
+        return item;
+      });
+
+      setFinalDeductionSet(updatedData);
+
+      console.log(updatedData);
     }
-  }
+  }, [orderDetail]);
 
-  const orderCurrentStatus = (status) => {
-    if (status.pending) return "Pending";
-    if (status.completed) return "Completed";
-    if (status.cancelled) return "Cancelled";
-    return "Unknown";
-  };
-
-  const heading = "px-4 py-2 flex items-center gap-2";
-  const innerHeading = "flex items-center gap-2";
-  const subHeading = "text-sm max-sm:text-xs";
-  const detailImp = "text-lg max-sm:text-sm";
-  const detail = "text-sm max-sm:text-xs";
+  // console.log("finalDeductionSet", orderDetail?.finalDeductionSet);
 
   if (orderDetailLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="relative flex flex-col bg-secondary-light pt-2 pb-5 h-fit shadow-md justify-center items-center w-full">
+      {/* Back and Delete */}
+      {/* <div className="relative w-full left-[3%]"> */}
+      <div className="relative flex justify-between w-full px-4">
+        <button
+          onClick={() => {
+            navigate("/admin/orders");
+          }}
+          className="text-3xl max-sm:text-xl bg-secondary text-secondary-light rounded"
+        >
+          <TiArrowBackOutline />
+        </button>
+        <button
+          onClick={() => {
+            setModalOpen(true);
+            setOrderToDelete(orderDetail.id);
+          }}
+          className="text-3xl max-sm:text-xl bg-red-600 text-secondary-light rounded"
+        >
+          <MdDeleteForever />
+        </button>
+      </div>
+
       {/* Order Detail */}
-      <div className="">
-        {/* Back Button */}
-        {/* large screen */}
-        <button
-          onClick={() => {
-            navigate("/admin/orders");
-          }}
-          className="max-sm:hidden absolute w-fit top-[7%] left-5 bg-secondary text-secondary-light px-2 py-1 mx-4 my-2 rounded"
-        >
-          Back
-        </button>
-        {/* small screen */}
-        <button
-          onClick={() => {
-            navigate("/admin/orders");
-          }}
-          className="lg:hidden absolute w-fit top-[7%] right-0 bg-secondary text-secondary-light px-2 py-1 mx-4 my-2 rounded"
-        >
-          Back
-        </button>
+      <div className="flex flex-col bg-white justify-center border rounded-xl items-center w-[95%]">
+        {/* <div className="my-10 grid grid-cols-2 max-sm:grid-cols-1 w-full"> */}
+        <div className="grid grid-cols-2 max-sm:grid-cols-1 place-items-start place-content-center gap-14 max-sm:gap-5 py-10 max-sm:py-5 w-5/6 max-sm:w-fit">
+          {/* Order Info */}
+          <DetailWrapper icon={IoCartOutline} heading="Order Details">
+            <DetailDiv label={`Order ID`} text={orderDetail?.orderId} />
+            <DetailDiv label={`Offered Price`} text={orderDetail?.offerPrice} />
+            <DetailDiv
+              label={`Scheduled PickUp`}
+              text={orderDetail?.schedulePickUp}
+            />
+            <DetailDiv
+              label={`Status`}
+              text={orderCurrentStatus(orderDetail.status)}
+            />
+          </DetailWrapper>
 
-        {/* Order ID */}
-        <div className={`${heading}`}>
-          <span className={`${subHeading}`}>Order ID:</span>
-          <span className={`${detailImp}`}>{orderDetail?.orderId}</span>
-        </div>
-
-        {/* Order Status */}
-        <div className={`${heading}`}>
-          <span className={`${subHeading}`}>Order Status:</span>
-          <span className={`${detailImp}`}>
-            {orderCurrentStatus(orderDetail.status)}
-          </span>
-        </div>
-
-        {/* Product & Price */}
-        <div className={`${heading}`}>
-          <div className="flex flex-col gap-1">
-            <p className="text-lg max-sm:text-sm">Product Detail:</p>
-            <div className={`${innerHeading}`}>
-              <span className={`${subHeading}`}>Product Name:</span>
-              <span className={`${detailImp}`}>{orderDetail?.productName}</span>
-            </div>
-            <div className="flex justify-center text-sm opacity-50 ">
-              {orderDetail?.productCategory === "Mobile" ? (
-                <div className={`${innerHeading}`}>
-                  <div className={`${innerHeading}`}>
-                    <span className={`${subHeading}`}>Variant: </span>
-                    <span className={`${detail}`}>
-                      {orderDetail?.variant?.variantName}
-                    </span>
-                  </div>
-                  <div className={`${innerHeading}`}>
-                    <span className={`${subHeading}`}>Price:</span>
-                    <span className={`${detail}`}>
-                      {orderDetail?.variant?.price}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div className={`${innerHeading}`}>
-                  <span className={`${subHeading}`}>Price:</span>
-                  <span className={`${detail}`}>
-                    {orderDetail?.variant?.price}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Customer Details */}
-        <div className="px-4 py-2 flex flex-col">
-          <p className="text-lg max-sm:text-sm">Customer Detail:</p>
-
-          <div className="flex flex-col">
-            <div className="text-xs">
-              <span className={`${subHeading}`}>Customer Name: </span>
-              <span className={`${detail}`}>{orderDetail?.customerName}</span>
-            </div>
-            <div className="text-xs">
-              <span className={`${subHeading}`}>Phone: </span>
-              <span className={`${detail}`}>{orderDetail?.phone}</span>
-            </div>
-            <div className="text-xs">
-              <span className={`${subHeading}`}>Email: </span>
-              <span className={`${detail}`}>{orderDetail?.email}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Address Detail*/}
-        <div className=" px-4 py-2">
-          <p className="text-lg max-sm:text-sm">Address Detail:</p>
-
-          <div className="flex flex-col">
-            <div className="text-xs opacity-70">
-              <span className={`${subHeading}`}>Address: </span>
-              <span className={`${detail} text-sm`}>
-                {orderDetail?.addressDetails.address}
-              </span>
-            </div>
-            <div className="text-xs opacity-70">
-              <span className={`${subHeading}`}>City: </span>
-              <span className={`${detail} text-sm`}>
-                {orderDetail?.addressDetails.city}
-              </span>
-            </div>
-            <div className="text-xs opacity-70">
-              <span className={`${subHeading}`}>State: </span>
-              <span className={`${detail} text-sm`}>
-                {orderDetail?.addressDetails.state}
-              </span>
-            </div>
-            <div className="text-xs opacity-70">
-              <span className={`${subHeading}`}>Pincode: </span>
-              <span className={`${detail} text-sm`}>
-                {orderDetail?.addressDetails.pinCode}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Offer Price */}
-        <div className={`${heading}`}>
-          <span className={`${subHeading}`}>OfferPrice:</span>
-          <span className={`${detailImp}`}>{orderDetail?.offerPrice}</span>
-        </div>
-
-        {/* Schedule Time: */}
-        <div className={`${heading}`}>
-          <span className={`${subHeading}`}>Schedule Time:</span>
-          <span className={`${detailImp}`}>{orderDetail?.schedulePickUp}</span>
-        </div>
-
-        {/* Completed Order Details Only */}
-        {orderDetail.status.completed && (
-          <>
-            <div className={`${heading}`}>
-              <span className={`${subHeading}`}>Picked Up Agent: </span>
-              <span className={`${detail}`}>
-                {orderDetail.pickedUpDetails.agentName}
-              </span>
-            </div>
-
-            <div className={`${heading}`}>
-              <span className={`${subHeading}`}>Picked Up On: </span>
-              <span className={`${detail}`}>
-                {orderDetail.pickedUpDetails.pickedUpDate}
-              </span>
-            </div>
-
-            {/* Customer proof images to view and download */}
-            <div className="flex items-center justify-center gap-3 border p-1 rounded">
-              <div className="flex flex-col justify-center gap-2">
-                <p className={`${subHeading}`}>Customer ID Front: </p>
-                <img
-                  src={
-                    import.meta.env.VITE_APP_BASE_URL +
-                    orderDetail.customerProofFront
-                  }
-                  alt="ConditionLabel"
-                  className="w-[100px] h-[100px] mx-auto "
-                />
-                <button
-                  onClick={() => {
-                    downloadImage(
-                      import.meta.env.VITE_APP_BASE_URL +
-                        orderDetail.customerProofFront,
-                      `${orderDetail.customerName}-customerProofFront`
-                    );
-                  }}
-                  className="bg-green-600 px-2 rounded text-white"
-                >
-                  Download
-                </button>
-              </div>
-
-              <div className="flex flex-col justify-center gap-2">
-                <p className={`${subHeading}`}>Customer ID Back: </p>
-                <img
-                  src={
-                    import.meta.env.VITE_APP_BASE_URL +
-                    orderDetail.customerProofBack
-                  }
-                  alt="ConditionLabel"
-                  className="w-[100px] h-[100px] mx-auto "
-                  onClick={() => downloadImage()}
-                />
-                <button
-                  onClick={() => {
-                    downloadImage(
-                      import.meta.env.VITE_APP_BASE_URL +
-                        orderDetail.customerProofBack,
-                      `${orderDetail.customerName}-customerProofBack`
-                    );
-                  }}
-                  className="bg-green-600 px-2 rounded text-white"
-                >
-                  Download
-                </button>
-              </div>
-
-              {orderDetail.customerOptional1 && (
-                <div className="flex flex-col justify-center gap-2">
-                  <p className={`${subHeading}`}>Optional Proof1: </p>
-                  <img
-                    src={
-                      import.meta.env.VITE_APP_BASE_URL +
-                      orderDetail.customerOptional1
-                    }
-                    alt="ConditionLabel"
-                    className="w-[100px] h-[100px] mx-auto "
-                    onClick={() => downloadImage()}
-                  />
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        import.meta.env.VITE_APP_BASE_URL +
-                          orderDetail.customerOptional1,
-                        `${orderDetail.customerName}-customerOptional1`
-                      );
-                    }}
-                    className="bg-green-600 px-2 rounded text-white"
-                  >
-                    Download
-                  </button>
-                </div>
-              )}
-
-              {orderDetail.customerOptional2 && (
-                <div className="flex flex-col justify-center gap-2">
-                  <p className={`${subHeading}`}>Optional Proof2</p>
-                  <img
-                    src={
-                      import.meta.env.VITE_APP_BASE_URL +
-                      orderDetail.customerOptional2
-                    }
-                    alt="ConditionLabel"
-                    className="w-[100px] h-[100px] mx-auto "
-                    onClick={() => downloadImage()}
-                  />
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        import.meta.env.VITE_APP_BASE_URL +
-                          orderDetail.customerOptional2,
-                        `${orderDetail.customerName}-customerOptional2`
-                      );
-                    }}
-                    className="bg-green-600 px-2 rounded text-white"
-                  >
-                    Download
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Device Info: */}
-            {orderDetail.deviceInfo && (
-              <div className="flex items-center justify-center gap-4">
-                <div>
-                  <h2 className="text-lg">Device Info:</h2>
-                </div>
-                <div className="">
-                  <div className="flex text-sm opacity-70 gap-2 justify-center">
-                    {orderDetail.deviceInfo.serialNumber ? (
-                      <p>
-                        Serial Number:{" "}
-                        <span className="font-bold">
-                          {orderDetail.deviceInfo.serialNumber}
-                        </span>
-                      </p>
-                    ) : null}
-
-                    {orderDetail.deviceInfo.imeiNumber ? (
-                      <p>
-                        IMEI Number:{" "}
-                        <span className="font-bold">
-                          {orderDetail.deviceInfo.imeiNumber}
-                        </span>
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Final Price */}
-            <div className="px-4 py-2 flex gap-4 items-center justify-center">
-              Offered Price:
-              <span className="font-bold"> {orderDetail.offerPrice}</span>
-              Final Price:
-              <span className="font-bold"> {orderDetail.finalPrice}</span>
-            </div>
-          </>
-        )}
-
-        {/* Cancelled Order Reason */}
-        {orderDetail.status.cancelled && (
-          <div className={`${heading}`}>
-            <span className={`${subHeading}`}>Cancel Reason: </span>
-            <span className={`${detailImp}`}>{orderDetail.cancelReason}</span>
-          </div>
-        )}
-      </div>
-
-      <hr />
-
-      {/* Form handler */}
-      <div className="text-center mt-4">
-        {orderDetail.status.pending && (
-          <>
-            {/* Order Recieved Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 my-10">
-              {/* Mandatory Images */}
-              <div className="flex flex-col gap-1 items-center">
-                <div className="">
-                  <h2 className="text-lg">
-                    Required Documents<span className="text-red-600">*</span>
-                  </h2>
-                </div>
-                {/* ID Proof Images */}
-                <div className="flex max-sm:flex-col gap-2">
-                  {/* ID Front Image */}
-                  <div className="flex items-center max-sm:flex-col gap-2">
-                    <label htmlFor="name">
-                      Upload Front of Customer ID
-                      <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      type="file"
-                      name="name"
-                      ref={fileInputRef1}
-                      placeholder="Enter Name"
-                      className="border rounded px-2 py-1 w-3/4 mx-auto"
-                      onChange={(e) => {
-                        setImageSelected1(e.target.files[0]);
-                      }}
-                      required
-                    />
-                  </div>
-
-                  {/* ID Back Image */}
-                  <div className="flex items-center max-sm:flex-col gap-2">
-                    <label htmlFor="name">
-                      Upload Back of Customer ID
-                      <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      type="file"
-                      name="name"
-                      id=""
-                      ref={fileInputRef2}
-                      placeholder="Enter Name"
-                      className="border rounded px-2 py-1 w-3/4 mx-auto"
-                      onChange={(e) => {
-                        setImageSelected2(e.target.files[0]);
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <hr className="w-1/3 mx-auto" />
-              {/* Optional Images & Other details */}
-              <div className="flex flex-col gap-1 ">
-                <div className="">
-                  <h2 className="text-lg">Optional Documents</h2>
-                </div>
-                <div className="flex items-center max-sm:flex-col gap-2">
-                  {/* Optional Image 1 */}
-                  <label htmlFor="name">Upload Optional Doc 1</label>
-                  <input
-                    type="file"
-                    name="name"
-                    ref={fileInputRef3}
-                    placeholder=""
-                    className="border rounded px-2 py-1 w-1/3 mx-auto"
-                    onChange={(e) => {
-                      setImageSelected3(e.target.files[0]);
-                    }}
-                  />
-
-                  {/* Optional Image 2 */}
-                  <label htmlFor="name">Upload Optional Doc 2</label>
-                  <input
-                    type="file"
-                    name="name"
-                    ref={fileInputRef4}
-                    placeholder=""
-                    className="border rounded px-2 py-1 w-1/3 mx-auto"
-                    onChange={(e) => {
-                      setImageSelected4(e.target.files[0]);
-                    }}
-                  />
-                </div>
-
-                {/* Order Picked Up By: */}
-                <div className="flex items-center max-sm:flex-col justify-center gap-2 mt-5">
-                  {/* Pickup details */}
-                  <div className="flex items-center max-sm:flex-col">
-                    <label htmlFor="pickedUpBy">
-                      Order Picked Up By:
-                      <span className="text-red-600">* </span>
-                    </label>
-                    <input
-                      type="text"
-                      name="pickedUpBy"
-                      // ref={fileInputRef3}
-                      placeholder="Picked Up By Name"
-                      className="border rounded px-1 mx-auto"
-                      onChange={(e) => {
-                        setPickedUpBy(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col items-center">
-                    {/* Offered Price */}
-                    <div>
-                      <label htmlFor="finalPrice">
-                        Offered Price:{" "}
-                        <span className="font-bold">
-                          {orderDetail.offerPrice}
-                        </span>
-                      </label>
-                    </div>
-
-                    {/* Purchase Price */}
-                    <div className="flex items-center max-sm:flex-col">
-                      <label htmlFor="finalPrice">
-                        Purchase Price:
-                        <span className="text-red-600">* </span>
-                      </label>
-                      <input
-                        type="number"
-                        name="finalPrice"
-                        placeholder="Purchase Price"
-                        className="border rounded px-1 mx-auto"
-                        onChange={(e) => {
-                          setFinalPrice(e.target.value);
-                        }}
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {/* Date Picker */}
-                  <div className="max-sm:flex max-sm:flex-col">
-                    <label htmlFor="datepicker">
-                      Select Date and Time:
-                      <span className="text-red-600">* </span>
-                    </label>
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleTimeChange}
-                      showTimeSelect
-                      // timeFormat="HH:mm" // 24 hours
-                      timeFormat="h:mm aa" // 12 hours
-                      timeIntervals={30}
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      timeCaption="Time"
-                      // minDate={schedulePickUpDate}
-                      minDate={currentDate}
-                      minTime={minTime}
-                      maxTime={maxTime}
-                      placeholderText="Select PickedUp Time"
-                      className="border px-1 rounded"
-                      required
-                    />
-
-                    {selectedDate && (
-                      <p className="py-2 text-xl">
-                        Picket Up time: `
-                        {selectedDate.toLocaleString("en-US", {
-                          month: "long",
-                        })}{" "}
-                        {selectedDate.getDate()}, {selectedDate.getFullYear()}{" "}
-                        {selectedDate.toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: true,
-                        })}
-                        `
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* serialNo & IMEI */}
-                <div className="flex justify-center max-sm:flex-col mt-5 gap-2 items-center">
-                  <div>
-                    <label htmlFor="finalPrice">Serial No:</label>
-                    <input
-                      type="text"
-                      name="serialNo"
-                      placeholder="Serial No"
-                      className="border rounded px-1 mx-auto"
-                      onChange={(e) => {
-                        setDeviceInfo({
-                          ...deviceInfo,
-                          serialNumber: e.target.value,
-                        });
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="finalPrice">IMEI No:</label>
-                    <input
-                      type="text"
-                      name="IMEI"
-                      placeholder="IMEI No"
-                      className="border rounded px-1 mx-auto"
-                      onChange={(e) => {
-                        setDeviceInfo({
-                          ...deviceInfo,
-                          imeiNumber: e.target.value,
-                        });
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <input
-                type="submit"
-                value={`${
-                  !orderReceivedLoading ? "Mark Received" : "Loading"
-                } `}
-                className={` ${
-                  !orderReceivedLoading
-                    ? "bg-green-600 cursor-pointer"
-                    : "bg-green-300 cursor-none"
-                } border rounded px-2 py-1 w-fit text-white  hover:bg-green-600 mx-auto`}
+          {/* Product Detail */}
+          <DetailWrapper icon={MdOutlineDevices} heading="Product Details">
+            <DetailDiv label={`Product`} text={orderDetail?.productName} />
+            <div className="flex gap-4">
+              <DetailDiv
+                label={`Variant`}
+                text={orderDetail?.variant?.variantName}
               />
-            </form>
-
-            <hr className="py-5" />
-
-            {/* Order Cancel Form */}
-            <div className="text-sm max-sm:text-xs py-1 text-center">
-              Provide Mandatory Reason If You Are Cancelling the Order.
+              <DetailDiv label={`Price`} text={orderDetail?.variant?.price} />
             </div>
-            <form
-              onSubmit={handleCancelOrder}
-              className="flex justify-center flex-col items-center gap-4 pb-10 "
-            >
-              <div className="flex max-sm:flex-col items-center gap-1 text-[16px] max-sm:text-sm">
-                <label htmlFor="reason">
-                  <span>Reason:</span>
-                  <span className="text-red-600">*</span>
-                </label>
+          </DetailWrapper>
 
-                <textarea
-                  type="textarea"
-                  name="reason"
-                  placeholder="Reason for cancellation"
-                  className="px-2 py-1 text-sm max-sm:text-xs h-[100px] w-[300px] max-sm:w-[250px] border rounded"
-                  onChange={(e) => {
-                    setCancelReason(e.target.value);
-                  }}
-                  required
+          {/* Accessories Available */}
+          <DetailWrapper icon={BsBoxSeam} heading="Accessories">
+            {finalDeductionSet.map((deduction, i) => {
+              return (
+                <div key={i}>
+                  {deduction.type === "Accessories" &&
+                    deduction?.conditions?.map((condition) => {
+                      return (
+                        <DetailDiv
+                          label={condition.conditionLabel}
+                          text="Available"
+                        />
+                      );
+                    })}
+                  {deduction.type === "AccessoriesNotSelected" &&
+                    deduction?.conditions?.map((condition) => {
+                      return (
+                        <DetailDiv
+                          label={condition.conditionLabel}
+                          text="Not Available"
+                        />
+                      );
+                    })}
+                </div>
+              );
+            })}
+            {finalDeductionSet.length == 0 && (
+              <p className="text-gray-500 text-[16px] max-sm:text-sm">
+                Data not available
+              </p>
+            )}
+          </DetailWrapper>
+
+          {/* Selected Conditions Info */}
+          <DetailWrapper icon={TbListDetails} heading="Selected Conditions">
+            {finalDeductionSet.map((deduction, i) => {
+              return (
+                <div key={i}>
+                  {!deduction.type.toLowerCase().includes("accessories") &&
+                    deduction?.conditions?.map((condition) => {
+                      return (
+                        <DetailDiv
+                          label={deduction?.type}
+                          text={condition.conditionLabel}
+                        />
+                      );
+                    })}
+                </div>
+              );
+            })}
+            {finalDeductionSet.length == 0 && (
+              <p className="text-gray-500 text-[16px] max-sm:text-sm">
+                Data not available
+              </p>
+            )}
+          </DetailWrapper>
+
+          {/* Customer Details */}
+          <DetailWrapper icon={RiContactsLine} heading="Customer Details">
+            <DetailDiv label={`Name`} text={orderDetail?.customerName} />
+            <DetailDiv label={`Phone`} text={orderDetail?.phone} />
+            <DetailDiv label={`Email`} text={orderDetail?.email} />
+          </DetailWrapper>
+
+          {/* Address Detail*/}
+          <DetailWrapper icon={FaMapLocationDot} heading="Address Details">
+            <DetailDiv
+              label={`Address`}
+              text={orderDetail?.addressDetails?.address}
+            />
+            <div className="flex gap-4">
+              <DetailDiv
+                label={`City`}
+                text={orderDetail?.addressDetails?.city}
+              />
+              <DetailDiv
+                label={`State`}
+                text={orderDetail?.addressDetails?.state}
+              />
+            </div>
+            <DetailDiv
+              label={`Pin Code`}
+              text={orderDetail?.addressDetails?.pinCode}
+            />
+          </DetailWrapper>
+
+          {/* Completed Order Details */}
+          {orderDetail.status.completed && (
+            <>
+              {/* Completion Detail*/}
+              <DetailWrapper icon={SiTicktick} heading="Completion Details">
+                <DetailDiv
+                  label={`Agent Name`}
+                  text={orderDetail?.pickedUpDetails?.agentName}
+                />
+                <DetailDiv
+                  label={`Picked Up On`}
+                  text={orderDetail?.pickedUpDetails?.pickedUpDate}
                 />
 
-                {/* <input
-                  type="text"
-                  name="reason"
-                  placeholder="Reason for cancellation"
-                  className="px-2 py-1 border rounded"
-                  onChange={(e) => {
-                    setCancelReason(e.target.value);
-                  }}
-                  required
-                /> */}
-              </div>
-              <div className="text-[16px] max-sm:text-sm">
-                <input
-                  type="submit"
-                  value="Cancel Order"
-                  className="bg-red-600 text-white px-3 py-1 rounded cursor-pointer"
+                <div className="flex gap-4">
+                  <DetailDiv
+                    label={`Offered Price`}
+                    text={orderDetail?.offerPrice}
+                  />
+                  <DetailDiv
+                    label={`Final Price`}
+                    text={orderDetail?.finalPrice}
+                  />
+                </div>
+              </DetailWrapper>
+
+              {/* Device Info: */}
+              <DetailWrapper icon={BsInfoCircle} heading="Device Info">
+                <DetailDiv
+                  label={`Serial Number`}
+                  text={
+                    orderDetail?.deviceInfo?.serialNumber || "Not Available"
+                  }
                 />
-              </div>
-            </form>
-          </>
+                <DetailDiv
+                  label={`IMEI Number`}
+                  text={orderDetail?.deviceInfo?.imeiNumber || "Not Available"}
+                />
+              </DetailWrapper>
+
+              {/* Customer proof images to view or download */}
+              <DetailWrapper icon={FaRegImages} heading="Customer IDs">
+                {/* Customer proof images to view and download */}
+                {/* <div className="flex max-sm:flex-col  items-center justify-center gap-3 p-1 rounded"> */}
+                <div className="grid grid-cols-4 max-sm:grid-cols-2 items-start justify-center gap-3 p-1 rounded">
+                  <CustomerIDImage
+                    label="Customer ID Front"
+                    imageSrc={orderDetail.customerProofFront}
+                    imageAlt="Customer Front ID"
+                    downloadHandler={() => {
+                      downloadImage(
+                        import.meta.env.VITE_APP_BASE_URL +
+                          orderDetail.customerProofFront,
+                        `${orderDetail.customerName}-customerProofFront`
+                      );
+                    }}
+                  />
+
+                  <CustomerIDImage
+                    label="Customer ID Back"
+                    imageSrc={orderDetail.customerProofBack}
+                    imageAlt="Customer Back ID"
+                    downloadHandler={() => {
+                      downloadImage(
+                        import.meta.env.VITE_APP_BASE_URL +
+                          orderDetail.customerProofBack,
+                        `${orderDetail.customerName}-customerProofBack`
+                      );
+                    }}
+                  />
+
+                  {orderDetail.customerOptional1 && (
+                    <CustomerIDImage
+                      label="Optional Proof 1"
+                      imageSrc={orderDetail.customerOptional1}
+                      imageAlt="Optional Proof 1"
+                      downloadHandler={() => {
+                        downloadImage(
+                          import.meta.env.VITE_APP_BASE_URL +
+                            orderDetail.customerOptional1,
+                          `${orderDetail.customerName}-customerOptional1`
+                        );
+                      }}
+                    />
+                  )}
+
+                  {orderDetail.customerOptional2 && (
+                    <CustomerIDImage
+                      label="Optional Proof 2"
+                      imageSrc={orderDetail.customerOptional2}
+                      imageAlt="Optional Proof 2"
+                      downloadHandler={() => {
+                        downloadImage(
+                          import.meta.env.VITE_APP_BASE_URL +
+                            orderDetail.customerOptional2,
+                          `${orderDetail.customerName}-customerOptional2`
+                        );
+                      }}
+                    />
+                  )}
+                </div>
+              </DetailWrapper>
+            </>
+          )}
+
+          {/* Cancelled Order Reason */}
+          {orderDetail.status.cancelled && (
+            <DetailWrapper icon={MdCancel} heading="Cancellation Details">
+              <DetailDiv
+                label={`Cancel Reason`}
+                text={orderDetail?.cancelReason}
+              />
+            </DetailWrapper>
+          )}
+        </div>
+
+        {/* Form handler */}
+        {orderDetail.status.pending && (
+          <div>
+            {/* Order Complete Form */}
+            <OrderCompleteForm
+              orderDetail={orderDetail}
+              handleSubmit={handleSubmit}
+              fileInputRef1={fileInputRef1}
+              setImageSelected1={setImageSelected1}
+              fileInputRef2={fileInputRef2}
+              setImageSelected2={setImageSelected2}
+              fileInputRef3={fileInputRef3}
+              setImageSelected3={setImageSelected3}
+              fileInputRef4={fileInputRef4}
+              setImageSelected4={setImageSelected4}
+              setPickUpHandler={setPickUpHandler}
+              finalPriceHandler={finalPriceHandler}
+              selectedDate={selectedDate}
+              handleTimeChange={handleTimeChange}
+              deviceInfoHandler={deviceInfoHandler}
+              orderReceivedLoading={orderReceivedLoading}
+              DetailWrapper={DetailWrapper}
+              DetailDiv={DetailDiv}
+            />
+          </div>
         )}
       </div>
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={orderToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
+
+      {/* {orderDetail?.status?.pending && (
+        <OrderCancellationForm
+          cancelHandler={handleCancelOrder}
+          handleReasonChange={handleReasonChange}
+        />
+      )} */}
     </div>
   );
 };
 
 export default OrderDetail;
+
+function DetailWrapper({ icon: Icon, heading, children }) {
+  const style = {
+    detailDiv: "flex items-start gap-2",
+    detailIcon:
+      "rounded-full bg-secondary-light p-3 max-sm:p-[7px] text-lg max-sm:text-sm",
+    detailHeading: "text-2xl font-serif text-start max-sm:text-lg",
+    detailSubDiv: "flex flex-col",
+  };
+
+  return (
+    <div className={style.detailDiv}>
+      <div className={style.detailIcon}>
+        <Icon />
+      </div>
+      <div className={style.detailSubDiv}>
+        <p className={style.detailHeading}>{heading}</p>
+        <div className={style.detailSubDiv}>{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function DetailDiv({ label, text }) {
+  const style = {
+    detailWrapper: "flex items-center gap-1",
+    detailLabel: "text-gray-500 text-sm max-sm:text-xs",
+    detailText: "text-[16px] max-sm:text-sm",
+  };
+  return (
+    <div className={`${style.detailWrapper}`}>
+      <span className={`${style.detailLabel}`}>{label}:</span>
+      <span className={`${style.detailText}`}>{text}</span>
+    </div>
+  );
+}
+
+function CustomerIDImage({ label, imageSrc, imageAlt, downloadHandler }) {
+  const style = {
+    detailWrapper: "flex items-center gap-1",
+    detailLabel: "text-gray-500 text-sm max-sm:text-xs",
+    detailText: "text-[16px] max-sm:text-sm",
+  };
+  return (
+    <div className="flex flex-col justify-center gap-2">
+      <p className={`${style.detailLabel}`}>{label}</p>
+      <img
+        src={`${import.meta.env.VITE_APP_BASE_URL + imageSrc}`}
+        alt={imageAlt}
+        className="w-[100px] h-fit max-h-[250px] mx-auto "
+      />
+      <button
+        onClick={downloadHandler}
+        className="bg-green-600 px-2 rounded text-white"
+      >
+        Download
+      </button>
+    </div>
+  );
+}

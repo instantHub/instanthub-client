@@ -20,6 +20,7 @@ import {
   fetchSearchResults,
   clearSearchResults,
 } from "../../features/searchSlice";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
@@ -86,6 +87,10 @@ const ProductsList = () => {
 
   // const [filterData, setSelectedCategory] = useState("");
   // console.log(search);
+
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState("");
 
   const handleDelete = async (productId) => {
     console.log("handledelete", productId);
@@ -226,7 +231,11 @@ const ProductsList = () => {
       {/* DELETE */}
       <td>
         <button
-          onClick={() => handleDelete(product.id)}
+          onClick={() => {
+            // handleDelete(product.id);
+            setModalOpen(true);
+            setProductToDelete(product.id);
+          }}
           className="bg-red-600 text-white px-3 py-2 rounded-md max-sm:text-sm"
         >
           <MdDeleteForever className="text-2xl" />
@@ -454,134 +463,19 @@ const ProductsList = () => {
             </div>
           )} */}
       </div>
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={productToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this item? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 };
 
 export default ProductsList;
-
-/* Filters */
-//   <div className="flex justify-around items-center mb-5">
-//   <div className="my-4 flex gap-2 items-center">
-//     <div>
-//       <input
-//         type="search"
-//         name=""
-//         id=""
-//         placeholder="Search a product"
-//         className="px-2 text-sm py-1 rounded border"
-//         onChange={(e) => setSearch(e.target.value)}
-//       />
-//     </div>
-//     <div>
-//       <button className="bg-green-600 px-2 rounded text-sm py-1 text-white">
-//         Search
-//       </button>
-//     </div>
-//   </div>
-
-//   <div className=" my-4 flex gap-2 items-center">
-//     <div>
-//       <input
-//         type="number"
-//         placeholder="Search a Page"
-//         className="px-2 text-sm py-1 rounded border"
-//         onChange={(e) => setPage(e.target.value)}
-//         disabled={productsData?.totalPages <= 1}
-//       />
-//     </div>
-//     <div>
-//       <button className="bg-green-600 px-2 rounded text-sm py-1 text-white">
-//         Page No
-//       </button>
-//     </div>
-//   </div>
-// </div>
-
-// <div className="flex items-center justify-between mb-4">
-//   {/* Select Category */}
-//   <div>
-//     <label htmlFor="condition" className=" mr-2">
-//       Select Category:
-//     </label>
-//     <select
-//       id="condition"
-//       onChange={(e) => {
-//         setCategoryId(e.target.value);
-//         // setSelectedCategory(e.target.value);
-//         dispatch(
-//           filterCategory({
-//             category: e.target.value,
-//             from: "productsList",
-//           })
-//         );
-//       }}
-//       value={filterData}
-//       className="p-2 rounded bg-gray-700 text-white"
-//     >
-//       <option value="">Select</option>
-//       {!categoryDataLoading &&
-//         categoryData.map((category) => (
-//           <option key={category.id} value={category.id}>
-//             {category.name}
-//           </option>
-//         ))}
-//     </select>
-//   </div>
-
-//   {/* Clear filter */}
-//   <div>
-//     <button
-//       className="text-red-600 hover:border-b-[1px] border-red-600"
-//       onClick={(e) => {
-//         e.preventDefault();
-//         dispatch(clearFilter({ clear: "productsList" }));
-//         setCategoryId("");
-//       }}
-//     >
-//       Clear Filter
-//     </button>
-//   </div>
-
-//   {/* Pagination controls */}
-//   <div className="flex gap-2 justify-center">
-//     <div className="flex gap-2 justify-center mt-2">
-//       {!productsDataLoading && (
-//         <button
-//           onClick={() => setPage((prevPage) => prevPage - 1)}
-//           className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
-//           disabled={productsData.page === 1}
-//         >
-//           <FaAngleLeft />
-//           Previous
-//         </button>
-//       )}
-
-//       {!productsDataLoading && (
-//         <div className="text-center text-lg">
-//           Page {productsData.page} of {productsData.totalPages}
-//         </div>
-//       )}
-
-//       {!productsDataLoading && (
-//         <button
-//           onClick={() => setPage((prevPage) => prevPage + 1)}
-//           className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
-//           disabled={productsData.page === productsData.totalPages}
-//         >
-//           Next
-//           <FaAngleRight />
-//         </button>
-//       )}
-//     </div>
-//   </div>
-
-//   {/* Create Product Button */}
-//   <div>
-//     <Link to={"/admin/add-products"}>
-//       <button className="bg-blue-700 text-white px-2 py-1 rounded">
-//         Create Product
-//       </button>
-//     </Link>
-//   </div>
-// </div>

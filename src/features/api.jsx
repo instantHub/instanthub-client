@@ -36,6 +36,8 @@ export const api = createApi({
     "Services Orders",
     "Recycle",
     "Variants Questions",
+    "Phone Numbers",
+    "Complaints",
   ],
   endpoints: (build) => ({
     getCategory: build.query({
@@ -409,6 +411,8 @@ export const api = createApi({
       }),
       invalidatesTags: ["Series"],
     }),
+
+    // OTPs and Number
     getOTP: build.query({
       query: (mobileNo) => `/api/otp/${mobileNo}`,
       // providesTags: ["Brands"],
@@ -424,9 +428,17 @@ export const api = createApi({
       }),
       invalidatesTags: ["Series"],
     }),
+
     getPhoneNumbers: build.query({
       query: () => `/api/otp`,
-      // providesTags: ["Brands"],
+      providesTags: ["Phone Numbers"],
+    }),
+    deletePhoneNumber: build.mutation({
+      query: (numberId) => ({
+        url: `/api/otp/number/${numberId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Phone Numbers"],
     }),
     getStocks: build.query({
       query: () => `/api/stocks`,
@@ -672,6 +684,38 @@ export const api = createApi({
     dashboardDetails: build.query({
       query: () => "/api/admin/dashboard",
     }),
+
+    // Complaints
+    getComplaints: build.query({
+      query: () => `/api/complaint`,
+      providesTags: ["Complaints"],
+    }),
+    createComplaint: build.mutation({
+      query: (data) => ({
+        url: "/api/complaint",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: ["Complaints"],
+    }),
+    acknowledgeComplaint: build.mutation({
+      query: ({ complaintId, data }) => ({
+        url: `/api/complaint/${complaintId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Complaints"],
+    }),
+    deleteComplaint: build.mutation({
+      query: (complaintId) => ({
+        url: `/api/complaint/${complaintId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Complaints"],
+    }),
   }),
 });
 
@@ -728,6 +772,7 @@ export const {
   useGetOTPQuery,
   useGenerateOTPMutation,
   useGetPhoneNumbersQuery,
+  useDeletePhoneNumberMutation,
   useGetStocksQuery,
   useStockSoldMutation,
   useDeleteCLImageMutation,
@@ -759,6 +804,11 @@ export const {
   useUpdateVariantQuestionsMutation,
   useDeleteVariantQuestionsMutation,
   useDashboardDetailsQuery,
+
+  useGetComplaintsQuery,
+  useCreateComplaintMutation,
+  useAcknowledgeComplaintMutation,
+  useDeleteComplaintMutation,
 } = api;
 
 // useGetAllQuestionsQuery,

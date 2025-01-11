@@ -66,7 +66,7 @@ const Navbar = () => {
   return (
     // <nav className="sticky flex justify-between items-center p-4 w-full  top-0 z-50">
     <nav
-      className={`bg-white flex items-center py-3 max-sm:py-3 w-full sticky top-0 z-20 border-b max-14inch:py-0 max-2sm:mx-1
+      className={`bg-white flex items-center py-3 max-sm:py-3 w-lvw sticky top-0 z-20 border-b max-14inch:py-0 max-2sm:mx-1
               ${isSidebarOpen ? "justify-between" : "justify-between"}
     `}
     >
