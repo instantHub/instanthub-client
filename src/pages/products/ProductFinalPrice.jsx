@@ -564,15 +564,15 @@ const ProductFinalPrice = () => {
         </div>
 
         {showLocation && (
-          <div className="fixed inset-0 flex justify-center items-center bg-black/50">
-            <div className="relative bg-white p-6 max-sm:p-4 w-fit max-md:w-[90%] rounded-lg">
-              <LocationSelector
-                handleAddress={handleAddress}
-                setShowLocation={setShowLocation}
-                setIsOpen={setIsOpen}
-              />
-            </div>
-          </div>
+          // <div className="z-10 fixed inset-0 flex justify-center items-center bg-black/50">
+          //   <div className="relative bg-white p-6 max-sm:p-4 w-fit max-md:w-[90%] rounded-lg">
+          <LocationSelector
+            handleAddress={handleAddress}
+            setShowLocation={setShowLocation}
+            setIsOpen={setIsOpen}
+          />
+          //   </div>
+          // </div>
         )}
 
         <div className="w-full flex gap-10 max-sm:flex-col text-[16px] max-sm:text-xs">
@@ -808,7 +808,7 @@ const ProductFinalPrice = () => {
       {isOpen && (
         <div
           role="dialog"
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         >
           <div className="relative bg-white p-8 max-sm:py-2 max-sm:px-4 rounded-lg shadow-lg w-[60%] max-lg:w-3/4 max-sm:w-[90%]">
             <div className="flex justify-between items-center">

@@ -566,87 +566,82 @@ const RecycleProductDetail = () => {
 
         {/* Would you like to recycle this item? */}
         {isOpen && (
-          <div>
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-[30%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
-                <div className="flex justify-center">
-                  <h2 className="text-xl max-sm:text-lg font-semibold mb-4 text-center">
-                    Would You Like to Recycle this{" "}
-                    {productDetails.category.name}?
-                  </h2>
+          <div className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-[30%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
+              <div className="flex justify-center">
+                <h2 className="text-xl max-sm:text-lg font-semibold mb-4 text-center">
+                  Would You Like to Recycle this {productDetails.category.name}?
+                </h2>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="flex gap-2 items-center">
+                  <span>{productDetails.category.name} is</span>
+                  <span className="text-lg max-sm:text-sm font-semibold">
+                    {productDetails.category.name
+                      .toLowerCase()
+                      .includes("laptop")
+                      ? laptopStatus
+                      : mobileStatus}
+                  </span>
                 </div>
 
-                <div className="flex flex-col items-center">
-                  <div className="flex gap-2 items-center">
-                    <span>{productDetails.category.name} is</span>
-                    <span className="text-lg max-sm:text-sm font-semibold">
-                      {productDetails.category.name
-                        .toLowerCase()
-                        .includes("laptop")
-                        ? laptopStatus
-                        : mobileStatus}
-                    </span>
-                  </div>
-
-                  {productDetails.category.name
-                    .toLowerCase()
-                    .includes("laptop") &&
-                    laptopStatus.toLowerCase().includes("on") && (
-                      <div className="flex gap-2 items-center my-2">
-                        <span>{productDetails.category.name} Age</span>
-                        <span className="text-lg max-sm:text-sm font-semibold border-b">
-                          {ageSelected}
-                        </span>
-                      </div>
-                    )}
-                  <div className="flex gap-2 items-center my-2">
-                    <span>Recycle Price</span>
-                    <span className="text-lg font-semibold">
-                      {recyclePrice}
-                    </span>
-                  </div>
-                  <div className="flex gap-4 items-center max-sm:text-sm">
-                    <span>{productDetails.category.name} Name</span>
-                    <span className="text-lg font-semibold max-sm:text-sm">
-                      {productDetails.name}
-                    </span>
-                  </div>
-                  {productDetails.category.name
-                    .toLowerCase()
-                    .includes("mobile") && (
-                    <div className="flex gap-4 items-center">
-                      <span>Variant</span>
-                      <span className="text-lg max-sm:text-sm font-semibold">
-                        {variantSelected.name}
+                {productDetails.category.name
+                  .toLowerCase()
+                  .includes("laptop") &&
+                  laptopStatus.toLowerCase().includes("on") && (
+                    <div className="flex gap-2 items-center my-2">
+                      <span>{productDetails.category.name} Age</span>
+                      <span className="text-lg max-sm:text-sm font-semibold border-b">
+                        {ageSelected}
                       </span>
                     </div>
                   )}
+                <div className="flex gap-2 items-center my-2">
+                  <span>Recycle Price</span>
+                  <span className="text-lg font-semibold">{recyclePrice}</span>
                 </div>
-                {/* <div className="flex justify-around mt-8"> */}
-                <div className="w-full flex items-center justify-center">
-                  {/* <div className="grid grid-cols-3 mt-8 items-center"> */}
-                  <div className="w-full flex justify-around mt-8 items-center">
-                    <button
-                      onClick={() => {
-                        setOrderOpen(true);
-                        //   setRecyclePrice(500);
-                      }}
-                      className="bg-green-600 text-white mx-auto px-4 py-1 rounded h-fit w-fit"
-                    >
-                      Yes
-                    </button>
-                    <img
-                      src="/images/recycle1.png"
-                      alt="logo"
-                      className="w-[88px] h-[70px] max-2sm:w-[60px] max-2sm:h-[55px]"
-                    />
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="bg-red-700 text-white mx-auto px-4 py-1 rounded h-fit w-fit"
-                    >
-                      No
-                    </button>
+                <div className="flex gap-4 items-center max-sm:text-sm">
+                  <span>{productDetails.category.name} Name</span>
+                  <span className="text-lg font-semibold max-sm:text-sm">
+                    {productDetails.name}
+                  </span>
+                </div>
+                {productDetails.category.name
+                  .toLowerCase()
+                  .includes("mobile") && (
+                  <div className="flex gap-4 items-center">
+                    <span>Variant</span>
+                    <span className="text-lg max-sm:text-sm font-semibold">
+                      {variantSelected.name}
+                    </span>
                   </div>
+                )}
+              </div>
+              {/* <div className="flex justify-around mt-8"> */}
+              <div className="w-full flex items-center justify-center">
+                {/* <div className="grid grid-cols-3 mt-8 items-center"> */}
+                <div className="w-full flex justify-around mt-8 items-center">
+                  <button
+                    onClick={() => {
+                      setOrderOpen(true);
+                      //   setRecyclePrice(500);
+                    }}
+                    className="bg-green-600 text-white mx-auto px-4 py-1 rounded h-fit w-fit"
+                  >
+                    Yes
+                  </button>
+                  <img
+                    src="/images/recycle1.png"
+                    alt="logo"
+                    className="w-[88px] h-[70px] max-2sm:w-[60px] max-2sm:h-[55px]"
+                  />
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="bg-red-700 text-white mx-auto px-4 py-1 rounded h-fit w-fit"
+                  >
+                    No
+                  </button>
                 </div>
               </div>
             </div>
@@ -655,7 +650,7 @@ const RecycleProductDetail = () => {
 
         {/* Fill out the details to book order */}
         {orderOpen && (
-          <div className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-8 max-sm:px-4 max-sm:py-2 rounded-lg shadow-lg w-[50%] max-lg:w-[90%]">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold mb-4">
@@ -738,7 +733,9 @@ const RecycleProductDetail = () => {
                     {selectedDate && (
                       <p className="max-sm:text-sm">
                         Scheduled time:{" "}
-                        <span className="font-semibold max-sm:text-xs">{schedulePickUp}</span>{" "}
+                        <span className="font-semibold max-sm:text-xs">
+                          {schedulePickUp}
+                        </span>{" "}
                       </p>
                     )}
                   </div>
@@ -844,7 +841,7 @@ const Modal = ({
   rightHandlerText,
 }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-8 max-sm:px-2 max-sm:py-5 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
         <div className="flex justify-center">
           <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">

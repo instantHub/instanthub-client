@@ -35,7 +35,7 @@ const RecycleProducts = () => {
     isSuccess: productsLoaded,
   } = useGetProductsQuery({ brandId, search });
 
-  console.log("productsData", productsData);
+  // console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
     setSeriesAction((prevSeries) => ({

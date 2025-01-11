@@ -35,7 +35,7 @@ function LocationSelector({ handleAddress, setShowLocation, setIsOpen }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20">
       <div className="relative bg-white p-4 rounded w-fit max-sm:w-[90%]">
         <h2 className="text-lg max-sm:text-sm font-bold mb-4">Select a City</h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 flex-wrap space-y-2">

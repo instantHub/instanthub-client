@@ -15,7 +15,7 @@ const RecycleBrands = () => {
   const [category, setCategory] = useState(null);
   const { data: brands = [], isLoading: brandsLoading } =
     useGetBrandQuery(catId);
-  console.log("brands", brands);
+  // console.log("brands", brands);
 
   useEffect(() => {
     if (!brandsLoading) setCategory(brands[0].category);
