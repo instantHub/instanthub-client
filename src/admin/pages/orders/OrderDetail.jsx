@@ -598,10 +598,13 @@ function DetailWrapper({ icon: Icon, heading, children }) {
 }
 
 function DetailDiv({ label, text }) {
+  const wideContent = label === "Address" || label === "Cancel Reason";
   const style = {
-    detailWrapper: "flex items-center gap-1",
+    detailWrapper: `flex  ${
+      wideContent ? "items-start" : "items-center"
+    } gap-1`,
     detailLabel: "text-gray-500 text-sm max-sm:text-xs",
-    detailText: "text-[16px] max-sm:text-sm",
+    detailText: "text-[16px] max-sm:text-sm text-wrap max-sm:max-w-[200px]",
   };
   return (
     <div className={`${style.detailWrapper}`}>

@@ -135,6 +135,9 @@ function ComplaintCard({ complaint }) {
 const ComplaintReader = ({ complaint, onClose, deleteConfirmation }) => {
   const [acknowledgeComplaint, { isLoading: acknowledgeComplaintLoading }] =
     useAcknowledgeComplaintMutation();
+
+  const { pending, acknowledge: acknowledged } = complaint.status;
+
   const style = {
     detailDiv: "flex items-center max-sm:items-start gap-2 ",
     detailLabel: "",
@@ -160,6 +163,8 @@ const ComplaintReader = ({ complaint, onClose, deleteConfirmation }) => {
       console.log("Error while acknowledging complaint", error);
     }
   }
+
+  console.log("complaint", complaint);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -194,8 +199,9 @@ const ComplaintReader = ({ complaint, onClose, deleteConfirmation }) => {
             Close
           </button>
           <button
-            className="px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded"
+            className="px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded disabled:bg-gray-300"
             onClick={acknowledgeHandler}
+            disabled={acknowledged}
           >
             Acknowledge
           </button>

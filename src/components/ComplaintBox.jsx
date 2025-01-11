@@ -43,6 +43,10 @@ const ComplaintBox = ({ setOpenComplaintBox }) => {
       const complaintCreated = await createComplaint(formData);
       console.log("complaint raised", complaintCreated);
       toast.success("Complaint Raised. Thank You!");
+      setName("");
+      setEmail("");
+      setComplaint("");
+      setOpenComplaintBox(false);
     } catch (error) {
       console.log("Error while submitting complaint:", error);
     }

@@ -59,7 +59,7 @@ const SideBar = () => {
       ],
     },
 
-    // BRANDS
+    // BRANDS and SERIES
     {
       title: "Brands",
       links: [
@@ -70,6 +70,10 @@ const SideBar = () => {
         {
           name: "brands-list",
           icon: <RiListIndefinite />,
+        },
+        {
+          name: "add-series",
+          icon: <SiDatabricks />,
         },
       ],
     },
@@ -91,15 +95,15 @@ const SideBar = () => {
     },
 
     // SERIES
-    {
-      title: "Series",
-      links: [
-        {
-          name: "add-series",
-          icon: <SiDatabricks />,
-        },
-      ],
-    },
+    // {
+    //   title: "Series",
+    //   links: [
+    //     {
+    //       name: "add-series",
+    //       icon: <SiDatabricks />,
+    //     },
+    //   ],
+    // },
 
     // QUESTIONS
     {
@@ -108,17 +112,6 @@ const SideBar = () => {
         {
           name: "create-questions",
           icon: <RiQuestionAnswerFill />,
-        },
-      ],
-    },
-
-    // VARIANT QUESTIONS
-    {
-      title: "Variant Questions",
-      links: [
-        {
-          name: "variants-questions",
-          icon: <PiGitDiff />,
         },
       ],
     },
@@ -151,6 +144,39 @@ const SideBar = () => {
       ],
     },
 
+    // SERVICES
+    {
+      title: "Services",
+      links: [
+        {
+          name: "add-services",
+          // icon: <CgProfile />,
+          icon: <GrMultiple />,
+        },
+        {
+          name: "services-list",
+          // icon: <CgProfile />,
+          icon: <GoMultiSelect />,
+        },
+        {
+          name: "services-Orders",
+          // icon: <CgProfile />,
+          icon: <MdOutlineMultipleStop />,
+        },
+      ],
+    },
+
+    // Complaints
+    {
+      title: "Complaints",
+      links: [
+        {
+          name: "complaints",
+          icon: <SiSlides />,
+        },
+      ],
+    },
+
     // MANAGE STOCKS
     {
       title: "Manage Stocks",
@@ -179,24 +205,13 @@ const SideBar = () => {
       ],
     },
 
-    // SERVICES
+    // VARIANT QUESTIONS
     {
-      title: "Services",
+      title: "Variant Questions",
       links: [
         {
-          name: "add-services",
-          // icon: <CgProfile />,
-          icon: <GrMultiple />,
-        },
-        {
-          name: "services-list",
-          // icon: <CgProfile />,
-          icon: <GoMultiSelect />,
-        },
-        {
-          name: "services-Orders",
-          // icon: <CgProfile />,
-          icon: <MdOutlineMultipleStop />,
+          name: "variants-questions",
+          icon: <PiGitDiff />,
         },
       ],
     },
@@ -208,17 +223,6 @@ const SideBar = () => {
         {
           name: "create-post",
           icon: <FaJediOrder />,
-        },
-      ],
-    },
-
-    // Complaints
-    {
-      title: "Complaints",
-      links: [
-        {
-          name: "complaints",
-          icon: <SiSlides />,
         },
       ],
     },
@@ -237,7 +241,8 @@ const SideBar = () => {
   ];
 
   const activeLink = `flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2 `;
-  const normalLink = `flex items-center gap-3 pl-4 pt-1 pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-secondary dark:hover:bg-secondary-light hover:bg-light-gray m-2`;
+  const normalLink = `flex items-center gap-3 pl-4 pt-1 pb-1 rounded-lg text-md text-white hover:text-black hover:bg-gray-200 m-2`;
+  // const normalLink = `flex items-center gap-3 pl-4 pt-1 pb-1 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-secondary dark:hover:bg-secondary-light hover:bg-light-gray m-2`;
 
   return (
     <div className={`w-ful z-30 bg-gray-900/50 fixed `}>
@@ -254,7 +259,7 @@ const SideBar = () => {
             <div>
               <Link
                 to="/admin"
-                className="gap-2 flex items-center font-extrabold tracking-tight dark:text-white text-slate-900"
+                className="gap-2 flex items-center font-extrabold tracking-tight text-white"
               >
                 <GiCash />
                 <span className="max-sm:text-sm text-lg tracking-widest">
@@ -279,7 +284,7 @@ const SideBar = () => {
 
           {links.map((item) => (
             <div key={item.title}>
-              <p className="text-gray-400 text-sm dark:text-gray-400 px-2 mt-2 uppercase">
+              <p className="text-white text-sm px-2 mt-2 uppercase">
                 {isSidebarOpen ? item.title : item.title.substring(0, 5)}
               </p>
 

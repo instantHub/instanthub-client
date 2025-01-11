@@ -31,7 +31,7 @@ const ProductFinalPrice = () => {
     city: "",
     pinCode: "",
   });
-  console.log("addressDetails", addressDetails);
+  // console.log("addressDetails", addressDetails);
   const [offerPrice, setOfferPrice] = useState();
   const [specialPrice, setSpecialPrice] = useState();
   const [accessoriesNotSelected, setAccessoriesNotSelected] = useState([]);
@@ -53,7 +53,7 @@ const ProductFinalPrice = () => {
   const maxTime = new Date();
   maxTime.setHours(22, 0, 0, 0);
 
-  // console.log("selectedProdDetails", selectedProdDetails);
+  console.log("selectedProdDetails", selectedProdDetails);
   // console.log("laptopSlice", laptopSlice);
   // console.log("deductionsByType", deductionsByType);
 
@@ -401,7 +401,7 @@ const ProductFinalPrice = () => {
     });
   }
 
-  console.log("accessoriesNotSelected", accessoriesNotSelected);
+  // console.log("accessoriesNotSelected", accessoriesNotSelected);
 
   // UseEffect to get complete final data
   // useEffect(() => {
