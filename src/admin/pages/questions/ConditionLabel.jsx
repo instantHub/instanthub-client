@@ -143,7 +143,8 @@ const CreateConditionLabels = () => {
 
   return (
     // <div className="flex gap-4 w-full">
-    <div className="flex flex-col max-sm:w-svw">
+    // <div className="flex flex-col max-sm:w-svw">
+    <div className="flex flex-col">
       <div className="flex justify-between items-center">
         <h1 className="bold text-sm max-sm:text-xs mb-2">
           Create ConditionLabels

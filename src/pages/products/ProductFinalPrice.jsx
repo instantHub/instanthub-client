@@ -564,15 +564,11 @@ const ProductFinalPrice = () => {
         </div>
 
         {showLocation && (
-          // <div className="z-10 fixed inset-0 flex justify-center items-center bg-black/50">
-          //   <div className="relative bg-white p-6 max-sm:p-4 w-fit max-md:w-[90%] rounded-lg">
           <LocationSelector
             handleAddress={handleAddress}
             setShowLocation={setShowLocation}
             setIsOpen={setIsOpen}
           />
-          //   </div>
-          // </div>
         )}
 
         <div className="w-full flex gap-10 max-sm:flex-col text-[16px] max-sm:text-xs">
@@ -729,24 +725,6 @@ const ProductFinalPrice = () => {
               </div>
 
               <DisplayDeductions data={deductionsByType} />
-
-              {/* {accessoriesNotSelected.length > 0 ? (
-                <div className="flex flex-col items-start text-lg max-sm:text-xs">
-                  <h2 className="text-xl max-sm:text-sm font-semibold py-2">
-                    Accessories Not Selected
-                  </h2>
-                  <div>
-                    {accessoriesNotSelected.map((a, index) => (
-                      <h2 key={index}>
-                        <span>{index + 1}. </span>{" "}
-                        <span className="text-lg max-sm:text-xs font-semibold text-red-600">
-                          {a.conditionLabel}
-                        </span>
-                      </h2>
-                    ))}
-                  </div>
-                </div>
-              ) : null} */}
             </div>
 
             <div className="w-3/4 mt-5 flex items-center justify-center max-lg:w-full">

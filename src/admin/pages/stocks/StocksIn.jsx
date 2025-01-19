@@ -65,7 +65,11 @@ export default function StocksIn() {
       orderId: selectedStock.id,
       soldByDetails: formattedDate,
       soldPrice: sellingPrice,
-      stockStatus: "Stock Out",
+      status: {
+        in: false,
+        out: true,
+        lost: false,
+      },
     };
 
     console.log("formData from StockIn handleSubmit", formData);
@@ -176,7 +180,7 @@ export default function StocksIn() {
         {stock.soldPrice ? stock.soldPrice : `PENDING`}
       </td>
       <td className="px-4 py-2 text-lg max-sm:text-xs">
-        <h2>{stock.stockStatus}</h2>
+        {/* <h2>{stock.status}</h2> */}
       </td>
       <td className="px-4 py-2 text-sm max-sm:text-xs">
         <button
@@ -197,9 +201,7 @@ export default function StocksIn() {
         {!stocksDataLoading && (
           <Table
             headers={headers}
-            data={stocksData.filter((s) =>
-              s.stockStatus.toLowerCase().includes("in")
-            )}
+            data={stocksData.filter((s) => s.status.in === true)}
             keyExtractor={(item) => item.id}
             rowRenderer={rowRenderer}
           />
@@ -388,7 +390,7 @@ export default function StocksIn() {
   <tbody className="text-center">
     {!stocksDataLoading &&
       stocksData
-        .filter((s) => s.stockStatus.toLowerCase().includes("in"))
+        .filter((s) => s.status.toLowerCase().includes("in"))
         .map((stock, index) => (
           <tr
             key={`${stock._id}-${index}`}
@@ -475,7 +477,7 @@ export default function StocksIn() {
               {stock.soldPrice ? stock.soldPrice : `PENDING`}
             </td>
             <td className="px-4 py-2">
-              <h2>{stock.stockStatus}</h2>
+              <h2>{stock.status}</h2>
             </td>
 
             <td className="px-4 py-2 text-sm">

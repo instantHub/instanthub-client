@@ -48,7 +48,6 @@ const Home = () => {
         />
 
         <link rel="canonical" href="https://www.instanthub.in/" />
-        
       </Helmet>
 
       <div className="flex flex-col w-full">

@@ -177,12 +177,18 @@ export default function BookService() {
     //   deviceAdditionalInfo
     // );
 
+    if (!schedulePickUp) {
+      toast.warning("Kindly Select Schedule Date");
+      return;
+    }
+
     let formData = {
       selectedService: selectedService,
       customerName: name,
       email: email,
       phone: phone,
       address: address,
+      pincode,
       // scheduleDate: selectedDate,
       scheduleDate: schedulePickUp,
       scheduleTime: time,

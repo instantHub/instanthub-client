@@ -106,7 +106,7 @@ export default function StocksIn() {
         {stock.soldPrice ? stock.soldPrice : `PENDING`}
       </td>
       <td className="px-4 py-2 text-lg max-sm:text-xs">
-        <h2>{stock.stockStatus}</h2>
+        {/* <h2>{stock.status}</h2> */}
       </td>
     </>
   );
@@ -119,9 +119,7 @@ export default function StocksIn() {
         {!stocksDataLoading && (
           <Table
             headers={headers}
-            data={stocksData.filter((s) =>
-              s.stockStatus.toLowerCase().includes("out")
-            )}
+            data={stocksData.filter((s) => s.status.out === true)}
             keyExtractor={(item) => item.id}
             rowRenderer={rowRenderer}
           />
@@ -151,7 +149,7 @@ export default function StocksIn() {
 <tbody className="text-center">
   {!stocksDataLoading &&
     stocksData
-      .filter((s) => s.stockStatus.toLowerCase().includes("out"))
+      .filter((s) => s.status.toLowerCase().includes("out"))
       .map((stock, index) => (
         <tr
           key={`${stock._id}-${index}`}
@@ -240,7 +238,7 @@ export default function StocksIn() {
             {stock.soldPrice ? stock.soldPrice : `PENDING`}
           </td>
           <td className="px-4 py-2">
-            <h2>{stock.stockStatus}</h2>
+            <h2>{stock.status}</h2>
           </td>
         </tr>
       ))}

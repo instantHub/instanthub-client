@@ -15,7 +15,7 @@ const ConfirmationModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white w-full max-w-md rounded shadow-lg p-6">
+      <div className="bg-white w-full max-sm:w-[95%] max-w-md rounded shadow-lg p-6 max-sm:px-3 max-sm:py-6">
         <h2 className="text-lg font-semibold mb-4">{title}</h2>
         <p className="text-gray-800 mb-2">{detail && detail}</p>
         <p className="text-gray-600 mb-6">{description}</p>

@@ -16,6 +16,7 @@ import {
 } from "../../features/filterSlice";
 import Table from "../../components/TableView";
 import { MdDeleteForever } from "react-icons/md";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -53,38 +54,38 @@ const ConditionLabelsTable = () => {
     }
   };
 
-  const headers = [
-    "Category",
-    "Condition",
-    "Condition Label",
-    "Condition Label Image",
-    "Edit & Delete",
-  ];
+  const headers = ["Condition", "Condition Label", "Edit & Delete"];
 
   const rowRenderer = (conditionLabel) => (
     <>
-      <td className="text-lg max-sm:text-xs py-2">
-        {conditionLabel.category?.name}
+      <td className="text-lg max-sm:text-xs flex flex-col gap-1 justify-center items-center">
+        <div className="">
+          <span>{conditionLabel.conditionNameId?.conditionName}</span>
+        </div>
+        <div className="flex gap-1 items-center">
+          <span className="text-sm max-sm:text-[10px]">Category</span>
+          <span>{conditionLabel.category?.name}</span>
+        </div>
       </td>
       <td className="text-lg max-sm:text-xs py-2">
-        {conditionLabel.conditionNameId?.conditionName}
-      </td>
-      <td className="text-lg max-sm:text-xs py-2">
-        {conditionLabel.conditionLabel}
-      </td>
-      <td className="text-lg max-sm:text-xs py-2">
-        {conditionLabel.conditionLabelImg ? (
-          <img
-            src={
-              import.meta.env.VITE_APP_BASE_URL +
-              conditionLabel.conditionLabelImg
-            }
-            alt="CAT"
-            className="w-[60px] h-[60px] mx-auto "
-          />
-        ) : (
-          <p className="text-red-500">No Image</p>
-        )}
+        <div>
+          {conditionLabel.conditionLabelImg && (
+            <img
+              src={
+                import.meta.env.VITE_APP_BASE_URL +
+                conditionLabel.conditionLabelImg
+              }
+              alt={conditionLabel.conditionLabel}
+              className="w-[60px] h-[60px] mx-auto "
+            />
+          )}
+        </div>
+        <div>
+          <span className="text-sm max-sm:text-[10px]">
+            {" "}
+            {conditionLabel.conditionLabel}
+          </span>
+        </div>
       </td>
       <td className="text-white py-2">
         <div className="flex gap-2 justify-center">
@@ -136,7 +137,7 @@ const ConditionLabelsTable = () => {
         [];
 
   return (
-    <div className="flex flex-col items-center p-4 max-sm:text-sm">
+    <div className="flex flex-col items-center p-4 max-sm:p-2 max-sm:text-sm">
       <h2 className="text-black text-lg font-bold mb-4">
         ConditionLabels Table
       </h2>
@@ -248,45 +249,45 @@ const ConditionLabelsTable = () => {
 
 export default ConditionLabelsTable;
 
-const ConfirmationModal = ({
-  isOpen,
-  onClose,
-  onConfirm,
-  itemToDelete,
-  title = "Are you sure?",
-  description = "This action cannot be undone.",
-  confirmText = "Confirm",
-  cancelText = "Cancel",
-  detail = null,
-}) => {
-  if (!isOpen) return null;
+// const ConfirmationModal = ({
+//   isOpen,
+//   onClose,
+//   onConfirm,
+//   itemToDelete,
+//   title = "Are you sure?",
+//   description = "This action cannot be undone.",
+//   confirmText = "Confirm",
+//   cancelText = "Cancel",
+//   detail = null,
+// }) => {
+//   if (!isOpen) return null;
 
-  console.log("itemToDelete", itemToDelete);
+//   console.log("itemToDelete", itemToDelete);
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white w-full max-w-md rounded shadow-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">{title}</h2>
-        <p className="text-gray-800 mb-2">{detail && detail}</p>
-        <p className="text-gray-600 mb-6">{description}</p>
-        <div className="flex justify-end space-x-4">
-          <button
-            className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded"
-            onClick={onClose}
-          >
-            {cancelText}
-          </button>
-          <button
-            className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded"
-            onClick={() => {
-              onConfirm(...itemToDelete);
-              onClose();
-            }}
-          >
-            {confirmText}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+//       <div className="bg-white w-full max-w-md rounded shadow-lg p-6">
+//         <h2 className="text-lg font-semibold mb-4">{title}</h2>
+//         <p className="text-gray-800 mb-2">{detail && detail}</p>
+//         <p className="text-gray-600 mb-6">{description}</p>
+//         <div className="flex justify-end space-x-4">
+//           <button
+//             className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded"
+//             onClick={onClose}
+//           >
+//             {cancelText}
+//           </button>
+//           <button
+//             className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded"
+//             onClick={() => {
+//               onConfirm(...itemToDelete);
+//               onClose();
+//             }}
+//           >
+//             {confirmText}
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };

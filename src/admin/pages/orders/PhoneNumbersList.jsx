@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Table from "../../components/TableView";
 import ConfirmationModal from "../../components/ConfirmationModal";
+import { MdDeleteForever } from "react-icons/md";
 
 const PhoneNumbersList = () => {
   const { data: phoneNumbers, isLoading: phoneNumbersLoading } =
@@ -83,41 +84,48 @@ const PhoneNumbersList = () => {
         </div>
 
         {/* Phone Numbers Cards */}
-        <div className="w-full mx-auto grid grid-cols-3 gap-4 max-sm:gap-2 max-sm:grid-cols-2">
+        <div className="w-full mx-auto grid grid-cols-5 gap-4 max-sm:gap-2 max-md:grid-cols-3 max-sm:grid-cols-2">
           {phoneNumbers?.phoneNumbers?.map((number) => (
             <div
               key={number.id}
-              className="flex flex-col gap-2 max-sm:gap-1 shadow rounded-md px-4 max-sm:px-2 py-2 border text-sm max-sm:text-xs"
+              className="flex flex-col gap-2 max-sm:gap-1 shadow rounded-md pt-2 border text-sm max-sm:text-xs overflow-hidden"
             >
-              {/* Schedule time */}
-              <div>
-                <b>Number: </b>
-                <span>{number.mobileNumber}</span>
+              <div className="flex flex-col gap-2 px-4 max-sm:px-2">
+                {/* Schedule time */}
+                <div>
+                  <b>Number: </b>
+                  <span>{number.mobileNumber}</span>
+                </div>
+
+                {/* Pin Code */}
+                <div>
+                  <b>Total Visits: </b>
+                  <span>{number.totalOTPsTaken}</span>
+                </div>
+
+                {/* Status */}
+                <div className="flex max-sm:flex-col">
+                  <b>Last Updated: </b>
+                  <span>{convertUTCToIST(number.updatedAt)}</span>
+                </div>
               </div>
 
-              {/* Pin Code */}
-              <div>
-                <b>Total Visits: </b>
-                <span>{number.totalOTPsTaken}</span>
-              </div>
-
-              {/* Status */}
-              <div className="flex max-sm:flex-col">
-                <b>Last Updated: </b>
-                <span>{convertUTCToIST(number.updatedAt)}</span>
-              </div>
-
-              {/* View or Delete */}
-              <div className="flex justify-center gap-2 mt-2">
+              {/* Delete */}
+              <div className="flex justify-center gap-2 mt-2 overflow-hidden">
                 <button
                   onClick={() => {
                     setModalOpen(true);
                     setNumberToDelete(number.id);
                     // deleteNumber(number.id);
                   }}
-                  className="bg-red-600 text-white px-3 py-1 rounded-md"
+                  className="w-full flex items-center justify-center border-t border-t-red-200 text-red-600 bg-white px-3 py-1"
                 >
-                  Delete
+                  <span className="tracking-widest max-sm:text-[11px]">
+                    Delete
+                  </span>
+                  <span>
+                    <MdDeleteForever />
+                  </span>
                 </button>
               </div>
             </div>

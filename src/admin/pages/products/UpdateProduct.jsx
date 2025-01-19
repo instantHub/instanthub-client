@@ -190,7 +190,7 @@ const UpdateProduct = () => {
   if (productDataLoading) return <Loading />;
 
   return (
-    <div className="px-[2%] pt-[2%] w-full">
+    <div className="px-2 pt-[2%] w-full">
       <CardHeader
         location={"/admin/products-list"}
         text="Update Products"
@@ -208,25 +208,28 @@ const UpdateProduct = () => {
             >
               <h2>
                 <span>Update Product </span>
-                <span className="text-lg font-semibold">{state.prodName}</span>
+                <span className="text-lg max-sm:text-sm font-semibold">
+                  {state.prodName}
+                </span>
               </h2>
               <hr />
 
               <div className="grid grid-cols-2 gap-4 max-sm:gap-2 max-sm:grid-cols-1">
-                {/* Category */}
-                <h2>
-                  <span>Category </span>
-                  <span className="text-lg font-semibold max-sm:text-sm">
-                    {productData?.category?.name}
-                  </span>
-                </h2>
-                {/* Brand */}
-                <h2>
-                  <span>Brand </span>
-                  <span className="text-lg font-semibold max-sm:text-sm">
-                    {productData?.brand?.name}
-                  </span>
-                </h2>
+                {/* Category and Brand */}
+                <div className="col-span-2 max-sm:col-span-1 grid grid-cols-2 max-sm:py-2">
+                  <h2>
+                    <span>Category </span>
+                    <span className="text-lg font-semibold max-sm:text-sm">
+                      {productData?.category?.name}
+                    </span>
+                  </h2>
+                  <h2>
+                    <span>Brand </span>
+                    <span className="text-lg font-semibold max-sm:text-sm">
+                      {productData?.brand?.name}
+                    </span>
+                  </h2>
+                </div>
 
                 {/* Product Name - Product Image - Variants */}
                 <div className="flex flex-col">
@@ -261,7 +264,7 @@ const UpdateProduct = () => {
                     </div>
                   </div>
                   {/* Variants */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 text-sm max-sm:text-xs w-full">
                     {state.variants?.map((variant, index) => (
                       <div
                         key={index}

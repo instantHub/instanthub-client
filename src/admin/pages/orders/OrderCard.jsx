@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { orderCurrentStatus } from "../../helpers/helper";
 
-const OrderCard = ({ data }) => {
-  //   console.log("data", data);
+const OrderCard = ({ data, categoryImage }) => {
+  // console.log("data", data);
   const navigate = useNavigate();
 
   const style = {
@@ -13,13 +13,25 @@ const OrderCard = ({ data }) => {
       data.status.cancelled && "border-red-600"
     }`,
   };
+  const image =
+    "/uploads/categories/Packers%20&%20movers%20(33)-image-1728314801508.jpg";
 
   return (
     <>
-      <div className={`shadow cursor-pointer rounded-md px-4 py-2 text-sm max-sm:text-xs border ${style.borderColor}`}>
+      <div
+        className={`shadow flex items-center cursor-pointer rounded-md py-2 text-sm max-sm:text-xs border ${style.borderColor}`}
+      >
+        <div className="px-5 max-sm:px-2 mx-auto">
+          <img
+            src={import.meta.env.VITE_APP_BASE_URL + categoryImage}
+            alt={"Product Image"}
+            className={`w-[60px] h-fit mx-auto max-sm:w-[50px]`}
+            loading="lazy" // Native lazy loading
+          />
+        </div>
         <div
           onClick={() => navigate(`/admin/order-detail/${data.id}`)}
-          className="flex flex-col gap-[2px]"
+          className="grow flex flex-col gap-[2px]"
         >
           {/* Order and Product name and variant */}
           <div className="flex flex-col text-start gap-[2px]">

@@ -15,7 +15,7 @@ function UpdateService(props) {
   const [formData, setFormData] = useState({});
   const [newImage, setNewImage] = useState(false);
 
-  const { updateData, setUpdateModel } = props;
+  const { updateData, setUpdateModel, closeModal } = props;
   // console.log("updateData from UpdateService", updateData);
 
   // handle Image Delete
@@ -84,6 +84,7 @@ function UpdateService(props) {
         return;
       }
       toast.success(serviceUpdated.data.message);
+      closeModal(false);
       // toast.success(`Service Updated Successfully`);
     } catch (error) {
       console.error("Error updating service:", error);
@@ -119,165 +120,146 @@ function UpdateService(props) {
   // console.log("formData fron update service", formData);
 
   return (
-    <>
-      <div className="">
-        <div className="grow">
-          <div className="flex justify-between items-center">
-            <h1 className="bold text-[1.4rem] mb-2">Update Service</h1>
-            <div className="flex items-center gap-1">
-              <h2>Service Category</h2>
-              <h2 className="pl-1"> / Update Service</h2>
-            </div>
-          </div>
-          <div className="bg-white border rounded-md shadow-lg">
-            <div className="flex flex-col gap-4 p-5 ">
-              <div className="flex gap-2 items-center">
-                {updateData.serviceFrom === "serviceCategory" && (
-                  <>
-                    <span className="text-lg opacity-75">Update </span>
-                    {updateData.serviceToUpdate && (
-                      <span className="text-xl ">
-                        {updateData.serviceToUpdate.name}
-                      </span>
-                    )}
-                    <span className="text-lg opacity-75">Service</span>
-                  </>
-                )}
+    <div className="flex flex-col gap-2 w-fit">
+      <h2 className="bold text-xl max-sm:text-sm mb-2">Update Service</h2>
+      {/* Service name for Service Category */}
+      {updateData.serviceFrom === "serviceCategory" && (
+        <p className="text-lg opacity-75 max-sm:text-sm">
+          Update {updateData.serviceToUpdate.name}
+        </p>
+      )}
+      <hr />
+      <form className="flex flex-col gap-4 max-sm:text-xs">
+        <div className="flex flex-col">
+          {formData && (
+            <div className="flex flex-col items-start">
+              {/* Service Name AND Image Handler */}
+              <div className="w-full grid grid-cols-3 max-sm:grid-cols-2 items-center">
+                {/* Service Name */}
+                <div className="w-full max-sm:col-span-2 grid grid-cols-2 max-sm:grid-cols-3 place-items-center items-center gap-2">
+                  <label className="text-sm col-span-1">Service Name:</label>
+                  <input
+                    type="text"
+                    name="serviceName"
+                    className="max-sm:col-span-2 border py-1 px-2 rounded text-sm"
+                    placeholder="Enter Service Name"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        name: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                {/* Image and Delete */}
+                <div className="w-full flex flex-col gap-1 items-center">
+                  <img
+                    src={import.meta.env.VITE_APP_BASE_URL + formData.image}
+                    alt="serviceCatImg"
+                    className="w-[100px] h-fit mx-auto max-sm:w-[70px]"
+                  />
+                  {/* Delete Button */}
+                  {formData.image ? (
+                    <button
+                      onClick={(e) => handleImageDelete(e)}
+                      className="px-2 py-1 text-white bg-red-500 rounded w-fit text-sm max-sm:text-xs"
+                    >
+                      Delete Image
+                    </button>
+                  ) : null}
+                </div>
+
+                {/* File Selector */}
+                <div className="w-full">
+                  <input
+                    type="file"
+                    className="max-sm:text-xs"
+                    onChange={(e) => {
+                      setNewImage(true);
+                      setFormData({
+                        ...formData,
+                        image: e.target.files[0],
+                      });
+                    }}
+                  />
+                </div>
               </div>
-              <hr />
 
-              <div className="flex flex-col">
-                {formData && (
-                  <div className="flex flex-col items-start">
-                    <div className="flex items-center">
-                      <div className="flex">
-                        <label>Service Name:</label>
-                        <input
-                          type="text"
-                          name="serviceName"
-                          className="border mx-2 py-1 px-2 rounded text-[15px]"
-                          placeholder="Enter Service Name"
-                          value={formData.name}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              name: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <div className="flex items-center">
-                          <img
-                            src={
-                              import.meta.env.VITE_APP_BASE_URL + formData.image
-                            }
-                            alt="serviceCatImg"
-                            className="w-[100px] h-[100px] mx-auto "
-                          />
-
-                          <input
-                            type="file"
-                            name=""
-                            // ref={fileInputRef}
-                            id=""
-                            onChange={(e) => {
-                              setNewImage(true);
-                              setFormData({
-                                ...formData,
-                                image: e.target.files[0],
-                              });
-                              // setNewImgSelected(true);
-                            }}
-                          />
-                        </div>
-                        <div className="mt-2">
-                          {formData.image ? (
-                            <button
-                              onClick={(e) => handleImageDelete(e)}
-                              className="px-2 py-1 text-white bg-red-500 rounded w-fit"
-                            >
-                              Delete Image
-                            </button>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                    {updateData.serviceFrom === "serviceSubProduct" && (
-                      <>
-                        <div className="flex mt-4">
-                          <label>Product Description:</label>
-                          <input
-                            type="text"
-                            name="Description"
-                            className="border mx-2 py-1 px-2 rounded text-[15px]"
-                            placeholder="Enter Service Name"
-                            value={formData.description}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                description: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="flex mt-2">
-                          <label>Product Discount:</label>
-                          <input
-                            type="number"
-                            name="Discount"
-                            className="border mx-2 py-1 px-2 rounded text-[15px]"
-                            placeholder="Enter Service Name"
-                            value={formData.discount}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                discount: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="flex mt-2">
-                          <label>Product Price:</label>
-                          <input
-                            type="number"
-                            name="Price"
-                            className="border mx-2 py-1 px-2 rounded text-[15px]"
-                            placeholder="Enter Service Name"
-                            value={formData.price}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                price: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                      </>
-                    )}
+              {/* Sub Services */}
+              {updateData.serviceFrom === "serviceSubProduct" && (
+                <>
+                  <div className="flex items-center mt-4  ">
+                    <label>Product Description:</label>
+                    <input
+                      type="text"
+                      name="Description"
+                      className="border mx-2 py-1 px-2 rounded text-[15px]"
+                      placeholder="Enter Service Name"
+                      value={formData.description}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          description: e.target.value,
+                        })
+                      }
+                    />
                   </div>
-                )}
-              </div>
-
-              <div className="flex items-center justify-around py-3 px-2">
-                <button
-                  onClick={(e) => handleSubmit(e)}
-                  className=" bg-green-600 text-white rounded px-2 py-1 cursor-pointer hover:bg-green-700"
-                >
-                  Update Service
-                </button>
-                <button
-                  onClick={() => setUpdateModel(false)}
-                  className=" bg-red-600 text-white rounded px-2 py-1 cursor-pointer hover:bg-red-700"
-                >
-                  Cancel
-                </button>
-              </div>
+                  <div className="flex items-center mt-2">
+                    <label>Product Discount:</label>
+                    <input
+                      type="number"
+                      name="Discount"
+                      className="border mx-2 py-1 px-2 rounded text-[15px]"
+                      placeholder="Enter Service Name"
+                      value={formData.discount}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          discount: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label>Product Price:</label>
+                    <input
+                      type="number"
+                      name="Price"
+                      className="border mx-2 py-1 px-2 rounded text-[15px]"
+                      placeholder="Enter Service Name"
+                      value={formData.price}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          price: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </>
+              )}
             </div>
-          </div>
+          )}
         </div>
-      </div>
-    </>
+
+        <div className="flex items-center justify-around py-3 px-2">
+          <button
+            onClick={(e) => handleSubmit(e)}
+            className=" bg-green-600 text-white rounded px-2 py-1 cursor-pointer hover:bg-green-700 max-sm:text-sm"
+          >
+            Update Service
+          </button>
+          <button
+            onClick={() => setUpdateModel(false)}
+            className=" bg-red-600 text-white rounded px-2 py-1 cursor-pointer hover:bg-red-700 max-sm:text-sm"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

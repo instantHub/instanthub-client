@@ -81,7 +81,9 @@ const filterSlice = createSlice({
       const clearedEntries = Object.entries(state[clear])
         .map(([key]) => key) // Return an array of keys
         .reduce((acc, curr) => {
-          acc[curr] = ""; // Set each key to an empty string in the accumulator
+          // console.log(curr === "page");
+          if (curr === "page") acc[curr] = 1;
+          else acc[curr] = ""; // Set each key to an empty string in the accumulator
           return acc; // Return the accumulator in each iteration
         }, {});
 

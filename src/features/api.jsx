@@ -599,7 +599,7 @@ export const api = createApi({
         },
         body: data,
       }),
-      invalidatesTags: ["ConditionLabels"],
+      // invalidatesTags: [""],
     }),
 
     // Recycle

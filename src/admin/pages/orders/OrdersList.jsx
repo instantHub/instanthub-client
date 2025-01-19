@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useGetOrdersListQuery } from "../../../features/api";
+import {
+  useGetCategoryQuery,
+  useGetOrdersListQuery,
+} from "../../../features/api";
 import OrderCard from "./OrderCard";
 import OrderTabs from "../../components/OrderTabs";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
@@ -8,6 +11,11 @@ import Loading from "../../../components/Loading";
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =
     useGetOrdersListQuery();
+
+  const { data: categoryData, isLoading: categoryDataLoading } =
+    useGetCategoryQuery();
+
+  const [categoryImages, setCategoryImages] = useState({});
 
   // console.log("ordersData", ordersData);
 
@@ -52,6 +60,17 @@ const OrdersList = () => {
     }
   }, [ordersData]);
 
+  // Setting Category Images
+  useEffect(() => {
+    if (categoryData) {
+      let images = categoryData.reduce((acc, ite) => {
+        if (!acc[ite.name]) acc[ite.name] = ite.image;
+        return acc;
+      }, {});
+      setCategoryImages(images);
+    }
+  }, [categoryData]);
+
   if (ordersLoading) return <Loading />;
 
   return (
@@ -82,7 +101,13 @@ const OrdersList = () => {
               });
             })
             ?.map((order) => {
-              return <OrderCard key={order.id} data={order} />;
+              return (
+                <OrderCard
+                  key={order.id}
+                  data={order}
+                  categoryImage={categoryImages[order.productCategory]}
+                />
+              );
             })}
         </div>
       </div>

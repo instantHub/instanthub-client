@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  useGetServicesOrdersQuery,
   useDeleteServiceOrderMutation,
+  useGetServicesOrdersQuery,
 } from "../../../features/api";
-import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "react-toastify";
-import Table from "../../components/TableView";
-import { useNavigate } from "react-router-dom";
-import { GiCardPickup } from "react-icons/gi";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ServiceOrderCard from "./ServiceOrderCard";
+import OrderTabs from "../../components/OrderTabs";
+import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
+import Loading from "../../../components/Loading";
 
 const ServicesOrdersList = () => {
   const { data: servicesOrders, isLoading: servicesOrdersLoading } =
@@ -18,245 +16,354 @@ const ServicesOrdersList = () => {
   const [deleteServiceOrder, { isLoading: deleteLoading }] =
     useDeleteServiceOrderMutation();
 
-  const navigate = useNavigate();
+  const [ordersDisplaying, setOrdersDiplaying] = useState({
+    all: true,
+    pending: false,
+    completed: false,
+    cancelled: false,
+  });
 
-  // Delete Order
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [orderToDelete, setOrderToDelete] = useState("");
-  const [orderIDToDelete, setOrderIDToDelete] = useState("");
+  const [serviceOrdersCount, setServiceOrdersCount] = useState({
+    pending: 0,
+    completed: 0,
+    cancelled: 0,
+    total: 0,
+  });
+  console.log("serviceOrdersCount", serviceOrdersCount);
 
-  const handleDelete = async (serviceOrderId) => {
-    console.log("handleDelete serviceOrderId", serviceOrderId);
-    try {
-      await deleteServiceOrder(serviceOrderId);
-      toast.success("Service Order deleted successfully");
-    } catch (error) {
-      toast.error("Service Order couldn't be deleted..!!");
+  function handleDisplay(show) {
+    console.log(show);
+    let updatedDisplay = {};
+    Object.entries(ordersDisplaying).map(([key, _]) => {
+      if (show == key) updatedDisplay[show] = true;
+      else updatedDisplay[key] = false;
+    });
+    console.log("updatedDisplay", updatedDisplay);
+    setOrdersDiplaying(updatedDisplay);
+  }
+
+  // serviceOrdersCount calculation
+  useEffect(() => {
+    if (servicesOrders) {
+      let initialCounts = { pending: 0, completed: 0, cancelled: 0, total: 0 };
+      const count = servicesOrders.reduce((acc, ite) => {
+        if (ite.status.pending) {
+          acc.pending += 1;
+        } else if (ite.status.completed) {
+          acc.completed += 1;
+        } else if (ite.status.cancelled) {
+          acc.cancelled += 1;
+        }
+        acc.total += 1;
+        return acc;
+      }, initialCounts);
+      setServiceOrdersCount(count);
     }
-  };
+  }, [servicesOrders]);
 
-  const handleOrderStatus = (order) => {
-    if (order.status.pending) {
-      return (
-        <p className="px-4 py-1 bg-blue-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
-          Pickup Pending <GiCardPickup />
-        </p>
-      );
-    }
-
-    if (order.status.completed) {
-      return (
-        <p className="flex flex-col border shadow rounded overflow-hidden bg-green-600 w-full">
-          <span className="px-2 py-1 text-white">Order Completed On:</span>
-          <span className="bg-white px-2">
-            {order.pickedUpDetails.pickedUpDate}
-          </span>
-        </p>
-      );
-    }
-
-    if (order.status.cancelled) {
-      return (
-        <p className="px-4 py-1 bg-red-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
-          Order Cancelled <GiCardPickup />
-        </p>
-      );
-    }
-
-    // Return null or some default content if none of the conditions match
-    return null;
-  };
-
-  const orderCurrentStatus = (status) => {
-    if (status?.pending) return <span className="text-blue-600">Pending</span>;
-    if (status?.completed)
-      return <span className="text-green-600">Completed</span>;
-    if (status?.cancelled)
-      return <span className="text-red-600">Cancelled</span>;
-    return "Unknown";
-  };
-
-  const handleViewBtnColor = (status) => {
-    if (status.pending) return "bg-blue-500 hover:bg-blue-700";
-    if (status.completed) return "bg-green-600 hover:bg-green-700";
-    if (status.cancelled) return "bg-red-600 hover:bg-red-700";
-    return "bg-black text-white";
-  };
-
-  const headers = [
-    "Service Order Details",
-    "Customer Details",
-    "Schedule Time",
-    "Completion Detail",
-    "Status",
-    "Update Order",
-    "Delete Order",
-  ];
-
-  const rowRenderer = (servicesOrder) => (
-    <>
-      {/* Order Details */}
-      <td className="max-sm:text-xs py-2">
-        <div className="flex items-center justify-center">
-          <div className="flex flex-col items-start p-1 pl-2 rounded bg- text-[16px] max-sm:text-xs">
-            <p className="flex max-sm:flex-col items-center justify-center gap-1">
-              <span className="font-semibold">Order ID:</span>
-              <span>{servicesOrder.serviceOrderId}</span>
-            </p>
-            <div>
-              <span className="font-semibold">Requested Service: </span>
-              {servicesOrder.serviceType === "Brand" ? (
-                <>
-                  <span className="font-semibold">
-                    {servicesOrder.selectedService.serviceCategoryId.name}
-                  </span>
-                  <div className="text-start">
-                    <span className="font-semibold">Brand: </span>
-                    <span className="">
-                      {servicesOrder.selectedService.name}{" "}
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <span className="font-semibold">
-                  {servicesOrder.selectedService.name}
-                </span>
-              )}
-            </div>
-            <p>
-              <span className="font-semibold">Inspection Charges: </span>
-              <span>{servicesOrder.inspectionCharges}</span>
-            </p>
-          </div>
-        </div>
-      </td>
-
-      {/* Customer Details */}
-      <td className="max-sm:text-xs py-2">
-        <div className="flex flex-col items-start">
-          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-            <span>Name:</span>
-            <span className="text-sm max-sm:text-xs font-bold ">
-              {servicesOrder.customerName}
-            </span>
-          </p>
-          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-            <span>Phone:</span>
-            <span className="text-sm max-sm:text-xs font-bold">{servicesOrder.phone}</span>
-          </p>
-          <p className="text-xs flex flex-col items-center gap-1 max-sm:gap-0 max-sm:hidden">
-            <span>Email:</span>
-            <span className="text-xs font-bold">{servicesOrder.email}</span>
-          </p>
-          <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-            <span>Address:</span>
-            <span className=" font-bold">{servicesOrder.address}</span>
-          </p>
-        </div>
-      </td>
-
-      {/* Schedule */}
-      <td className="max-sm:text-xs py-2">
-        <span>{servicesOrder.scheduleDate}</span>
-      </td>
-
-      {/* Completion Detail */}
-      <td className="max-sm:text-xs py-2">
-        {servicesOrder.status.completed ? (
-          <div className="flex flex-col items-start">
-            <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-              <span>Agent:</span>
-              <span className="text-sm max-sm:text-xs font-bold ">
-                {servicesOrder.serviceAgent}
-              </span>
-            </p>
-            <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-              <span>Completed On:</span>
-              <span className="text-sm max-sm:text-xs font-bold">
-                {servicesOrder.serviceCompletedOn}
-              </span>
-            </p>
-
-            <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
-              <span>Final Price:</span>
-              <span className=" font-bold">
-                {servicesOrder.serviceFinalPrice}
-              </span>
-            </p>
-          </div>
-        ) : (
-          "-"
-        )}
-      </td>
-
-      {/* Status */}
-      <td className="max-sm:text-xs py-2">
-        {orderCurrentStatus(servicesOrder.status)}
-      </td>
-
-      {/* View Button */}
-      <td className="max-sm:text-xs text-white py-2">
-        <button
-          className={`${handleViewBtnColor(
-            servicesOrder.status
-          )} p-2 max-sm:p-1 rounded`}
-          onClick={() => {
-            // setSelectedServiceOrder(servicesOrder);
-            // setIsOpen(true);
-            navigate(`/admin/serviceOrder-detail/${servicesOrder.id}`);
-          }}
-        >
-          View Order
-        </button>
-      </td>
-      <td className="max-sm:text-xs text-white py-2">
-        <div className="flex gap-2 justify-center">
-          <button
-            className="bg-red-600 px-3 py-1 rounded-md"
-            onClick={() => {
-              // handleDelete(servicesOrder.id);
-              setModalOpen(true);
-              setOrderToDelete(servicesOrder.id);
-              setOrderIDToDelete(servicesOrder.serviceOrderId);
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      </td>
-    </>
-  );
+  if (servicesOrdersLoading) return <Loading />;
 
   return (
-    <>
-      <div className="p-4">
-        {/* Service Orders List */}
-        {!servicesOrdersLoading && (
-          <Table
-            headers={headers}
-            data={servicesOrders}
-            keyExtractor={(item) => item.id}
-            rowRenderer={rowRenderer}
-          />
-        )}
+    <div>
+      {/* Pending - Completed - Cancelled Tabs */}
+      <OrderTabs
+        handleDisplay={handleDisplay}
+        ordersDisplaying={ordersDisplaying}
+        ordersCount={serviceOrdersCount}
+      />
+
+      <div className="flex justify-center mt-2 text-[16px] max-sm:text-sm ">
+        <CurrentOrdersAndCount
+          ordersDisplaying={ordersDisplaying}
+          serviceOrdersCount={serviceOrdersCount}
+        />
       </div>
 
-      <ConfirmationModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleDelete}
-        itemToDelete={orderToDelete}
-        title="Confirm Deletion"
-        detail={`You are about to delete an Service Order: ${orderIDToDelete}`}
-        description="Are you sure you want to delete this item? This action cannot be undone."
-        confirmText="Delete"
-        cancelText="Cancel"
-      />
-    </>
+      {/* Orders Cards */}
+      <div className="mt-2 mb-5 flex flex-col items-center">
+        <div className="w-full grid grid-cols-3 gap-4 max-sm:gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 px-10 max-sm:px-1 mx-auto">
+          {servicesOrders
+            ?.filter((order) => {
+              // Check if any of the keys in order.status match the true keys in ordersDisplaying
+              return Object.keys(order.status).some((key) => {
+                if (ordersDisplaying.all) return order;
+                else return order.status[key] && ordersDisplaying[key];
+              });
+            })
+            ?.map((order) => {
+              return <ServiceOrderCard key={order.id} data={order} />;
+            })}
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default ServicesOrdersList;
+
+// import React, { useState } from "react";
+// import {
+//   useGetServicesOrdersQuery,
+//   useDeleteServiceOrderMutation,
+// } from "../../../features/api";
+// import "react-datepicker/dist/react-datepicker.css";
+// import { toast } from "react-toastify";
+// import Table from "../../components/TableView";
+// import { useNavigate } from "react-router-dom";
+// import { GiCardPickup } from "react-icons/gi";
+// import ConfirmationModal from "../../components/ConfirmationModal";
+
+// const ServicesOrdersList = () => {
+//   const { data: servicesOrders, isLoading: servicesOrdersLoading } =
+//     useGetServicesOrdersQuery();
+//   console.log("servicesOrders", servicesOrders);
+
+//   const [deleteServiceOrder, { isLoading: deleteLoading }] =
+//     useDeleteServiceOrderMutation();
+
+//   const navigate = useNavigate();
+
+//   // Delete Order
+//   const [isModalOpen, setModalOpen] = useState(false);
+//   const [orderToDelete, setOrderToDelete] = useState("");
+//   const [orderIDToDelete, setOrderIDToDelete] = useState("");
+
+//   const handleDelete = async (serviceOrderId) => {
+//     console.log("handleDelete serviceOrderId", serviceOrderId);
+//     try {
+//       await deleteServiceOrder(serviceOrderId);
+//       toast.success("Service Order deleted successfully");
+//     } catch (error) {
+//       toast.error("Service Order couldn't be deleted..!!");
+//     }
+//   };
+
+//   const handleOrderStatus = (order) => {
+//     if (order.status.pending) {
+//       return (
+//         <p className="px-4 py-1 bg-blue-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+//           Pickup Pending <GiCardPickup />
+//         </p>
+//       );
+//     }
+
+//     if (order.status.completed) {
+//       return (
+//         <p className="flex flex-col border shadow rounded overflow-hidden bg-green-600 w-full">
+//           <span className="px-2 py-1 text-white">Order Completed On:</span>
+//           <span className="bg-white px-2">
+//             {order.pickedUpDetails.pickedUpDate}
+//           </span>
+//         </p>
+//       );
+//     }
+
+//     if (order.status.cancelled) {
+//       return (
+//         <p className="px-4 py-1 bg-red-600 text-white shadow rounded w-full flex items-center justify-center gap-1">
+//           Order Cancelled <GiCardPickup />
+//         </p>
+//       );
+//     }
+
+//     // Return null or some default content if none of the conditions match
+//     return null;
+//   };
+
+//   const orderCurrentStatus = (status) => {
+//     if (status?.pending) return <span className="text-blue-600">Pending</span>;
+//     if (status?.completed)
+//       return <span className="text-green-600">Completed</span>;
+//     if (status?.cancelled)
+//       return <span className="text-red-600">Cancelled</span>;
+//     return "Unknown";
+//   };
+
+//   const handleViewBtnColor = (status) => {
+//     if (status.pending) return "bg-blue-500 hover:bg-blue-700";
+//     if (status.completed) return "bg-green-600 hover:bg-green-700";
+//     if (status.cancelled) return "bg-red-600 hover:bg-red-700";
+//     return "bg-black text-white";
+//   };
+
+//   const headers = [
+//     "Service Order Details",
+//     "Customer Details",
+//     "Schedule Time",
+//     "Completion Detail",
+//     "Status",
+//     "Update Order",
+//     "Delete Order",
+//   ];
+
+//   const rowRenderer = (servicesOrder) => (
+//     <>
+//       {/* Order Details */}
+//       <td className="max-sm:text-xs py-2">
+//         <div className="flex items-center justify-center">
+//           <div className="flex flex-col items-start p-1 pl-2 rounded bg- text-[16px] max-sm:text-xs">
+//             <p className="flex max-sm:flex-col items-center justify-center gap-1">
+//               <span className="font-semibold">Order ID:</span>
+//               <span>{servicesOrder.serviceOrderId}</span>
+//             </p>
+//             <div>
+//               <span className="font-semibold">Requested Service: </span>
+//               {servicesOrder.serviceType === "Brand" ? (
+//                 <>
+//                   <span className="font-semibold">
+//                     {servicesOrder.selectedService.serviceCategoryId.name}
+//                   </span>
+//                   <div className="text-start">
+//                     <span className="font-semibold">Brand: </span>
+//                     <span className="">
+//                       {servicesOrder.selectedService.name}{" "}
+//                     </span>
+//                   </div>
+//                 </>
+//               ) : (
+//                 <span className="font-semibold">
+//                   {servicesOrder.selectedService.name}
+//                 </span>
+//               )}
+//             </div>
+//             <p>
+//               <span className="font-semibold">Inspection Charges: </span>
+//               <span>{servicesOrder.inspectionCharges}</span>
+//             </p>
+//           </div>
+//         </div>
+//       </td>
+
+//       {/* Customer Details */}
+//       <td className="max-sm:text-xs py-2">
+//         <div className="flex flex-col items-start">
+//           <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+//             <span>Name:</span>
+//             <span className="text-sm max-sm:text-xs font-bold ">
+//               {servicesOrder.customerName}
+//             </span>
+//           </p>
+//           <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+//             <span>Phone:</span>
+//             <span className="text-sm max-sm:text-xs font-bold">
+//               {servicesOrder.phone}
+//             </span>
+//           </p>
+//           <p className="text-xs flex flex-col items-center gap-1 max-sm:gap-0 max-sm:hidden">
+//             <span>Email:</span>
+//             <span className="text-xs font-bold">{servicesOrder.email}</span>
+//           </p>
+//           <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+//             <span>Address:</span>
+//             <span className=" font-bold">{servicesOrder.address}</span>
+//           </p>
+//         </div>
+//       </td>
+
+//       {/* Schedule */}
+//       <td className="max-sm:text-xs py-2">
+//         <span>{servicesOrder.scheduleDate}</span>
+//       </td>
+
+//       {/* Completion Detail */}
+//       <td className="max-sm:text-xs py-2">
+//         {servicesOrder.status.completed ? (
+//           <div className="flex flex-col items-start">
+//             <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+//               <span>Agent:</span>
+//               <span className="text-sm max-sm:text-xs font-bold ">
+//                 {servicesOrder.serviceAgent}
+//               </span>
+//             </p>
+//             <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+//               <span>Completed On:</span>
+//               <span className="text-sm max-sm:text-xs font-bold">
+//                 {servicesOrder.serviceCompletedOn}
+//               </span>
+//             </p>
+
+//             <p className="text-xs flex max-sm:flex-col items-center gap-1 max-sm:gap-0">
+//               <span>Final Price:</span>
+//               <span className=" font-bold">
+//                 {servicesOrder.serviceFinalPrice}
+//               </span>
+//             </p>
+//           </div>
+//         ) : (
+//           "-"
+//         )}
+//       </td>
+
+//       {/* Status */}
+//       <td className="max-sm:text-xs py-2">
+//         {orderCurrentStatus(servicesOrder.status)}
+//       </td>
+
+//       {/* View Button */}
+//       <td className="max-sm:text-xs text-white py-2">
+//         <button
+//           className={`${handleViewBtnColor(
+//             servicesOrder.status
+//           )} p-2 max-sm:p-1 rounded`}
+//           onClick={() => {
+//             // setSelectedServiceOrder(servicesOrder);
+//             // setIsOpen(true);
+//             navigate(`/admin/serviceOrder-detail/${servicesOrder.id}`);
+//           }}
+//         >
+//           View Order
+//         </button>
+//       </td>
+//       <td className="max-sm:text-xs text-white py-2">
+//         <div className="flex gap-2 justify-center">
+//           <button
+//             className="bg-red-600 px-3 py-1 rounded-md"
+//             onClick={() => {
+//               // handleDelete(servicesOrder.id);
+//               setModalOpen(true);
+//               setOrderToDelete(servicesOrder.id);
+//               setOrderIDToDelete(servicesOrder.serviceOrderId);
+//             }}
+//           >
+//             Delete
+//           </button>
+//         </div>
+//       </td>
+//     </>
+//   );
+
+//   return (
+//     <>
+//       <div className="p-4">
+//         {/* Service Orders List */}
+//         {!servicesOrdersLoading && (
+//           <Table
+//             headers={headers}
+//             data={servicesOrders}
+//             keyExtractor={(item) => item.id}
+//             rowRenderer={rowRenderer}
+//           />
+//         )}
+//       </div>
+
+//       <ConfirmationModal
+//         isOpen={isModalOpen}
+//         onClose={() => setModalOpen(false)}
+//         onConfirm={handleDelete}
+//         itemToDelete={orderToDelete}
+//         title="Confirm Deletion"
+//         detail={`You are about to delete an Service Order: ${orderIDToDelete}`}
+//         description="Are you sure you want to delete this item? This action cannot be undone."
+//         confirmText="Delete"
+//         cancelText="Cancel"
+//       />
+//     </>
+//   );
+// };
+
+// export default ServicesOrdersList;
+
+// OLD
 
 // handleServiceComplete
 {

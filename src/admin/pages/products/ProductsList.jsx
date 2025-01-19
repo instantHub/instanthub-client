@@ -21,50 +21,18 @@ import {
   clearSearchResults,
 } from "../../features/searchSlice";
 import ConfirmationModal from "../../components/ConfirmationModal";
+import ProductCard from "./ProductCard";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
-  const [deductionSelected, setDeductionSelected] = useState("");
-  // console.log("deductionSelected", deductionSelected);
 
   const dispatch = useDispatch();
 
   const filterData = useSelector((state) => state.filter.productsList);
 
   // console.log("filterData", filterData);
-
-  // THUNK START
-  const [query, setQuery] = useState("");
-  const { results, loading, error } = useSelector((state) => state.search);
-  console.log(results.products, loading, error);
-
-  const handleSearch = () => {
-    if (query.trim()) {
-      dispatch(
-        fetchSearchResults({
-          page: filterData.page,
-          limit,
-          search: query,
-          categoryId,
-        })
-      );
-    } else {
-      dispatch(clearSearchResults());
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-  // THUNK END
 
   const [categoryId, setCategoryId] = useState(filterData.category);
 
@@ -82,11 +50,9 @@ const ProductsList = () => {
 
   const { data: categoryData, isLoading: categoryDataLoading } =
     useGetCategoryQuery();
+
   const [deleteProduct, { isLoading: deleteLoading }] =
     useDeleteProductMutation();
-
-  // const [filterData, setSelectedCategory] = useState("");
-  // console.log(search);
 
   // Delete Order
   const [isModalOpen, setModalOpen] = useState(false);
@@ -96,153 +62,6 @@ const ProductsList = () => {
     console.log("handledelete", productId);
     await deleteProduct(productId);
   };
-
-  const headers = [
-    "Category",
-    "Brand",
-    "Product Name",
-    "Variants",
-    "Product IMG",
-    "Status",
-    "Questions",
-    "Edit/Update",
-    "Delete",
-  ];
-
-  const rowRenderer = (product) => (
-    <>
-      <td className="px-4 py-2">{product.category.name}</td>
-      <td className="px-4 py-2">{product.brand.name}</td>
-      <td className="px-4 py-2">{product.name}</td>
-      {/* Variants */}
-      <td className="px-4 py-2">
-        <ul>
-          {product.category.name === "Mobile"
-            ? product.variants.map((variant, i) => (
-                <div
-                  key={`${variant.id}-${i}`}
-                  className="flex gap-2 justify-center"
-                >
-                  <div className="">
-                    <p
-                      htmlFor="variantName"
-                      className="text-xs max-sm:text-[10px] text-gray-500"
-                    >
-                      Variant Name
-                    </p>
-                    <span key={i + 23} className="text-xs" name="variantName">
-                      {variant.name}
-                    </span>
-                  </div>
-                  <div>
-                    <p
-                      htmlFor="variantName"
-                      className="text-xs max-sm:text-[10px] text-gray-500"
-                    >
-                      Variant Price
-                    </p>
-                    <span key={i + 77} className="text-xs" name="variantName">
-                      {variant.price}
-                    </span>
-                  </div>
-                </div>
-              ))
-            : product.variants.map((variant, i) => (
-                <div className="" key={variant.id}>
-                  <p
-                    htmlFor="price"
-                    className="text-xs max-sm:text-[10px] text-gray-500"
-                  >
-                    Product Price
-                  </p>
-                  <span key={i + 78} className="text-xs" name="price">
-                    {variant.price}
-                  </span>
-                </div>
-              ))}
-        </ul>
-      </td>
-      {/* Image */}
-      <td className="px-4 py-2">
-        <img
-          src={import.meta.env.VITE_APP_BASE_URL + product.image}
-          alt="CAT"
-          className="w-[60px] h-[60px] mx-auto max-sm:w-[40px] max-sm:h-[40px]"
-        />
-      </td>
-      <td className="px-4 py-2">{product.status}</td>
-      {/* PRICEDROP BUTTON */}
-      <td className="px-4 py-2">
-        {product.category.name === "Mobile" ? (
-          <div className="flex flex-col justify-cente">
-            <div>
-              <select
-                onChange={(e) =>
-                  setDeductionSelected({
-                    [product.id]: e.target.value,
-                  })
-                }
-                className="border-2 border-blue-500 rounded"
-              >
-                <option value="">Variant</option>
-                {product.variantDeductions.map((variantDeduction, index) => (
-                  <option
-                    key={`${variantDeduction.id}-${index}`}
-                    value={variantDeduction.variantName}
-                  >
-                    {variantDeduction.variantName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              {deductionSelected[product.id] && (
-                <Link
-                  to={`/admin/products/product-questions/${
-                    product.id
-                  }?variant=${deductionSelected[product.id]}`}
-                >
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
-                    Price Drop
-                  </button>
-                </Link>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div>
-            <Link
-              to={`/admin/products/product-questions/${product.id}?variant=${
-                deductionSelected[product.id]
-              }`}
-            >
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-2 rounded">
-                Price Drop
-              </button>
-            </Link>
-          </div>
-        )}
-      </td>
-      <td className="py-2">
-        <div className="flex items-center justify-center">
-          <EditButton location={`/admin/update-product/${product.id}`} />
-        </div>
-      </td>
-      {/* DELETE */}
-      <td>
-        <button
-          onClick={() => {
-            // handleDelete(product.id);
-            setModalOpen(true);
-            setProductToDelete(product.id);
-          }}
-          className="bg-red-600 text-white px-3 py-2 rounded-md max-sm:text-sm"
-        >
-          <MdDeleteForever className="text-2xl" />
-        </button>
-      </td>
-    </>
-  );
 
   useEffect(() => {
     if (productsData) {
@@ -271,22 +90,22 @@ const ProductsList = () => {
 
   return (
     //Products based on the Category selected
-    <div className="flex flex-col items-center p-4 max-sm:text-sm">
+    <div className="flex flex-col items-center p-4 max-sm:p-1 max-sm:text-sm">
       <div className="text-center">
-        <h2 className="text-black font-serif text-2xl font-bold">
+        <h2 className="text-black font-serif text-2xl max-sm:text-sm font-bold">
           Products Table
         </h2>
       </div>
 
       {/* Filter features */}
-      <div className="w-[96%] max-sm:w-full flex justify-evenly flex- gap-2 border rounded-lg shadow-lg my-5 px-5">
+      <div className="w-[96%] max-sm:w-full flex justify-evenly flex-wrap gap-2 border rounded-lg shadow my-5 px-5 max-sm:px-1">
         {/* Select Category */}
         <div className="flex items-center">
           <select
             id="category"
             onChange={(e) => selectCategoryFunc(e)}
             value={filterData.category}
-            className="px-2 py-1 border rounded text-sm mmax-sm:text-xs"
+            className="px-2 py-1 border rounded text-sm mmax-sm:text-[10px]"
           >
             <option value="">Select Category</option>
             {!categoryDataLoading &&
@@ -409,12 +228,11 @@ const ProductsList = () => {
       </div>
 
       {!productsDataLoading && (
-        <Table
-          headers={headers}
-          data={productsData.products}
-          keyExtractor={(item) => item.id}
-          rowRenderer={rowRenderer}
-        />
+        <div className="w-full grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-1 gap-5 max-sm:gap-3">
+          {productsData.products.map((product) => (
+            <ProductCard key={product?.id} data={product} />
+          ))}
+        </div>
       )}
 
       {/* Pagination controls */}

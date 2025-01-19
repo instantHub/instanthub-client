@@ -19,12 +19,9 @@ export default function ManageStocks() {
     let countIn = 0,
       countOut = 0;
     if (!stocksDataLoading) {
-      stocksData.map((s) => {
-        if (s.stockStatus.toLowerCase().includes("in")) {
-          countIn = countIn + 1;
-        } else if (s.stockStatus.toLowerCase().includes("out")) {
-          countOut = countOut + 1;
-        }
+      stocksData.forEach((s) => {
+        if (s.status.in) countIn = countIn + 1;
+        if (s.status.out) countOut = countOut + 1;
       });
     }
     setTotalStocksIn(countIn);

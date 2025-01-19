@@ -56,21 +56,43 @@ const Dashboard = () => {
   const ordersStatus = [
     {
       label: "Pending",
-      count: dashboardDetail?.ordersPendingCount,
+      count: dashboardDetail?.ordersCount?.pending,
     },
     {
       label: "Completed",
-      count: dashboardDetail?.ordersCompletedCount,
+      count: dashboardDetail?.ordersCount?.completed,
+    },
+    {
+      label: "Cancelled",
+      count: dashboardDetail?.ordersCount?.cancelled,
+    },
+  ];
+  const recycleOrdersStatus = [
+    {
+      label: "Pending",
+      count: dashboardDetail?.recycleOrdersCount?.pending,
+    },
+    {
+      label: "Completed",
+      count: dashboardDetail?.recycleOrdersCount?.completed,
+    },
+    {
+      label: "Cancelled",
+      count: dashboardDetail?.recycleOrdersCount?.cancelled,
     },
   ];
   const stockStatus = [
     {
-      label: "Stock In",
-      count: dashboardDetail?.stocksInCount,
+      label: "Stocks In",
+      count: dashboardDetail?.stocksCount?.in,
     },
     {
-      label: "Stock Out",
-      count: dashboardDetail?.stocksOutCount,
+      label: "Stocks Out",
+      count: dashboardDetail?.stocksCount?.out,
+    },
+    {
+      label: "Stocks Lost",
+      count: dashboardDetail?.stocksCount?.lost,
     },
   ];
 
@@ -159,12 +181,6 @@ const Dashboard = () => {
     setProductsChartData(prodData);
   }, [dashboardDetail]);
 
-  // console.log("Charts Data monthlyOrders:", monthlyOrders);
-  // console.log("Charts Data monthlyRecycleOrders:", monthlyRecycleOrders);
-  // console.log("Charts Data categoriesChartData:", categoriesChartData);
-  // console.log("Charts Data brandsChartData:", brandsChartData);
-  // console.log("Charts Data productsChartData:", productsChartData);
-
   const colors = [
     {
       bgColor: "rgba(75, 192, 192, 0.6)",
@@ -185,7 +201,7 @@ const Dashboard = () => {
   if (dashboardDetailLoading) return <Loading />;
 
   return (
-    <div className="mx-10 mt-5 max-sm:mx-2 pb-10">
+    <div className="mx-10 mt-5 max-sm:mx-2 pb-10 max-sm:pb-5">
       <div className="flex flex-col gap-20 max-sm:gap-10 pl-">
         {/* Categories and Brands Chart */}
         <div className="flex flex-col gap-2 justify-around items-center border px-3 py-10 rounded-xl shadow-lg">
@@ -235,7 +251,7 @@ const Dashboard = () => {
           </div>
 
           {/* Brand wise products */}
-          <div className="flex flex-wrap justify-center items-center">
+          <div className="max-sm:hidden flex flex-wrap justify-center items-center">
             {dashboardDetail?.detailedProductsCount?.map((cat, i) => (
               <div key={i}>
                 <p className="text-center text-sm">
@@ -270,9 +286,10 @@ const Dashboard = () => {
                 color={colors[0]}
                 chartFor="Orders"
               />
+              {/* Not required currently */}
               {/* <div>
                 <p className="text-center text-sm">
-                  Total {dashboardDetail?.ordersCount} Orders
+                  Total {dashboardDetail?.ordersCount?.total} Orders
                 </p>
               </div> */}
             </div>
@@ -304,41 +321,54 @@ const Dashboard = () => {
           </div>
           <div>
             <p className="text-center font-serif text-xl max-sm:text-sm">
-              Total {dashboardDetail?.ordersCount} Orders
+              Total {dashboardDetail?.ordersCount?.total} Orders
             </p>
           </div>
         </div>
 
         {/* Recycle Orders Chart*/}
         <div className="flex flex-col items-center border px-3 py-10 max-sm:py-5 rounded-xl shadow-lg">
-          <p className="font-serif text-3xl max-sm:text-lg">
+          <p className="font-serif text-3xl max-sm:text-xl">
             Recycle Orders Chart
           </p>
           <div className="flex max-sm:flex-col max-sm:gap-5 justify-center items-center">
-            {/* Recycle Orders */}
+            {/* ORDERS */}
             <div className="flex flex-col items-center">
               <p className="text-center text-sm max-sm:text-xs">
                 Month-on-Month Recycle Orders
               </p>
               <BarChart
                 data={monthlyRecycleOrders}
-                category="Recycle Orders"
-                xTitle="Recycle Orders"
+                category="Orders"
+                xTitle="Orders"
                 yTitle="Count"
-                color={colors[1]}
+                color={colors[0]}
                 chartFor="Orders"
               />
-
+              {/* Not required currently */}
               {/* <div>
                 <p className="text-center text-sm">
-                  Total {dashboardDetail?.recycleOrdersCount} Recycle Orders
+                  Total {dashboardDetail?.ordersCount?.total} Orders
                 </p>
               </div> */}
+            </div>
+
+            {/* ORDER STATUS */}
+            <div className="flex flex-col items-center">
+              <p className="text-center text-sm">Recycle Orders Status</p>
+              <BarChart
+                category={"Orders Status"}
+                data={recycleOrdersStatus}
+                xTitle="Pending / Completed"
+                yTitle="Count"
+                color={colors[0]}
+                chartFor="Orders"
+              />
             </div>
           </div>
           <div>
             <p className="text-center font-serif text-xl max-sm:text-sm">
-              Total {dashboardDetail?.recycleOrdersCount} Recycle Orders
+              Total {dashboardDetail?.recycleOrdersCount?.total} Orders
             </p>
           </div>
         </div>

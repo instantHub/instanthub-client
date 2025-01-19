@@ -222,22 +222,29 @@ const CreateServiceForm = () => {
   };
 
   const createHeadingStyle =
-    "text-2xl text-green-800 font-serif font-bold py-1";
+    "text-2xl max-sm:text-sm text-green-800 font-serif font-bold py-1";
+
+  const formStyle = "flex flex-col gap-4 p-5 max-sm:p-4 w-full";
+  const inputDiv = "w-fit grid grid-cols-2 text-sm max-sm:text-xs";
+  const inputLabel = "text-sm max-sm:text-xs";
+  const inputBox = "text-sm max-sm:text-xs";
+  const inputSubmitBtn =
+    "w-fit px-4 py-2 max-sm:px-2 max-sm:py-1 max-sm:text-sm bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300";
 
   const createButtonStyle = (buttonType) => {
     return `${
       buttonType
-        ? `bg-green-700 text-white px-4 py-3 text-lg `
-        : `bg-white px-4 py-2`
-    } border font-serif text-black rounded-md shadow-xl cursor-pointer`;
+        ? `bg-green-700 text-white px-4 max-sm:px-2 py-3 max-sm:py-1 text-lg max-sm:text-xs`
+        : `bg-white px-4 max-sm:px-2 py-2 max-sm:py-1 max-sm:text-[10px]`
+    } border font-serif text-[16px] text-black rounded-md shadow-xl max-sm:shadow cursor-pointer`;
   };
 
   return (
-    <div className="flex w-[90%] mt-[2%] mx-auto">
+    <div className="flex w-[90%] max-sm:w-[95%] mt-[2%] mx-auto">
       <div className="flex gap-4 w-full">
         <div className="w-full">
           {/* Buttons */}
-          <div className="flex justify-between items-center mb-5">
+          <div className="grid grid-cols-5 max-md:grid-cols-3 max-sm:grid-cols-2 gap-2 justify-between items-center mb-5 max-sm:mb-5">
             <button
               onClick={() => {
                 dispatch({
@@ -345,77 +352,74 @@ const CreateServiceForm = () => {
               </div>
               <form
                 onSubmit={(e) => handleSubmit(e, "serviceCategory")}
-                className="flex flex-col gap-4 p-5 w-full"
+                className={`${formStyle}`}
               >
-                <div className="flex">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col gap-4">
-                      {/* Select Type */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Type</label>
-                        <select
-                          value={state.serviceType}
-                          onChange={(e) => {
-                            dispatch({
-                              type: "serviceType",
-                              key: "serviceType",
-                              value: e.target.value,
-                            });
-                            // setServiceType(e.target.value);
-                          }}
-                          className="px-2 py-1 border rounded"
-                        >
-                          <option value="DirectService">Direct Service</option>
-                          <option value="Brand">Brand</option>
-                          <option value="ServiceSubCategory">
-                            Service Sub Category
-                          </option>
-                        </select>
-                      </div>
+                {/* Select Type */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Type</label>
+                  <select
+                    value={state.serviceType}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceType",
+                        key: "serviceType",
+                        value: e.target.value,
+                      });
+                      // setServiceType(e.target.value);
+                    }}
+                    className="px-2 py-1 border rounded"
+                  >
+                    <option value="DirectService">Direct Service</option>
+                    <option value="Brand">Brand</option>
+                    <option value="ServiceSubCategory">
+                      Service Sub Category
+                    </option>
+                  </select>
+                </div>
 
-                      <div className="flex items-center gap-2">
-                        <label>Service Name</label>
-                        <input
-                          type="text"
-                          value={state.serviceCategory.serviceName}
-                          onChange={(e) => {
-                            // setServiceName(e.target.value);
-                            dispatch({
-                              type: "serviceCategory",
-                              key: "serviceName",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder="Enter Service Name"
-                          required
-                        />
-                      </div>
+                {/* Service Name */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Name</label>
+                  <input
+                    type="text"
+                    value={state.serviceCategory.serviceName}
+                    onChange={(e) => {
+                      // setServiceName(e.target.value);
+                      dispatch({
+                        type: "serviceCategory",
+                        key: "serviceName",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Service Name"
+                    required
+                  />
+                </div>
 
-                      <div className="py-2">
-                        <input
-                          type="file"
-                          name="image"
-                          ref={fileInputRef}
-                          onChange={(e) => {
-                            // setServiceImage(e.target.files[0]);
-                            dispatch({
-                              type: "serviceCategory",
-                              key: "serviceImage",
-                              value: e.target.files[0],
-                            });
-                          }}
-                          // onChange={(e) => setImageSelected(e.target.files[0])}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+                {/* Image */}
+                <div className={`${inputDiv}`}>
+                  <input
+                    type="file"
+                    name="image"
+                    className="col-span-2"
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                      // setServiceImage(e.target.files[0]);
+                      dispatch({
+                        type: "serviceCategory",
+                        key: "serviceImage",
+                        value: e.target.files[0],
+                      });
+                    }}
+                    // onChange={(e) => setImageSelected(e.target.files[0])}
+                    required
+                  />
                 </div>
                 <div>
                   <button
                     type="submit"
-                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    className={`${inputSubmitBtn}`}
                     disabled={createServiceLoading}
                   >
                     {!createServiceLoading
@@ -437,106 +441,105 @@ const CreateServiceForm = () => {
               <form
                 // onSubmit={handleSubmit}
                 onSubmit={(e) => handleSubmit(e, "serviceBrand")}
-                className="flex flex-col gap-4 p-5 w-full"
+                className={`${formStyle}`}
               >
-                <div className="flex">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col gap-4">
-                      {/* Select Type */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Type</label>
-                        <select
-                          value={state.serviceType}
-                          onChange={(e) => {
-                            dispatch({
-                              type: "serviceType",
-                              key: "serviceType",
-                              value: e.target.value,
-                            });
-                            // setServiceType(e.target.value);
-                          }}
-                          className="px-2 py-1 bg-gray-700 text-white border rounded"
-                        >
-                          <option value="DirectService" disabled>
-                            Direct Service
-                          </option>
-                          <option value="Brand">Brand</option>
-                          <option value="ServiceSubCategory" disabled>
-                            Service Sub Category
-                          </option>
-                        </select>
-                      </div>
-
-                      {/* Select Service Category */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Category</label>
-                        <select
-                          value={state.serviceBrand.serviceCategory}
-                          onChange={(e) => {
-                            // setServiceCategory(e.target.value);
-                            dispatch({
-                              type: "serviceBrand",
-                              key: "serviceCategoryId",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          required
-                        >
-                          <option value="">Select Service Category</option>
-                          {!servicesLoading &&
-                            servicesData?.serviceCategories
-                              .filter((sc) => sc.type === state.serviceType)
-                              .map((sc, i) => (
-                                <option value={sc._id} key={i}>
-                                  {sc.name}
-                                </option>
-                              ))}
-                        </select>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <label>Brand Name</label>
-                        <input
-                          type="text"
-                          value={state.serviceBrand.brandName}
-                          onChange={(e) => {
-                            // setBrandName(e.target.value);
-                            dispatch({
-                              type: "serviceBrand",
-                              key: "brandName",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder="Enter Brand Name"
-                          required
-                        />
-                      </div>
-
-                      <div className="py-2">
-                        <input
-                          type="file"
-                          name="image"
-                          ref={fileInputRef}
-                          onChange={(e) => {
-                            // setBrandImage(e.target.files[0]);
-                            dispatch({
-                              type: "serviceBrand",
-                              key: "brandImage",
-                              value: e.target.files[0],
-                            });
-                          }}
-                          // onChange={(e) => setImageSelected(e.target.files[0])}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+                {/* Select Type */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Type</label>
+                  <select
+                    value={state.serviceType}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceType",
+                        key: "serviceType",
+                        value: e.target.value,
+                      });
+                      // setServiceType(e.target.value);
+                    }}
+                    className="px-2 py-1 bg-gray-700 text-white border rounded"
+                  >
+                    <option value="DirectService" disabled>
+                      Direct Service
+                    </option>
+                    <option value="Brand">Brand</option>
+                    <option value="ServiceSubCategory" disabled>
+                      Service Sub Category
+                    </option>
+                  </select>
                 </div>
+
+                {/* Select Service Category */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Category</label>
+                  <select
+                    value={state.serviceBrand.serviceCategory}
+                    onChange={(e) => {
+                      // setServiceCategory(e.target.value);
+                      dispatch({
+                        type: "serviceBrand",
+                        key: "serviceCategoryId",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    required
+                  >
+                    <option value="">Select Service Category</option>
+                    {!servicesLoading &&
+                      servicesData?.serviceCategories
+                        .filter((sc) => sc.type === state.serviceType)
+                        .map((sc, i) => (
+                          <option value={sc._id} key={i}>
+                            {sc.name}
+                          </option>
+                        ))}
+                  </select>
+                </div>
+
+                {/* Brand Name */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Brand Name</label>
+                  <input
+                    type="text"
+                    value={state.serviceBrand.brandName}
+                    onChange={(e) => {
+                      // setBrandName(e.target.value);
+                      dispatch({
+                        type: "serviceBrand",
+                        key: "brandName",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Brand Name"
+                    required
+                  />
+                </div>
+
+                {/* Image */}
+                <div className={`${inputDiv}`}>
+                  <input
+                    type="file"
+                    name="image"
+                    ref={fileInputRef}
+                    className="col-span-2"
+                    onChange={(e) => {
+                      // setBrandImage(e.target.files[0]);
+                      dispatch({
+                        type: "serviceBrand",
+                        key: "brandImage",
+                        value: e.target.files[0],
+                      });
+                    }}
+                    // onChange={(e) => setImageSelected(e.target.files[0])}
+                    required
+                  />
+                </div>
+
                 <div>
                   <button
                     type="submit"
-                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    className={`${inputSubmitBtn}`}
                     disabled={createServiceLoading}
                   >
                     {!createServiceLoading
@@ -557,81 +560,77 @@ const CreateServiceForm = () => {
               <form
                 // onSubmit={handleSubmit}
                 onSubmit={(e) => handleSubmit(e, "serviceBrandProblem")}
-                className="flex flex-col gap-4 p-5 w-full"
+                className={`${formStyle}`}
               >
-                <div className="flex">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col gap-4">
-                      {/* Select Type */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Category</label>
-                        <select
-                          value={state.serviceBrandProblem.serviceCategory}
-                          onChange={(e) => {
-                            // setServiceCategory(e.target.value);
-                            dispatch({
-                              type: "serviceBrandProblem",
-                              key: "serviceCategoryId",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          required
-                        >
-                          <option value="">Select Service Category</option>
-                          {servicesData.serviceCategories
-                            .filter((sc) => sc.type === "Brand")
-                            .map((sc, i) => (
-                              <option value={sc._id} key={i}>
-                                {sc.name}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <label>Brand Problem Name</label>
-                        <input
-                          type="text"
-                          value={state.serviceBrandProblem.brandProblemName}
-                          onChange={(e) => {
-                            // setBrandProblemName(e.target.value);
-                            dispatch({
-                              type: "serviceBrandProblem",
-                              key: "brandProblemName",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder="Enter Name"
-                          required
-                        />
-                      </div>
-
-                      <div className="py-2">
-                        <input
-                          type="file"
-                          name="image"
-                          ref={fileInputRef}
-                          onChange={(e) => {
-                            // setBrandProblemImage(e.target.files[0]);
-                            dispatch({
-                              type: "serviceBrandProblem",
-                              key: "brandProblemImage",
-                              value: e.target.files[0],
-                            });
-                          }}
-                          // onChange={(e) => setImageSelected(e.target.files[0])}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+                {/* Select Type */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Category</label>
+                  <select
+                    value={state.serviceBrandProblem.serviceCategory}
+                    onChange={(e) => {
+                      // setServiceCategory(e.target.value);
+                      dispatch({
+                        type: "serviceBrandProblem",
+                        key: "serviceCategoryId",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    required
+                  >
+                    <option value="">Select Service Category</option>
+                    {servicesData.serviceCategories
+                      .filter((sc) => sc.type === "Brand")
+                      .map((sc, i) => (
+                        <option value={sc._id} key={i}>
+                          {sc.name}
+                        </option>
+                      ))}
+                  </select>
                 </div>
+
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Brand Problem Name</label>
+                  <input
+                    type="text"
+                    value={state.serviceBrandProblem.brandProblemName}
+                    onChange={(e) => {
+                      // setBrandProblemName(e.target.value);
+                      dispatch({
+                        type: "serviceBrandProblem",
+                        key: "brandProblemName",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Name"
+                    required
+                  />
+                </div>
+
+                <div className={`${inputDiv}`}>
+                  <input
+                    type="file"
+                    name="image"
+                    ref={fileInputRef}
+                    className="col-span-2"
+                    onChange={(e) => {
+                      // setBrandProblemImage(e.target.files[0]);
+                      dispatch({
+                        type: "serviceBrandProblem",
+                        key: "brandProblemImage",
+                        value: e.target.files[0],
+                      });
+                    }}
+                    // onChange={(e) => setImageSelected(e.target.files[0])}
+                    required
+                  />
+                </div>
+
                 <div>
                   <button
                     type="submit"
-                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    className={`${inputSubmitBtn}`}
                     disabled={createServiceLoading}
                   >
                     {!createServiceLoading
@@ -654,111 +653,107 @@ const CreateServiceForm = () => {
               <form
                 // onSubmit={handleSubmit}
                 onSubmit={(e) => handleSubmit(e, "serviceSubCategory")}
-                className="flex flex-col gap-4 p-5 w-full"
+                className={`${formStyle}`}
               >
-                <div className="flex">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col gap-4">
-                      {/* Select Type */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Type</label>
-                        <select
-                          value={state.serviceType}
-                          onChange={(e) => {
-                            dispatch({
-                              type: "serviceType",
-                              key: "serviceType",
-                              value: e.target.value,
-                            });
-                            // setServiceType(e.target.value);
-                          }}
-                          className="px-2 py-1 bg-gray-700 text-gray-100 border rounded"
-                        >
-                          <option value="DirectService" disabled>
-                            Direct Service
-                          </option>
-                          <option value="Brand" disabled>
-                            Brand
-                          </option>
-                          <option value="ServiceSubCategory">
-                            Service Sub Category
-                          </option>
-                        </select>
-                      </div>
-
-                      {/* Select Service Category */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Category</label>
-                        <select
-                          value={state.serviceSubCategory.serviceCategory}
-                          onChange={(e) => {
-                            // setServiceCategory(e.target.value);
-                            dispatch({
-                              type: "serviceSubCategory",
-                              key: "serviceCategoryId",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          required
-                        >
-                          <option value="">Select Service Category</option>
-                          {!servicesLoading &&
-                            servicesData?.serviceCategories
-                              .filter((sc) => sc.type === state.serviceType)
-                              .map((sc, i) => (
-                                <option value={sc._id} key={i}>
-                                  {sc.name}
-                                </option>
-                              ))}
-                        </select>
-                      </div>
-
-                      {/* Service Sub Category Name */}
-                      <div className="flex items-center gap-2">
-                        <p>Service Sub Category Name</p>
-                        <input
-                          type="text"
-                          value={state.serviceSubCategory.subServiceName}
-                          onChange={(e) => {
-                            // setSubServiceName(e.target.value);
-                            dispatch({
-                              type: "serviceSubCategory",
-                              key: "subServiceName",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder="Enter Name"
-                          required
-                        />
-                      </div>
-
-                      {/* Image */}
-                      <div className="py-2">
-                        <input
-                          type="file"
-                          name="image"
-                          ref={fileInputRef}
-                          onChange={(e) => {
-                            // setSubServiceImage(e.target.files[0]);
-                            dispatch({
-                              type: "serviceSubCategory",
-                              key: "subServiceImage",
-                              value: e.target.files[0],
-                            });
-                          }}
-                          // onChange={(e) => setImageSelected(e.target.files[0])}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+                {/* Select Type */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Type</label>
+                  <select
+                    value={state.serviceType}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceType",
+                        key: "serviceType",
+                        value: e.target.value,
+                      });
+                      // setServiceType(e.target.value);
+                    }}
+                    className="px-2 py-1 bg-gray-700 text-gray-100 border rounded"
+                  >
+                    <option value="DirectService" disabled>
+                      Direct Service
+                    </option>
+                    <option value="Brand" disabled>
+                      Brand
+                    </option>
+                    <option value="ServiceSubCategory">
+                      Service Sub Category
+                    </option>
+                  </select>
                 </div>
+
+                {/* Select Service Category */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Service Category</label>
+                  <select
+                    value={state.serviceSubCategory.serviceCategory}
+                    onChange={(e) => {
+                      // setServiceCategory(e.target.value);
+                      dispatch({
+                        type: "serviceSubCategory",
+                        key: "serviceCategoryId",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    required
+                  >
+                    <option value="">Select Service Category</option>
+                    {!servicesLoading &&
+                      servicesData?.serviceCategories
+                        .filter((sc) => sc.type === state.serviceType)
+                        .map((sc, i) => (
+                          <option value={sc._id} key={i}>
+                            {sc.name}
+                          </option>
+                        ))}
+                  </select>
+                </div>
+
+                {/* Service Sub Category Name */}
+                <div className={`${inputDiv}`}>
+                  <p className={`${inputLabel}`}>Service Sub Category Name</p>
+                  <input
+                    type="text"
+                    value={state.serviceSubCategory.subServiceName}
+                    onChange={(e) => {
+                      // setSubServiceName(e.target.value);
+                      dispatch({
+                        type: "serviceSubCategory",
+                        key: "subServiceName",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Name"
+                    required
+                  />
+                </div>
+
+                {/* Image */}
+                <div className={`${inputDiv}`}>
+                  <input
+                    type="file"
+                    name="image"
+                    ref={fileInputRef}
+                    className="col-span-2"
+                    onChange={(e) => {
+                      // setSubServiceImage(e.target.files[0]);
+                      dispatch({
+                        type: "serviceSubCategory",
+                        key: "subServiceImage",
+                        value: e.target.files[0],
+                      });
+                    }}
+                    // onChange={(e) => setImageSelected(e.target.files[0])}
+                    required
+                  />
+                </div>
+
                 <div>
                   <button
                     type="submit"
-                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    className={`${inputSubmitBtn}`}
                     disabled={createServiceLoading}
                   >
                     {!createServiceLoading
@@ -781,167 +776,162 @@ const CreateServiceForm = () => {
               <form
                 // onSubmit={handleSubmit}
                 onSubmit={(e) => handleSubmit(e, "serviceSubProduct")}
-                className="flex flex-col gap-4 p-5 w-full"
+                className={`${formStyle}`}
               >
-                <div className="flex">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col gap-4">
-                      {/* Select Type */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Category</label>
-                        <select
-                          value={state.serviceSubProduct.serviceCategory}
-                          onChange={(e) => {
-                            // setServiceCategory(e.target.value);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "serviceCategoryId",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          required
-                        >
-                          <option value="">Select Service Category</option>
-                          {servicesData.serviceCategories
-                            .filter((sc) => sc.type === "ServiceSubCategory")
-                            .map((sc, i) => (
-                              <option value={sc._id} key={i}>
-                                {sc.name}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
-
-                      {/* Select Service Brand */}
-                      <div className="flex items-center gap-2">
-                        <label>Service Sub Service</label>
-                        <select
-                          value={state.serviceSubProduct.subService}
-                          onChange={(e) => {
-                            // setSubService(e.target.value);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "subServiceId",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          required
-                        >
-                          <option value="">Select Service Sub Service</option>
-                          {!servicesLoading &&
-                            servicesData.serviceSubCategories
-                              .filter(
-                                (ssc) =>
-                                  ssc.serviceCategoryId._id ===
-                                  state.serviceSubProduct.serviceCategoryId
-                              )
-                              .map((ssc, i) => (
-                                <option value={ssc._id} key={i}>
-                                  {ssc.name}
-                                </option>
-                              ))}
-                        </select>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <label>Product Name</label>
-                        <input
-                          type="text"
-                          value={state.serviceSubProduct.subProdName}
-                          onChange={(e) => {
-                            // setSubProdName(e.target.value);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "productName",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder="Enter Name"
-                          required
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <label>Product Description</label>
-                        <input
-                          type="text"
-                          value={state.serviceSubProduct.subProdDesc}
-                          onChange={(e) => {
-                            // setSubProdDesc(e.target.value);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "subProdDesc",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder="Enter Prod Description"
-                          required
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <label>Product Discount %</label>
-                        <input
-                          type="number"
-                          value={state.serviceSubProduct.prodDisPer}
-                          onChange={(e) => {
-                            // setProdDisPer(e.target.value);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "prodDisPer",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder={`Enter % number`}
-                          required
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <label>Product Price</label>
-                        <input
-                          type="number"
-                          value={state.serviceSubProduct.subProdPrice}
-                          onChange={(e) => {
-                            // setSubProdPrice(e.target.value);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "productPrice",
-                              value: e.target.value,
-                            });
-                          }}
-                          className="px-2 py-1 border rounded"
-                          placeholder={`Enter Price for ${state.serviceSubProduct.productName}`}
-                          required
-                        />
-                      </div>
-
-                      <div className="py-2">
-                        <input
-                          type="file"
-                          name="image"
-                          ref={fileInputRef}
-                          onChange={(e) => {
-                            // setSubProdImage(e.target.files[0]);
-                            dispatch({
-                              type: "serviceSubProduct",
-                              key: "productImage",
-                              value: e.target.files[0],
-                            });
-                          }}
-                          // onChange={(e) => setImageSelected(e.target.files[0])}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+                {/* Select Type */}
+                <div className={`${inputDiv}`}>
+                  <label>Service Category</label>
+                  <select
+                    value={state.serviceSubProduct.serviceCategory}
+                    onChange={(e) => {
+                      // setServiceCategory(e.target.value);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "serviceCategoryId",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    required
+                  >
+                    <option value="">Select Service Category</option>
+                    {servicesData.serviceCategories
+                      .filter((sc) => sc.type === "ServiceSubCategory")
+                      .map((sc, i) => (
+                        <option value={sc._id} key={i}>
+                          {sc.name}
+                        </option>
+                      ))}
+                  </select>
                 </div>
+
+                {/* Select Service Brand */}
+                <div className={`${inputDiv}`}>
+                  <label>Service Sub Service</label>
+                  <select
+                    value={state.serviceSubProduct.subService}
+                    onChange={(e) => {
+                      // setSubService(e.target.value);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "subServiceId",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    required
+                  >
+                    <option value="">Select Service Sub Service</option>
+                    {!servicesLoading &&
+                      servicesData.serviceSubCategories
+                        .filter(
+                          (ssc) =>
+                            ssc.serviceCategoryId._id ===
+                            state.serviceSubProduct.serviceCategoryId
+                        )
+                        .map((ssc, i) => (
+                          <option value={ssc._id} key={i}>
+                            {ssc.name}
+                          </option>
+                        ))}
+                  </select>
+                </div>
+
+                <div className={`${inputDiv}`}>
+                  <label>Product Name</label>
+                  <input
+                    type="text"
+                    value={state.serviceSubProduct.subProdName}
+                    onChange={(e) => {
+                      // setSubProdName(e.target.value);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "productName",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Name"
+                    required
+                  />
+                </div>
+                <div className={`${inputDiv}`}>
+                  <label>Product Description</label>
+                  <input
+                    type="text"
+                    value={state.serviceSubProduct.subProdDesc}
+                    onChange={(e) => {
+                      // setSubProdDesc(e.target.value);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "subProdDesc",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Prod Description"
+                    required
+                  />
+                </div>
+                <div className={`${inputDiv}`}>
+                  <label>Product Discount %</label>
+                  <input
+                    type="number"
+                    value={state.serviceSubProduct.prodDisPer}
+                    onChange={(e) => {
+                      // setProdDisPer(e.target.value);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "prodDisPer",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder={`Enter % number`}
+                    required
+                  />
+                </div>
+                <div className={`${inputDiv}`}>
+                  <label>Product Price</label>
+                  <input
+                    type="number"
+                    value={state.serviceSubProduct.subProdPrice}
+                    onChange={(e) => {
+                      // setSubProdPrice(e.target.value);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "productPrice",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder={`Enter Price for ${state.serviceSubProduct.productName}`}
+                    required
+                  />
+                </div>
+
+                <div className={`${inputDiv}`}>
+                  <input
+                    type="file"
+                    name="image"
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                      // setSubProdImage(e.target.files[0]);
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "productImage",
+                        value: e.target.files[0],
+                      });
+                    }}
+                    // onChange={(e) => setImageSelected(e.target.files[0])}
+                    required
+                  />
+                </div>
+
                 <div>
                   <button
                     type="submit"
-                    className={`w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
+                    className={`${inputSubmitBtn}`}
                     disabled={createServiceLoading}
                   >
                     {!createServiceLoading
