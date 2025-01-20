@@ -1,17 +1,26 @@
 import React, { useState } from "react";
-import { FaHandsHoldingCircle } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useDeleteRecycleOrderMutation } from "../../../features/api";
-import { orderCurrentStatus, orderViewBtnColor } from "../../helpers/helper";
+import { orderCurrentStatus } from "../../helpers/helper";
 
-const RecycleOrderCard = ({ data }) => {
+const RecycleOrderCard = ({ data, categoryImage }) => {
   //   console.log("data", data);
   const [deleteRecycleOrder] = useDeleteRecycleOrderMutation();
+
+  const navigate = useNavigate();
 
   // Delete Order
   const [isModalOpen, setModalOpen] = useState(false);
   const [orderToDelete, setOrderToDelete] = useState("");
+
+  const style = {
+    boldness: "font-semibold max-sm:font-norma",
+    borderColor: `${data.status.pending && "border-blue-600"} 
+    ${data.status.completed && "border-green-600"} ${
+      data.status.cancelled && "border-red-600"
+    }`,
+  };
 
   const handleDelete = async (recycleOrderId) => {
     console.log("handledelete", recycleOrderId);
@@ -20,23 +29,43 @@ const RecycleOrderCard = ({ data }) => {
 
   return (
     <>
-      <div className="shadow rounded-md px-4 py-2 border text-sm max-sm:text-xs">
-        <div>
+      {/* <div className="shadow rounded-md px-4 py-2 border text-sm max-sm:text-xs"> */}
+      <div
+        className={`shadow flex items-center cursor-pointer rounded-md py-2 text-sm max-sm:text-xs border ${style.borderColor}`}
+      >
+        <div className="px-5 max-sm:px-2 mx-auto">
+          <img
+            src={import.meta.env.VITE_APP_BASE_URL + categoryImage}
+            alt={"Product Image"}
+            className={`w-[60px] h-[60px] max-sm:h-[50px] mx-auto max-sm:w-[50px]`}
+            loading="lazy" // Native lazy loading
+          />
+        </div>
+        <div
+          onClick={() => navigate(`/admin/recycleOrder-detail/${data.id}`)}
+          className="grow flex flex-col gap-[2px]"
+        >
           {/* Order and Product name and variant */}
-          <div className="flex flex-col text-center py-1">
+          <div className="flex flex-col text-start py-1">
             <div>
               <span>Order ID: </span>
               <b>{data.recycleOrderId}</b>
             </div>
 
-            <div className="flex gap-2 justify-center py-1">
+            <div className="flex gap-2 justify-start py-1">
               <b>{data.productDetails.productName}</b>
-              <b>{data.productDetails.productVariant}</b>
+              <b
+                className={` ${
+                  data.productDetails.productCategory !== "Mobile" && "hidden"
+                }`}
+              >
+                {data.productDetails.productVariant}
+              </b>
             </div>
           </div>
 
           {/* RecyclePrice & Status */}
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-start">
             <div>
               <b>Recycle Price: </b>
               <span>{data.recyclePrice}</span>
@@ -60,7 +89,7 @@ const RecycleOrderCard = ({ data }) => {
           </div>
 
           {/* View or Delete */}
-          <div className="flex justify-center gap-2 py-2">
+          {/* <div className="flex justify-center gap-2 py-2">
             <div className="grow">
               <Link
                 to={`/admin/recycleOrder-detail/${data.id}`}
@@ -85,7 +114,7 @@ const RecycleOrderCard = ({ data }) => {
                 Delete
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

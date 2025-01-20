@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetServicesQuery } from "../../features/api";
 
 const ServicesHome = () => {
   const { data: servicesData, serviceLoading: serviceLoading } =
     useGetServicesQuery();
-  const [serviceCategorySelected, setServiceCategorySelected] = useState(false);
-  const [selectedServiceCategory, setSelectedServiceCategory] = useState("");
-  const [serviceBrandSelected, setServiceBrandSelected] = useState("");
-  const [selectedServiceBrand, setSelectedServiceBrand] = useState("");
 
   let navigate = useNavigate();
 
@@ -58,6 +54,7 @@ const ServicesHome = () => {
                 {!serviceLoading &&
                   servicesData?.serviceCategories
                     // ?.filter((sc) => sc.type.toLowerCase() === "directservice")
+                    .filter((s) => s.status === "Active")
                     .slice(0, 10)
                     .map((service, i) => (
                       <Link to={determinePath(service)} key={i}>
@@ -92,57 +89,6 @@ const ServicesHome = () => {
                     show all services...
                   </button>
                 </div>
-              </div>
-
-              {/* List of Service Brands */}
-              <div>
-                {!serviceLoading &&
-                  serviceCategorySelected &&
-                  servicesData?.serviceBrands
-                    ?.filter(
-                      (sb) => sb.serviceCategoryId === selectedServiceCategory
-                    )
-                    .map((serviceBrand, i) => (
-                      <Link to={`/services/subservices/${serviceBrand._id}`}>
-                        <p
-                          onClick={() => {
-                            setSelectedServiceBrand(serviceBrand._id);
-                            setServiceBrandSelected(!serviceBrandSelected);
-                          }}
-                        ></p>
-                      </Link>
-                    ))}
-
-                {serviceCategorySelected && serviceBrandSelected ? (
-                  <div>
-                    {!serviceLoading &&
-                      servicesData?.serviceProblems
-                        ?.filter((sp) => sp.brandId === selectedServiceBrand)
-                        .map((serviceProblem, i) => (
-                          <p>{serviceProblem.name}</p>
-                        ))}
-                  </div>
-                ) : null}
-              </div>
-
-              {/* List of SubCategory */}
-              <div>
-                {!serviceLoading &&
-                  servicesData?.subCategory
-                    ?.filter(
-                      (sc) => sc.serviceCategoryId === selectedServiceCategory
-                    )
-                    .map((sc, i) => (
-                      <Link to={`/services/subServices/${sc._id}`} key={i}>
-                        <div
-                          key={i}
-                          className="bg-white w-fit h-24 flex items-center justify-center cursor-pointer border border-secondary rounded shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-                          onClick={() => setServiceCategorySelected(sc._id)}
-                        >
-                          <p className="p-2 text-center">{sc.name}</p>
-                        </div>
-                      </Link>
-                    ))}
               </div>
             </>
           )}

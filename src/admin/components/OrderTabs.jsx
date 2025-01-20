@@ -8,17 +8,7 @@ const OrderTabs = ({ handleDisplay, ordersDisplaying, ordersCount }) => {
     "border bg-black text-white px-2 max-sm:px-1 max-sm:text-xs rounded-full ";
 
   return (
-    <div className="w-full grid grid-cols-4 max-sm:grid-cols-[auto,1fr,1fr,1fr] max-sm:px-2 border text-[16px] max-sm:text-xs">
-      <button
-        className={`col-auto ${tabStyle} ${
-          ordersDisplaying.all ? activeTab : ""
-        } `}
-        onClick={() => handleDisplay("all")}
-      >
-        <span>All</span>
-        <span className={`${countStyle}`}>{ordersCount.total}</span>
-      </button>
-
+    <div className="w-full grid grid-cols-4 max-sm:grid-cols-[1fr,1fr,1fr,auto] max-sm:px-2 border text-[16px] max-sm:text-xs">
       <button
         className={`col-span-1 ${tabStyle} ${
           ordersDisplaying.pending ? activeTab : ""
@@ -47,6 +37,16 @@ const OrderTabs = ({ handleDisplay, ordersDisplaying, ordersCount }) => {
       >
         <span>Cancelled</span>
         <span className={`${countStyle}`}>{ordersCount.cancelled}</span>
+      </button>
+
+      <button
+        className={`col-auto ${tabStyle} ${
+          ordersDisplaying.history ? activeTab : ""
+        } `}
+        onClick={() => handleDisplay("history")}
+      >
+        <span>History</span>
+        <span className={`${countStyle}`}>{ordersCount.total}</span>
       </button>
     </div>
   );

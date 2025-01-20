@@ -19,6 +19,8 @@ const initialState = {
     serviceFor: "",
     type: "",
     serviceName: "",
+    inspectionCharges: 0,
+    status: "Active",
     serviceImage: "",
   },
   serviceBrand: {
@@ -71,6 +73,12 @@ function reducer(state, action) {
         currentForm: updatedToggle,
       };
 
+    case "inspectionCharges":
+      state[type] = {
+        ...state[type],
+        [key]: value,
+      };
+      return { ...state };
     case "serviceType":
       return { ...state, [key]: value };
 
@@ -150,6 +158,7 @@ const CreateServiceForm = () => {
 
     console.log("state.state.serviceType", state.serviceType);
     console.log("serviceFor", from);
+    console.log("inspectionCharges", state.inspectionCharges);
 
     let payload = {};
 
@@ -157,6 +166,8 @@ const CreateServiceForm = () => {
       payload = {
         ...state.serviceCategory,
         type: state.serviceType,
+        inspectionCharges: parseInt(state.serviceCategory.inspectionCharges),
+        status: state.serviceCategory.status,
         serviceFor: from,
         serviceImage: await uploadFileHandler(
           state.serviceCategory.serviceImage
@@ -395,6 +406,49 @@ const CreateServiceForm = () => {
                     placeholder="Enter Service Name"
                     required
                   />
+                </div>
+
+                {/* Service Inspection Charges */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Inspection Charges</label>
+                  <input
+                    type="number"
+                    value={state.serviceCategory.inspectionCharges}
+                    onChange={(e) => {
+                      // setServiceName(e.target.value);
+                      dispatch({
+                        type: "serviceCategory",
+                        key: "inspectionCharges",
+                        value: e.target.value,
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Inspection Charges"
+                    required
+                  />
+                </div>
+
+                {/* Status */}
+                <div className={`${inputDiv}`}>
+                  <label htmlFor="status" className={`${inputLabel}`}>
+                    Status
+                  </label>
+                  <select
+                    id="status"
+                    name="status"
+                    value={state.serviceCategory.status}
+                    className="px-2 py-1 border rounded"
+                    onChange={(e) =>
+                      dispatch({
+                        type: "serviceCategory",
+                        key: "status",
+                        value: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Blocked">Blocked</option>
+                  </select>
                 </div>
 
                 {/* Image */}

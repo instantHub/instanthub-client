@@ -30,7 +30,7 @@ export default function BookService() {
   const [createServiceOrder, { isLoading: createServiceOrderLoading }] =
     useCreateServiceOrderMutation();
 
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState(null);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [schedulePickUp, setSchedulePickUp] = useState(null);
@@ -45,7 +45,7 @@ export default function BookService() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
-  const [inspectionCharges, setInspectionCharges] = useState(149);
+  const [inspectionCharges, setInspectionCharges] = useState(0);
 
   const [deviceNameModel, setDeviceNameModel] = useState("");
   const [deviceAdditionalInfo, setDeviceAdditionalInfo] = useState("");
@@ -133,11 +133,13 @@ export default function BookService() {
         service = servicesData.serviceCategories.find(
           (sc) => sc._id === serviceId
         );
+
         console.log("direct service", service);
         setSelectedService(service);
-        if (service.name.toLowerCase().includes("interior")) {
-          setInspectionCharges(499);
-        }
+
+        // if (service.name.toLowerCase().includes("interior")) {
+        //   setInspectionCharges(499);
+        // }
       } else if (st === "ss") {
         service = servicesData.serviceSubProducts.find(
           (sc) => sc._id === serviceId
@@ -146,10 +148,23 @@ export default function BookService() {
         let price = service.price - (service.discount * service.price) / 100;
         setProdPrice(price);
         setSelectedService(service);
-        setInspectionCharges(900);
+        // setInspectionCharges(900);
       }
     }
   }, [servicesData, serviceId]);
+
+  // setting up inspectionCharges
+  useEffect(() => {
+    if (selectedService) {
+      if (st === "ds") {
+        setInspectionCharges(selectedService.inspectionCharges);
+      } else {
+        setInspectionCharges(
+          selectedService.serviceCategoryId.inspectionCharges
+        );
+      }
+    }
+  }, [selectedService]);
 
   // UseEffect to handle page refresh
   useEffect(() => {
@@ -161,7 +176,7 @@ export default function BookService() {
     }
   }, [serviceProblemsData]);
 
-  // console.log("selectedService", selectedService);
+  console.log("selectedService", selectedService);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

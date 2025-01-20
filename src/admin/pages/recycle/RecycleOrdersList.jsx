@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useGetRecycleOrdersQuery } from "../../../features/api";
+import {
+  useGetCategoryQuery,
+  useGetRecycleOrdersQuery,
+} from "../../../features/api";
 import OrderTabs from "../../components/OrderTabs";
 import RecycleOrderCard from "./RecycleOrderCard";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
@@ -8,13 +11,17 @@ import Loading from "../../../components/Loading";
 const RecycleOrdersList = () => {
   const { data: recycleOrdersData, isLoading: recycleOrdersDataloading } =
     useGetRecycleOrdersQuery();
-  // console.log("recycleOrdersData", recycleOrdersData);
+  console.log("recycleOrdersData", recycleOrdersData);
+
+  const { data: categoryData, isLoading: categoryDataLoading } =
+    useGetCategoryQuery();
+  const [categoryImages, setCategoryImages] = useState({});
 
   const [recycleOrdersDisplaying, setRecycleOrdersDisplaying] = useState({
-    all: true,
-    pending: false,
+    pending: true,
     completed: false,
     cancelled: false,
+    history: false,
   });
 
   function handleDisplay(show) {
@@ -29,7 +36,18 @@ const RecycleOrdersList = () => {
   }
 
   const [recycleOrdersCount, setRecycleOrdersCount] = useState({});
-  console.log("recycleOrdersCount", recycleOrdersCount);
+  // console.log("recycleOrdersCount", recycleOrdersCount);
+
+  // Setting Category Images
+  useEffect(() => {
+    if (categoryData) {
+      let images = categoryData.reduce((acc, ite) => {
+        if (!acc[ite.name]) acc[ite.name] = ite.image;
+        return acc;
+      }, {});
+      setCategoryImages(images);
+    }
+  }, [categoryData]);
 
   // ordersCount calculation
   useEffect(() => {
@@ -76,12 +94,20 @@ const RecycleOrdersList = () => {
             ?.filter((order) => {
               // Check if any of the keys in order.status match the true keys in ordersDisplaying
               return Object.keys(order.status).some((key) => {
-                if (recycleOrdersDisplaying.all) return order;
+                if (recycleOrdersDisplaying.history) return order;
                 else return order.status[key] && recycleOrdersDisplaying[key];
               });
             })
             ?.map((order) => {
-              return <RecycleOrderCard key={order.id} data={order} />;
+              return (
+                <RecycleOrderCard
+                  key={order.id}
+                  data={order}
+                  categoryImage={
+                    categoryImages[order.productDetails.productCategory]
+                  }
+                />
+              );
             })}
         </div>
       </div>

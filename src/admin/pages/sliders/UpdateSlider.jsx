@@ -86,14 +86,14 @@ const UpdateSlider = () => {
   return (
     <div>
       {sliderImage && status && (
-        <div className="mt-[5%] w-[80%] mx-auto grow">
+        <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%] font-serif text-sm max-sm:text-xs">
           <div className="flex justify-between items-center">
-            <h1 className="bold text-[1.4rem] mb-2">Update Slider</h1>
+            {/* Back Button */}
             <div className="py-3 px-2 text-center">
               <Link to={`/admin/add-sliders`}>
                 <button
                   type="submit"
-                  className="border text-white bg-blue-600 rounded-md px-4 py-1 cursor-pointer  hover:bg-blue-700"
+                  className="border text-white bg-black rounded-md px-4 py-1 cursor-pointer  hover:bg-gray-800"
                 >
                   Back
                 </button>
@@ -129,7 +129,7 @@ const UpdateSlider = () => {
                       <img
                         src={import.meta.env.VITE_APP_BASE_URL + sliderImage}
                         alt="Old Slider Image"
-                        className="w-fit h-[180px] mx-auto "
+                        className="w-[480px] h-[150px] mx-auto max-sm:w-[280px] max-sm:h-fit"
                       />
                     </div>
                   </div>

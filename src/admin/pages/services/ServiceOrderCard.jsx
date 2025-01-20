@@ -32,7 +32,7 @@ const OrderCard = ({ data }) => {
           <img
             src={import.meta.env.VITE_APP_BASE_URL + image}
             alt={"Servicer Category Image"}
-            className={`w-[60px] h-fit mx-auto max-sm:w-[50px]`}
+            className={`w-[60px] h-[60px] max-sm:h-[50px] mx-auto max-sm:w-[50px]`}
             loading="lazy" // Native lazy loading
           />
         </div>

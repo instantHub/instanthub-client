@@ -110,13 +110,16 @@ function UpdateService(props) {
         setFormData({
           name: updateData.serviceToUpdate.name,
           image: updateData.serviceToUpdate.image,
+          inspectionCharges: updateData.serviceToUpdate.inspectionCharges || 0,
+          status: updateData.serviceToUpdate.status || "Active",
           serviceFrom: updateData.serviceFrom,
         });
       }
     }
   }, [updateData]);
 
-  // console.log("test", updateData, formData);
+  console.log("updateData", updateData);
+  console.log("formData", formData);
   // console.log("formData fron update service", formData);
 
   return (
@@ -152,6 +155,48 @@ function UpdateService(props) {
                     }
                   />
                 </div>
+
+                {updateData.serviceFrom === "serviceCategory" && (
+                  <>
+                    <div className="w-full max-sm:col-span-2 grid grid-cols-2 max-sm:grid-cols-3 place-items-center items-center gap-2">
+                      <label className="text-sm col-span-1">
+                        Inspection Charges:
+                      </label>
+                      <input
+                        type="number"
+                        name="inspectionCharges"
+                        className="max-sm:col-span-1 border py-1 px-2 rounded text-sm"
+                        placeholder="Inspection Charges"
+                        value={formData.inspectionCharges}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            inspectionCharges: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    {/* Status */}
+                    <div className="w-full max-sm:col-span-2 grid grid-cols-2 max-sm:grid-cols-3 place-items-center items-center gap-2">
+                      <label className="text-sm col-span-1">Status</label>
+                      <select
+                        id="status"
+                        name="status"
+                        value={formData.status}
+                        className="px-2 py-1 border rounded"
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            status: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Blocked">Blocked</option>
+                      </select>
+                    </div>
+                  </>
+                )}
 
                 {/* Image and Delete */}
                 <div className="w-full flex flex-col gap-1 items-center">

@@ -47,57 +47,54 @@ const CreateCoupon = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center mt-10">
-        <h1 className="bold text-[1.4rem] mb-2">Add / Create Coupon</h1>
+      <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%] font-serif text-sm max-sm:text-xs">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 border rounded-lg p-5 "
+        >
+          <div>
+            <h2 className="">Add/Create Coupon</h2>
+          </div>
+          <hr />
 
-        <div className="bg-white border rounded-md shadow-lg w-[50%] max-2sm:w-[90%]">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4  p-5 ">
-            <div>
-              <h2 className="">Add/Create Coupon</h2>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <label htmlFor="seriesName">Enter New Coupon Name</label>
+              <input
+                type="text"
+                id="couponCode"
+                value={couponCode}
+                className=" border p-2 rounded"
+                placeholder="Coupon Name"
+                onChange={(e) => setCouponCode(e.target.value)}
+                required
+              />
             </div>
-            <hr />
-
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <label htmlFor="seriesName">Enter New Coupon Name</label>
-                <input
-                  type="text"
-                  id="couponCode"
-                  value={couponCode}
-                  className=" border p-2 rounded"
-                  placeholder="Coupon Name"
-                  onChange={(e) => setCouponCode(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <label htmlFor="seriesName">Enter Coupon Value</label>
-                <input
-                  type="number"
-                  id="couponValue"
-                  value={couponValue}
-                  className=" border p-2 rounded"
-                  placeholder="Coupon Value"
-                  onChange={(e) => setCouponValue(e.target.value)}
-                  required
-                />
-              </div>
+            <div className="flex items-center gap-2">
+              <label htmlFor="seriesName">Enter Coupon Value</label>
+              <input
+                type="number"
+                id="couponValue"
+                value={couponValue}
+                className=" border p-2 rounded"
+                placeholder="Coupon Value"
+                onChange={(e) => setCouponValue(e.target.value)}
+                required
+              />
             </div>
-            <div className="px-2">
-              <button
-                type="submit"
-                className="bg-green-600 text-white rounded-md p-1 w-[20%] cursor-pointer hover:bg-green-700"
-              >
-                Create Coupon
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <div className="px-2">
+            <button
+              type="submit"
+              className="bg-green-600 text-white rounded-md px-5 py-2 w-fit cursor-pointer hover:bg-green-700"
+            >
+              Create Coupon
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div>
-        <CouponsList />
-      </div>
+      <CouponsList />
     </>
   );
 };

@@ -1,13 +1,8 @@
 import React from "react";
 
 const CurrentOrdersAndCount = ({ ordersDisplaying = {}, ordersCount = {} }) => {
+  // console.log("ordersCount from CurrentOrdersAndCount", ordersCount);
   const orderCurrentStatus = (status) => {
-    if (status == "all")
-      return (
-        <span className="text-black bg-gradient-to-tr from-blue-200 via-green-200 to-red-200 text-lg max-sm:text-sm px-2 py-[2px] rounded ">
-          All Orders
-        </span>
-      );
     if (status == "pending")
       return (
         <span className="text-blue-700 bg-blue-200 text-lg max-sm:text-sm px-2 py-[2px] rounded ">
@@ -26,14 +21,20 @@ const CurrentOrdersAndCount = ({ ordersDisplaying = {}, ordersCount = {} }) => {
           Cancelled Orders
         </span>
       );
-    return "Unknown";
+    if (status == "history")
+      return (
+        <span className="text-black bg-gradient-to-tr from-blue-200 via-green-200 to-red-200 text-lg max-sm:text-sm px-2 py-[2px] rounded ">
+          All Orders
+        </span>
+      );
+    return "Unknown Status";
   };
 
-  if (ordersDisplaying.all)
+  if (ordersDisplaying.history)
     return (
       <div className="flex flex-col items-center">
-        {orderCurrentStatus("all")}
-        {ordersCount.all === 0 && (
+        {orderCurrentStatus("history")}
+        {ordersCount.total === 0 && (
           <b className="text-black text-xl max-sm:text-lg my-10">
             No Orders To Display
           </b>
@@ -73,7 +74,7 @@ const CurrentOrdersAndCount = ({ ordersDisplaying = {}, ordersCount = {} }) => {
         )}
       </div>
     );
-  return <p>Unknown</p>;
+  return <p>Unknown CurrentOrdersAndCount</p>;
 };
 
 export default CurrentOrdersAndCount;

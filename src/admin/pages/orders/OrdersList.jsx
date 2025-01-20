@@ -20,10 +20,10 @@ const OrdersList = () => {
   // console.log("ordersData", ordersData);
 
   const [ordersDisplaying, setOrdersDiplaying] = useState({
-    all: true,
-    pending: false,
+    pending: true,
     completed: false,
     cancelled: false,
+    history: false,
   });
 
   const [ordersCount, setOrdersCount] = useState({});
@@ -96,7 +96,7 @@ const OrdersList = () => {
             ?.filter((order) => {
               // Check if any of the keys in order.status match the true keys in ordersDisplaying
               return Object.keys(order.status).some((key) => {
-                if (ordersDisplaying.all) return order;
+                if (ordersDisplaying.history) return order;
                 else return order.status[key] && ordersDisplaying[key];
               });
             })

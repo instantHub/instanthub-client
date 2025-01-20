@@ -13,8 +13,6 @@ const OrderCard = ({ data, categoryImage }) => {
       data.status.cancelled && "border-red-600"
     }`,
   };
-  const image =
-    "/uploads/categories/Packers%20&%20movers%20(33)-image-1728314801508.jpg";
 
   return (
     <>
@@ -25,7 +23,7 @@ const OrderCard = ({ data, categoryImage }) => {
           <img
             src={import.meta.env.VITE_APP_BASE_URL + categoryImage}
             alt={"Product Image"}
-            className={`w-[60px] h-fit mx-auto max-sm:w-[50px]`}
+            className={`w-[60px] h-[60px] max-sm:h-[50px] mx-auto max-sm:w-[50px]`}
             loading="lazy" // Native lazy loading
           />
         </div>
