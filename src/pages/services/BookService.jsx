@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   useCreateServiceOrderMutation,
   useGetServicesQuery,
-} from "../../features/api";
+} from "../../features/api/services/servicesApi";
 import {
   Link,
   useNavigate,

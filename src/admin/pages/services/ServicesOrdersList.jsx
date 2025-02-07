@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   useDeleteServiceOrderMutation,
   useGetServicesOrdersQuery,
-} from "../../../features/api";
+} from "../../../features/api/services/servicesApi";
 import ServiceOrderCard from "./ServiceOrderCard";
 import OrderTabs from "../../components/OrderTabs";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";

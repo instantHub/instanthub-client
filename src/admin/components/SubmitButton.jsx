@@ -1,15 +1,17 @@
-import React from "react";
+export const SubmitButton = ({ loading, type, children }) => {
+  const BG_COLOR =
+    type === "secondary"
+      ? "bg-red-600 hover:bg-red-700"
+      : "bg-green-600 hover:bg-green-700";
 
-export const SubmitButton = (props) => {
-  // console.log("Submit Button", props.handleLoading);
   return (
     <div>
       <button
         type="submit"
-        className={`w-[20%] max-md:w-full bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
-        disabled={props.handleLoading}
+        className={`w-full ${BG_COLOR} px-2 max-md:w-full text-white rounded-md p-1 cursor-pointer disabled:cursor-none disabled:bg-gray-300`}
+        disabled={loading}
       >
-        {!props.productCreationLoading ? `${props.value}` : `${props.loading}`}
+        {!loading ? `${children}` : "Loading..."}
       </button>
     </div>
   );

@@ -14,7 +14,7 @@ const SlidersList = () => {
     <>
       <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%] font-serif">
         <h1 className="bold text-[1.4rem] text-center">Sliders List</h1>
-        <div className="bg-white border rounded-md shadow-lg py-5 mt-2 mb-5">
+        <div className="bg-white mt-2 mb-5">
           <div className="w-full grid grid-cols-2 gap-4 max-sm:grid-cols-1 px-10 max-sm:px-1 mx-auto">
             {!slidersLoading &&
               slidersList.map((slider) => (

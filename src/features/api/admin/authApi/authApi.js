@@ -1,9 +1,10 @@
-import { api } from "./api";
+import { api } from "../../../api";
 
 // const ADMIN_URL = "http://localhost:8000/api";
 const ADMIN_URL = "/api";
 
-export const adminApiSlice = api.injectEndpoints({
+// export const adminApiSlice = api.injectEndpoints({
+export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data) => ({
@@ -55,4 +56,4 @@ export const {
   useAdminProfileQuery,
   useUpdateAdminMutation,
   useAdminLogoutMutation,
-} = adminApiSlice;
+} = authApi;

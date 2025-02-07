@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UpdateButton from "./UpdateButton";
 import { useUpdateLaptopConfigurationsPriceDropMutation } from "../../../../features/api";
 import { toast } from "react-toastify";
+import { LAPTOP_DESKTOP } from "../../../../utils/constants";
 
 const UpdateSystemConfigurations = (props) => {
   const { productDetail, productId, type } = props;
@@ -16,7 +17,7 @@ const UpdateSystemConfigurations = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const laptopDesktop = ["laptop", "desktop"];
+  // const laptopDesktop = ["laptop", "desktop"];
 
   const title = getTitle();
 
@@ -105,7 +106,7 @@ const UpdateSystemConfigurations = (props) => {
     if (productDetail) {
       // Set the matched product to the component state
       setProductData(productDetail);
-      if (laptopDesktop.includes(productDetail.category.name.toLowerCase())) {
+      if (LAPTOP_DESKTOP.includes(productDetail.category.name.toLowerCase())) {
         setSelectedDeductions(productDetail.simpleDeductions);
       }
     }
@@ -116,273 +117,104 @@ const UpdateSystemConfigurations = (props) => {
 
   return (
     <>
-      <div className="mt-5">
-        {/* <div className="w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl"> */}
-        <div className="w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded ">
-          <div className="bg-scroll">
-            {/* {productData && productData.category.name === "Laptop" && ( */}
-            {productData &&
-              laptopDesktop.includes(
-                productData.category.name.toLowerCase()
-              ) && (
-                <>
-                  <h3 className="text-2xl font-serif text-center font-bold">
-                    {title} to update
-                  </h3>
-                  {/* <form onSubmit={handleSubmit}> */}
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setIsOpen(true);
-                    }}
-                  >
-                    {productData &&
-                      selectedDeductions.map((condition, index) => (
-                        <div
-                          key={condition.id}
-                          className={`mb-10 border my-2 py- px- rounded ${
-                            index % 2 === 0 ? `` : `bg-gray-100`
-                          }`}
-                        >
-                          <div>
-                            <h3 className="text-2xl font-serif font-bold text-center py-2 bg-white">
-                              {condition.conditionName}
-                            </h3>
-                          </div>
-                          <hr />
-                          {/* <div className="flex flex-col px-4 py-2">
-                            {productData.brand.name === "Apple" &&
-                            condition.conditionName === "Processor"
-                              ? condition.conditionLabels &&
-                                condition.conditionLabels
-                                  .filter((label) =>
-                                    label.conditionLabel
-                                      .toLowerCase()
-                                      .includes("apple")
-                                  )
-                                  .map((conditionLabel, index) => (
-                                    <div
-                                      key={index}
-                                      className="flex justify-center items-center  gap-6  mt-2 pb-1"
-                                    >
-                                      <div>
-                                        <h3 className="text-xl">
-                                          {conditionLabel.conditionLabel}
-                                        </h3>
-                                      </div>
+      {/* <div className="w-[95%] flex flex-col mx-auto my-1 bg-white px-4 py-2 rounded shadow-xl"> */}
+      <div className="w-fit max-sm:w-full flex flex-col mx-auto my-1 bg-white rounded text-sm max-sm:text-xs">
+        {/* {productData && productData.category.name === "Laptop" && ( */}
+        {productData &&
+          LAPTOP_DESKTOP.includes(productData.category.name.toLowerCase()) && (
+            <>
+              <h3 className="text-2xl max-sm:text-lg font-serif text-center font-bold">
+                {title} to update
+              </h3>
+              {/* <form onSubmit={handleSubmit}> */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setIsOpen(true);
+                }}
+              >
+                {productData &&
+                  selectedDeductions.map((condition, index) => (
+                    <div key={condition.id} className={`border my-4 rounded `}>
+                      <h3 className="text-2xl max-sm:text-lg font-serif font-bold text-center py-2 bg-white">
+                        {condition.conditionName}
+                      </h3>
 
-                                      <div className="flex items-center gap-1">
-                                        <span className="text-lg">₹</span>
-                                        <input
-                                          type="number"
-                                          name="priceDrop"
-                                          value={conditionLabel.priceDrop}
-                                          className="border-b px-3 py-1 rounded text-lg"
-                                          placeholder="Price Drop"
-                                          onChange={(e) =>
-                                            handlePriceDropChange2(
-                                              conditionLabel.conditionLabelId,
-                                              parseInt(e.target.value),
-                                              e.target.name
-                                            )
-                                          }
-                                          required
-                                        />
-                                      </div>
+                      <hr />
 
-                                      <div className="w-[82px] text-center">
-                                        <h3
-                                          className={`${
-                                            conditionLabel.operation ===
-                                            "Subtrack"
-                                              ? "bg-red-200"
-                                              : "bg-blue-200"
-                                          } text-black font-bold px-2 py-1 rounded`}
-                                        >
-                                          {conditionLabel.operation}
-                                        </h3>
-                                      </div>
-                                      <select
-                                        name="operation"
-                                        id=""
-                                        className="border rounded px-1"
-                                        onChange={(e) => {
-                                          if (e.target.value !== "") {
-                                            handlePriceDropChange2(
-                                              conditionLabel.conditionLabelId,
-                                              e.target.value,
-                                              e.target.name
-                                            );
-                                          }
-                                        }}
-                                      >
-                                        <option value="">
-                                          Select Operation
-                                        </option>
-                                        <option value="Subtrack">
-                                          Subtrack
-                                        </option>
-                                        <option value="Add">Add</option>
-                                      </select>
-                                    </div>
-                                  ))
-                              : condition.conditionLabels &&
-                                condition.conditionLabels
-                                  .filter(
-                                    (label) =>
-                                      !label.conditionLabel
-                                        .toLowerCase()
-                                        .includes("apple")
-                                  )
-                                  .map((conditionLabel, index) => (
-                                    <div
-                                      key={index}
-                                      className="flex justify-center items-center  gap-6  mt-2 pb-1"
-                                    >
-                                      <div>
-                                        <h3 className="text-xl">
-                                          {conditionLabel.conditionLabel}
-                                        </h3>
-                                      </div>
+                      <div className="flex flex-col">
+                        {condition.conditionLabels &&
+                          condition.conditionLabels.map(
+                            (conditionLabel, index) => (
+                              <div
+                                key={conditionLabel.id}
+                                className={`flex justify-center items-center gap-6 max-sm:gap-1 p-2
+                                  ${index % 2 === 0 ? `` : `bg-gray-100`}`}
+                              >
+                                <h3 className="">
+                                  {conditionLabel.conditionLabel}
+                                </h3>
 
-                                      <div className="flex items-center gap-1">
-                                        <span className="text-lg">₹</span>
-                                        <input
-                                          type="number"
-                                          name="priceDrop"
-                                          value={conditionLabel.priceDrop}
-                                          className="border-b px-3 py-1 rounded text-lg"
-                                          placeholder="Price Drop"
-                                          onChange={(e) =>
-                                            handlePriceDropChange2(
-                                              conditionLabel.conditionLabelId,
-                                              parseInt(e.target.value),
-                                              e.target.name
-                                            )
-                                          }
-                                          required
-                                        />
-                                      </div>
+                                <div className="flex items-center gap-1">
+                                  <span className="">₹</span>
+                                  <input
+                                    type="number"
+                                    name="priceDrop"
+                                    value={conditionLabel.priceDrop}
+                                    className="border-b px-3 py-1 rounded"
+                                    placeholder="Price Drop"
+                                    onChange={(e) =>
+                                      handlePriceDropChange2(
+                                        conditionLabel.conditionLabelId,
+                                        parseInt(e.target.value),
+                                        e.target.name
+                                      )
+                                    }
+                                    required
+                                  />
+                                </div>
 
-                                      <div className="w-[82px] text-center">
-                                        <h3
-                                          className={`${
-                                            conditionLabel.operation ===
-                                            "Subtrack"
-                                              ? "bg-red-200"
-                                              : "bg-blue-200"
-                                          } text-black font-bold px-2 py-1 rounded`}
-                                        >
-                                          {conditionLabel.operation}
-                                        </h3>
-                                      </div>
-                                      <select
-                                        name="operation"
-                                        id=""
-                                        className="border rounded px-1"
-                                        onChange={(e) => {
-                                          if (e.target.value !== "") {
-                                            handlePriceDropChange2(
-                                              conditionLabel.conditionLabelId,
-                                              e.target.value,
-                                              e.target.name
-                                            );
-                                          }
-                                        }}
-                                      >
-                                        <option value="">
-                                          Select Operation
-                                        </option>
-                                        <option value="Subtrack">
-                                          Subtrack
-                                        </option>
-                                        <option value="Add">Add</option>
-                                      </select>
-                                    </div>
-                                  ))}
-                          </div> */}
-                          <div className="flex flex-col px-4 py-2">
-                            {condition.conditionLabels &&
-                              condition.conditionLabels
-                                // .filter((label) =>
-                                //   label.conditionLabel
-                                //     .toLowerCase()
-                                //     .includes("apple")
-                                // )
-                                .map((conditionLabel, index) => (
-                                  <div
-                                    key={conditionLabel.id}
-                                    className="flex justify-center items-center  gap-6  mt-2 pb-1"
+                                <div className="flex max-sm:flex-col gap-4 max-sm:gap-1">
+                                  <h3
+                                    className={`${
+                                      conditionLabel.operation === "Subtrack"
+                                        ? "bg-red-200 px-2"
+                                        : "bg-blue-200 px-4"
+                                    } text-black font-bold py-1 rounded`}
                                   >
-                                    <div>
-                                      <h3 className="text-xl">
-                                        {conditionLabel.conditionLabel}
-                                      </h3>
-                                    </div>
-
-                                    <div className="flex items-center gap-1">
-                                      <span className="text-lg">₹</span>
-                                      <input
-                                        type="number"
-                                        name="priceDrop"
-                                        value={conditionLabel.priceDrop}
-                                        className="border-b px-3 py-1 rounded text-lg"
-                                        placeholder="Price Drop"
-                                        onChange={(e) =>
-                                          handlePriceDropChange2(
-                                            conditionLabel.conditionLabelId,
-                                            parseInt(e.target.value),
-                                            e.target.name
-                                          )
-                                        }
-                                        required
-                                      />
-                                    </div>
-
-                                    <div className="w-[82px] text-center">
-                                      <h3
-                                        className={`${
-                                          conditionLabel.operation ===
-                                          "Subtrack"
-                                            ? "bg-red-200"
-                                            : "bg-blue-200"
-                                        } text-black font-bold px-2 py-1 rounded`}
-                                      >
-                                        {conditionLabel.operation}
-                                      </h3>
-                                    </div>
-                                    <select
-                                      name="operation"
-                                      id=""
-                                      className="border rounded px-1"
-                                      onChange={(e) => {
-                                        if (e.target.value !== "") {
-                                          handlePriceDropChange2(
-                                            conditionLabel.conditionLabelId,
-                                            e.target.value,
-                                            e.target.name
-                                          );
-                                        }
-                                      }}
-                                    >
-                                      <option value="">Select Operation</option>
-                                      <option value="Subtrack">Subtrack</option>
-                                      <option value="Add">Add</option>
-                                    </select>
-                                  </div>
-                                ))}
-                          </div>
-                        </div>
-                      ))}
-                    <UpdateButton
-                      text={`Update ${title}`}
-                      updateLoading={updateLoading}
-                    />
-                  </form>
-                </>
-              )}
-          </div>
-        </div>
+                                    {conditionLabel.operation}
+                                  </h3>
+                                  <select
+                                    name="operation"
+                                    className="border rounded px-1"
+                                    onChange={(e) => {
+                                      if (e.target.value !== "") {
+                                        handlePriceDropChange2(
+                                          conditionLabel.conditionLabelId,
+                                          e.target.value,
+                                          e.target.name
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <option value="">Select Operation</option>
+                                    <option value="Subtrack">Subtrack</option>
+                                    <option value="Add">Add</option>
+                                  </select>
+                                </div>
+                              </div>
+                            )
+                          )}
+                      </div>
+                    </div>
+                  ))}
+                <UpdateButton
+                  text={`Update ${title}`}
+                  updateLoading={updateLoading}
+                />
+              </form>
+            </>
+          )}
       </div>
 
       {isOpen && (
@@ -395,20 +227,6 @@ const UpdateSystemConfigurations = (props) => {
                   <span className="text-xl font-semibold">Update {title}?</span>
                 </h2>
               </div>
-              {/* <div className="flex flex-col items-center">
-                <div className="flex gap-4 items-center">
-                  <span>Category</span>
-                  <h2 className="text-lg font-semibold">
-                    {selectedCondition.categoryName}
-                  </h2>
-                </div>
-                <div className="flex gap-4 items-center">
-                  <span>Condition</span>
-                  <h2 className="text-lg font-semibold">
-                    {selectedCondition.conditionName}
-                  </h2>
-                </div>
-              </div> */}
               <div className="flex justify-around mt-8">
                 <button
                   onClick={() => handleSubmit()}
@@ -434,4 +252,3 @@ const UpdateSystemConfigurations = (props) => {
 };
 
 export default UpdateSystemConfigurations;
-// export default withSystemConfigurations(UpdateSystemConfigurations);

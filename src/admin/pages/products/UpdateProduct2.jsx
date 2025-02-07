@@ -3,7 +3,7 @@ import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
   useUploadProductImageMutation,
-} from "../../../features/api";
+} from "../../../features/api/products/productsApi";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { SubmitButton } from "../../components/SubmitButton";
@@ -317,11 +317,9 @@ const UpdateProduct = () => {
                   </div>
                 </div>
                 <div className="py-3 px-2">
-                  <SubmitButton
-                    handleLoading={updateProductLoading}
-                    value="Update Product"
-                    loading="Loading..."
-                  />
+                  <SubmitButton loading={updateProductLoading}>
+                    Update Product
+                  </SubmitButton>
                 </div>
               </form>
             )}

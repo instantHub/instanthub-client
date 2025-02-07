@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetServicesQuery } from "../../features/api";
-
+// import { useGetServicesQuery } from "../../features/api/services/servicesApi";
+import { useGetServicesQuery
+  
+ } from "../../features/api/services/servicesApi";
 const ServicesHome = () => {
   const { data: servicesData, serviceLoading: serviceLoading } =
     useGetServicesQuery();

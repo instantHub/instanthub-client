@@ -2,9 +2,10 @@ import React, { useState, useRef, useReducer } from "react";
 import {
   useCreateCategoryMutation,
   useUploadCategoryImageMutation,
-} from "../../../features/api";
+} from "../../../features/api/categories/categoriesApi";
 import { toast } from "react-toastify";
 import ListButton from "../../components/ListButton";
+import { SubmitButton } from "../../components/SubmitButton";
 
 const initialState = {
   category: "",
@@ -84,10 +85,7 @@ const CreateCategory = () => {
       const imageURL = await uploadFileHandler();
 
       console.log("handlesubmit ", category, uniqueURL, imageURL);
-      //   setCategoryData({
-      //     ...categoryData,
-      //     image: imageURL,
-      //   });
+
       const categoryData = {
         name: category,
         uniqueURL: uniqueURL,
@@ -205,14 +203,10 @@ const CreateCategory = () => {
               </div>
             </div>
           </div>
-          <div className="py-3 px-2 max-md:p-1">
-            <button
-              type="submit"
-              className={`w-[20%] max-sm:w-1/2 bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
-              disabled={createCategoryloading}
-            >
-              {!createCategoryloading ? "Create Category" : "Loading..."}
-            </button>
+          <div className="w-1/2 py-3 max-md:p-1">
+            <SubmitButton loading={createCategoryloading}>
+              Create Category
+            </SubmitButton>
           </div>
         </form>
       </div>

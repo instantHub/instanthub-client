@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import {
-  useGetCategoryQuery,
-  useGetAllBrandQuery,
   useCreateProductMutation,
   useUploadProductImageMutation,
+} from "../../../features/api/products/productsApi";
+import {
+  useGetAllBrandQuery,
   useGetAllSeriesQuery,
 } from "../../../features/api";
 import { toast } from "react-toastify";
@@ -377,12 +379,10 @@ const CreateProducts = () => {
                   </select>
                 </div>
               </div>
-              <div className="py-3 px-2">
-                <SubmitButton
-                  handleLoading={productCreationLoading}
-                  value="Create Product"
-                  loading="Loading..."
-                />
+              <div className="py-3">
+                <SubmitButton handleLoading={productCreationLoading}>
+                  Create Product
+                </SubmitButton>
               </div>
             </form>
           </div>

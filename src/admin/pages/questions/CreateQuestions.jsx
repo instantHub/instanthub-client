@@ -10,19 +10,21 @@ import SideList from "./SideList";
 
 const CreateQuestions = () => {
   const { data: conditionsData } = useGetConditionsQuery();
+  console.log("conditionsData", conditionsData);
   const { data: conditionsLabelsData } = useGetConditionLabelsQuery();
 
   const filterCondition = useSelector((state) => state.filter.conditionsList);
   const filterConditionLabel = useSelector(
     (state) => state.filter.conditionLabelsList
   );
-  //   console.log("filterCondition from CreateQuestions", filterCondition);
-  //   console.log(
-  //     "filterConditionLabel from CreateQuestions",
-  //     filterConditionLabel
-  //   );
 
-  const conditionHeaders = ["Category", "Condition", "Page"];
+  const conditionHeaders = [
+    "Category",
+    "Condition",
+    "Page",
+    "keyword",
+    "isYesNoType",
+  ];
   const conditionRowRenderer = (condition, index) => (
     <>
       <td className="py-2">{condition.category.name}</td>
@@ -30,6 +32,8 @@ const CreateQuestions = () => {
         <span>{index}</span>. <span>{condition.conditionName}</span>
       </td>
       <td className="py-2">{condition.page}</td>
+      <td className="py-2">{condition.keyword}</td>
+      <td className="py-2">{condition.isYesNoType ? "Yes" : "No"}</td>
     </>
   );
 

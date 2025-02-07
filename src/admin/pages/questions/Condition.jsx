@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import {
-  useCreateConditionsMutation,
-  useGetCategoryQuery,
-} from "../../../features/api";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
+import { useCreateConditionsMutation } from "../../../features/api";
 import { toast } from "react-toastify";
 import ListButton from "../../components/ListButton";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "../../features/filterSlice";
+import { SubmitButton } from "../../components/SubmitButton";
+import FormData from "./FormData";
 
 function Condtions() {
   const { data: categoryData, isLoading: categoryLoading } =
@@ -23,19 +23,22 @@ function Condtions() {
     category: filterData.category,
     conditionName: "",
     page: "",
+    keyword: "",
+    isYesNoType: false,
+    description: "",
   });
 
   console.log("formData", formData);
 
   // Function to handle changes in the form fields
-  const handleChange = (event, field, conditionName) => {
+  const handleChange = (event, conditionName) => {
     const { value } = event.target;
     const updatedFormData = { ...formData };
     updatedFormData[conditionName] = value;
     setFormData(updatedFormData);
   };
 
-  // console.log("condition formData", formData);
+  console.log("condition formData", formData);
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -78,13 +81,11 @@ function Condtions() {
             onSubmit={handleSubmit}
             className="flex flex-col justify-center gap-4 px-4 max-sm:px-2 py-4 max-sm:py-2"
           >
-            <div>
-              <h2 className="text-lg max-sm:text-sm">Add Condition</h2>
-            </div>
+            <h2 className="text-lg max-sm:text-sm">Add Condition</h2>
             <hr />
 
             {/* Select Category */}
-            <div className="flex max-sm:flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
               <label>Category:</label>
               <select
                 className="border p-1 rounded text-lg max-sm:text-sm"
@@ -114,69 +115,67 @@ function Condtions() {
 
             <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
               {/* Condition Name */}
-              <div className="flex items-center max-sm:flex-col">
-                <div className="flex items-center max-sm:flex-col">
-                  <label>Condition Name:</label>
-                  <input
-                    type="text"
-                    name="name"
-                    className="border mx-2 py-1 px-2 rounded text-sm max-sm:text-xs"
-                    placeholder="Enter Condition Name"
-                    value={formData.conditionName}
-                    onChange={(event) =>
-                      handleChange(event, "name", "conditionName")
-                    }
-                    required
-                  />
-                </div>
+              <FormData
+                label="Condition Name"
+                type="text"
+                value={formData.conditionName}
+                handleChange={(e) => handleChange(e, "conditionName")}
+              />
 
-                {/* Page No */}
-                <div className="flex items-center max-sm:flex-col">
-                  <label>Page:</label>
-                  <input
-                    type="number"
-                    name="page"
-                    className="border mx-2 py-1 px-2 rounded text-sm max-sm:text-xs"
-                    placeholder="Enter Page Number"
-                    value={formData.page}
-                    onChange={(event) => handleChange(event, "name", "page")}
-                    required
-                  />
-                </div>
+              {/* Page No */}
+              <FormData
+                label="Page No"
+                type="number"
+                value={formData.page}
+                handleChange={(e) => handleChange(e, "page")}
+              />
+
+              {/* Keyword */}
+              <FormData
+                label="Keyword"
+                type="text"
+                value={formData.keyword}
+                handleChange={(e) => handleChange(e, "keyword")}
+              />
+
+              {/* Description */}
+              <FormData
+                label="Description"
+                type="text"
+                value={formData.description}
+                handleChange={(e) => handleChange(e, "description")}
+              />
+
+              {/* Yes & No */}
+              <div className="flex items-center gap-1">
+                <label>is it Yes & No Condition:</label>
+                <select
+                  name="isYesNoType"
+                  value={formData.isYesNoType}
+                  className="px-1 border rounded"
+                  onChange={(event) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      isYesNoType: event.target.value,
+                    }));
+                  }}
+                >
+                  <option value="">Select</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
               </div>
             </div>
 
-            <div className="py-3 px-2">
-              <button
-                type="submit"
-                className={`w-fit px-4 bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
-                disabled={createConditonLoading}
-              >
-                {!createConditonLoading ? "Create Condition" : "Loading..."}
-              </button>
+            <div className="py-3">
+              <SubmitButton loading={createConditonLoading}>
+                Create Condition
+              </SubmitButton>
             </div>
           </form>
         </div>
-
-        {/* condition List */}
-        {/* <div className="mt-5 ml-5 overflow-y-auto scrollbar max-h-[250px]">
-            <p className="w-full text-xl font-semibold">
-              List of selected category's conditions
-            </p>
-            <ul className="">
-              {!conditionsLoading &&
-                conditionsData
-                  ?.filter((cond) => cond.category.id == formData.category)
-                  .map((condition) => (
-                    <li className="bg-white text-lg px-4 py-2">
-                      {condition.conditionName}
-                    </li>
-                  ))}
-            </ul>
-          </div> */}
       </div>
     </div>
-    // </div>
   );
 }
 

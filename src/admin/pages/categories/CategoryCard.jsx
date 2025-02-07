@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import ConfirmationModal from "../../components/ConfirmationModal";
-import { useDeleteCategoryMutation } from "../../../features/api";
+import { useDeleteCategoryMutation } from "../../../features/api/categories/categoriesApi";
 import { toast } from "react-toastify";
 import ActionButton from "../../components/ActionButton";
 

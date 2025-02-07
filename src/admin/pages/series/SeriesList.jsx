@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
 import {
   useGetAllSeriesQuery,
   useDeleteSeriesMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import EditButton from "../../components/EditButton";
 import Table from "../../components/TableView";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import SeriesCard from "./SeriesCard";
 
 const SeriesList = () => {
   const { data: seriesData, isLoading: seriesLoading } = useGetAllSeriesQuery();
@@ -18,8 +18,11 @@ const SeriesList = () => {
     console.log("seriesData", seriesData);
   }
 
-  const handleDelete = async (seriesId, e) => {
-    e.preventDefault();
+  // Delete Order
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [seriesToDelete, setSeriesToDelete] = useState("");
+
+  const handleDelete = async (seriesId) => {
     console.log("delete series", seriesId);
     try {
       const deletedSeries = await deleteSeries(seriesId);
@@ -30,53 +33,37 @@ const SeriesList = () => {
     }
   };
 
-  const headers = ["Series Name", "Category & Brand", "Update", "Delete"];
-
-  const rowRenderer = (series) => (
-    <>
-      <td className="text-lg max-sm:text-xs">{series.name}</td>
-      <td className="flex flex-col">
-        <div className="text-lg max-sm:text-xs">
-          <span className="opacity-70">Category:</span> {series?.category?.name}
-        </div>
-        <div className="text-lg max-sm:text-xs">
-          <span className="opacity-70">Brand: </span>
-          {series?.brand?.name}
-        </div>
-      </td>
-      <td className="px-4 py-2">
-        <EditButton location={`/admin/update-series/${series.id}`} />
-      </td>
-      <td>
-        <button
-          onClick={(e) => handleDelete(series.id, e)}
-          className="bg-red-600 text-white px-3 py-1 rounded-md"
-        >
-          <MdDeleteForever className="text-2xl" />
-        </button>
-      </td>
-    </>
-  );
-
   return (
     <>
-      <div className="flex mt-[5%] w-fit max-sm:w-[95%] mx-auto">
-        <div className="grow">
-          <div className="flex justify-between items-center">
-            <h1 className="bold text-lg max-sm:text-sm mb-2">Series List</h1>
-          </div>
-          <div className="bg-white border rounded-md shadow-lg">
-            {!seriesLoading && (
-              <Table
-                headers={headers}
-                data={seriesData}
-                keyExtractor={(item) => item.id}
-                rowRenderer={rowRenderer}
-              />
-            )}
+      <div className="flex flex-col items-center mt-[5%] w-fit max-sm:w-[99%] mx-auto">
+        <h1 className="text-2xl py-2 font-serif">Series List</h1>
+        {/* Series Cards */}
+        <div className="mt-2 mb-5 flex flex-col items-center">
+          <div className="w-full px-10 max-sm:px-2 mx-auto grid grid-cols-5 max-md:grid-cols-3 max-sm:grid-cols-2 gap-4 max-sm:gap-2 ">
+            {seriesData?.map((series) => {
+              return (
+                <SeriesCard
+                  key={series.id}
+                  data={series}
+                  setModalOpen={setModalOpen}
+                  setSeriesToDelete={setSeriesToDelete}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+        itemToDelete={seriesToDelete}
+        title="Confirm Deletion"
+        description="Are you sure you want to delete this series? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </>
   );
 };

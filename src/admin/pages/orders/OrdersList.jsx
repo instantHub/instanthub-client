@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  useGetCategoryQuery,
-  useGetOrdersListQuery,
-} from "../../../features/api";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
+import { useGetOrdersListQuery } from "../../../features/api";
+
 import OrderCard from "./OrderCard";
 import OrderTabs from "../../components/OrderTabs";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";

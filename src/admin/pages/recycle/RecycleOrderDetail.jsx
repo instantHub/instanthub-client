@@ -2,12 +2,13 @@ import React, { useRef, useState } from "react";
 import {
   useGetRecycleOrderQuery,
   useRecycleOrderCompleteMutation,
-  useUploadCustomerProofImageMutation,
   useRecycleOrderCancelMutation,
-} from "../../../features/api";
+} from "../../../features/api/recycle/recycleApi";
+import { useUploadCustomerProofImageMutation } from "../../../features/api";
 import { useNavigate, useParams } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import Loading from "../../../components/Loading";
+import InputSubmitBtn from "../../../components/InputSubmitBtn";
+import DateAndTime from "../../../components/DateAndTime";
 
 const RecycleOrderDetail = () => {
   const { recycleOrderId } = useParams();
@@ -44,25 +45,10 @@ const RecycleOrderDetail = () => {
 
   // CALENDER
   const [selectedDate, setSelectedDate] = useState(null);
-  const currentDate = new Date();
-
-  // Set the minimum time to 10:00 AM
-  const minTime = new Date();
-  minTime.setHours(10, 0, 0, 0);
-
-  // Set the maximum time to 10:00 PM
-  const maxTime = new Date();
-  maxTime.setHours(22, 0, 0, 0);
 
   const [pickedUpBy, setPickedUpBy] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
   //   console.log("pickedUpBy", pickedUpBy);
-
-  const handleTimeChange = (date) => {
-    console.log("date", typeof date);
-
-    setSelectedDate(date);
-  };
 
   const uploadFileHandler = async (image) => {
     const formData = new FormData();
@@ -108,23 +94,16 @@ const RecycleOrderDetail = () => {
 
     console.log("handlesubmit ", imageURL1, imageURL2);
 
-    const formattedDate = {
-      agentName: pickedUpBy,
-      pickedUpDate: `${selectedDate.toLocaleString("en-US", {
-        month: "long",
-      })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
-        "en-US",
-        { hour: "numeric", minute: "numeric", hour12: true }
-      )}`,
-    };
-
     const formData = {
       // recycleOrderId: recycleOrderDetail.id,
       customerProofFront: imageURL1,
       customerProofBack: imageURL2,
       customerOptional1: imageURL3 ? imageURL3 : null,
       customerOptional2: imageURL4 ? imageURL4 : null,
-      pickedUpDetails: formattedDate,
+      pickedUpDetails: {
+        agentName: pickedUpBy,
+        pickedUpDate: selectedDate,
+      },
       deviceInfo,
       finalPrice,
       status: {
@@ -692,43 +671,7 @@ const RecycleOrderDetail = () => {
                   </div>
 
                   {/* Date Picker */}
-                  <div className="relative flex max-sm:flex-col max-sm:gap-1">
-                    <p htmlFor="datepicker">
-                      Select Pick Up Time:
-                      <span className="text-red-600">* </span>
-                    </p>
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleTimeChange}
-                      showTimeSelect
-                      timeFormat="h:mm aa" // 12 hours
-                      timeIntervals={30}
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      timeCaption="Time"
-                      minDate={currentDate}
-                      minTime={minTime}
-                      maxTime={maxTime}
-                      placeholderText="Select PickedUp Time"
-                      className="border px-1 rounded"
-                      required
-                    />
-
-                    {selectedDate && (
-                      <p className="absolute top-4 py-2 text-sm max-sm:hidden">
-                        Picket Up time: `
-                        {selectedDate.toLocaleString("en-US", {
-                          month: "long",
-                        })}{" "}
-                        {selectedDate.getDate()}, {selectedDate.getFullYear()}{" "}
-                        {selectedDate.toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: true,
-                        })}
-                        `
-                      </p>
-                    )}
-                  </div>
+                  <DateAndTime setSchedule={setSelectedDate} />
                 </div>
 
                 {/* Serial No and IMEI No */}
@@ -768,20 +711,10 @@ const RecycleOrderDetail = () => {
                 </div>
               </div>
 
-              {!recycleOrderCompletedLoading ? (
-                <input
-                  type="submit"
-                  value="Mark Completed"
-                  className="border rounded px-2 py-1 w-fit bg-green-600 text-white cursor-pointer hover:bg-green-600 mx-auto"
-                />
-              ) : (
-                <input
-                  type="submit"
-                  value="Loading"
-                  name=""
-                  className="border rounded px-2 py-1 w-fit bg-green-300 text-white cursor-none mx-auto"
-                />
-              )}
+              <InputSubmitBtn
+                loading={recycleOrderCompletedLoading}
+                label="Mark Completed"
+              />
             </form>
 
             {/* Order Cancel Form */}

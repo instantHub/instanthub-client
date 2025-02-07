@@ -12,7 +12,7 @@ import {
 import { GiSellCard } from "react-icons/gi";
 import { MdHomeRepairService } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetCategoryQuery } from "../features/api";
+import { useGetCategoryQuery } from "../features/api/categories/categoriesApi";
 // import { FaPhone } from "react-icons/fa";
 
 const FloatingButtons = () => {

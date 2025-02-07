@@ -10,20 +10,6 @@ import ServicesHome from "../services/ServicesHome";
 import { FaHandPointLeft, FaHandPointRight } from "react-icons/fa";
 
 const Home = () => {
-  // const structuredData = {
-  //   "@context": "https://schema.org",
-  //   "@type": "WebSite",
-  //   url: "https://www.instanthub.in/",
-  //   name: "InstantHub",
-  //   description:
-  //     "Get instant cash payments with InstantHub. No more waiting for checks to clear or funds to transfer. Receive cash on the spot quickly and easily.",
-  //   potentialAction: {
-  //     "@type": "SearchAction",
-  //     target: "https://www.instanthub.in/",
-  //     "query-input": "required name=search_term_string",
-  //   },
-  // };
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

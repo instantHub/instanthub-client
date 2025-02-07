@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import ConfirmationModal from "../../components/ConfirmationModal";
-import { useDeleteProductMutation } from "../../../features/api";
-import { toast } from "react-toastify";
+import { useDeleteProductMutation } from "../../../features/api/products/productsApi";
 import ActionButton from "../../components/ActionButton";
+// import { checkPendingPrices } from "../../helpers/pendingPrices";
+import { MOBILE } from "../../helpers/constants";
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, pendingPricingMobiles }) => {
   //   console.log(data);
   const navigate = useNavigate();
-  const [deleteProduct, { isLoading: deleteLoading }] =
-    useDeleteProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
 
   const [deductionSelected, setDeductionSelected] = useState("");
   const MOBILE_CATEGORY = data.category.name === "Mobile";
@@ -26,6 +24,8 @@ const ProductCard = ({ data }) => {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pricingNeeded, setPricingNeeded] = useState(false);
+  const [pricingNeededFor, setPricingNeededFor] = useState("");
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -43,11 +43,59 @@ const ProductCard = ({ data }) => {
     setIsModalOpen(true);
   }
 
+  // async function checkPendingPrices() {
+  //   console.log("pendingPricingMobiles",pendingPricingMobiles);
+  //   return pendingPricingMobiles.find((product) => {
+  //     console.log("checkPendingPrices :-", product.productName, ":", data.name);
+  //     if (product.productName === data.name) return product.variants;
+  //     return [];
+  //   });
+  // }
+
+  const checkPendingPrices = async () => {
+    // console.log("pendingPricingMobiles", pendingPricingMobiles);
+
+    const product = pendingPricingMobiles.find((product) => {
+      return product.productName === data.name;
+    });
+
+    return product ? product.variants : [];
+  };
+
+  useEffect(() => {
+    async function checkPricing() {
+      if (MOBILE_CATEGORY) {
+        let check = await checkPendingPrices();
+        // console.log("check", check);
+        setPricingNeededFor(check);
+        if (check?.length > 0) setPricingNeeded(true);
+      }
+    }
+
+    checkPricing();
+  }, [data, pendingPricingMobiles]);
+
+  // console.log(pricingNeeded, pricingNeededFor);
+
   return (
     <>
       <div
-        className={`relative w-full shadow flex flex-col justify-center items-center cursor-pointer rounded-md pt-3 max-sm:pt-2 text-center text-sm max-sm:text-[10px] border`}
+        className={`relative w-full shadow flex flex-col justify-center items-center cursor-pointer rounded-md pt-3 max-sm:pt-2 
+              text-center text-sm max-sm:text-[10px] border ${
+                pricingNeeded && "border-yellow-500"
+              }`}
       >
+        {pricingNeeded && (
+          <div className="w-full border-b pb-2 text-yellow-500 flex justify-center items-center gap-1">
+            <p className="font-extrabold">WARNING:- </p>
+            <p>Pricing needed for Variants </p>
+            {pricingNeededFor.map((item, i) => (
+              <span key={i} className="font-semibold">
+                {item}
+              </span>
+            ))}
+          </div>
+        )}
         {/* Data Display */}
         <div className="w-full h-full grid grid-cols-5 max-sm:grid-cols-4 place-items-center gap-2 px-2 max-sm:px-1">
           {/* Category & Brand */}
@@ -169,7 +217,7 @@ const ProductCard = ({ data }) => {
         onConfirm={handleDelete}
         itemToDelete={data.id}
         title="Confirm Deletion"
-        detail={`You are about to delete ${data.name} Brand.`}
+        detail={`You are about to delete ${data.name}, ${data?.category?.name} Product.`}
         description="Are you sure you want to delete this item? This action cannot be undone."
         confirmText="Delete"
         cancelText="Cancel"

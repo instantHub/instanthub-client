@@ -1,8 +1,6 @@
 import React from "react";
-import {
-  useGetCategoryQuery,
-  useGetAllBrandQuery,
-} from "../../../features/api";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
+import { useGetAllBrandQuery } from "../../../features/api";
 import { Link } from "react-router-dom";
 import { filterCategory } from "../../features/filterSlice";
 import { useDispatch, useSelector } from "react-redux";

@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
 import ItemGrid from "../../components/ItemGrid";
 import RecycleContent from "./RecycleContent";
+import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 
 const RecycleBrands = () => {
   const { catId } = useParams();
@@ -42,25 +43,20 @@ const RecycleBrands = () => {
           href={`https://www.instanthub.in/recycle-categories/recycle-brands/${catId}`}
         />
       </Helmet>
-      {/* <div className="mt-8 w-4/5 mx-auto"> */}
-      <div className="pt-10 w-4/5 max-2sm:w-[90%] mx-auto">
+      <div className="pt-10 max-sm:pt-5 w-4/5 max-2sm:w-[90%] mx-auto">
         <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
           Recycle your {category?.name} to recycle and get Instant Cash
         </p>
-        <div className="mx-0 mb-6">
-          {!brandsLoading && (
-            <div className="flex items-center gap-1 max-2sm:text-xs">
-              <h2 className="flex items-center opacity-60 gap-1">
-                <Link to={"/"}>Home</Link>
-                <FaAngleRight />
-                <Link to={"/recycle-categories"}>Recycle</Link>
-                <FaAngleRight />
-                <span className="font-semibold">Recycle {category?.name}</span>
-              </h2>
-            </div>
-          )}
-          <hr className="text-black mt-1" />
-        </div>
+
+        {/* BreadCrumbLinks Headers */}
+        <BreadCrumbLinks
+          recycle={true}
+          brands={{
+            link: ``,
+            label: `Recycle ${category?.name}`,
+            isLast: true,
+          }}
+        />
 
         {brandsLoading ? (
           <Loading />

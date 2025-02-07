@@ -9,7 +9,8 @@ export const fetchProcessorDeductions = createAsyncThunk(
       const response = await axios.get(
         `${
           import.meta.env.VITE_APP_BASE_URL
-        }/api/products/processor-deductions/${processorId}`
+        }/api/processors/deductions/${processorId}`
+        // }/api/products/processor-deductions/${processorId}`
       );
       console.log("res", response.data);
       return response.data; // Assuming the API returns an array of products

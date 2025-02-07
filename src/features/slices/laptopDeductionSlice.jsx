@@ -105,7 +105,7 @@ export const laptopDeductionSlice = createSlice({
     },
 
     clearLaptopDeductions: (state, action) => {
-      // console.log("clearLaptopDeductions reducer");
+      console.log("clearLaptopDeductions reducer");
 
       return {
         ...state,

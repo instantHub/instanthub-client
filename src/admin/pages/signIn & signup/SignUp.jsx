@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "../../../features/adminApiSlice";
-import { setCredentials } from "../../../features/authSlice";
+import { useRegisterMutation } from "../../../features/api/admin/authApi/authApi";
+import { setCredentials } from "../../../features/slices/authSlice";
 import { toast } from "react-toastify";
 
 const SignUp = () => {

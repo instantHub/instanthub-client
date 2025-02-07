@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetCategoryQuery } from "../../../features/api";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import { Link } from "react-router-dom";
 import CategoryCard from "./CategoryCard";
 

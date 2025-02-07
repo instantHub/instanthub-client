@@ -1,13 +1,6 @@
-import React from "react";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import ActionButton from "../../components/ActionButton";
 
 const ListItemCard = ({ data, service, handleEdit, handleDelete }) => {
-  const editBtnStyle =
-    "flex items-center justify-center tracking-[10px] bg-white border-t border-r border-t-blue-200 text-blue-600 px-3 py-1";
-  const deleteBtnStyle =
-    "flex items-center justify-center bg-white border-t border-t-red-200 text-red-600 px-3 py-1";
   console.log("data", data);
 
   return (

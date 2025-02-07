@@ -9,7 +9,6 @@ const Footer = () => {
   const listItemStyle =
     "px-2 py-1 max-sm:text-xs text-sm hover:text-[16px] hover:bg-secondary-light hover:text-secondary rounded-md transition-all ease-in-out duration-1000";
   return (
-    // <div className="w-full sm:pt-10 sm:pb-5 mt-2 bg-secondary px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16">
     <div
       className={`bg-secondary w-full sm:pt-10 sm:pb-5 mt-2 px-4 pt-2 pb-[4px] max-sm:text-md max-sm:px-[2px] max-lg:pb-10 max-sm:pb-16`}
     >
@@ -19,9 +18,7 @@ const Footer = () => {
           <div className="pb-5">
             <img
               src="/images/NewLogoB.jpeg"
-              // src="/images/NavLogo.jpg"
               alt="logo"
-              // className="w-full h-[75px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
               className="w-[150px] h-[80px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
               loading="lazy" // Native lazy loading
             />
@@ -54,7 +51,7 @@ const Footer = () => {
 
         {/* Small Screen */}
         {/* Company  - Support  - More */}
-        <div className="grid grid-cols-4 w-full max-sm:grid-cols-2 max-sm:gap-2">
+        <div className="grid grid-cols-3 w-full max-sm:grid-cols-2 max-sm:gap-2">
           {/* Business Name */}
           <div className="md:hidden flex items-center">
             <img
@@ -141,7 +138,7 @@ const Footer = () => {
           </div>
 
           {/* More */}
-          <div className="flex flex-col justify-start items-center max-sm:items-start">
+          {/* <div className="flex flex-col justify-start items-center max-sm:items-start">
             <div className="text-white font-bold py-1 max-sm:text-sm">
               <label htmlFor="">More</label>
             </div>
@@ -171,10 +168,10 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
 
           {/* Address */}
-          <div className="flex flex-col justify-start items-center max-sm:items-start">
+          <div className="max-sm:col-span-2 flex flex-col justify-start items-center max-sm:items-start">
             <div className="text-white font-bold py-2 max-sm:text-sm">
               <p>Our Office</p>
             </div>
@@ -190,6 +187,56 @@ const Footer = () => {
               <p>GST: 29CSJPA4571K1ZE</p>
             </div>
           </div>
+        </div>
+      </div>
+      {/* <div className="flex justify-center items-center text-white">
+        <div>All Rights Reserved @ 2024</div>
+        <div>
+          <Link to={`/terms-conditions`}>
+            <span className={`${listItemStyle}`}>Terms & Conditions</span>
+          </Link>
+        </div>
+        <div>
+          <Link to={`/privacy-policies`}>
+            <span className={`${listItemStyle}`}>Privacy Policy</span>
+          </Link>
+        </div>
+        <div>
+          <Link to={`/service-policy`}>
+            <span className={`${listItemStyle}`}>Service Policy</span>
+          </Link>
+        </div>
+        <div>
+          <Link to={`/terms-of-use`}>
+            <span className={`${listItemStyle}`}>Terms Of Use</span>
+          </Link>
+        </div>
+      </div> */}
+
+      <div className="mb-3 flex flex-wrap max-sm:flex-col gap-1 justify-center items-center gap-x-6 text-white text-xs max-sm:text-[10px] py-4">
+        <div>All Rights Reserved © 2025 - Instant Hub</div>
+        <div className="flex gap-5 items-center max-sm:gap-4">
+          <Link
+            to="/terms-conditions"
+            className=" border-b border-b-gray-500 pb-1"
+          >
+            Terms & Conditions
+          </Link>
+          <Link
+            to="/privacy-policies"
+            className="border-b border-b-gray-500 pb-1"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            to="/service-policy"
+            className="border-b border-b-gray-500 pb-1"
+          >
+            Service Policy
+          </Link>
+          <Link to="/terms-of-use" className="border-b border-b-gray-500 pb-1">
+            Terms of Use
+          </Link>
         </div>
       </div>
 

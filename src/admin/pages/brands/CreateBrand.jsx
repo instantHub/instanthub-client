@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
 import {
-  useGetCategoryQuery,
   useCreateBrandMutation,
   useUploadBrandImageMutation,
 } from "../../../features/api";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import { toast } from "react-toastify";
 import ListButton from "../../components/ListButton";
+import { SubmitButton } from "../../components/SubmitButton";
 
 const CreateBrand = () => {
   const [brand, setBrand] = useState("");
@@ -115,6 +116,7 @@ const CreateBrand = () => {
                   // console.log(e.target.value);
                   setCategorySelected(e.target.value);
                 }}
+                required
               >
                 <option value="">Select Category</option>
                 {!isLoading &&
@@ -177,13 +179,9 @@ const CreateBrand = () => {
             </div>
           </div>
           <div className="py-3 px-2">
-            <button
-              type="submit"
-              className={`w-[20%] max-sm:w-full bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700 disabled:cursor-none disabled:bg-gray-300`}
-              disabled={createBrandLoading}
-            >
-              {!createBrandLoading ? "Create Brand" : "Loading..."}
-            </button>
+            <SubmitButton loading={createBrandLoading}>
+              Create Brand
+            </SubmitButton>
           </div>
         </form>
       </div>

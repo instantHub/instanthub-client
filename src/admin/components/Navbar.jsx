@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   useAdminLogoutMutation,
   useAdminProfileQuery,
-} from "../../features/adminApiSlice";
+} from "../../features/api/admin/authApi/authApi";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../features/authSlice";
+import { logout } from "../../features/slices/authSlice";
 import { toast } from "react-toastify";
 import { FiAlignLeft } from "react-icons/fi";
 import { IoLogOut } from "react-icons/io5";

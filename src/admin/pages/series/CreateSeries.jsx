@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import {
   useCreateSeriesMutation,
   useGetAllBrandQuery,
-  useGetCategoryQuery,
 } from "../../../features/api";
 import { toast } from "react-toastify";
 import SeriesList from "./SeriesList";
@@ -52,8 +52,8 @@ const CreateSeries = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center mt-10">
-        <div className="bg-white border rounded-md shadow-lg w-[50%] max-2sm:w-[90%]">
+      <div className="flex flex-col justify-between items-center mt-5 max-sm:text-sm">
+        <div className="bg-white border rounded-md shadow-lg w-fit max-sm:w-[98%]">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
             <h2 className="text-lg max-sm:text-sm">
               Add / Create Series for the Product
@@ -62,7 +62,7 @@ const CreateSeries = () => {
 
             <div className="flex justify-around items-center max-sm:flex-col gap-4">
               {/* select Category */}
-              <div className="flex items-center max-sm:items-start gap-2 max-sm:flex-col text-lg max-sm:text-sm">
+              <div className="flex items-center max-sm:items-start gap-2 text-lg max-sm:text-sm">
                 <label htmlFor="category">Select Category :</label>
                 <select
                   id="category"
@@ -93,7 +93,7 @@ const CreateSeries = () => {
               </div>
 
               {/* select Brand */}
-              <div className="flex items-center max-sm:items-start  gap-2 max-sm:flex-col text-lg max-sm:text-sm">
+              <div className="flex items-center max-sm:items-start gap-2 text-lg max-sm:text-sm">
                 <label htmlFor="productType">Select Brand :</label>
                 <select
                   id="productType"
@@ -127,8 +127,8 @@ const CreateSeries = () => {
 
             {/* <div className="flex gap-4 items-center mx-auto"> */}
             {/* Series Name */}
-            <div className="flex flex-col mx-auto w-fit text-lg max-sm:text-sm gap-2">
-              <label htmlFor="seriesName">Enter New Series Name :</label>
+            <div className="flex items-center mx-auto w-fit text-lg max-sm:text-sm gap-2">
+              <label htmlFor="seriesName">Enter Series Name :</label>
               <input
                 type="text"
                 id="seriesName"

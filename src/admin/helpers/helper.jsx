@@ -1,10 +1,24 @@
 // Orders
 
 export const orderCurrentStatus = (status) => {
-  if (status.pending) return <span className="text-blue-600 bg-blue-200 text-xs px-2 py-[2px] rounded-full ">Pending</span>;
+  if (status.pending)
+    return (
+      <span className="text-blue-600 bg-blue-200 text-xs px-2 py-[2px] rounded-full ">
+        Pending
+      </span>
+    );
   if (status.completed)
-    return <span className="text-green-600 bg-green-200 text-xs px-2 py-[2px] rounded-full">Completed</span>;
-  if (status.cancelled) return <span className="text-red-600 bg-red-200 text-xs px-2 py-[2px] rounded-full">Cancelled</span>;
+    return (
+      <span className="text-green-600 bg-green-200 text-xs px-2 py-[2px] rounded-full">
+        Completed
+      </span>
+    );
+  if (status.cancelled)
+    return (
+      <span className="text-red-600 bg-red-200 text-xs px-2 py-[2px] rounded-full">
+        Cancelled
+      </span>
+    );
   return "Unknown";
 };
 

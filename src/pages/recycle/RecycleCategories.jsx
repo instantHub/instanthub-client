@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useGetCategoryQuery } from "../../features/api";
-import AllBrandsList from "../brands/AllBrandsList";
+import { useGetCategoryQuery } from "../../features/api/categories/categoriesApi";
 import { Helmet } from "react-helmet-async";
 import ItemGrid from "../../components/ItemGrid";
 import Loading from "../../components/Loading";
@@ -63,7 +61,7 @@ const RecycleCategories = () => {
         </script>
       </Helmet>
 
-      <div className="pt-10 mx-auto">
+      <div className="pt-10 max-sm:pt-5 mx-auto">
         <div className="w-full mx-auto">
           <div className="w-5/6 max-sm:text-center mx-auto mb-6">
             <h1 className="text-2xl pb-6 max-sm:text-lg">
@@ -72,8 +70,6 @@ const RecycleCategories = () => {
                 Let's recycle your gadgets!
               </span>
             </h1>
-
-            {/* <hr className="text-black mt-1" /> */}
           </div>
 
           <div className="bg-[url('/images/recycle1.png')] w-full h-full"></div>
@@ -81,7 +77,6 @@ const RecycleCategories = () => {
           {categoriesLoading ? (
             <Loading />
           ) : (
-            // <div className="flex flex-wrap justify-evenly gap-6 bg-[url('/images/recycle1.png')] bg-center bg-no-repeat min-h-[400px] max-sm:min-h-[300px]">
             <div className="flex flex-wrap justify-evenly gap-6 bg-[url('/images/recycle1.png')] bg-contain bg-center bg-no-repeat my-10">
               <ItemGrid
                 items={filteredCategories}

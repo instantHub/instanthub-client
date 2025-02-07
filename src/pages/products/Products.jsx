@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  useGetProductsQuery,
-  useGetBrandSeriesQuery,
-} from "../../features/api";
+import { useGetProductsQuery } from "../../features/api/products/productsApi";
+import { useGetBrandSeriesQuery } from "../../features/api";
 import { useParams, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa6";
@@ -11,6 +9,8 @@ import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
 import ProductCard from "../../components/ProductCard";
 import SellContent from "../../components/SellContent";
+import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import SeriesButton from "../../components/SeriesButton";
 
 const Products = () => {
   const { brandId } = useParams();
@@ -101,8 +101,12 @@ const Products = () => {
       </Helmet>
 
       {/* Series */}
-      <div className={`${displayedSeries?.length > 0 ? "mt-10" : "mt-0"}`}>
-        <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+      <div
+        className={`${
+          displayedSeries?.length > 0 ? "pt-10 max-sm:pt-2" : "mt-0"
+        }`}
+      >
+        <div className="mx-10 max-sm:mx-2 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {displayedSeries?.map((series) => (
             <SeriesButton
               key={series.id}
@@ -124,8 +128,7 @@ const Products = () => {
             <BsSearch className="text-gray-700 text-sm" />
             <input
               type="search"
-              name=""
-              id=""
+              name="search"
               placeholder="Search a product"
               className="px-2 bg-white text-sm py-1 outline-none"
               onChange={(e) => debounce(e, "test1", "test2")}
@@ -147,20 +150,17 @@ const Products = () => {
         </div>
 
         {/* Home > Cat > Brand */}
-        <div className="mx-0 mb-6 text-lg max-sm:text-sm">
-          <div className="flex items-center gap-1">
-            <h2 className="flex items-center opacity-60 gap-1">
-              <Link to={"/"}>Home</Link>
-              <FaAngleRight />
-              <Link to={`/categories/brands/${category?.id}`}>
-                {category?.name}
-              </Link>
-              <FaAngleRight />
-            </h2>
-            {brand?.name}
-          </div>
-          <hr className="text-black mt-1" />
-        </div>
+        <BreadCrumbLinks
+          brands={{
+            link: `/categories/brands/${category?.id}`,
+            label: `${category?.name}`,
+          }}
+          products={{
+            link: ``,
+            label: `${brand?.name}`,
+            isLast: true,
+          }}
+        />
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {filteredProducts?.filter(
@@ -189,27 +189,3 @@ const Products = () => {
 };
 
 export default Products;
-
-const SeriesButton = ({ series, isSelected, onClick }) => (
-  <div
-    key={series.id}
-    className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
-  >
-    <button onClick={onClick} className="w-full h-full">
-      <div
-        className={`${
-          isSelected ? "bg-secondary text-white" : "bg-gray-200 max-sm:bg-white"
-        } flex flex-col items-center justify-center cursor-pointer w-full h-full p-2 sm:p-2 sm:min-w-full rounded sm:rounded-md sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
-      >
-        <span className="text-center mt-2 flex-1 line-clamp-3 flex items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-          <div className="text-[14px] font-[500] leading-7">{series.name}</div>
-        </span>
-      </div>
-    </button>
-    {isSelected && (
-      <button onClick={onClick} className="absolute top-1 right-1 text-white">
-        <FaTimes />
-      </button>
-    )}
-  </div>
-);

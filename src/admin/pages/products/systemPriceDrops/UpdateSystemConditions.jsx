@@ -133,7 +133,7 @@ const UpdateSystemConditions = (props) => {
 
   return (
     <>
-      <div>
+      <div className="w-fit mx-auto">
         {/* Selected Processor Based Deductions */}
         {selectedProcessorDeductions && (
           <form
@@ -143,51 +143,43 @@ const UpdateSystemConditions = (props) => {
             }}
           >
             <div>
-              <span className="flex justify-center text-3xl font-serif font-bold">
+              <p className="flex justify-center text-3xl max-sm:text-lg font-serif font-bold">
                 {selectedProcessorDeductions?.processorName}
-              </span>
-              <span className="flex justify-center text-lg font-serif">
-                Update <span className="font-bold px-1"> {title} </span> Based
-                On The Selected Processor
-              </span>
+              </p>
+              <p className="text-center flex max-sm:flex-col justify-center gap-1 text-lg max-sm:text-xs font-serif">
+                <span>
+                  Update <span className="font-bold"> {title} </span>
+                </span>
+                <span>Based On The Selected Processor</span>
+              </p>
               {selectedProcessorDeductions?.deductions?.map(
                 (condition, index) => (
                   <div
                     key={condition.id}
-                    className={`mb-10 border my-2 py- px- rounded ${
-                      index % 2 === 0 ? `` : `bg-gray-100`
-                    }`}
+                    className={`border my-4 rounded text-sm max-sm:text-xs`}
                   >
-                    <div>
-                      <h3 className="text-2xl py-2 font-serif text-center font-extrabold bg-white">
-                        {condition.conditionName}
-                      </h3>
-                    </div>
+                    <h3 className="text-2xl max-sm:text-lg py-2 font-serif text-center font-extrabold bg-white">
+                      {condition.conditionName}
+                    </h3>
                     <hr />
-                    <div className="flex px-4 py-2 flex-col">
+                    <div className="flex flex-col">
                       {condition.conditionLabels &&
                         condition.conditionLabels.map(
                           (conditionLabel, index) => (
                             <div
                               key={conditionLabel.id}
-                              className={`flex gap-6 items-center mt-2`}
+                              className={`flex justify-center items-center gap-6 max-sm:gap-1 p-2
+                                ${index % 2 === 0 ? `` : `bg-gray-100`}`}
                             >
                               <div>
-                                <div>
-                                  <h3 className="text-sm">
-                                    {conditionLabel.conditionLabel}
-                                  </h3>
-                                </div>
+                                <h3>{conditionLabel.conditionLabel}</h3>
 
                                 <div className="flex items-center gap-1">
-                                  {/* {productData.category.name !== "Mobile" ? (
-                                    <span className="text-lg">₹</span>
-                                  ) : null} */}
                                   <input
                                     type="number"
                                     name="priceDrop"
                                     value={conditionLabel.priceDrop}
-                                    className="border px-3 py-1 rounded text-[0.9rem]"
+                                    className="border px-3 py-1 rounded"
                                     placeholder="Price Drop"
                                     onChange={(e) =>
                                       handleLaptopPriceDropChange(
@@ -205,33 +197,30 @@ const UpdateSystemConditions = (props) => {
                                 </div>
                               </div>
 
-                              {conditionLabel.conditionLabelImg && (
-                                <div>
+                              <div>
+                                {conditionLabel.conditionLabelImg && (
                                   <img
                                     src={
                                       import.meta.env.VITE_APP_BASE_URL +
                                       conditionLabel.conditionLabelImg
                                     }
                                     alt="conditionLabelImg"
-                                    className="w-[60px] h-[60px] mx-auto "
+                                    className="w-[60px] h-[60px] mx-auto max-sm:w-[45px] max-sm:h-[45px]"
                                   />
-                                </div>
-                              )}
-                              <div className="flex gap-4">
-                                <div className="w-[82px] text-center">
-                                  <h3
-                                    className={`${
-                                      conditionLabel.operation === "Subtrack"
-                                        ? "bg-red-200"
-                                        : "bg-blue-200"
-                                    } text-black font-bold px-2 py-1 rounded`}
-                                  >
-                                    {conditionLabel.operation}
-                                  </h3>
-                                </div>
+                                )}
+                              </div>
+                              <div className="flex max-sm:flex-col gap-4 max-sm:gap-1">
+                                <h3
+                                  className={`${
+                                    conditionLabel.operation === "Subtrack"
+                                      ? "bg-red-200"
+                                      : "bg-blue-200"
+                                  } text-black font-bold px-2 py-1 rounded text-center`}
+                                >
+                                  {conditionLabel.operation}
+                                </h3>
                                 <select
                                   name="operation"
-                                  id=""
                                   className="border rounded px-1"
                                   onChange={(e) => {
                                     if (e.target.value !== "") {
@@ -256,17 +245,8 @@ const UpdateSystemConditions = (props) => {
                 )
               )}
             </div>
-            {/* <div className="py-3 px-2">
-            <button
-              type="submit"
-              className="w-[20%] bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
-            >
-              Submitt
-            </button>
-            </div> */}
             <UpdateButton
               text={`Update ${title}`}
-              // text={`Update ${selectedProcessorDeductions.processorName} Problems`}
               updateLoading={updateLoading}
             />
           </form>
@@ -276,11 +256,11 @@ const UpdateSystemConditions = (props) => {
       {isOpen && (
         <div>
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className={`bg-white p-5 rounded-lg shadow-lg w-1/4`}>
+            <div className={`bg-white p-5 rounded-lg shadow-lg w-1/4 max-sm:w-fit`}>
               <div className="flex justify-center">
-                <h2 className="text-lg text-center">
+                <h2 className="text-lg max-sm:text-sm text-center">
                   Sure want you to <br />
-                  <span className="text-xl font-semibold">Update {title}?</span>
+                  <span className="text-xl max-sm:text-lg font-semibold">Update {title}?</span>
                 </h2>
               </div>
 

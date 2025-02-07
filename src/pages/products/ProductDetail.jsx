@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useGetProductDetailsQuery } from "../../features/api";
+import { useGetProductDetailsQuery } from "../../features/api/products/productsApi";
 import { useParams, Link } from "react-router-dom";
 import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/Loading";
 import SellContent from "../../components/SellContent";
+import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 
 const ProductDetail = () => {
   const { prodId } = useParams();
@@ -29,17 +30,18 @@ const ProductDetail = () => {
     }
   }, [productDetails, isLoading]);
 
-    useEffect(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   if (isLoading) return <Loading />;
 
+  const { category, brand, name } = productDetails;
 
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${productDetails?.name} ${productDetails?.category?.name} | InstantHub`}</title>
+        <title>{`Sell Old ${name} ${category?.name} | InstantHub`}</title>
         <meta
           name="description"
           content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
@@ -51,47 +53,29 @@ const ProductDetail = () => {
       </Helmet>
 
       <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">
-        <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
-          <span>Sell your </span>
+        <p className="pb-5 text-xl font-bold text-wrap max-sm:text-sm max-sm:font-semibold">
           <span>
-            {`${productDetails?.brand?.name} ${productDetails?.name} ${productDetails?.category?.name} `}
+            Sell your {`${brand?.name} ${name} ${category?.name} `} for Instant
+            Cash
           </span>
-          <span>for Instant Cash</span>
         </p>
 
-        {/* Home > Cat > Brand > Product */}
-        <div className="mx-0 mb-2 text-lg max-sm:text-sm">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center opacity-60 gap-1 max-sm:text-[14px]">
-              <Link to={"/"}>Home</Link>
-              <FaAngleRight />
-              <Link to={`/categories/brands/${productDetails?.category?.id}`}>
-                {productDetails?.category?.name}
-              </Link>
-              <FaAngleRight />
-              <Link
-                to={`/categories/brands/products/${productDetails?.brand?.id}`}
-              >
-                {productDetails?.brand?.name}
-              </Link>
-              <span className="max-sm:hidden">
-                <FaAngleRight />
-              </span>
-              <span className="max-sm:hidden">Products</span>
-
-              <FaAngleRight />
-            </div>
-
-            {productDetails?.name?.length > 20 ? (
-              <span className="max-sm:text-[12px]">
-                {productDetails?.name?.substring(0, 20)}...
-              </span>
-            ) : (
-              <span className="max-sm:text-[14px]">{productDetails?.name}</span>
-            )}
-          </div>
-          <hr className="text-black mt-1" />
-        </div>
+        {/* Header Links: Home > Category > Brand > Products > ProductName */}
+        <BreadCrumbLinks
+          brands={{
+            link: `/categories/brands/${category?.id}`,
+            label: `${category?.name}`,
+          }}
+          products={{
+            link: `/categories/brands/products/${brand.id}`,
+            label: `${brand?.name}`,
+          }}
+          productDetail={{
+            link: ``,
+            label: name,
+            isLast: true,
+          }}
+        />
 
         <div className="bg-white flex flex-col sm:flex-row px-3 sm:px-6 sm:py-1">
           {/* Product Image */}
@@ -219,3 +203,39 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+/* Home > Cat > Brand > Product */
+{
+  /* <div className="mx-0 mb-2 text-lg max-sm:text-sm">
+          <div className="flex items-center gap-1">
+            <div className="flex items-center opacity-60 gap-1 max-sm:text-[14px]">
+              <Link to={"/"}>Home</Link>
+              <FaAngleRight />
+              <Link to={`/categories/brands/${productDetails?.category?.id}`}>
+                {productDetails?.category?.name}
+              </Link>
+              <FaAngleRight />
+              <Link
+                to={`/categories/brands/products/${productDetails?.brand?.id}`}
+              >
+                {productDetails?.brand?.name}
+              </Link>
+              <span className="max-sm:hidden">
+                <FaAngleRight />
+              </span>
+              <span className="max-sm:hidden">Products</span>
+
+              <FaAngleRight />
+            </div>
+
+            {productDetails?.name?.length > 20 ? (
+              <span className="max-sm:text-[12px]">
+                {productDetails?.name?.substring(0, 20)}...
+              </span>
+            ) : (
+              <span className="max-sm:text-[14px]">{productDetails?.name}</span>
+            )}
+          </div>
+          <hr className="text-black mt-1" />
+        </div> */
+}

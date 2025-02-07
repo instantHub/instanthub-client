@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
+
 import {
   useGetVariantsQuestionsQuery,
   useCreateVariantQuestionsMutation,
-  useUpdateVariantQuestionsMutation,
-  useGetAllProductsQuery,
   useGetSingleProductQuery,
   useDeleteVariantQuestionsMutation,
 } from "../../../features/api";
@@ -25,21 +24,9 @@ function CreateVariantsQuestions() {
     isLoading: variantsQuestionsDataLoading,
   } = useGetVariantsQuestionsQuery();
 
-  const [
-    createVariantQuestions,
-    {
-      isError: createVariantQuestionsFailed,
-      isSuccess: variantQuestionsCreated,
-    },
-  ] = useCreateVariantQuestionsMutation();
+  const [createVariantQuestions] = useCreateVariantQuestionsMutation();
 
-  const [
-    deleteVariantQuestions,
-    {
-      isError: deleteVariantQuestionsFailed,
-      isSuccess: variantQuestionsDeleted,
-    },
-  ] = useDeleteVariantQuestionsMutation();
+  const [deleteVariantQuestions] = useDeleteVariantQuestionsMutation();
 
   const [variantName, setVariantName] = useState("");
   console.log("variantName", variantName);
@@ -76,22 +63,20 @@ function CreateVariantsQuestions() {
     toast.success("variant created successfull..!");
   };
 
-  const headers = ["Variant Name", "No of Deductions", "Update", "Delete"];
+  const headers = ["Variant Name", "No of Deductions", "Update & Delete"];
 
   const rowRenderer = (variant) => (
     <>
-      <td className="text-lg max-sm:text-sm px-4 py-2">{variant.name}</td>
-      <td className="text-lg max-sm:text-sm px-4 py-2">
+      <td className="text-sm max-sm:text-xs py-2">{variant.name}</td>
+      <td className="text-sm max-sm:text-xs py-2">
         {variant.deductions.length} deductions
       </td>
-      <td className="text-sm max-sm:text-xs px-4 py-2">
+      <td className="flex items-center justify-center gap-1 text-sm max-sm:text-xs py-2">
         <Link to={`/admin/update-variant-questions/${variant._id}`}>
           <button className="bg-green-600 text-white px-2 py-1 border rounded">
             Update
           </button>
         </Link>
-      </td>
-      <td className="px-4 py-2">
         <button
           onClick={() => {
             // handleDelete(variant._id);
@@ -115,53 +100,46 @@ function CreateVariantsQuestions() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center mt-[5%] mx-auto">
-        <div className="flex gap-4">
-          <div className="">
-            <div className="flex justify-between items-center">
-              <h1 className="bold text-lg max-sm:text-sm mb-2">
-                Create Variants Questions
-              </h1>
-            </div>
-            {/* Create Condition BOX */}
-            <div className="bg-white flex border rounded-md shadow-lg">
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-4 p-5 "
-              >
-                <h2 className="">Add Variant Name</h2>
-                <hr />
+      <div className="flex flex-col items-center justify-center mt-[5%] mx-auto text-sm max-sm:text-xs">
+        {/* Create Condition BOX */}
+        <div className="flex flex-col gap-4">
+          <h1 className="bold text-lg max-sm:text-sm">
+            Create Variants Questions
+          </h1>
+          <div className="bg-white flex border rounded-md shadow-lg">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
+              <h2 className="">Add Variant Name</h2>
+              <hr />
 
-                <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
-                  <div className="flex items-center">
-                    <div className="">
-                      <label>Variant Name:</label>
-                      <input
-                        type="text"
-                        name="name"
-                        className="border mx-2 py-1 px-2 rounded text-[15px]"
-                        placeholder="Enter Variant Name"
-                        value={variantName}
-                        onChange={(e) =>
-                          //   handleChange(event, "name", "conditionName")
-                          setVariantName(e.target.value)
-                        }
-                        required
-                      />
-                    </div>
+              <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
+                <div className="flex items-center">
+                  <div className="">
+                    <label>Variant Name:</label>
+                    <input
+                      type="text"
+                      name="name"
+                      className="border mx-2 py-1 px-2 rounded text-[15px]"
+                      placeholder="Enter Variant Name"
+                      value={variantName}
+                      onChange={(e) =>
+                        //   handleChange(event, "name", "conditionName")
+                        setVariantName(e.target.value)
+                      }
+                      required
+                    />
                   </div>
                 </div>
+              </div>
 
-                <div className="py-3 px-2">
-                  <button
-                    type="submit"
-                    className="w-[30%] max-sm:w-fit max-sm:px-3 max-sm:py-1 text-lg max-sm:text-sm bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
-                  >
-                    Create Variant
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="py-3 px-2">
+                <button
+                  type="submit"
+                  className="w-[30%] max-sm:w-fit max-sm:px-3 max-sm:py-1 text-lg max-sm:text-sm bg-green-600 text-white rounded-md p-1 cursor-pointer hover:bg-green-700"
+                >
+                  Create Variant
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 

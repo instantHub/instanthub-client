@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import {
   useGetConditionsQuery,
-  useGetCategoryQuery,
   useGetConditionLabelsQuery,
   useDeleteConditionLabelMutation,
 } from "../../../features/api";

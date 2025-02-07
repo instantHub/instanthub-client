@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { useGetAllProductsQuery } from "../features/api";
 import { Link } from "react-router-dom";
 import "./searchStyle.css";
 import { BsSearch } from "react-icons/bs";

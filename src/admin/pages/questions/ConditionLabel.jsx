@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import {
   useGetConditionsQuery,
-  useGetCategoryQuery,
   useCreateConditionLabelsMutation,
   useUploadConditionLabelsImageMutation,
 } from "../../../features/api";

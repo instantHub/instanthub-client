@@ -1,21 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  useGetProductsQuery,
-  useGetBrandSeriesQuery,
-} from "../../features/api";
-import { useParams, Link } from "react-router-dom";
+import { useGetProductsQuery } from "../../features/api/products/productsApi";
+import { useGetBrandSeriesQuery } from "../../features/api";
+import { useParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import { FaAngleRight } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import ProductCard from "../../components/ProductCard";
 import Loading from "../../components/Loading";
 import RecycleContent from "./RecycleContent";
+import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import SeriesButton from "../../components/SeriesButton";
 
 const RecycleProducts = () => {
   const { brandId } = useParams();
 
-  const { data: brandSeries, isLoading: seriesLoading } =
-    useGetBrandSeriesQuery(brandId);
+  const { data: brandSeries } = useGetBrandSeriesQuery(brandId);
 
   const [seriesAction, setSeriesAction] = useState({
     showSeries: false,
@@ -29,11 +27,8 @@ const RecycleProducts = () => {
   const [search, setSearch] = useState("");
 
   // Get Products by Brand
-  const {
-    data: productsData,
-    isLoading: productsLoading,
-    isSuccess: productsLoaded,
-  } = useGetProductsQuery({ brandId, search });
+  const { data: productsData, isLoading: productsLoading } =
+    useGetProductsQuery({ brandId, search });
 
   // console.log("productsData", productsData);
 
@@ -65,14 +60,9 @@ const RecycleProducts = () => {
     }
   }, [productsData]);
 
-  // console.log("category", category);
-  // console.log("brand", brand);
-
   const displayedSeries = seriesAction.showSeries
     ? brandSeries.filter((series) => series.id === seriesAction.selectedSeries)
     : brandSeries;
-
-  // if (seriesLoading || displayedSeries.length === 0) return null;
 
   const filteredProducts = seriesAction.showSeries
     ? productsData?.filter(
@@ -87,8 +77,12 @@ const RecycleProducts = () => {
   return (
     <>
       {/* Series */}
-      <div className={`${displayedSeries?.length > 0 ? "mt-10" : "mt-0"}`}>
-        <div className="mx-10 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
+      <div
+        className={`${
+          displayedSeries?.length > 0 ? "mt-10 max-sm:mt-3" : "mt-0"
+        }`}
+      >
+        <div className="mx-10 max-sm:mx-2 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {displayedSeries?.map((series) => (
             <SeriesButton
               key={series.id}
@@ -114,11 +108,9 @@ const RecycleProducts = () => {
             <BsSearch className="text-black" />
             <input
               type="search"
-              name=""
-              id=""
+              name="search"
               placeholder="Search a product"
               className="px-2 text-sm py-1 outline-none"
-              // onChange={(e) => setSearch(e.target.value)}
               onChange={(e) => debounce(e, "test1", "test2")}
             />
           </div>
@@ -130,42 +122,22 @@ const RecycleProducts = () => {
         </div>
 
         {/* Recycle Text */}
-        <div>
-          <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
-            Recycle your {`${brand?.name} ${category?.name}`} to recycle and get
-            Instant Cash
-          </p>
-        </div>
+        <p className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
+          Recycle your {`${brand?.name} ${category?.name}`} and get Instant Cash
+        </p>
 
-        {/*  */}
-        <div className="mx-0 mb-6">
-          <div className="flex items-center gap-1">
-            <h2 className="flex items-center opacity-60 gap-1 max-2sm:text-xs max-2sm:gap-0">
-              <Link to={"/"} className="max-2sm:hidden">
-                Home
-              </Link>
-              <Link to={"/"} className="2sm:hidden">
-                H..
-              </Link>
-              <FaAngleRight className="" />
-              <Link to={"/recycle-categories"} className="max-sm:hidden">
-                Recycle
-              </Link>
-              <Link to={"/recycle-categories"} className="sm:hidden">
-                Re..
-              </Link>
-              <FaAngleRight />
-              <Link to={`/recycle-categories/recycle-brands/${category?.id}`}>
-                Recycle {category?.name}
-              </Link>
-              <FaAngleRight />
-              <span className="font-semibold">
-                Recycle {brand?.name} {category?.name}
-              </span>
-            </h2>
-          </div>
-          <hr className="text-black mt-1" />
-        </div>
+        <BreadCrumbLinks
+          recycle={true}
+          brands={{
+            link: `/recycle-categories/recycle-brands/${category?.id}`,
+            label: `Recycle ${category?.name}`,
+          }}
+          products={{
+            link: ``,
+            label: `Recycle ${brand?.name} ${category?.name}`,
+            isLast: true,
+          }}
+        />
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {filteredProducts
@@ -185,30 +157,3 @@ const RecycleProducts = () => {
 };
 
 export default RecycleProducts;
-
-const SeriesButton = ({ series, isSelected, onClick }) => (
-  <div
-    key={series.id}
-    className="relative col-span-1 max-h-44  sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
-  >
-    <button onClick={onClick} className="w-full h-full">
-      <div
-        className={`${
-          isSelected ? "bg-secondary text-white" : "bg-gray-200 max-sm:bg-white"
-        } flex flex-col items-center justify-center cursor-pointer w-full h-full p-2 sm:p-2 sm:min-w-full rounded sm:rounded-md 
-          sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500`}
-      >
-        <span className="text-center mt-2 flex-1 line-clamp-3 flex items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-          <div className="text-[14px] max-sm:text-xs font-[500] max-sm:font-[400] leading-7">
-            {series.name}
-          </div>
-        </span>
-      </div>
-    </button>
-    {isSelected && (
-      <button onClick={onClick} className="absolute top-1 right-1 text-white">
-        <FaTimes />
-      </button>
-    )}
-  </div>
-);

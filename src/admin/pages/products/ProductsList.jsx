@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import {
   useGetAllProductsQuery,
-  useGetCategoryQuery,
   useDeleteProductMutation,
-} from "../../../features/api";
+} from "../../../features/api/products/productsApi";
 import { Link } from "react-router-dom";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import { MdDeleteForever } from "react-icons/md";
-import EditButton from "../../components/EditButton";
-import Table from "../../components/TableView";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterCategory,
@@ -16,22 +13,22 @@ import {
   filterPage,
   clearFilter,
 } from "../../features/filterSlice";
-import {
-  fetchSearchResults,
-  clearSearchResults,
-} from "../../features/searchSlice";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import ProductCard from "./ProductCard";
+import axios from "axios";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
+
+  const [showPendingPricing, setShowPendingPricing] = useState(false);
+  const [pendingPricingMobiles, setPendingPricingMobiles] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const filterData = useSelector((state) => state.filter.productsList);
-
   // console.log("filterData", filterData);
 
   const [categoryId, setCategoryId] = useState(filterData.category);
@@ -45,14 +42,12 @@ const ProductsList = () => {
       search: filterData.product,
       categoryId,
     });
-
   // console.log(productsData && productsData);
 
   const { data: categoryData, isLoading: categoryDataLoading } =
     useGetCategoryQuery();
 
-  const [deleteProduct, { isLoading: deleteLoading }] =
-    useDeleteProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
 
   // Delete Order
   const [isModalOpen, setModalOpen] = useState(false);
@@ -61,6 +56,17 @@ const ProductsList = () => {
   const handleDelete = async (productId) => {
     console.log("handledelete", productId);
     await deleteProduct(productId);
+  };
+
+  const selectCategoryFunc = (e) => {
+    setCategoryId(e.target.value);
+    // setSelectedCategory(e.target.value);
+    dispatch(
+      filterCategory({
+        category: e.target.value,
+        from: "productsList",
+      })
+    );
   };
 
   useEffect(() => {
@@ -77,16 +83,29 @@ const ProductsList = () => {
   }, [productsData]);
   // }, [page, productsData]);
 
-  const selectCategoryFunc = (e) => {
-    setCategoryId(e.target.value);
-    // setSelectedCategory(e.target.value);
-    dispatch(
-      filterCategory({
-        category: e.target.value,
-        from: "productsList",
-      })
-    );
-  };
+  // All Products with empty prices
+  useEffect(() => {
+    async function checkPricing() {
+      try {
+        setLoading(true);
+        let result = await axios(
+          `${import.meta.env.VITE_APP_BASE_URL}/api/pricing/empty-pricing`
+        );
+        // console.log("result", result.data);
+        setPendingPricingMobiles(result.data);
+        setLoading(false);
+        if (result.data.length > 0) setShowPendingPricing(true);
+      } catch (error) {
+        console.log("Error while checking pricing", error);
+        setLoading(false);
+      }
+    }
+
+    checkPricing();
+  }, []);
+
+  // console.log(pendingPricingMobiles);
+  // console.log(pendingPricingProcessors);
 
   return (
     //Products based on the Category selected
@@ -96,6 +115,32 @@ const ProductsList = () => {
           Products Table
         </h2>
       </div>
+
+      {loading ? (
+        <div className="w-full text-end px-4">Loading...</div>
+      ) : (
+        <div className="flex justify-end max-sm:justify-center items-center gap-2 w-full text-sm max-sm:text-[10px]">
+          <p>
+            Total: {pendingPricingMobiles.length} products pending for prices
+          </p>
+          <select
+            className="border px-1 py-[2px] rounded disabled:bg-gray-200 w-fit"
+            onChange={(e) => {
+              dispatch(
+                filterProduct({ product: e.target.value, from: "productsList" })
+              );
+            }}
+            // disabled={filterData.product}
+          >
+            <option value="">View</option>
+            {pendingPricingMobiles.map((item, i) => (
+              <option key={item.productName} value={item.productName}>
+                {i + 1}. {item.productName}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Filter features */}
       <div className="w-[96%] max-sm:w-full flex justify-evenly flex-wrap gap-2 border rounded-lg shadow my-5 px-5 max-sm:px-1">
@@ -108,12 +153,12 @@ const ProductsList = () => {
             className="px-2 py-1 border rounded text-sm mmax-sm:text-[10px]"
           >
             <option value="">Select Category</option>
-            {!categoryDataLoading &&
-              categoryData.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
+            {/* {!categoryDataLoading && */}
+            {categoryData?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -132,22 +177,6 @@ const ProductsList = () => {
               dispatch(filterPage({ page: 1, from: "productsList" }));
             }}
           />
-
-          {/* NEW THUNK */}
-          {/* <input
-            type="text"
-            className="px-2 text-sm py-1 rounded border"
-            value={query}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown} // Trigger search on Enter key press
-            placeholder="Search for products"
-          />
-          <button
-            className="px-2  text-sm py-1 rounded border shadow-2xl"
-            onClick={handleSearch}
-          >
-            Search
-          </button> */}
         </div>
 
         {/* Pagination controls */}
@@ -227,13 +256,17 @@ const ProductsList = () => {
         </div>
       </div>
 
-      {!productsDataLoading && (
-        <div className="w-full grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-1 gap-5 max-sm:gap-3">
-          {productsData.products.map((product) => (
-            <ProductCard key={product?.id} data={product} />
-          ))}
-        </div>
-      )}
+      {/* {!productsDataLoading && ( */}
+      <div className="w-full grid grid-cols-2 max-md:grid-cols-1 max-sm:grid-cols-1 gap-5 max-sm:gap-3">
+        {productsData?.products?.map((product) => (
+          <ProductCard
+            key={product?.id}
+            data={product}
+            pendingPricingMobiles={pendingPricingMobiles || []}
+          />
+        ))}
+      </div>
+      {/* )} */}
 
       {/* Pagination controls */}
       <div className="flex flex-col gap-2 justify-center mt-2">
@@ -254,7 +287,6 @@ const ProductsList = () => {
               Previous
             </button>
           )}
-          {/* {!productsDataLoading && productsData.products.length != 0 && ( */}
 
           {!productsDataLoading &&
             productsData.page !== productsData.totalPages && (
@@ -273,13 +305,7 @@ const ProductsList = () => {
                 <FaAngleRight />
               </button>
             )}
-          {/* )} */}
         </div>
-        {/* {!productsDataLoading && (
-            <div className="text-center text-lg">
-              Page {productsData.page} of {productsData.totalPages} Pages
-            </div>
-          )} */}
       </div>
 
       <ConfirmationModal

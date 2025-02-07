@@ -3,7 +3,7 @@ import {
   useCreateServicesMutation,
   useGetServicesQuery,
   useUploadServicesImageMutation,
-} from "../../../features/api";
+} from "../../../features/api/services/servicesApi";
 import { toast } from "react-toastify";
 
 const initialState = {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useGetAllProductsQuery } from "../features/api";
 import { Link } from "react-router-dom";
 import "./searchStyle.css";
 import { BsSearch } from "react-icons/bs";
@@ -56,49 +55,6 @@ const SearchBar = () => {
       setProductsLoading(false);
     }
   }, [debouncedSearch]);
-
-  // const handleSearch = async () => {
-  //   console.log("Search API 1");
-  //   try {
-  //     setProductsLoading(true);
-
-  //     let response;
-  //     if (import.meta.env.VITE_BUILD === "development") {
-  //       response = await axios.get("http://localhost:8000/api/products", {
-  //         params: {
-  //           search: search.trim() ? search : undefined,
-  //           page,
-  //           limit: 10,
-  //         },
-  //       });
-  //     } else if (import.meta.env.VITE_BUILD === "production") {
-  //       response = await axios.get(
-  //         "https://api.yusufqureshi.online/api/products",
-  //         {
-  //           params: {
-  //             search: search.trim() ? search : undefined,
-  //             page,
-  //             limit: 10,
-  //           },
-  //         }
-  //       );
-  //     }
-
-  //     // const response = await axios.get("/api/products", {
-  //     //   params: {
-  //     //     search: search.trim() ? search : undefined,
-  //     //     page,
-  //     //     limit: 10,
-  //     //   },
-  //     // });
-  //     // console.log("response", response);
-  //     setProductsData(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching products:", error);
-  //   } finally {
-  //     setProductsLoading(false);
-  //   }
-  // };
 
   const productListRef = useRef(null);
 

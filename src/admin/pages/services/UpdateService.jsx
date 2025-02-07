@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  useDeleteCLImageMutation,
-  useDeleteImageMutation,
   useUpdateServiceMutation,
   useUploadServicesImageMutation,
-} from "../../../features/api";
+} from "../../../features/api/services/servicesApi";
+// import { useDeleteCLImageMutation } from "../../../features/api";
+import { useDeleteImageMutation } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 

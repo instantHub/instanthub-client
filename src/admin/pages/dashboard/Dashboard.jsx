@@ -3,8 +3,8 @@ import { Link, Outlet } from "react-router-dom";
 import {
   useDashboardDetailsQuery,
   useGetOrdersListQuery,
-  useGetRecycleOrdersQuery,
 } from "../../../features/api";
+import { useGetRecycleOrdersQuery } from "../../../features/api/recycle/recycleApi";
 import Loading from "../../../components/Loading";
 import MonthlyOrdersChart from "./MonthlyOrdersChart";
 import DoughnutChart from "./DoughnutChart";
@@ -22,7 +22,7 @@ const Dashboard = () => {
   const { data: recycleOrdersData, isLoading: recycleOrdersLoading } =
     useGetRecycleOrdersQuery();
 
-  console.log("dashboardDetail", dashboardDetail);
+  // console.log("dashboardDetail", dashboardDetail);
   // console.log("ordersData", ordersData);
 
   const divStyle =

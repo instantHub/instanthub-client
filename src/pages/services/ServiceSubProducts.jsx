@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useGetServicesQuery } from "../../features/api";
+import { useGetServicesQuery } from "../../features/api/services/servicesApi";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import { BsFileArrowDown } from "react-icons/bs";
-import { FaAnglesDown } from "react-icons/fa6";
 
 const ServiceBrands = () => {
   const { subServiceId } = useParams();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../../../features/adminApiSlice";
-import { setCredentials } from "../../../features/authSlice";
+import { useLoginMutation } from "../../../features/api/admin/authApi/authApi";
+import { setCredentials } from "../../../features/slices/authSlice";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 

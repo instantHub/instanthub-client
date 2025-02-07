@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  useGetCategoryQuery,
-  useGetRecycleOrdersQuery,
-} from "../../../features/api";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
+import { useGetRecycleOrdersQuery } from "../../../features/api/recycle/recycleApi";
 import OrderTabs from "../../components/OrderTabs";
 import RecycleOrderCard from "./RecycleOrderCard";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";

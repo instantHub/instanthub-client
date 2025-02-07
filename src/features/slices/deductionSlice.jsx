@@ -9,6 +9,9 @@ const initialState = {
   productPhysicalCondition: {},
   productPanelCondition: {},
   productDisplayDefect: {},
+  productBox: {},
+  productBill: {},
+  productCharger: {},
   getUpTo: {
     variantName: "",
     price: null,
@@ -39,7 +42,7 @@ export const deductionSlice = createSlice({
       };
     },
     addDeductions: (state, action) => {
-      console.log("addDeduction Reducer", action.payload);
+      // console.log("addDeduction Reducer", action.payload);
 
       // let productCategory = state.productCategory.toLowerCase();
       let laptopCategory = state.productCategory.toLowerCase() === "laptop";
@@ -150,6 +153,46 @@ export const deductionSlice = createSlice({
         },
       };
     },
+    // Accessories
+    addProductBox: (state, action) => {
+      // console.log("addProductBox Slice");
+      return {
+        ...state,
+        productBox: {
+          conditionLabel: action.payload.conditionLabel,
+          priceDrop: action.payload.priceDrop,
+          operation: action.payload.operation,
+          type: action.payload.type,
+        },
+      };
+    },
+
+    addProductGSTBill: (state, action) => {
+      // console.log("addProductGSTBill Slice");
+      return {
+        ...state,
+        productBill: {
+          conditionLabel: action.payload.conditionLabel,
+          priceDrop: action.payload.priceDrop,
+          operation: action.payload.operation,
+          type: action.payload.type,
+        },
+      };
+    },
+
+    addProductCharger: (state, action) => {
+      // console.log("addProductCharger Slice");
+      return {
+        ...state,
+        productCharger: {
+          conditionLabel: action.payload.conditionLabel,
+          priceDrop: action.payload.priceDrop,
+          operation: action.payload.operation,
+          type: action.payload.type,
+        },
+      };
+    },
+
     addProductDisplayDefect: (state, action) => {
       console.log("addProductDisplayDefect Slice");
 
@@ -255,6 +298,9 @@ export const deductionSlice = createSlice({
         productScreenCondition: {},
         productPhysicalCondition: {},
         productDisplayDefect: {},
+        productBox: {},
+        productBill: {},
+        productCharger: {},
         deductions: [],
       };
     },
@@ -268,6 +314,9 @@ export const {
   addProductScreenCondition,
   addProductPhysicalCondition,
   addProductDisplayDefect,
+  addProductBox,
+  addProductGSTBill,
+  addProductCharger,
   clearDeductions,
   removeDeductions,
 } = deductionSlice.actions;

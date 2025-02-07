@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import {
   useGetConditionsQuery,
-  useGetCategoryQuery,
   useDeleteConditionMutation,
 } from "../../../features/api";
 import BackButton from "../../components/BackButton";
@@ -67,13 +67,26 @@ const ConditionsList = () => {
   //   console.log(conditions);
   // }
 
-  const headers = ["Category", "Condition", "Page", "Edit & Delete"];
+  const headers = [
+    "Category",
+    "Condition",
+    "Page",
+    "keyword",
+    "Description",
+    "isYesNoType",
+    "Edit & Delete",
+  ];
 
   const rowRenderer = (condition) => (
     <>
       <td className="text-lg max-sm:text-xs py-2">{condition.category.name}</td>
       <td className="text-lg max-sm:text-xs py-2">{condition.conditionName}</td>
       <td className="text-lg max-sm:text-xs py-2">{condition.page}</td>
+      <td className="text-lg max-sm:text-xs py-2">{condition.keyword}</td>
+      <td className="text-lg max-sm:text-xs py-2">{condition.description}</td>
+      <td className="text-lg max-sm:text-xs py-2">
+        {condition.isYesNoType ? "Yes" : "No"}
+      </td>
       <td className="text-lg max-sm:text-xs text-white py-2">
         <div className="flex gap-2 justify-center">
           <EditButton location={`/admin/updateCondition/${condition.id}`} />
@@ -103,7 +116,6 @@ const ConditionsList = () => {
       <div className="p-4">
         <div className="flex justify-between items-center flex-wrap">
           <div className="flex items-center gap-4 mb-4 max-sm:text-sm">
-
             <div className="w-fit flex justify-around items-center max-sm:flex-col max-sm:items-start gap-2 max-sm:gap-1">
               <label htmlFor="condition" className="text-lg max-sm:text-xs">
                 Select Category:
@@ -132,7 +144,6 @@ const ConditionsList = () => {
               </select>
             </div>
           </div>
-
 
           <h2 className="text-black text-xl max-sm:text-sm font-serif font-bold mb-4">
             Conditions Table

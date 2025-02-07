@@ -1,17 +1,19 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setGetUpto } from "../../features/deductionSlice";
+import {
+  clearDeductions,
+  setGetUpto,
+} from "../../features/slices/deductionSlice";
 import {
   addProcessor,
   addHardDisk,
   addRam,
-} from "../../features/laptopDeductionSlice";
-
+  clearLaptopDeductions,
+} from "../../features/slices/laptopDeductionSlice";
 import { toast } from "react-toastify";
 import OtpGenerator from "../otp/OTPGenerator";
-import { Helmet } from "react-helmet-async";
-import LaptopDeductionItems from "./LaptopDeductionItems";
+import LaptopDeductionItems from "./questionnaire/LaptopDeductionItems";
 
 const LaptopsQuestions = (props) => {
   console.log("LaptopsQuestions");
@@ -99,51 +101,6 @@ const LaptopsQuestions = (props) => {
 
   // console.log("sortedConditions LaptopQuestions", sortedConditions);
 
-  // console.log("screenConditionPage", screenConditionPage, screenCondition);
-  const handleContinueOld = () => {
-    console.log("handleContinue");
-    // If in 1st page all fields must be selected
-    if (currentPageIndex === 0) {
-      if (processor === null || hardDisk === null || ram === null) {
-        toast.error("select all system configurations");
-        return;
-      }
-    }
-
-    if (currentPageIndex === agePage - 1 && age === null) {
-      toast.error("Select Age to proceed..!");
-      return;
-    }
-
-    if (currentPageIndex === screenSizePage - 1 && screenSize === null) {
-      toast.error("Select ScreenSize to proceed..!");
-      return;
-    }
-
-    if (currentPageIndex === graphicPage - 1 && graphic === null) {
-      toast.error("Select Graphics to proceed..!");
-      return;
-    }
-    if (
-      currentPageIndex === screenConditionPage - 1 &&
-      screenCondition === null
-    ) {
-      toast.error("Select Screen Condition to proceed..!");
-      return;
-    }
-
-    // if (currentPageIndex < sortedConditions.length - 1) {
-    console.log("lastPageIndex from continue", lastPageIndex);
-
-    if (currentPageIndex < lastPageIndex - 1) {
-      setCurrentPageIndex(currentPageIndex + 1);
-    } else {
-      // Handle if there are no more conditions
-      // console.log("No more conditions to display.");
-      setShowOTP(true);
-    }
-  };
-
   const handleContinue = () => {
     console.log("handleContinue");
 
@@ -207,13 +164,7 @@ const LaptopsQuestions = (props) => {
     const conditionName = selectedOption.getAttribute("data-arg3");
     const operation = selectedOption.getAttribute("data-arg4");
     const conditionLabelId = selectedOption.getAttribute("data-arg5");
-    // console.log(
-    //   "arg",
-    //   conditionName,
-    //   conditionLabel,
-    //   priceDrop,
-    //   conditionLabelId
-    // );
+
     console.log("laptops handle change");
 
     if (conditionName === "Processor") {
@@ -231,10 +182,6 @@ const LaptopsQuestions = (props) => {
           type: "Processor",
         })
       );
-
-      // const procBasedDed = productsData.processorBasedDeduction.find(
-      //   (pbd) => pbd.processorId === conditionLabelId
-      // );
 
       const sorted = groupConditionsByPage(procBasedDed.deductions);
       // console.log("sorted", sorted);
@@ -269,8 +216,8 @@ const LaptopsQuestions = (props) => {
     try {
       let URL =
         import.meta.env.VITE_BUILD === "development"
-          ? `http://localhost:8000/api/products/processor-deductions/${processorId}`
-          : `https://api.instantpick.in/api/products/processor-deductions/${processorId}`;
+          ? `http://localhost:8000/api/processors/deductions/${processorId}`
+          : `https://api.instantpick.in/api/processors/deductions/${processorId}`;
 
       console.log("URL of processor", URL);
 
@@ -362,6 +309,20 @@ const LaptopsQuestions = (props) => {
     return null;
   }
 
+  function resetStateData() {
+    dispatch(clearLaptopDeductions());
+    dispatch(clearDeductions());
+    setProcessor(null);
+    setHardDisk(null);
+    setRam(null);
+    setScreenSize(null);
+    setGraphic(null);
+    setScreenCondition(null);
+    setPhysicalCondition(null);
+    setModelYear(null);
+    setAge(null);
+  }
+
   // console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);
   // console.log("productsData", productsData);
@@ -373,24 +334,6 @@ const LaptopsQuestions = (props) => {
 
   return (
     <>
-      {/* <Helmet>
-        <title>{`Sell Old ${productsData?.category?.name}
-         Online and Get Instant Cash for used ${productsData?.category?.name} | InstantHub`}</title>
-
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-
-        <meta
-          name="keywords"
-          content="sell old mobiles online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant hub, instanthub"
-        />
-        <link
-          rel="canonical"
-          href={`https://www.instanthub.in/sell/deductions?productId=${productsData?.id}&variant=${selectedVariant}`}
-        />
-      </Helmet> */}
       <div>
         <div className="flex flex-col">
           {currentPageIndex === 0 && (
@@ -438,9 +381,9 @@ const LaptopsQuestions = (props) => {
             {currentPageIndex > 0 &&
               processorBasedDeductions[currentPageIndex - 1]?.conditions?.map(
                 (condition, index) => (
-                  <div key={index} className="px-4 py-4">
+                  <div key={index} className="px-4 py-4 max-sm:px-1">
                     {/* Condition Name Headings */}
-                    <div className="px-5 py-2 text-center font-extrabold text-2xl max-sm:text-lg">
+                    <div className="px-5 py-2 max-sm:px-2 text-center font-extrabold text-2xl max-sm:text-lg">
                       <h2>{condition.conditionName}</h2>
                     </div>
 
@@ -475,12 +418,26 @@ const LaptopsQuestions = (props) => {
               )}
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-5 max-sm:gap-2">
+            <button
+              onClick={() => {
+                setCurrentPageIndex((prev) => prev - 1);
+                // console.log("Prev Btn", currentPageIndex);
+                if (currentPageIndex === 1) resetStateData();
+              }}
+              className={`px-2 py-1 bg-secondary-light text-secondary border border-secondary mx-auto rounded w-[35%] mt-6 
+                              hover:bg-secondary hover:text-secondary-light ${
+                                currentPageIndex === 0 && "hidden"
+                              }`}
+            >
+              Previous
+            </button>
+
             <button
               onClick={handleContinue}
               className="px-2 py-1 text-lg max-sm:text-sm bg-secondary text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
             >
-              Continue
+              Next
             </button>
           </div>
         </div>

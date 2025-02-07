@@ -6,7 +6,8 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa6";
 import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { addDeductions } from "../../features/deductionSlice";
+import { addDeductions } from "../../features/slices/deductionSlice";
+import { LAPTOP_DESKTOP } from "../../utils/constants";
 
 const OtpGenerator = (props) => {
   const { closeModal } = props;
@@ -14,13 +15,14 @@ const OtpGenerator = (props) => {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
 
+  const [generateOTP, { isLoading: generateOTPLoading }] =
+    useGenerateOTPMutation();
+
   const selectedProdDetails = useSelector((state) => state.deductions);
   // console.log("selectedProdDetails", selectedProdDetails);
 
   const [otp, setOtp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [generateOTP, { isLoading: generateOTPLoading }] =
-    useGenerateOTPMutation();
   const [enteredOtp, setEnteredOtp] = useState("");
   const [verificationStatus, setVerificationStatus] = useState("");
 
@@ -31,7 +33,7 @@ const OtpGenerator = (props) => {
   const data = useSelector((state) => state.deductions);
   // console.log("useSelector from OTP", laptopSlice, data);
 
-  const laptopDesktop = ["laptop", "desktop"];
+  // const laptopDesktop = ["laptop", "desktop"];
 
   const navigate = useNavigate();
 
@@ -71,7 +73,7 @@ const OtpGenerator = (props) => {
       // setOtp(otpGenerated.data.data.otp);
 
       // if (data.productCategory.toLowerCase().includes("laptop")) {
-      if (laptopDesktop.includes(data.productCategory.toLowerCase())) {
+      if (LAPTOP_DESKTOP.includes(data.productCategory.toLowerCase())) {
         dispatch(addDeductions(laptopSlice.processor));
         dispatch(addDeductions(laptopSlice.hardDisk));
         dispatch(addDeductions(laptopSlice.ram));
@@ -81,12 +83,22 @@ const OtpGenerator = (props) => {
         dispatch(addDeductions(laptopSlice.physicalCondition));
         dispatch(addDeductions(laptopSlice.modelYear));
         dispatch(addDeductions({ ...data.productAge, type: "Age" }));
+
+        // Accessories
+        dispatch(addDeductions(data.productBill));
+        dispatch(addDeductions(data.productBox));
+        dispatch(addDeductions(data.productCharger));
       } else if (data.productCategory.toLowerCase().includes("mobile")) {
         dispatch(addDeductions(data.productAge));
         dispatch(addDeductions(data.productScreenCondition));
         dispatch(addDeductions(data.productPhysicalCondition));
         dispatch(addDeductions(data.productPanelCondition));
         dispatch(addDeductions(data.productDisplayDefect));
+
+        // Accessories
+        dispatch(addDeductions(data.productBill));
+        dispatch(addDeductions(data.productBox));
+        dispatch(addDeductions(data.productCharger));
       }
 
       // Until OTP is applied
@@ -121,20 +133,12 @@ const OtpGenerator = (props) => {
   };
   // END OTP Verification
 
-  // useEffect(() => {
-  //   if (selectedProdDetails.productName == "") {
-  //     navigate(`/categories/brands/productDetails/${productId}`);
-  //     // /categories/brands/productDetails/6643523e84ef9ccb0a2ec86f
-  //   }
-  // });
-
   return (
     <div className="flex bg-white max-sm:w-[95%] justify-center rounded-xl">
       <div className="">
         <img
           src="/images/OTP2.png"
           alt=""
-          // className="w-full h-auto transform transition-transform hover:scale-110"
           className="max-sm:hidden"
           loading="lazy" // Native lazy loading
         />
@@ -156,7 +160,7 @@ const OtpGenerator = (props) => {
             </div>
             <div className="flex flex-col gap-1 max-sm:px-2">
               <div className="text-xl flex gap-2 max-sm:flex-col max-sm:text-sm">
-                <h2>{selectedProdDetails.productName}</h2>
+                <h2 className="text-wrap">{selectedProdDetails.productName}</h2>
                 {selectedProdDetails.productCategory === "Mobile" ? (
                   <span>{selectedProdDetails.getUpTo.variantName}</span>
                 ) : null}
@@ -300,9 +304,10 @@ const OtpGenerator = (props) => {
 
             <button
               type="submit"
-              className="bg-green-600 text-white min-w-fit rounded py-1 px-2 max-sm:px-1"
+              className="bg-green-600 text-white min-w-fit rounded py-1 px-2 max-sm:px-1 disabled:bg-gray-400 disabled:pointer-events-none"
+              disabled={generateOTPLoading}
             >
-              Get Final Price
+              {!generateOTPLoading ? "Get Final Price" : "Loading..."}
             </button>
           </form>
         </div>

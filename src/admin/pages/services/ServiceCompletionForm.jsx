@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import { FaRegImages } from "react-icons/fa";
-import DatePicker from "react-datepicker";
-import { IoCartOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 import {
   useCancelServiceOrderMutation,
-  useDeleteServiceMutation,
   useServiceOrderCompleteMutation,
-} from "../../../features/api";
-import ConfirmationModal from "../../components/ConfirmationModal";
+} from "../../../features/api/services/servicesApi";
 import OrderCancellationForm from "../../components/OrderCancellationForm";
+import DateAndTime from "../../../components/DateAndTime";
+import { SubmitButton } from "../../components/SubmitButton";
 
 const ServiceCompletionForm = ({
   serviceOrderDetail,
   serviceOrderId,
   DetailWrapper,
   DetailDiv,
-  setCancelModal,
 }) => {
   const [cancelServiceOrder, { isLoading: cancelServiceOrderLoading }] =
     useCancelServiceOrderMutation();
@@ -31,32 +27,12 @@ const ServiceCompletionForm = ({
 
   const [serviceCompletedOn, setServiceCompletedOn] = useState(null);
 
-  const [selectedDate, setSelectedDate] = useState(null);
-
-  const [cancelReason, setCancelReason] = useState("");
-  console.log("cancelReason", cancelReason);
-
-  // CALENDER
-  const currentDate = new Date();
-
-  // Set the minimum time to 10:00 AM
-  const minTime = new Date();
-  minTime.setHours(10, 0, 0, 0);
-
-  // Set the maximum time to 10:00 PM
-  const maxTime = new Date();
-  maxTime.setHours(22, 0, 0, 0);
-
-  function handleReasonChange(e) {
-    setCancelReason(e.target.value);
-  }
+  const [cancelModal, setCancelModal] = useState(false);
 
   // Additional Services Done
   const [additionalServices, setAdditionalServices] = useState([
     { name: "", price: 0 },
   ]);
-
-  console.log("additionalServices", additionalServices);
 
   // Handler to add a new service entry
   const addService = (e) => {
@@ -77,65 +53,21 @@ const ServiceCompletionForm = ({
     setAdditionalServices(newServices);
   };
 
-  const handleTimeChange = (date) => {
-    setSelectedDate(date);
-
-    const formattedDate = `${date.toLocaleString("en-US", {
-      month: "long",
-    })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
-      "en-US",
-      { hour: "numeric", minute: "numeric", hour12: true }
-    )}`;
-    // console.log("formattedDate", formattedDate);
-    setServiceCompletedOn(formattedDate);
-  };
-
-  async function handleCancelOrder(e) {
-    e.preventDefault();
-    console.log("handleCancelOrder");
-    try {
-      const formData = {
-        status: {
-          pending: false,
-          completed: false,
-          cancelled: true,
-        },
-        cancelReason: cancelReason || null,
-      };
-      console.log(formData);
-
-      const orderCancelData = await cancelServiceOrder({
-        serviceOrderId,
-        data: formData,
-      }).unwrap();
-      console.log("orderCancelData", orderCancelData);
-      toast.success("Order cancelled successfully.");
-    } catch (error) {
-      console.log("Error: ", error);
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handleSubmit");
-    if (!serviceCompletedOn) {
-      toast.warning("Select the service completion date.");
-      return;
-    }
-    console.log("serviceOrderDetail", serviceOrderDetail);
-    console.log(
-      serviceFinalPrice,
-      serviceAgent,
-      serviceCompletedOn,
-      additionalServices
-    );
+
+    // console.log(
+    //   serviceFinalPrice,
+    //   serviceAgent,
+    //   serviceCompletedOn,
+    //   additionalServices
+    // );
 
     let formData = {
-      //   serviceOrderId: serviceOrderDetail.id,
       serviceFinalPrice,
       serviceAgent,
       serviceCompletedOn,
-      // additionalServices,
       status: {
         pending: false,
         completed: true,
@@ -151,7 +83,7 @@ const ServiceCompletionForm = ({
       }
     }
 
-    console.log("formData from handleSubmit", formData);
+    console.log("formData from Service handleSubmit", formData);
 
     try {
       const serviceOrderCompleted = await serviceOrderComplete({
@@ -159,10 +91,12 @@ const ServiceCompletionForm = ({
         data: formData,
       }).unwrap();
       console.log("serviceOrderCompleted", serviceOrderCompleted);
+
+      toast.success("Order completed..!!");
+
       setServiceFinalPrice("");
       setServiceAgent("");
       setServiceCompletedOn("");
-      setSelectedDate();
       setAdditionalServices[{ name: "", price: 0 }];
     } catch (error) {
       console.log("Error: ", error);
@@ -203,30 +137,10 @@ const ServiceCompletionForm = ({
               label="Completed On"
               flexColSScr={true}
               text={
-                <div className="flex flex-col items-start">
-                  <div className="flex items-center">
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleTimeChange}
-                      showTimeSelect
-                      timeFormat="h:mm aa" // 12 hours
-                      timeIntervals={30}
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      timeCaption="Time"
-                      minDate={currentDate}
-                      minTime={minTime}
-                      maxTime={maxTime}
-                      placeholderText="Select PickedUp Time"
-                      className="border px-1 rounded"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <p className="py-2 text-xs max-sm:text-[10px]">
-                      {serviceCompletedOn}
-                    </p>
-                  </div>
-                </div>
+                <DateAndTime
+                  label={false}
+                  setSchedule={setServiceCompletedOn}
+                />
               }
             />
 
@@ -318,16 +232,12 @@ const ServiceCompletionForm = ({
         )}
 
         {/* Submit Order Completion */}
-        <div className="w-fit mx-auto">
-          <input
-            type="submit"
-            value={`${
-              !orderCompleteLoading ? "Service Completed" : "Loading..."
-            } `}
-            className={` bg-green-600 hover:bg-green-700 cursor-pointer rounded px-2 py-1 w-fit text-white disabled:bg-gray-300`}
-            disabled={orderCompleteLoading}
-          />
+        <div className="w-full mx-auto">
+          <SubmitButton loading={orderCompleteLoading}>
+            Service Completed
+          </SubmitButton>
         </div>
+
         {/* Cancel confirmation */}
         <div className="w-fit mx-auto">
           <button
@@ -341,6 +251,15 @@ const ServiceCompletionForm = ({
           </button>
         </div>
       </form>
+
+      {cancelModal && (
+        <OrderCancellationForm
+          orderId={serviceOrderId}
+          cancelOrder={cancelServiceOrder}
+          cancelLoading={cancelServiceOrderLoading}
+          closeModal={() => setCancelModal(false)}
+        />
+      )}
     </div>
   );
 };
@@ -375,42 +294,42 @@ function InputDiv({
   );
 }
 
-function DetailWrapper({ icon: Icon, heading, children }) {
-  const style = {
-    detailDiv: "flex items-start gap-2",
-    detailIcon:
-      "rounded-full bg-secondary-light p-3 max-sm:p-[7px] text-lg max-sm:text-sm",
-    detailHeading: "text-2xl font-serif text-start max-sm:text-lg",
-    detailSubDiv: "flex flex-col",
-  };
+// function DetailWrapper({ icon: Icon, heading, children }) {
+//   const style = {
+//     detailDiv: "flex items-start gap-2",
+//     detailIcon:
+//       "rounded-full bg-secondary-light p-3 max-sm:p-[7px] text-lg max-sm:text-sm",
+//     detailHeading: "text-2xl font-serif text-start max-sm:text-lg",
+//     detailSubDiv: "flex flex-col",
+//   };
 
-  return (
-    <div className={style.detailDiv}>
-      <div className={style.detailIcon}>
-        <Icon />
-      </div>
-      <div className={style.detailSubDiv}>
-        <p className={style.detailHeading}>{heading}</p>
-        <div className={style.detailSubDiv}>{children}</div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className={style.detailDiv}>
+//       <div className={style.detailIcon}>
+//         <Icon />
+//       </div>
+//       <div className={style.detailSubDiv}>
+//         <p className={style.detailHeading}>{heading}</p>
+//         <div className={style.detailSubDiv}>{children}</div>
+//       </div>
+//     </div>
+//   );
+// }
 
-function DetailDiv({ label, text, isRequired, flexColSScr }) {
-  const style = {
-    detailWrapper: `flex gap-1 items-center ${
-      flexColSScr && "max-sm:flex-col max-sm:items-start"
-    }`,
-    detailLabel: "text-gray-500  text-sm max-sm:text-xs",
-    detailText: "text-[16px] max-sm:text-sm",
-  };
-  return (
-    <div className={`${style.detailWrapper}`}>
-      <span className={`${style.detailLabel}`}>
-        {label}: {isRequired && <span className="text-red-600">* </span>}
-      </span>
-      <span className={`${style.detailText}`}>{text}</span>
-    </div>
-  );
-}
+// function DetailDiv({ label, text, isRequired, flexColSScr }) {
+//   const style = {
+//     detailWrapper: `flex gap-1 items-center ${
+//       flexColSScr && "max-sm:flex-col max-sm:items-start"
+//     }`,
+//     detailLabel: "text-gray-500  text-sm max-sm:text-xs",
+//     detailText: "text-[16px] max-sm:text-sm",
+//   };
+//   return (
+//     <div className={`${style.detailWrapper}`}>
+//       <span className={`${style.detailLabel}`}>
+//         {label}: {isRequired && <span className="text-red-600">* </span>}
+//       </span>
+//       <span className={`${style.detailText}`}>{text}</span>
+//     </div>
+//   );
+// }

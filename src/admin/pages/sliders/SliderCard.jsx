@@ -36,7 +36,7 @@ const SliderCard = ({ data }) => {
             src={import.meta.env.VITE_APP_BASE_URL + data.image}
             alt={"Product Image"}
             // className={`w-[60px] h-fit mx-auto max-sm:w-[50px]`}
-            className="w-[480px] h-[150px] mx-auto max-sm:w-[280px] max-sm:h-fit"
+            className="w-[480px] h-[150px] mx-auto max-sm:w-[280px] max-sm:h-[90px]"
             loading="lazy" // Native lazy loading
           />
         </div>
