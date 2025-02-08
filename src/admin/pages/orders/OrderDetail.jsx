@@ -21,6 +21,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import { TbListDetails } from "react-icons/tb";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../../components/ConfirmationModal";
+import AssignAgent from "../../components/AssignAgent";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
@@ -485,6 +486,8 @@ const OrderDetail = () => {
         {/* Order Complete Form */}
         {orderDetail.status.pending && (
           <div>
+            <AssignAgent />
+            
             <OrderCompleteForm
               orderDetail={orderDetail}
               handleSubmit={handleSubmit}
