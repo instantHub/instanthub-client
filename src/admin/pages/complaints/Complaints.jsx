@@ -4,7 +4,7 @@ import {
   useDeleteComplaintMutation,
   useGetComplaintsQuery,
 } from "../../../features/api";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 import ConfirmationModal from "../../components/ConfirmationModal";
 
 const Complaints = () => {

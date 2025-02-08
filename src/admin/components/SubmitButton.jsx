@@ -5,7 +5,7 @@ export const SubmitButton = ({ loading, type, children }) => {
       : "bg-green-600 hover:bg-green-700";
 
   return (
-    <div>
+    <div className="mt-5 max-sm:mt-3">
       <button
         type="submit"
         className={`w-full ${BG_COLOR} px-2 max-md:w-full text-white rounded-md p-1 cursor-pointer disabled:cursor-none disabled:bg-gray-300`}

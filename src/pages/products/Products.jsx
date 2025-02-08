@@ -6,9 +6,9 @@ import { BsSearch } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import ProductCard from "../../components/ProductCard";
-import SellContent from "../../components/SellContent";
+import SellContent from "../../components/static/SellContent";
 import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 import SeriesButton from "../../components/SeriesButton";
 

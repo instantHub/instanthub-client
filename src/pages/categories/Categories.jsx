@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 // import { useGetCategoryQuery } from "../../features/api/categories/categoriesApi";
 import { useGetCategoryQuery } from "../../features/api/categories/categoriesApi";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import ItemGrid from "../../components/ItemGrid";
 
 const Categories = () => {

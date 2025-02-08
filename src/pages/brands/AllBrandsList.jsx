@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetAllBrandQuery } from "../../features/api";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 
 const AllBrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();

@@ -5,7 +5,7 @@ import { useGetOrdersListQuery } from "../../../features/api";
 import OrderCard from "./OrderCard";
 import OrderTabs from "../../components/OrderTabs";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =

@@ -6,7 +6,7 @@ import {
 import ServiceOrderCard from "./ServiceOrderCard";
 import OrderTabs from "../../components/OrderTabs";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 
 const ServicesOrdersList = () => {
   const { data: servicesOrders, isLoading: servicesOrdersLoading } =

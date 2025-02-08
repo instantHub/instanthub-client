@@ -8,6 +8,7 @@ const BreadCrumbLinks = ({
   productDetail = null,
   recycle = false,
 }) => {
+  
   const getBreadcrumbLink = (to, data) => (
     <Link to={to} className={`${data.isLast && "font-semibold"}`}>
       {data.label}

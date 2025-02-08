@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import ComplaintBox from "./ComplaintBox";
+import ComplaintBox from "../ComplaintBox";
 
 const Footer = () => {
   const [openComplaintBox, setOpenComplaintBox] = useState(false);

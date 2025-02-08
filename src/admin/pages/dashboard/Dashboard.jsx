@@ -5,7 +5,7 @@ import {
   useGetOrdersListQuery,
 } from "../../../features/api";
 import { useGetRecycleOrdersQuery } from "../../../features/api/recycle/recycleApi";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 import MonthlyOrdersChart from "./MonthlyOrdersChart";
 import DoughnutChart from "./DoughnutChart";
 import RadarChart from "./RadarChart";

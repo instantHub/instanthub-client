@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useGetBrandQuery } from "../../features/api";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import ItemGrid from "../../components/ItemGrid";
 import RecycleContent from "./RecycleContent";
 import BreadCrumbLinks from "../../components/BreadCrumbLinks";

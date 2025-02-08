@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useGetCategoryQuery } from "../../features/api/categories/categoriesApi";
 import { Helmet } from "react-helmet-async";
 import ItemGrid from "../../components/ItemGrid";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import RecycleContent from "./RecycleContent";
 
 const RecycleCategories = () => {

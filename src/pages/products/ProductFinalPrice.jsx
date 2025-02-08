@@ -6,7 +6,7 @@ import { useGetCouponQuery } from "../../features/api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
-import FAQ from "../../components/FAQ";
+import FAQ from "../../components/static/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
 import LocationSelector from "../../components/LocationSelector";
@@ -182,7 +182,7 @@ const ProductFinalPrice = () => {
       dispatch({ type: "recycleProduct", value: true });
     }
 
-    // 
+    //
     const finalDeductionSet = selectedProdDetails.deductions.reduce(
       (res, curr) => {
         (res[curr.type] = res[curr.type] || []).push(curr);

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./searchStyle.css";
 import { BsSearch } from "react-icons/bs";
 import axios from "axios";
-import useDebounce, { useDebounceFunc } from "../hooks/UseDebounce";
+import useDebounce, { useDebounceFunc } from "../../hooks/UseDebounce";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");

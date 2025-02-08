@@ -139,6 +139,7 @@ const ServiceCompletionForm = ({
               text={
                 <DateAndTime
                   label={false}
+                  showPreviousDate={true}
                   setSchedule={setServiceCompletedOn}
                 />
               }

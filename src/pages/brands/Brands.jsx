@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetBrandQuery } from "../../features/api";
 import { Helmet } from "react-helmet-async";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import ItemGrid from "../../components/ItemGrid";
-import SellContent from "../../components/SellContent";
+import SellContent from "../../components/static/SellContent";
 import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 
 const Brands = () => {

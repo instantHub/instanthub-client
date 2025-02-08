@@ -6,7 +6,7 @@ import { useCreateOrderMutation, useGetCouponQuery } from "../../features/api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
-import FAQ from "../../components/FAQ";
+import FAQ from "../../components/static/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
 import LocationSelector from "../../components/LocationSelector";
@@ -645,7 +645,10 @@ const ProductFinalPrice = () => {
               />
 
               {/* Date Picker */}
-              <DateAndTime setSchedule={setSchedulePickUp} />
+              <DateAndTime
+                showPreviousDate={false}
+                setSchedule={setSchedulePickUp}
+              />
 
               {/* Payment */}
               <div className="flex flex-col gap-2 justify-center w-full items-center py-2 border-t border-b">

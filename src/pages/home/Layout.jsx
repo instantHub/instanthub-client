@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import Footer from "../../components/static/Footer";
 import FloatingButtons from "../../components/FloatingButtons";
 import useGoogleAnalytics from "../../hooks/useGoogleAnalytics";
 

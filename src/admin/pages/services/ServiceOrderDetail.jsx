@@ -4,7 +4,7 @@ import {
   useGetServiceOrderQuery,
 } from "../../../features/api/services/servicesApi";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 import { orderCurrentStatus } from "../../helpers/helper";
 import { IoCartOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";

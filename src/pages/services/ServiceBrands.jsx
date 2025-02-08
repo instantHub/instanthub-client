@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 import { clearServiceProblems } from "../../features/slices/serviceProblemsSlice";
 import { useDispatch } from "react-redux";
 import ItemGrid from "../../components/ItemGrid";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 // import ServiceFAQs from "./ServiceFAQs";
 import ServiceContent from "./ServiceContent";
 

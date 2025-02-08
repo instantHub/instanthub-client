@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { SubmitButton } from "../../components/SubmitButton";
 // import BackButton from "../../components/BackButton";
 import CardHeader from "../../components/CardHeader";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 
 const initialState = {
   category: "",

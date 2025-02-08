@@ -4,7 +4,7 @@ import { useGetRecycleOrdersQuery } from "../../../features/api/recycle/recycleA
 import OrderTabs from "../../components/OrderTabs";
 import RecycleOrderCard from "./RecycleOrderCard";
 import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 
 const RecycleOrdersList = () => {
   const { data: recycleOrdersData, isLoading: recycleOrdersDataloading } =

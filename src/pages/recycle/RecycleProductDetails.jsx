@@ -6,12 +6,14 @@ import { FaAngleRight } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import FormInput from "../../components/FormInput";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import RecycleContent from "./RecycleContent";
 import LocationSelector from "../../components/LocationSelector";
 import { LAPTOP, MOBILE } from "../../utils/constants";
 import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 import DateAndTime from "../../components/DateAndTime";
+import { SubmitButton } from "../../admin/components/SubmitButton";
+import InputSubmitBtn from "../../components/InputSubmitBtn";
 
 const RecycleProductDetail = () => {
   const { prodId } = useParams();
@@ -194,17 +196,13 @@ const RecycleProductDetail = () => {
     setShowLocation(true);
   }
 
-  console.log("recycle price", recyclePrice);
-
   if (!productDetails) return <Loading />;
 
   const { category, brand, name } = productDetails;
 
   const MOBILE_CATEGORY = category?.name === MOBILE ? true : false;
   const LAPTOP_CATEGORY = category?.name === LAPTOP ? true : false;
-  // console.log("formData", formData);
-  // console.log("addressDetails", addressDetails);
-  // console.log("address", address);
+
   return (
     <>
       <Helmet>
@@ -462,7 +460,11 @@ const RecycleProductDetail = () => {
                     handleChange={handlePinCodeChange}
                   />
 
-                  <DateAndTime setSchedule={setSchedulePickUp} />
+                  <DateAndTime
+                    label={true}
+                    showPreviousDate={false}
+                    setSchedule={setSchedulePickUp}
+                  />
 
                   <div className="space-y-2">
                     <label className="flex items-center">
@@ -533,13 +535,12 @@ const RecycleProductDetail = () => {
                       </div>
                     )}
                   </div>
-                  <input
-                    type="submit"
-                    value={`${!orderLoading ? "Sell" : "Loading..."} `}
-                    name=""
-                    className="border rounded px-2 py-1 w-1/5 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
-                    disabled={orderLoading}
-                  />
+
+                  {/* <SubmitButton loading={orderLoading} type="primary">
+                    Sell
+                  </SubmitButton> */}
+
+                  <InputSubmitBtn loading={orderLoading} label="Book Recycle" />
                 </form>
               </div>
             </div>
@@ -645,6 +646,8 @@ function CheckStatus({
 
         <Buttons
           status={status}
+          category={product.category}
+          laptopAge={laptopAge}
           yesHandler={() => {
             setIsOpen(false);
             handleBookOrder(price);
@@ -723,7 +726,12 @@ function CheckAge({ data, setData, setAgeSelected }) {
           setAgeSelected("Between 1-3 Years");
         }}
       >
-        <input type="radio" name="belowThree" checked={data.belowThree} />{" "}
+        <input
+          type="radio"
+          name="belowThree"
+          checked={data.belowThree}
+          required
+        />{" "}
         Between 1-3 Years
       </label>
       <label
@@ -738,20 +746,29 @@ function CheckAge({ data, setData, setAgeSelected }) {
           setAgeSelected("More Than 3 Years");
         }}
       >
-        <input type="radio" name="aboveThree" checked={data.aboveThree} />
+        <input
+          type="radio"
+          name="aboveThree"
+          checked={data.aboveThree}
+          required
+        />
         More Than 3 Years
       </label>
     </div>
   );
 }
 
-function Buttons({ status, yesHandler, noHandler }) {
+function Buttons({ status, category, laptopAge, yesHandler, noHandler }) {
+  const disable =
+    !status.selected || (category !== "Mobile" && !laptopAge.selected);
+
   return (
     <div className="w-full flex justify-around mt-8 items-center">
       <button
         onClick={yesHandler}
         className="bg-green-600 text-white mx-auto px-4 py-1 rounded h-fit w-fit disabled:bg-gray-400"
-        disabled={!status.selected}
+        disabled={disable}
+        // disabled={!status.selected}
       >
         Yes
       </button>
@@ -769,243 +786,3 @@ function Buttons({ status, yesHandler, noHandler }) {
     </div>
   );
 }
-
-// DatePicker
-{
-  /* <div className="flex items-center">
-                    <h2 className="max-sm:text-sm">Select Date and Time: </h2>
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleTimeChange}
-                      showTimeSelect
-                      timeFormat="h:mm aa" // 12 hours
-                      timeIntervals={30}
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      timeCaption="Time"
-                      minDate={currentDate}
-                      minTime={minTime}
-                      maxTime={maxTime}
-                      className="border ml-1 p-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-[2px]"
-                      placeholderText="Schedule Pickup"
-                      required
-                    />
-                  </div> */
-}
-
-// productStatus: productDetails.category.name
-//   .toLowerCase()
-//   .includes("mobile")
-//   ? mobileStatus
-//   : laptopStatus,
-
-// const Modal = ({
-//   heading,
-//   categoryName,
-//   productName,
-//   leftHandler,
-//   leftHandlerText,
-//   rightHandler,
-//   rightHandlerText,
-// }) => {
-//   return (
-//     <div className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-//       <div className="bg-white p-8 max-sm:px-2 max-sm:py-5 rounded-lg shadow-lg w-[40%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
-//         <div className="flex justify-center">
-//           <h2 className="text-xl font-semibold mb-4 text-center max-sm:text-sm">
-//             {heading}
-//           </h2>
-//         </div>
-//         <div className="flex flex-col items-center">
-//           <div className="flex gap-4 items-center">
-//             <span className="max-sm:text-sm">{categoryName}</span>
-//             <span className="text-lg font-semibold max-sm:text-sm">
-//               {productName}
-//             </span>
-//           </div>
-//         </div>
-
-//         <div className="flex justify-around items-center gap-4 my-4 text-[16px] max-sm:text-sm">
-//           <div
-//             className="shadow-md shadow-green-300 hover:shadow-green-500 hover:shadow-inner bg-white text-green-600
-//             border border-green-600  text-center px-4 py-1 rounded cursor-pointer hover:bg-green-700 hover:text-white
-//             transition-all ease-in-out duration-1000"
-//             onClick={leftHandler}
-//           >
-//             <span>{leftHandlerText}</span>
-//           </div>
-//           <div
-//             className="shadow-md shadow-red-300 hover:shadow-red-500 hover:shadow-inner text-red-600 border border-red-600
-//             bg-white text-center px-4 py-1 rounded cursor-pointer hover:bg-red-700 hover:text-white
-//             transition-all ease-in-out duration-1000"
-//             onClick={rightHandler}
-//           >
-//             <span>{rightHandlerText}</span>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-{
-  /* {checkLaptopAge && (
-          <div>
-            <Modal
-              heading={` What is the age of your ${productDetails.category.name}?`}
-              categoryName={`Laptop Name`}
-              productName={`${productDetails.name}`}
-              leftHandler={handleLaptopAge1}
-              leftHandlerText={`Between 1-3 Years`}
-              rightHandler={handleLaptopAge2}
-              rightHandlerText={`More Than 3 Years`}
-            />
-          </div>
-        )} */
-}
-
-/* Would you like to recycle this item? */
-
-{
-  /* {isOpen && (
-          <div className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-[30%] max-lg:w-[60%] max-sm:w-[80%] max-2sm:w-[95%]">
-              <div className="flex justify-center">
-                <h2 className="text-xl max-sm:text-lg font-semibold mb-4 text-center">
-                  Would You Like to Recycle this {productDetails.category.name}?
-                </h2>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <div className="flex gap-2 items-center">
-                  <span>{productDetails.category.name} is</span>
-                  <span className="text-lg max-sm:text-sm font-semibold">
-                    {productDetails.category.name
-                      .toLowerCase()
-                      .includes("laptop")
-                      ? laptopStatus
-                      : mobileStatus}
-                  </span>
-                </div>
-
-                {productDetails.category.name
-                  .toLowerCase()
-                  .includes("laptop") &&
-                  laptopStatus.toLowerCase().includes("on") && (
-                    <div className="flex gap-2 items-center my-2">
-                      <span>{productDetails.category.name} Age</span>
-                      <span className="text-lg max-sm:text-sm font-semibold border-b">
-                        {ageSelected}
-                      </span>
-                    </div>
-                  )}
-                <div className="flex gap-2 items-center my-2">
-                  <span>Recycle Price</span>
-                  <span className="text-lg font-semibold">{recyclePrice}</span>
-                </div>
-                <div className="flex gap-4 items-center max-sm:text-sm">
-                  <span>{productDetails.category.name} Name</span>
-                  <span className="text-lg font-semibold max-sm:text-sm">
-                    {productDetails.name}
-                  </span>
-                </div>
-                {productDetails.category.name
-                  .toLowerCase()
-                  .includes("mobile") && (
-                  <div className="flex gap-4 items-center">
-                    <span>Variant</span>
-                    <span className="text-lg max-sm:text-sm font-semibold">
-                      {variantSelected.name}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className="w-full flex items-center justify-center">
-                <div className="w-full flex justify-around mt-8 items-center">
-                  <button
-                    onClick={() => {
-                      setShowLocation(true);
-                      setIsOpen(false);
-                    }}
-                    className="bg-green-600 text-white mx-auto px-4 py-1 rounded h-fit w-fit"
-                  >
-                    Yes
-                  </button>
-                  <img
-                    src="/images/recycle1.png"
-                    alt="logo"
-                    className="w-[88px] h-[70px] max-2sm:w-[60px] max-2sm:h-[55px]"
-                  />
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="bg-red-700 text-white mx-auto px-4 py-1 rounded h-fit w-fit"
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )} */
-}
-
-// All Old Handlers
-{
-  // function handleLaptopSwitchOn() {
-  //   // setRecyclePrice(700);
-  //   setLaptopStatus("Switched On");
-  //   setCheckLaptopOn(false);
-  //   setCheckLaptopAge(true);
-  // }
-  // function handleLaptopSwitchOff() {
-  //   setRecyclePrice(500);
-  //   setLaptopStatus("Switched Off");
-  //   setCheckLaptopOn(false);
-  //   setIsOpen(true);
-  //   // setCheckLaptopAge(true);
-  // }
-  // function handleMobileSwitchOn() {
-  //   setRecyclePrice(700);
-  //   setMobileStatus("Switched On");
-  //   setCheckMobileOn(false);
-  //   setIsOpen(true);
-  // }
-  // function handleMobileSwitchOff() {
-  //   setRecyclePrice(500);
-  //   setMobileStatus("Switched Off");
-  //   setCheckMobileOn(false);
-  //   setIsOpen(true);
-  // }
-  // function handleLaptopAge1() {
-  //   setRecyclePrice(1500);
-  //   setAgeSelected("Between 1-3 Years");
-  //   setCheckLaptopAge(false);
-  //   setIsOpen(true);
-  // }
-  // function handleLaptopAge2() {
-  //   setRecyclePrice(500);
-  //   // setAgeSelected(laptopAge[1]);
-  //   setAgeSelected("More Than 3 Years");
-  //   setCheckLaptopAge(false);
-  //   setIsOpen(true);
-  // }
-}
-
-// <Modal
-//   heading={`Is Your ${productDetails.category.name} Switched On?`}
-//   categoryName={`${productDetails.category.name} Name`}
-//   productName={`${productDetails.name}`}
-//   leftHandler={handleMobileSwitchOn}
-//   leftHandlerText={`Switched On`}
-//   rightHandler={handleMobileSwitchOff}
-//   rightHandlerText={`Switched Off`}
-// />
-
-// <Modal
-//   heading={`Is Your ${productDetails.category.name} Switched On?`}
-//   categoryName={`${productDetails.category.name} Name`}
-//   productName={`${productDetails.name}`}
-//   leftHandler={handleLaptopSwitchOn}
-//   leftHandlerText={`Switched On`}
-//   rightHandler={handleLaptopSwitchOff}
-//   rightHandlerText={`Switched Off`}
-// />

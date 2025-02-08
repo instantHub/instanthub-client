@@ -51,12 +51,15 @@ const OrderCompleteForm = ({
             />
 
             <DetailDiv
-              // label="Select Pickup Time"
-              label=""
+              label="Select Pickup Time"
               flexColSScr={true}
               text={
                 // {/* Date Picker */}
-                <DateAndTime setSchedule={setSelectedDate} />
+                <DateAndTime
+                  label={false}
+                  showPreviousDate={true}
+                  setSchedule={setSelectedDate}
+                />
               }
             />
             <DetailDiv

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Slider from "../../components/Slider";
 import Categories from "../categories/Categories";
-import TestimonialCarousel from "../../components/TestimonialsCorousel";
-import HowItWorks from "../../components/HowItWorks";
-import WhyChooseInstantHubs from "../../components/WhyUs";
+import TestimonialCarousel from "../../components/static/TestimonialsCorousel";
+import HowItWorks from "../../components/static/HowItWorks";
+import WhyChooseInstantHubs from "../../components/static/WhyUs";
 import { Helmet } from "react-helmet-async";
-import FAQ from "../../components/FAQ";
+import FAQ from "../../components/static/FAQ";
 import ServicesHome from "../services/ServicesHome";
 import { FaHandPointLeft, FaHandPointRight } from "react-icons/fa";
 

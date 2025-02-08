@@ -3,8 +3,8 @@ import { useGetProductDetailsQuery } from "../../features/api/products/productsA
 import { useParams, Link } from "react-router-dom";
 import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
-import Loading from "../../components/Loading";
-import SellContent from "../../components/SellContent";
+import Loading from "../../components/loader/Loading";
+import SellContent from "../../components/static/SellContent";
 import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 
 const ProductDetail = () => {

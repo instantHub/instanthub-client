@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import React, { useState } from "react";
 
-const DateAndTime = ({ label = true, setSchedule }) => {
+const DateAndTime = ({ label = true, showPreviousDate, setSchedule }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
 
@@ -32,7 +32,7 @@ const DateAndTime = ({ label = true, setSchedule }) => {
   return (
     <div className="flex flex-col items-start">
       <div className="flex items-center">
-        {label && <h2 className="max-sm:text-sm">Select Date and Time: </h2>}
+        {label && <h2 className="max-sm:text-xs">Select Date and Time: </h2>}
         <DatePicker
           selected={selectedDate}
           onChange={handleTimeChange}
@@ -41,7 +41,7 @@ const DateAndTime = ({ label = true, setSchedule }) => {
           timeIntervals={30}
           dateFormat="MMMM d, yyyy h:mm aa"
           timeCaption="Time"
-          minDate={currentDate}
+          minDate={showPreviousDate ? false : currentDate}
           minTime={minTime}
           maxTime={maxTime}
           className="border ml-1 p-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-[2px]"

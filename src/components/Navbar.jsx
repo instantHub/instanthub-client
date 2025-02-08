@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SearchBar from "./SearchBar";
-import SearchBar2 from "./SearchBar2";
+import SearchBar from "./search/SearchBar";
+import SearchBar2 from "./search/SearchBar2";
 import { useGetCategoryQuery } from "../features/api/categories/categoriesApi";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";

@@ -2,7 +2,10 @@ import React, { useEffect, useState, useRef, useReducer } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useGetProductDetailsQuery } from "../../../features/api/products/productsApi";
-import { useCreateOrderMutation, useGetCouponQuery } from "../../../features/api";
+import {
+  useCreateOrderMutation,
+  useGetCouponQuery,
+} from "../../../features/api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
@@ -871,7 +874,10 @@ const ProductFinalPrice = () => {
                 </div>
 
                 {/* Date Picker */}
-                <DateAndTime setSchedule={setSchedulePickUp} />
+                <DateAndTime
+                  showPreviousDate={false}
+                  setSchedule={setSchedulePickUp}
+                />
 
                 {/* Payment */}
                 <div className="pb-2">

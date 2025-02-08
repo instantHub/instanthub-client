@@ -119,7 +119,7 @@ const ProductsList = () => {
       {loading ? (
         <div className="w-full text-end px-4">Loading...</div>
       ) : (
-        <div className="flex justify-end max-sm:justify-center items-center gap-2 w-full text-sm max-sm:text-[10px]">
+        <div className="w-full flex max-sm:flex-col justify-end gap-2 max-sm:gap-1 text-sm max-sm:text-[10px] max-sm:pt-2">
           <p>
             Total: {pendingPricingMobiles.length} products pending for prices
           </p>

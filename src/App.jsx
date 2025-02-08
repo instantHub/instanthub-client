@@ -97,10 +97,10 @@ import AdminCreatePost from "./admin/pages/posts/CreatePost";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorComponent from "./components/ErrorComponent";
-import AboutPage from "./components/About";
-import ContactUs from "./components/ContactUs";
+import AboutPage from "./components/static/About";
+import ContactUs from "./components/static/ContactUs";
 import CreateQuestions from "./admin/pages/questions/CreateQuestions";
-import Loading from "./components/Loading";
+import Loading from "./components/loader/Loading";
 import useGoogleAnalytics from "./hooks/useGoogleAnalytics";
 
 // import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";

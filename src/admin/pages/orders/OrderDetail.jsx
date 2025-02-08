@@ -6,7 +6,7 @@ import {
   useUploadCustomerProofImageMutation,
 } from "../../../features/api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 import OrderCompleteForm from "../../components/OrderCompleteForm";
 import { orderCurrentStatus } from "../../helpers/helper";
 import { FaRegImages } from "react-icons/fa";

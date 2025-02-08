@@ -6,7 +6,7 @@ import {
 } from "../../../features/api/recycle/recycleApi";
 import { useUploadCustomerProofImageMutation } from "../../../features/api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loader/Loading";
 import InputSubmitBtn from "../../../components/InputSubmitBtn";
 import DateAndTime from "../../../components/DateAndTime";
 
@@ -671,7 +671,11 @@ const RecycleOrderDetail = () => {
                   </div>
 
                   {/* Date Picker */}
-                  <DateAndTime setSchedule={setSelectedDate} />
+                  <DateAndTime
+                    label={false}
+                    showPreviousDate={true}
+                    setSchedule={setSelectedDate}
+                  />
                 </div>
 
                 {/* Serial No and IMEI No */}

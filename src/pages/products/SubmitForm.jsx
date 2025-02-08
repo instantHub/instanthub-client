@@ -179,7 +179,10 @@ const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
           />
 
           {/* Date Picker */}
-          <DateAndTime setSchedule={setSchedulePickUp} />
+          <DateAndTime
+            showPreviousDate={false}
+            setSchedule={setSchedulePickUp}
+          />
 
           {/* Payment */}
           <div className="flex flex-col gap-2 justify-center w-full items-center py-2 border-t border-b">

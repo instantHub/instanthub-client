@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { useGetCategoryQuery } from "../../features/api/categories/categoriesApi";
 import Categories from "./Categories";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import ItemGrid from "../../components/ItemGrid";
 
 // Mock the API hook

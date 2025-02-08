@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import ProductCard from "../../components/ProductCard";
-import Loading from "../../components/Loading";
+import Loading from "../../components/loader/Loading";
 import RecycleContent from "./RecycleContent";
 import BreadCrumbLinks from "../../components/BreadCrumbLinks";
 import SeriesButton from "../../components/SeriesButton";
