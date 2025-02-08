@@ -1,9 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useGetServicesQuery } from "../../features/api/services/servicesApi";
-import { useGetServicesQuery
-  
- } from "../../features/api/services/servicesApi";
+import { useGetServicesQuery } from "../../features/api/services/servicesApi";
+
 const ServicesHome = () => {
   const { data: servicesData, serviceLoading: serviceLoading } =
     useGetServicesQuery();
@@ -71,6 +69,8 @@ const ServicesHome = () => {
                                 service.image
                               }
                               alt="CAT"
+                              width="112"
+                              height="112" // Prevents CLS
                               className="w-28 h-28 max-sm:w-20 max-sm:h-20 "
                               loading="lazy"
                             />
