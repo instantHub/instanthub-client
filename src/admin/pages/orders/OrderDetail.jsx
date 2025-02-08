@@ -138,6 +138,7 @@ const OrderDetail = () => {
       const pickedUpDetails = {
         agentName: pickedUpBy,
         pickedUpDate: selectedDate,
+        agentAssigned: true,
       };
 
       const formData = {
@@ -486,8 +487,8 @@ const OrderDetail = () => {
         {/* Order Complete Form */}
         {orderDetail.status.pending && (
           <div>
-            <AssignAgent />
-            
+            <AssignAgent orderDetail={orderDetail} />
+
             <OrderCompleteForm
               orderDetail={orderDetail}
               handleSubmit={handleSubmit}
