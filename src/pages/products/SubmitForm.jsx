@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DateAndTime from "../../components/DateAndTime";
+import DateAndTime from "../../components/DateAndTime/DateAndTime";
 import InputSubmitBtn from "../../components/InputSubmitBtn";
 import { useCreateOrderMutation } from "../../features/api";
 import { ORDER_EMAIL_MSG } from "../../utils/constants";

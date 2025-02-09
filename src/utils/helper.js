@@ -26,3 +26,11 @@ const handlePhoneChange = (e) => {
     toast.error("Phone Number cannot be more than 10 digits");
   }
 };
+
+export const validateEmail = (email) => {
+  console.log("email from validation", email);
+  const regex =
+    /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|icloud\.com|hotmail\.com|aol\.com)$/i;
+
+  return regex.test(email.trim()); // Trim spaces & match case-insensitively
+};

@@ -11,7 +11,7 @@ import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
 import LocationSelector from "../../components/LocationSelector";
 import { LAPTOP_DESKTOP, ORDER_EMAIL_MSG } from "../../utils/constants";
-import DateAndTime from "../../components/DateAndTime";
+import DateAndTime from "../../components/DateAndTime/DateAndTime";
 import InputSubmitBtn from "../../components/InputSubmitBtn";
 
 const initialState = {

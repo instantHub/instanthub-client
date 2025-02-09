@@ -165,7 +165,7 @@ export const api = createApi({
     }),
     getOrder: build.query({
       query: (orderId) => `/api/orders/${orderId}`,
-      providesTags: ["Orders"],
+      providesTags: ["Order Detail"],
     }),
     createOrder: build.mutation({
       query: (data) => ({
@@ -209,6 +209,15 @@ export const api = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Orders"],
+    }),
+
+    assignAgent: build.mutation({
+      query: ({ orderId, data }) => ({
+        url: `/api/orders/assign-agent/${orderId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Order Detail"],
     }),
 
     // Sliders
@@ -379,13 +388,13 @@ export const api = createApi({
     }),
 
     // Recycle
-   
+
     // VARIANT WISE QUESTIONS
     getSingleProduct: build.query({
       query: () => `/api/questions/single-product`,
       providesTags: ["Variants Questions"],
     }),
-    
+
     getVariantsQuestions: build.query({
       query: () => `/api/questions/variants-questions`,
       providesTags: ["Variants Questions"],
@@ -483,6 +492,7 @@ export const {
   useOrderReceivedMutation,
   useOrderCancelMutation,
   useDeleteOrderMutation,
+  useAssignAgentMutation,
 
   useGetActiveSlidersListQuery,
   useGetAllSlidersQuery,

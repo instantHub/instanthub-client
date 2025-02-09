@@ -5,7 +5,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import OrderCancellationForm from "./OrderCancellationForm";
 import { useOrderCancelMutation } from "../../features/api";
 import InputSubmitBtn from "../../components/InputSubmitBtn";
-import DateAndTime from "../../components/DateAndTime";
+import DateAndTime from "../../components/DateAndTime/DateAndTime";
 
 const OrderCompleteForm = ({
   orderDetail,
