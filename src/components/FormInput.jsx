@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 const FormInput = ({
   name,
@@ -10,7 +9,7 @@ const FormInput = ({
   checked,
   handleChange,
   handlePayment,
-  disabled = "false",
+  disabled = false,
 }) => {
   // console.log("FormInput");
   const isAddressField = ["state", "city", "pincode"].includes(name);

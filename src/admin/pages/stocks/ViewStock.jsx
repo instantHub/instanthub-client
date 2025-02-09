@@ -1,33 +1,18 @@
 import React, { useState } from "react";
 import { useStockSoldMutation } from "../../../features/api/admin/stocks/stocksApi";
-import DatePicker from "react-datepicker";
+import DateAndTime from "../../../components/DateAndTime/DateAndTime";
+import { SubmitButton } from "../../components/SubmitButton";
 
 export default function ViewStock({ stock, setViewStock }) {
-  console.log("stock", stock);
+  // console.log("stock", stock);
 
   const [stockSold, { isLoading: stockSoldLoading }] = useStockSoldMutation();
-  console.log("stockSoldLoading", stockSoldLoading);
+  // console.log("stockSoldLoading", stockSoldLoading);
 
   const [soldBy, setSoldBy] = useState("");
   const [sellingPrice, setSellingPrice] = useState("");
 
-  // CALENDER
   const [selectedDate, setSelectedDate] = useState(null);
-  const currentDate = new Date();
-
-  // Set the minimum time to 10:00 AM
-  const minTime = new Date();
-  minTime.setHours(10, 0, 0, 0);
-
-  // Set the maximum time to 10:00 PM
-  const maxTime = new Date();
-  maxTime.setHours(22, 0, 0, 0);
-
-  const handleTimeChange = (date) => {
-    console.log("date", typeof date);
-
-    setSelectedDate(date);
-  };
 
   console.log("Selling Details:", soldBy, sellingPrice, selectedDate);
 
@@ -35,20 +20,10 @@ export default function ViewStock({ stock, setViewStock }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedDate = {
-      agentName: soldBy,
-      soldDate: `${selectedDate.toLocaleString("en-US", {
-        month: "long",
-      })} ${selectedDate.getDate()}, ${selectedDate.getFullYear()} ${selectedDate.toLocaleTimeString(
-        "en-US",
-        { hour: "numeric", minute: "numeric", hour12: true }
-      )}`,
-    };
-
     const formData = {
       stockId: stock.id,
       orderId: stock.orderId,
-      soldByDetails: formattedDate,
+      soldByDetails: { agentName: soldBy, soldDate: selectedDate },
       soldPrice: sellingPrice,
       status: {
         in: false,
@@ -162,53 +137,17 @@ export default function ViewStock({ stock, setViewStock }) {
               </div>
 
               {/* Date picker */}
-              <div className="relative pb-7 grid grid-cols-2 items-center">
-                <label htmlFor="datepicker">
-                  Select Date and Time:
-                  <span className="text-red-600">* </span>
-                </label>
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={handleTimeChange}
-                  showTimeSelect
-                  // timeFormat="HH:mm" // 24 hours
-                  timeFormat="h:mm aa" // 12 hours
-                  timeIntervals={30}
-                  dateFormat="MMMM d, yyyy h:mm aa"
-                  timeCaption="Time"
-                  // minDate={schedulePickUpDate}
-                  minDate={currentDate}
-                  minTime={minTime}
-                  maxTime={maxTime}
-                  placeholderText="Select PickedUp Time"
-                  className="border p-1 rounded"
-                  required
+              <div>
+                <DateAndTime
+                  showPreviousDate={true}
+                  setSchedule={setSelectedDate}
                 />
-
-                {selectedDate && (
-                  <p className="absolute bottom-0 left-10 text-sm max-sm:text-xs">
-                    Sold On: `
-                    {selectedDate.toLocaleString("en-US", {
-                      month: "long",
-                    })}{" "}
-                    {selectedDate.getDate()}, {selectedDate.getFullYear()}{" "}
-                    {selectedDate.toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    })}
-                    `
-                  </p>
-                )}
               </div>
 
               {/* Submit Button */}
-              <input
-                type="submit"
-                value="Submit"
-                className="border rounded px-2 py-1 w-fit bg-green-600 text-white cursor-pointer mx-auto disabled:cursor-none disabled:bg-gray-400"
-                disabled={stockSoldLoading}
-              />
+              <SubmitButton loading={stockSoldLoading} type="primary">
+                Stock Sold
+              </SubmitButton>
             </form>
           </div>
         )}

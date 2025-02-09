@@ -168,7 +168,8 @@ const ComplaintBox = ({ setOpenComplaintBox }) => {
               Cancel
             </button>
             <button
-              className={`px-4 py-2 max-sm:px-2 max-sm:py-1 text-white bg-red-600 hover:bg-red-700 rounded `}
+              className={`px-4 py-2 max-sm:px-2 max-sm:py-1 text-white bg-red-600 hover:bg-red-700 rounded disabled:bg-gray-200`}
+              disabled={createComplaintLoading}
             >
               Send Complaint
             </button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Testimonials = () => {
@@ -94,4 +94,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials;
+export default memo(Testimonials);

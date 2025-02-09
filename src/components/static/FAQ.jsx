@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const FAQ = (props) => {
@@ -146,4 +146,4 @@ const FAQ = (props) => {
   );
 };
 
-export default FAQ;
+export default memo(FAQ);

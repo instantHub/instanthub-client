@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import { GiPriceTag } from "react-icons/gi";
@@ -72,4 +72,4 @@ const HowItWorks = () => {
   );
 };
 
-export default HowItWorks;
+export default memo(HowItWorks);

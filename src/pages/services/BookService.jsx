@@ -11,11 +11,12 @@ import {
 } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa";
-import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import ServiceFAQs from "./ServiceFAQs";
 import PriceModal from "./PriceModal";
+import InputSubmitBtn from "../../components/InputSubmitBtn";
+import DateAndTime from "../../components/DateAndTime/DateAndTime";
 
 export default function BookService() {
   const { serviceId } = useParams();
@@ -32,14 +33,10 @@ export default function BookService() {
 
   const [selectedService, setSelectedService] = useState(null);
 
-  const [selectedDate, setSelectedDate] = useState(null);
   const [schedulePickUp, setSchedulePickUp] = useState(null);
-
-  const currentDate = new Date();
 
   const [prodPrice, setProdPrice] = useState("");
 
-  const [time, setTime] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
@@ -58,27 +55,6 @@ export default function BookService() {
     (state) => state.serviceProblems.serviceProblems
   );
   // console.log("serviceProblemsSlice", serviceProblemsData);
-
-  const timings = [
-    "9 AM - 11 AM",
-    "11 AM - 1 PM",
-    "2 PM - 4 PM",
-    "4 PM - 6 PM",
-    "6 PM - 8 PM",
-  ];
-
-  const handleTimeChange = (date) => {
-    setSelectedDate(date);
-
-    const formattedDate = `${date.toLocaleString("en-US", {
-      month: "long",
-    })} ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString(
-      "en-US",
-      { hour: "numeric", minute: "numeric", hour12: true }
-    )}`;
-    // console.log("formattedDate", formattedDate);
-    setSchedulePickUp(formattedDate);
-  };
 
   const handlePinCodeChange = (e) => {
     let value = e.target.value;
@@ -108,13 +84,6 @@ export default function BookService() {
     } else {
       toast.error("Phone Number cannot be more than 10 digits");
       return;
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    // Prevent default for non-numeric characters
-    if (!/[0-9]/.test(e.key)) {
-      e.preventDefault();
     }
   };
 
@@ -206,7 +175,7 @@ export default function BookService() {
       pincode,
       // scheduleDate: selectedDate,
       scheduleDate: schedulePickUp,
-      scheduleTime: time,
+      // scheduleTime: time,
       status: {
         pending: true,
         completed: false,
@@ -238,7 +207,7 @@ export default function BookService() {
       };
     }
 
-    // console.log("formdata", formData);
+    console.log("formdata", formData);
 
     try {
       // const response = await axios.post("/api/services", payload);
@@ -391,17 +360,6 @@ export default function BookService() {
                 ) : null}
                 {st === "b" ? (
                   <div className="flex flex-col items-center w-full max-sm:hidden">
-                    {/* <h2 className="text-lg max-sm:text-sm">
-                    To book{" "}
-                    <span className="font-semibold">
-                      {selectedService?.serviceCategoryId?.name}
-                    </span>{" "}
-                    for{" "}
-                    <span className="font-semibold">
-                      {selectedService?.name}{" "}
-                    </span>
-                    provide below details for service confirmation.
-                  </h2> */}
                     {serviceProblemsData.length > 0 ? (
                       <div className="w-fit mt-2 px-4 py-1 max-h-[500px] overflow-y-auto scrollbar max-sm:text-sm max-sm:w-full">
                         <h2 className="font-semibold border-b mb-1">
@@ -509,37 +467,13 @@ export default function BookService() {
                     <p>Schedule a Date & Time</p>
                   </div>
 
-                  {/* <div className="flex mt-5 justify-around max-2sm:flex-col max-2sm:items-start max-2sm:gap-4 max-2sm:mx-auto"> */}
                   {/* DATE & TIME */}
-                  <div className="flex mt-2 justify-around max-2sm:text-xs">
-                    <div className="">
-                      <DatePicker
-                        selected={selectedDate}
-                        onChange={handleTimeChange}
-                        timeFormat="h:mm aa" // 12 hours
-                        dateFormat="MMMM d, yyyy"
-                        minDate={currentDate}
-                        className="border-b"
-                        placeholderText="Date *"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <select
-                        name=""
-                        onChange={(e) => setTime(e.target.value)}
-                        className="text-gray-400 border-b"
-                        required
-                      >
-                        <option value="">Time</option>
-                        {/* <span className="text-red-500">*</span> */}
-                        {timings.map((time, i) => (
-                          <option key={i} value={time}>
-                            {time}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                  <div className="flex justify-center">
+                    <DateAndTime
+                      label={false}
+                      showPreviousDate={false}
+                      setSchedule={setSchedulePickUp}
+                    />
                   </div>
 
                   {/* Electronic devices additional details */}
@@ -659,16 +593,15 @@ export default function BookService() {
                     <div>
                       {/* <input
                         type="submit"
-                        value={`Book Now`}
-                        className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      /> */}
-                      <input
-                        type="submit"
                         value={`${
                           !createServiceOrderLoading ? "Book Now" : "Loading..."
                         } `}
                         className="border rounded px-2 py-1 w-1/5 max-sm:w-fit bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
                         disabled={createServiceOrderLoading}
+                      /> */}
+                      <InputSubmitBtn
+                        loading={createServiceOrderLoading}
+                        label="Book Now"
                       />
                     </div>
                     {st !== "ss" ? (

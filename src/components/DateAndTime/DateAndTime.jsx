@@ -1,7 +1,6 @@
+import React, { memo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-import React, { useState } from "react";
 
 const DateAndTime = ({ label = true, showPreviousDate, setSchedule }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -67,7 +66,7 @@ const DateAndTime = ({ label = true, showPreviousDate, setSchedule }) => {
   );
 };
 
-export default DateAndTime;
+export default memo(DateAndTime);
 
 // Old formatting with date and time
 {
@@ -85,36 +84,4 @@ export default DateAndTime;
   //   "en-US",
   //   { hour: "numeric", minute: "numeric", hour12: true }
   // )}`;
-}
-
-{
-  // <div className="flex flex-col items-start">
-  //   <div className="flex items-center max-sm:flex-col gap-2">
-  //     <div className="flex items-center">
-  //       {label && <h2 className="max-sm:text-xs">Select Date and Time: </h2>}
-  //       <DatePicker
-  //         selected={selectedDate}
-  //         onChange={handleTimeChange}
-  //         showTimeSelect
-  //         timeFormat="h:mm aa" // 12 hours
-  //         timeIntervals={30}
-  //         dateFormat="MMMM d, yyyy h:mm aa"
-  //         timeCaption="Time"
-  //         minDate={showPreviousDate ? false : currentDate}
-  //         minTime={minTime}
-  //         maxTime={maxTime}
-  //         className="border ml-1 p-1 rounded max-sm:text-sm max-sm:px-1 max-sm:py-[2px]"
-  //         placeholderText="Schedule Pickup"
-  //         required
-  //       />
-  //     </div>
-  //     <Time setTime={setTime} />
-  //   </div>
-  //   {selectedDate && (
-  //     <p className="text-sm max-sm:text-xs">
-  //       Scheduled time:{" "}
-  //       <span className="font-semibold max-sm:text-xs">{formattedDate}</span>
-  //     </p>
-  //   )}
-  // </div>
 }

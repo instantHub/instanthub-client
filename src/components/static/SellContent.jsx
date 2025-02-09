@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 const SellContent = () => {
   const WhyUs = [
@@ -103,4 +103,4 @@ const SellContent = () => {
   );
 };
 
-export default SellContent;
+export default memo(SellContent);

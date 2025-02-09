@@ -1,5 +1,4 @@
-import React from "react";
-// import FAQ from "./FAQ";
+import React, { memo } from "react";
 
 // const WhyChooseInstantCashPicks = () => {
 const WhyChooseInstantHubs = () => {
@@ -51,4 +50,4 @@ const WhyChooseInstantHubs = () => {
   );
 };
 
-export default WhyChooseInstantHubs;
+export default memo(WhyChooseInstantHubs);
