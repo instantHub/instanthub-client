@@ -116,42 +116,59 @@ const ProductQuestions = () => {
 
   const handleContinue = () => {
     // Accessories
-    if (currentPageIndex === pageIndices.bill - 1 && condition.bill === null) {
-      toast.error("Select Bill to proceed..!");
-      return;
-    }
-    if (currentPageIndex === pageIndices.box - 1 && condition.box === null) {
-      toast.error("Select Box to proceed..!");
-      return;
-    }
-    if (
-      currentPageIndex === pageIndices.charger - 1 &&
-      condition.charger === null
-    ) {
-      toast.error("Select Charger to proceed..!");
-      return;
-    }
+    // if (currentPageIndex === pageIndices.bill - 1 && condition.bill === null) {
+    //   toast.error("Select Bill to proceed..!");
+    //   return;
+    // }
+    // if (currentPageIndex === pageIndices.box - 1 && condition.box === null) {
+    //   toast.error("Select Box to proceed..!");
+    //   return;
+    // }
+    // if (
+    //   currentPageIndex === pageIndices.charger - 1 &&
+    //   condition.charger === null
+    // ) {
+    //   toast.error("Select Charger to proceed..!");
+    //   return;
+    // }
 
-    if (currentPageIndex === pageIndices.age - 1 && condition.age === null) {
-      toast.error("Select Age to proceed..!");
-      return;
-    }
+    // console.log(sortedConditions[currentPageIndex]);
+    let conditionNotSelected = false;
+    sortedConditions[currentPageIndex].conditions.forEach((condition) => {
+      if (condition.isYesNoType && !condition.isSelected.selected) {
+        console.log("condition isYesNoType", condition);
+        conditionNotSelected = true;
+        return;
+      }
+    });
 
-    if (
-      currentPageIndex === pageIndices.physicalCondition - 1 &&
-      condition.physicalCondition === null
-    ) {
-      toast.error("Select Physical Condition to proceed..!");
+    if (conditionNotSelected) {
+      toast.error("Select All Mandatory Conditions to proceed..!");
+      conditionNotSelected = false;
       return;
     }
+    console.log("conditionNotSelected after checking", conditionNotSelected);
 
-    if (
-      currentPageIndex === pageIndices.screenCondition - 1 &&
-      condition.screenCondition === null
-    ) {
-      toast.error("Select Screen Condition to proceed..!");
-      return;
-    }
+    // if (currentPageIndex === pageIndices.age - 1 && condition.age === null) {
+    //   toast.error("Select Age to proceed..!");
+    //   return;
+    // }
+
+    // if (
+    //   currentPageIndex === pageIndices.physicalCondition - 1 &&
+    //   condition.physicalCondition === null
+    // ) {
+    //   toast.error("Select Physical Condition to proceed..!");
+    //   return;
+    // }
+
+    // if (
+    //   currentPageIndex === pageIndices.screenCondition - 1 &&
+    //   condition.screenCondition === null
+    // ) {
+    //   toast.error("Select Screen Condition to proceed..!");
+    //   return;
+    // }
 
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);

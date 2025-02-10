@@ -15,6 +15,8 @@ import { BsCircle } from "react-icons/bs";
 const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
   const { conditionName, conditionLabels, keyword, isYesNoType } = condition;
 
+  console.log("DeductionItems Component Re-rendering");
+
   const [selected, setSelected] = useState(false);
 
   const deductionData = useSelector((state) => state.deductions.deductions);
@@ -59,7 +61,7 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
     // }
     // dispatchConditionAction(label);
 
-    setSelected(true);
+    setSelected((prev) => !prev);
     condition.isSelected.selected = true;
     condition.isSelected.selectedLabel = label;
     console.log("checking condition", condition);
@@ -150,11 +152,11 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
           condition?.isSelected?.selectedLabel?.conditionLabel ===
           label.conditionLabel;
 
-        console.log(
-          "condition?.isSelected?.selectedLabel?.conditionLabel",
-          condition?.isSelected?.selectedLabel?.conditionLabel
-        );
-        console.log("label", label.conditionLabel);
+        // console.log(
+        //   "condition?.isSelected?.selectedLabel?.conditionLabel",
+        //   condition?.isSelected?.selectedLabel?.conditionLabel
+        // );
+        // console.log("label", label.conditionLabel);
 
         const borderClass = isSelected
           ? functionalProblems

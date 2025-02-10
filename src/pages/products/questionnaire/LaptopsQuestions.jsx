@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearDeductions,
@@ -20,35 +20,6 @@ const LaptopsQuestions = (props) => {
   const { productsData, deductions, handleLabelSelection } = props;
   // console.log("productsData from laptop", productsData);
 
-  const [config, setConfig] = useState({
-    processor: null,
-    hardDisk: null,
-    ram: null,
-    screenSize: null,
-    graphic: null,
-    screenCondition: null,
-    physicalCondition: null,
-    modelYear: null,
-    age: null,
-    // Accessories
-    bill: null,
-    box: null,
-    charger: null,
-  });
-
-  const [pageIndices, setPageIndices] = useState({
-    screenSize: null,
-    graphic: null,
-    screenCondition: null,
-    physicalCondition: null,
-    modelYear: null,
-    age: null,
-    // Accessories
-    bill: null,
-    box: null,
-    charger: null,
-  });
-
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [lastPageIndex, setLastPageIndex] = useState(0);
   const [showOTP, setShowOTP] = useState(false);
@@ -58,17 +29,22 @@ const LaptopsQuestions = (props) => {
 
   const dispatch = useDispatch();
 
+  const [selected, setSelected] = useState(false);
+  const [processorSelected, setProcessorSelected] = useState(false);
+
   // const data = useSelector((state) => state.deductions);
   // // console.log("useSelector", data);
 
   const groupConditionsByPage = (conditions) => {
-    // console.log("IN groupConditionsByPage laptop");
+    console.log("IN groupConditionsByPage laptop");
     const grouped = conditions.reduce((acc, condition) => {
       const { page } = condition;
       if (!acc[page]) {
         acc[page] = [];
       }
-      acc[page].push(condition);
+      // acc[page].push(condition);
+      const isSelected = { selected: false, selectedLabel: null };
+      acc[page].push({ ...condition, isSelected });
       return acc;
     }, {});
 
@@ -91,84 +67,73 @@ const LaptopsQuestions = (props) => {
         conditions: grouped[page],
       }));
 
-    // console.log("sortedPages", sortedPages);
+    console.log("sortedPages from function", sortedPages);
 
     return sortedPages;
   };
 
-  const sortedConditions = deductions ? groupConditionsByPage(deductions) : [];
-  // console.log("sortedConditions LaptopQuestions", sortedConditions);
+  // const sortedConditions = deductions ? groupConditionsByPage(deductions) : [];
+  const sortedConditions = useMemo(() => {
+    if (!deductions) return [];
+    return groupConditionsByPage(deductions);
+  }, [deductions]);
+
+  console.log("sortedConditions LaptopQuestions", sortedConditions);
 
   const handleContinue = () => {
     console.log("handleContinue");
 
-    const validationSteps = [
-      {
-        condition:
-          currentPageIndex === 0 &&
-          (config.processor === null ||
-            config.hardDisk === null ||
-            config.ram === null),
-        message: "Select all system configurations",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.age - 1 && config.age === null,
-        message: "Select Age to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.screenSize - 1 &&
-          config.screenSize === null,
-        message: "Select ScreenSize to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.graphic - 1 &&
-          config.graphic === null,
-        message: "Select Graphics to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.screenCondition - 1 &&
-          config.screenCondition === null,
-        message: "Select Screen Condition to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.modelYear - 1 &&
-          config.modelYear === null,
-        message: "Select Model Launch Year to proceed..!",
-      },
+    let conditionNotSelected = false;
+    console.log("conditionNotSelected", conditionNotSelected);
 
-      // Accessories
-      {
-        condition:
-          currentPageIndex === pageIndices.bill - 1 && config.bill === null,
-        message: "Select Bill to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.box - 1 && config.box === null,
-        message: "Select Product Box to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.charger - 1 &&
-          config.charger === null,
-        message: "Select Charger to proceed..!",
-      },
-    ];
-
-    for (let { condition, message } of validationSteps) {
-      if (condition) {
-        toast.error(message);
-        return;
-      }
+    console.log("currentPageIndex", currentPageIndex);
+    if (currentPageIndex > 0) {
+      console.log(
+        "processorBasedDeductions[currentPageIndex].conditions",
+        processorBasedDeductions[currentPageIndex - 1].conditions
+      );
+      processorBasedDeductions[currentPageIndex - 1].conditions.forEach(
+        (condition) => {
+          console.log(condition.isYesNoType, !condition.isSelected.selected);
+          if (condition.isYesNoType && !condition.isSelected.selected) {
+            console.log("condition isYesNoType", condition);
+            conditionNotSelected = true;
+            return;
+          }
+        }
+      );
+    } else {
+      sortedConditions[0].conditions.forEach((condition) => {
+        const config = ["Processor", "Hard Disk", "Ram"];
+        const configCond = config.includes(condition.conditionName);
+        console.log("object", condition);
+        const notSelected = configCond
+          ? !condition.isSelected.selected
+            ? true
+            : false
+          : false;
+        console.log("notSelected", configCond, notSelected);
+        if (
+          (condition.isYesNoType && !condition.isSelected.selected) ||
+          notSelected
+        ) {
+          console.log("condition isYesNoType", condition);
+          conditionNotSelected = true;
+          return;
+        }
+      });
     }
+
+    if (conditionNotSelected) {
+      toast.error("Select All Mandatory Conditions to proceed..!");
+      conditionNotSelected = false;
+      return;
+    }
+    console.log("conditionNotSelected after checking", conditionNotSelected);
 
     if (currentPageIndex < lastPageIndex - 1) {
       setCurrentPageIndex((prevIndex) => prevIndex + 1);
+      conditionNotSelected = false;
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setShowOTP(true);
@@ -189,16 +154,31 @@ const LaptopsQuestions = (props) => {
     const operation = selectedOption.getAttribute("data-arg4");
     const conditionLabelId = selectedOption.getAttribute("data-arg5");
 
+    function setSelectedFunc() {
+      setSelected((prev) => !prev);
+      sortedConditions[0].conditions.forEach((condition) => {
+        if (condition.conditionName == conditionName) {
+          condition.isSelected.selected = true;
+          condition.isSelected.selectedLabel = {
+            conditionLabelId,
+            conditionLabel,
+            priceDrop,
+            operation,
+          };
+          // console.log("checking condition", condition);
+          return;
+        }
+      });
+    }
+
     if (conditionName === "Processor") {
       const procBasedDed = await getProcessorDeductions(conditionLabelId);
-      console.log("procBasedDed", procBasedDed);
+      // console.log("procBasedDed", procBasedDed);
 
       setPagesFunc(procBasedDed);
+      setProcessorSelected((prev) => !prev);
 
-      setConfig((prev) => ({
-        ...prev,
-        processor: { conditionLabel, priceDrop, conditionLabelId },
-      }));
+      setSelectedFunc();
 
       dispatch(
         addProcessor({
@@ -228,18 +208,14 @@ const LaptopsQuestions = (props) => {
 
       dispatch(setGetUpto(getUpTo));
     } else if (conditionName === "Hard Disk") {
-      setConfig((prev) => ({
-        ...prev,
-        hardDisk: { conditionLabel, priceDrop, conditionLabelId },
-      }));
+      setSelectedFunc();
+
       dispatch(
         addHardDisk({ conditionLabel, priceDrop, operation, type: "Hard Disk" })
       );
     } else if (conditionName === "Ram") {
-      setConfig((prev) => ({
-        ...prev,
-        ram: { conditionLabel, priceDrop, conditionLabelId },
-      }));
+      setSelectedFunc();
+
       dispatch(addRam({ conditionLabel, priceDrop, operation, type: "RAM" }));
     }
   };
@@ -292,57 +268,13 @@ const LaptopsQuestions = (props) => {
     }
   }
 
-  async function setPagesFunc(selectedProcessor) {
-    console.log("Function to set page number");
-
-    const keyMap = {
-      "screen size": "screenSize",
-      graphic: "graphic",
-      "screen condition": "screenCondition",
-      physical: "physicalCondition",
-      age: "age",
-      "model launch year": "modelYear",
-
-      // Accessories
-      bill: "bill",
-      box: "box",
-      charger: "charger",
-    };
-
-    const pageIndicesUpdate = selectedProcessor.deductions.reduce((acc, d) => {
-      for (const [keyword, key] of Object.entries(keyMap)) {
-        if (d.conditionName.toLowerCase().includes(keyword)) {
-          acc[key] = d.page;
-          break; // Stop checking once a match is found
-        }
-      }
-
-      return acc;
-    }, {});
-
-    setPageIndices((prev) => ({ ...prev, ...pageIndicesUpdate }));
-  }
-
   function resetStateData() {
     dispatch(clearLaptopDeductions());
     dispatch(clearDeductions());
-
-    const clearedConfig = Object.fromEntries(
-      Object.keys(config).map((key) => [key, null])
-    );
-    const clearedPageIndices = Object.fromEntries(
-      Object.keys(pageIndices).map((key) => [key, null])
-    );
-
-    console.log("clearedConfig", clearedConfig);
-    console.log("clearedPageIndices", clearedPageIndices);
-
-    setConfig(clearedConfig);
-    setPageIndices(clearedPageIndices);
   }
 
   // console.log("selectedLabels", selectedLabels);
-  // console.log("processorBasedDeductions", processorBasedDeductions);
+  console.log("processorBasedDeductions", processorBasedDeductions);
   // console.log("productsData", productsData);
 
   return (
@@ -407,7 +339,6 @@ const LaptopsQuestions = (props) => {
                     {/* Condition Labels */}
                     <div>
                       <LaptopDeductionItems
-                        setConfig={setConfig}
                         condition={condition}
                         handleLabelSelection={handleLabelSelection}
                         handleContinue={handleContinue}

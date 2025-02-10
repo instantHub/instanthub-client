@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addScreenSize,
@@ -18,17 +18,15 @@ import {
 import { BsCircle } from "react-icons/bs";
 import { addProductAge } from "../../../features/slices/deductionSlice";
 
-const LaptopDeductionItems = ({
-  setConfig,
-  condition,
-  handleLabelSelection,
-}) => {
+const LaptopDeductionItems = ({ condition, handleLabelSelection }) => {
   const { conditionName, conditionLabels, keyword, isYesNoType } = condition;
 
   const deductionSlice = useSelector((state) => state.deductions);
   const deductionData = useSelector((state) => state.deductions.deductions);
 
   const dispatch = useDispatch();
+
+  const [selected, setSelected] = useState(false);
 
   const laptopSliceData = useSelector((state) => state.laptopDeductions);
   // console.log("laptopSliceData", laptopSliceData);
@@ -86,69 +84,52 @@ const LaptopDeductionItems = ({
         type
       );
     dispatchConditionAction(label);
+
+    setSelected((prev) => !prev);
+    condition.isSelected.selected = true;
+    condition.isSelected.selectedLabel = label;
+    console.log("checking condition", condition);
   };
 
   const dispatchConditionAction = (label) => {
-    function setState(type, label) {
-      setConfig((prev) => ({ ...prev, [type]: label }));
-    }
-
     const actionMap2 = {
       "screen size": {
         action: addScreenSize,
-        setState,
         type: keyword,
-        configType: "screenSize",
       },
       graphic: {
         action: addGraphic,
-        setState,
         type: keyword,
-        configType: "graphic",
       },
       "screen condition": {
         action: addScreenCondition,
-        setState,
         type: keyword,
-        configType: "screenCondition",
       },
       physical: {
         action: addPhysicalCondition,
-        setState,
         type: keyword,
-        configType: "physicalCondition",
       },
       age: {
         action: addAge,
-        setState,
         type: keyword,
-        configType: "age",
       },
       "model launch year": {
         action: addModelYear,
-        setState,
         type: keyword,
-        configType: "modelYear",
       },
 
       // Accessories
       bill: {
         action: addProductGSTBill,
-        setState,
         type: keyword,
-        configType: "bill",
       },
       box: {
         action: addProductBox,
-        setState,
         type: keyword,
-        configType: "box",
       },
       charger: {
         action: addProductCharger,
-        setState,
         type: keyword,
-        configType: "charger",
       },
     };
 
@@ -157,9 +138,8 @@ const LaptopDeductionItems = ({
     );
 
     if (matchedCondition2) {
-      const [, { action, setState, type, configType }] = matchedCondition2;
+      const [, { action, type }] = matchedCondition2;
       dispatch(action({ ...label, type }));
-      setState(configType, label);
 
       // Additional action for age
       if (matchedCondition2[0] === "age") {
@@ -172,18 +152,6 @@ const LaptopDeductionItems = ({
 
   return (
     <div
-      // className={
-      //   largerConditionLabel
-      //     ? "grid lg:grid-cols-2 md:grid-cols-1 gap-2 items-center px-2"
-      //     : `grid ${
-      //         shouldShowImage
-      //           ? "grid-cols-2 lg:grid-cols-4"
-      //           : `grid-cols-1 lg:grid-cols-4 ${
-      //               shorterConditionLabel && "max-sm:grid-cols-2"
-      //             }`
-      //       } md:grid-cols-3 gap-4 max-sm:gap-2 items-center px-4 max-sm:px-1`
-      // }
-
       className={`grid items-center gap-4 px-4 ${
         largerConditionLabel
           ? "lg:grid-cols-2 grid-cols-1 "
@@ -197,9 +165,9 @@ const LaptopDeductionItems = ({
       }`}
     >
       {conditionLabels.map((label, index) => {
-        const isSelected = deductionData.some(
-          (condLabel) => condLabel.conditionLabel === label.conditionLabel
-        );
+        const isSelected =
+          condition?.isSelected?.selectedLabel?.conditionLabel ===
+          label.conditionLabel;
 
         const borderClass = isSelected
           ? functionalProblems
@@ -238,16 +206,6 @@ const LaptopDeductionItems = ({
 
             <div
               key={label.conditonLabelId}
-              // className={`text-lg max-sm:text-xs ${backgroundClass} ${
-              //   shouldShowImage
-              //     ? "py-2 text-center w-full h-[100px] max-sm:h-[80px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
-              //     : `flex text-sm items-center gap-1 py-4 bg-slate-100 ${
-              //         shorterConditionLabel
-              //           ? "h-fit"
-              //           : "h-[90px] max-sm:h-[65px]"
-              //       }`
-              // }`}
-
               className={`${backgroundClass} ${
                 shouldShowImage
                   ? "py-2 text-center w-full h-[100px] max-sm:h-[80px] flex items-center justify-center lg:text-[12px] max-md:text-[12px] max-sm:text-xs"
