@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProductScreenCondition,
@@ -14,6 +14,8 @@ import { BsCircle } from "react-icons/bs";
 
 const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
   const { conditionName, conditionLabels, keyword, isYesNoType } = condition;
+
+  const [selected, setSelected] = useState(false);
 
   const deductionData = useSelector((state) => state.deductions.deductions);
   const deductionSliceData = useSelector((state) => state.deductions);
@@ -45,17 +47,22 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
   };
 
   const handleOnClick = (label) => {
-    if (shouldShowImage) {
-      if (!conditionName.toLowerCase().includes("defects")) {
-        handleLabelSelection(
-          label.conditionLabel,
-          label.priceDrop,
-          label.operation,
-          type
-        );
-      }
-    }
-    dispatchConditionAction(label);
+    // if (shouldShowImage) {
+    //   if (!conditionName.toLowerCase().includes("defects")) {
+    //     handleLabelSelection(
+    //       label.conditionLabel,
+    //       label.priceDrop,
+    //       label.operation,
+    //       type
+    //     );
+    //   }
+    // }
+    // dispatchConditionAction(label);
+
+    setSelected(true);
+    condition.isSelected.selected = true;
+    condition.isSelected.selectedLabel = label;
+    console.log("checking condition", condition);
   };
 
   const dispatchConditionAction = (label) => {
@@ -132,12 +139,22 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
       {conditionLabels.map((label, index) => {
         const labelSelected = isLabelSelected(label.conditionLabel);
 
+        // const isSelected =
+        //   deductionData.some(
+        //     (condLabel) => condLabel.conditionLabel === label.conditionLabel
+        //   ) ||
+        //   deductionSliceData.productDisplayDefect.conditionLabel ===
+        //     label.conditionLabel;
+
         const isSelected =
-          deductionData.some(
-            (condLabel) => condLabel.conditionLabel === label.conditionLabel
-          ) ||
-          deductionSliceData.productDisplayDefect.conditionLabel ===
-            label.conditionLabel;
+          condition?.isSelected?.selectedLabel?.conditionLabel ===
+          label.conditionLabel;
+
+        console.log(
+          "condition?.isSelected?.selectedLabel?.conditionLabel",
+          condition?.isSelected?.selectedLabel?.conditionLabel
+        );
+        console.log("label", label.conditionLabel);
 
         const borderClass = isSelected
           ? functionalProblems

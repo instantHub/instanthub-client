@@ -175,10 +175,13 @@ const ProductQuestions = () => {
     console.log("IN groupConditionsByPage", conditions);
     const grouped = conditions.reduce((acc, condition) => {
       const { page } = condition;
+      // console.log("condition", condition);
       if (!acc[page]) {
         acc[page] = [];
       }
-      acc[page].push(condition);
+      // acc[page].push(condition);
+      const isSelected = { selected: false, selectedLabel: null };
+      acc[page].push({ ...condition, isSelected });
       return acc;
     }, {});
 
@@ -190,7 +193,7 @@ const ProductQuestions = () => {
         conditions: grouped[page],
       }));
 
-    // console.log("sortedPages", sortedPages);
+    console.log("sortedPages", sortedPages);
 
     return sortedPages;
   }
