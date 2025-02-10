@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Loading from "../../components/loader/Loading";
 import ItemGrid from "../../components/ItemGrid";
 import SellContent from "../../components/static/SellContent";
-import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 
 const Brands = () => {
   const { catId } = useParams();

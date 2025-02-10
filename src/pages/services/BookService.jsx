@@ -10,13 +10,64 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { FaAngleRight } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import ServiceFAQs from "./ServiceFAQs";
 import PriceModal from "./PriceModal";
 import InputSubmitBtn from "../../components/InputSubmitBtn";
 import DateAndTime from "../../components/DateAndTime/DateAndTime";
+
+// New Form Validation
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ServiceBreadCrumbLinks from "../../components/breadcrumbs/ServiceBreadCrumbsLinks";
+
+const formSchema = z
+  .object({
+    name: z.string().min(2, "Name must be at least 2 characters").trim(),
+    email: z
+      .string()
+      .email("Invalid email address")
+      .regex(
+        /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|icloud\.com|hotmail\.com|aol\.com)$/,
+        "Only Gmail, Yahoo, Outlook, iCloud, Hotmail, and AOL are allowed"
+      ),
+    phone: z
+      .string()
+      .length(10, "Phone number must be exactly 10 digits")
+      .regex(/^\d{10}$/, "Phone number must contain only numbers")
+      .transform((val) => Number(val)), // Convert to number
+
+    address: z.string().min(8, "Address must be at least 10 characters").trim(),
+    pincode: z
+      .string()
+      .length(6, "Pincode must be exactly 6 digits")
+      .regex(/^\d{6}$/, "Pincode must contain only numbers")
+      .transform((val) => Number(val)), // Convert to number
+
+    // Conditionally required based on serviceType
+    deviceNameModel: z
+      .string()
+      .trim()
+      .min(2, "Model Name must be at least 2 characters")
+      .optional(), // Initially optional, we’ll enforce conditionally
+
+    deviceAdditionalInfo: z.string().trim().optional(), // Always optional
+  })
+  .superRefine((data, ctx) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceType = urlParams.get("st"); // Getting 'st' from URL
+
+    // Conditionally require deviceNameModel if serviceType is "repair" or "exchange"
+    if (serviceType === "b" && !data.deviceNameModel) {
+      ctx.addIssue({
+        path: ["deviceNameModel"],
+        message: "Model Name is required for this service type",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
 
 export default function BookService() {
   const { serviceId } = useParams();
@@ -31,94 +82,69 @@ export default function BookService() {
   const [createServiceOrder, { isLoading: createServiceOrderLoading }] =
     useCreateServiceOrderMutation();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(formSchema),
+  });
+
+  const [serviceType, setServiceType] = useState({
+    directService: false,
+    brandsService: false,
+    subService: false,
+  });
+
   const [selectedService, setSelectedService] = useState(null);
 
   const [schedulePickUp, setSchedulePickUp] = useState(null);
 
   const [prodPrice, setProdPrice] = useState("");
-
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [pincode, setPincode] = useState("");
   const [inspectionCharges, setInspectionCharges] = useState(0);
-
-  const [deviceNameModel, setDeviceNameModel] = useState("");
-  const [deviceAdditionalInfo, setDeviceAdditionalInfo] = useState("");
 
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const ERROR_STYLE = "text-red-500 text-xs";
 
   const serviceProblemsData = useSelector(
     (state) => state.serviceProblems.serviceProblems
   );
   // console.log("serviceProblemsSlice", serviceProblemsData);
 
-  const handlePinCodeChange = (e) => {
-    let value = e.target.value;
-
-    // Remove non-numeric characters
-    value = value.replace(/\D/g, "");
-
-    // Restrict the length to 10 digits
-    if (value.length <= 6) {
-      setPincode(Number(e.target.value));
-      // setPincode(e.target.value);
-    } else {
-      toast.error("PinCode cannot be more than 6 digits");
-      return;
-    }
-  };
-
-  const handlePhoneChange = (e) => {
-    let value = e.target.value;
-
-    // Remove non-numeric characters
-    value = value.replace(/\D/g, "");
-
-    // Restrict the length to 10 digits
-    if (value.length <= 10) {
-      setPhone(Number(e.target.value));
-    } else {
-      toast.error("Phone Number cannot be more than 10 digits");
-      return;
-    }
-  };
-
   //   UseEffect to Set Service
   useEffect(() => {
     // console.log("UseEffect of BookService");
 
+    if (servicesDataLoading) return;
+
     let service;
-    if (!servicesDataLoading) {
-      if (st === "b") {
-        service = servicesData.serviceBrands.find((sb) => sb._id === serviceId);
-        console.log("brand service", service);
-        setSelectedService(service);
-        // setInspectionCharges(149);
-      } else if (st === "ds") {
-        service = servicesData.serviceCategories.find(
-          (sc) => sc._id === serviceId
-        );
+    if (st === "ds") {
+      service = servicesData.serviceCategories.find(
+        (sc) => sc._id === serviceId
+      );
+      // console.log("direct service", service);
 
-        console.log("direct service", service);
-        setSelectedService(service);
+      setSelectedService(service);
+      setServiceType((prev) => ({ ...prev, directService: true }));
+    } else if (st === "b") {
+      service = servicesData.serviceBrands.find((sb) => sb._id === serviceId);
+      // console.log("brand service", service);
 
-        // if (service.name.toLowerCase().includes("interior")) {
-        //   setInspectionCharges(499);
-        // }
-      } else if (st === "ss") {
-        service = servicesData.serviceSubProducts.find(
-          (sc) => sc._id === serviceId
-        );
-        console.log("sub service", service);
-        let price = service.price - (service.discount * service.price) / 100;
-        setProdPrice(price);
-        setSelectedService(service);
-        // setInspectionCharges(900);
-      }
+      setSelectedService(service);
+      setServiceType((prev) => ({ ...prev, brandsService: true }));
+    } else if (st === "ss") {
+      service = servicesData.serviceSubProducts.find(
+        (sc) => sc._id === serviceId
+      );
+      // console.log("sub service", service);
+
+      let price = service.price - (service.discount * service.price) / 100;
+      setProdPrice(price);
+      setSelectedService(service);
+      setServiceType((prev) => ({ ...prev, subService: true }));
     }
   }, [servicesData, serviceId]);
 
@@ -138,28 +164,25 @@ export default function BookService() {
   // UseEffect to handle page refresh
   useEffect(() => {
     // console.log("!serviceProblemsData", serviceProblemsData.length > 0);
-    if (st === "b") {
-      if (serviceProblemsData.length <= 0) {
-        navigate(`/services/serviceBrandProblems/${serviceId}`);
-      }
+    if (st === "b" && serviceProblemsData.length <= 0) {
+      navigate(`/services/serviceBrandProblems/${serviceId}`);
     }
   }, [serviceProblemsData]);
 
-  console.log("selectedService", selectedService);
+  // console.log("selectedService", selectedService);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // console.log(
-    //   selectedDate,
-    //   time,
-    //   name,
-    //   address,
-    //   email,
-    //   phone,
-    //   pincode,
-    //   deviceNameModel,
-    //   deviceAdditionalInfo
-    // );
+  const onSubmit = async (data) => {
+    console.log("Form Data:", data);
+
+    const {
+      name,
+      email,
+      phone,
+      address,
+      pincode,
+      deviceNameModel,
+      deviceAdditionalInfo,
+    } = data;
 
     if (!schedulePickUp) {
       toast.warning("Kindly Select Schedule Date");
@@ -173,9 +196,7 @@ export default function BookService() {
       phone: phone,
       address: address,
       pincode,
-      // scheduleDate: selectedDate,
       scheduleDate: schedulePickUp,
-      // scheduleTime: time,
       status: {
         pending: true,
         completed: false,
@@ -184,7 +205,7 @@ export default function BookService() {
       inspectionCharges,
     };
 
-    if (st === "b") {
+    if (serviceType.brandsService) {
       formData = {
         ...formData,
         serviceType: selectedService.serviceCategoryId.type,
@@ -194,13 +215,13 @@ export default function BookService() {
           deviceAdditionalInfo: deviceAdditionalInfo,
         },
       };
-    } else if (st === "ss") {
+    } else if (serviceType.subService) {
       formData = {
         ...formData,
         serviceType: selectedService.serviceCategoryId.type,
         price: prodPrice,
       };
-    } else if (st === "ds") {
+    } else if (serviceType.directService) {
       formData = {
         ...formData,
         serviceType: selectedService.type,
@@ -210,7 +231,6 @@ export default function BookService() {
     console.log("formdata", formData);
 
     try {
-      // const response = await axios.post("/api/services", payload);
       const response = await createServiceOrder(formData);
       // console.log("Service Order created successfully:", response.data);
 
@@ -222,9 +242,18 @@ export default function BookService() {
       }
     } catch (error) {
       console.error("Error creating service:", error);
-      // Handle error (e.g., show an error message)
     }
   };
+
+  function getHeadingTitle() {
+    if (serviceType.directService) {
+      return ` To book ${selectedService?.name} provide below details to confirm the order.`;
+    } else if (serviceType.brandsService) {
+      return ` To book ${selectedService?.name} ${selectedService?.serviceCategoryId?.name} provide below details for service confirmation.`;
+    } else if (serviceType.subService) {
+      return ` To purchase ${selectedService?.name} provide below details to book the order.`;
+    }
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -245,158 +274,70 @@ export default function BookService() {
       </Helmet>
 
       <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">
+        {/* Home > Cat > Brand */}
         <div className="mx-0 mb-6">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center opacity-60 gap-1 max-sm:text-sm">
-              <Link to={"/"}>Home</Link>
-              <FaAngleRight />
-              <Link
-                className={`${st === "ds" ? `` : `max-sm:hidden`}`}
-                to={"/services"}
-              >
-                Service
-              </Link>
-              <Link
-                className={`${st === "ds" ? `hidden` : `sm:hidden`}`}
-                to={"/services"}
-              >
-                ...
-              </Link>
-              <FaAngleRight />
-              {st === "ds" && selectedService ? (
-                <Link>{selectedService.name}</Link>
-              ) : null}
-              {st === "b" && selectedService ? (
-                <>
-                  <Link
-                    className="max-sm:hidden"
-                    to={`/services/serviceBrands/${selectedService.serviceCategoryId._id}`}
-                  >
-                    {selectedService.serviceCategoryId.name}
-                  </Link>
-                  <Link
-                    className="sm:hidden"
-                    to={`/services/serviceBrands/${selectedService.serviceCategoryId._id}`}
-                  >
-                    ...
-                  </Link>
-                  <FaAngleRight />
-                  <Link
-                    to={`/services/serviceBrandProblems/${selectedService._id}`}
-                  >
-                    {selectedService.name}
-                  </Link>
-                </>
-              ) : null}
-              {st === "ss" && selectedService ? (
-                <>
-                  <Link
-                    className="max-sm:hidden"
-                    to={`/services/serviceSubCategory/${selectedService.serviceCategoryId._id}`}
-                  >
-                    {selectedService.serviceCategoryId.name}
-                  </Link>
-                  <Link
-                    className="sm:hidden"
-                    to={`/services/serviceSubCategory/${selectedService.serviceCategoryId._id}`}
-                  >
-                    ...
-                  </Link>
-                  <FaAngleRight />
-                  <Link>{selectedService.subServiceId.name}</Link>
-                  <FaAngleRight />
-                  <Link>{selectedService.name}</Link>
-                </>
-              ) : null}
-            </div>
-          </div>
-
-          <hr className="text-black mt-1" />
+          <ServiceBreadCrumbLinks
+            directService={{
+              link: `/services/book-service/${selectedService?._id}?st=${st}`,
+              label: selectedService?.name,
+              isLast: serviceType.directService,
+            }}
+            brandsService={
+              serviceType.brandsService && {
+                link: `/services/serviceBrands/${selectedService?.serviceCategoryId?._id}?st=${st}`,
+                label: selectedService?.serviceCategoryId?.name,
+                isLast: serviceType.brandsService,
+              }
+            }
+            subService={
+              serviceType.subService && {
+                link: `/services/serviceSubCategory/${selectedService?.serviceCategoryId?._id}?st=${st}`,
+                label: selectedService?.serviceCategoryId?.name,
+                isLast: serviceType.subService,
+              }
+            }
+          />
         </div>
 
         <div className={`flex flex-col`}>
-          <div
-            className={`flex justify-center w-full ${
-              st === "b" ? `flex-col` : `flex-row`
-            }`}
-          >
+          <div className={`flex flex-col justify-center w-full `}>
             {/* Heading for brand */}
-            <div>
-              {st === "b" ? (
-                <div className="flex flex-col items-center w-full mb-5">
-                  <h2 className="text-lg max-sm:text-sm">
-                    To book{" "}
-                    <span className="font-semibold">
-                      {selectedService?.serviceCategoryId?.name}
-                    </span>{" "}
-                    for{" "}
-                    <span className="font-semibold">
-                      {selectedService?.name}{" "}
-                    </span>
-                    provide below details for service confirmation.
-                  </h2>
-                </div>
-              ) : null}
-            </div>
+            <h1 className="text-center text-lg max-sm:text-sm mb-5">
+              {getHeadingTitle()}
+            </h1>
 
             <div
               className={`w-full flex ${
-                st === "b"
+                serviceType.brandsService
                   ? `flex-row justify-center`
                   : `flex-col items-center justify-center`
               }`}
             >
-              <div className="mb-2">
-                {st === "ds" ? (
-                  <div>
-                    <h2 className="mb-1">
-                      To book{" "}
-                      <span className="font-semibold">
-                        {selectedService?.name}{" "}
-                      </span>{" "}
-                      provide below details to confirm the order.
-                    </h2>
-                  </div>
-                ) : null}
-                {st === "b" ? (
-                  <div className="flex flex-col items-center w-full max-sm:hidden">
-                    {serviceProblemsData.length > 0 ? (
-                      <div className="w-fit mt-2 px-4 py-1 max-h-[500px] overflow-y-auto scrollbar max-sm:text-sm max-sm:w-full">
-                        <h2 className="font-semibold border-b mb-1">
-                          Selected Problems
-                        </h2>
-                        {serviceProblemsData.map((sp, i) => (
-                          <div key={i}>
-                            <span>{sp.serviceProblem}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                ) : null}
-                {st === "ss" ? (
-                  <div>
-                    <h2>
-                      To purchase{" "}
-                      <span className="font-semibold">
-                        {selectedService?.name}{" "}
-                      </span>{" "}
-                      provide below details to book the order.
-                    </h2>
-                  </div>
-                ) : null}
+              {/* Showing Selected Problems */}
+              <div className="mb-2 max-sm:hidden">
+                {serviceType.brandsService &&
+                  serviceProblemsData.length > 0 && (
+                    <div className="w-fit mt-2 px-4 py-1 max-h-[500px] overflow-y-auto scrollbar max-sm:text-sm max-sm:w-full">
+                      <h2 className="font-semibold border-b mb-1">
+                        Selected Problems
+                      </h2>
+                      {serviceProblemsData.map((sp, i) => (
+                        <div key={i}>
+                          <span>{sp.serviceProblem}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
               </div>
 
               {/* FORM TO COLLECT DETAILS */}
               <div className="mx-auto w-1/2 border pb-5 max-sm:w-full">
                 <div className="flex flex-col ">
-                  <div className="relative py-2 text-center bg-secondary text-lg text-white">
-                    <p>Provide Details For Booking</p>
-                  </div>
-
-                  {/* Sub Service / Furniture */}
-                  {selectedService?.serviceCategoryId?.type ===
-                    "ServiceSubCategory" && (
+                  <p className="py-2 text-center bg-secondary text-lg text-white">
+                    Provide Details For Booking
+                  </p>
+                  {/* Sub Service - Product Image and Price Details */}
+                  {serviceType.subService && (
                     <div className="grid grid-cols-2 cursor-pointer items-center mx-auto w-full h-full border-b px-4 pb-2 mt-2 bg-white sm:min-w-full">
                       <div className="flex w-36 h-28 items-center justify-center mx-auto max-sm:w-24 max-sm:h-24">
                         <img
@@ -409,22 +350,20 @@ export default function BookService() {
                         />
                       </div>
                       <div className=" mt-2 flex- flex flex-col horizontal items-start justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                        <div className="text-[12px] font-[500] pl-2 leading-7 max-sm:text-xs">
-                          <span>{selectedService.name}</span>
-                        </div>
+                        <p className="text-[12px] font-[500] pl-2 leading-7 max-sm:text-xs">
+                          {selectedService.name}
+                        </p>
 
                         {/* Prod Desc */}
-                        <div className="text-sm font-semibold text-start pl-2 max-sm:text-xs">
-                          <span>{selectedService.description}</span>
-                        </div>
+                        <p className="text-sm font-semibold text-start pl-2 max-sm:text-xs">
+                          {selectedService.description}
+                        </p>
 
                         {/* PRICING */}
                         <div className="flex mt-2 pl-2 py-1 items-center gap-1">
-                          <div>
-                            <span className="text-red-500 font-semibold text-lg">
-                              ₹{prodPrice}
-                            </span>
-                          </div>
+                          <p className="text-red-500 font-semibold text-lg">
+                            ₹{prodPrice}
+                          </p>
                           <div className="flex items-center gap-1">
                             <span className="text-red-500 line-through text-xs">
                               MRP-{selectedService.price}
@@ -439,10 +378,10 @@ export default function BookService() {
                     </div>
                   )}
 
-                  {st === "b" && (
-                    <div className="w-full py-2 px-4 max-sm:px-2">
-                      <div className="flex items-center justify-around gap-2">
-                        {/* Button to Open Modal */}
+                  {/* Electronics / Brands Services Price Listing Modal */}
+                  {serviceType.brandsService && (
+                    <>
+                      <div className="w-full p-2 flex items-center justify-around gap-2">
                         <button
                           onClick={() => setIsModalOpen(true)}
                           className="text-sm max-sm:text-xs bg-green-600 text-white px-3 py-1 max-sm:px-2 rounded-full font-semibold"
@@ -460,15 +399,14 @@ export default function BookService() {
                           setIsModalOpen={setIsModalOpen}
                         />
                       )}
-                    </div>
+                    </>
                   )}
 
-                  <div className="mt-5 text-center text-lg">
-                    <p>Schedule a Date & Time</p>
-                  </div>
-
-                  {/* DATE & TIME */}
-                  <div className="flex justify-center">
+                  {/* Date and Time Picker */}
+                  <div className="mt-5 flex max-sm:flex-col justify-center items-center gap-2">
+                    <p className="text-center text-lg max-md:text-sm">
+                      Schedule a Date & Time
+                    </p>
                     <DateAndTime
                       label={false}
                       showPreviousDate={false}
@@ -477,159 +415,125 @@ export default function BookService() {
                   </div>
 
                   {/* Electronic devices additional details */}
-                  {selectedService?.serviceCategoryId?.type === "Brand" && (
-                    <>
-                      <div className="mt-5 text-center text-lg">
-                        <h2>
-                          Enter Details about your{" "}
-                          {
-                            selectedService?.serviceCategoryId?.name.split(
-                              " "
-                            )[0]
-                          }
-                        </h2>
+                  {serviceType.brandsService && (
+                    <div className="mt-5 text-center text-lg max-sm:text-sm">
+                      <p>
+                        Enter Details about your{" "}
+                        {selectedService?.serviceCategoryId?.name.split(" ")[0]}
+                      </p>
+
+                      <div className="flex flex-col gap-3 mt-5 pl-5 pr-2">
+                        {/* DeviceNameModel Field */}
+                        <DeviceInfo
+                          label="Enter Name & Model"
+                          deviceInfo="deviceNameModel"
+                          required
+                        >
+                          <input
+                            {...register("deviceNameModel")}
+                            placeholder="Name & Model"
+                            className="border-b"
+                          />
+                          {errors.deviceNameModel && (
+                            <p className={ERROR_STYLE}>
+                              {errors.deviceNameModel.message}
+                            </p>
+                          )}
+                        </DeviceInfo>
+
+                        {/* DeviceAdditionalInfo Field */}
+                        <DeviceInfo
+                          label="Add Addtional Info"
+                          deviceInfo="deviceAdditionalInfo"
+                        >
+                          <input
+                            {...register("deviceAdditionalInfo")}
+                            placeholder="Add additional information"
+                            className="border-b"
+                          />
+                        </DeviceInfo>
                       </div>
-                      <div>
-                        <div className="flex flex-col gap-3 mt-5 pl-5 pr-2">
-                          <div className="flex items-center gap-4 max-2sm:flex-col max-2sm:items-start max-2sm:gap-1">
-                            <label htmlFor="" className="text-[15px]">
-                              Enter Name & Model
-                              <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              name=""
-                              onChange={(e) =>
-                                setDeviceNameModel(e.target.value)
-                              }
-                              placeholder="Name & Model"
-                              className="border-b"
-                              required
-                            />
-                          </div>
-                          <div className="flex items-center gap-4 max-2sm:flex-col max-2sm:items-start max-2sm:gap-1">
-                            <label htmlFor="" className="text-[15px]">
-                              Add any additional information
-                            </label>
-                            <input
-                              type="text"
-                              name=""
-                              onChange={(e) =>
-                                setDeviceAdditionalInfo(e.target.value)
-                              }
-                              placeholder="Additional info"
-                              className="border-b"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </>
+                    </div>
                   )}
 
                   <div className="mt-5 text-center text-lg">
-                    <p>Your Contact Details</p>
+                    Your Contact Details
                   </div>
                   <form
-                    onSubmit={handleSubmit}
+                    onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-3 mt-5 pl-5 pr-2"
                   >
+                    {/* Name Field */}
                     <div>
-                      {/* <label htmlFor="">Name</label> */}
                       <input
-                        type="text"
-                        name="name"
-                        onChange={(e) => setName(e.target.value)}
+                        {...register("name")}
                         placeholder="Full Name"
                         className="border-b w-full"
-                        required
                       />
+                      {errors.name && (
+                        <p className={ERROR_STYLE}>{errors.name.message}</p>
+                      )}
                     </div>
+                    {/* Email Field */}
                     <div>
                       <input
-                        type="text"
-                        name="address"
-                        onChange={(e) => setAddress(e.target.value)}
-                        placeholder="Flat / Building / Street"
-                        className="border-b w-full"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="number"
-                        name="pincode"
-                        value={pincode}
-                        onInput={handlePinCodeChange}
-                        placeholder="Enter Area PinCode here"
-                        className="border-b w-full"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="email"
-                        name="email"
-                        onChange={(e) => setEmail(e.target.value)}
+                        {...register("email")}
                         placeholder="Email"
                         className="border-b w-full"
-                        required
                       />
+                      {errors.email && (
+                        <p className={ERROR_STYLE}>{errors.email.message}</p>
+                      )}
                     </div>
                     <div>
+                      {/* Phone Field */}
                       <input
-                        type="number"
-                        name="phone"
-                        value={phone}
-                        // onChange={(e) => handlePhoneChange(e)}
-                        // onKeyPress={handleKeyPress}
-                        onChange={handlePhoneChange}
+                        {...register("phone")}
                         placeholder="Mobile No"
                         className="border-b w-full"
-                        required
                       />
+                      {errors.phone && (
+                        <p className={ERROR_STYLE}>{errors.phone.message}</p>
+                      )}
+                    </div>
+                    {/* Address Field */}
+                    <div>
+                      <input
+                        {...register("address")}
+                        placeholder="Flat / Building / Street"
+                        className="border-b w-full"
+                      />
+                      {errors.address && (
+                        <p className={ERROR_STYLE}>{errors.address.message}</p>
+                      )}
+                    </div>
+                    {/* Pincode Field */}
+                    <div>
+                      <input
+                        {...register("pincode")}
+                        placeholder="Enter Area PinCode here"
+                        className="border-b w-full"
+                      />
+                      {errors.pincode && (
+                        <p className={ERROR_STYLE}>{errors.pincode.message}</p>
+                      )}
                     </div>
 
                     <div>
-                      {/* <input
-                        type="submit"
-                        value={`${
-                          !createServiceOrderLoading ? "Book Now" : "Loading..."
-                        } `}
-                        className="border rounded px-2 py-1 w-1/5 max-sm:w-fit bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
-                        disabled={createServiceOrderLoading}
-                      /> */}
                       <InputSubmitBtn
                         loading={createServiceOrderLoading}
                         label="Book Now"
                       />
                     </div>
-                    {st !== "ss" ? (
-                      <div>
-                        <h2 className="text-center bg-yellow-400 text-lg max-sm:text-sm">
-                          Rs.{inspectionCharges} charges for inspection at your
-                          doorstep
-                        </h2>
-                      </div>
-                    ) : (
-                      <div>
-                        <h2 className="text-center bg-yellow-400 text-lg max-sm:text-sm">
-                          Rs.{inspectionCharges} Delivery charges to your
-                          doorstep
-                        </h2>
-                      </div>
-                    )}
-                    <div>
-                      {st === "ds" ? (
-                        <>
-                          <h3 className="bg-red-600 text-white text-center w-fit mx-auto px-1 max-2sm:text-xs">
-                            <span className="font-bold">Note:</span> Final price
-                            will be provided after full inspection.
-                          </h3>
-                        </>
-                      ) : null}
-                    </div>
                   </form>
+                </div>
+
+                {/* Inspection charges */}
+                <div className="w-full mt-5 text-center flex flex-col gap-2">
+                  <InspectionCharges
+                    serviceType={serviceType}
+                    inspectionCharges={inspectionCharges}
+                  />
                 </div>
               </div>
             </div>
@@ -644,4 +548,113 @@ export default function BookService() {
       {/* <ServiceContent /> */}
     </>
   );
+}
+
+const DeviceInfo = ({ label, deviceInfo, required, children }) => {
+  return (
+    <div className="flex max-sm:flex-co items-center max-sm:items-start gap-4 max-sm:gap-2">
+      <label htmlFor={deviceInfo} className="text-[15px]">
+        {label}
+        {required && <span className="text-red-500">*</span>}
+      </label>
+
+      {children}
+    </div>
+  );
+};
+
+const InspectionCharges = ({ serviceType, inspectionCharges }) => {
+  const { directService, brandsService, subService } = serviceType;
+
+  if (!subService && !brandsService && !directService) return null; // Return early if no valid serviceType
+
+  return (
+    <>
+      <h2 className="text-center bg-yellow-400 text-lg max-sm:text-sm">
+        Rs.{inspectionCharges}{" "}
+        {subService ? "Delivery" : "charges for inspection"} at your doorstep
+      </h2>
+      {directService && (
+        <h3 className="bg-red-600 text-white w-fit mx-auto px-1 max-2sm:text-xs">
+          <b>Note:</b> Final price will be provided after full inspection.
+        </h3>
+      )}
+    </>
+  );
+};
+
+// Old handleSubmit
+{
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // console.log(
+  //   //   selectedDate,
+  //   //   time,
+  //   //   name,
+  //   //   address,
+  //   //   email,
+  //   //   phone,
+  //   //   pincode,
+  //   //   deviceNameModel,
+  //   //   deviceAdditionalInfo
+  //   // );
+  //   if (!schedulePickUp) {
+  //     toast.warning("Kindly Select Schedule Date");
+  //     return;
+  //   }
+  //   let formData = {
+  //     selectedService: selectedService,
+  //     customerName: name,
+  //     email: email,
+  //     phone: phone,
+  //     address: address,
+  //     pincode,
+  //     // scheduleDate: selectedDate,
+  //     scheduleDate: schedulePickUp,
+  //     // scheduleTime: time,
+  //     status: {
+  //       pending: true,
+  //       completed: false,
+  //       cancelled: false,
+  //     },
+  //     inspectionCharges,
+  //   };
+  //   if (st === "b") {
+  //     formData = {
+  //       ...formData,
+  //       serviceType: selectedService.serviceCategoryId.type,
+  //       problems: serviceProblemsData,
+  //       deviceInfo: {
+  //         deviceNameModel: deviceNameModel,
+  //         deviceAdditionalInfo: deviceAdditionalInfo,
+  //       },
+  //     };
+  //   } else if (st === "ss") {
+  //     formData = {
+  //       ...formData,
+  //       serviceType: selectedService.serviceCategoryId.type,
+  //       price: prodPrice,
+  //     };
+  //   } else if (st === "ds") {
+  //     formData = {
+  //       ...formData,
+  //       serviceType: selectedService.type,
+  //     };
+  //   }
+  //   console.log("formdata", formData);
+  //   try {
+  //     // const response = await axios.post("/api/services", payload);
+  //     const response = await createServiceOrder(formData);
+  //     // console.log("Service Order created successfully:", response.data);
+  //     if (response.data.success) {
+  //       toast.success(
+  //         "Service ordered successfully, kindly check your email for confirmation"
+  //       );
+  //       navigate(`/services`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating service:", error);
+  //     // Handle error (e.g., show an error message)
+  //   }
+  // };
 }

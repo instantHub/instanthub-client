@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 import Loading from "../../components/loader/Loading";
 import ProductCard from "../../components/ProductCard";
 import SellContent from "../../components/static/SellContent";
-import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 import SeriesButton from "../../components/SeriesButton";
 
 const Products = () => {

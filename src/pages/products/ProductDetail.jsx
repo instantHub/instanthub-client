@@ -5,7 +5,7 @@ import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/loader/Loading";
 import SellContent from "../../components/static/SellContent";
-import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 
 const ProductDetail = () => {
   const { prodId } = useParams();

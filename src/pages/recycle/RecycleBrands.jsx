@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 import Loading from "../../components/loader/Loading";
 import ItemGrid from "../../components/ItemGrid";
 import RecycleContent from "./RecycleContent";
-import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 
 const RecycleBrands = () => {
   const { catId } = useParams();

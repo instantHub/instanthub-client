@@ -7,7 +7,7 @@ import { FaTimes } from "react-icons/fa";
 import ProductCard from "../../components/ProductCard";
 import Loading from "../../components/loader/Loading";
 import RecycleContent from "./RecycleContent";
-import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 import SeriesButton from "../../components/SeriesButton";
 
 const RecycleProducts = () => {

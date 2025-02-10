@@ -10,7 +10,7 @@ import Loading from "../../components/loader/Loading";
 import RecycleContent from "./RecycleContent";
 import LocationSelector from "../../components/LocationSelector";
 import { LAPTOP, MOBILE } from "../../utils/constants";
-import BreadCrumbLinks from "../../components/BreadCrumbLinks";
+import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 import DateAndTime from "../../components/DateAndTime/DateAndTime";
 import { SubmitButton } from "../../admin/components/SubmitButton";
 import InputSubmitBtn from "../../components/InputSubmitBtn";
