@@ -24,8 +24,10 @@ function Condtions() {
     conditionName: "",
     page: "",
     keyword: "",
-    isYesNoType: false,
     description: "",
+    isYesNoType: false,
+    isMandatory: false,
+    showLabelsImage: false,
   });
 
   console.log("formData", formData);
@@ -39,6 +41,14 @@ function Condtions() {
   };
 
   console.log("condition formData", formData);
+
+  function handleCheckBox(e) {
+    console.log(e.target, e.target.checked);
+    const { name } = e.target;
+    setFormData((prev) => {
+      return { ...prev, [name]: !prev[name] };
+    });
+  }
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -147,7 +157,7 @@ function Condtions() {
               />
 
               {/* Yes & No */}
-              <div className="flex items-center gap-1">
+              {/* <div className="flex items-center gap-1">
                 <label>is it Yes & No Condition:</label>
                 <select
                   name="isYesNoType"
@@ -164,6 +174,41 @@ function Condtions() {
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                 </select>
+              </div> */}
+            </div>
+
+            {/* Checkboxes */}
+            <div className="flex items-center gap-2 text-sm max-sm:text-xs">
+              {/* Yes & No */}
+              <div className="flex items-center gap-1">
+                <label>Yes & No Condition:</label>
+                <input
+                  type="checkbox"
+                  name="isYesNoType"
+                  checked={formData.isYesNoType}
+                  onChange={handleCheckBox}
+                />
+              </div>
+              {/* Is Mandatory */}
+              <div className="flex items-center gap-1">
+                <label>Mandatory:</label>
+                <input
+                  type="checkbox"
+                  name="isMandatory"
+                  checked={formData.isMandatory}
+                  onChange={handleCheckBox}
+                />
+              </div>
+              {/* Show Images */}
+              <div className="flex items-center gap-1">
+                <label>Show Images:</label>
+                <input
+                  type="checkbox"
+                  name="showLabelsImage"
+                  checked={formData.showLabelsImage}
+                  disabled={formData.isYesNoType}
+                  onChange={handleCheckBox}
+                />
               </div>
             </div>
 

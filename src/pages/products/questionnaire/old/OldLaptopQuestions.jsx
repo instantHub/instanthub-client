@@ -208,7 +208,7 @@ const LaptopsQuestions = (props) => {
       );
     } else if (conditionName === "Ram") {
       setRam({ conditionLabel, priceDrop });
-      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "RAM" }));
+      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "Ram" }));
     }
   };
 

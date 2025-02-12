@@ -1,25 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { LAPTOP, LAPTOP_DESKTOP } from "../../utils/constants";
 
 const initialState = {
   productName: "",
   productImage: "",
   productCategory: "",
-  productAge: {},
-  productScreenCondition: {},
-  productPhysicalCondition: {},
-  productPanelCondition: {},
-  productDisplayDefect: {},
-  productBox: {},
-  productBill: {},
-  productCharger: {},
+
   getUpTo: {
     variantName: "",
     price: null,
   },
-  toBeDeducted: 0,
+
   toBeAdded: 0,
-  finalPrice: 0,
+  toBeDeducted: 0,
+  // finalPrice: 0,
+
   deductions: [],
+  singleDeductions: {},
 };
 
 export const deductionSlice = createSlice({
@@ -41,267 +38,137 @@ export const deductionSlice = createSlice({
         },
       };
     },
+
     addDeductions: (state, action) => {
-      // console.log("addDeduction Reducer", action.payload);
+      console.log("addDeduction Reducer", action.payload);
 
-      // let productCategory = state.productCategory.toLowerCase();
-      let laptopCategory = state.productCategory.toLowerCase() === "laptop";
-      let desktopCategory = state.productCategory.toLowerCase() === "desktop";
-      const configItems = ["Hard Disk", "RAM"];
-
-      if (
-        (laptopCategory || desktopCategory) &&
-        action.payload.type === "Processor"
-      ) {
-        console.log("Processor", action.payload);
-        return {
-          ...state,
-          deductions: [...state.deductions, action.payload],
-        };
-      }
-
-      if (
-        (laptopCategory || desktopCategory) &&
-        configItems.includes(action.payload.type)
-      ) {
-        console.log("Hard Disk or RAM", action.payload);
-        if (action.payload.operation === "Subtrack") {
-          return {
-            ...state,
-            toBeDeducted: Math.ceil(
-              state.toBeDeducted + action.payload.priceDrop
-            ),
-            deductions: [...state.deductions, action.payload],
-          };
-        } else if (action.payload.operation === "Add") {
-          return {
-            ...state,
-            toBeAdded: Math.ceil(state.toBeAdded + action.payload.priceDrop),
-            deductions: [...state.deductions, action.payload],
-          };
-        }
-      }
+      let { condition, conditionLabel } = action.payload;
+      // console.log(condition, conditionLabel);
 
       // Check if action.payload already exists in deductions
-      const isExisting = state.deductions.some((condition) => {
-        return condition.conditionLabel === action.payload.conditionLabel;
+      const isExisting = state.deductions.some((deduction) => {
+        return deduction.conditionLabel === conditionLabel.conditionLabel;
       });
 
       if (!isExisting) {
-        if (action.payload.operation === "Subtrack") {
-          // console.log("state", state.productCategory);
-          return {
-            ...state,
+        state.deductions = [
+          ...state.deductions,
+          { ...conditionLabel, type: condition.keyword },
+        ];
+      } else {
+        const filteredData = state.deductions.filter(
+          (d) => d.conditionLabel !== conditionLabel.conditionLabel
+        );
+        state.deductions = filteredData;
+      }
+    },
 
-            // DIRECT
-            // toBeDeducted: Math.ceil(state.toBeDeducted + action.payload.priceDrop),
+    addSingleDeductions: (state, action) => {
+      console.log("addSingleDeductions Reducer", action.payload);
+      let { condition, conditionLabel } = action.payload;
+      // console.log(condition, conditionLabel);
 
-            // PERCENTAGE
-            toBeDeducted: Math.ceil(
-              state.toBeDeducted +
-                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-            ),
-            // Push deduction into deductions array
-            deductions: [...state.deductions, action.payload],
-          };
-        } else if (action.payload.operation === "Add") {
-          return {
-            ...state,
-            toBeAdded: Math.ceil(
-              state.toBeAdded +
-                (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-            ),
-            // Push deduction into deductions array
-            deductions: [...state.deductions, action.payload],
-          };
+      const exisitingCondition = Object.entries(state.singleDeductions).some(
+        ([keyword, _]) => keyword === condition.keyword
+      );
+      console.log("exisitingCondition", exisitingCondition);
+
+      // Single Selection but not mandatory like Display Defects
+      if (exisitingCondition && !condition.isMandatory) {
+        if (
+          state.singleDeductions[condition.keyword].conditionLabel ==
+          conditionLabel.conditionLabel
+        ) {
+          // state.singleDeductions[condition.keyword] = {};
+          delete state.singleDeductions[condition.keyword];
+          return;
         }
       }
-    },
-    addProductAge: (state, action) => {
-      console.log("addProductAge reducer", action.payload);
-      // console.log(initialState);
-      return {
-        ...state,
-        productAge: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-          type: action.payload.type,
-        },
-      };
-    },
-    addProductScreenCondition: (state, action) => {
-      return {
-        ...state,
-        productScreenCondition: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-          type: action.payload.type,
-        },
-      };
-    },
-    addProductPhysicalCondition: (state, action) => {
-      // console.log("addProductPhysicalCondition Slice");
-      return {
-        ...state,
-        productPhysicalCondition: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-          type: action.payload.type,
-        },
-      };
-    },
-    // Accessories
-    addProductBox: (state, action) => {
-      // console.log("addProductBox Slice");
-      return {
-        ...state,
-        productBox: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-          type: action.payload.type,
-        },
-      };
-    },
 
-    addProductGSTBill: (state, action) => {
-      // console.log("addProductGSTBill Slice");
-      return {
-        ...state,
-        productBill: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-          type: action.payload.type,
-        },
-      };
-    },
-
-    addProductCharger: (state, action) => {
-      // console.log("addProductCharger Slice");
-      return {
-        ...state,
-        productCharger: {
-          conditionLabel: action.payload.conditionLabel,
-          priceDrop: action.payload.priceDrop,
-          operation: action.payload.operation,
-          type: action.payload.type,
-        },
-      };
-    },
-
-    addProductDisplayDefect: (state, action) => {
-      console.log("addProductDisplayDefect Slice");
-
-      // Check if action.payload already exists in deductions
-      const isExisting =
-        state.productDisplayDefect.conditionLabel ===
-        action.payload.conditionLabel;
-      if (isExisting) {
-        return {
-          ...state,
-          productDisplayDefect: {},
-        };
+      if (exisitingCondition) {
+        Object.entries(state.singleDeductions).forEach(([keyword, _]) => {
+          if (keyword == condition.keyword) {
+            state.singleDeductions[keyword] = conditionLabel;
+          }
+        });
       } else {
-        return {
-          ...state,
-          productDisplayDefect: {
-            conditionLabel: action.payload.conditionLabel,
-            priceDrop: action.payload.priceDrop,
-            operation: action.payload.operation,
-            type: action.payload.type,
-          },
-        };
+        state.singleDeductions[condition.keyword] = conditionLabel;
       }
     },
-    removeDeductions: (state, action) => {
-      // console.log("removeDeductions reducer", action.payload);
 
-      // Check if action.payload already exists in deductions
-      const isExisting = state.deductions.some((condition) => {
-        return condition.conditionLabel === action.payload.conditionLabel;
+    performCalculation: (state, _) => {
+      console.log("performCalculation Reducer");
+
+      let category = state.productCategory.toLowerCase();
+      let PROCESSOR_CATEGORY = LAPTOP_DESKTOP.includes(category);
+      console.log("PROCESSOR_CATEGORY", PROCESSOR_CATEGORY);
+
+      const CONFIG_ITEMS = ["Hard Disk", "Ram"];
+
+      function percentageCal(priceDrop) {
+        return Math.ceil((state.getUpTo.price * Number(priceDrop)) / 100);
+      }
+
+      let amountToBeAdded = 0;
+      let amountToBeDeducted = 0;
+
+      // Calculation on single deduction entries
+      const deductionEntries = Object.entries(state.singleDeductions);
+      deductionEntries.forEach(([_, label]) => {
+        const ADD_OPERATION = label?.operation?.toLowerCase() === "add";
+        const { priceDrop, type } = label;
+
+        // Do not perform calculation on processor
+        if (PROCESSOR_CATEGORY && label.type === "Processor") {
+          console.log("Skip Processor calculation");
+          return;
+        }
+
+        // Normal calculation for Hard Disk and Ram
+        if (PROCESSOR_CATEGORY && CONFIG_ITEMS.includes(type)) {
+          console.log("Hard Disk or Ram", label);
+
+          if (ADD_OPERATION) {
+            amountToBeAdded += Math.ceil(priceDrop + state.toBeAdded);
+          } else {
+            console.log("Perfrom subract on Hard Disk & Ram");
+            amountToBeDeducted += Math.ceil(priceDrop + state.toBeDeducted);
+          }
+
+          return;
+        }
+
+        if (ADD_OPERATION) {
+          amountToBeAdded += percentageCal(priceDrop);
+        } else {
+          amountToBeDeducted += percentageCal(priceDrop);
+        }
       });
 
-      if (isExisting) {
-        // Filter out the item from the deductions array if it exists
-        const updatedDeductions = state.deductions.filter(
-          (condition) =>
-            condition.conditionLabel !== action.payload.conditionLabel
-        );
+      // Calculation on deductions entries
+      state.deductions.forEach((deduction) => {
+        const ADD_OPERATION = deduction.operation.toLowerCase() === "add";
+        if (ADD_OPERATION)
+          amountToBeAdded += percentageCal(deduction.priceDrop);
+        else amountToBeDeducted += percentageCal(deduction.priceDrop);
+      });
 
-        if (action.payload.operation === "Subtrack") {
-          return {
-            ...state,
-            // Deduction based on Product Category
-            toBeDeducted: state.productCategory.toLowerCase().includes("mobile")
-              ? Math.ceil(
-                  state.toBeDeducted -
-                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
-                      100
-                )
-              : Math.ceil(state.toBeDeducted - action.payload.priceDrop),
-            // Add updated deduction to deductions array
-            deductions: updatedDeductions,
-          };
-        } else if (action.payload.operation === "Add") {
-          return {
-            ...state,
-            // Deduction based on Product Category
-            toBeAdded: state.productCategory.toLowerCase().includes("mobile")
-              ? Math.ceil(
-                  state.toBeAdded -
-                    (state.getUpTo.price * Number(action.payload.priceDrop)) /
-                      100
-                )
-              : Math.ceil(state.toBeAdded - action.payload.priceDrop),
-            // Add updated deduction to deductions array
-            deductions: updatedDeductions,
-          };
-        }
+      state.toBeAdded = amountToBeAdded;
+      state.toBeDeducted = amountToBeDeducted;
 
-        // if (action.payload.operation === "Subtrack") {
-        //   return {
-        //     ...state,
-        //     toBeDeducted: Math.ceil(
-        //       state.toBeDeducted -
-        //         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-        //     ),
-        //     deductions: updatedDeductions,
-        //   };
-        // } else if (action.payload.operation === "Add") {
-        //   return {
-        //     ...state,
-        //     toBeAdded: Math.ceil(
-        //       state.toBeAdded -
-        //         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-        //     ),
-        //     deductions: updatedDeductions,
-        //   };
-        // }
-
-        // return {
-        //   ...state,
-        //   toBeDeducted: state.toBeDeducted - Number(action.payload.priceDrop),
-        //   deductions: updatedDeductions,
-        // };
-      }
+      console.log(
+        `amountToBeAdded: ${amountToBeAdded}, amountToBeDeducted: ${amountToBeDeducted}`
+      );
     },
-    clearDeductions: (state, action) => {
+
+    clearDeductions: (state, _) => {
       return {
         ...state,
         toBeDeducted: 0,
         toBeAdded: 0,
-        productAge: {},
-        productScreenCondition: {},
-        productPhysicalCondition: {},
-        productDisplayDefect: {},
-        productBox: {},
-        productBill: {},
-        productCharger: {},
+
         deductions: [],
+        singleDeductions: {},
       };
     },
   },
@@ -309,16 +176,13 @@ export const deductionSlice = createSlice({
 
 export const {
   setGetUpto,
+
   addDeductions,
-  addProductAge,
-  addProductScreenCondition,
-  addProductPhysicalCondition,
-  addProductDisplayDefect,
-  addProductBox,
-  addProductGSTBill,
-  addProductCharger,
+  addSingleDeductions,
+
+  performCalculation,
+
   clearDeductions,
-  removeDeductions,
 } = deductionSlice.actions;
 
 export default deductionSlice.reducer;

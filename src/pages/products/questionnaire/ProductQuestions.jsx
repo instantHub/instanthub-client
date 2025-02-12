@@ -6,7 +6,6 @@ import {
   addDeductions,
   setGetUpto,
   clearDeductions,
-  removeDeductions,
 } from "../../../features/slices/deductionSlice";
 import { clearLaptopDeductions } from "../../../features/slices/laptopDeductionSlice";
 import { toast } from "react-toastify";
@@ -19,6 +18,7 @@ import Loading from "../../../components/loader/Loading";
 import ProgressBar from "../../../components/ProgressBar";
 import { LAPTOP_DESKTOP } from "../../../utils/constants";
 import NextPrevButton from "./NextPrevButton";
+import { groupConditionsByPage } from "../../../utils/helper";
 
 const ProductQuestions = () => {
   // Query Params
@@ -46,29 +46,6 @@ const ProductQuestions = () => {
 
   const [progressPercentage, setProgressPercentage] = useState(0);
 
-  const [condition, setCondition] = useState({
-    age: null,
-    physicalCondition: null,
-    screenCondition: null,
-    displayDefectCondition: null,
-
-    // Accessories
-    bill: null,
-    box: null,
-    charger: null,
-  });
-
-  const [pageIndices, setPageIndices] = useState({
-    age: null,
-    physicalCondition: null,
-    screenCondition: null,
-    displayDefectCondition: null,
-    // Accessories
-    bill: null,
-    box: null,
-    charger: null,
-  });
-
   const conditionMapping = {
     "physical condition": "physicalCondition",
     "screen condition": "screenCondition",
@@ -79,11 +56,8 @@ const ProductQuestions = () => {
     charger: "charger",
   };
 
-  const conditionNameSubHeading =
-    "text-lg font-medium text-gray-600 max-2sm:text-sm";
-
-  const handleLabelSelection = (label, price, operation, type) => {
-    // console.log("handleLabelSelection");
+  const handleLabelSelection = ({ label, price, operation, type }) => {
+    console.log("handleLabelSelection", label, price, operation, type);
     if (!selectedLabels.some((sl) => sl.conditionLabel == label)) {
       setSelectedLabels([
         ...selectedLabels,
@@ -103,40 +77,22 @@ const ProductQuestions = () => {
           (selectedLabel) => selectedLabel.conditionLabel !== label
         )
       );
-      dispatch(
-        removeDeductions({
-          conditionLabel: label,
-          priceDrop: price,
-          operation,
-          type,
-        })
-      );
+      // dispatch(
+      //   removeDeductions({
+      //     conditionLabel: label,
+      //     priceDrop: price,
+      //     operation,
+      //     type,
+      //   })
+      // );
     }
   };
 
   const handleContinue = () => {
-    // Accessories
-    // if (currentPageIndex === pageIndices.bill - 1 && condition.bill === null) {
-    //   toast.error("Select Bill to proceed..!");
-    //   return;
-    // }
-    // if (currentPageIndex === pageIndices.box - 1 && condition.box === null) {
-    //   toast.error("Select Box to proceed..!");
-    //   return;
-    // }
-    // if (
-    //   currentPageIndex === pageIndices.charger - 1 &&
-    //   condition.charger === null
-    // ) {
-    //   toast.error("Select Charger to proceed..!");
-    //   return;
-    // }
-
-    // console.log(sortedConditions[currentPageIndex]);
     let conditionNotSelected = false;
     sortedConditions[currentPageIndex].conditions.forEach((condition) => {
-      if (condition.isYesNoType && !condition.isSelected.selected) {
-        console.log("condition isYesNoType", condition);
+      if (condition.isMandatory && !condition.isSelected.selected) {
+        // console.log("condition isMandatory", condition);
         conditionNotSelected = true;
         return;
       }
@@ -147,28 +103,8 @@ const ProductQuestions = () => {
       conditionNotSelected = false;
       return;
     }
-    console.log("conditionNotSelected after checking", conditionNotSelected);
 
-    // if (currentPageIndex === pageIndices.age - 1 && condition.age === null) {
-    //   toast.error("Select Age to proceed..!");
-    //   return;
-    // }
-
-    // if (
-    //   currentPageIndex === pageIndices.physicalCondition - 1 &&
-    //   condition.physicalCondition === null
-    // ) {
-    //   toast.error("Select Physical Condition to proceed..!");
-    //   return;
-    // }
-
-    // if (
-    //   currentPageIndex === pageIndices.screenCondition - 1 &&
-    //   condition.screenCondition === null
-    // ) {
-    //   toast.error("Select Screen Condition to proceed..!");
-    //   return;
-    // }
+    // console.log("conditionNotSelected after checking", conditionNotSelected);
 
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
@@ -183,58 +119,9 @@ const ProductQuestions = () => {
     setShowOTP(false);
   };
 
-  // const sortedConditions = deductions ? groupConditionsByPage(deductions) : [];
   const sortedConditions = useMemo(() => {
     return deductions ? groupConditionsByPage(deductions) : [];
   }, [deductions]);
-
-  function groupConditionsByPage(conditions) {
-    console.log("IN groupConditionsByPage", conditions);
-    const grouped = conditions.reduce((acc, condition) => {
-      const { page } = condition;
-      // console.log("condition", condition);
-      if (!acc[page]) {
-        acc[page] = [];
-      }
-      // acc[page].push(condition);
-      const isSelected = { selected: false, selectedLabel: null };
-      acc[page].push({ ...condition, isSelected });
-      return acc;
-    }, {});
-
-    // Convert the grouped object into an array of pages with conditions
-    const sortedPages = Object.keys(grouped)
-      .sort((a, b) => a - b)
-      .map((page) => ({
-        page,
-        conditions: grouped[page],
-      }));
-
-    console.log("sortedPages", sortedPages);
-
-    return sortedPages;
-  }
-
-  // if no deduction questions found
-  if (productsData?.category?.name === "Mobile") {
-    if (productsData?.variantDeductions.length < 1) {
-      return (
-        <h2 className="my-[10%] mx-auto text-center">
-          No Questions Available Yet for Category{" "}
-          <span className="font-bold"> {productsData.category.name}</span>
-        </h2>
-      );
-    }
-  } else if (productsData?.category?.name !== "Mobile") {
-    if (productsData?.simpleDeductions.length < 1) {
-      return (
-        <h2 className="my-[10%] mx-auto text-center">
-          No Questions Available Yet for Category{" "}
-          <span className="font-bold"> {productsData.category.name}</span>
-        </h2>
-      );
-    }
-  }
 
   // UseEffect to clear Deductions on initial render from reducer
   useEffect(() => {
@@ -281,10 +168,10 @@ const ProductQuestions = () => {
             d.conditionName.toLowerCase().includes(cond)
           );
           if (key) {
-            setPageIndices((prev) => ({
-              ...prev,
-              [conditionMapping[key]]: d.page,
-            }));
+            // setPageIndices((prev) => ({
+            //   ...prev,
+            //   [conditionMapping[key]]: d.page,
+            // }));
           }
         });
       } else if (category.name !== "Mobile") {
@@ -296,10 +183,10 @@ const ProductQuestions = () => {
           );
 
           if (key) {
-            setPageIndices((prev) => ({
-              ...prev,
-              [conditionMapping[key]]: d.page,
-            }));
+            // setPageIndices((prev) => ({
+            //   ...prev,
+            //   [conditionMapping[key]]: d.page,
+            // }));
           }
         });
       }
@@ -382,7 +269,7 @@ const ProductQuestions = () => {
                       <div className="px-5 py-2 text-center font-extrabold text-2xl max-sm:text-lg">
                         <h2>{condition.conditionName}</h2>
                         <div className="text-center text-lg max-sm:text-sm mb-5">
-                          <p className={conditionNameSubHeading}>
+                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
                             {condition.description}
                           </p>
                         </div>
@@ -390,8 +277,7 @@ const ProductQuestions = () => {
 
                       <DeductionItems
                         condition={condition}
-                        setCondition={setCondition}
-                        handleLabelSelection={handleLabelSelection}
+                        // handleLabelSelection={handleLabelSelection}
                       />
                     </div>
                   )
@@ -410,7 +296,7 @@ const ProductQuestions = () => {
                 <LaptopsQuestions
                   productsData={productsData}
                   deductions={deductions}
-                  handleLabelSelection={handleLabelSelection}
+                  // handleLabelSelection={handleLabelSelection}
                 />
               )
             )}
@@ -491,6 +377,32 @@ const DeviceCheck = ({ productsData, setAboutDevice }) => {
     </div>
   );
 };
+
+// Important and Needed
+{
+  // // if no deduction questions found
+  // if (productsData?.category?.name === "Mobile") {
+  //   // const { category } = productsData;
+  //   if (productsData?.variantDeductions.length < 1) {
+  //     return (
+  //       <h2 className="my-[10%] mx-auto text-center">
+  //         No Questions Available Yet for Category{" "}
+  //         <b>{productsData.category.name}</b>
+  //       </h2>
+  //     );
+  //   }
+  // } else if (productsData?.category?.name !== "Mobile") {
+  //   // const { category } = productsData;
+  //   if (productsData?.simpleDeductions.length < 1) {
+  //     return (
+  //       <h2 className="my-[10%] mx-auto text-center">
+  //         No Questions Available Yet for Category{" "}
+  //         <b>{productsData.category.name}</b>
+  //       </h2>
+  //     );
+  //   }
+  // }
+}
 
 // getConditionSubTitle
 {

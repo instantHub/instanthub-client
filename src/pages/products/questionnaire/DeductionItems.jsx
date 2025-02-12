@@ -1,124 +1,49 @@
 import React, { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addProductScreenCondition,
-  addProductPhysicalCondition,
-  addProductDisplayDefect,
-  addProductAge,
-  addProductBox,
-  addProductGSTBill,
-  addProductCharger,
+  addDeductions,
+  // addProductScreenCondition,
+  // addProductPhysicalCondition,
+  // addProductDisplayDefect,
+  // addProductAge,
+  // addProductBox,
+  // addProductGSTBill,
+  // addProductCharger,
+  addSingleDeductions,
 } from "../../../features/slices/deductionSlice";
 
 import { BsCircle } from "react-icons/bs";
 
-const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
-  const { conditionName, conditionLabels, keyword, isYesNoType } = condition;
+const DeductionItems = ({ condition, handleLabelSelection }) => {
+  const {
+    conditionName,
+    conditionLabels,
+    keyword,
+    isYesNoType,
+    isMandatory,
+    showLabelsImage: shouldShowImage,
+  } = condition;
 
-  console.log("DeductionItems Component Re-rendering");
+  // console.log("DeductionItems Component Re-rendering");
 
   const [selected, setSelected] = useState(false);
 
   const deductionData = useSelector((state) => state.deductions.deductions);
   const deductionSliceData = useSelector((state) => state.deductions);
   // console.log("deductionData", deductionData);
-  // console.log("deductionSliceData", deductionSliceData);
+  console.log("deductionSliceData", deductionSliceData);
 
   const dispatch = useDispatch();
 
-  // Determine if the image should be shown based on the condition name
-  const shouldShowImage = ![
-    "age",
-    "screen size",
-    "screen condition",
-    "physical condition",
-    "bill",
-    "box",
-    "charger",
-  ].some((c) => conditionName.toLowerCase().includes(c));
-
-  const isLabelSelected = (conditionLabel) => {
-    return [
-      deductionSliceData.productPhysicalCondition.conditionLabel,
-      deductionSliceData.productScreenCondition.conditionLabel,
-      deductionSliceData.productAge.conditionLabel,
-      deductionSliceData.productBill.conditionLabel,
-      deductionSliceData.productBox.conditionLabel,
-      deductionSliceData.productCharger.conditionLabel,
-    ].includes(conditionLabel);
-  };
-
   const handleOnClick = (label) => {
-    // if (shouldShowImage) {
-    //   if (!conditionName.toLowerCase().includes("defects")) {
-    //     handleLabelSelection(
-    //       label.conditionLabel,
-    //       label.priceDrop,
-    //       label.operation,
-    //       type
-    //     );
-    //   }
-    // }
-    // dispatchConditionAction(label);
+    if (condition.multiSelect)
+      dispatch(addDeductions({ condition, conditionLabel: label }));
+    else dispatch(addSingleDeductions({ condition, conditionLabel: label }));
 
     setSelected((prev) => !prev);
     condition.isSelected.selected = true;
     condition.isSelected.selectedLabel = label;
     console.log("checking condition", condition);
-  };
-
-  const dispatchConditionAction = (label) => {
-    const actionMap = {
-      defects: {
-        action: addProductDisplayDefect,
-        type: keyword,
-        conditioncondition: "displayDefectCondition",
-      },
-      "screen condition": {
-        action: addProductScreenCondition,
-        type: keyword,
-        condition: "screenCondition",
-      },
-      "physical condition": {
-        action: addProductPhysicalCondition,
-        // setState: setPhysicalCondition,
-        type: keyword,
-        condition: "physicalCondition",
-      },
-      age: {
-        action: addProductAge,
-        // setState: setAge,
-        type: keyword,
-        condition: "age",
-      },
-
-      // Accessories
-      bill: {
-        action: addProductGSTBill,
-        type: keyword,
-        condition: "bill",
-      },
-      box: {
-        action: addProductBox,
-        type: keyword,
-        condition: "box",
-      },
-      charger: {
-        action: addProductCharger,
-        type: keyword,
-        condition: "charger",
-      },
-    };
-
-    const matchedCondition = Object.entries(actionMap).find(([key]) =>
-      conditionName.toLowerCase().includes(key)
-    );
-
-    if (matchedCondition) {
-      const [, { action, type, condition }] = matchedCondition;
-      dispatch(action({ ...label, type }));
-      setCondition((prev) => ({ ...prev, [condition]: label }));
-    }
   };
 
   const type = conditionName;
@@ -139,24 +64,9 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
       }`}
     >
       {conditionLabels.map((label, index) => {
-        const labelSelected = isLabelSelected(label.conditionLabel);
-
-        // const isSelected =
-        //   deductionData.some(
-        //     (condLabel) => condLabel.conditionLabel === label.conditionLabel
-        //   ) ||
-        //   deductionSliceData.productDisplayDefect.conditionLabel ===
-        //     label.conditionLabel;
-
         const isSelected =
           condition?.isSelected?.selectedLabel?.conditionLabel ===
           label.conditionLabel;
-
-        // console.log(
-        //   "condition?.isSelected?.selectedLabel?.conditionLabel",
-        //   condition?.isSelected?.selectedLabel?.conditionLabel
-        // );
-        // console.log("label", label.conditionLabel);
 
         const borderClass = isSelected
           ? functionalProblems
@@ -168,8 +78,6 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
           ? functionalProblems
             ? "bg-red-500 text-white"
             : "bg-secondary text-white"
-          : labelSelected
-          ? "bg-white"
           : "bg-slate-100 text-black";
 
         return (
@@ -207,11 +115,7 @@ const DeductionItems = ({ condition, setCondition, handleLabelSelection }) => {
                     deductionData.some(
                       (condLabel) =>
                         condLabel.conditionLabel === label.conditionLabel
-                    ) ||
-                    deductionSliceData.productPhysicalCondition
-                      .conditionLabel === label.conditionLabel ||
-                    deductionSliceData.productScreenCondition.conditionLabel ===
-                      label.conditionLabel
+                    )
                       ? "text-secondary bg-white"
                       : "opacity-30"
                   }`}

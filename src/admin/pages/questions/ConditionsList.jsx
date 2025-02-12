@@ -16,6 +16,7 @@ const ConditionsList = () => {
   //   const [questions, setQuestions] = useState([]);
   const { data: conditions, isLoading: conditionsLoading } =
     useGetConditionsQuery();
+
   const { data: categories, isLoading: categoriesLoading } =
     useGetCategoryQuery();
   const [deleteCondition, { isLoading: deleteLoading }] =
@@ -28,6 +29,14 @@ const ConditionsList = () => {
   console.log("filterData from ConditionsList", filterData);
 
   const dispatch = useDispatch();
+
+  if (conditions) {
+    const cats = conditions.filter(
+      (cond) => cond.category.id === filterData?.category
+      // (cond) => cond.category.id === selectedCategory
+    );
+    console.log("conditions", cats);
+  }
 
   // Modal open for confirming Condition DELETE
   const openModal = (categoryId, categoryName, conditionId, conditionName) => {

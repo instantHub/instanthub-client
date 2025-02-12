@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addSingleDeductions,
   clearDeductions,
   setGetUpto,
 } from "../../../features/slices/deductionSlice";
@@ -27,13 +28,13 @@ const LaptopsQuestions = (props) => {
   const [processorBasedDeductions, setProcessorBasedDeductions] =
     useState(null);
 
+  const deductionSliceDate = useSelector((state) => state.deductions);
+  console.log("deductionSliceDate", deductionSliceDate);
+
   const dispatch = useDispatch();
 
   const [selected, setSelected] = useState(false);
   const [processorSelected, setProcessorSelected] = useState(false);
-
-  // const data = useSelector((state) => state.deductions);
-  // // console.log("useSelector", data);
 
   const groupConditionsByPage = (conditions) => {
     console.log("IN groupConditionsByPage laptop");
@@ -44,7 +45,8 @@ const LaptopsQuestions = (props) => {
       }
       // acc[page].push(condition);
       const isSelected = { selected: false, selectedLabel: null };
-      acc[page].push({ ...condition, isSelected });
+      const multiSelect = condition.conditionName.includes("Problem");
+      acc[page].push({ ...condition, isSelected, multiSelect });
       return acc;
     }, {});
 
@@ -94,9 +96,9 @@ const LaptopsQuestions = (props) => {
       );
       processorBasedDeductions[currentPageIndex - 1].conditions.forEach(
         (condition) => {
-          console.log(condition.isYesNoType, !condition.isSelected.selected);
-          if (condition.isYesNoType && !condition.isSelected.selected) {
-            console.log("condition isYesNoType", condition);
+          console.log(condition.isMandatory, !condition.isSelected.selected);
+          if (condition.isMandatory && !condition.isSelected.selected) {
+            console.log("condition isMandatory", condition);
             conditionNotSelected = true;
             return;
           }
@@ -114,10 +116,10 @@ const LaptopsQuestions = (props) => {
           : false;
         console.log("notSelected", configCond, notSelected);
         if (
-          (condition.isYesNoType && !condition.isSelected.selected) ||
+          (condition.isMandatory && !condition.isSelected.selected) ||
           notSelected
         ) {
-          console.log("condition isYesNoType", condition);
+          console.log("condition isMandatory", condition);
           conditionNotSelected = true;
           return;
         }
@@ -175,18 +177,25 @@ const LaptopsQuestions = (props) => {
       const procBasedDed = await getProcessorDeductions(conditionLabelId);
       // console.log("procBasedDed", procBasedDed);
 
-      setPagesFunc(procBasedDed);
+      // setPagesFunc(procBasedDed);
       setProcessorSelected((prev) => !prev);
 
       setSelectedFunc();
 
+      let cl = {
+        conditionLabel,
+        priceDrop,
+        operation,
+        type: "Processor",
+      };
+
+      dispatch(addProcessor(cl));
+
+      let processor = sortedConditions[0].conditions.find(
+        (d) => d.conditionName == "Processor"
+      );
       dispatch(
-        addProcessor({
-          conditionLabel,
-          priceDrop,
-          operation,
-          type: "Processor",
-        })
+        addSingleDeductions({ condition: processor, conditionLabel: cl })
       );
 
       const sorted = groupConditionsByPage(procBasedDed.deductions);
@@ -210,13 +219,25 @@ const LaptopsQuestions = (props) => {
     } else if (conditionName === "Hard Disk") {
       setSelectedFunc();
 
+      let cl = { conditionLabel, priceDrop, operation, type: "Hard Disk" };
+      dispatch(addHardDisk(cl));
+
+      let hardDisk = sortedConditions[0].conditions.find(
+        (d) => d.conditionName == "Hard Disk"
+      );
       dispatch(
-        addHardDisk({ conditionLabel, priceDrop, operation, type: "Hard Disk" })
+        addSingleDeductions({ condition: hardDisk, conditionLabel: cl })
       );
     } else if (conditionName === "Ram") {
       setSelectedFunc();
 
-      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "RAM" }));
+      let cl = { conditionLabel, priceDrop, operation, type: "Ram" };
+      dispatch(addRam(cl));
+
+      let ram = sortedConditions[0].conditions.find(
+        (d) => d.conditionName == "Ram"
+      );
+      dispatch(addSingleDeductions({ condition: ram, conditionLabel: cl }));
     }
   };
 

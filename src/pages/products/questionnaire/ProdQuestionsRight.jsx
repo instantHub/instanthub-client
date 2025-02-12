@@ -6,6 +6,8 @@ const ProdDeductionsRight = () => {
   const productsData = useSelector((state) => state.deductions);
   const laptopSlice = useSelector((state) => state.laptopDeductions);
 
+  const deductionSlice = useSelector((state) => state.deductions);
+
   // console.log("productsData", productsData);
 
   return (
@@ -31,107 +33,17 @@ const ProdDeductionsRight = () => {
           <h2 className="py-3 font-bold text-gray-400">Evaluation</h2>
 
           <div className="flex flex-col gap-2">
-            {/* Laptop Configurations */}
-            <DisplayData
-              label="Laptop Configuration"
-              show={laptopSlice.processor.conditionLabel}
-              items={[
-                laptopSlice.processor.conditionLabel,
-                laptopSlice.hardDisk.conditionLabel,
-                laptopSlice.ram.conditionLabel,
-              ]}
-            />
-
-            {/* Screen Size */}
-            <DisplayData
-              label="Screen Size"
-              show={laptopSlice.screenSize.conditionLabel}
-              items={[laptopSlice.screenSize.conditionLabel]}
-            />
-
-            {/* Graphic */}
-            <DisplayData
-              label="Graphics"
-              show={laptopSlice.graphic.conditionLabel}
-              items={[laptopSlice.graphic.conditionLabel]}
-            />
-
-            {/* Screen Condition */}
-            <DisplayData
-              label="Screen Condition"
-              show={laptopSlice.screenCondition.conditionLabel}
-              items={[laptopSlice.screenCondition.conditionLabel]}
-            />
-
-            {/* Physical Condition */}
-            <DisplayData
-              label="Physical Condition"
-              show={laptopSlice.physicalCondition.conditionLabel}
-              items={[laptopSlice.physicalCondition.conditionLabel]}
-            />
-
-            {/* Model Launch Year */}
-            <DisplayData
-              label="Model Launch Year"
-              show={laptopSlice.modelYear.conditionLabel}
-              items={[laptopSlice.modelYear.conditionLabel]}
-            />
-
-            {/* Selected Conditions */}
-            <DisplayData
-              label="Selected Conditions"
-              show={productsData.deductions.length > 0}
-              items={productsData.deductions.map(
-                (label) => label.conditionLabel
-              )}
-            />
-
-            {/* Accessories */}
-            <DisplayData
-              label="Bill"
-              show={productsData.productBill.conditionLabel}
-              items={[productsData.productBill.conditionLabel]}
-            />
-
-            <DisplayData
-              label="Box"
-              show={productsData.productBox.conditionLabel}
-              items={[productsData.productBox.conditionLabel]}
-            />
-
-            <DisplayData
-              label="Charger"
-              show={productsData.productCharger.conditionLabel}
-              items={[productsData.productCharger.conditionLabel]}
-            />
-
-            {/* Products Age display */}
-            <DisplayData
-              label={"Age"}
-              show={productsData.productAge.conditionLabel}
-              items={[productsData.productAge.conditionLabel]}
-            />
-
-            {/* Products Physical Condition */}
-            <DisplayData
-              label={"Physical Condition"}
-              show={productsData.productPhysicalCondition.conditionLabel}
-              items={[productsData.productPhysicalCondition.conditionLabel]}
-            />
-
-            {/* Products ScreenCondition */}
-            <DisplayData
-              label={"Screen Condition"}
-              show={productsData.productScreenCondition.conditionLabel}
-              items={[productsData.productScreenCondition.conditionLabel]}
-            />
-
-            {/* Products Display & Defect Condition */}
-            <DisplayData
-              label={"Display & Defect"}
-              show={productsData.productDisplayDefect.conditionLabel}
-              items={[productsData.productDisplayDefect.conditionLabel]}
-            />
+            {Object.entries(deductionSlice.singleDeductions).map(
+              ([keyword, label]) => {
+                return (
+                  <DisplayData
+                    key={keyword}
+                    keyword={keyword}
+                    label={label.conditionLabel}
+                  />
+                );
+              }
+            )}
           </div>
         </div>
       </div>
@@ -141,17 +53,120 @@ const ProdDeductionsRight = () => {
 
 export default ProdDeductionsRight;
 
-function DisplayData({ label, show, items }) {
+function DisplayData({ keyword, label }) {
   return (
-    show && (
+    label && (
       <div className="flex flex-col gap-2">
-        <h2 className="font-bold">{label}</h2>
-        {items?.map((item) => (
-          <p key={item} className="pl-2 text-sm">
-            {item}
-          </p>
-        ))}
+        <h2 className="font-bold">{keyword}</h2>
+        <p className="pl-2 text-sm">{label}</p>
       </div>
     )
   );
+}
+
+// function DisplayData({ label, show, items }) {
+//   return (
+//     show && (
+//       <div className="flex flex-col gap-2">
+//         <h2 className="font-bold">{label}</h2>
+//         {items?.map((item) => (
+//           <p key={item} className="pl-2 text-sm">
+//             {item}
+//           </p>
+//         ))}
+//       </div>
+//     )
+//   );
+// }
+
+// Old Displaying Selected Data
+{
+  // <div className="flex flex-col gap-2">
+  //   {/* Laptop Configurations */}
+  //   <DisplayData
+  //     label="Laptop Configuration"
+  //     show={laptopSlice.processor.conditionLabel}
+  //     items={[
+  //       laptopSlice.processor.conditionLabel,
+  //       laptopSlice.hardDisk.conditionLabel,
+  //       laptopSlice.ram.conditionLabel,
+  //     ]}
+  //   />
+  //   {/* Screen Size */}
+  //   <DisplayData
+  //     label="Screen Size"
+  //     show={laptopSlice.screenSize.conditionLabel}
+  //     items={[laptopSlice.screenSize.conditionLabel]}
+  //   />
+  //   {/* Graphic */}
+  //   <DisplayData
+  //     label="Graphics"
+  //     show={laptopSlice.graphic.conditionLabel}
+  //     items={[laptopSlice.graphic.conditionLabel]}
+  //   />
+  //   {/* Screen Condition */}
+  //   <DisplayData
+  //     label="Screen Condition"
+  //     show={laptopSlice.screenCondition.conditionLabel}
+  //     items={[laptopSlice.screenCondition.conditionLabel]}
+  //   />
+  //   {/* Physical Condition */}
+  //   <DisplayData
+  //     label="Physical Condition"
+  //     show={laptopSlice.physicalCondition.conditionLabel}
+  //     items={[laptopSlice.physicalCondition.conditionLabel]}
+  //   />
+  //   {/* Model Launch Year */}
+  //   <DisplayData
+  //     label="Model Launch Year"
+  //     show={laptopSlice.modelYear.conditionLabel}
+  //     items={[laptopSlice.modelYear.conditionLabel]}
+  //   />
+  //   {/* Selected Conditions */}
+  //   <DisplayData
+  //     label="Selected Conditions"
+  //     show={productsData.deductions.length > 0}
+  //     items={productsData.deductions.map((label) => label.conditionLabel)}
+  //   />
+  //   {/* Accessories */}
+  //   <DisplayData
+  //     label="Bill"
+  //     show={productsData.productBill.conditionLabel}
+  //     items={[productsData.productBill.conditionLabel]}
+  //   />
+  //   <DisplayData
+  //     label="Box"
+  //     show={productsData.productBox.conditionLabel}
+  //     items={[productsData.productBox.conditionLabel]}
+  //   />
+  //   <DisplayData
+  //     label="Charger"
+  //     show={productsData.productCharger.conditionLabel}
+  //     items={[productsData.productCharger.conditionLabel]}
+  //   />
+  //   {/* Products Age display */}
+  //   <DisplayData
+  //     label={"Age"}
+  //     show={productsData.productAge.conditionLabel}
+  //     items={[productsData.productAge.conditionLabel]}
+  //   />
+  //   {/* Products Physical Condition */}
+  //   <DisplayData
+  //     label={"Physical Condition"}
+  //     show={productsData.productPhysicalCondition.conditionLabel}
+  //     items={[productsData.productPhysicalCondition.conditionLabel]}
+  //   />
+  //   {/* Products ScreenCondition */}
+  //   <DisplayData
+  //     label={"Screen Condition"}
+  //     show={productsData.productScreenCondition.conditionLabel}
+  //     items={[productsData.productScreenCondition.conditionLabel]}
+  //   />
+  //   {/* Products Display & Defect Condition */}
+  //   <DisplayData
+  //     label={"Display & Defect"}
+  //     show={productsData.productDisplayDefect.conditionLabel}
+  //     items={[productsData.productDisplayDefect.conditionLabel]}
+  //   />
+  // </div>;
 }

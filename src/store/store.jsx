@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import globalSlice from "../features/slices/globalSlice";
 import authSlice from "../features/slices/authSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "../features/api";
@@ -22,7 +21,6 @@ import { recycleApi } from "../features/api/recycle/recycleApi";
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    global: globalSlice,
     deductions: deductionSlice,
     serviceProblems: serviceProblemsSlice,
     laptopDeductions: laptopDeductionSlice,

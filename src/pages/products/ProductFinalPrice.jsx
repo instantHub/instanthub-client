@@ -99,7 +99,7 @@ const ProductFinalPrice = () => {
   // console.log("Reducer state:", state);
 
   const selectedProdDetails = useSelector((state) => state.deductions);
-  const laptopSlice = useSelector((state) => state.laptopDeductions);
+  // const laptopSlice = useSelector((state) => state.laptopDeductions);
   console.log("selectedProdDetails", selectedProdDetails);
 
   const [formData, setFormData] = useState();
@@ -137,15 +137,10 @@ const ProductFinalPrice = () => {
   useEffect(() => {
     if (selectedProdDetails.productName == "") {
       navigate(`/categories/brands/productDetails/${productId}`);
-    } else if (!selectedProdDetails.productAge.conditionLabel) {
+    } else if (Object.keys(selectedProdDetails.singleDeductions).length < 1) {
       if (selectedProdDetails.productCategory === "Desktop") return;
       navigate(`/categories/brands/productDetails/${productId}`);
     }
-    // else if (
-    //   selectedProdDetails.productPhysicalCondition.conditionLabel === ""
-    // ) {
-    //   navigate(`/categories/brands/productDetails/${productId}`);
-    // }
   }, [selectedProdDetails]);
 
   useEffect(() => {

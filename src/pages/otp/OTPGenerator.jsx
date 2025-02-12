@@ -6,7 +6,10 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa6";
 import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { addDeductions } from "../../features/slices/deductionSlice";
+import {
+  addDeductions,
+  performCalculation,
+} from "../../features/slices/deductionSlice";
 import { LAPTOP_DESKTOP } from "../../utils/constants";
 
 const OtpGenerator = (props) => {
@@ -74,31 +77,36 @@ const OtpGenerator = (props) => {
 
       // if (data.productCategory.toLowerCase().includes("laptop")) {
       if (LAPTOP_DESKTOP.includes(data.productCategory.toLowerCase())) {
-        dispatch(addDeductions(laptopSlice.processor));
-        dispatch(addDeductions(laptopSlice.hardDisk));
-        dispatch(addDeductions(laptopSlice.ram));
-        dispatch(addDeductions(laptopSlice.screenSize));
-        dispatch(addDeductions(laptopSlice.graphic));
-        dispatch(addDeductions(laptopSlice.screenCondition));
-        dispatch(addDeductions(laptopSlice.physicalCondition));
-        dispatch(addDeductions(laptopSlice.modelYear));
-        dispatch(addDeductions({ ...data.productAge, type: "Age" }));
+        // dispatch(addDeductions(laptopSlice.processor));
+        // dispatch(addDeductions(laptopSlice.hardDisk));
+        // dispatch(addDeductions(laptopSlice.ram));
+        // dispatch(addDeductions(laptopSlice.screenSize));
+        // dispatch(addDeductions(laptopSlice.graphic));
+        // dispatch(addDeductions(laptopSlice.screenCondition));
+        // dispatch(addDeductions(laptopSlice.physicalCondition));
+        // dispatch(addDeductions(laptopSlice.modelYear));
+        // dispatch(addDeductions({ ...data.productAge, type: "Age" }));
 
         // Accessories
-        dispatch(addDeductions(data.productBill));
-        dispatch(addDeductions(data.productBox));
-        dispatch(addDeductions(data.productCharger));
+        // dispatch(addDeductions(data.productBill));
+        // dispatch(addDeductions(data.productBox));
+        // dispatch(addDeductions(data.productCharger));
+
+        dispatch(performCalculation());
+
       } else if (data.productCategory.toLowerCase().includes("mobile")) {
-        dispatch(addDeductions(data.productAge));
-        dispatch(addDeductions(data.productScreenCondition));
-        dispatch(addDeductions(data.productPhysicalCondition));
-        dispatch(addDeductions(data.productPanelCondition));
-        dispatch(addDeductions(data.productDisplayDefect));
+        // dispatch(addDeductions(data.productAge));
+        // dispatch(addDeductions(data.productScreenCondition));
+        // dispatch(addDeductions(data.productPhysicalCondition));
+        // dispatch(addDeductions(data.productPanelCondition));
+        // dispatch(addDeductions(data.productDisplayDefect));
 
         // Accessories
-        dispatch(addDeductions(data.productBill));
-        dispatch(addDeductions(data.productBox));
-        dispatch(addDeductions(data.productCharger));
+        // dispatch(addDeductions(data.productBill));
+        // dispatch(addDeductions(data.productBox));
+        // dispatch(addDeductions(data.productCharger));
+
+        dispatch(performCalculation());
       }
 
       // Until OTP is applied

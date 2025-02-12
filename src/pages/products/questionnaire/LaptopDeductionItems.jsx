@@ -9,17 +9,25 @@ import {
   addModelYear,
 } from "../../../features/slices/laptopDeductionSlice";
 
-import {
-  addProductGSTBill,
-  addProductBox,
-  addProductCharger,
-} from "../../../features/slices/deductionSlice";
+// import {
+//   addProductGSTBill,
+//   addProductBox,
+//   addProductCharger,
+// } from "../../../features/slices/deductionSlice";
 
 import { BsCircle } from "react-icons/bs";
-import { addProductAge } from "../../../features/slices/deductionSlice";
+import { addDeductions, addSingleDeductions } from "../../../features/slices/deductionSlice";
+// import { addProductAge } from "../../../features/slices/deductionSlice";
 
 const LaptopDeductionItems = ({ condition, handleLabelSelection }) => {
-  const { conditionName, conditionLabels, keyword, isYesNoType } = condition;
+  const {
+    conditionName,
+    conditionLabels,
+    keyword,
+    isYesNoType,
+    isMandatory,
+    showLabelsImage,
+  } = condition;
 
   const deductionSlice = useSelector((state) => state.deductions);
   const deductionData = useSelector((state) => state.deductions.deductions);
@@ -60,30 +68,27 @@ const LaptopDeductionItems = ({ condition, handleLabelSelection }) => {
   const functionalProblems = conditionName.toLowerCase().includes("functional");
 
   const isLabelSelected = (conditionLabel) => {
-    return [
-      laptopSliceData.screenSize.conditionLabel,
-      laptopSliceData.graphic.conditionLabel,
-      laptopSliceData.screenCondition.conditionLabel,
-      laptopSliceData.physicalCondition.conditionLabel,
-      laptopSliceData.age.conditionLabel,
-      laptopSliceData.modelYear.conditionLabel,
+    // return [
+    //   laptopSliceData.screenSize.conditionLabel,
+    //   laptopSliceData.graphic.conditionLabel,
+    //   laptopSliceData.screenCondition.conditionLabel,
+    //   laptopSliceData.physicalCondition.conditionLabel,
+    //   laptopSliceData.age.conditionLabel,
+    //   laptopSliceData.modelYear.conditionLabel,
 
-      // Accessories
-      deductionSlice.productBox.conditionLabel,
-      deductionSlice.productBill.conditionLabel,
-      deductionSlice.productCharger.conditionLabel,
-    ].includes(conditionLabel);
+    //   // Accessories
+    //   deductionSlice.productBox.conditionLabel,
+    //   deductionSlice.productBill.conditionLabel,
+    //   deductionSlice.productCharger.conditionLabel,
+    // ].includes(conditionLabel);
   };
 
   const handleOnClick = (label) => {
-    if (shouldShowImage)
-      handleLabelSelection(
-        label.conditionLabel,
-        label.priceDrop,
-        label.operation,
-        type
-      );
-    dispatchConditionAction(label);
+    if (condition.multiSelect)
+      dispatch(addDeductions({ condition, conditionLabel: label }));
+    else dispatch(addSingleDeductions({ condition, conditionLabel: label }));
+
+    // dispatchConditionAction(label);
 
     setSelected((prev) => !prev);
     condition.isSelected.selected = true;
