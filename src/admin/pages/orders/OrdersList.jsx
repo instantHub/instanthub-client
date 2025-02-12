@@ -99,6 +99,7 @@ const OrdersList = () => {
                 else return order.status[key] && ordersDisplaying[key];
               });
             })
+            ?.reverse() // Reverse the filtered orders
             ?.map((order) => {
               return (
                 <OrderCard

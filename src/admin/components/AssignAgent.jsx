@@ -4,7 +4,7 @@ import DateAndTime from "../../components/DateAndTime/DateAndTime";
 import { toast } from "react-toastify";
 
 const AssignAgent = ({ orderDetail }) => {
-  console.log("AssignAgent orderDetail", orderDetail);
+  // console.log("AssignAgent orderDetail", orderDetail);
 
   const [assignAgent, { isLoading: loadingAssignment }] =
     useAssignAgentMutation();

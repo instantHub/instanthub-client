@@ -62,6 +62,8 @@ const OrderDetail = () => {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
+  console.log("Details entered", pickedUpBy, finalPrice, selectedDate);
+
   const uploadFileHandler = async (image) => {
     const formData = new FormData();
     formData.append("image", image);
@@ -126,6 +128,8 @@ const OrderDetail = () => {
 
       const frontImageURL = await uploadFileHandler(imagesSelected.front);
       const backImageURL = await uploadFileHandler(imagesSelected.back);
+      // const frontImageURL = "";
+      // const backImageURL = "";
 
       const optional1URL = imagesSelected.optional1
         ? await uploadFileHandler(imagesSelected.optional1)
@@ -294,6 +298,7 @@ const OrderDetail = () => {
                       deduction?.conditions?.map((condition) => {
                         return (
                           <DetailDiv
+                            key={condition.conditionName}
                             label={condition.conditionLabel}
                             text="Available"
                           />
@@ -303,6 +308,7 @@ const OrderDetail = () => {
                       deduction?.conditions?.map((condition) => {
                         return (
                           <DetailDiv
+                            key={condition.conditionName}
                             label={condition.conditionLabel}
                             text="Not Available"
                           />
@@ -323,6 +329,7 @@ const OrderDetail = () => {
                     deduction?.conditions?.map((condition) => {
                       return (
                         <DetailDiv
+                          key={condition.conditionName}
                           label={deduction?.type}
                           text={condition.conditionLabel}
                         />

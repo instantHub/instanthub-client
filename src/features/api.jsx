@@ -193,7 +193,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Orders", "Order Detail"],
     }),
     orderCancel: build.mutation({
       query: ({ orderId, data }) => ({
@@ -201,7 +201,7 @@ export const api = createApi({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Orders", "Order Detail"],
     }),
     deleteOrder: build.mutation({
       query: (orderId) => ({

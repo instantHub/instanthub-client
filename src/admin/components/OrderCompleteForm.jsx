@@ -57,7 +57,7 @@ const OrderCompleteForm = ({
                 // {/* Date Picker */}
                 <DateAndTime
                   label={false}
-                  showPreviousDate={true}
+                  showPreviousDate={false}
                   setSchedule={setSelectedDate}
                 />
               }

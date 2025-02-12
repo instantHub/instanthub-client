@@ -62,6 +62,12 @@ const OrderCard = ({ data, categoryImage }) => {
             </div>
           </div>
 
+          {/* Customer Name */}
+          <div>
+            <span>Customer Name: </span>
+            <span className={`${style.boldness}`}>{data.customerName}</span>
+          </div>
+
           {/* Schedule time */}
           <div>
             <span>Schedule Pick Up: </span>
@@ -84,34 +90,6 @@ const OrderCard = ({ data, categoryImage }) => {
               </span>
             </div>
           </div>
-
-          {/* View or Delete - Only in Laptop Mode */}
-          {/* <div className="max-sm:hidden flex justify-center gap-2 py-2">
-            <div className="grow">
-              <Link
-                to={`/admin/order-detail/${data.id}`}
-                className={`font-bold p-1 rounded flex items-center 
-                    justify-center gap-1 ${orderViewBtnColor(data.status)}`}
-                // justify-center gap-1 bg-green-600 hover:bg-green-700`}
-              >
-                <span>View Detail</span>
-                <span>
-                  <FaHandsHoldingCircle />
-                </span>
-              </Link>
-            </div>
-            <div>
-              <button
-                onClick={() => {
-                  setModalOpen(true);
-                  setOrderToDelete(data.id);
-                }}
-                className="bg-red-600 text-white px-3 py-1 rounded-md"
-              >
-                Delete
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </>
