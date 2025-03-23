@@ -155,60 +155,62 @@ function Condtions() {
                 value={formData.description}
                 handleChange={(e) => handleChange(e, "description")}
               />
-
-              {/* Yes & No */}
-              {/* <div className="flex items-center gap-1">
-                <label>is it Yes & No Condition:</label>
-                <select
-                  name="isYesNoType"
-                  value={formData.isYesNoType}
-                  className="px-1 border rounded"
-                  onChange={(event) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      isYesNoType: event.target.value,
-                    }));
-                  }}
-                >
-                  <option value="">Select</option>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                </select>
-              </div> */}
             </div>
 
             {/* Checkboxes */}
-            <div className="flex items-center gap-2 text-sm max-sm:text-xs">
-              {/* Yes & No */}
-              <div className="flex items-center gap-1">
-                <label>Yes & No Condition:</label>
-                <input
-                  type="checkbox"
-                  name="isYesNoType"
-                  checked={formData.isYesNoType}
-                  onChange={handleCheckBox}
-                />
-              </div>
+            <div className="grid grid-cols-4 max-md:grid-cols-2 items-center gap-2 text-sm max-sm:text-xs">
               {/* Is Mandatory */}
-              <div className="flex items-center gap-1">
-                <label>Mandatory:</label>
-                <input
-                  type="checkbox"
-                  name="isMandatory"
-                  checked={formData.isMandatory}
-                  onChange={handleCheckBox}
-                />
+              <div>
+                <label className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    name="isMandatory"
+                    checked={formData.isMandatory}
+                    onChange={handleCheckBox}
+                  />
+                  Mandatory
+                </label>
               </div>
+
+              {/* Multi Select */}
+              <div>
+                <label className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    name="multiSelect"
+                    checked={formData.multiSelect}
+                    onChange={handleCheckBox}
+                  />
+                  Multi Selection
+                </label>
+              </div>
+
+              {/* Yes & No */}
+              <div>
+                <label className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    name="isYesNoType"
+                    checked={formData.isYesNoType}
+                    disabled={formData.multiSelect}
+                    onChange={handleCheckBox}
+                  />
+                  Yes & No Condition
+                </label>
+              </div>
+
               {/* Show Images */}
-              <div className="flex items-center gap-1">
-                <label>Show Images:</label>
-                <input
-                  type="checkbox"
-                  name="showLabelsImage"
-                  checked={formData.showLabelsImage}
-                  disabled={formData.isYesNoType}
-                  onChange={handleCheckBox}
-                />
+              <div>
+                <label className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    name="showLabelsImage"
+                    checked={formData.showLabelsImage}
+                    disabled={formData.isYesNoType}
+                    onChange={handleCheckBox}
+                  />
+                  Show Images
+                </label>
               </div>
             </div>
 

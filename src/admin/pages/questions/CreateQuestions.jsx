@@ -21,19 +21,28 @@ const CreateQuestions = () => {
   const conditionHeaders = [
     "Category",
     "Condition",
-    "Page",
     "keyword",
-    "isYesNoType",
+    "Configurations",
   ];
   const conditionRowRenderer = (condition, index) => (
     <>
       <td className="py-2">{condition.category.name}</td>
-      <td className="py-2 flex justify-start pl-2">
-        <span>{index}</span>. <span>{condition.conditionName}</span>
+      <td className="py-2 flex flex-col justify-center items-center">
+        <span>{condition.conditionName}</span>
+        <b>Page No. {condition.page}</b>
       </td>
-      <td className="py-2">{condition.page}</td>
+
       <td className="py-2">{condition.keyword}</td>
-      <td className="py-2">{condition.isYesNoType ? "Yes" : "No"}</td>
+      <td className="flex flex-col py-2">
+        <span>{condition.isMandatory ? "Mandatory" : "Not Mandatory"}</span>
+        <span>
+          {condition.multiSelect ? "Multi Select" : "Not Multi Select"}
+        </span>
+        <span>{condition.isYesNoType ? "Yes No Type" : "Not Yes No Type"}</span>
+        <span>
+          {condition.showLabelsImage ? "Show Image" : "Don't Show Image"}
+        </span>
+      </td>
     </>
   );
 
@@ -62,7 +71,7 @@ const CreateQuestions = () => {
           <Condition />
         </div>
         {/* Condition SideList */}
-        <div className="flex-1 text-center overflow-y-auto scrollbar max-h-[380px] ">
+        <div className="flex-1 text-center overflow-y-auto scrollbar max-h-[380px]">
           {filterCondition.category ? (
             <SideList
               headers={conditionHeaders}

@@ -8,9 +8,9 @@ function groupConditionsByPage(conditions) {
     }
     // acc[page].push(condition);
     const isSelected = { selected: false, selectedLabel: null };
-    const multiSelect = condition.conditionName.includes("Problem");
+    // const multiSelect = condition.conditionName.includes("Problem");
 
-    acc[page].push({ ...condition, isSelected, multiSelect });
+    acc[page].push({ ...condition, isSelected });
     return acc;
   }, {});
 

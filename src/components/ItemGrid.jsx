@@ -1,14 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ItemGrid = ({ items, linkPath, displayBig, gridFor }) => {
-  let itemID = gridFor === "services" ? "_id" : "id";
+const ItemGrid = ({ items, linkPath, displayBig, service = false }) => {
+  let itemID = service ? "_id" : "id";
+
+  const determinePath = (item) => {
+    if (!service) {
+      return `${linkPath}/${item[itemID]}`;
+    } else {
+      const type = item?.type?.toLowerCase();
+      const id = item._id;
+
+      if (type === "directservice") {
+        return `${linkPath}/book-service/${id}?st=ds`;
+      } else if (type === "brand") {
+        return `${linkPath}/serviceBrands/${id}`;
+      } else if (type === "servicesubcategory") {
+        return `${linkPath}/serviceSubCategory/${id}`;
+      } else {
+        return "#"; // Default path if none of the conditions match
+      }
+    }
+  };
+
   return (
     <>
       {items?.map((item, index) => (
         <div className="flex justify-center" key={item[itemID]}>
           <Link
-            to={`${linkPath}/${item[itemID]}`}
+            // to={`${linkPath}/${item[itemID]}`}
+            to={determinePath(item)}
             // className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl
             //     transition ease-in-out duration-500 ${
             //       displayBig ? `w-32 h-32` : `w-28 h-28`

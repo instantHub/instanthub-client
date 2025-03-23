@@ -4,7 +4,6 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "../features/api";
 
 import deductionSlice from "../features/slices/deductionSlice";
-import laptopDeductionSlice from "../features/slices/laptopDeductionSlice";
 import serviceProblemsSlice from "../features/slices/serviceProblemsSlice";
 import filterSlice from "../admin/features/filterSlice";
 import searchSlice from "../admin/features/searchSlice";
@@ -23,7 +22,6 @@ export const store = configureStore({
     auth: authSlice,
     deductions: deductionSlice,
     serviceProblems: serviceProblemsSlice,
-    laptopDeductions: laptopDeductionSlice,
     filter: filterSlice,
     search: searchSlice,
     processor: processorSlice,

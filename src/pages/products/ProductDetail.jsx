@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import Loading from "../../components/loader/Loading";
 import SellContent from "../../components/static/SellContent";
 import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
+import { MOBILE } from "../../utils/constants";
 
 const ProductDetail = () => {
   const { prodId } = useParams();
@@ -25,7 +26,7 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && productDetails?.category?.name !== "Mobile") {
+    if (!isLoading && productDetails?.category?.name !== MOBILE) {
       handleToggle(productDetails.variants[0]);
     }
   }, [productDetails, isLoading]);

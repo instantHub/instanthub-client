@@ -47,8 +47,9 @@ function UpdateCondition() {
         page: conditiontoUpdate.page,
         keyword: conditiontoUpdate.keyword,
         description: conditiontoUpdate.description,
-        isYesNoType: conditiontoUpdate.isYesNoType,
         isMandatory: conditiontoUpdate.isMandatory,
+        multiSelect: conditiontoUpdate.multiSelect,
+        isYesNoType: conditiontoUpdate.isYesNoType,
         showLabelsImage: conditiontoUpdate.showLabelsImage,
       }));
     }
@@ -110,24 +111,6 @@ function UpdateCondition() {
 
                 <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
                   {/* Condition Name */}
-                  {/* <div className="flex items-center gap-1">
-                    <label>Condition Name:</label>
-                    <input
-                      type="text"
-                      name="conditionName"
-                      className="border mx-2 py-1 px-2 rounded text-[15px]"
-                      placeholder="Enter Condition Name"
-                      value={formData.conditionName}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          conditionName: e.target.value,
-                        })
-                      }
-                    />
-                  </div> */}
-
-                  {/* Condition Name */}
                   <FormData
                     label="Condition Name"
                     type="text"
@@ -140,25 +123,6 @@ function UpdateCondition() {
                     }
                   />
 
-                  {/* Keyword */}
-                  {/* <div className="flex items-center gap-1">
-                    <label>Keyword:</label>
-                    <input
-                      type="text"
-                      name="keyword"
-                      value={formData.keyword}
-                      className="border py-1 px-2 rounded text-sm max-sm:text-xs"
-                      placeholder="Enter a keyword"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          keyword: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div> */}
-
                   <FormData
                     label="Keyword"
                     type="text"
@@ -170,24 +134,6 @@ function UpdateCondition() {
                       })
                     }
                   />
-
-                  {/* Page No */}
-                  {/* <div className="flex items-center gap-1">
-                    <label>Page:</label>
-                    <input
-                      type="number"
-                      name="page"
-                      className="border mx-2 py-1 px-2 rounded text-[15px]"
-                      placeholder="Enter Page Number"
-                      value={formData.page}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          page: e.target.value,
-                        })
-                      }
-                    />
-                  </div> */}
 
                   <FormData
                     label="Page No"
@@ -213,60 +159,62 @@ function UpdateCondition() {
                       })
                     }
                   />
-
-                  {/* Yes & No */}
-                  {/* <div className="flex items-center gap-1">
-                    <label>is it Yes & No Condition:</label>
-                    <select
-                      name="isYesNoType"
-                      value={formData.isYesNoType}
-                      className="px-1 border rounded"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          isYesNoType: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">Select</option>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div> */}
                 </div>
 
                 {/* Checkboxes */}
-                <div className="flex items-center gap-2 text-sm max-sm:text-xs">
-                  {/* Yes & No */}
-                  <div className="flex items-center gap-1">
-                    <label>Yes & No Condition:</label>
-                    <input
-                      type="checkbox"
-                      name="isYesNoType"
-                      checked={formData.isYesNoType}
-                      onChange={handleCheckBox}
-                    />
-                  </div>
+                <div className="grid grid-cols-4 max-md:grid-cols-2 items-center gap-2 text-sm max-sm:text-xs">
                   {/* Is Mandatory */}
-                  <div className="flex items-center gap-1">
-                    <label>Mandatory:</label>
-                    <input
-                      type="checkbox"
-                      name="isMandatory"
-                      checked={formData.isMandatory}
-                      onChange={handleCheckBox}
-                    />
+                  <div>
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        name="isMandatory"
+                        checked={formData.isMandatory}
+                        onChange={handleCheckBox}
+                      />
+                      <span>Mandatory</span>
+                    </label>
                   </div>
+
+                  {/* Multi Select */}
+                  <div>
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        name="multiSelect"
+                        checked={formData.multiSelect}
+                        onChange={handleCheckBox}
+                      />
+                      <span>Multi Select</span>
+                    </label>
+                  </div>
+
+                  {/* Yes & No */}
+                  <div>
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        name="isYesNoType"
+                        checked={formData.isYesNoType}
+                        disabled={formData.multiSelect}
+                        onChange={handleCheckBox}
+                      />
+                      <span>Yes & No Condition</span>
+                    </label>
+                  </div>
+
                   {/* Show Images */}
-                  <div className="flex items-center gap-1">
-                    <label>Show Images:</label>
-                    <input
-                      type="checkbox"
-                      name="showLabelsImage"
-                      checked={formData.showLabelsImage}
-                      disabled={formData.isYesNoType}
-                      onChange={handleCheckBox}
-                    />
+                  <div>
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        name="showLabelsImage"
+                        checked={formData.showLabelsImage}
+                        disabled={formData.isYesNoType}
+                        onChange={handleCheckBox}
+                      />
+                      <span>Show Images</span>
+                    </label>
                   </div>
                 </div>
 

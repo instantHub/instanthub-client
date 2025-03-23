@@ -61,7 +61,8 @@ const ProductQuestionsList = () => {
     isLoading: variantsQuestionsDataLoading,
   } = useGetVariantsQuestionsQuery();
 
-  // console.log("selectedDeductions", selectedDeductions);
+  console.log("variantsQuestionsData", variantsQuestionsData);
+  console.log("selectedDeductions", selectedDeductions);
 
   // const laptopDesktop = ["laptop", "desktop"];
 
@@ -396,11 +397,7 @@ const ProductQuestionsList = () => {
                                 ${index % 2 === 0 ? `` : `bg-gray-100`}`}
                             >
                               <div>
-                                <div>
-                                  <h3 className="">
-                                    {conditionLabel.conditionLabel}
-                                  </h3>
-                                </div>
+                                <h3>{conditionLabel.conditionLabel}</h3>
                                 <div className="flex items-center gap-1">
                                   {productCategory !== "Mobile" && (
                                     <span className="">₹</span>
@@ -635,7 +632,7 @@ const ProductQuestionsList = () => {
                         condition.conditionLabels.map(
                           (conditionLabel, index) => (
                             <div
-                              key={index}
+                              key={index + condition.page}
                               className="flex justify-around items-center mt-2 border-b-2 pb-1"
                             >
                               <div>

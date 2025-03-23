@@ -112,7 +112,7 @@ const ServiceBrands = () => {
                 items={serviceBrands}
                 linkPath="/services/serviceBrandProblems"
                 displayBig={true}
-                gridFor="services"
+                service={true}
               />
             </div>
           </div>

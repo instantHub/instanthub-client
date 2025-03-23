@@ -4,9 +4,9 @@ import React from "react";
 const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
   // console.log("data from TABLE component", data);
   return (
-    <table className="w-full">
+    <table className="w-full text-sm max-sm:text-xs">
       <thead>
-        <tr className="py-10 font-serif text-xl max-sm:text-sm border shadow-xl text-green-800 font-bold ">
+        <tr className="py-10 font-serif border text-lg max-sm:text-xs shadow-xl text-green-800 font-bold ">
           {headers.map((header, index) => (
             <th key={index} className="px-4 py-4 max-sm:px-2 max-sm:py-1">
               {header}

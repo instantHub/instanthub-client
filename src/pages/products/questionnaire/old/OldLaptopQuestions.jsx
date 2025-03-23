@@ -9,7 +9,6 @@ import {
   addProcessor,
   addHardDisk,
   addRam,
-  clearLaptopDeductions,
 } from "../../features/slices/laptopDeductionSlice";
 import { toast } from "react-toastify";
 import OtpGenerator from "../otp/OTPGenerator";
@@ -310,7 +309,6 @@ const LaptopsQuestions = (props) => {
   }
 
   function resetStateData() {
-    dispatch(clearLaptopDeductions());
     dispatch(clearDeductions());
     setProcessor(null);
     setHardDisk(null);

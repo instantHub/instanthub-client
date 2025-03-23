@@ -3,11 +3,9 @@ import { useGetProductDetailsQuery } from "../../../features/api/products/produc
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
-  addDeductions,
-  setGetUpto,
+  setProductData,
   clearDeductions,
 } from "../../../features/slices/deductionSlice";
-import { clearLaptopDeductions } from "../../../features/slices/laptopDeductionSlice";
 import { toast } from "react-toastify";
 import ProdDeductionsRight from "./ProdQuestionsRight";
 import LaptopsQuestions from "./LaptopsQuestions";
@@ -19,6 +17,7 @@ import ProgressBar from "../../../components/ProgressBar";
 import { LAPTOP_DESKTOP } from "../../../utils/constants";
 import NextPrevButton from "./NextPrevButton";
 import { groupConditionsByPage } from "../../../utils/helper";
+import DisplayCondition from "./DisplayCondition";
 
 const ProductQuestions = () => {
   // Query Params
@@ -28,13 +27,11 @@ const ProductQuestions = () => {
 
   const dispatch = useDispatch();
 
-  // Fetching Product details
   const { data: productsData, isLoading } =
     useGetProductDetailsQuery(productId);
   // console.log("productsData", productsData);
 
   const [deductions, setDeductions] = useState();
-  const [selectedLabels, setSelectedLabels] = useState([]);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   const [aboutDevice, setAboutDevice] = useState({
@@ -46,68 +43,31 @@ const ProductQuestions = () => {
 
   const [progressPercentage, setProgressPercentage] = useState(0);
 
-  const conditionMapping = {
-    "physical condition": "physicalCondition",
-    "screen condition": "screenCondition",
-    defect: "displayDefectCondition",
-    age: "age",
-    bill: "bill",
-    box: "box",
-    charger: "charger",
-  };
-
-  const handleLabelSelection = ({ label, price, operation, type }) => {
-    console.log("handleLabelSelection", label, price, operation, type);
-    if (!selectedLabels.some((sl) => sl.conditionLabel == label)) {
-      setSelectedLabels([
-        ...selectedLabels,
-        { conditionLabel: label, priceDrop: price },
-      ]);
-      dispatch(
-        addDeductions({
-          conditionLabel: label,
-          priceDrop: price,
-          operation,
-          type,
-        })
-      );
-    } else if (selectedLabels.some((sl) => sl.conditionLabel == label)) {
-      setSelectedLabels(
-        selectedLabels.filter(
-          (selectedLabel) => selectedLabel.conditionLabel !== label
-        )
-      );
-      // dispatch(
-      //   removeDeductions({
-      //     conditionLabel: label,
-      //     priceDrop: price,
-      //     operation,
-      //     type,
-      //   })
-      // );
-    }
-  };
-
   const handleContinue = () => {
-    let conditionNotSelected = false;
+    let conditionStatus = { notSelected: false, keyword: "" };
+    // console.log("condition selected or not", conditionStatus);
+
+    function setConditionStatus(selected, keyword) {
+      conditionStatus.notSelected = selected;
+      conditionStatus.keyword = keyword;
+    }
+
     sortedConditions[currentPageIndex].conditions.forEach((condition) => {
       if (condition.isMandatory && !condition.isSelected.selected) {
-        // console.log("condition isMandatory", condition);
-        conditionNotSelected = true;
+        setConditionStatus(true, condition.keyword);
         return;
       }
     });
 
-    if (conditionNotSelected) {
-      toast.error("Select All Mandatory Conditions to proceed..!");
-      conditionNotSelected = false;
+    if (conditionStatus.notSelected) {
+      toast.error(`Select ${conditionStatus.keyword} to proceed..!`);
+      setConditionStatus(false, "");
       return;
     }
 
-    // console.log("conditionNotSelected after checking", conditionNotSelected);
-
     if (currentPageIndex < sortedConditions.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
+      setConditionStatus(false, "");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       // console.log("No more conditions to display.");
@@ -127,13 +87,11 @@ const ProductQuestions = () => {
   useEffect(() => {
     // Dispatch the action to clear deductions on initial render
     dispatch(clearDeductions());
-    dispatch(clearLaptopDeductions());
 
     // Event listener to handle browser back button
     const handlePopstate = () => {
       // Dispatch the action to clear deductions when the user navigates back using the browser back button
       dispatch(clearDeductions());
-      dispatch(clearLaptopDeductions());
     };
 
     // Add event listener for the popstate event
@@ -145,7 +103,7 @@ const ProductQuestions = () => {
     };
   }, [dispatch]); // include dispatch in the dependency array to ensure that it has access to the latest dispatch function.
 
-  // useEffect to set deductions and priceUpTo value from productsData and set conditions PAGE numbers
+  // useEffect to set deductions and priceUpTo value from productsData
   useEffect(() => {
     if (productsData) {
       const { category, variants, variantDeductions, simpleDeductions } =
@@ -162,44 +120,20 @@ const ProductQuestions = () => {
         );
         // console.log("Mobile Deductions", d[0].deductions);
         setDeductions(varDeduction.deductions);
-
-        varDeduction.deductions.forEach((d) => {
-          const key = Object.keys(conditionMapping).find((cond) =>
-            d.conditionName.toLowerCase().includes(cond)
-          );
-          if (key) {
-            // setPageIndices((prev) => ({
-            //   ...prev,
-            //   [conditionMapping[key]]: d.page,
-            // }));
-          }
-        });
       } else if (category.name !== "Mobile") {
         setDeductions(simpleDeductions);
-
-        simpleDeductions.forEach((d) => {
-          const key = Object.keys(conditionMapping).find((cond) =>
-            d.conditionName.toLowerCase().includes(cond)
-          );
-
-          if (key) {
-            // setPageIndices((prev) => ({
-            //   ...prev,
-            //   [conditionMapping[key]]: d.page,
-            // }));
-          }
-        });
       }
 
-      // Initial State(productName,productCategory,productImage,variantName,price) in reducer
-      let prodVariant = {
-        productCategory: category.name,
-        productName: productsData.name,
-        productImage: productsData.image,
-        variantName: selectedVariant,
-        price: variant.price,
+      // Initial State in reducer
+      let prodData = {
+        selectedProduct: productsData,
+        getUpTo: {
+          variantName: selectedVariant,
+          price: variant.price,
+        },
       };
-      dispatch(setGetUpto(prodVariant));
+
+      dispatch(setProductData(prodData));
     }
     // console.log("selectedVariant", selectedVariant, priceGetUpTo);
   }, [productsData]);
@@ -261,25 +195,11 @@ const ProductQuestions = () => {
                 className="flex flex-col gap-5"
               >
                 {sortedConditions[currentPageIndex].conditions.map(
-                  (condition, index) => (
-                    <div
-                      className="flex flex-col"
-                      key={condition.conditionId + index}
-                    >
-                      <div className="px-5 py-2 text-center font-extrabold text-2xl max-sm:text-lg">
-                        <h2>{condition.conditionName}</h2>
-                        <div className="text-center text-lg max-sm:text-sm mb-5">
-                          <p className="text-lg font-medium text-gray-600 max-2sm:text-sm">
-                            {condition.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      <DeductionItems
-                        condition={condition}
-                        // handleLabelSelection={handleLabelSelection}
-                      />
-                    </div>
+                  (condition) => (
+                    <DisplayCondition
+                      key={condition.conditionId}
+                      condition={condition}
+                    />
                   )
                 )}
 
@@ -296,7 +216,6 @@ const ProductQuestions = () => {
                 <LaptopsQuestions
                   productsData={productsData}
                   deductions={deductions}
-                  // handleLabelSelection={handleLabelSelection}
                 />
               )
             )}
@@ -306,11 +225,11 @@ const ProductQuestions = () => {
           <ProdDeductionsRight />
         </div>
 
-        {showOTP ? (
+        {showOTP && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <OtpGenerator closeModal={closeModal} />
           </div>
-        ) : null}
+        )}
       </div>
     </>
   );

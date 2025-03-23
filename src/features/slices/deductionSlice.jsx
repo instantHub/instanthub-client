@@ -2,9 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { LAPTOP, LAPTOP_DESKTOP } from "../../utils/constants";
 
 const initialState = {
-  productName: "",
-  productImage: "",
-  productCategory: "",
+  selectedProduct: {},
 
   getUpTo: {
     variantName: "",
@@ -23,20 +21,11 @@ export const deductionSlice = createSlice({
   name: "deductions",
   initialState,
   reducers: {
-    setGetUpto: (state, action) => {
-      // console.log("setGetUpto reducer");
-      const { productName, productImage, productCategory, variantName, price } =
-        action.payload;
-      return {
-        ...state,
-        productName,
-        productImage,
-        productCategory,
-        getUpTo: {
-          variantName,
-          price,
-        },
-      };
+    setProductData: (state, action) => {
+      const { selectedProduct, getUpTo } = action.payload;
+
+      state.selectedProduct = selectedProduct;
+      state.getUpTo = getUpTo;
     },
 
     addDeductions: (state, action) => {
@@ -45,7 +34,7 @@ export const deductionSlice = createSlice({
       let { condition, conditionLabel } = action.payload;
       // console.log(condition, conditionLabel);
 
-      // Check if action.payload already exists in deductions
+      // Check if conditionLabel Already Exists
       const isExisting = state.deductions.some((deduction) => {
         return deduction.conditionLabel === conditionLabel.conditionLabel;
       });
@@ -71,7 +60,7 @@ export const deductionSlice = createSlice({
       const exisitingCondition = Object.entries(state.singleDeductions).some(
         ([keyword, _]) => keyword === condition.keyword
       );
-      console.log("exisitingCondition", exisitingCondition);
+      // console.log("exisitingCondition", exisitingCondition);
 
       // Single Selection but not mandatory like Display Defects
       if (exisitingCondition && !condition.isMandatory) {
@@ -79,7 +68,6 @@ export const deductionSlice = createSlice({
           state.singleDeductions[condition.keyword].conditionLabel ==
           conditionLabel.conditionLabel
         ) {
-          // state.singleDeductions[condition.keyword] = {};
           delete state.singleDeductions[condition.keyword];
           return;
         }
@@ -99,7 +87,7 @@ export const deductionSlice = createSlice({
     performCalculation: (state, _) => {
       console.log("performCalculation Reducer");
 
-      let category = state.productCategory.toLowerCase();
+      let category = state.selectedProduct.category.name.toLowerCase();
       let PROCESSOR_CATEGORY = LAPTOP_DESKTOP.includes(category);
       console.log("PROCESSOR_CATEGORY", PROCESSOR_CATEGORY);
 
@@ -175,7 +163,8 @@ export const deductionSlice = createSlice({
 });
 
 export const {
-  setGetUpto,
+  // setGetUpto,
+  setProductData,
 
   addDeductions,
   addSingleDeductions,
@@ -187,62 +176,29 @@ export const {
 
 export default deductionSlice.reducer;
 
-// ADD DEDUCTIONS
-// if (state.productCategory.toLowerCase().includes("mobile")) {
-//   if (action.payload.operation === "Subtrack") {
-//     return {
-//       ...state,
-//       toBeDeducted: Math.ceil(
-//         state.toBeDeducted +
-//           (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-//       ),
-//       deductions: [...state.deductions, action.payload],
-//     };
-//   } else if (action.payload.operation === "Add") {
-//     return {
-//       ...state,
-//       toBeAdded: Math.ceil(
-//         state.toBeAdded +
-//           (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-//       ),
-//       deductions: [...state.deductions, action.payload],
-//     };
-//   }
-// } else {
-//   if (action.payload.operation === "Subtrack") {
-//     return {
-//       ...state,
-//       toBeDeducted: Math.ceil(
-//         state.toBeDeducted + action.payload.priceDrop
-//       ),
-//       deductions: [...state.deductions, action.payload],
-//     };
-//   } else if (action.payload.operation === "Add") {
-//     return {
-//       ...state,
-//       toBeAdded: Math.ceil(state.toBeAdded + action.payload.priceDrop),
-//       deductions: [...state.deductions, action.payload],
-//     };
-//   }
-// }
-
-// REMOVE DEDUCTIONS
-// if (action.payload.operation === "Subtrack") {
-//   return {
-//     ...state,
-//     toBeDeducted: Math.ceil(
-//       state.toBeDeducted -
-//         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-//     ),
-//     deductions: updatedDeductions,
-//   };
-// } else if (action.payload.operation === "Add") {
-//   return {
-//     ...state,
-//     toBeAdded: Math.ceil(
-//       state.toBeAdded -
-//         (state.getUpTo.price * Number(action.payload.priceDrop)) / 100
-//     ),
-//     deductions: updatedDeductions,
-//   };
-// }
+// Good code to include multi select data as well in singleDeductions
+{
+  // if (condition.multiSelect) {
+  //   const dataExists =
+  //     state.singleDeductions[condition.keyword]?.length > 0;
+  //   if (dataExists) {
+  //     // Check if conditionLabel Already Exists
+  //     const isExisting = state.singleDeductions[condition.keyword].some(
+  //       (deduction) => {
+  //         return deduction.conditionLabel === conditionLabel.conditionLabel;
+  //       }
+  //     );
+  //     if (!isExisting) {
+  //       state.singleDeductions[condition.keyword].push(conditionLabel);
+  //     } else {
+  //       const filteredData = state.singleDeductions[
+  //         condition.keyword
+  //       ].filter((d) => d.conditionLabel !== conditionLabel.conditionLabel);
+  //       state.singleDeductions[condition.keyword] = filteredData;
+  //     }
+  //   } else {
+  //     state.singleDeductions[condition.keyword] = [conditionLabel];
+  //   }
+  //   return;
+  // }
+}

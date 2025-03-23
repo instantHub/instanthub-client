@@ -4,7 +4,7 @@ import React from "react";
 const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
   //   console.log("data frin TABLE component", data);
   return (
-    <table className="w-full ">
+    <table className="w-full text-sm max-sm:text-xs">
       <thead>
         <tr className="py-10 font-serif text-xl border shadow-xl text-blue-800 font-bold max-sm:text-sm">
           {headers.map((header, index) => (
@@ -14,7 +14,7 @@ const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
           ))}
         </tr>
       </thead>
-      <tbody className="text-center max-sm:text-sm">
+      <tbody className="text-center">
         {data?.map((item, index) => (
           <tr
             className={index % 2 === 0 ? "bg-white" : "bg-gray-50 border"}
