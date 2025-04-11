@@ -1,53 +1,21 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addSingleDeductions,
   clearDeductions,
-  setGetUpto,
+  setProductData,
 } from "../../../features/slices/deductionSlice";
-import {
-  addProcessor,
-  addHardDisk,
-  addRam,
-  clearLaptopDeductions,
-} from "../../../features/slices/laptopDeductionSlice";
 import { toast } from "react-toastify";
 import OtpGenerator from "../../otp/OTPGenerator";
-import LaptopDeductionItems from "./LaptopDeductionItems";
+// import LaptopDeductionItems from "./LaptopDeductionItems";
 import NextPrevButton from "./NextPrevButton";
+import DeductionItems from "./DeductionItems";
+import DisplayCondition from "./DisplayCondition";
 
 const LaptopsQuestions = (props) => {
   console.log("LaptopsQuestions");
-  const { productsData, deductions, handleLabelSelection } = props;
+  const { productsData, deductions } = props;
   // console.log("productsData from laptop", productsData);
-
-  const [config, setConfig] = useState({
-    processor: null,
-    hardDisk: null,
-    ram: null,
-    screenSize: null,
-    graphic: null,
-    screenCondition: null,
-    physicalCondition: null,
-    modelYear: null,
-    age: null,
-    // Accessories
-    bill: null,
-    box: null,
-    charger: null,
-  });
-
-  const [pageIndices, setPageIndices] = useState({
-    screenSize: null,
-    graphic: null,
-    screenCondition: null,
-    physicalCondition: null,
-    modelYear: null,
-    age: null,
-    // Accessories
-    bill: null,
-    box: null,
-    charger: null,
-  });
 
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [lastPageIndex, setLastPageIndex] = useState(0);
@@ -56,19 +24,24 @@ const LaptopsQuestions = (props) => {
   const [processorBasedDeductions, setProcessorBasedDeductions] =
     useState(null);
 
+  const deductionSliceDate = useSelector((state) => state.deductions);
+  // console.log("deductionSliceDate", deductionSliceDate);
+
   const dispatch = useDispatch();
 
-  // const data = useSelector((state) => state.deductions);
-  // // console.log("useSelector", data);
+  const [selected, setSelected] = useState(false);
 
   const groupConditionsByPage = (conditions) => {
-    // console.log("IN groupConditionsByPage laptop");
+    console.log("IN groupConditionsByPage laptop");
     const grouped = conditions.reduce((acc, condition) => {
       const { page } = condition;
       if (!acc[page]) {
         acc[page] = [];
       }
-      acc[page].push(condition);
+      // acc[page].push(condition);
+      const isSelected = { selected: false, selectedLabel: null };
+      // const multiSelect = condition.conditionName.includes("Problem");
+      acc[page].push({ ...condition, isSelected });
       return acc;
     }, {});
 
@@ -91,84 +64,63 @@ const LaptopsQuestions = (props) => {
         conditions: grouped[page],
       }));
 
-    // console.log("sortedPages", sortedPages);
+    // console.log("sortedPages from function", sortedPages);
 
     return sortedPages;
   };
 
-  const sortedConditions = deductions ? groupConditionsByPage(deductions) : [];
+  // const sortedConditions = deductions ? groupConditionsByPage(deductions) : [];
+  const sortedConditions = useMemo(() => {
+    if (!deductions) return [];
+    return groupConditionsByPage(deductions);
+  }, [deductions]);
+
   // console.log("sortedConditions LaptopQuestions", sortedConditions);
 
   const handleContinue = () => {
     console.log("handleContinue");
 
-    const validationSteps = [
-      {
-        condition:
-          currentPageIndex === 0 &&
-          (config.processor === null ||
-            config.hardDisk === null ||
-            config.ram === null),
-        message: "Select all system configurations",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.age - 1 && config.age === null,
-        message: "Select Age to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.screenSize - 1 &&
-          config.screenSize === null,
-        message: "Select ScreenSize to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.graphic - 1 &&
-          config.graphic === null,
-        message: "Select Graphics to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.screenCondition - 1 &&
-          config.screenCondition === null,
-        message: "Select Screen Condition to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.modelYear - 1 &&
-          config.modelYear === null,
-        message: "Select Model Launch Year to proceed..!",
-      },
+    let conditionStatus = { notSelected: false, keyword: "" };
+    console.log("condition selected or not", conditionStatus);
 
-      // Accessories
-      {
-        condition:
-          currentPageIndex === pageIndices.bill - 1 && config.bill === null,
-        message: "Select Bill to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.box - 1 && config.box === null,
-        message: "Select Product Box to proceed..!",
-      },
-      {
-        condition:
-          currentPageIndex === pageIndices.charger - 1 &&
-          config.charger === null,
-        message: "Select Charger to proceed..!",
-      },
-    ];
-
-    for (let { condition, message } of validationSteps) {
-      if (condition) {
-        toast.error(message);
-        return;
-      }
+    function setConditionStatus(selected, keyword) {
+      conditionStatus.notSelected = selected;
+      conditionStatus.keyword = keyword;
     }
+
+    if (currentPageIndex > 0) {
+      processorBasedDeductions[currentPageIndex - 1].conditions.forEach(
+        (condition) => {
+          console.log(condition.isMandatory, !condition.isSelected.selected);
+          if (condition.isMandatory && !condition.isSelected.selected) {
+            console.log("condition isMandatory", condition);
+            setConditionStatus(true, condition.keyword);
+            return;
+          }
+        }
+      );
+    } else {
+      sortedConditions[0].conditions.forEach((condition) => {
+        if (condition.isMandatory && !condition.isSelected.selected) {
+          console.log("condition isMandatory", condition);
+          setConditionStatus(true, condition.keyword);
+          return;
+        }
+      });
+    }
+
+    // Toast Notification to customer
+    if (conditionStatus.notSelected) {
+      toast.error(`Select ${conditionStatus.keyword} to proceed..!`);
+      setConditionStatus(false, "");
+      return;
+    }
+
+    // console.log("conditionNotSelected after checking", conditionStatus);
 
     if (currentPageIndex < lastPageIndex - 1) {
       setCurrentPageIndex((prevIndex) => prevIndex + 1);
+      setConditionStatus(false, "");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setShowOTP(true);
@@ -189,24 +141,40 @@ const LaptopsQuestions = (props) => {
     const operation = selectedOption.getAttribute("data-arg4");
     const conditionLabelId = selectedOption.getAttribute("data-arg5");
 
+    function setSelectedFunc() {
+      setSelected((prev) => !prev);
+      sortedConditions[0].conditions.forEach((condition) => {
+        if (condition.conditionName == conditionName) {
+          condition.isSelected.selected = true;
+          condition.isSelected.selectedLabel = {
+            conditionLabelId,
+            conditionLabel,
+            priceDrop,
+            operation,
+          };
+          return;
+        }
+      });
+    }
+
     if (conditionName === "Processor") {
       const procBasedDed = await getProcessorDeductions(conditionLabelId);
-      console.log("procBasedDed", procBasedDed);
+      // console.log("procBasedDed", procBasedDed);
 
-      setPagesFunc(procBasedDed);
+      setSelectedFunc();
 
-      setConfig((prev) => ({
-        ...prev,
-        processor: { conditionLabel, priceDrop, conditionLabelId },
-      }));
+      let cl = {
+        conditionLabel,
+        priceDrop,
+        operation,
+        type: "Processor",
+      };
 
+      let processor = sortedConditions[0].conditions.find(
+        (d) => d.conditionName == "Processor"
+      );
       dispatch(
-        addProcessor({
-          conditionLabel,
-          priceDrop,
-          operation,
-          type: "Processor",
-        })
+        addSingleDeductions({ condition: processor, conditionLabel: cl })
       );
 
       const sorted = groupConditionsByPage(procBasedDed.deductions);
@@ -218,39 +186,40 @@ const LaptopsQuestions = (props) => {
       }, 0);
       setLastPageIndex(maxIndex);
 
-      let getUpTo = {
-        productCategory: productsData.category.name,
-        productName: productsData.name,
-        productImage: productsData.image,
-        variantName: productsData.variants[0].name,
-        price: priceDrop,
+      let prodData = {
+        selectedProduct: productsData,
+        getUpTo: {
+          variantName: productsData.variants[0].name,
+          price: priceDrop,
+        },
       };
 
-      dispatch(setGetUpto(getUpTo));
+      dispatch(setProductData(prodData));
     } else if (conditionName === "Hard Disk") {
-      setConfig((prev) => ({
-        ...prev,
-        hardDisk: { conditionLabel, priceDrop, conditionLabelId },
-      }));
+      setSelectedFunc();
+
+      let cl = { conditionLabel, priceDrop, operation, type: "Hard Disk" };
+
+      let hardDisk = sortedConditions[0].conditions.find(
+        (d) => d.conditionName == "Hard Disk"
+      );
       dispatch(
-        addHardDisk({ conditionLabel, priceDrop, operation, type: "Hard Disk" })
+        addSingleDeductions({ condition: hardDisk, conditionLabel: cl })
       );
     } else if (conditionName === "Ram") {
-      setConfig((prev) => ({
-        ...prev,
-        ram: { conditionLabel, priceDrop, conditionLabelId },
-      }));
-      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "RAM" }));
+      setSelectedFunc();
+
+      let cl = { conditionLabel, priceDrop, operation, type: "Ram" };
+
+      let ram = sortedConditions[0].conditions.find(
+        (d) => d.conditionName == "Ram"
+      );
+      dispatch(addSingleDeductions({ condition: ram, conditionLabel: cl }));
     }
   };
 
   async function getProcessorDeductions(processorId) {
     try {
-      // let URL =
-      //   import.meta.env.VITE_BUILD === "development"
-      //     ? `http://localhost:8000/api/processors/deductions/${processorId}`
-      //     : `https://api.instantpick.in/api/processors/deductions/${processorId}`;
-
       const baseURL =
         import.meta.env.VITE_BUILD === "development"
           ? "http://localhost:8000"
@@ -292,56 +261,10 @@ const LaptopsQuestions = (props) => {
     }
   }
 
-  async function setPagesFunc(selectedProcessor) {
-    console.log("Function to set page number");
-
-    const keyMap = {
-      "screen size": "screenSize",
-      graphic: "graphic",
-      "screen condition": "screenCondition",
-      physical: "physicalCondition",
-      age: "age",
-      "model launch year": "modelYear",
-
-      // Accessories
-      bill: "bill",
-      box: "box",
-      charger: "charger",
-    };
-
-    const pageIndicesUpdate = selectedProcessor.deductions.reduce((acc, d) => {
-      for (const [keyword, key] of Object.entries(keyMap)) {
-        if (d.conditionName.toLowerCase().includes(keyword)) {
-          acc[key] = d.page;
-          break; // Stop checking once a match is found
-        }
-      }
-
-      return acc;
-    }, {});
-
-    setPageIndices((prev) => ({ ...prev, ...pageIndicesUpdate }));
-  }
-
   function resetStateData() {
-    dispatch(clearLaptopDeductions());
     dispatch(clearDeductions());
-
-    const clearedConfig = Object.fromEntries(
-      Object.keys(config).map((key) => [key, null])
-    );
-    const clearedPageIndices = Object.fromEntries(
-      Object.keys(pageIndices).map((key) => [key, null])
-    );
-
-    console.log("clearedConfig", clearedConfig);
-    console.log("clearedPageIndices", clearedPageIndices);
-
-    setConfig(clearedConfig);
-    setPageIndices(clearedPageIndices);
   }
 
-  // console.log("selectedLabels", selectedLabels);
   // console.log("processorBasedDeductions", processorBasedDeductions);
   // console.log("productsData", productsData);
 
@@ -354,7 +277,7 @@ const LaptopsQuestions = (props) => {
               Select the system configuration of your device?
             </h2>
           )}
-          <div>
+          <div className="flex flex-col gap-5">
             {/* List of Configurations(Processor, Ram, Hard Disk) to select */}
             {currentPageIndex === 0 &&
               sortedConditions[0].conditions.map((condition, index) => (
@@ -376,6 +299,7 @@ const LaptopsQuestions = (props) => {
                       {condition.conditionLabels.map((label, index) => (
                         <option
                           key={index}
+                          value={label}
                           data-arg1={label.conditionLabel}
                           data-arg2={label.priceDrop}
                           data-arg3={condition.conditionName}
@@ -393,27 +317,11 @@ const LaptopsQuestions = (props) => {
             {/* List all other conditions to select based on the processor selected */}
             {currentPageIndex > 0 &&
               processorBasedDeductions[currentPageIndex - 1]?.conditions?.map(
-                (condition, index) => (
-                  <div key={index} className="px-4 py-4 max-sm:px-1">
-                    {/* Condition Name & Headings */}
-                    <h2 className="px-5 py-2 max-sm:px-2 text-center font-extrabold text-2xl max-sm:text-lg">
-                      {condition.conditionName}
-                    </h2>
-
-                    <p className="text-center text-lg font-medium text-gray-600 max-sm:text-xs mb-5">
-                      {condition.description}
-                    </p>
-
-                    {/* Condition Labels */}
-                    <div>
-                      <LaptopDeductionItems
-                        setConfig={setConfig}
-                        condition={condition}
-                        handleLabelSelection={handleLabelSelection}
-                        handleContinue={handleContinue}
-                      />
-                    </div>
-                  </div>
+                (condition) => (
+                  <DisplayCondition
+                    key={condition.conditionId}
+                    condition={condition}
+                  />
                 )
               )}
           </div>
@@ -437,29 +345,3 @@ const LaptopsQuestions = (props) => {
   );
 };
 export default LaptopsQuestions;
-
-// Next Prev Button
-{
-  /* <div className="flex items-center gap-5 max-sm:gap-2">
-            <button
-              onClick={() => {
-                setCurrentPageIndex((prev) => prev - 1);
-                // console.log("Prev Btn", currentPageIndex);
-                if (currentPageIndex === 1) resetStateData();
-              }}
-              className={`px-2 py-1 bg-secondary-light text-secondary border border-secondary mx-auto rounded w-[35%] mt-6
-                              hover:bg-secondary hover:text-secondary-light ${
-                                currentPageIndex === 0 && "hidden"
-                              }`}
-            >
-              Previous
-            </button>
-
-            <button
-              onClick={handleContinue}
-              className="px-2 py-1 text-lg max-sm:text-sm bg-secondary text-white border mx-auto rounded w-[35%] mt-6 hover:bg-white hover:border-secondary hover:text-secondary"
-            >
-              Next
-            </button>
-          </div> */
-}

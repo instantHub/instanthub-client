@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useGenerateOTPMutation } from "../../features/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,7 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa6";
 import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { addDeductions } from "../../features/slices/deductionSlice";
-import { LAPTOP_DESKTOP } from "../../utils/constants";
+import { performCalculation } from "../../features/slices/deductionSlice";
 
 const OtpGenerator = (props) => {
   const { closeModal } = props;
@@ -18,8 +17,8 @@ const OtpGenerator = (props) => {
   const [generateOTP, { isLoading: generateOTPLoading }] =
     useGenerateOTPMutation();
 
-  const selectedProdDetails = useSelector((state) => state.deductions);
-  // console.log("selectedProdDetails", selectedProdDetails);
+  const { selectedProduct, getUpTo } = useSelector((state) => state.deductions);
+  // console.log("selectedProdDetails", selectedProduct);
 
   const [otp, setOtp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -29,7 +28,6 @@ const OtpGenerator = (props) => {
   // Dispatch
   const dispatch = useDispatch();
   // Slice Data
-  const laptopSlice = useSelector((state) => state.laptopDeductions);
   const data = useSelector((state) => state.deductions);
   // console.log("useSelector from OTP", laptopSlice, data);
 
@@ -72,34 +70,7 @@ const OtpGenerator = (props) => {
       // toast.success("OTP Generated");
       // setOtp(otpGenerated.data.data.otp);
 
-      // if (data.productCategory.toLowerCase().includes("laptop")) {
-      if (LAPTOP_DESKTOP.includes(data.productCategory.toLowerCase())) {
-        dispatch(addDeductions(laptopSlice.processor));
-        dispatch(addDeductions(laptopSlice.hardDisk));
-        dispatch(addDeductions(laptopSlice.ram));
-        dispatch(addDeductions(laptopSlice.screenSize));
-        dispatch(addDeductions(laptopSlice.graphic));
-        dispatch(addDeductions(laptopSlice.screenCondition));
-        dispatch(addDeductions(laptopSlice.physicalCondition));
-        dispatch(addDeductions(laptopSlice.modelYear));
-        dispatch(addDeductions({ ...data.productAge, type: "Age" }));
-
-        // Accessories
-        dispatch(addDeductions(data.productBill));
-        dispatch(addDeductions(data.productBox));
-        dispatch(addDeductions(data.productCharger));
-      } else if (data.productCategory.toLowerCase().includes("mobile")) {
-        dispatch(addDeductions(data.productAge));
-        dispatch(addDeductions(data.productScreenCondition));
-        dispatch(addDeductions(data.productPhysicalCondition));
-        dispatch(addDeductions(data.productPanelCondition));
-        dispatch(addDeductions(data.productDisplayDefect));
-
-        // Accessories
-        dispatch(addDeductions(data.productBill));
-        dispatch(addDeductions(data.productBox));
-        dispatch(addDeductions(data.productCharger));
-      }
+      dispatch(performCalculation());
 
       // Until OTP is applied
       toast.success("Success..!");
@@ -149,10 +120,7 @@ const OtpGenerator = (props) => {
           <div className="flex m-4 border grow-1 rounded-lg py-2 items-center justify-center gap-2 px-20 max-2sm:px-10">
             <div>
               <img
-                src={
-                  import.meta.env.VITE_APP_BASE_URL +
-                  selectedProdDetails.productImage
-                }
+                src={import.meta.env.VITE_APP_BASE_URL + selectedProduct.image}
                 alt="ProductImg"
                 className="size-20 rounded-xl"
                 loading="lazy" // Native lazy loading
@@ -160,9 +128,9 @@ const OtpGenerator = (props) => {
             </div>
             <div className="flex flex-col gap-1 max-sm:px-2">
               <div className="text-xl flex gap-2 max-sm:flex-col max-sm:text-sm">
-                <h2 className="text-wrap">{selectedProdDetails.productName}</h2>
-                {selectedProdDetails.productCategory === "Mobile" ? (
-                  <span>{selectedProdDetails.getUpTo.variantName}</span>
+                <h2 className="text-wrap">{selectedProduct.name}</h2>
+                {selectedProduct.category.name === "Mobile" ? (
+                  <span>{getUpTo.variantName}</span>
                 ) : null}
               </div>
               <div>

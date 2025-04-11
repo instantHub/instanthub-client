@@ -9,7 +9,6 @@ import {
   addProcessor,
   addHardDisk,
   addRam,
-  clearLaptopDeductions,
 } from "../../features/slices/laptopDeductionSlice";
 import { toast } from "react-toastify";
 import OtpGenerator from "../otp/OTPGenerator";
@@ -208,7 +207,7 @@ const LaptopsQuestions = (props) => {
       );
     } else if (conditionName === "Ram") {
       setRam({ conditionLabel, priceDrop });
-      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "RAM" }));
+      dispatch(addRam({ conditionLabel, priceDrop, operation, type: "Ram" }));
     }
   };
 
@@ -310,7 +309,6 @@ const LaptopsQuestions = (props) => {
   }
 
   function resetStateData() {
-    dispatch(clearLaptopDeductions());
     dispatch(clearDeductions());
     setProcessor(null);
     setHardDisk(null);

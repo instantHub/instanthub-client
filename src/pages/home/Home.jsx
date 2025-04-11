@@ -81,8 +81,7 @@ const Home = () => {
           <Categories />
 
           <div className="mt-10 pt-5 pb-16 bg-secondary-light/40">
-            {/* <Services /> */}
-            <ServicesHome />
+            ʼ <ServicesHome />
           </div>
           <HowItWorks />
           <TestimonialCarousel />

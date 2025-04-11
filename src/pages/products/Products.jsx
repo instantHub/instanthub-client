@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useGetProductsQuery } from "../../features/api/products/productsApi";
 import { useGetBrandSeriesQuery } from "../../features/api";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import { FaAngleRight } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../components/loader/Loading";
 import ProductCard from "../../components/ProductCard";
@@ -33,7 +31,7 @@ const Products = () => {
   const { data: productsData, isLoading: productsLoading } =
     useGetProductsQuery({ brandId, search });
 
-  // console.log("productsData", productsData);
+  console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
     setSeriesAction((prevSeries) => ({

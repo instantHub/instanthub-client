@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import globalSlice from "../features/slices/globalSlice";
 import authSlice from "../features/slices/authSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "../features/api";
 
 import deductionSlice from "../features/slices/deductionSlice";
-import laptopDeductionSlice from "../features/slices/laptopDeductionSlice";
 import serviceProblemsSlice from "../features/slices/serviceProblemsSlice";
 import filterSlice from "../admin/features/filterSlice";
 import searchSlice from "../admin/features/searchSlice";
@@ -22,10 +20,8 @@ import { recycleApi } from "../features/api/recycle/recycleApi";
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    global: globalSlice,
     deductions: deductionSlice,
     serviceProblems: serviceProblemsSlice,
-    laptopDeductions: laptopDeductionSlice,
     filter: filterSlice,
     search: searchSlice,
     processor: processorSlice,
