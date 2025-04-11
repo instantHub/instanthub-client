@@ -256,6 +256,7 @@ const ProductFinalPrice = () => {
           <ProductPricingContainer
             selectedProduct={selectedProduct}
             getUpTo={getUpTo}
+            setShowLocation={setShowLocation}
           />
 
           {/* Right */}
@@ -350,7 +351,11 @@ const Item = ({ clNo, conditionLabel }) => {
 };
 
 // Pricing Component
-const ProductPricingContainer = ({ selectedProduct, getUpTo }) => {
+const ProductPricingContainer = ({
+  selectedProduct,
+  getUpTo,
+  setShowLocation,
+}) => {
   const { state, dispatch } = useContext(StateContext);
 
   return (

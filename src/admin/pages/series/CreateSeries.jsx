@@ -78,15 +78,15 @@ const CreateSeries = () => {
                   {!categoryLoading &&
                     categoryData.map((category) => (
                       <option
-                        key={category.id}
-                        value={category.id}
+                        key={category?.id}
+                        value={category?.id}
                         name="category"
                         className=""
                         onChange={(e) => {
                           setSelectedCategory(e.target.value);
                         }}
                       >
-                        {category.name}
+                        {category?.name}
                       </option>
                     ))}
                 </select>
@@ -108,15 +108,15 @@ const CreateSeries = () => {
                   <option value="">Select Category</option>
                   {!BrandLoading &&
                     BrandData.map((brand) => {
-                      if (selectedCategory == brand.category.id) {
+                      if (selectedCategory == brand?.category?.id) {
                         return (
                           <option
-                            key={brand.id}
-                            value={brand.id}
+                            key={brand?.id}
+                            value={brand?.id}
                             name="category"
                             className=""
                           >
-                            {brand.name}
+                            {brand?.name}
                           </option>
                         );
                       }
