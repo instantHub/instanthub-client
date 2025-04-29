@@ -99,6 +99,8 @@ const ProductFinalPrice = () => {
   const productId = searchParams.get("productId");
   const navigate = useNavigate();
 
+  console.log("productId", productId);
+
   const { data: couponsData } = useGetCouponQuery();
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -214,9 +216,9 @@ const ProductFinalPrice = () => {
     setFormData({
       ...formData,
       productId,
-      productName: selectedProduct.name,
-      productBrand: selectedProduct.brand.name,
-      productCategory: selectedProduct.category.name,
+      productName: selectedProduct?.name,
+      productBrand: selectedProduct?.brand?.name,
+      productCategory: selectedProduct?.category?.name,
       variant: getUpTo,
       deductions: selectedProductData.deductions,
       // accessoriesAvailable: AccessoriesSelected,
@@ -257,6 +259,7 @@ const ProductFinalPrice = () => {
             selectedProduct={selectedProduct}
             getUpTo={getUpTo}
             setShowLocation={setShowLocation}
+            productId={productId}
           />
 
           {/* Right */}
@@ -355,6 +358,7 @@ const ProductPricingContainer = ({
   selectedProduct,
   getUpTo,
   setShowLocation,
+  productId,
 }) => {
   const { state, dispatch } = useContext(StateContext);
 

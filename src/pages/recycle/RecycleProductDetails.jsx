@@ -14,6 +14,12 @@ import BreadCrumbLinks from "../../components/breadcrumbs/BreadCrumbLinks";
 import DateAndTime from "../../components/DateAndTime/DateAndTime";
 import { SubmitButton } from "../../admin/components/SubmitButton";
 import InputSubmitBtn from "../../components/InputSubmitBtn";
+import {
+  DEAD_LAPTOP_PRICE,
+  DEAD_MOBILE_PRICE,
+  NON_DEAD_LAPTOP_PRICE,
+  NON_DEAD_MOBILE_PRICE,
+} from "./constants";
 
 const RecycleProductDetail = () => {
   const { prodId } = useParams();
@@ -577,13 +583,13 @@ function CheckStatus({
   const price = MOBILE_CATEGORY
     ? status.selected
       ? status.on
-        ? 700
-        : 500
+        ? NON_DEAD_MOBILE_PRICE
+        : DEAD_MOBILE_PRICE
       : "Select On / Off"
     : status.selected && laptopAge.selected
     ? status.on && laptopAge.belowThree
-      ? 1500
-      : 500
+      ? NON_DEAD_LAPTOP_PRICE
+      : DEAD_LAPTOP_PRICE
     : "Select On / Off";
 
   return (
