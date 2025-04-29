@@ -54,12 +54,12 @@ const Home = () => {
             <span className=" ">
               📱 "Old Gadgets, New Beginnings - Sell Now!" 🎁
             </span>
-            <span className=" ">
+            {/* <span className=" ">
               🎉 "New Year, New Savings! Grab up to 30% off on all services!" 🎉
-            </span>
-            <span className="">
+            </span> */}
+            {/* <span className="">
               💥 "New Year Bonanza: Deals You Can't Miss - Avail Now!" 💥
-            </span>
+            </span> */}
             <span className=" ">
               🛒 "Out with the Old, In with the Deals - Special New Year
               Offers!"

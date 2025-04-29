@@ -9,6 +9,12 @@ const cities = [
     available: true,
   },
   {
+    city: "Mysore",
+    state: "Karnataka",
+    icon: <BiSolidCity />,
+    available: true,
+  },
+  {
     city: "Mumbai",
     state: "Maharashtra",
     icon: <BiSolidCity />,
@@ -21,10 +27,6 @@ const cities = [
     icon: <BiSolidCity />,
     available: false,
   },
-  // { city: "Chennai", state: "Tamil Nadu" },
-  // { city: "Hyderabad", state: "Telangana" },
-  // { city: "Pune", state: "Maharashtra" },
-  // { city: "Ahmedabad", state: "Gujarat" },
 ];
 
 function LocationSelector({ handleAddress, setShowLocation, setIsOpen }) {

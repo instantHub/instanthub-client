@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDeleteSeriesMutation } from "../../../features/api";
 import ActionButton from "../../components/ActionButton";
 
 const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
@@ -12,7 +11,7 @@ const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
   };
 
   const handleEdit = () => {
-    navigate(`/admin/update-series/${data.id}`);
+    navigate(`/admin/update-series/${data?.id}`);
   };
 
   return (
@@ -24,15 +23,15 @@ const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
         <div className="flex flex-col text-start gap-[2px]">
           <div>
             <span className="max-sm:text-[10px]">Series: </span>
-            <span className={`${style.boldness}`}>{data.name}</span>
+            <span className={`${style.boldness}`}>{data?.name}</span>
           </div>
           <div>
             <span className="max-sm:text-[10px]">Category: </span>
-            <span className={`${style.boldness}`}>{data.category.name}</span>
+            <span className={`${style.boldness}`}>{data?.category?.name}</span>
           </div>
           <div>
             <span className="max-sm:text-[10px]">Brand: </span>
-            <span className={`${style.boldness}`}>{data.brand.name}</span>
+            <span className={`${style.boldness}`}>{data?.brand?.name}</span>
           </div>
         </div>
 
@@ -43,7 +42,7 @@ const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
           actionTwo={"Delete"}
           actionTwoHandler={() => {
             setModalOpen(true);
-            setSeriesToDelete(data.id);
+            setSeriesToDelete(data?.id);
           }}
           name={null}
         />
