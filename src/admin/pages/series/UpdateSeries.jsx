@@ -5,7 +5,7 @@ import {
   useUpdateSeriesMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../../components/admin/BackButton";
 
 const UpdateSeries = () => {
   const { seriesId } = useParams();

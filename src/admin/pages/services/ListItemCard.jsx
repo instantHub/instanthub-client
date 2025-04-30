@@ -1,4 +1,4 @@
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../../components/admin/ActionButton";
 
 const ListItemCard = ({ data, service, handleEdit, handleDelete }) => {
   console.log("data", data);

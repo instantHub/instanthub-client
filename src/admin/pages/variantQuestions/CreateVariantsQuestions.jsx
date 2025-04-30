@@ -9,8 +9,8 @@ import {
 
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import Table from "../../components/TableView";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import Table from "../../../components/admin/TableView";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 
 function CreateVariantsQuestions() {
   const [deductionSelected, setDeductionSelected] = useState("");

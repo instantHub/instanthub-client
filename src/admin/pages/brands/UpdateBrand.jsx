@@ -6,9 +6,9 @@ import {
 } from "../../../features/api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import CardHeader from "../../components/CardHeader";
-import UpdateButton from "../../components/UpdateButton";
-import { SubmitButton } from "../../components/SubmitButton";
+import CardHeader from "../../../components/admin/CardHeader";
+import UpdateButton from "../../../components/admin/UpdateButton";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 
 function UpdateBrand() {
   const { brandId } = useParams();

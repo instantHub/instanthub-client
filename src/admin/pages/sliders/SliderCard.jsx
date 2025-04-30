@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteSliderMutation } from "../../../features/api";
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../../components/admin/ActionButton";
 
 const SliderCard = ({ data }) => {
   // console.log("data", data);

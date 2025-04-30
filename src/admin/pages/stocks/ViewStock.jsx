@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useStockSoldMutation } from "../../../features/api/admin/stocks/stocksApi";
-import DateAndTime from "../../../components/DateAndTime/DateAndTime";
-import { SubmitButton } from "../../components/SubmitButton";
+import DateAndTime from "../../../components/user/DateAndTime/DateAndTime";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 
 export default function ViewStock({ stock, setViewStock }) {
   // console.log("stock", stock);

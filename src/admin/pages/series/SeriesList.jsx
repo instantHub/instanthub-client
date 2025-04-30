@@ -5,9 +5,9 @@ import {
 } from "../../../features/api";
 import { toast } from "react-toastify";
 import { MdDeleteForever } from "react-icons/md";
-import EditButton from "../../components/EditButton";
-import Table from "../../components/TableView";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import EditButton from "../../../components/admin/EditButton";
+import Table from "../../../components/admin/TableView";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import SeriesCard from "./SeriesCard";
 
 const SeriesList = () => {

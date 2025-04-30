@@ -6,9 +6,9 @@ import {
 } from "../../../features/api/recycle/recycleApi";
 import { useUploadCustomerProofImageMutation } from "../../../features/api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/loader/Loading";
-import InputSubmitBtn from "../../../components/InputSubmitBtn";
-import DateAndTime from "../../../components/DateAndTime/DateAndTime";
+import Loading from "../../../components/user/loader/Loading";
+import InputSubmitBtn from "../../../components/user/InputSubmitBtn";
+import DateAndTime from "../../../components/user/DateAndTime/DateAndTime";
 
 const RecycleOrderDetail = () => {
   const { recycleOrderId } = useParams();

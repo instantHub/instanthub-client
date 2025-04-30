@@ -4,8 +4,8 @@ import {
   useDeleteComplaintMutation,
   useGetComplaintsQuery,
 } from "../../../features/api";
-import Loading from "../../../components/loader/Loading";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import Loading from "../../../components/user/loader/Loading";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 
 const Complaints = () => {
   const { data: complaints, isLoading: complaintsLoading } =

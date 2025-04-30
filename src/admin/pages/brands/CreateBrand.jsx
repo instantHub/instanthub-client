@@ -5,8 +5,8 @@ import {
 } from "../../../features/api";
 import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import { toast } from "react-toastify";
-import ListButton from "../../components/ListButton";
-import { SubmitButton } from "../../components/SubmitButton";
+import ListButton from "../../../components/admin/ListButton";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 
 const CreateBrand = () => {
   const [brand, setBrand] = useState("");

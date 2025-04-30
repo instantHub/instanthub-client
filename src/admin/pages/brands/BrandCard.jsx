@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import { useDeleteBrandMutation } from "../../../features/api";
 import { toast } from "react-toastify";
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../../components/admin/ActionButton";
 
 const BrandCard = ({ data }) => {
   console.log(data);

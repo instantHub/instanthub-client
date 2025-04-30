@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import { useGetRecycleOrdersQuery } from "../../../features/api/recycle/recycleApi";
-import OrderTabs from "../../components/OrderTabs";
+import OrderTabs from "../../../components/admin/OrderTabs";
 import RecycleOrderCard from "./RecycleOrderCard";
-import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
-import Loading from "../../../components/loader/Loading";
+import CurrentOrdersAndCount from "../../../components/admin/CurrentOrdersAndCount";
+import Loading from "../../../components/user/loader/Loading";
 
 const RecycleOrdersList = () => {
   const { data: recycleOrdersData, isLoading: recycleOrdersDataloading } =

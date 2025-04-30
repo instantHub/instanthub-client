@@ -5,8 +5,8 @@ import {
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "../../components/BackButton";
-import { SubmitButton } from "../../components/SubmitButton";
+import BackButton from "../../../components/admin/BackButton";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 import FormData from "./FormData";
 
 function UpdateCondition() {

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
 import { useCreateConditionsMutation } from "../../../features/api";
 import { toast } from "react-toastify";
-import ListButton from "../../components/ListButton";
+import ListButton from "../../../components/admin/ListButton";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "../../features/filterSlice";
-import { SubmitButton } from "../../components/SubmitButton";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 import FormData from "./FormData";
 
 function Condtions() {

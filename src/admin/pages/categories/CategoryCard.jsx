@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import { useDeleteCategoryMutation } from "../../../features/api/categories/categoriesApi";
 import { toast } from "react-toastify";
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../../components/admin/ActionButton";
 
 const ListCard = ({ data }) => {
   const navigate = useNavigate();

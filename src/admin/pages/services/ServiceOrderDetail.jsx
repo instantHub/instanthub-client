@@ -4,7 +4,7 @@ import {
   useGetServiceOrderQuery,
 } from "../../../features/api/services/servicesApi";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/loader/Loading";
+import Loading from "../../../components/user/loader/Loading";
 import { orderCurrentStatus } from "../../helpers/helper";
 import { IoCartOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
@@ -13,7 +13,7 @@ import { RiContactsLine } from "react-icons/ri";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { BsBoxSeam } from "react-icons/bs";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import ServiceCompletionForm from "./ServiceCompletionForm";
 import { toast } from "react-toastify";
 

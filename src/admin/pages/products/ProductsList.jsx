@@ -13,7 +13,7 @@ import {
   filterPage,
   clearFilter,
 } from "../../features/filterSlice";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import ProductCard from "./ProductCard";
 import axios from "axios";
 

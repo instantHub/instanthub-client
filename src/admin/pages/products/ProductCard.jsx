@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import { useDeleteProductMutation } from "../../../features/api/products/productsApi";
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../../components/admin/ActionButton";
 // import { checkPendingPrices } from "../../helpers/pendingPrices";
 import { MOBILE } from "../../helpers/constants";
 

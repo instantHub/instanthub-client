@@ -6,8 +6,8 @@ import {
   useUploadCustomerProofImageMutation,
 } from "../../../features/api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/loader/Loading";
-import OrderCompleteForm from "../../components/OrderCompleteForm";
+import Loading from "../../../components/user/loader/Loading";
+import OrderCompleteForm from "../../../components/admin/OrderCompleteForm";
 import { orderCurrentStatus } from "../../helpers/helper";
 import { FaRegImages } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
@@ -20,8 +20,8 @@ import { TiArrowBackOutline } from "react-icons/ti";
 import { BsBoxSeam } from "react-icons/bs";
 import { TbListDetails } from "react-icons/tb";
 import { toast } from "react-toastify";
-import ConfirmationModal from "../../components/ConfirmationModal";
-import AssignAgent from "../../components/AssignAgent";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
+import AssignAgent from "../../../components/admin/AssignAgent";
 
 const OrderDetail = () => {
   const { orderId } = useParams();

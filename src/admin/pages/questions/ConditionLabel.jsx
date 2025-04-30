@@ -6,7 +6,7 @@ import {
   useUploadConditionLabelsImageMutation,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import ListButton from "../../components/ListButton";
+import ListButton from "../../../components/admin/ListButton";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory, filterCondition } from "../../features/filterSlice";
 

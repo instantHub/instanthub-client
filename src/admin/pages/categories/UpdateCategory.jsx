@@ -7,8 +7,8 @@ import {
 
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import CardHeader from "../../components/CardHeader";
-import { SubmitButton } from "../../components/SubmitButton";
+import CardHeader from "../../../components/admin/CardHeader";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 
 function UpdateCategory() {
   const { catId } = useParams();

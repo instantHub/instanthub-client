@@ -8,40 +8,40 @@ import {
   useLocation,
 } from "react-router-dom";
 // Client side
-import ClientLayout from "./pages/home/Layout";
-import ClientHome from "./pages/home/Home";
+import ClientLayout from "./pages/user/home/Layout";
+import ClientHome from "./pages/user/home/Home";
 // import ClientNavbar from "./components/Navbar";
-import ClientBrands from "./pages/brands/Brands";
+import ClientBrands from "./pages/user/brands/Brands";
 // import ClientProducts from "./pages/products/Products";
-import ClientProductDetail from "./pages/products/ProductDetail";
-import ClientProductDeductions from "./pages/products/questionnaire/ProductQuestions";
-import ClientOtpGenerator from "./pages/otp/OTPGenerator";
-import ClientProductFinalPrice from "./pages/products/ProductFinalPrice";
-import ClientServices from "./pages/services/Services";
-import ClientSubServices from "./pages/services/ServiceSubCategory";
-import ClientServiceSubProducts from "./pages/services/ServiceSubProducts";
-import ClientServicesBrands from "./pages/services/ServiceBrands";
-import ClientServicesBrandsProblems from "./pages/services/ServiceBrandProblems";
-import ClientBookService from "./pages/services/BookService";
-import ClientRecycleCategories from "./pages/recycle/RecycleCategories";
-import ClientRecycleBrands from "./pages/recycle/RecycleBrands";
+import ClientProductDetail from "./pages/user/products/ProductDetail";
+import ClientProductDeductions from "./pages/user/products/questionnaire/ProductQuestions";
+import ClientOtpGenerator from "./pages/user/otp/OTPGenerator";
+import ClientProductFinalPrice from "./pages/user/products/ProductFinalPrice";
+import ClientServices from "./pages/user/services/Services";
+import ClientSubServices from "./pages/user/services/ServiceSubCategory";
+import ClientServiceSubProducts from "./pages/user/services/ServiceSubProducts";
+import ClientServicesBrands from "./pages/user/services/ServiceBrands";
+import ClientServicesBrandsProblems from "./pages/user/services/ServiceBrandProblems";
+import ClientBookService from "./pages/user/services/BookService";
+import ClientRecycleCategories from "./pages/user/recycle/RecycleCategories";
+import ClientRecycleBrands from "./pages/user/recycle/RecycleBrands";
 // import ClientRecycleProducts from "./pages/recycle/RecycleProducts";
-import ClientRecycleProductDetail from "./pages/recycle/RecycleProductDetails";
+import ClientRecycleProductDetail from "./pages/user/recycle/RecycleProductDetails";
 
-const ClientProducts = lazy(() => import("./pages/products/Products"));
+const ClientProducts = lazy(() => import("./pages/user/products/Products"));
 
 // POLICIES
-import ClientTermsAndPolicies from "./components/policies/AllTermsAndPolicies";
+import ClientTermsAndPolicies from "./components/user/policies/AllTermsAndPolicies";
 
 // Admin side
-import PrivateRoute from "./admin/components/PrivateRoute";
+import PrivateRoute from "./components/admin/PrivateRoute";
 import AdminSignIn from "./admin/pages/signIn & signup/SignIn";
 import AdminSignUp from "./admin/pages/signIn & signup/SignUp";
 
 // import UpdateAdminProfile from "./admin/components/UpdateAdmin";
 // import AdminDashboard from "./admin/pages/dashboard/Dashboard";
 // import AdminProducts from "./admin/pages/products/Products";
-const UpdateAdminProfile = lazy(() => import("./admin/components/UpdateAdmin"));
+const UpdateAdminProfile = lazy(() => import("./components/admin/UpdateAdmin"));
 const AdminDashboard = lazy(() => import("./admin/pages/dashboard/Dashboard"));
 // const AdminProducts = lazy(() => import("./admin/pages/products/Products"));
 
@@ -96,11 +96,11 @@ import AdminCreatePost from "./admin/pages/posts/CreatePost";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ErrorComponent from "./components/ErrorComponent";
-import AboutPage from "./components/static/About";
-import ContactUs from "./components/static/ContactUs";
+import ErrorComponent from "./components/user/ErrorComponent";
+import AboutPage from "./components/user/static/About";
+import ContactUs from "./components/user/static/ContactUs";
 import CreateQuestions from "./admin/pages/questions/CreateQuestions";
-import Loading from "./components/loader/Loading";
+import Loading from "./components/user/loader/Loading";
 import useGoogleAnalytics from "./hooks/useGoogleAnalytics";
 
 // import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
@@ -291,7 +291,9 @@ function App() {
             />
           ),
           // element: <ClientRecycleProducts />,
-          element: lazyLoad(() => import("./pages/recycle/RecycleProducts")),
+          element: lazyLoad(() =>
+            import("./pages/user/recycle/RecycleProducts")
+          ),
         },
         {
           path: "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
@@ -334,7 +336,7 @@ function App() {
             },
             {
               path: "/admin/update-profile",
-              element: lazyLoad(() => import("./admin/components/UpdateAdmin")),
+              element: lazyLoad(() => import("./components/admin/UpdateAdmin")),
             },
             {
               path: "/admin/add-products",

@@ -3,9 +3,9 @@ import { useGetCategoryQuery } from "../../../features/api/categories/categories
 import { useGetOrdersListQuery } from "../../../features/api";
 
 import OrderCard from "./OrderCard";
-import OrderTabs from "../../components/OrderTabs";
-import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
-import Loading from "../../../components/loader/Loading";
+import OrderTabs from "../../../components/admin/OrderTabs";
+import CurrentOrdersAndCount from "../../../components/admin/CurrentOrdersAndCount";
+import Loading from "../../../components/user/loader/Loading";
 
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =

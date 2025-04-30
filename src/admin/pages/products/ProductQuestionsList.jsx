@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 import UpdateSystemConfigurations from "./systemPriceDrops/UpdateSystemConfigurations";
 import UpdateSystemConditions from "./systemPriceDrops/UpdateSystemConditions";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../../components/admin/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProcessorDeductions } from "../../features/processorSlice";
 import { LAPTOP_DESKTOP } from "../../../utils/constants";

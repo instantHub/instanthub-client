@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import SideBar from "../../components/SideBar";
+import Navbar from "../../../components/admin/Navbar";
+import SideBar from "../../../components/admin/SideBar";
 
 // Create the context
 export const SideBarContext = createContext();

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../../components/admin/ActionButton";
 
 const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
   // console.log("data", data);

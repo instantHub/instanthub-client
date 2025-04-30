@@ -7,7 +7,7 @@ import {
 } from "../../../features/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../../components/admin/BackButton";
 
 function UpdateConditionLabel() {
   const { conditionLabelId } = useParams();

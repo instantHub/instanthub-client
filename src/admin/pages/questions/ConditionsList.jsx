@@ -4,10 +4,10 @@ import {
   useGetConditionsQuery,
   useDeleteConditionMutation,
 } from "../../../features/api";
-import BackButton from "../../components/BackButton";
-import EditButton from "../../components/EditButton";
+import BackButton from "../../../components/admin/BackButton";
+import EditButton from "../../../components/admin/EditButton";
 import { toast } from "react-toastify";
-import Table from "../../components/TableView";
+import Table from "../../../components/admin/TableView";
 import { MdDeleteForever } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "../../features/filterSlice";

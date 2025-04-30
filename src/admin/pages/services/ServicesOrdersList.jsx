@@ -4,9 +4,9 @@ import {
   useGetServicesOrdersQuery,
 } from "../../../features/api/services/servicesApi";
 import ServiceOrderCard from "./ServiceOrderCard";
-import OrderTabs from "../../components/OrderTabs";
-import CurrentOrdersAndCount from "../../components/CurrentOrdersAndCount";
-import Loading from "../../../components/loader/Loading";
+import OrderTabs from "../../../components/admin/OrderTabs";
+import CurrentOrdersAndCount from "../../../components/admin/CurrentOrdersAndCount";
+import Loading from "../../../components/user/loader/Loading";
 
 const ServicesOrdersList = () => {
   const { data: servicesOrders, isLoading: servicesOrdersLoading } =

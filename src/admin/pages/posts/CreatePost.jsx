@@ -1,5 +1,5 @@
 import React from "react";
-import ListButton from "../../components/ListButton";
+import ListButton from "../../../components/admin/ListButton";
 
 const CreatePost = () => {
   return (

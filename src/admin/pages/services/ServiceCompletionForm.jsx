@@ -6,9 +6,9 @@ import {
   useCancelServiceOrderMutation,
   useServiceOrderCompleteMutation,
 } from "../../../features/api/services/servicesApi";
-import OrderCancellationForm from "../../components/OrderCancellationForm";
-import DateAndTime from "../../../components/DateAndTime/DateAndTime";
-import { SubmitButton } from "../../components/SubmitButton";
+import OrderCancellationForm from "../../../components/admin/OrderCancellationForm";
+import DateAndTime from "../../../components/user/DateAndTime/DateAndTime";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 
 const ServiceCompletionForm = ({
   serviceOrderDetail,

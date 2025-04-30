@@ -5,8 +5,8 @@ import {
 } from "../../../features/api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import Table from "../../components/TableView";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import Table from "../../../components/admin/TableView";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import { MdDeleteForever } from "react-icons/md";
 
 const PhoneNumbersList = () => {

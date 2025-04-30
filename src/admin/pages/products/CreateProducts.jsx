@@ -9,9 +9,9 @@ import {
   useGetAllSeriesQuery,
 } from "../../../features/api";
 import { toast } from "react-toastify";
-import { SubmitButton } from "../../components/SubmitButton";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 // import ListButton from "../../components/ListButton";
-import CardHeader from "../../components/CardHeader";
+import CardHeader from "../../../components/admin/CardHeader";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");

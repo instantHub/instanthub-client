@@ -6,10 +6,10 @@ import {
 } from "../../../features/api/products/productsApi";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { SubmitButton } from "../../components/SubmitButton";
+import { SubmitButton } from "../../../components/admin/SubmitButton";
 // import BackButton from "../../components/BackButton";
-import CardHeader from "../../components/CardHeader";
-import Loading from "../../../components/loader/Loading";
+import CardHeader from "../../../components/admin/CardHeader";
+import Loading from "../../../components/user/loader/Loading";
 
 const initialState = {
   category: "",

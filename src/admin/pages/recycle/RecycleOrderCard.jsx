@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/admin/ConfirmationModal";
 import { useDeleteRecycleOrderMutation } from "../../../features/api/recycle/recycleApi";
 import { orderCurrentStatus } from "../../helpers/helper";
 
