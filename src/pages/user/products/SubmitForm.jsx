@@ -5,7 +5,7 @@ import { useCreateOrderMutation } from "@api/ordersApi";
 import { ORDER_EMAIL_MSG } from "@utils/user/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 
 const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   const { state, dispatch } = reducer;

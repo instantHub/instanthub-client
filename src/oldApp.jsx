@@ -100,7 +100,7 @@ import ContactUs from "./components/user/static/ContactUs";
 import CreateQuestions from "./pages/admin/questions/CreateQuestions";
 import Loading from "./components/user/loader/Loading";
 import useGoogleAnalytics from "./hooks/useGoogleAnalytics";
-import { router } from "./routes";
+import { router } from "@routes";
 
 // import AdminAllLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateAllLaptopConfigurations";
 // import AdminSingleLaptopConfiguration from "./admin/pages/products/systemPriceDropsBackup/UpdateSingleLaptopConfigurations";

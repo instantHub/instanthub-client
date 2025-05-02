@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useUpdateAdminMutation } from "@api/authApi";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { BiSolidHide, BiShow } from "react-icons/bi";
-import { ROUTES } from "../../routes";
+import { ROUTES } from "@routes";
 
 const UpdateAdmin = () => {
   const [name, setName] = useState("");

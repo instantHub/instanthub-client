@@ -11,7 +11,7 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdMenu } from "react-icons/io";
 import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
-import { ROUTES } from "../../routes";
+import { ROUTES } from "@routes";
 
 const Navbar = () => {
   const dispatch = useDispatch();

@@ -16,7 +16,7 @@ import {
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import ProductCard from "./ProductCard";
 import axios from "axios";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");

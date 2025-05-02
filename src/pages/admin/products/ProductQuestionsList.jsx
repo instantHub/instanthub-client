@@ -15,7 +15,7 @@ import BackButton from "@components/admin/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProcessorDeductions } from "@features/adminSlices/processorSlice";
 import { LAPTOP_DESKTOP } from "@utils/user/constants";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const ProductQuestionsList = () => {
   const { productId } = useParams();

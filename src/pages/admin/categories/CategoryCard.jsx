@@ -4,8 +4,8 @@ import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteCategoryMutation } from "@api/categoriesApi";
 import { toast } from "react-toastify";
 import ActionButton from "@components/admin/ActionButton";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const ListCard = ({ data }) => {
   const navigate = useNavigate();

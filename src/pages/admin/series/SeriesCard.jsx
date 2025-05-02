@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "@components/admin/ActionButton";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
   // console.log("data", data);

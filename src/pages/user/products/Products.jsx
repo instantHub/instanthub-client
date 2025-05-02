@@ -9,9 +9,9 @@ import ProductCard from "@components/user/ProductCard";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import SeriesButton from "@components/user/SeriesButton";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
-import { removeLastParamFromPath } from "../../../utils/general/removeLastParamFromPath";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
+import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
 
 const Products = () => {
   const { brandId } = useParams();

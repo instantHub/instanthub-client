@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ROUTES } from "../../routes";
+import { ROUTES } from "@routes";
 
 const PrivateRoute = () => {
   const { adminInfo } = useSelector((state) => state.auth);

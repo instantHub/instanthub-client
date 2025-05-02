@@ -5,7 +5,7 @@ import { useLoginMutation } from "@api/authApi";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const SignIn = () => {
   const [signInData, setSignInData] = useState();

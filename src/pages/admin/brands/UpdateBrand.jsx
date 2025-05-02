@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardHeader from "@components/admin/CardHeader";
 import { SubmitButton } from "@components/admin/SubmitButton";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 function UpdateBrand() {
   const { brandId } = useParams();

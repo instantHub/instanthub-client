@@ -91,7 +91,7 @@ import ContactUs from "@components/user/static/ContactUs";
 import CreateQuestions from "@pages/admin/questions/CreateQuestions";
 
 import Loading from "@components/user/loader/Loading";
-import { ROUTES } from "./routes";
+import { ROUTES } from "@routes";
 
 const lazyLoad = (importFunc) => {
   const LazyComponent = lazy(importFunc);

@@ -11,8 +11,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Table from "@components/admin/TableView";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 import { data } from "autoprefixer";
 
 function CreateVariantsQuestions() {

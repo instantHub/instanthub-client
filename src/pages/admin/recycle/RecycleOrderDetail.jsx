@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "@components/user/loader/Loading";
 import InputSubmitBtn from "@components/user/InputSubmitBtn";
 import DateAndTime from "@components/user/DateAndTime/DateAndTime";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const RecycleOrderDetail = () => {
   const { recycleOrderId } = useParams();

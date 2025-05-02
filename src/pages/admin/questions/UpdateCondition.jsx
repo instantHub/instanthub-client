@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import FormData from "./FormData";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 function UpdateCondition() {
   const { conditionId } = useParams();

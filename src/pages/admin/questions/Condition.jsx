@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import FormData from "./FormData";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 function Condtions() {
   const { data: categoryData, isLoading: categoryLoading } =

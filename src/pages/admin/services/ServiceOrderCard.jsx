@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { orderCurrentStatus } from "@utils/admin/helper";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const OrderCard = ({ data }) => {
   // console.log("data", data);

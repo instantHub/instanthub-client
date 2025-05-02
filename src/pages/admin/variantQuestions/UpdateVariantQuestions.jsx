@@ -6,7 +6,7 @@ import {
   useUpdateVariantQuestionsMutation,
 } from "@api/variantQuestionsApi";
 import { toast } from "react-toastify";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const UpdateVariantQuestions = () => {
   const { variantQuestionsId } = useParams();

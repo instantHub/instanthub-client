@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteProductMutation } from "@api/productsApi";
 import ActionButton from "@components/admin/ActionButton";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const ProductCard = ({ data, pendingPricingMobiles }) => {
   //   console.log(data);

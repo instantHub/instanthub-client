@@ -18,8 +18,8 @@ import LocationSelector from "@components/user/LocationSelector";
 import { LAPTOP, LAPTOP_DESKTOP } from "@utils/user/constants";
 import SubmitForm from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 // Create the Context
 const StateContext = createContext();

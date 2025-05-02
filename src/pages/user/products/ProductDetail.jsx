@@ -7,8 +7,8 @@ import Loading from "@components/user/loader/Loading";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import { MOBILE } from "@utils/user/constants";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const ProductDetail = () => {
   const { prodId } = useParams();

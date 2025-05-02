@@ -6,7 +6,7 @@ import {
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const initialState = {
   category: "",

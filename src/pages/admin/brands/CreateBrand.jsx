@@ -7,7 +7,7 @@ import { useGetCategoryQuery } from "@api/categoriesApi";
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const CreateBrand = () => {
   const [brand, setBrand] = useState("");

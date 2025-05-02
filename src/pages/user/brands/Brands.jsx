@@ -6,8 +6,8 @@ import Loading from "@components/user/loader/Loading";
 import ItemGrid from "@components/user/ItemGrid";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
-import { removeLastParamFromPath } from "../../../utils/general/removeLastParamFromPath";
-import { ROUTES } from "../../../routes";
+import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
+import { ROUTES } from "@routes";
 
 const Brands = () => {
   const { catId } = useParams();

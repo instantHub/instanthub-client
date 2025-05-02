@@ -1,7 +1,7 @@
 import React from "react";
 import BackButton from "./BackButton";
 import ListButton from "./ListButton";
-import { ROUTES } from "../../routes";
+import { ROUTES } from "@routes";
 
 const CardHeader = ({ location, text, source }) => {
   return (

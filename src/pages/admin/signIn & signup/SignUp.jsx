@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "@api/authApi";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState();

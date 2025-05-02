@@ -6,7 +6,7 @@ import {
   useUploadSliderImageMutation,
 } from "@api/slidersApi";
 import { toast } from "react-toastify";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const UpdateSlider = () => {
   const { sliderId } = useParams();

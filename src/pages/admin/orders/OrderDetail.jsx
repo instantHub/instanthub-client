@@ -22,7 +22,7 @@ import { TbListDetails } from "react-icons/tb";
 import { toast } from "react-toastify";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import AssignAgent from "@components/admin/AssignAgent";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const OrderDetail = () => {
   const { orderId } = useParams();

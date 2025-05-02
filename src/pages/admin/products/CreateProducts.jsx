@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import ListButton from "@components/ListButton";
 import CardHeader from "@components/admin/CardHeader";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");

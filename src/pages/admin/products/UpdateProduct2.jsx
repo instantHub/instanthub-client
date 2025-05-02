@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import BackButton from "@components/BackButton";
 import CardHeader from "@components/admin/CardHeader";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const UpdateProduct = () => {
   const { productId } = useParams();

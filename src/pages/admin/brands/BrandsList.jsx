@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import BrandCard from "./BrandCard";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const BrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();

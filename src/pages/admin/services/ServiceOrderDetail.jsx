@@ -16,7 +16,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import ServiceCompletionForm from "./ServiceCompletionForm";
 import { toast } from "react-toastify";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const ServiceOrderDetail = () => {
   const { serviceOrderId } = useParams();

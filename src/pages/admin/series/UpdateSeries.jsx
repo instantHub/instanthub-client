@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useGetAllSeriesQuery, useUpdateSeriesMutation } from "@api/seriesApi";
 import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const UpdateSeries = () => {
   const { seriesId } = useParams();

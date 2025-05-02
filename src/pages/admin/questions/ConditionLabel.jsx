@@ -12,7 +12,7 @@ import {
   filterCategory,
   filterCondition,
 } from "@features/adminSlices/filterSlice";
-import { ROUTES } from "../../../routes";
+import { ROUTES } from "@routes";
 
 const CreateConditionLabels = () => {
   const { data: categoryData, isLoading: categoryLoading } =

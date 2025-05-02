@@ -17,8 +17,8 @@ import {
 import Table from "@components/admin/TableView";
 import { MdDeleteForever } from "react-icons/md";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
-import { ROUTES } from "../../../routes";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
