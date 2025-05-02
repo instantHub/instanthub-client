@@ -14,6 +14,7 @@ import { MdHomeRepairService } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetCategoryQuery } from "@api/categoriesApi";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 // import { FaPhone } from "react-icons/fa";
 
 const FloatingButtons = () => {

@@ -5,6 +5,7 @@ import { BsSearch } from "react-icons/bs";
 import axios from "axios";
 import useDebounce, { useDebounceFunc } from "@hooks/UseDebounce";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
