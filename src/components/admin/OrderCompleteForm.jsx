@@ -3,7 +3,7 @@ import { FaRegImages } from "react-icons/fa";
 import { SiTicktick } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import OrderCancellationForm from "./OrderCancellationForm";
-import { useOrderCancelMutation } from "../../features/api";
+import { useOrderCancelMutation } from "@api/ordersApi";
 import InputSubmitBtn from "../user/InputSubmitBtn";
 import DateAndTime from "../user/DateAndTime/DateAndTime";
 

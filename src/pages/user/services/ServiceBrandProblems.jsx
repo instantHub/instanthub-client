@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useGetServicesQuery } from "@features/api/services/servicesApi";
+import { useGetServicesQuery } from "@api/servicesApi";
 import {
   addServiceProblems,
   removeServiceProblems,
-} from "@features/slices/serviceProblemsSlice";
+} from "@features/userSlices/serviceProblemsSlice";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
-import ServiceContent from "../../../components/user/static/services/ServiceContent";
+import ServiceContent from "@components/user/static/services/ServiceContent";
 
 const ServiceBrands = () => {
   const { serviceBrandId } = useParams();

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useGetCouponQuery } from "@features/api";
+import { useGetCouponQuery } from "@api/couponsApi";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
@@ -15,7 +15,7 @@ import FAQ from "@components/user/static/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
 import LocationSelector from "@components/user/LocationSelector";
-import { LAPTOP, LAPTOP_DESKTOP } from "@utils/constants";
+import { LAPTOP, LAPTOP_DESKTOP } from "@utils/user/constants";
 import SubmitForm from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 

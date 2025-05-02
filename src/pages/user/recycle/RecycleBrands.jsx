@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetBrandQuery } from "@features/api";
+import { useGetBrandQuery } from "@api/brandsApi";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
 import ItemGrid from "@components/user/ItemGrid";

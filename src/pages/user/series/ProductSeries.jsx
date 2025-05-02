@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetBrandSeriesQuery } from "@features/api";
+import { useGetBrandSeriesQuery } from "@api/seriesApi";
 import { Link } from "react-router-dom";
 
 const ProductSeries = ({ brandId }) => {

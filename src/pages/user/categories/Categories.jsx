@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useGetCategoryQuery } from "@features/api/categories/categoriesApi";
+import { useGetCategoryQuery } from "@api/categoriesApi";
 import ItemGrid from "@components/user/ItemGrid";
 
 const Categories = () => {

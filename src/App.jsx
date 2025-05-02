@@ -1,11 +1,9 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import "./App.css";
 import {
   createBrowserRouter as Router,
   RouterProvider,
-  Route,
   Navigate,
-  useLocation,
 } from "react-router-dom";
 // Client side
 import ClientLayout from "./pages/user/home/Layout";
@@ -35,71 +33,71 @@ import ClientTermsAndPolicies from "./components/user/policies/AllTermsAndPolici
 
 // Admin side
 import PrivateRoute from "./components/admin/PrivateRoute";
-import AdminSignIn from "./admin/pages/signIn & signup/SignIn";
-import AdminSignUp from "./admin/pages/signIn & signup/SignUp";
+import AdminSignIn from "./pages/admin/signIn & signup/SignIn";
+import AdminSignUp from "./pages/admin/signIn & signup/SignUp";
 
 // import UpdateAdminProfile from "./admin/components/UpdateAdmin";
 // import AdminDashboard from "./admin/pages/dashboard/Dashboard";
 // import AdminProducts from "./admin/pages/products/Products";
 const UpdateAdminProfile = lazy(() => import("./components/admin/UpdateAdmin"));
-const AdminDashboard = lazy(() => import("./admin/pages/dashboard/Dashboard"));
+const AdminDashboard = lazy(() => import("./pages/admin/dashboard/Dashboard"));
 // const AdminProducts = lazy(() => import("./admin/pages/products/Products"));
 
-import Admin from "./admin/Admin";
-import AdminLayout from "./admin/pages/layout/Layout";
+import Admin from "./pages/admin/Admin";
+import AdminLayout from "./pages/admin/adminLayout/AdminLayout";
 
-import AdminCreateProducts from "./admin/pages/products/CreateProducts";
-import AdminUpdateProduct from "./admin/pages/products/UpdateProduct";
-import AdminBrandsList from "./admin/pages/brands/BrandsList";
-import AdminUpdateBrand from "./admin/pages/brands/UpdateBrand";
-import AdminCreateBrand from "./admin/pages/brands/CreateBrand";
-import AdminCategories from "./admin/pages/categories/CategoriesList";
-import AdminCreateCategory from "./admin/pages/categories/CreateCategory";
-import AdminCategoriesList from "./admin/pages/categories/CategoriesList";
-import AdminUpdateCategory from "./admin/pages/categories/UpdateCategory";
-import AdminCreateSeries from "./admin/pages/series/CreateSeries";
-import AdminUpdateSeries from "./admin/pages/series/UpdateSeries";
-import AdminSeriesList from "./admin/pages/series/SeriesList";
+import AdminCreateProducts from "./pages/admin/products/CreateProducts";
+import AdminUpdateProduct from "./pages/admin/products/UpdateProduct";
+import AdminBrandsList from "./pages/admin/brands/BrandsList";
+import AdminUpdateBrand from "./pages/admin/brands/UpdateBrand";
+import AdminCreateBrand from "./pages/admin/brands/CreateBrand";
+import AdminCategories from "./pages/admin/categories/CategoriesList";
+import AdminCreateCategory from "./pages/admin/categories/CreateCategory";
+import AdminCategoriesList from "./pages/admin/categories/CategoriesList";
+import AdminUpdateCategory from "./pages/admin/categories/UpdateCategory";
+import AdminCreateSeries from "./pages/admin/series/CreateSeries";
+import AdminUpdateSeries from "./pages/admin/series/UpdateSeries";
+import AdminSeriesList from "./pages/admin/series/SeriesList";
 // import AdminCreateConditions from "./admin/pages/questions/old/CreateCondtions";
-import AdminUpdateCondition from "./admin/pages/questions/UpdateCondition";
-import AdminUpdateConditionLabel from "./admin/pages/questions/UpdateConditionLabel";
+import AdminUpdateCondition from "./pages/admin/questions/UpdateCondition";
+import AdminUpdateConditionLabel from "./pages/admin/questions/UpdateConditionLabel";
 // import AdminProductsList from "./admin/pages/products/ProductsList";
 // import AdminProductQuestions from "./admin/pages/products/ProductQuestionsList";
 
-import AdminConditionsList from "./admin/pages/questions/ConditionsList";
-import AdminConditionLabelsList from "./admin/pages/questions/ConditionLabelsList";
-import AdminCreateSlider from "./admin/pages/sliders/CreateSlider";
-import AdminSlidersList from "./admin/pages/sliders/SlidersList";
-import AdminUpdateSlider from "./admin/pages/sliders/UpdateSlider";
-import AdminOrdersList from "./admin/pages/orders/OrdersList";
-import AdminOrderDetail from "./admin/pages/orders/OrderDetail";
-import AdminPhoneNumbers from "./admin/pages/orders/PhoneNumbersList";
-import AdminManageStocks from "./admin/pages/stocks/ManageStocks";
-import AdminCreateCoupon from "./admin/pages/coupons/CreateCoupon";
+import AdminConditionsList from "./pages/admin/questions/ConditionsList";
+import AdminConditionLabelsList from "./pages/admin/questions/ConditionLabelsList";
+import AdminCreateSlider from "./pages/admin/sliders/CreateSlider";
+import AdminSlidersList from "./pages/admin/sliders/SlidersList";
+import AdminUpdateSlider from "./pages/admin/sliders/UpdateSlider";
+import AdminOrdersList from "./pages/admin/orders/OrdersList";
+import AdminOrderDetail from "./pages/admin/orders/OrderDetail";
+import AdminPhoneNumbers from "./pages/admin/orders/PhoneNumbersList";
+import AdminManageStocks from "./pages/admin/stocks/ManageStocks";
+import AdminCreateCoupon from "./pages/admin/coupons/CreateCoupon";
 
 // Services
-import AdminCreateServiceForm from "./admin/pages/services/CreateServices";
-import AdminServicesList from "./admin/pages/services/ServicesList";
-import AdminServicesOrdersList from "./admin/pages/services/ServicesOrdersList";
-import AdminServiceOrderDetail from "./admin/pages/services/ServiceOrderDetail";
+import AdminCreateServiceForm from "./pages/admin/services/CreateServices";
+import AdminServicesList from "./pages/admin/services/ServicesList";
+import AdminServicesOrdersList from "./pages/admin/services/ServicesOrdersList";
+import AdminServiceOrderDetail from "./pages/admin/services/ServiceOrderDetail";
 
 // Recycle Orders
-import AdminRecycleOrdersList from "./admin/pages/recycle/RecycleOrdersList";
-import AdminRecycleOrderDetail from "./admin/pages/recycle/RecycleOrderDetail";
+import AdminRecycleOrdersList from "./pages/admin/recycle/RecycleOrdersList";
+import AdminRecycleOrderDetail from "./pages/admin/recycle/RecycleOrderDetail";
 
 // VARIANTS QUESTIONS
-import AdminCreateVariantsQuestions from "./admin/pages/variantQuestions/CreateVariantsQuestions";
-import AdminUpdateVariantQuestions from "./admin/pages/variantQuestions/UpdateVariantQuestions";
+import AdminCreateVariantsQuestions from "./pages/admin/variantQuestions/CreateVariantsQuestions";
+import AdminUpdateVariantQuestions from "./pages/admin/variantQuestions/UpdateVariantQuestions";
 
 // POSTS
-import AdminCreatePost from "./admin/pages/posts/CreatePost";
+import AdminCreatePost from "./pages/admin/posts/CreatePost";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorComponent from "./components/user/ErrorComponent";
 import AboutPage from "./components/user/static/About";
 import ContactUs from "./components/user/static/ContactUs";
-import CreateQuestions from "./admin/pages/questions/CreateQuestions";
+import CreateQuestions from "./pages/admin/questions/CreateQuestions";
 import Loading from "./components/user/loader/Loading";
 import useGoogleAnalytics from "./hooks/useGoogleAnalytics";
 
@@ -331,7 +329,7 @@ function App() {
             {
               path: "/admin/dashboard",
               element: lazyLoad(() =>
-                import("./admin/pages/dashboard/Dashboard")
+                import("./pages/admin/dashboard/Dashboard")
               ),
             },
             {
@@ -346,7 +344,7 @@ function App() {
               path: "/admin/products-list",
               // element: <AdminProductsList />,
               element: lazyLoad(() =>
-                import("./admin/pages/products/ProductsList")
+                import("./pages/admin/products/ProductsList")
               ),
             },
             {
@@ -357,7 +355,7 @@ function App() {
               path: "/admin/products/product-questions/:productId",
               // element: <AdminProductQuestions />,
               element: lazyLoad(() =>
-                import("./admin/pages/products/ProductQuestionsList")
+                import("./pages/admin/products/ProductQuestionsList")
               ),
             },
 
@@ -508,14 +506,14 @@ function App() {
             {
               path: "/admin/create-post",
               // element: <AdminProductQuestions />,
-              element: lazyLoad(() => import("./admin/pages/posts/CreatePost")),
+              element: lazyLoad(() => import("./pages/admin/posts/CreatePost")),
             },
 
             // Complaints
             {
               path: "/admin/complaints",
               element: lazyLoad(() =>
-                import("./admin/pages/complaints/Complaints")
+                import("./pages/admin/complaints/Complaints")
               ),
             },
           ],

@@ -4,7 +4,7 @@ import {
   addSingleDeductions,
   clearDeductions,
   setProductData,
-} from "@features/slices/deductionSlice";
+} from "@features/userSlices/deductionSlice";
 import { toast } from "react-toastify";
 import OtpGenerator from "../../otp/OTPGenerator";
 // import LaptopDeductionItems from "./LaptopDeductionItems";

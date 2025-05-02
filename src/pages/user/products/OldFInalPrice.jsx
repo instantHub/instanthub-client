@@ -1,21 +1,18 @@
 import React, { useEffect, useState, useRef, useReducer } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useGetProductDetailsQuery } from "../../../features/api/products/productsApi";
-import {
-  useCreateOrderMutation,
-  useGetCouponQuery,
-} from "../../../features/api";
+import { useGetProductDetailsQuery } from "@features/api/productsApi";
+import { useCreateOrderMutation, useGetCouponQuery } from "@features/apis";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
-import FAQ from "../../../components/user/static/FAQ";
+import FAQ from "@components/user/static/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
-import LocationSelector from "../../../components/user/LocationSelector";
-import { LAPTOP_DESKTOP, ORDER_EMAIL_MSG } from "../../../utils/constants";
-import DateAndTime from "../../../components/user/DateAndTime/DateAndTime";
-import InputSubmitBtn from "../../../components/user/InputSubmitBtn";
+import LocationSelector from "@components/user/LocationSelector";
+import { LAPTOP_DESKTOP, ORDER_EMAIL_MSG } from "@utils/user/constants";
+import DateAndTime from "@components/user/DateAndTime/DateAndTime";
+import InputSubmitBtn from "@components/user/InputSubmitBtn";
 
 const initialState = {
   addressDetails: { address: "", state: "", city: "", pinCode: "" },

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useUpdateAdminMutation } from "../../features/api/admin/authApi/authApi";
-import { setCredentials } from "../../features/slices/authSlice";
+import { useUpdateAdminMutation } from "@api/authApi";
+import { setCredentials } from "@features/userSlices/authSlice";
 import { BiSolidHide, BiShow } from "react-icons/bi";
 
 const UpdateAdmin = () => {

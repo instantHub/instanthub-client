@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useGetServicesQuery } from "@features/api/services/servicesApi";
+import { useGetServicesQuery } from "@api/servicesApi";
 import { Helmet } from "react-helmet-async";
 import ServiceContent from "@components/user/static/services/ServiceContent";
 

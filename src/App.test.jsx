@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, act } from "@testing-library/react";
 import Brands from "./pages/user/brands/Brands";
-import { store } from "./store/store";
+import { store } from "@features/store";
 import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
-import Categories from "./pages/user/categories/Categories";
+// import Categories from "./pages/user/categories/Categories";
 
 test("renders the App component", async () => {
   await act(async () => {

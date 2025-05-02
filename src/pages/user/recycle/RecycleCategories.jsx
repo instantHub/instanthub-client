@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetCategoryQuery } from "@features/api/categories/categoriesApi";
+import { useGetCategoryQuery } from "@api/categoriesApi";
 import { Helmet } from "react-helmet-async";
 import ItemGrid from "@components/user/ItemGrid";
 import Loading from "@components/user/loader/Loading";

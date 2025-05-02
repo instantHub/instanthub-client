@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useGetProductDetailsQuery } from "@features/api/products/productsApi";
+import { useGetProductDetailsQuery } from "@api/productsApi";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   setProductData,
   clearDeductions,
-} from "@features/slices/deductionSlice";
+} from "@features/userSlices/deductionSlice";
 import { toast } from "react-toastify";
 import ProdDeductionsRight from "./ProdQuestionsRight";
 import LaptopsQuestions from "./LaptopsQuestions";
@@ -13,9 +13,9 @@ import OtpGenerator from "../../otp/OTPGenerator";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
 import ProgressBar from "@components/user/ProgressBar";
-import { LAPTOP_DESKTOP } from "@utils/constants";
+import { LAPTOP_DESKTOP } from "@utils/user/constants";
 import NextPrevButton from "./NextPrevButton";
-import { groupConditionsByPage } from "@utils/helper";
+import { groupConditionsByPage } from "@utils/user/helper";
 import DisplayCondition from "./DisplayCondition";
 
 const ProductQuestions = () => {

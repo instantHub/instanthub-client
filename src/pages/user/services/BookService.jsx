@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   useCreateServiceOrderMutation,
   useGetServicesQuery,
-} from "@features/api/services/servicesApi";
+} from "@api/servicesApi";
 import {
   Link,
   useNavigate,
@@ -12,7 +12,7 @@ import {
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import ServiceFAQs from "../../../components/user/static/services/ServiceFAQs";
+import ServiceFAQs from "@components/user/static/services/ServiceFAQs";
 import PriceModal from "./PriceModal";
 import InputSubmitBtn from "@components/user/InputSubmitBtn";
 import DateAndTime from "@components/user/DateAndTime/DateAndTime";

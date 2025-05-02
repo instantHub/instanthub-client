@@ -1,5 +1,5 @@
 import React from "react";
-import { MOBILE } from "@utils/constants";
+import { MOBILE } from "@utils/user/constants";
 
 const SelectedProduct = ({ selectedProduct, getUpTo }) => {
   return (

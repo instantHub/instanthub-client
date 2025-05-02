@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addDeductions,
   addSingleDeductions,
-} from "@features/slices/deductionSlice";
+} from "@features/userSlices/deductionSlice";
 
 import { BsCircle } from "react-icons/bs";
 

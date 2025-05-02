@@ -1,30 +1,23 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { useGetCategoryQuery } from "../../../features/api/categories/categoriesApi";
+import { useGetCategoryQuery } from "@api/categoriesApi";
 import Categories from "./Categories";
-import Loading from "../../../components/user/loader/Loading";
-import ItemGrid from "../../../components/user/ItemGrid";
 
 // Mock the API hook
-jest.mock("../../features/api", () => ({
+jest.mock("@features/api", () => ({
   useGetCategoryQuery: jest.fn(),
 }));
 
 // Mock subcomponents
-jest.mock("../../components/Loading", () => () => <div>Loading...</div>);
-jest.mock(
-  "../../components/ItemGrid",
-  () =>
-    ({ items, linkPath, displayBig }) =>
-      (
-        <div data-testid="item-grid">
-          <p>Items: {items?.length || 0}</p>
-          <p>Link Path: {linkPath}</p>
-          <p>Display Big: {displayBig ? "True" : "False"}</p>
-        </div>
-      )
-);
+jest.mock("@components/Loading", () => () => <div>Loading...</div>);
+jest.mock("@components/ItemGrid", () => ({ items, linkPath, displayBig }) => (
+  <div data-testid="item-grid">
+    <p>Items: {items?.length || 0}</p>
+    <p>Link Path: {linkPath}</p>
+    <p>Display Big: {displayBig ? "True" : "False"}</p>
+  </div>
+));
 
 const renderComponent = () =>
   render(

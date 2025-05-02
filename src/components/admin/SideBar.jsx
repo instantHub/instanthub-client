@@ -23,9 +23,9 @@ import { SiAstro, SiDatabricks, SiSlides } from "react-icons/si";
 import { GiStockpiles, GiCash } from "react-icons/gi";
 import { ImProfile } from "react-icons/im";
 import { IoMdClose } from "react-icons/io";
-import { setCurrentPage } from "../../admin/features/adminPanelSlice";
+import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { useDispatch } from "react-redux";
-import { SideBarContext } from "../../admin/pages/layout/Layout";
+import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
 
 const SideBar = () => {
   const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);

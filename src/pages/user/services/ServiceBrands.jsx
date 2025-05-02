@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useGetServicesQuery } from "@features/api/services/servicesApi";
+import { useGetServicesQuery } from "@api/servicesApi";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import { clearServiceProblems } from "@features/slices/serviceProblemsSlice";
+import { clearServiceProblems } from "@features/userSlices/serviceProblemsSlice";
 import { useDispatch } from "react-redux";
 import ItemGrid from "@components/user/ItemGrid";
 import Loading from "@components/user/loader/Loading";

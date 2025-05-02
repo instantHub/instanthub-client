@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetServicesQuery } from "@features/api/services/servicesApi";
+import { useGetServicesQuery } from "@api/servicesApi";
 import ItemGrid from "@components/user/ItemGrid";
 
 const ServicesHome = () => {

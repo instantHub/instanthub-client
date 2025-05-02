@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useAdminLogoutMutation,
-  useAdminProfileQuery,
-} from "../../features/api/admin/authApi/authApi";
+import { useAdminLogoutMutation, useAdminProfileQuery } from "@api/authApi";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../features/slices/authSlice";
+import { logout } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import { FiAlignLeft } from "react-icons/fi";
 import { IoLogOut } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { IoMdMenu } from "react-icons/io";
-import { setCurrentPage } from "../../admin/features/adminPanelSlice";
-import { SideBarContext } from "../../admin/pages/layout/Layout";
+import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
+import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
 
 const Navbar = () => {
   const dispatch = useDispatch();

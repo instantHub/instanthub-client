@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useGetProductDetailsQuery } from "@features/api/products/productsApi";
+import { useGetProductDetailsQuery } from "@api/productsApi";
 import { useParams, Link } from "react-router-dom";
 import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
-import { MOBILE } from "@utils/constants";
+import { MOBILE } from "@utils/user/constants";
 
 const ProductDetail = () => {
   const { prodId } = useParams();

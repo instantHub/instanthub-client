@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useGetProductsQuery } from "@features/api/products/productsApi";
-import { useGetBrandSeriesQuery } from "@features/api";
+import { useGetProductsQuery } from "@api/productsApi";
+import { useGetBrandSeriesQuery } from "@features/apis";
 import { useParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import ProductCard from "@components/user/ProductCard";

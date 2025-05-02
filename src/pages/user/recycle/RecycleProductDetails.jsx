@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useGetProductDetailsQuery } from "@features/api/products/productsApi";
-import { useCreateRecycleOrderMutation } from "@features/api/recycle/recycleApi";
+import { useGetProductDetailsQuery } from "@api/productsApi";
+import { useCreateRecycleOrderMutation } from "@api/recycleApi";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
@@ -9,10 +9,10 @@ import FormInput from "@components/user/FormInput";
 import Loading from "@components/user/loader/Loading";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
 import LocationSelector from "@components/user/LocationSelector";
-import { LAPTOP, MOBILE } from "@utils/constants";
+import { LAPTOP, MOBILE } from "@utils/user/constants";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import DateAndTime from "@components/user/DateAndTime/DateAndTime";
-// import { SubmitButton } from "../../admin/components/SubmitButton";
+// import { SubmitButton } from "@admin/components/SubmitButton";
 import InputSubmitBtn from "@components/user/InputSubmitBtn";
 import {
   DEAD_LAPTOP_PRICE,

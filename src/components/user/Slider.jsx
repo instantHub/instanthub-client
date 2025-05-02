@@ -1,8 +1,7 @@
 // BEST IN PERFORMANCE IN LIGHTHOUSE
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { RxDotFilled } from "react-icons/rx";
-import { useGetActiveSlidersListQuery } from "../../features/api";
-import Loading from "./loader/Loading";
+import { useGetActiveSlidersListQuery } from "@api/slidersApi";
 
 function Slider() {
   const { data: slidersData = [], isLoading: slidersLoading } =

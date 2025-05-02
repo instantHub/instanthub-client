@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DateAndTime from "@components/user/DateAndTime/DateAndTime";
 import InputSubmitBtn from "@components/user/InputSubmitBtn";
-import { useCreateOrderMutation } from "@features/api";
-import { ORDER_EMAIL_MSG } from "@utils/constants";
+import { useCreateOrderMutation } from "@api/ordersApi";
+import { ORDER_EMAIL_MSG } from "@utils/user/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

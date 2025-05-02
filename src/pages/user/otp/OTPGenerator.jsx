@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useGenerateOTPMutation } from "../../../features/api";
+import { useGenerateOTPMutation } from "@api/OTPApi";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa6";
 import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { performCalculation } from "../../../features/slices/deductionSlice";
+import { performCalculation } from "@features/userSlices/deductionSlice";
 
 const OtpGenerator = (props) => {
   const { closeModal } = props;

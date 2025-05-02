@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCreateComplaintMutation } from "../../features/api";
+import { useCreateComplaintMutation } from "@api/complaintsApi";
 import { toast } from "react-toastify";
 
 const ComplaintBox = ({ setOpenComplaintBox }) => {
