@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "@components/admin/ActionButton";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
   // console.log("data", data);
@@ -11,7 +13,7 @@ const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
   };
 
   const handleEdit = () => {
-    navigate(`/admin/update-series/${data?.id}`);
+    navigate(generatePathWithParams(ROUTES.admin.updateSeries, data?.id));
   };
 
   return (

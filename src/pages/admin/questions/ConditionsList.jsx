@@ -11,6 +11,8 @@ import Table from "@components/admin/TableView";
 import { MdDeleteForever } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
+import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
 
 const ConditionsList = () => {
   //   const [questions, setQuestions] = useState([]);
@@ -122,7 +124,12 @@ const ConditionsList = () => {
 
       <td className=" text-white py-2">
         <div className="flex gap-2 justify-center">
-          <EditButton location={`/admin/updateCondition/${condition.id}`} />
+          <EditButton
+            location={generatePathWithParams(
+              ROUTES.admin.updateCondition,
+              condition.id
+            )}
+          />
           <button
             className="bg-red-600 px-3 py-1 max-sm:px-2 rounded-md"
             onClick={() =>
@@ -183,7 +190,7 @@ const ConditionsList = () => {
           </h2>
 
           <BackButton
-            location={"/admin/create-questions"}
+            location={ROUTES.admin.createQuestions}
             text={"Create Condtion"}
           />
         </div>
@@ -285,7 +292,7 @@ export default ConditionsList;
                     <td className="text-white py-2">
                       <div className="flex gap-2 justify-center">
                         <EditButton
-                          location={`/admin/updateCondition/${condition.id}`}
+                          location={}
                         />
                         <button
                           className="bg-red-600 px-3 py-1 rounded-md"
@@ -318,7 +325,7 @@ export default ConditionsList;
                       <td className="text-white py-2">
                         <div className="flex gap-2 justify-center">
                           <EditButton
-                            location={`/admin/updateCondition/${condition.id}`}
+                            location={}
                           />
                           <button
                             className="bg-red-600 px-3 py-1 rounded-md"

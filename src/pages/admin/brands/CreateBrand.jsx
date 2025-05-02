@@ -7,6 +7,7 @@ import { useGetCategoryQuery } from "@api/categoriesApi";
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
+import { ROUTES } from "../../../routes";
 
 const CreateBrand = () => {
   const [brand, setBrand] = useState("");
@@ -91,7 +92,7 @@ const CreateBrand = () => {
             <h2 className="pl-1"> / Add Brands</h2>
           </div>
 
-          <ListButton location={"/admin/brands-list"} text={"Brands List"} />
+          <ListButton location={ROUTES.admin.brandsList} text={"Brands List"} />
         </div>
       </div>
       <div className="bg-white border rounded-md shadow-lg">

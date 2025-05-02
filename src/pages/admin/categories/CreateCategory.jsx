@@ -6,6 +6,7 @@ import {
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
+import { ROUTES } from "../../../routes";
 
 const initialState = {
   category: "",
@@ -124,7 +125,7 @@ const CreateCategory = () => {
         </div>
 
         <ListButton
-          location={"/admin/categories-list"}
+          location={ROUTES.admin.categoriesList}
           text={"Categories List"}
         />
       </div>

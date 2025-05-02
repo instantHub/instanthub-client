@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "@api/authApi";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
+import { ROUTES } from "../../../routes";
 
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState();
@@ -19,7 +20,7 @@ const SignUp = () => {
   //   If AdminInfo(logged In) is available navigate to Admin Dashboard
   useEffect(() => {
     if (adminInfo) {
-      navigate("/admin/dashboard");
+      navigate(ROUTES.admin.dashboard);
     }
   }, [navigate, adminInfo]);
 
@@ -32,7 +33,7 @@ const SignUp = () => {
         const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials(res));
         toast.success("Registered in successfull");
-        navigate("/admin/dashboard");
+        navigate(ROUTES.admin.dashboard);
       } catch (err) {
         console.log("catch error");
         console.log(err?.data?.message || err.error);
@@ -110,7 +111,7 @@ const SignUp = () => {
           </div>
         </form>
         <div className="text-end -mt-11">
-          <Link to={"/admin/login"}>
+          <Link to={ROUTES.admin.login}>
             <button className="text-sm bg-blue-500 px-2 py-1 mt-3 border rounded text-white">
               Login
             </button>

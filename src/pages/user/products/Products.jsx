@@ -9,6 +9,9 @@ import ProductCard from "@components/user/ProductCard";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import SeriesButton from "@components/user/SeriesButton";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
+import { removeLastParamFromPath } from "../../../utils/general/removeLastParamFromPath";
 
 const Products = () => {
   const { brandId } = useParams();
@@ -150,7 +153,7 @@ const Products = () => {
         {/* Home > Cat > Brand */}
         <BreadCrumbLinks
           brands={{
-            link: `/categories/brands/${category?.id}`,
+            link: generatePathWithParams(ROUTES.user.brands, category?.id),
             label: `${category?.name}`,
           }}
           products={{
@@ -175,7 +178,7 @@ const Products = () => {
               <ProductCard
                 key={product.id}
                 product={product}
-                URL="/categories/brands/productDetails"
+                URL={removeLastParamFromPath(ROUTES.user.productDetails)}
               />
             ))}
         </div>

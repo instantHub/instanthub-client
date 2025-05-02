@@ -17,6 +17,8 @@ import {
 import Table from "@components/admin/TableView";
 import { MdDeleteForever } from "react-icons/md";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -82,7 +84,6 @@ const ConditionLabelsTable = () => {
         </div>
         <div>
           <span className="text-sm max-sm:text-[10px]">
-            {" "}
             {conditionLabel.conditionLabel}
           </span>
         </div>
@@ -90,7 +91,10 @@ const ConditionLabelsTable = () => {
       <td className="text-white py-2">
         <div className="flex gap-2 justify-center">
           <EditButton
-            location={`/admin/updateConditionLabel/${conditionLabel.id}`}
+            location={generatePathWithParams(
+              ROUTES.admin.updateConditionLabel,
+              conditionLabel.id
+            )}
           />
           <button
             className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
@@ -218,7 +222,7 @@ const ConditionLabelsTable = () => {
         {/* Create ConditionLabel Button */}
         <div className="flex items-center">
           <BackButton
-            location={"/admin/create-questions"}
+            location={ROUTES.admin.createQuestions}
             text={"Create ConditionLabels"}
           />
         </div>

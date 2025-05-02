@@ -22,6 +22,7 @@ import { TbListDetails } from "react-icons/tb";
 import { toast } from "react-toastify";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import AssignAgent from "@components/admin/AssignAgent";
+import { ROUTES } from "../../../routes";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
@@ -81,7 +82,7 @@ const OrderDetail = () => {
   const handleDelete = async (orderId) => {
     console.log("handledelete", orderId);
     await deleteOrder(orderId);
-    navigate("/admin/orders");
+    navigate(ROUTES.admin.ordersList);
   };
 
   const setPickUpHandler = (e) => {
@@ -242,7 +243,7 @@ const OrderDetail = () => {
       <div className="relative flex justify-between w-full px-4">
         <button
           onClick={() => {
-            navigate("/admin/orders");
+            navigate(ROUTES.admin.ordersList);
           }}
           className="text-3xl max-sm:text-xl bg-secondary text-secondary-light rounded"
         >

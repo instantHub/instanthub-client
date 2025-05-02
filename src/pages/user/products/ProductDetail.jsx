@@ -7,6 +7,8 @@ import Loading from "@components/user/loader/Loading";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import { MOBILE } from "@utils/user/constants";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const ProductDetail = () => {
   const { prodId } = useParams();
@@ -64,11 +66,11 @@ const ProductDetail = () => {
         {/* Header Links: Home > Category > Brand > Products > ProductName */}
         <BreadCrumbLinks
           brands={{
-            link: `/categories/brands/${category?.id}`,
+            link: generatePathWithParams(ROUTES.user.brands, category.id),
             label: `${category?.name}`,
           }}
           products={{
-            link: `/categories/brands/products/${brand.id}`,
+            link: generatePathWithParams(ROUTES.user.products, brand.id),
             label: `${brand?.name}`,
           }}
           productDetail={{
@@ -204,39 +206,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-/* Home > Cat > Brand > Product */
-{
-  /* <div className="mx-0 mb-2 text-lg max-sm:text-sm">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center opacity-60 gap-1 max-sm:text-[14px]">
-              <Link to={"/"}>Home</Link>
-              <FaAngleRight />
-              <Link to={`/categories/brands/${productDetails?.category?.id}`}>
-                {productDetails?.category?.name}
-              </Link>
-              <FaAngleRight />
-              <Link
-                to={`/categories/brands/products/${productDetails?.brand?.id}`}
-              >
-                {productDetails?.brand?.name}
-              </Link>
-              <span className="max-sm:hidden">
-                <FaAngleRight />
-              </span>
-              <span className="max-sm:hidden">Products</span>
-
-              <FaAngleRight />
-            </div>
-
-            {productDetails?.name?.length > 20 ? (
-              <span className="max-sm:text-[12px]">
-                {productDetails?.name?.substring(0, 20)}...
-              </span>
-            ) : (
-              <span className="max-sm:text-[14px]">{productDetails?.name}</span>
-            )}
-          </div>
-          <hr className="text-black mt-1" />
-        </div> */
-}

@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteSliderMutation } from "@api/slidersApi";
 import ActionButton from "@components/admin/ActionButton";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const SliderCard = ({ data }) => {
   // console.log("data", data);
@@ -23,7 +25,7 @@ const SliderCard = ({ data }) => {
   };
 
   const handleEdit = () => {
-    navigate(`/admin/update-sliders/${data.id}`);
+    navigate(generatePathWithParams(ROUTES.admin.updateSlider, data.id));
   };
 
   return (

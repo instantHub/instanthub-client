@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import BrandCard from "./BrandCard";
+import { ROUTES } from "../../../routes";
 
 const BrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
@@ -35,7 +36,7 @@ const BrandsList = () => {
           Brands List
         </h2>
         <div>
-          <Link to={"/admin/add-brands"}>
+          <Link to={ROUTES.admin.createBrand}>
             <button className="bg-blue-700 text-white px-2 py-1 rounded">
               Create Brand
             </button>

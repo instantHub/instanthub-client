@@ -6,6 +6,7 @@ import {
   useUpdateVariantQuestionsMutation,
 } from "@api/variantQuestionsApi";
 import { toast } from "react-toastify";
+import { ROUTES } from "../../../routes";
 
 const UpdateVariantQuestions = () => {
   const { variantQuestionsId } = useParams();
@@ -101,7 +102,7 @@ const UpdateVariantQuestions = () => {
   return (
     <div className="w-fit mx-auto text-sm max-sm:text-xs">
       <div className="w-fit m-2 max-sm:m-1 px-4 max-sm:px-2 py-1 bg-black text-white rounded">
-        <Link to={"/admin/variants-questions"}>
+        <Link to={ROUTES.admin.variantsQuestions}>
           <button>Back</button>
         </Link>
       </div>

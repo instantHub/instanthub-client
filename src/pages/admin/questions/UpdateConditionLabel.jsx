@@ -8,6 +8,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";
+import { ROUTES } from "../../../routes";
 
 function UpdateConditionLabel() {
   const { conditionLabelId } = useParams();
@@ -156,7 +157,7 @@ function UpdateConditionLabel() {
               <h2>Home </h2>
               <h2 className="pl-1"> / Update ConditionLabel</h2>
 
-              <BackButton location={"/admin/conditionLabelsList"} />
+              <BackButton location={ROUTES.admin.conditionLabelsList} />
             </div>
           </div>
           <div className="bg-white border rounded-md shadow-lg">

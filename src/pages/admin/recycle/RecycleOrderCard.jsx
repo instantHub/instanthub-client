@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteRecycleOrderMutation } from "@api/recycleApi";
 import { orderCurrentStatus } from "@utils/admin/helper";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const RecycleOrderCard = ({ data, categoryImage }) => {
   //   console.log("data", data);
@@ -42,7 +44,11 @@ const RecycleOrderCard = ({ data, categoryImage }) => {
           />
         </div>
         <div
-          onClick={() => navigate(`/admin/recycleOrder-detail/${data.id}`)}
+          onClick={() =>
+            navigate(
+              generatePathWithParams(ROUTES.admin.recycleOrderDetail, data.id)
+            )
+          }
           className="grow flex flex-col gap-[2px]"
         >
           {/* Order and Product name and variant */}
@@ -92,7 +98,7 @@ const RecycleOrderCard = ({ data, categoryImage }) => {
           {/* <div className="flex justify-center gap-2 py-2">
             <div className="grow">
               <Link
-                to={`/admin/recycleOrder-detail/${data.id}`}
+                to={generatePathWithParams(ROUTES.admin.recycleOrderDetail, data.id)}
                 className={` font-bold p-1 rounded flex items-center justify-center gap-1 
                     ${orderViewBtnColor(data.status)}`}
                 // justify-center gap-1 bg-green-600 hover:bg-green-700`}

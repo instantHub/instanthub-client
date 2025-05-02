@@ -385,7 +385,7 @@ export default React.memo(Dashboard);
         Total {categoryData?.length} Categories
       </div>
       <div className={`bg-orange-200 text-orange-500 ${divMoreBtn}`}>
-        <Link to={"/admin/categories-list"}>More Info</Link>
+        <Link to={ROUTES.admin.categoriesList}>More Info</Link>
       </div>
     </div>
   )}
@@ -396,7 +396,7 @@ export default React.memo(Dashboard);
         Total {brandsData?.length} Brands
       </div>
       <div className={`bg-green-200 text-green-700 ${divMoreBtn}`}>
-        <Link to={"/admin/brands-list"}>More Info</Link>
+        <Link to={ROUTES.admin.brandsList}>More Info</Link>
       </div>
     </div>
   )}
@@ -407,7 +407,7 @@ export default React.memo(Dashboard);
         Total {productsData?.totalProducts} Products
       </div>
       <div className={`bg-blue-200 text-blue-700 ${divMoreBtn}`}>
-        <Link to={"/admin/products-list"}>More Info</Link>
+        <Link to={ROUTES.admin.productsList}>More Info</Link>
       </div>
     </div>
   )}
@@ -419,7 +419,7 @@ export default React.memo(Dashboard);
           Total {ordersData?.length} Orders
         </div>
         <div className={`bg-yellow-200 text-yellow-700 ${divMoreBtn}`}>
-          <Link to={"/admin/orders"}>More Info</Link>
+          <Link to={ROUTES.admin.ordersList}>More Info</Link>
         </div>
       </div>
       <div className={`bg-slate-50 border-slate-500 ${divStyle}`}>
@@ -427,7 +427,7 @@ export default React.memo(Dashboard);
           Total {ordersPendingCount} Orders Pending
         </div>
         <div className={`bg-slate-200 text-slate-700 ${divMoreBtn}`}>
-          <Link to={"/admin/orders"}>More Info</Link>
+          <Link to={ROUTES.admin.ordersList}>More Info</Link>
         </div>
       </div>
       <div className={`bg-secondary ${divStyle}`}>
@@ -435,7 +435,7 @@ export default React.memo(Dashboard);
           Total {ordersReceivedCount} Orders Received / Completed
         </div>
         <div className={`bg-secondary ${divMoreBtn}`}>
-          <Link to={"/admin/orders"}>More Info</Link>
+          <Link to={ROUTES.admin.ordersList}>More Info</Link>
         </div>
       </div>
       <div className={`bg-red-50 border-red-500 ${divStyle}`}>
@@ -443,13 +443,13 @@ export default React.memo(Dashboard);
           Total {totalStocksIn} Stocks In
         </div>
         <div className={`bg-red-200 text-red-700  ${divMoreBtn}`}>
-          <Link to={"/admin/manage-stocks"}>More Info</Link>
+          <Link to={ROUTES.admin.manageStocks}>More Info</Link>
         </div>
       </div>
       <div className={`bg-pink-500 ${divStyle}`}>
         <div className={`${divDesc}`}>Total {totalStocksOut} Stocks Out</div>
         <div className={`bg-pink-600 ${divMoreBtn}`}>
-          <Link to={"/admin/manage-stocks"}>More Info</Link>
+          <Link to={ROUTES.admin.manageStocks}>More Info</Link>
         </div>
       </div>
     </>
@@ -461,7 +461,7 @@ export default React.memo(Dashboard);
         Total {recycleOrdersData?.length} Recycle Order
       </div>
       <div className={`bg-amber-500 ${divMoreBtn}`}>
-        <Link to={"/admin/recycle-orders"}>More Info</Link>
+        <Link to={}>More Info</Link>
       </div>
     </div>
   )}
@@ -475,7 +475,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.categoriesCount} Categories
   //     </div>
   //     <div className={`bg-orange-200 text-orange-500 ${divMoreBtn}`}>
-  //       <Link to={"/admin/categories-list"}>More Info</Link>
+  //       <Link to={ROUTES.admin.categoriesList}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={` bg-green-50 border-green-500  ${divStyle}`}>
@@ -483,7 +483,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.brandsCount} Brands
   //     </div>
   //     <div className={`bg-green-200 text-green-700 ${divMoreBtn}`}>
-  //       <Link to={"/admin/brands-list"}>More Info</Link>
+  //       <Link to={ROUTES.admin.brandsList}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-blue-50 border-blue-500  ${divStyle}`}>
@@ -491,7 +491,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.productsCount} Products
   //     </div>
   //     <div className={`bg-blue-200 text-blue-700 ${divMoreBtn}`}>
-  //       <Link to={"/admin/products-list"}>More Info</Link>
+  //       <Link to={ROUTES.admin.productsList}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-yellow-50 border-yellow-500 ${divStyle}`}>
@@ -499,7 +499,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.ordersCount} Orders
   //     </div>
   //     <div className={`bg-yellow-200 text-yellow-700 ${divMoreBtn}`}>
-  //       <Link to={"/admin/orders"}>More Info</Link>
+  //       <Link to={ROUTES.admin.ordersList}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-slate-50 border-slate-500 ${divStyle}`}>
@@ -507,7 +507,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.ordersPendingCount} Orders Pending
   //     </div>
   //     <div className={`bg-slate-200 text-slate-700 ${divMoreBtn}`}>
-  //       <Link to={"/admin/orders"}>More Info</Link>
+  //       <Link to={ROUTES.admin.ordersList}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-secondary ${divStyle}`}>
@@ -515,7 +515,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.ordersCompletedCount} Orders Received / Completed
   //     </div>
   //     <div className={`bg-secondary ${divMoreBtn}`}>
-  //       <Link to={"/admin/orders"}>More Info</Link>
+  //       <Link to={ROUTES.admin.ordersList}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-red-50 border-red-500 ${divStyle}`}>
@@ -523,7 +523,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.stocksInCount} Stocks In
   //     </div>
   //     <div className={`bg-red-200 text-red-700  ${divMoreBtn}`}>
-  //       <Link to={"/admin/manage-stocks"}>More Info</Link>
+  //       <Link to={ROUTES.admin.manageStocks}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-pink-500 ${divStyle}`}>
@@ -531,7 +531,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.stocksOutCount} Stocks Out
   //     </div>
   //     <div className={`bg-pink-600 ${divMoreBtn}`}>
-  //       <Link to={"/admin/manage-stocks"}>More Info</Link>
+  //       <Link to={ROUTES.admin.manageStocks}>More Info</Link>
   //     </div>
   //   </div>
   //   <div className={`bg-amber-300 ${divStyle}`}>
@@ -539,7 +539,7 @@ export default React.memo(Dashboard);
   //       Total {dashboardDetail.recycleOrdersCount} Recycle Order
   //     </div>
   //     <div className={`bg-amber-500 ${divMoreBtn}`}>
-  //       <Link to={"/admin/recycle-orders"}>More Info</Link>
+  //       <Link to={}>More Info</Link>
   //     </div>
   //   </div>
   // </div>;

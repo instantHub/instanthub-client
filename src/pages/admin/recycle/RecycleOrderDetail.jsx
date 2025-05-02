@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "@components/user/loader/Loading";
 import InputSubmitBtn from "@components/user/InputSubmitBtn";
 import DateAndTime from "@components/user/DateAndTime/DateAndTime";
+import { ROUTES } from "../../../routes";
 
 const RecycleOrderDetail = () => {
   const { recycleOrderId } = useParams();
@@ -188,7 +189,7 @@ const RecycleOrderDetail = () => {
         {/* large screen */}
         <button
           onClick={() => {
-            navigate("/admin/recycle-orders");
+            navigate(ROUTES.admin.recycleOrdersList);
           }}
           className="max-sm:hidden absolute w-fit top-[7%] left-5 bg-secondary text-secondary-light px-2 py-1 mx-4 my-2 rounded"
         >
@@ -197,7 +198,7 @@ const RecycleOrderDetail = () => {
         {/* small screen */}
         <button
           onClick={() => {
-            navigate("/admin/recycle-orders");
+            navigate(ROUTES.admin.recycleOrdersList);
           }}
           className="lg:hidden absolute w-fit top-[7%] right-0 bg-secondary text-secondary-light px-2 py-1 mx-4 my-2 rounded"
         >

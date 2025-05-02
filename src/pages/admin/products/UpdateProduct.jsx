@@ -10,6 +10,7 @@ import { SubmitButton } from "@components/admin/SubmitButton";
 // import BackButton from "@components/BackButton";
 import CardHeader from "@components/admin/CardHeader";
 import Loading from "@components/user/loader/Loading";
+import { ROUTES } from "../../../routes";
 
 const initialState = {
   category: "",
@@ -192,7 +193,7 @@ const UpdateProduct = () => {
   return (
     <div className="px-2 pt-[2%] w-full">
       <CardHeader
-        location={"/admin/products-list"}
+        location={ROUTES.admin.productsList}
         text="Update Products"
         source="update"
       />

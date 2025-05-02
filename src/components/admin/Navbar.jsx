@@ -11,6 +11,7 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdMenu } from "react-icons/io";
 import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
+import { ROUTES } from "../../routes";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Navbar = () => {
       const res = await adminLogout();
       dispatch(logout());
       toast.success("Logged out successfully");
-      navigate("/admin/login");
+      navigate(ROUTES.admin.login);
     } catch (error) {}
   };
 
@@ -100,7 +101,7 @@ const Navbar = () => {
             {isDropdownOpen && (
               <div className="absolute mt-32 bg-white rounded-lg shadow-lg">
                 <div className="py-1">
-                  <Link to={"/admin/update-profile"}>
+                  <Link to={ROUTES.admin.updateProfile}>
                     <h2 className="px-4 py-2 text-gray-800 hover:bg-gray-300 flex items-center gap-1">
                       <span>Profile</span>
                       <CgProfile />

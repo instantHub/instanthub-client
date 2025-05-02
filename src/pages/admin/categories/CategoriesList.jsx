@@ -2,6 +2,7 @@ import React from "react";
 import { useGetCategoryQuery } from "@api/categoriesApi";
 import { Link } from "react-router-dom";
 import CategoryCard from "./CategoryCard";
+import { ROUTES } from "../../../routes";
 
 const CategoriesList = () => {
   const { data: categoryData, isLoading: categoryDataLoading } =
@@ -18,7 +19,7 @@ const CategoriesList = () => {
           Categories List
         </h2>
         <div>
-          <Link to={"/admin/add-category"}>
+          <Link to={ROUTES.admin.createCategory}>
             <button className="bg-blue-700 text-white text-lg max-sm:text-xs px-2 py-1 rounded">
               Create Category
             </button>

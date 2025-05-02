@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardHeader from "@components/admin/CardHeader";
 import { SubmitButton } from "@components/admin/SubmitButton";
+import { ROUTES } from "../../../routes";
 
 function UpdateBrand() {
   const { brandId } = useParams();
@@ -102,7 +103,7 @@ function UpdateBrand() {
   return (
     <div className="flex flex-col mt-10 w-[96%] mx-auto">
       <CardHeader
-        location={"/admin/brands-list"}
+        location={ROUTES.admin.brandsList}
         text="Update Brand"
         source="update"
       />

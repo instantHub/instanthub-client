@@ -5,6 +5,7 @@ import { useGetCategoryQuery } from "@api/categoriesApi";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
+import { ROUTES } from "../../routes";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,19 +26,15 @@ const Navbar = () => {
   const navOptions = [
     {
       name: "Home",
-      url: "/",
+      url: ROUTES.user.root,
     },
     {
       name: "About",
-      url: "/about",
+      url: ROUTES.user.about,
     },
-    // {
-    //   name: "Services",
-    //   url: "/services",
-    // },
     {
       name: "Contact",
-      url: "/contact-us",
+      url: ROUTES.user.contactUs,
     },
   ];
 
@@ -70,8 +67,10 @@ const Navbar = () => {
   }
 
   function handleNavigation(to, id) {
-    if (to === "brands") navigate(`/categories/brands/${id}`);
-    else if (to === "products") navigate(`/categories/brands/products/${id}`);
+    if (to === "brands")
+      navigate(generatePathWithParams(ROUTES.user.brands, id));
+    else if (to === "products")
+      navigate(generatePathWithParams(ROUTES.user.products, cat.id));
   }
 
   useEffect(() => {
@@ -280,7 +279,6 @@ const Navbar = () => {
                     key={i}
                     onClick={() => {
                       setHoveredCategoryId(null);
-                      // navigate(`/categories/brands/${category.id}`);
                       handleNavigation("brands", category.id);
                     }}
                   >
@@ -322,7 +320,6 @@ const Navbar = () => {
                                 category.brands?.map((brand, index) => (
                                   <Link
                                     key={index}
-                                    // to={`/categories/brands/products/${brand.id}`}
                                     onClick={() => {
                                       setHoveredCategoryId(null);
                                       handleNavigation("products", brand.id);

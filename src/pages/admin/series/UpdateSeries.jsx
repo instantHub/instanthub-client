@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useGetAllSeriesQuery, useUpdateSeriesMutation } from "@api/seriesApi";
 import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";
+import { ROUTES } from "../../../routes";
 
 const UpdateSeries = () => {
   const { seriesId } = useParams();
@@ -53,7 +54,7 @@ const UpdateSeries = () => {
       console.log("Series created", seriesUpdated);
       toast.success("Series Updated successfull..!");
 
-      navigate("/admin/add-series");
+      navigate(ROUTES.admin.createSeries);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -66,7 +67,7 @@ const UpdateSeries = () => {
         <div className="mt-[5%] w-[80%] max-sm:w-[98%] mx-auto grow">
           <div className="flex justify-between items-center">
             <h1 className="bold text-[1.4rem] mb-2">Update Series</h1>
-            <BackButton location={`/admin/add-series`} />
+            <BackButton location={ROUTES.admin.createSeries} />
           </div>
           <div className="bg-white border rounded-md shadow-lg">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">

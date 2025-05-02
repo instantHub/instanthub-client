@@ -8,7 +8,7 @@ const CreatePost = () => {
         <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">Create Post</h1>
 
         {/* <ListButton
-          location={"/admin/categories-list"}
+          location={ROUTES.admin.categoriesList}
           text={"Categories List"}
         /> */}
       </div>

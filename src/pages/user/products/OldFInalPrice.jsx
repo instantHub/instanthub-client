@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useReducer } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useGetProductDetailsQuery } from "@features/api/productsApi";
-import { useCreateOrderMutation, useGetCouponQuery } from "@features/apis";
+import { useCreateOrderMutation, useGetCouponQuery } from "@api/seriesApi";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";

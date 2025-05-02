@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import FormData from "./FormData";
+import { ROUTES } from "../../../routes";
 
 function Condtions() {
   const { data: categoryData, isLoading: categoryLoading } =
@@ -80,7 +81,7 @@ function Condtions() {
       <div className="flex justify-between items-center">
         <h1 className="bold text-lg max-sm:text-sm mb-2">Create Condition</h1>
         <ListButton
-          location={"/admin/conditionsList"}
+          location={ROUTES.admin.conditionsList}
           text={"Conditions List"}
         />
       </div>

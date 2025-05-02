@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardHeader from "@components/admin/CardHeader";
 import { SubmitButton } from "@components/admin/SubmitButton";
+import { ROUTES } from "../../../routes";
 
 function UpdateCategory() {
   const { catId } = useParams();
@@ -103,7 +104,7 @@ function UpdateCategory() {
   return (
     <div className="flex flex-col mt-10 w-[96%] mx-auto max-sm:text-sm ">
       <CardHeader
-        location={"/admin/categories-list"}
+        location={ROUTES.admin.categoriesList}
         text="Update Category"
         source="update"
       />

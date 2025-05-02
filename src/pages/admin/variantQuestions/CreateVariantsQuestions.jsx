@@ -11,6 +11,9 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Table from "@components/admin/TableView";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
+import { data } from "autoprefixer";
 
 function CreateVariantsQuestions() {
   const [deductionSelected, setDeductionSelected] = useState("");
@@ -72,7 +75,12 @@ function CreateVariantsQuestions() {
         {variant.deductions.length} deductions
       </td>
       <td className="flex items-center justify-center gap-1 text-sm max-sm:text-xs py-2">
-        <Link to={`/admin/update-variant-questions/${variant._id}`}>
+        <Link
+          to={generatePathWithParams(
+            ROUTES.admin.updateVariantQuestions,
+            variant._id
+          )}
+        >
           <button className="bg-green-600 text-white px-2 py-1 border rounded">
             Update
           </button>

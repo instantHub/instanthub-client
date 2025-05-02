@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteProductMutation } from "@api/productsApi";
 import ActionButton from "@components/admin/ActionButton";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const ProductCard = ({ data, pendingPricingMobiles }) => {
   //   console.log(data);
@@ -35,7 +37,7 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
   };
 
   function handleEdit() {
-    navigate(`/admin/update-product/${data.id}`);
+    navigate(generatePathWithParams(ROUTES.admin.updateProduct, data.id));
   }
   function openDeleteModel() {
     setIsModalOpen(true);
@@ -268,7 +270,7 @@ const VariantDetail = ({ label, value }) => (
   //   <button
   //     className={`w-full ${style.btnStyle} text-blue-600 border-r`}
   //     onClick={() => {
-  //       navigate(`/admin/update-product/${data.id}`);
+  //       navigate();
   //     }}
   //   >
   //     <span className="tracking-[5px] max-sm:tracking-[4px] max-sm:text-[10px]">

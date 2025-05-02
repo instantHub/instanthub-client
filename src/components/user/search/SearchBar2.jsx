@@ -7,6 +7,9 @@ import { FaMobileAlt, FaLaptop } from "react-icons/fa";
 import { RiArmchairLine } from "react-icons/ri";
 import { GrServices } from "react-icons/gr";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
+import { determineServicePath } from "@utils/user/determineServicePath";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -22,8 +25,6 @@ const SearchBar = () => {
   // console.log("productsData", productsData);
 
   const handleSearch = async (e, from) => {
-    // console.log("search API 2");
-
     let searchValue;
 
     if (from.includes("input")) {
@@ -35,52 +36,6 @@ const SearchBar = () => {
     try {
       setProductsLoading(true);
       setServicesLoading(true);
-
-      // let response;
-      // let services;
-      // if (import.meta.env.VITE_BUILD === "development") {
-      //   response = await axios.get("http://localhost:8000/api/products", {
-      //     params: {
-      //       search: searchValue.trim() ? searchValue : undefined,
-      //       page,
-      //       limit: 10,
-      //     },
-      //   });
-
-      //   // SERVICES
-      //   services = await axios.get(
-      //     "http://localhost:8000/api/services/search",
-      //     {
-      //       params: {
-      //         search: searchValue.trim() ? searchValue : undefined,
-      //         page,
-      //         limit: 10,
-      //       },
-      //     }
-      //   );
-      // } else if (import.meta.env.VITE_BUILD === "production") {
-      //   // "https://api.yusufqureshi.online/api/products",
-      //   response = await axios.get("https://api.instantpick.in/api/products", {
-      //     params: {
-      //       //   search: search.trim() ? search : undefined,
-      //       search: searchValue.trim() ? searchValue : undefined,
-      //       page,
-      //       limit: 10,
-      //     },
-      //   });
-
-      //   // SERVICES
-      //   services = await axios.get(
-      //     "https://api.instantpick.in/api/services/search",
-      //     {
-      //       params: {
-      //         search: searchValue.trim() ? searchValue : undefined,
-      //         page,
-      //         limit: 10,
-      //       },
-      //     }
-      //   );
-      // }
 
       let response = await axios.get(
         `${import.meta.env.VITE_APP_BASE_URL}/api/products`,
@@ -152,21 +107,6 @@ const SearchBar = () => {
   const debounceCallApi = useMemo(() => debounce(handleSearch, 800), []);
   //   const debounceScroll = useMemo(() => debounce(handleScroll, 400), []);
 
-  const determinePath = (service) => {
-    const type = service.type.toLowerCase();
-    const id = service._id;
-
-    if (type === "directservice") {
-      return `/services/book-service/${id}?st=ds`;
-    } else if (type === "brand") {
-      return `/services/serviceBrands/${id}`;
-    } else if (type === "servicesubcategory") {
-      return `/services/serviceSubCategory/${id}`;
-    } else {
-      return "#"; // Default path if none of the conditions match
-    }
-  };
-
   const productListRef = useRef(null);
 
   useEffect(() => {
@@ -229,7 +169,10 @@ const SearchBar = () => {
             productsData?.products?.map((product, index) => (
               <div key={index} onClick={clearSearch}>
                 <Link
-                  to={`/categories/brands/productDetails/${product.id}`}
+                  to={generatePathWithParams(
+                    ROUTES.user.productDetails,
+                    product.id
+                  )}
                   // onClick={clearSearch}
                 >
                   <button className="flex items-center gap-1 py-2 border-b">
@@ -256,7 +199,7 @@ const SearchBar = () => {
         >
           {!servicesLoading &&
             servicesData?.services?.map((service, index) => (
-              <Link key={index} to={determinePath(service)}>
+              <Link key={index} to={determineServicePath(service)}>
                 <div onClick={clearSearch}>
                   <button className="flex items-center gap-1 py-2 border-b">
                     {/* <FaMobileAlt /> */}

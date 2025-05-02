@@ -16,6 +16,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import ServiceCompletionForm from "./ServiceCompletionForm";
 import { toast } from "react-toastify";
+import { ROUTES } from "../../../routes";
 
 const ServiceOrderDetail = () => {
   const { serviceOrderId } = useParams();
@@ -56,7 +57,7 @@ const ServiceOrderDetail = () => {
       <div className="relative flex justify-between w-full px-4">
         <button
           onClick={() => {
-            navigate("/admin/services-orders");
+            navigate(ROUTES.admin.serviceOrdersList);
           }}
           className="text-3xl max-sm:text-xl bg-secondary text-secondary-light rounded"
         >

@@ -16,6 +16,7 @@ import {
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import ProductCard from "./ProductCard";
 import axios from "axios";
+import { ROUTES } from "../../../routes";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
@@ -248,7 +249,7 @@ const ProductsList = () => {
 
         {/* Create Product Button */}
         <div className="flex items-center">
-          <Link to={"/admin/add-products"}>
+          <Link to={ROUTES.admin.createProduct}>
             <button className="bg-blue-700 text-white px-2 py-1 rounded max-sm:text-xs">
               Create Product
             </button>

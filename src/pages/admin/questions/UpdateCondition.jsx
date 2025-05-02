@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import FormData from "./FormData";
+import { ROUTES } from "../../../routes";
 
 function UpdateCondition() {
   const { conditionId } = useParams();
@@ -96,7 +97,7 @@ function UpdateCondition() {
               Update Condition
             </h1>
 
-            <BackButton location={"/admin/conditionsList"} />
+            <BackButton location={ROUTES.admin.conditionsList} />
           </div>
           {!conditionsLoading && (
             <div className="bg-white border rounded-md shadow-lg">

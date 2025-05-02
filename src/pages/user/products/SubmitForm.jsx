@@ -5,6 +5,7 @@ import { useCreateOrderMutation } from "@api/ordersApi";
 import { ORDER_EMAIL_MSG } from "@utils/user/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
 
 const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   const { state, dispatch } = reducer;
@@ -86,7 +87,9 @@ const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
       if (order.data.success) {
         setIsOpen(false);
         toast.success("Order placed, check your email for the bill.");
-        navigate(`/categories/brands/productDetails/${formData.productId}`);
+        navigate(
+          generatePathWithParams(ROUTES.user.productDetails, formData.productId)
+        );
       }
     } catch (error) {
       console.log("Eror while creating order", error);

@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import ListButton from "@components/ListButton";
 import CardHeader from "@components/admin/CardHeader";
+import { ROUTES } from "../../../routes";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -172,14 +173,14 @@ const CreateProducts = () => {
               <h2 className="pl-1"> / Add Products</h2>
             </div>
             <ListButton
-              location={"/admin/products-list"}
+              location={ROUTES.admin.productsList}
               text={"Products List"}
             />
           </div>
         </div> */}
 
         <CardHeader
-          location={"/admin/products-list"}
+          location={ROUTES.admin.productsList}
           text="Add Products"
           source="create"
         />

@@ -1,6 +1,7 @@
 import React from "react";
 import BackButton from "./BackButton";
 import ListButton from "./ListButton";
+import { ROUTES } from "../../routes";
 
 const CardHeader = ({ location, text, source }) => {
   return (
@@ -12,7 +13,7 @@ const CardHeader = ({ location, text, source }) => {
 
         {source === "create" ? (
           <ListButton
-            location={"/admin/products-list"}
+            location={ROUTES.admin.productsList}
             text={"Products List"}
           />
         ) : (

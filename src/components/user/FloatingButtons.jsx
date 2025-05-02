@@ -13,6 +13,7 @@ import { GiSellCard } from "react-icons/gi";
 import { MdHomeRepairService } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetCategoryQuery } from "@api/categoriesApi";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 // import { FaPhone } from "react-icons/fa";
 
 const FloatingButtons = () => {
@@ -219,7 +220,7 @@ const FloatingButtons = () => {
                 {categories?.map((cat) => (
                   <Link
                     key={cat.id}
-                    to={`/categories/brands/${cat.id}`}
+                    to={generatePathWithParams(ROUTES.user.brands, cat.id)}
                     className="py-2 font-[400] hover:font-semibold text-sm border-b w-[130px]"
                   >
                     {cat.name}

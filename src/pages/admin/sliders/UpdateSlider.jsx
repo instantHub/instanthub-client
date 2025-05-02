@@ -6,6 +6,7 @@ import {
   useUploadSliderImageMutation,
 } from "@api/slidersApi";
 import { toast } from "react-toastify";
+import { ROUTES } from "../../../routes";
 
 const UpdateSlider = () => {
   const { sliderId } = useParams();
@@ -77,7 +78,7 @@ const UpdateSlider = () => {
 
       // Clear the value of the file input
       // fileInputRef.current.value = "";
-      navigate("/admin/add-sliders");
+      navigate(ROUTES.admin.createSlider);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -90,7 +91,7 @@ const UpdateSlider = () => {
           <div className="flex justify-between items-center">
             {/* Back Button */}
             <div className="py-3 px-2 text-center">
-              <Link to={`/admin/add-sliders`}>
+              <Link to={ROUTES.admin.createSlider}>
                 <button
                   type="submit"
                   className="border text-white bg-black rounded-md px-4 py-1 cursor-pointer  hover:bg-gray-800"

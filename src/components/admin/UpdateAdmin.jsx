@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useUpdateAdminMutation } from "@api/authApi";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { BiSolidHide, BiShow } from "react-icons/bi";
+import { ROUTES } from "../../routes";
 
 const UpdateAdmin = () => {
   const [name, setName] = useState("");
@@ -45,7 +46,7 @@ const UpdateAdmin = () => {
         }).unwrap();
         dispatch(setCredentials(res.updatedAdmin));
         toast.success(res.message);
-        navigate("/admin/dashboard");
+        navigate(ROUTES.admin.dashboard);
       } catch (err) {
         console.log("catch error");
         console.log(err?.data?.message || err.error);

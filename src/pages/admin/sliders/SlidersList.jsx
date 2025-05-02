@@ -52,7 +52,7 @@ export default SlidersList;
   //           </td>
   //           <td className="px-4 py-2">{slider.status}</td>
   //           <td className="px-4 py-2">
-  //             <Link to={`/admin/update-sliders/${slider.id}`}>
+  //             <Link to={}>
   //               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
   //                 Edit
   //               </button>

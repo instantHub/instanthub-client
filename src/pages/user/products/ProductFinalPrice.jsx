@@ -18,6 +18,8 @@ import LocationSelector from "@components/user/LocationSelector";
 import { LAPTOP, LAPTOP_DESKTOP } from "@utils/user/constants";
 import SubmitForm from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 // Create the Context
 const StateContext = createContext();
@@ -229,7 +231,7 @@ const ProductFinalPrice = () => {
   // UseEffect to handle page refresh
   useEffect(() => {
     if (handlePageRefresh())
-      navigate(`/categories/brands/productDetails/${productId}`);
+      navigate(generatePathWithParams(ROUTES.user.productDetails, productId));
 
     completeFinalData();
   }, [selectedProductData]);
@@ -247,7 +249,10 @@ const ProductFinalPrice = () => {
 
       <div className="flex flex-col justify-between pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
         <Link
-          to={`/categories/brands/productDetails/${selectedProduct?.id}`}
+          to={generatePathWithParams(
+            ROUTES.user.productDetails,
+            selectedProduct?.id
+          )}
           className="w-fit text-secondary bg-white px-2 border border-secondary rounded"
         >
           Back
@@ -549,10 +554,10 @@ const CouponModal = ({ submitCoupon }) => {
 {
   // const handlePageRefresh = () => {
   //   if (selectedProduct.name == "") {
-  //     navigate(`/categories/brands/productDetails/${productId}`);
+  //     navigate(generatePathWithParams(ROUTES.user.productDetails, productId));
   //   } else if (Object.keys(selectedProductData.singleDeductions).length < 1) {
   //     if (selectedProduct.category.name === "Desktop") return;
-  //     navigate(`/categories/brands/productDetails/${productId}`);
+  //     navigate(generatePathWithParams(ROUTES.user.productDetails, productId));
   //   }
   // };
 }

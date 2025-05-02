@@ -12,6 +12,7 @@ import {
   filterCategory,
   filterCondition,
 } from "@features/adminSlices/filterSlice";
+import { ROUTES } from "../../../routes";
 
 const CreateConditionLabels = () => {
   const { data: categoryData, isLoading: categoryLoading } =
@@ -153,7 +154,7 @@ const CreateConditionLabels = () => {
           Create ConditionLabels
         </h1>
         <ListButton
-          location={"/admin/conditionLabelsList"}
+          location={ROUTES.admin.conditionLabelsList}
           text={"ConditionLabels List"}
         />
       </div>

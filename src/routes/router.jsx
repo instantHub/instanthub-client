@@ -91,6 +91,7 @@ import ContactUs from "@components/user/static/ContactUs";
 import CreateQuestions from "@pages/admin/questions/CreateQuestions";
 
 import Loading from "@components/user/loader/Loading";
+import { ROUTES } from "./routes";
 
 const lazyLoad = (importFunc) => {
   const LazyComponent = lazy(importFunc);
@@ -103,7 +104,7 @@ const lazyLoad = (importFunc) => {
 
 export const router = Router([
   {
-    path: "/",
+    path: ROUTES.user.root,
     // errorElement: (
     //   <ErrorComponent message={`Sorry please try after sometime..!`} />
     // ),
@@ -117,32 +118,32 @@ export const router = Router([
         element: <ClientHome />,
       },
       {
-        path: "/about",
+        path: ROUTES.user.about,
         element: <AboutPage />,
       },
       {
-        path: "/contact-us",
+        path: ROUTES.user.contactUs,
         element: <ContactUs />,
       },
       {
-        path: "/privacy-policies",
+        path: ROUTES.user.privacyPolicy,
         element: <ClientTermsAndPolicies />,
       },
       {
-        path: "/service-policy",
+        path: ROUTES.user.servicePolicy,
         element: <ClientTermsAndPolicies />,
       },
       {
-        path: "/terms-conditions",
+        path: ROUTES.user.termsConditions,
         element: <ClientTermsAndPolicies />,
       },
       {
-        path: "/terms-of-use",
+        path: ROUTES.user.termsOfUse,
         element: <ClientTermsAndPolicies />,
       },
 
       {
-        path: "/categories/brands/:catId",
+        path: ROUTES.user.brands,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Brands, please try after sometime..!`}
@@ -152,7 +153,7 @@ export const router = Router([
       },
 
       {
-        path: "/categories/brands/products/:brandId",
+        path: ROUTES.user.products,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Products, please try after sometime..!`}
@@ -165,7 +166,7 @@ export const router = Router([
         ),
       },
       {
-        path: "/categories/brands/productDetails/:prodId",
+        path: ROUTES.user.productDetails,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Product Details, please try after sometime..!`}
@@ -174,23 +175,23 @@ export const router = Router([
         element: <ClientProductDetail />,
       },
       {
-        path: "/sell/deductions",
+        path: ROUTES.user.productDeductions,
         errorElement: (
           <ErrorComponent message={`Sorry please try after sometime..!`} />
         ),
         element: <ClientProductDeductions />,
       },
       {
-        path: "/sell/deductions/generateOTP",
+        path: ROUTES.user.productGenerateOTP,
         element: <ClientOtpGenerator />,
       },
       {
-        path: "/sell/deductions/finalPrice",
+        path: ROUTES.user.productFinalPrice,
         element: <ClientProductFinalPrice />,
       },
       // Services
       {
-        path: "/services",
+        path: ROUTES.user.services,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
@@ -199,7 +200,7 @@ export const router = Router([
         element: <ClientServices />,
       },
       {
-        path: "/services/serviceSubCategory/:serviceCategoryId",
+        path: ROUTES.user.serviceSubCategory,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
@@ -208,7 +209,7 @@ export const router = Router([
         element: <ClientSubServices />,
       },
       {
-        path: "/services/serviceSubProducts/:subServiceId",
+        path: ROUTES.user.serviceSubProducts,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
@@ -217,7 +218,7 @@ export const router = Router([
         element: <ClientServiceSubProducts />,
       },
       {
-        path: "/services/serviceBrands/:serviceCategoryId",
+        path: ROUTES.user.serviceBrands,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
@@ -226,7 +227,7 @@ export const router = Router([
         element: <ClientServicesBrands />,
       },
       {
-        path: "/services/serviceBrandProblems/:serviceBrandId",
+        path: ROUTES.user.serviceBrandProblems,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Services Problems, please try after sometime..!`}
@@ -235,7 +236,7 @@ export const router = Router([
         element: <ClientServicesBrandsProblems />,
       },
       {
-        path: "/services/book-service/:serviceId",
+        path: ROUTES.user.bookService,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Book-Service, please try after sometime..!`}
@@ -244,7 +245,7 @@ export const router = Router([
         element: <ClientBookService />,
       },
       {
-        path: "/recycle-categories",
+        path: ROUTES.user.recycleCategories,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to Recycle Categories, please try after sometime..!`}
@@ -253,7 +254,7 @@ export const router = Router([
         element: <ClientRecycleCategories />,
       },
       {
-        path: "/recycle-categories/recycle-brands/:catId",
+        path: ROUTES.user.recycleBrands,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to Recycle Brands, please try after sometime..!`}
@@ -262,7 +263,7 @@ export const router = Router([
         element: <ClientRecycleBrands />,
       },
       {
-        path: "/recycle-categories/recycle-brands/recycle-products/:brandId",
+        path: ROUTES.user.recycleProducts,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Products, please try after sometime..!`}
@@ -272,7 +273,7 @@ export const router = Router([
         element: lazyLoad(() => import("@pages/user/recycle/RecycleProducts")),
       },
       {
-        path: "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
+        path: ROUTES.user.recycleProductDetails,
         errorElement: (
           <ErrorComponent
             message={`Sorry unable to load Product Details, please try after sometime..!`}
@@ -283,52 +284,52 @@ export const router = Router([
     ],
   },
   {
-    path: "/admin/login",
+    path: ROUTES.admin.login,
     element: <AdminSignIn />,
   },
   {
-    path: "/admin/signup",
+    path: ROUTES.admin.signUp,
     // element: <AdminSignUp />, // Undo for new admin registration
-    element: <Navigate to="/admin/login" replace />,
+    element: <Navigate to={ROUTES.admin.login} replace />,
   },
   {
     path: "",
     element: <PrivateRoute />,
     children: [
       {
-        path: "/admin",
+        path: ROUTES.admin.root,
         element: <Admin />,
 
         children: [
           {
             index: true,
-            element: <Navigate to="/admin/dashboard" replace />,
+            element: <Navigate to={ROUTES.admin.dashboard} replace />,
           },
           {
-            path: "/admin/dashboard",
+            path: ROUTES.admin.dashboard,
             element: lazyLoad(() => import("@pages/admin/dashboard/Dashboard")),
           },
           {
-            path: "/admin/update-profile",
+            path: ROUTES.admin.updateProfile,
             element: lazyLoad(() => import("@components/admin/UpdateAdmin")),
           },
           {
-            path: "/admin/add-products",
+            path: ROUTES.admin.createProduct,
             element: <AdminCreateProducts />,
           },
           {
-            path: "/admin/products-list",
+            path: ROUTES.admin.productsList,
             // element: <AdminProductsList />,
             element: lazyLoad(() =>
               import("@pages/admin/products/ProductsList")
             ),
           },
           {
-            path: "/admin/update-product/:productId",
+            path: ROUTES.admin.updateProduct,
             element: <AdminUpdateProduct />,
           },
           {
-            path: "/admin/products/product-questions/:productId",
+            path: ROUTES.admin.productQuestions,
             // element: <AdminProductQuestions />,
             element: lazyLoad(() =>
               import("@pages/admin/products/ProductQuestionsList")
@@ -337,152 +338,152 @@ export const router = Router([
 
           // Categories
           {
-            path: "/admin/add-category",
+            path: ROUTES.admin.createCategory,
             element: <AdminCreateCategory />,
           },
           {
-            path: "/admin/categories-list",
+            path: ROUTES.admin.categoriesList,
             element: <AdminCategoriesList />,
           },
           {
-            path: "/admin/update-category/:catId",
+            path: ROUTES.admin.updateCategory,
             element: <AdminUpdateCategory />,
           },
 
+          // Brands
           {
-            path: "/admin/add-brands",
+            path: ROUTES.admin.createBrand,
             element: <AdminCreateBrand />,
           },
           {
-            path: "/admin/brands-list",
+            path: ROUTES.admin.brandsList,
             element: <AdminBrandsList />,
           },
           {
-            path: "/admin/update-brand/:brandId",
+            path: ROUTES.admin.updateBrand,
             element: <AdminUpdateBrand />,
           },
 
           // Series
           {
-            path: "/admin/add-series",
+            path: ROUTES.admin.createSeries,
             element: <AdminCreateSeries />,
           },
           {
-            path: "/admin/series-list",
+            path: ROUTES.admin.seriesList,
             element: <AdminSeriesList />,
           },
           {
-            path: "/admin/update-series/:seriesId",
+            path: ROUTES.admin.updateSeries,
             element: <AdminUpdateSeries />,
           },
 
           // Conditions
           {
-            path: "/admin/create-questions",
+            path: ROUTES.admin.createQuestions,
             element: <CreateQuestions />,
-            // element: <AdminCreateConditions />,
           },
           {
-            path: "/admin/conditionsList",
+            path: ROUTES.admin.conditionsList,
             element: <AdminConditionsList />,
           },
           {
-            path: "/admin/updateCondition/:conditionId",
+            path: ROUTES.admin.updateCondition,
             element: <AdminUpdateCondition />,
           },
           {
-            path: "/admin/conditionLabelsList",
+            path: ROUTES.admin.conditionLabelsList,
             element: <AdminConditionLabelsList />,
           },
           {
-            path: "/admin/updateConditionLabel/:conditionLabelId",
+            path: ROUTES.admin.updateConditionLabel,
             element: <AdminUpdateConditionLabel />,
           },
 
           // Slider
           {
-            path: "/admin/add-sliders",
+            path: ROUTES.admin.createSlider,
             element: <AdminCreateSlider />,
           },
           {
-            path: "/admin/sliders-list",
+            path: ROUTES.admin.slidersList,
             element: <AdminSlidersList />,
           },
           {
-            path: "/admin/update-sliders/:sliderId",
+            path: ROUTES.admin.updateSlider,
             element: <AdminUpdateSlider />,
           },
 
           // Orders
           {
-            path: "/admin/orders",
+            path: ROUTES.admin.ordersList,
             element: <AdminOrdersList />,
           },
           {
-            path: "/admin/order-detail/:orderId",
+            path: ROUTES.admin.orderDetail,
             element: <AdminOrderDetail />,
           },
           {
-            path: "/admin/manage-stocks",
+            path: ROUTES.admin.manageStock,
             element: <AdminManageStocks />,
           },
           {
-            path: "/admin/phone-numbers",
+            path: ROUTES.admin.phoneNumbers,
             element: <AdminPhoneNumbers />,
           },
           {
-            path: "/admin/add-coupons",
+            path: ROUTES.admin.createCoupon,
             element: <AdminCreateCoupon />,
           },
 
           // SERVICES
           {
-            path: "/admin/add-services",
+            path: ROUTES.admin.createService,
             element: <AdminCreateServiceForm />,
           },
           {
-            path: "/admin/services-list",
+            path: ROUTES.admin.servicesList,
             element: <AdminServicesList />,
           },
           {
-            path: "/admin/services-orders",
+            path: ROUTES.admin.serviceOrdersList,
             element: <AdminServicesOrdersList />,
           },
           {
-            path: "/admin/serviceOrder-detail/:serviceOrderId",
+            path: ROUTES.admin.serviceOrderDetail,
             element: <AdminServiceOrderDetail />,
           },
 
           // Recycle Orders
           {
-            path: "/admin/recycle-orders",
+            path: ROUTES.admin.recycleOrdersList,
             element: <AdminRecycleOrdersList />,
           },
           {
-            path: "/admin/recycleOrder-detail/:recycleOrderId",
+            path: ROUTES.admin.recycleOrderDetail,
             element: <AdminRecycleOrderDetail />,
           },
 
           // VARIANTS QUESTIONS
           {
-            path: "/admin/variants-questions",
+            path: ROUTES.admin.variantsQuestions,
             element: <AdminCreateVariantsQuestions />,
           },
           {
-            path: "/admin/update-variant-questions/:variantQuestionsId",
+            path: ROUTES.admin.updateVariantQuestions,
             element: <AdminUpdateVariantQuestions />,
           },
 
           // POSTS
           {
-            path: "/admin/create-post",
+            path: ROUTES.admin.createPost,
             // element: <AdminProductQuestions />,
             element: lazyLoad(() => import("@pages/admin/posts/CreatePost")),
           },
 
           // Complaints
           {
-            path: "/admin/complaints",
+            path: ROUTES.admin.complaintsList,
             element: lazyLoad(() =>
               import("@pages/admin/complaints/Complaints")
             ),

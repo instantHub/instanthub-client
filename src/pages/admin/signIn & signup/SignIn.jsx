@@ -5,6 +5,7 @@ import { useLoginMutation } from "@api/authApi";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
+import { ROUTES } from "../../../routes";
 
 const SignIn = () => {
   const [signInData, setSignInData] = useState();
@@ -21,7 +22,7 @@ const SignIn = () => {
   //   If AdminInfo(logged In) is available navigate to Admin Dashboard
   useEffect(() => {
     if (adminInfo) {
-      navigate("/admin/dashboard");
+      navigate(ROUTES.admin.dashboard);
     }
   }, [navigate, adminInfo]);
 
@@ -34,7 +35,7 @@ const SignIn = () => {
       // dispatch(setCredentials(res));
       dispatch(setCredentials(res));
       toast.success("Logged in successfull");
-      navigate("/admin/dashboard");
+      navigate(ROUTES.admin.dashboard);
     } catch (err) {
       console.log("catch error");
       console.log(err?.data?.message || err.error);
@@ -87,7 +88,7 @@ const SignIn = () => {
 
       {/* Undo for new admin registration */}
       {/* <div className="text-end -mt-11">
-          <Link to={"/admin/signup"}>
+          <Link to={ROUTES.admin.singup}>
             <button className="text-sm bg-blue-500 px-2 py-1 mt-3 border rounded text-white">
               Register
             </button>

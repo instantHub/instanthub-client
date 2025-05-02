@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { orderCurrentStatus } from "@utils/admin/helper";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const OrderCard = ({ data, categoryImage }) => {
   // console.log("data", data);
@@ -28,7 +30,9 @@ const OrderCard = ({ data, categoryImage }) => {
           />
         </div>
         <div
-          onClick={() => navigate(`/admin/order-detail/${data.id}`)}
+          onClick={() =>
+            navigate(generatePathWithParams(ROUTES.admin.orderDetail, data.id))
+          }
           className="grow flex flex-col gap-[2px]"
         >
           {/* Order and Product name and variant */}

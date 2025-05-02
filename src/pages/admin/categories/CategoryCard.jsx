@@ -4,6 +4,8 @@ import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteCategoryMutation } from "@api/categoriesApi";
 import { toast } from "react-toastify";
 import ActionButton from "@components/admin/ActionButton";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const ListCard = ({ data }) => {
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ const ListCard = ({ data }) => {
   };
 
   function handleEdit() {
-    navigate(`/admin/update-category/${data.id}`);
+    navigate(generatePathWithParams(ROUTES.admin.updateCategory, data.id));
   }
 
   function openDeleteModel() {
@@ -40,7 +42,6 @@ const ListCard = ({ data }) => {
   return (
     <>
       <div
-        //   onClick={() => navigate(`/admin/update-category/${data.id}`)}
         className={`w-full shadow flex flex-col justify-center items-center cursor-pointer rounded-md pt-2 text-sm max-sm:text-xs border`}
       >
         {/* Data Display */}

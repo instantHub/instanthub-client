@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import BackButton from "@components/BackButton";
 import CardHeader from "@components/admin/CardHeader";
+import { ROUTES } from "../../../routes";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -178,12 +179,12 @@ const UpdateProduct = () => {
               <h2 className="pl-1"> / Update Product</h2>
             </div>
 
-            <BackButton location={"/admin/products-list"} />
+            <BackButton location={ROUTES.admin.productsList} />
           </div>
         </div> */}
 
         <CardHeader
-          location={"/admin/products-list"}
+          location={ROUTES.admin.productsList}
           text="Update Products"
           source="update"
         />

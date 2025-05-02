@@ -15,6 +15,7 @@ import BackButton from "@components/admin/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProcessorDeductions } from "@features/adminSlices/processorSlice";
 import { LAPTOP_DESKTOP } from "@utils/user/constants";
+import { ROUTES } from "../../../routes";
 
 const ProductQuestionsList = () => {
   const { productId } = useParams();
@@ -329,7 +330,7 @@ const ProductQuestionsList = () => {
 
   return (
     <div className="relative">
-      <BackButton location={"/admin/products-list"} />
+      <BackButton location={ROUTES.admin.productsList} />
 
       <div className="w-full flex flex-col mx-auto my-1 bg-white px-4 max-sm:px-2 py-2">
         {/* Heading */}

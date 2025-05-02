@@ -4,6 +4,7 @@ import "./searchStyle.css";
 import { BsSearch } from "react-icons/bs";
 import axios from "axios";
 import useDebounce, { useDebounceFunc } from "@hooks/UseDebounce";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -135,7 +136,10 @@ const SearchBar = () => {
             productsData.products.map((product, index) => (
               <div key={index} onClick={clearSearch}>
                 <Link
-                  to={`/categories/brands/productDetails/${product.id}`}
+                  to={generatePathWithParams(
+                    ROUTES.user.productDetails,
+                    product.id
+                  )}
                   // onClick={clearSearch}
                 >
                   <button className="py-1 border-b">

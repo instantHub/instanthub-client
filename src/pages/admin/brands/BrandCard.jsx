@@ -4,11 +4,13 @@ import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteBrandMutation } from "@api/brandsApi";
 import { toast } from "react-toastify";
 import ActionButton from "@components/admin/ActionButton";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
 const BrandCard = ({ data }) => {
   console.log(data);
   const navigate = useNavigate();
-  const [deleteBrand, { isLoading: deleteLoading }] = useDeleteBrandMutation();
+  const [deleteBrand] = useDeleteBrandMutation();
 
   const style = {
     boldness: "font-semibold max-sm:font-norma",
@@ -31,8 +33,9 @@ const BrandCard = ({ data }) => {
   };
 
   function handleEdit() {
-    navigate(`/admin/update-brand/${data.id}`);
+    navigate(generatePathWithParams(ROUTES.admin.updateBrand, data.id));
   }
+
   function openDeleteModel() {
     setIsModalOpen(true);
   }
