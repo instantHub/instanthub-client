@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
 
 // https://vitejs.dev/config/
 // const apiURL = import.meta.env.VITE_APP_BASE_URL;
@@ -11,4 +12,15 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@components": path.resolve(__dirname, "src/components"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@features": path.resolve(__dirname, "src/features"),
+      "@api": path.resolve(__dirname, "src/features/api"),
+      "@utils": path.resolve(__dirname, "src/utils"),
+      "@routes": path.resolve(__dirname, "src/routes"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
+    },
+  },
 });
