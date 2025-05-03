@@ -5,9 +5,10 @@ import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { clearServiceProblems } from "@features/userSlices/serviceProblemsSlice";
 import { useDispatch } from "react-redux";
-import ItemGrid from "@components/user/ItemGrid";
 import Loading from "@components/user/loader/Loading";
 import ServiceContent from "@components/user/static/services/ServiceContent";
+import ServiceItemGrid from "./ServiceItemGrid";
+import ServiceHeaderImage from "./ServiceHeaderImage";
 
 const ServiceBrands = () => {
   const { serviceCategoryId } = useParams();
@@ -61,19 +62,18 @@ const ServiceBrands = () => {
       </Helmet>
       <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">
         <div className="mx-0 mb-6">
-          {
-            <div className="flex items-center gap-1 max-sm:text-xs">
-              <span className="flex items-center opacity-60 gap-1">
-                <Link to={"/"}>Home</Link>
-                <FaAngleRight />
-                <Link to={`/services`}>Services</Link>
-                <FaAngleRight />
-              </span>
-              <span>{serviceCategory?.name}</span>
+          <div className="flex items-center gap-1 max-sm:text-xs">
+            <span className="flex items-center opacity-60 gap-1">
+              <Link to={"/"}>Home</Link>
               <FaAngleRight />
-              <span>Brands</span>
-            </div>
-          }
+              <Link to={`/services`}>Services</Link>
+              <FaAngleRight />
+            </span>
+            <span>{serviceCategory?.name}</span>
+            <FaAngleRight />
+            <span>Brands</span>
+          </div>
+
           <hr className="text-black mt-1" />
         </div>
 
@@ -83,21 +83,10 @@ const ServiceBrands = () => {
           <div className="flex flex-col">
             <div className="mt-2 mb-5">
               <div className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500">
-                <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
-                  <img
-                    src={
-                      import.meta.env.VITE_APP_BASE_URL + serviceCategory.image
-                    }
-                    alt="CAT"
-                    // className="w-full h-full max-sm:w-32 max-sm:h-32"
-                    className="w-28 h-28 max-sm:w-32 max-sm:h-24"
-                  />
-                </div>
-                <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                  <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                    {serviceCategory.name}
-                  </div>
-                </span>
+                <ServiceHeaderImage
+                  serviceName={serviceCategory.name}
+                  serviceImage={serviceCategory.image}
+                />
               </div>
             </div>
 
@@ -106,11 +95,10 @@ const ServiceBrands = () => {
             </div>
 
             <div className="grid grid-cols-8 gap-6 max-md:grid-cols-5 max-sm:grid-cols-3">
-              <ItemGrid
-                items={serviceBrands}
-                linkPath="/services/serviceBrandProblems"
+              <ServiceItemGrid
+                services={serviceBrands}
+                fromBrands={true}
                 displayBig={true}
-                service={true}
               />
             </div>
           </div>

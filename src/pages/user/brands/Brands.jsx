@@ -65,7 +65,6 @@ const Brands = () => {
               <ItemGrid
                 items={brands}
                 linkPath={removeLastParamFromPath(ROUTES.user.products)}
-                displayBig={false}
               />
             ) : (
               <h2>No Data Available</h2>

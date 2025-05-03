@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetServicesQuery } from "@api/servicesApi";
-import ItemGrid from "@components/user/ItemGrid";
+import { ROUTES } from "../../../routes";
+import ServiceItemGrid from "./serviceItemGrid";
 
 const ServicesHome = () => {
   const { data: servicesData, isLoading: serviceLoading } =
@@ -10,7 +11,7 @@ const ServicesHome = () => {
   let navigate = useNavigate();
 
   const toggleShowAll = () => {
-    navigate("/services");
+    navigate(ROUTES.user.services);
   };
 
   return (
@@ -40,11 +41,10 @@ const ServicesHome = () => {
             </>
           ) : (
             <>
-              <ItemGrid
-                items={servicesData?.serviceCategories.slice(0, 10)}
-                linkPath="/services"
+              <ServiceItemGrid
+                services={servicesData?.serviceCategories.slice(0, 10)}
                 displayBig={true}
-                service={true}
+                showTitle={true}
               />
               <div className="relative text-center mt-4">
                 <button
