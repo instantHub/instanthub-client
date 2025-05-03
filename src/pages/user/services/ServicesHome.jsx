@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetServicesQuery } from "@api/servicesApi";
 import { ROUTES } from "../../../routes";
-import ServiceItemGrid from "./serviceItemGrid";
+import ServiceItemGrid from "./ServiceItemGrid";
 
 const ServicesHome = () => {
   const { data: servicesData, isLoading: serviceLoading } =

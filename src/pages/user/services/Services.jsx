@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useGetServicesQuery } from "@api/servicesApi";
 import { Helmet } from "react-helmet-async";
 import ServiceContent from "@components/user/static/services/ServiceContent";
-import ServiceItemGrid from "./serviceItemGrid";
+import ServiceItemGrid from "./ServiceItemGrid";
 import Loading from "@components/user/loader/Loading";
 
 const Services = () => {
