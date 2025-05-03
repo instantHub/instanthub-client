@@ -6,6 +6,8 @@ import Loading from "@components/user/loader/Loading";
 import ItemGrid from "@components/user/ItemGrid";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
 import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
+import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
+import { ROUTES } from "@routes";
 
 const RecycleBrands = () => {
   const { catId } = useParams();
@@ -63,7 +65,7 @@ const RecycleBrands = () => {
             {brands?.length > 0 ? (
               <ItemGrid
                 items={brands}
-                linkPath="/recycle-categories/recycle-brands/recycle-products"
+                linkPath={removeLastParamFromPath(ROUTES.user.recycleProducts)}
                 displayBig={false}
               />
             ) : (

@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { useGetServicesQuery } from "@api/servicesApi";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import Loading from "@components/user/loader/Loading";
+import ServiceHeaderImage from "./ServiceHeaderImage";
 
 const ServiceBrands = () => {
   const { subServiceId } = useParams();
@@ -78,46 +80,21 @@ const ServiceBrands = () => {
         </div>
 
         {!serviceSubProducts ? (
-          <div className="flex flex-col justify-center items-center h-32">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-            <span>Loading...</span>
-          </div>
+          <Loading />
         ) : (
           <div className="flex flex-col">
             <div className="mt-2 mb-5 flex justify-center gap-5">
               <div className="flex flex-col items-center justify-center cursor-pointer w-[45%] h-full bg-white  sm:min-w-[45%] rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500">
-                <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
-                  <img
-                    src={
-                      import.meta.env.VITE_APP_BASE_URL +
-                      serviceSubCategory?.serviceCategoryId?.image
-                    }
-                    alt="CAT"
-                    className="w-28 h-28 max-sm:w-32 max-sm:h-24"
-                  />
-                </div>
-                <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                  <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                    {serviceSubCategory?.serviceCategoryId?.name}
-                  </div>
-                </span>
+                <ServiceHeaderImage
+                  serviceName={serviceSubCategory?.serviceCategoryId?.name}
+                  serviceImage={serviceSubCategory?.serviceCategoryId?.image}
+                />
               </div>
               <div className="flex flex-col items-center justify-center cursor-pointer w-[45%] h-full bg-white  sm:min-w-[45%] rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500">
-                <div className="flex horizontal w-28 h-28 items-start justify-between max-sm:w-24 max-sm:h-24">
-                  <img
-                    src={
-                      import.meta.env.VITE_APP_BASE_URL +
-                      serviceSubCategory?.image
-                    }
-                    alt="CAT"
-                    className="w-28 h-28 max-sm:w-32 max-sm:h-24"
-                  />
-                </div>
-                <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                  <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                    {serviceSubCategory?.name}
-                  </div>
-                </span>
+                <ServiceHeaderImage
+                  serviceName={serviceSubCategory?.name}
+                  serviceImage={serviceSubCategory?.image}
+                />
               </div>
             </div>
 
@@ -127,64 +104,59 @@ const ServiceBrands = () => {
 
             <div className="grid grid-cols-5 gap-4 max-lg:grid-cols-3 max-sm:grid-cols-2 max-sm:gap-1">
               {serviceSubProducts &&
-                serviceSubProducts
-                  // .subCategory
-                  //   .filter(
-                  //     (sc) => sc.serviceCategoryId._id === serviceCategoryId
-                  //   )
-                  .map((serviceSubProduct, i) => (
-                    <Link
-                      to={`/services/book-service/${serviceSubProduct._id}?st=ss`}
+                serviceSubProducts.map((serviceSubProduct, i) => (
+                  <Link
+                    key={i}
+                    to={`/services/book-service/${serviceSubProduct._id}?st=ss`}
+                  >
+                    <div
                       key={i}
+                      // className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
+                      className="flex flex-col cursor-pointer w-full h-full border bg-white sm:min-w-full rounded-ss-xl rounded-br-xl hover:shadow-2xl transition ease-in-out duration-500"
                     >
-                      <div
-                        key={i}
-                        // className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-0 sm:rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
-                        className="flex flex-col cursor-pointer w-full h-full border bg-white sm:min-w-full rounded-ss-xl rounded-br-xl hover:shadow-2xl transition ease-in-out duration-500"
-                      >
-                        <div className="flex horizontal w-28 h-28 items-center justify-center mx-auto max-sm:w-24 max-sm:h-24">
-                          <img
-                            src={
-                              import.meta.env.VITE_APP_BASE_URL +
-                              serviceSubProduct.image
-                            }
-                            alt="CAT"
-                            // className="w-full h-full max-sm:w-32 max-sm:h-32"
-                            className="w-28 h-28 max-sm:w-32 max-sm:h-24"
-                          />
+                      <div className="flex horizontal w-28 h-28 items-center justify-center mx-auto max-sm:w-24 max-sm:h-24">
+                        <img
+                          src={
+                            import.meta.env.VITE_APP_BASE_URL +
+                            serviceSubProduct.image
+                          }
+                          alt="CAT"
+                          // className="w-full h-full max-sm:w-32 max-sm:h-32"
+                          className="w-28 h-28 max-sm:w-32 max-sm:h-24"
+                        />
+                      </div>
+                      {/* <span className="text-center mt-2 flex-1 line-clamp-3 flex flex-col horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12"> */}
+                      <div className="text-center mt-2 flex-1 flex flex-col horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
+                        <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
+                          <span>{serviceSubProduct.name}</span>
                         </div>
-                        {/* <span className="text-center mt-2 flex-1 line-clamp-3 flex flex-col horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12"> */}
-                        <div className="text-center mt-2 flex-1 flex flex-col horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-                          <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-                            <span>{serviceSubProduct.name}</span>
-                          </div>
-                          {/* Prod Desc */}
-                          <div className="text-sm font-semibold text-start pl-2 max-sm:text-xs max-2sm:text-[10px]">
-                            <span>{serviceSubProduct.description}</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-col mt-2 pl-2 py-1 items-start justify-start">
-                          <div className="flex items-center gap-1">
-                            <span className="text-red-500 line-through text-xs max-sm:text-[10px]">
-                              MRP{serviceSubProduct.price}
-                            </span>
-
-                            <span className="text-xs">
-                              {serviceSubProduct.discount}% off
-                            </span>
-                          </div>
-
-                          <span className="text-red-500 font-semibold text-lg">
-                            ₹
-                            {serviceSubProduct.price -
-                              (serviceSubProduct.discount *
-                                serviceSubProduct.price) /
-                                100}
-                          </span>
+                        {/* Prod Desc */}
+                        <div className="text-sm font-semibold text-start pl-2 max-sm:text-xs max-2sm:text-[10px]">
+                          <span>{serviceSubProduct.description}</span>
                         </div>
                       </div>
-                    </Link>
-                  ))}
+                      <div className="flex flex-col mt-2 pl-2 py-1 items-start justify-start">
+                        <div className="flex items-center gap-1">
+                          <span className="text-red-500 line-through text-xs max-sm:text-[10px]">
+                            MRP{serviceSubProduct.price}
+                          </span>
+
+                          <span className="text-xs">
+                            {serviceSubProduct.discount}% off
+                          </span>
+                        </div>
+
+                        <span className="text-red-500 font-semibold text-lg">
+                          ₹
+                          {serviceSubProduct.price -
+                            (serviceSubProduct.discount *
+                              serviceSubProduct.price) /
+                              100}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
             </div>
           </div>
         )}

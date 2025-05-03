@@ -2,8 +2,8 @@ import { ROUTES } from "@routes";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 
 export const determineServicePath = (service) => {
-  const type = service.type.toLowerCase();
-  const id = service._id;
+  const type = service?.type?.toLowerCase();
+  const id = service?._id;
 
   if (type === "directservice") {
     return `/services/book-service/${id}?st=ds`;

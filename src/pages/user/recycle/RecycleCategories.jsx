@@ -4,6 +4,8 @@ import { Helmet } from "react-helmet-async";
 import ItemGrid from "@components/user/ItemGrid";
 import Loading from "@components/user/loader/Loading";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
+import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
+import { ROUTES } from "@routes";
 
 const RecycleCategories = () => {
   const { data: categories, isLoading: categoriesLoading } =
@@ -80,7 +82,7 @@ const RecycleCategories = () => {
             <div className="flex flex-wrap justify-evenly gap-6 bg-[url('/images/recycle1.png')] bg-contain bg-center bg-no-repeat my-10">
               <ItemGrid
                 items={filteredCategories}
-                linkPath="/recycle-categories/recycle-brands"
+                linkPath={removeLastParamFromPath(ROUTES.user.recycleBrands)}
                 displayBig={true}
               />
             </div>

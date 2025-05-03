@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "@api/categoriesApi";
 import ItemGrid from "@components/user/ItemGrid";
+import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
+import { ROUTES } from "@routes";
 
 const Categories = () => {
   const { data: categories = [], isLoading: categoriesLoading } =
@@ -35,7 +37,7 @@ const Categories = () => {
           <>
             <ItemGrid
               items={categories}
-              linkPath="/categories/brands"
+              linkPath={removeLastParamFromPath(ROUTES.user.brands)}
               displayBig={true}
             />
 
