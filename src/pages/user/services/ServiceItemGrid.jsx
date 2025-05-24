@@ -12,8 +12,12 @@ const ServiceItemGrid = ({
 }) => {
   function determinePath(service) {
     if (fromBrands) {
-      const id = service?._id;
-      return generatePathWithParams(ROUTES.user.serviceBrandProblems, id);
+      const location = localStorage.getItem("location");
+      const uniqueURL = service.serviceCategoryId.uniqueURL;
+
+      return `/${location}/services/brands/problems/${uniqueURL}`;
+
+      // return generatePathWithParams(ROUTES.user.serviceBrandProblems, id);
     } else {
       return determineServicePath(service);
     }

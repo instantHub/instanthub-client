@@ -12,13 +12,13 @@ const OtpGenerator = (props) => {
   const { closeModal } = props;
   // Query Params
   const [searchParams] = useSearchParams();
-  const productId = searchParams.get("productId");
+  const productURL = searchParams.get("product");
 
   const [generateOTP, { isLoading: generateOTPLoading }] =
     useGenerateOTPMutation();
 
   const { selectedProduct, getUpTo } = useSelector((state) => state.deductions);
-  // console.log("selectedProdDetails", selectedProduct);
+  console.log("selectedProduct Details", selectedProduct);
 
   const [otp, setOtp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -30,8 +30,6 @@ const OtpGenerator = (props) => {
   // Slice Data
   const data = useSelector((state) => state.deductions);
   // console.log("useSelector from OTP", laptopSlice, data);
-
-  // const laptopDesktop = ["laptop", "desktop"];
 
   const navigate = useNavigate();
 
@@ -74,7 +72,11 @@ const OtpGenerator = (props) => {
 
       // Until OTP is applied
       toast.success("Success..!");
-      navigate(`/sell/deductions/finalPrice?productId=${productId}`);
+      const categoryURL = selectedProduct.category.uniqueURL;
+      const brandURL = selectedProduct.brand.uniqueURL;
+      navigate(
+        `/sell/deductions/finalPrice?p=${productURL}&c=${categoryURL}&b=${brandURL}`
+      );
     } else if (otpGenerated.data.message.includes("Exceeded")) {
       // toast.error("Exceeded OTP limit. Try again later.");
       toast.error("Exceeded limit. Try again later.");
@@ -92,7 +94,7 @@ const OtpGenerator = (props) => {
     if (Number(enteredOtp) === actualOtp) {
       setVerificationStatus("Success! OTP verified.");
 
-      navigate(`/sell/deductions/finalPrice?productId=${productId}`);
+      navigate(`/sell/deductions/finalPrice?p=${productURL}`);
     } else {
       toast.error("Wrong OTP. Enter correct OTP number!.");
       setVerificationStatus("Error! OTP verification failed.");
@@ -218,7 +220,7 @@ const OtpGenerator = (props) => {
                     <label htmlFor="otpInput" className="text-sm font-semibold">
                       Verify OTP:
                     </label>
-                    <input
+                    <inputÞ
                       type="text"
                       id="otpInput"
                       value={enteredOtp}

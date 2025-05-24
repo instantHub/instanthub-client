@@ -41,16 +41,13 @@ function reducer(state, action) {
 }
 
 const ServicesList = () => {
-  const { data: servicesData, isLoading: serviceDataLoading } =
-    useGetServicesQuery();
+  const { data: servicesData } = useGetServicesQuery();
   console.log("servicesData", servicesData);
 
   // console.log("servicesData", servicesData);
 
-  const [deleteService, { isLoading: deleteServiceLoading }] =
-    useDeleteServiceMutation();
-  const [updateService, { isLoading: updateServiceLoading }] =
-    useUpdateServiceMutation();
+  const [deleteService] = useDeleteServiceMutation();
+  const [updateService] = useUpdateServiceMutation();
 
   const [state, dispatch] = useReducer(reducer, initialState);
   // console.log("Reducer State :-", state);

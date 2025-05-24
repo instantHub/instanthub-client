@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import { ROUTES } from "@routes";
+import { slugify } from "@utils/general/slugify";
 
 const initialState = {
   category: "",
@@ -168,8 +169,11 @@ const CreateCategory = () => {
                 name="uniqueURL"
                 value={uniqueURL}
                 onChange={(e) => {
-                  setUniqueURL(e.target.value);
-                  dispatch({ type: e.target.name, value: e.target.value });
+                  setUniqueURL(slugify(e.target.value));
+                  dispatch({
+                    type: e.target.name,
+                    value: slugify(e.target.value),
+                  });
                 }}
                 className=" border p-2 rounded-sm max-md:p-1"
                 placeholder="Enter Unique URL"

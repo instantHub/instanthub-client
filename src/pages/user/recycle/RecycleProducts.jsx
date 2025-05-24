@@ -6,13 +6,16 @@ import { BsSearch } from "react-icons/bs";
 import ProductCard from "@components/user/ProductCard";
 import Loading from "@components/user/loader/Loading";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
-import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import SeriesButton from "@components/user/SeriesButton";
+import RecycleBreadcrumbs from "@components/user/breadcrumbs/RecycleBreadcrumbs";
+import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
+import { ROUTES } from "../../../routes";
 
 const RecycleProducts = () => {
-  const { brandId } = useParams();
+  const { brandURL } = useParams();
+  // console.log("brandURL", brandURL);
 
-  const { data: brandSeries } = useGetBrandSeriesQuery(brandId);
+  const { data: brandSeries } = useGetBrandSeriesQuery(brandURL);
 
   const [seriesAction, setSeriesAction] = useState({
     showSeries: false,
@@ -27,7 +30,7 @@ const RecycleProducts = () => {
 
   // Get Products by Brand
   const { data: productsData, isLoading: productsLoading } =
-    useGetProductsQuery({ brandId, search });
+    useGetProductsQuery({ brandUniqueURL: brandURL, search });
 
   // console.log("productsData", productsData);
 
@@ -98,7 +101,7 @@ const RecycleProducts = () => {
 
       <div
         className={`${
-          displayedSeries.length > 0 ? "pt-7 max-sm:py-2" : "pt-5 max-sm:pt-0"
+          displayedSeries?.length > 0 ? "pt-7 max-sm:py-2" : "pt-5 max-sm:pt-0"
         } w-4/5 max-2sm:w-[90%] mx-auto `}
       >
         {/* Search Bar */}
@@ -125,27 +128,20 @@ const RecycleProducts = () => {
           Recycle your {`${brand?.name} ${category?.name}`} and get Instant Cash
         </p>
 
-        <BreadCrumbLinks
-          recycle={true}
-          brands={{
-            link: `/recycle-categories/recycle-brands/${category?.id}`,
-            label: `Recycle ${category?.name}`,
-          }}
-          products={{
-            link: ``,
-            label: `Recycle ${brand?.name} ${category?.name}`,
-            isLast: true,
-          }}
-        />
+        <RecycleBreadcrumbs />
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {filteredProducts
-            .filter((product) => product.status.toLowerCase() !== "blocked")
+            ?.filter((product) => product.status.toLowerCase() !== "blocked")
             .map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
-                URL="/recycle-categories/recycle-brands/recycle-productDetails"
+                // URL={`/recycle-categories/recycle-brands/recycle-productDetails/${product.uniqueURL}?b=${product.brand.uniqueURL}`}
+                URL={`${generatePathWithParams(
+                  ROUTES.user.recycleProductDetails,
+                  product.uniqueURL
+                )}?b=${product.brand.uniqueURL}`}
               />
             ))}
         </div>

@@ -20,6 +20,7 @@ import SubmitForm from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
+import { useGetProductDetailsQuery } from "../../../features/api/productsApi";
 
 // Create the Context
 const StateContext = createContext();
@@ -98,10 +99,15 @@ function reducer(state, action) {
 
 const ProductFinalPrice = () => {
   const [searchParams] = useSearchParams();
-  const productId = searchParams.get("productId");
+  const productURL = searchParams.get("p");
+  const categoryURL = searchParams.get("c");
+  const brandURL = searchParams.get("b");
   const navigate = useNavigate();
 
-  console.log("productId", productId);
+  const { data: productDetails, isLoading } =
+    useGetProductDetailsQuery(productURL);
+
+  console.log("product url from params", productURL);
 
   const { data: couponsData } = useGetCouponQuery();
 
@@ -111,6 +117,7 @@ const ProductFinalPrice = () => {
   const selectedProductData = useSelector((state) => state.deductions);
   const { selectedProduct, getUpTo } = selectedProductData;
   console.log("selectedProductData", selectedProductData);
+  console.log("selectedProduct", selectedProduct);
 
   const [formData, setFormData] = useState();
   console.log("formData", formData);
@@ -217,7 +224,12 @@ const ProductFinalPrice = () => {
 
     setFormData({
       ...formData,
-      productId,
+      productId: selectedProduct.id,
+      uniqueURLs: {
+        category: categoryURL,
+        brand: brandURL,
+        product: productURL,
+      },
       productName: selectedProduct?.name,
       productBrand: selectedProduct?.brand?.name,
       productCategory: selectedProduct?.category?.name,
@@ -230,8 +242,13 @@ const ProductFinalPrice = () => {
 
   // UseEffect to handle page refresh
   useEffect(() => {
-    if (handlePageRefresh())
-      navigate(generatePathWithParams(ROUTES.user.productDetails, productId));
+    if (handlePageRefresh()) {
+      const location = localStorage.getItem("location");
+
+      navigate(`/${location}/${categoryURL}/${brandURL}/${productURL}`, {
+        replace: true,
+      });
+    }
 
     completeFinalData();
   }, [selectedProductData]);
@@ -264,7 +281,7 @@ const ProductFinalPrice = () => {
             selectedProduct={selectedProduct}
             getUpTo={getUpTo}
             setShowLocation={setShowLocation}
-            productId={productId}
+            productId={selectedProduct.id}
           />
 
           {/* Right */}
@@ -379,7 +396,7 @@ const ProductPricingContainer = ({
       {/* Recalculate Button */}
       <div className="flex w-full justify-end mt-5">
         <Link
-          to={`/sell/deductions?productId=${selectedProduct?.id}&variant=${getUpTo.variantName}`}
+          to={`/sell/deductions?product=${selectedProduct?.uniqueURL}&variant=${getUpTo.variantName}`}
         >
           <button className="px-2 border-b rounded">Recalculate</button>
         </Link>
@@ -434,7 +451,7 @@ const ProductPricingContainer = ({
             </button>
           ) : (
             ["Laptop", "Mobile"].includes(selectedProduct.category.name) && (
-              <RecycleProduct productId={productId} />
+              <RecycleProduct productId={selectedProduct.uniqueURL} />
             )
           )}
         </div>
@@ -549,15 +566,3 @@ const CouponModal = ({ submitCoupon }) => {
     </div>
   );
 };
-
-// Old handlePageRefresh
-{
-  // const handlePageRefresh = () => {
-  //   if (selectedProduct.name == "") {
-  //     navigate(generatePathWithParams(ROUTES.user.productDetails, productId));
-  //   } else if (Object.keys(selectedProductData.singleDeductions).length < 1) {
-  //     if (selectedProduct.category.name === "Desktop") return;
-  //     navigate(generatePathWithParams(ROUTES.user.productDetails, productId));
-  //   }
-  // };
-}

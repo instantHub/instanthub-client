@@ -7,7 +7,7 @@ export const seriesApi = baseApi.injectEndpoints({
       providesTags: ["Series"],
     }),
     getBrandSeries: build.query({
-      query: (brandId) => `/api/series/${brandId}`,
+      query: (brandUniqueURL) => `/api/series/${brandUniqueURL}`,
       // providesTags: ["Brands"],
       providesTags: ["Series"],
     }),

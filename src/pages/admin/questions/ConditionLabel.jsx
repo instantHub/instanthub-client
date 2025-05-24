@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useGetConditionsQuery } from "@api/conditionsApi";
 import {
   useCreateConditionLabelsMutation,
@@ -16,7 +16,7 @@ import { ROUTES } from "@routes";
 
 const CreateConditionLabels = () => {
   const { data: categoryData, isLoading: categoryLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
 

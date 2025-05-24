@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useGetAllBrandQuery } from "@api/brandsApi";
 import { Link } from "react-router-dom";
 import { filterCategory } from "@features/adminSlices/filterSlice";
@@ -11,12 +11,9 @@ const BrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
 
   const { data: categoryData, isLoading: categoryDataLoading } =
-    useGetCategoryQuery();
-
-  // const [selectedCategory, setSelectedCategory] = useState("");
+    useGetCategoriesQuery();
 
   const handleCategoryChange = (e) => {
-    // setSelectedCategory(e.target.value);
     dispatch(filterCategory({ category: e.target.value, from: "brandsList" }));
   };
 

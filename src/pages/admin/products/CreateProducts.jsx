@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import {
   useCreateProductMutation,
   useUploadProductImageMutation,
@@ -11,6 +11,7 @@ import { SubmitButton } from "@components/admin/SubmitButton";
 // import ListButton from "@components/ListButton";
 import CardHeader from "@components/admin/CardHeader";
 import { ROUTES } from "@routes";
+import { slugify } from "@utils/general/slugify";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -25,7 +26,7 @@ const CreateProducts = () => {
   const [createProduct, { isLoading: productCreationLoading }] =
     useCreateProductMutation();
   const { data: categoryData, isLoading: categoryLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   const { data: BrandData, isLoading: BrandLoading } = useGetAllBrandQuery();
 
   const [selectedSeries, setSelectedSeries] = useState("");
@@ -40,8 +41,6 @@ const CreateProducts = () => {
   //   console.log("series from products", seriesData);
   // }
   console.log("selected series from products", selectedSeries, seriesYes);
-
-  let productId = undefined;
 
   // VARIANTS
   const [variants, setVariants] = useState([{ name: "", price: "" }]);
@@ -61,8 +60,6 @@ const CreateProducts = () => {
     newVariants.splice(index, 1);
     setVariants(newVariants);
   };
-
-  // console.log("variants", variants);
 
   // File handler
   const uploadFileHandler = async () => {
@@ -116,7 +113,6 @@ const CreateProducts = () => {
       const productCreated = await createProduct(
         JSON.stringify(productsData)
       ).unwrap();
-      // productId = product.id;
       console.log(productCreated);
       if (
         !productCreated.success &&
@@ -165,20 +161,6 @@ const CreateProducts = () => {
   return (
     <div className="flex px-[2%] pt-[2%]">
       <div className="grow">
-        {/* <div className="flex justify-between items-center">
-          <h1 className="bold text-[1.4rem] mb-2">Create Product</h1>
-          <div className="flex gap-2">
-            <div className="flex items-center">
-              <h2>Home </h2>
-              <h2 className="pl-1"> / Add Products</h2>
-            </div>
-            <ListButton
-              location={ROUTES.admin.productsList}
-              text={"Products List"}
-            />
-          </div>
-        </div> */}
-
         <CardHeader
           location={ROUTES.admin.productsList}
           text="Add Products"
@@ -188,7 +170,6 @@ const CreateProducts = () => {
         <div className="flex justify-center max-md:flex-col">
           <div className="w-[70%] max-md:w-full grow-1 bg-white border rounded-md shadow-lg">
             <form
-              action=""
               method="post"
               className="flex flex-col gap-4  p-5 "
               onSubmit={handleSubmit}
@@ -331,7 +312,7 @@ const CreateProducts = () => {
                     placeholder="Enter Unique URL"
                     value={uniqueURL}
                     onChange={(e) => {
-                      setUniqueURL(e.target.value);
+                      setUniqueURL(slugify(e.target.value));
                     }}
                     required
                   />
@@ -477,13 +458,6 @@ const CreateProducts = () => {
           </div>
         </div>
       </div>
-
-      {/* {!categoryLoading &&
-        categoryData.some(
-          (cat) => cat.id === selectedCategory && cat.name !== "Mobile"
-        ) && (
-         
-        )} */}
     </div>
   );
 };

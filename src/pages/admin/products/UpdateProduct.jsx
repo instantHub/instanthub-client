@@ -5,12 +5,13 @@ import {
   useUploadProductImageMutation,
 } from "@api/productsApi";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import BackButton from "@components/BackButton";
 import CardHeader from "@components/admin/CardHeader";
 import Loading from "@components/user/loader/Loading";
 import { ROUTES } from "@routes";
+import { slugify } from "../../../utils/general/slugify";
 
 const initialState = {
   category: "",
@@ -65,18 +66,19 @@ function reducer(state, action) {
 }
 
 const UpdateProduct = () => {
-  const { productId } = useParams();
+  const { productId, productSlug } = useParams();
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log("Reducer state:", state);
+  console.log("Reducer state:", state, productSlug);
 
-  const [uploadProductImage, { isLoading: uploadLoading }] =
-    useUploadProductImageMutation();
+  const [uploadProductImage] = useUploadProductImageMutation();
   const { data: productData, isLoading: productDataLoading } =
-    useGetProductDetailsQuery(productId);
+    useGetProductDetailsQuery(productSlug);
+  console.log("productData", productData);
   const [updateProduct, { isLoading: updateProductLoading }] =
     useUpdateProductMutation();
 
+  const navigate = useNavigate();
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
 
@@ -118,6 +120,7 @@ const UpdateProduct = () => {
     // console.log("after imageURL", state.imageURL);
 
     const updatedProductData = {
+      productID: productData.id,
       name: state.prodName,
       uniqueURL: state.uniqueURL,
       //   image: imageSelected ? imageSelected : productData.image,
@@ -133,12 +136,39 @@ const UpdateProduct = () => {
 
     try {
       const updatedProduct = await updateProduct({
-        productId,
+        productSlug,
         data: updatedProductData,
       }).unwrap();
 
       // productId = product.id;
-      console.log(updatedProduct);
+      console.log("updatedProduct", updatedProduct);
+      navigate(-1);
+      // productData = updateProduct;
+
+      // Reducer
+      // const extractedVariants = updatedProduct?.variants.map((variant) => ({
+      //   variantId: variant.id,
+      //   name: variant.name,
+      //   price: variant.price,
+      // }));
+
+      // dispatch({
+      //   type: "initial",
+      //   value: {
+      //     prodName: updatedProduct?.name,
+      //     category: updatedProduct?.category.id,
+      //     brand: updatedProduct?.brand.id,
+      //     uniqueURL: updatedProduct?.uniqueURL,
+      //     imageSelected: updatedProduct?.image,
+      //     status: updatedProduct?.status,
+      //     newImgSelected: false,
+      //     variants: extractedVariants,
+      //     oldVariants: extractedVariants,
+      //     variantLen: extractedVariants?.length,
+      //     updatedVriantLen: extractedVariants?.length,
+      //   },
+      // });
+
       if (
         !updatedProduct.success &&
         updatedProduct.data === "Duplicate productName"
@@ -182,8 +212,8 @@ const UpdateProduct = () => {
         newImgSelected: false,
         variants: extractedVariants,
         oldVariants: extractedVariants,
-        variantLen: extractedVariants.length,
-        updatedVriantLen: extractedVariants.length,
+        variantLen: extractedVariants?.length,
+        updatedVriantLen: extractedVariants?.length,
       },
     });
   }, [productData]);
@@ -289,7 +319,10 @@ const UpdateProduct = () => {
                     placeholder="Enter Unique URL"
                     value={state.uniqueURL}
                     onChange={(e) => {
-                      dispatch({ type: "uniqueURL", value: e.target.value });
+                      dispatch({
+                        type: "uniqueURL",
+                        value: slugify(e.target.value),
+                      });
                     }}
                     required
                   />
@@ -316,12 +349,6 @@ const UpdateProduct = () => {
                           });
                         }}
                       />
-
-                      {/* {state.imageSelected && (
-                        <p className="absolute mt-[3.8rem]">
-                          Selected file: {state.imageSelected}
-                        </p>
-                      )} */}
                     </div>
                   </div>
                 </div>
@@ -525,7 +552,7 @@ const VariantSection = ({ title, variants, dispatch, isEditable }) => {
   return (
     <div className="m-2 flex flex-col items-center justify-center">
       <h3 className="text-xl inline-block">{title}:</h3>
-      {variants.map((variant, index) => (
+      {variants?.map((variant, index) => (
         <div
           key={index}
           className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"

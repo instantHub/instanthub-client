@@ -8,7 +8,6 @@ import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 
 const BrandCard = ({ data }) => {
-  console.log(data);
   const navigate = useNavigate();
   const [deleteBrand] = useDeleteBrandMutation();
 
@@ -74,6 +73,13 @@ const BrandCard = ({ data }) => {
               <span className={`${style.boldness}`}>{data.name}</span>
             </div>
           </div>
+        </div>
+        <div className="w-full p-2 flex max-md:flex-col justify-center items-center gap-1">
+          <p>Unique URL: </p>
+
+          <span className={`${style.boldness} text-[16px] max-sm:text-sm`}>
+            {data.uniqueURL}
+          </span>
         </div>
 
         {/* Edit or Delete */}

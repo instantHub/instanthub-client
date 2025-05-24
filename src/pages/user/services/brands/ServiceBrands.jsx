@@ -7,12 +7,12 @@ import { clearServiceProblems } from "@features/userSlices/serviceProblemsSlice"
 import { useDispatch } from "react-redux";
 import Loading from "@components/user/loader/Loading";
 import ServiceContent from "@components/user/static/services/ServiceContent";
-import ServiceItemGrid from "./ServiceItemGrid";
-import ServiceHeaderImage from "./ServiceHeaderImage";
+import ServiceItemGrid from "../ServiceItemGrid";
+import ServiceHeaderImage from "../ServiceHeaderImage";
 
 const ServiceBrands = () => {
-  const { serviceCategoryId } = useParams();
-  // console.log("serviceCategoryId", serviceCategoryId);
+  const { categoryUniqueURL } = useParams();
+  console.log("categoryUniqueURL", categoryUniqueURL);
 
   const dispatch = useDispatch();
 
@@ -22,21 +22,19 @@ const ServiceBrands = () => {
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceBrands, setServiceBrand] = useState("");
   console.log("serviceCategory", serviceCategory);
-  // console.log("serviceBrands", serviceBrands);
+  console.log("serviceBrands", serviceBrands);
 
   useEffect(() => {
     dispatch(clearServiceProblems());
-    if (!servicesDataLoading) {
-      const sc = servicesData.serviceCategories;
-      // console.log(sc, "sc");
-      const serviceFound = sc.find((s) => s._id === serviceCategoryId);
-      setServiceCategory(serviceFound);
+    if (servicesDataLoading) return;
+    const sc = servicesData.serviceCategories;
+    const serviceFound = sc.find((s) => s.uniqueURL === categoryUniqueURL);
+    setServiceCategory(serviceFound);
 
-      const serviceBrandsFound = servicesData.serviceBrands.filter(
-        (sc) => sc.serviceCategoryId._id === serviceCategoryId
-      );
-      setServiceBrand(serviceBrandsFound);
-    }
+    const serviceBrandsFound = servicesData.serviceBrands.filter(
+      (sc) => sc.serviceCategoryId.uniqueURL === categoryUniqueURL
+    );
+    setServiceBrand(serviceBrandsFound);
   }, [servicesData]);
 
   useEffect(() => {

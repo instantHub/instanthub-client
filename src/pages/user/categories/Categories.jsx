@@ -1,13 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useGetCategoryQuery } from "@api/categoriesApi";
-import ItemGrid from "@components/user/ItemGrid";
-import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
-import { ROUTES } from "@routes";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 
 const Categories = () => {
   const { data: categories = [], isLoading: categoriesLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
 
   return (
     <div className="w-4/5 max-sm:w-[92%] mx-auto">
@@ -35,16 +32,28 @@ const Categories = () => {
           </>
         ) : (
           <>
-            <ItemGrid
-              items={categories}
-              linkPath={removeLastParamFromPath(ROUTES.user.brands)}
-              displayBig={true}
-            />
+            {categories?.map((item) => (
+              <div className="flex justify-center" key={item.id}>
+                <Link
+                  to={`${localStorage.getItem("location")}/${item.uniqueURL}`}
+                  className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
+                              transition ease-in-out duration-500 w-32 h-32 max-sm:w-24 max-sm:h-24
+                            }`}
+                >
+                  <img
+                    src={import.meta.env.VITE_APP_BASE_URL + item?.image}
+                    alt={item?.name || "Item"}
+                    className="justify-center"
+                    loading="lazy" // Native lazy loading
+                  />
+                </Link>
+              </div>
+            ))}
 
             {/* RECYCLE Category */}
             <div className="flex justify-center">
               <Link
-                to={`/recycle-categories`}
+                to={`/recycle/categories`}
                 className="w-32 h-32 max-sm:w-24 p-4 max-sm:h-24 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
               >
                 <img

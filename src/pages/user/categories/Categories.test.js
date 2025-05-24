@@ -1,12 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import Categories from "./Categories";
 
 // Mock the API hook
 jest.mock("@features/api", () => ({
-  useGetCategoryQuery: jest.fn(),
+  useGetCategoriesQuery: jest.fn(),
 }));
 
 // Mock subcomponents
@@ -28,7 +28,7 @@ const renderComponent = () =>
 
 describe("Categories Component", () => {
   test("renders loading state when categories are loading", () => {
-    useGetCategoryQuery.mockReturnValue({
+    useGetCategoriesQuery.mockReturnValue({
       data: null,
       categoriesLoading: true,
     });
@@ -44,7 +44,7 @@ describe("Categories Component", () => {
       { id: 2, name: "Category 2" },
     ];
 
-    useGetCategoryQuery.mockReturnValue({
+    useGetCategoriesQuery.mockReturnValue({
       data: mockCategories,
       categoriesLoading: false,
     });
@@ -61,7 +61,7 @@ describe("Categories Component", () => {
   });
 
   test("renders the recycle link correctly", () => {
-    useGetCategoryQuery.mockReturnValue({
+    useGetCategoriesQuery.mockReturnValue({
       data: [],
       categoriesLoading: false,
     });
@@ -74,7 +74,7 @@ describe("Categories Component", () => {
   });
 
   test("does not render ItemGrid when categories data is null", () => {
-    useGetCategoryQuery.mockReturnValue({
+    useGetCategoriesQuery.mockReturnValue({
       data: null,
       categoriesLoading: false,
     });
@@ -85,7 +85,7 @@ describe("Categories Component", () => {
   });
 
   test("displays the heading correctly", () => {
-    useGetCategoryQuery.mockReturnValue({
+    useGetCategoriesQuery.mockReturnValue({
       data: [],
       categoriesLoading: false,
     });

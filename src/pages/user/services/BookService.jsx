@@ -70,8 +70,8 @@ const formSchema = z
   });
 
 export default function BookService() {
-  const { serviceId } = useParams();
-  // console.log("serviceId", serviceId);
+  const { serviceId, serviceUniqueURL } = useParams();
+  console.log("serviceId serviceUniqueURL", serviceId, serviceUniqueURL);
 
   const [searchParams] = useSearchParams();
   const st = searchParams.get("st");
@@ -116,28 +116,28 @@ export default function BookService() {
 
   //   UseEffect to Set Service
   useEffect(() => {
-    // console.log("UseEffect of BookService");
-
     if (servicesDataLoading) return;
 
     let service;
     if (st === "ds") {
       service = servicesData.serviceCategories.find(
-        (sc) => sc._id === serviceId
+        (sc) => sc.uniqueURL === serviceUniqueURL
       );
       // console.log("direct service", service);
 
       setSelectedService(service);
       setServiceType((prev) => ({ ...prev, directService: true }));
     } else if (st === "b") {
-      service = servicesData.serviceBrands.find((sb) => sb._id === serviceId);
+      service = servicesData.serviceBrands.find(
+        (sb) => sb.serviceCategoryId.uniqueURL === serviceUniqueURL
+      );
       // console.log("brand service", service);
 
       setSelectedService(service);
       setServiceType((prev) => ({ ...prev, brandsService: true }));
     } else if (st === "ss") {
       service = servicesData.serviceSubProducts.find(
-        (sc) => sc._id === serviceId
+        (sc) => sc.uniqueURL === serviceUniqueURL
       );
       // console.log("sub service", service);
 
@@ -163,9 +163,10 @@ export default function BookService() {
 
   // UseEffect to handle page refresh
   useEffect(() => {
-    // console.log("!serviceProblemsData", serviceProblemsData.length > 0);
     if (st === "b" && serviceProblemsData.length <= 0) {
-      navigate(`/services/serviceBrandProblems/${serviceId}`);
+      const location = localStorage.getItem("location");
+
+      navigate(`/${location}/services/brands/problems/${serviceUniqueURL}`);
     }
   }, [serviceProblemsData]);
 

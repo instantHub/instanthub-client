@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import {
   useGetConditionsQuery,
   useDeleteConditionMutation,
@@ -20,7 +20,7 @@ const ConditionsList = () => {
     useGetConditionsQuery();
 
   const { data: categories, isLoading: categoriesLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   const [deleteCondition, { isLoading: deleteLoading }] =
     useDeleteConditionMutation();
 

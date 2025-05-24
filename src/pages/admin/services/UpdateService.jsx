@@ -5,6 +5,7 @@ import {
 } from "@api/servicesApi";
 import { useDeleteImageMutation } from "@api/generalApi";
 import { toast } from "react-toastify";
+import { slugify } from "../../../utils/general/slugify";
 
 function UpdateService(props) {
   const [updateService, { isLoading: updateServiceLoading }] =
@@ -98,6 +99,7 @@ function UpdateService(props) {
       if (updateData.serviceFrom === "serviceSubProduct") {
         setFormData({
           name: updateData.serviceToUpdate.name,
+          uniqueURL: updateData.serviceToUpdate.uniqueURL,
           image: updateData.serviceToUpdate.image,
           description: updateData.serviceToUpdate.description,
           discount: updateData.serviceToUpdate.discount,
@@ -107,6 +109,7 @@ function UpdateService(props) {
       } else {
         setFormData({
           name: updateData.serviceToUpdate.name,
+          uniqueURL: updateData.serviceToUpdate.uniqueURL,
           image: updateData.serviceToUpdate.image,
           inspectionCharges: updateData.serviceToUpdate.inspectionCharges || 0,
           status: updateData.serviceToUpdate.status || "Active",
@@ -149,6 +152,24 @@ function UpdateService(props) {
                       setFormData({
                         ...formData,
                         name: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                {/* Unique URL */}
+                <div className="w-full max-sm:col-span-2 grid grid-cols-2 max-sm:grid-cols-3 place-items-center items-center gap-2">
+                  <label className="text-sm col-span-1">Unique URL:</label>
+                  <input
+                    type="text"
+                    name="uniqueURL"
+                    className="max-sm:col-span-2 border py-1 px-2 rounded text-sm"
+                    placeholder="Enter uniqueURL"
+                    value={formData.uniqueURL}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        uniqueURL: slugify(e.target.value),
                       })
                     }
                   />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useGetOrdersListQuery } from "@api/ordersApi";
 
 import OrderCard from "./OrderCard";
@@ -11,8 +11,7 @@ const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =
     useGetOrdersListQuery();
 
-  const { data: categoryData, isLoading: categoryDataLoading } =
-    useGetCategoryQuery();
+  const { data: categoryData } = useGetCategoriesQuery();
 
   const [categoryImages, setCategoryImages] = useState({});
 

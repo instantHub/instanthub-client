@@ -6,4 +6,6 @@ const LAPTOP = "Laptop";
 
 const LAPTOP_DESKTOP = ["laptop", "desktop"];
 
-export { ORDER_EMAIL_MSG, MOBILE, LAPTOP, LAPTOP_DESKTOP };
+const MAX_LABEL_LENGTH = 20;
+
+export { ORDER_EMAIL_MSG, MOBILE, LAPTOP, LAPTOP_DESKTOP, MAX_LABEL_LENGTH };

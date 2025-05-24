@@ -37,7 +37,9 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
   };
 
   function handleEdit() {
-    navigate(generatePathWithParams(ROUTES.admin.updateProduct, data.id));
+    navigate(
+      generatePathWithParams(ROUTES.admin.updateProduct, data.uniqueURL)
+    );
   }
   function openDeleteModel() {
     setIsModalOpen(true);
@@ -179,7 +181,7 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
                   {deductionSelected[data.id] && (
                     <Link
                       to={`/admin/products/product-questions/${
-                        data.id
+                        data.uniqueURL
                       }?variant=${deductionSelected[data.id]}`}
                     >
                       <button className={`${style.priceDropBtn}`}>
@@ -191,14 +193,17 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
               </div>
             ) : (
               <Link
-                to={`/admin/products/product-questions/${data.id}?variant=${
-                  deductionSelected[data.id]
-                }`}
+                to={`/admin/products/product-questions/${data.uniqueURL}?t=${data.category.name}`}
               >
                 <button className={`${style.priceDropBtn}`}>Price Drop</button>
               </Link>
             )}
           </div>
+        </div>
+
+        <div className="m-2 text-[14px]">
+          Uniqur URL:
+          <strong className="text-[16px]"> {data.uniqueURL}</strong>
         </div>
 
         {/* Edit or Delete */}

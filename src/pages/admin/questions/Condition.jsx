@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useCreateConditionsMutation } from "@api/conditionsApi";
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
@@ -11,7 +11,7 @@ import { ROUTES } from "@routes";
 
 function Condtions() {
   const { data: categoryData, isLoading: categoryLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   const [createConditions, { isLoading: createConditonLoading }] =
     useCreateConditionsMutation();
 

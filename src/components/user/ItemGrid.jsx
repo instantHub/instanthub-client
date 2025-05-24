@@ -2,17 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ItemGrid = ({ items, linkPath, displayBig = false }) => {
+  console.log("location from localst", localStorage.getItem("location"));
   return (
     <>
       {items?.map((item) => (
         <div className="flex justify-center" key={item.id}>
           <Link
-            to={`${linkPath}/${item.id}`}
-            // to={determinePath(item)}
-            // className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl
-            //     transition ease-in-out duration-500 ${
-            //       displayBig ? `w-32 h-32` : `w-28 h-28`
-            //     }`}
+            to={`${linkPath}/${item.uniqueURL}`}
             className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
                 transition ease-in-out duration-500 ${
                   displayBig
@@ -26,8 +22,6 @@ const ItemGrid = ({ items, linkPath, displayBig = false }) => {
               className="justify-center"
               loading="lazy" // Native lazy loading
             />
-            {/* Optional: display item name */}
-            {/* <p className="size-4 pt-1">{item?.name}</p> */}
           </Link>
         </div>
       ))}

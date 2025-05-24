@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { Helmet } from "react-helmet-async";
 import ItemGrid from "@components/user/ItemGrid";
 import Loading from "@components/user/loader/Loading";
@@ -9,7 +9,7 @@ import { ROUTES } from "@routes";
 
 const RecycleCategories = () => {
   const { data: categories, isLoading: categoriesLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
 
   const [filteredCategories, setFilteredCategories] = useState(null);
 

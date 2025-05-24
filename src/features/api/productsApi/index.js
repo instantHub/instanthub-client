@@ -13,13 +13,14 @@ export const productsApi = baseApi.injectEndpoints({
       providesTags: ["Products"],
     }),
     getProducts: build.query({
-      query: ({ brandId, search }) => ({
-        url: `/api/products/${brandId}?search=${search}`,
+      query: ({ brandUniqueURL, search }) => ({
+        url: `/api/products/${brandUniqueURL}?search=${search}`,
       }),
       providesTags: ["Products"],
     }),
     getProductDetails: build.query({
-      query: (prodId) => `/api/products/product-details/${prodId}`,
+      query: (productUniqueURL) =>
+        `/api/products/product-details/${productUniqueURL}`,
       providesTags: ["Products"],
     }),
     getProductQuestions: build.query({
@@ -45,8 +46,8 @@ export const productsApi = baseApi.injectEndpoints({
       }),
     }),
     updateProduct: build.mutation({
-      query: ({ productId, data }) => ({
-        url: `/api/products/update-product/${productId}`,
+      query: ({ productSlug, data }) => ({
+        url: `/api/products/update-product/${productSlug}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

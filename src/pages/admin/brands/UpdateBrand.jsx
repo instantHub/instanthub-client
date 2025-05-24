@@ -9,19 +9,22 @@ import { toast } from "react-toastify";
 import CardHeader from "@components/admin/CardHeader";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import { ROUTES } from "@routes";
+import {
+  useGetBrandQuery,
+  useGetSingleBrandQuery,
+} from "../../../features/api/brandsApi";
+import Loading from "../../../components/user/loader/Loading";
+import { slugify } from "../../../utils/general/slugify";
 
 function UpdateBrand() {
   const { brandId } = useParams();
-  //   console.log(brandId);
 
-  const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
+  const { data: brandsData, isLoading } = useGetSingleBrandQuery(brandId);
+
   const [newImgSelected, setNewImgSelected] = useState(false);
-  const [uploadBrandImage, { isLoading: uploadLoading }] =
-    useUploadBrandImageMutation();
-  const [
-    updateBrand,
-    { isLoading: updateBrandLoading, isError: updateBrandError },
-  ] = useUpdateBrandMutation();
+  const [uploadBrandImage] = useUploadBrandImageMutation();
+  const [updateBrand, { isLoading: updateBrandLoading }] =
+    useUpdateBrandMutation();
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
@@ -29,27 +32,23 @@ function UpdateBrand() {
   const [formData, setFormData] = useState({
     category: "",
     name: "",
+    uniqueURL: "",
     image: "",
   });
 
-  let brandToUpdate;
-  if (!brandsLoading) {
-    brandToUpdate = brandsData.filter((brand) => brand.id == brandId);
-  }
-
   useEffect(() => {
     if (brandsData) {
-      console.log("useEffect", brandToUpdate);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        category: brandToUpdate[0].category.id,
-        name: brandToUpdate[0].name,
-        image: brandToUpdate[0].image,
+        category: brandsData.category.id,
+        name: brandsData.name,
+        uniqueURL: brandsData.uniqueURL,
+        image: brandsData.image,
       }));
     }
   }, [brandsData]);
 
-  console.log(formData);
+  console.log("formData", formData);
 
   // File handler
   const uploadFileHandler = async () => {
@@ -100,6 +99,8 @@ function UpdateBrand() {
     // console.log("handleSubmit", formData);
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <div className="flex flex-col mt-10 w-[96%] mx-auto">
       <CardHeader
@@ -112,61 +113,68 @@ function UpdateBrand() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
           <div className="flex gap-2 items-center">
             <span className="text-xl opacity-75 max-sm:text-lg">
-              Update {brandToUpdate[0]?.category?.name} Brand
+              Update {brandsData?.category?.name} Brand
             </span>
           </div>
           <hr />
           <div className="grid grid-cols-2 gap-2 w-full max-lg:grid-cols-1">
-            {!brandsLoading && (
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-4">
-                  <label htmlFor="conditioName">Brand Name</label>
-                  <h2
-                    name="conditioName"
-                    className="text-[1.7rem] text-red-700"
-                  >
-                    {brandToUpdate[0].name}
-                  </h2>
-                </div>
-                <div className="flex items-center max-sm:flex-col">
-                  <div className="flex w-full max-sm:flex-col">
-                    <label className="">Update Brand Name:</label>
-                    <input
-                      type="text"
-                      name="conditionName"
-                      className="border mx-2 py-1 px-2 rounded text-[15px]"
-                      placeholder="Enter Condition Name"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          name: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="flex items-center grow-0">
-                    <img
-                      src={import.meta.env.VITE_APP_BASE_URL + formData.image}
-                      alt="ConditionLabel"
-                      className="w-[100px] h-[100px] mx-auto "
-                      loading="lazy" // Native lazy loading
-                    />
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          image: e.target.files[0],
-                        });
-                        setNewImgSelected(true);
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
+            <div className="flex items-center gap-4">
+              <label htmlFor="conditioName">Brand Name</label>
+              <h2 name="conditioName" className="text-[1.7rem] text-red-700">
+                {brandsData.name}
+              </h2>
+            </div>
+            <div className="flex max-sm:flex-col">
+              <label className="">Update Brand Name:</label>
+              <input
+                type="text"
+                name="conditionName"
+                className="border mx-2 py-1 px-2 rounded text-[15px]"
+                placeholder="Enter Condition Name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    name: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="flex  max-sm:flex-col">
+              <label className="">Unique URL:</label>
+              <input
+                type="text"
+                name="conditionName"
+                className="border mx-2 py-1 px-2 rounded text-[15px]"
+                placeholder="Enter Condition Name"
+                value={formData.uniqueURL}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    uniqueURL: slugify(e.target.value),
+                  })
+                }
+              />
+            </div>
+            <div className="flex items-center grow-0">
+              <img
+                src={import.meta.env.VITE_APP_BASE_URL + formData.image}
+                alt="ConditionLabel"
+                className="w-[100px] h-[100px] mx-auto "
+                loading="lazy" // Native lazy loading
+              />
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    image: e.target.files[0],
+                  });
+                  setNewImgSelected(true);
+                }}
+              />
+            </div>
           </div>
 
           <div className="w-1/2 mx-auto">

@@ -18,11 +18,12 @@ import { LAPTOP_DESKTOP } from "@utils/user/constants";
 import { ROUTES } from "@routes";
 
 const ProductQuestionsList = () => {
-  const { productId } = useParams();
+  const { productSlug } = useParams();
+  console.log("productSlug", productSlug);
   // Query Params
   const [searchParams] = useSearchParams();
   const selectedVariant = searchParams.get("variant");
-  // console.log("selectedVariant", selectedVariant);
+  console.log("selectedVariant", selectedVariant);
 
   const [selectedDeductions, setSelectedDeductions] = useState(null);
 
@@ -50,7 +51,7 @@ const ProductQuestionsList = () => {
   });
 
   const { data: productDetail, isLoading: productsLoading } =
-    useGetProductDetailsQuery(productId);
+    useGetProductDetailsQuery(productSlug);
 
   const [productData, setProductData] = useState(null);
 
@@ -250,7 +251,7 @@ const ProductQuestionsList = () => {
     event.preventDefault();
     try {
       await updatePriceDrop({
-        productId: productId,
+        productId: productData.id,
         data: productData,
       }).unwrap();
       toast.success("Updated PriceDrops for the Product");
@@ -673,7 +674,7 @@ const ProductQuestionsList = () => {
                 <UpdateSystemConfigurations
                   type={"AllLaptopConfig"}
                   productDetail={productDetail}
-                  productId={productId}
+                  productUniqueURL={productSlug}
                 />
               )}
 
@@ -681,7 +682,7 @@ const ProductQuestionsList = () => {
                 <UpdateSystemConfigurations
                   type={"SingleLaptopConfig"}
                   productDetail={productDetail}
-                  productId={productId}
+                  productUniqueURL={productSlug}
                 />
               )}
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useGetConditionsQuery } from "@api/conditionsApi";
 import {
   useGetConditionLabelsQuery,
@@ -28,7 +28,7 @@ const ConditionLabelsTable = () => {
   const [deleteConditionLabel, { isLoading: deleteLoading }] =
     useDeleteConditionLabelMutation();
   const { data: categories, isLoading: categoriesLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
 
   const filterData = useSelector((state) => state.filter.conditionLabelsList);
   // console.log("filterData", filterData);
