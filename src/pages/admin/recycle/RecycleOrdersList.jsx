@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useGetRecycleOrdersQuery } from "@api/recycleApi";
 import OrderTabs from "@components/admin/OrderTabs";
 import RecycleOrderCard from "./RecycleOrderCard";
@@ -12,7 +12,7 @@ const RecycleOrdersList = () => {
   console.log("recycleOrdersData", recycleOrdersData);
 
   const { data: categoryData, isLoading: categoryDataLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   const [categoryImages, setCategoryImages] = useState({});
 
   const [recycleOrdersDisplaying, setRecycleOrdersDisplaying] = useState({

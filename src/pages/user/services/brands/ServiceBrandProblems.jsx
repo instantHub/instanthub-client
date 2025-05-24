@@ -10,15 +10,19 @@ import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import ServiceContent from "@components/user/static/services/ServiceContent";
 import Loading from "@components/user/loader/Loading";
-import ServiceHeaderImage from "./ServiceHeaderImage";
+import ServiceHeaderImage from "../ServiceHeaderImage";
 
 const ServiceBrands = () => {
-  const { serviceBrandId } = useParams();
+  const { categoryUniqueURL } = useParams();
+  console.log("categoryUniqueURL", categoryUniqueURL);
+
+  const location = localStorage.getItem("location");
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
 
   const [serviceBrand, setServiceBrand] = useState("");
+
   const [serviceProblems, setServiceProblems] = useState("");
 
   const [selectedServiceProblems, setSelectedServiceProblems] = useState([]);
@@ -63,22 +67,20 @@ const ServiceBrands = () => {
   };
 
   useEffect(() => {
-    if (!servicesDataLoading) {
-      const serviceBrands = servicesData.serviceBrands;
-      //   console.log("serviceBrands", serviceBrands);
+    if (servicesDataLoading) return;
 
-      const serviceBrandFound = serviceBrands.find(
-        (sb) => sb._id === serviceBrandId
-      );
-      setServiceBrand(serviceBrandFound);
+    const serviceBrands = servicesData.serviceBrands;
 
-      const serviceProbs = servicesData.serviceProblems.filter(
-        (sp) =>
-          sp?.serviceCategoryId?._id ===
-          serviceBrandFound?.serviceCategoryId?._id
-      );
-      setServiceProblems(serviceProbs);
-    }
+    const serviceBrandFound = serviceBrands.find(
+      (sb) => sb.serviceCategoryId.uniqueURL === categoryUniqueURL
+    );
+    console.log("serviceBrandFound", serviceBrandFound);
+    setServiceBrand(serviceBrandFound);
+
+    const serviceProbs = servicesData.serviceProblems.filter(
+      (sp) => sp?.serviceCategoryId?.uniqueURL === categoryUniqueURL
+    );
+    setServiceProblems(serviceProbs);
   }, [servicesData]);
 
   useEffect(() => {
@@ -100,6 +102,7 @@ const ServiceBrands = () => {
           content="InstantHub, laptop repairs, mobile repairs, painting services, interior designs, pest control services, repair services, maintenance services, instant cash payments, professional services, reliable services, quick repairs, home maintenance"
         />
       </Helmet>
+
       <div className="mt-8 w-4/5 max-sm:w-[90%] mx-auto">
         <div className="mx-0 mb-6">
           <div className="flex items-center gap-1 max-sm:text-xs">
@@ -178,7 +181,6 @@ const ServiceBrands = () => {
                         serviceBrandProblem.image
                       }
                       alt="service problems"
-                      // className="w-full h-full max-sm:w-32 max-sm:h-32"
                       className="w-28 h-28 max-sm:w-20 max-sm:h-20"
                     />
                   </div>
@@ -202,7 +204,10 @@ const ServiceBrands = () => {
           {serviceProblemsData.length > 0 ? (
             // <div className="mx-auto mt-10 bg-secondary py-1 px-8 text-xl text-white rounded">
             <div className="mx-auto mt-10 px-8 text-white bg-gradient-to-r from-secondary to-black/60 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-secondary dark:focus:ring-secondary font-medium rounded-lg text-sm py-2.5 text-center mb-2">
-              <Link to={`/services/book-service/${serviceBrand._id}?st=b`}>
+              {/* <Link to={`/services/book-service/${serviceBrand._id}?st=b`}> */}
+              <Link
+                to={`/${location}/services/${serviceBrand.serviceCategoryId.uniqueURL}?st=b`}
+              >
                 <button>Continue</button>
               </Link>
             </div>

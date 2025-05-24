@@ -11,13 +11,21 @@ import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import SeriesButton from "@components/user/SeriesButton";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
+
+import BreadCrumb from "@components/user/breadcrumbs/Breadcrumbs";
+import { slugify } from "../../../utils/general/slugify";
 
 const Products = () => {
-  const { brandId } = useParams();
+  const { brandId, categoryUniqueURL, brandUniqueURL } = useParams();
+  // console.log(
+  //   "brandId, categorySlug, brandUniqueURL",
+  //   brandId,
+  //   categoryUniqueURL,
+  //   brandUniqueURL
+  // );
 
   const { data: brandSeries, isLoading: seriesLoading } =
-    useGetBrandSeriesQuery(brandId);
+    useGetBrandSeriesQuery(brandUniqueURL);
 
   const [seriesAction, setSeriesAction] = useState({
     showSeries: false,
@@ -31,10 +39,12 @@ const Products = () => {
   const [search, setSearch] = useState("");
 
   // Get Products by Brand
+  // const { data: productsData, isLoading: productsLoading } =
+  //   useGetProductsQuery({ brandId, search });
   const { data: productsData, isLoading: productsLoading } =
-    useGetProductsQuery({ brandId, search });
+    useGetProductsQuery({ brandUniqueURL, search });
 
-  // console.log("productsData", productsData);
+  console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
     setSeriesAction((prevSeries) => ({
@@ -150,18 +160,7 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Home > Cat > Brand */}
-        <BreadCrumbLinks
-          brands={{
-            link: generatePathWithParams(ROUTES.user.brands, category?.id),
-            label: `${category?.name}`,
-          }}
-          products={{
-            link: ``,
-            label: `${brand?.name}`,
-            isLast: true,
-          }}
-        />
+        <BreadCrumb />
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {filteredProducts?.filter(
@@ -178,7 +177,9 @@ const Products = () => {
               <ProductCard
                 key={product.id}
                 product={product}
-                URL={removeLastParamFromPath(ROUTES.user.productDetails)}
+                URL={`${product.uniqueURL}`}
+                // URL={`${slugify(product.uniqueURL)}`}
+                // URL={removeLastParamFromPath(ROUTES.user.productDetails)}
               />
             ))}
         </div>

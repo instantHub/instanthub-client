@@ -21,13 +21,12 @@ import DisplayCondition from "./DisplayCondition";
 const ProductQuestions = () => {
   // Query Params
   const [searchParams] = useSearchParams();
-  const productId = searchParams.get("productId");
+  const product = searchParams.get("product");
   const selectedVariant = searchParams.get("variant");
 
   const dispatch = useDispatch();
 
-  const { data: productsData, isLoading } =
-    useGetProductDetailsQuery(productId);
+  const { data: productsData, isLoading } = useGetProductDetailsQuery(product);
   // console.log("productsData", productsData);
 
   const [deductions, setDeductions] = useState();

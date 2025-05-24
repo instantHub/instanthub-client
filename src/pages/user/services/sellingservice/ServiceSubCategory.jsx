@@ -4,7 +4,7 @@ import { useGetServicesQuery } from "@api/servicesApi";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
-import ServiceHeaderImage from "./ServiceHeaderImage";
+import ServiceHeaderImage from "../ServiceHeaderImage";
 
 const SubServices = () => {
   const { serviceCategoryId } = useParams();

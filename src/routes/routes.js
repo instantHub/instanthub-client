@@ -8,25 +8,48 @@ export const ROUTES = {
     termsConditions: "/terms-conditions",
     termsOfUse: "/terms-of-use",
 
-    brands: "/categories/brands/:catId",
-    products: "/categories/brands/products/:brandId",
-    productDetails: "/categories/brands/productDetails/:prodId",
+    brands: "/:location/:categoryUniqueURL",
+    // brands: "/categories/brands/:slug",
+
+    // products: "/categories/brands/products/:brandId",
+    products: "/:location/:categoryUniqueURL/:brandUniqueURL",
+
+    // productDetails: "/categories/brands/productDetails/:prodId",
+    productDetails:
+      "/:location/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
+
     productDeductions: "/sell/deductions",
     productGenerateOTP: "/sell/deductions/generateOTP",
     productFinalPrice: "/sell/deductions/finalPrice",
 
+    // services: "/services",
+    // serviceSubCategory: "/services/serviceSubCategory/:serviceCategoryId",
+    // serviceSubProducts: "/services/serviceSubProducts/:subServiceId",
+    // serviceBrands: "/services/serviceBrands/:serviceCategoryId",
+    // serviceBrandProblems: "/services/serviceBrandProblems/:serviceBrandId",
+    // bookService: "/services/book-service/:serviceId",
+
     services: "/services",
+    serviceBrands: "/:location/services/brands/:categoryUniqueURL",
+    serviceBrandProblems:
+      "/:location/services/brands/problems/:categoryUniqueURL",
+
     serviceSubCategory: "/services/serviceSubCategory/:serviceCategoryId",
     serviceSubProducts: "/services/serviceSubProducts/:subServiceId",
-    serviceBrands: "/services/serviceBrands/:serviceCategoryId",
-    serviceBrandProblems: "/services/serviceBrandProblems/:serviceBrandId",
-    bookService: "/services/book-service/:serviceId",
-    recycleCategories: "/recycle-categories",
-    recycleBrands: "/recycle-categories/recycle-brands/:catId",
-    recycleProducts:
-      "/recycle-categories/recycle-brands/recycle-products/:brandId",
+    bookService: "/:location/services/:serviceUniqueURL",
+
+    // recycleCategories: "/recycle-categories",
+    // recycleBrands: "/recycle-categories/recycle-brands/:categoryURL",
+    // recycleProducts:
+    //   "/recycle-categories/recycle-brands/recycle-products/:brandURL",
+    // recycleProductDetails:
+    //   "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
+
+    recycleCategories: "/recycle/categories",
+    recycleBrands: "/recycle/categories/brands/:categoryURL",
+    recycleProducts: "/recycle/categories/brands/products/:brandURL",
     recycleProductDetails:
-      "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
+      "/recycle/categories/brands/products/productDetails/:productURL",
   },
   admin: {
     root: "/admin",
@@ -39,16 +62,21 @@ export const ROUTES = {
 
     createProduct: "/admin/add-products",
     productsList: "/admin/products-list",
-    updateProduct: "/admin/update-product/:productId",
-    productQuestions: "/admin/products/product-questions/:productId",
+
+    // updateProduct: "/admin/update-product/:productId",
+    updateProduct: "/admin/update-product/:productSlug",
+
+    // productQuestions: "/admin/products/product-questions/:productId",
+    productQuestions: "/admin/products/product-questions/:productSlug",
 
     createCategory: "/admin/add-category",
     categoriesList: "/admin/categories-list",
-    updateCategory: "/admin/update-category/:catId",
+    updateCategory: "/admin/update-category/:categoryId",
 
     createBrand: "/admin/add-brands",
     brandsList: "/admin/brands-list",
     updateBrand: "/admin/update-brand/:brandId",
+    // updateBrand: "/admin/update-brand/:brandUniqueURL",
 
     createSeries: "/admin/add-series",
     seriesList: "/admin/series-list",

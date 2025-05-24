@@ -12,14 +12,14 @@ import {
 import { GiSellCard } from "react-icons/gi";
 import { MdHomeRepairService } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 // import { FaPhone } from "react-icons/fa";
 
 const FloatingButtons = () => {
   const { data: categories, categoriesLoading: categoriesLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
 
   const defaultMessage =
     "Hi There! Need help to sell on https://www.instanthub.in/";

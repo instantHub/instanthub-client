@@ -3,11 +3,12 @@ import {
   useCreateBrandMutation,
   useUploadBrandImageMutation,
 } from "@api/brandsApi";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import { ROUTES } from "@routes";
+import { slugify } from "@utils/general/slugify";
 
 const CreateBrand = () => {
   const [brand, setBrand] = useState("");
@@ -16,10 +17,9 @@ const CreateBrand = () => {
   const [categorySelected, setCategorySelected] = useState();
   const [createBrand, { isLoading: createBrandLoading }] =
     useCreateBrandMutation();
-  const [uploadBrandImage, { isLoading: uploadLoadingNew }] =
-    useUploadBrandImageMutation();
+  const [uploadBrandImage] = useUploadBrandImageMutation();
   // const [brandsData, setCategories] = useState([]);
-  const { data: categories, isLoading } = useGetCategoryQuery();
+  const { data: categories, isLoading } = useGetCategoriesQuery();
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
@@ -151,7 +151,7 @@ const CreateBrand = () => {
                 type="text"
                 id="uniqueURL"
                 value={uniqueURL}
-                onChange={(e) => setUniqueURL(e.target.value)}
+                onChange={(e) => setUniqueURL(slugify(e.target.value))}
                 className=" border p-2 rounded-sm max-sm:p-1"
                 placeholder="Enter Unique URL"
                 required

@@ -83,28 +83,6 @@ const UpdateSystemConditions = (props) => {
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
   const handleSubmit = async () => {
-    let updatingSingleLaptop = false;
-
-    // let updatedProduct = {...productData};
-    let updatedProduct;
-    if (type === "SingleLaptopConditions") {
-      updatingSingleLaptop = true;
-      updatedProduct = {
-        ...productData,
-        processorBasedDeduction: productData.processorBasedDeduction.map(
-          (pbd) => ({
-            ...pbd,
-            deductions:
-              pbd.processorId === selectedProcessorDeductions.processorId
-                ? selectedProcessorDeductions.deductions
-                : pbd.deductions,
-          })
-        ),
-      };
-    }
-
-    // console.log("updated product", updatedProduct);
-
     try {
       await updatePriceDrop({
         productId: productData.id,
@@ -127,8 +105,6 @@ const UpdateSystemConditions = (props) => {
     }
   };
 
-  // console.log("type", type);
-  // console.log("selectedProcessorDeductions", selectedProcessorDeductions);
   console.log("productData", productData && productData);
 
   return (

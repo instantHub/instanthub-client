@@ -8,8 +8,13 @@ import { Helmet } from "react-helmet-async";
 import FAQ from "@components/user/static/FAQ";
 import ServicesHome from "../services/ServicesHome";
 import { FaHandPointLeft, FaHandPointRight } from "react-icons/fa";
+import { useIPLocation } from "../../../hooks/useIPLocation";
 
 const Home = () => {
+  const { location, error, loading } = useIPLocation();
+
+  console.log("location", location);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

@@ -8,8 +8,14 @@ export const brandsApi = baseApi.injectEndpoints({
     }),
     getBrand: build.query({
       query: (catId) => `/api/brand/${catId}`,
-      providesTags: ["CreateBrands", "Brands"],
+      providesTags: ["CreateBrands"],
     }),
+
+    getSingleBrand: build.query({
+      query: (brandId) => `/api/brand/single/${brandId}`,
+      providesTags: ["CreateBrands"],
+    }),
+
     createBrand: build.mutation({
       query: (data) => ({
         url: "/api/brand/add-brand",
@@ -51,6 +57,7 @@ export const brandsApi = baseApi.injectEndpoints({
 export const {
   useGetAllBrandQuery,
   useGetBrandQuery,
+  useGetSingleBrandQuery,
   useCreateBrandMutation,
   useUploadBrandImageMutation,
   useUpdateBrandMutation,

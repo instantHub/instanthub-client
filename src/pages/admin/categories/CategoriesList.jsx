@@ -1,12 +1,12 @@
 import React from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { Link } from "react-router-dom";
 import CategoryCard from "./CategoryCard";
 import { ROUTES } from "@routes";
 
 const CategoriesList = () => {
   const { data: categoryData, isLoading: categoryDataLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
 
   if (!categoryDataLoading) {
     console.log(categoryData);

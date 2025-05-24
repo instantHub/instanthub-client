@@ -10,9 +10,7 @@ import Loading from "@components/user/loader/Loading";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
 import LocationSelector from "@components/user/LocationSelector";
 import { LAPTOP, MOBILE } from "@utils/user/constants";
-import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
 import DateAndTime from "@components/user/DateAndTime/DateAndTime";
-// import { SubmitButton } from "@admin/components/SubmitButton";
 import InputSubmitBtn from "@components/user/InputSubmitBtn";
 import {
   DEAD_LAPTOP_PRICE,
@@ -20,10 +18,14 @@ import {
   NON_DEAD_LAPTOP_PRICE,
   NON_DEAD_MOBILE_PRICE,
 } from "./constants";
+import RecycleBreadcrumbs from "@components/user/breadcrumbs/RecycleBreadcrumbs";
 
 const RecycleProductDetail = () => {
-  const { prodId } = useParams();
-  const { data: productDetails, isLoading } = useGetProductDetailsQuery(prodId);
+  const { productURL } = useParams();
+  console.log("productURL", productURL);
+
+  const { data: productDetails, isLoading } =
+    useGetProductDetailsQuery(productURL);
   const [createRecycleOrder, { isLoading: orderLoading }] =
     useCreateRecycleOrderMutation();
   const [variantSelected, setVariantSelected] = useState([]);
@@ -115,12 +117,11 @@ const RecycleProductDetail = () => {
 
   // useEffect to select product variant
   useEffect(() => {
-    if (!isLoading) {
-      if (productDetails?.category?.name !== MOBILE) {
-        handleToggle(productDetails.variants[0]);
-      }
+    if (isLoading) return;
+
+    if (productDetails?.category?.name !== MOBILE) {
+      handleToggle(productDetails.variants[0]);
     }
-    // setLoadedInitially(true);
   }, [productDetails]);
 
   useEffect(() => {
@@ -212,11 +213,7 @@ const RecycleProductDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${
-          productDetails
-            ? `${productDetails.name} ${productDetails.category.name}`
-            : null
-        }| InstantHub`}</title>
+        <title>{`Sell Old ${`${productDetails?.name} ${productDetails?.category?.name}`}| InstantHub`}</title>
 
         <meta
           name="description"
@@ -229,7 +226,7 @@ const RecycleProductDetail = () => {
         />
         <link
           rel="canonical"
-          href={`https://www.instanthub.in/recycle-categories/recycle-brands/recycle-productDetails/${prodId}`}
+          href={`https://www.instanthub.in/recycle-categories/recycle-brands/recycle-productDetails/${productURL}`}
         />
       </Helmet>
 
@@ -251,19 +248,7 @@ const RecycleProductDetail = () => {
           />
         )}
 
-        {/* Header Links: Home > Category > Brand > Products > ProductName */}
-        <BreadCrumbLinks
-          recycle={true}
-          brands={{
-            link: `/recycle-categories/recycle-brands/${category?.id}`,
-            label: `Recycle ${category?.name}`,
-          }}
-          products={{
-            link: `/recycle-categories/recycle-brands/recycle-products/${brand.id}`,
-            label: `${brand?.name}`,
-          }}
-          productDetail={{ link: ``, label: name, isLast: true }}
-        />
+        <RecycleBreadcrumbs />
 
         <div className="bg-white flex flex-col sm:flex-row px-3 sm:p-6 max-sm:pb-3 max-sm:flex-col bg-[url('/images/recycle1.png')] bg-center bg-no-repeat">
           {/* IMAGE */}
@@ -280,14 +265,14 @@ const RecycleProductDetail = () => {
           {/* Products Details */}
           <div
             className={`flex flex-col  w-full sm:w-2/3 max-sm:gap-6 max-14inch:gap-12 ${
-              productDetails.category.name === "Mobile" ? `gap-16` : `gap-10`
+              productDetails?.category?.name === "Mobile" ? `gap-16` : `gap-10`
             }`}
           >
             <div className="mt-6 flex gap-2 items-center">
-              <h1 className="text-3xl">{productDetails.name}</h1>
-              {productDetails.category.name === "Mobile" &&
-                variantSelected.length != 0 && (
-                  <h3 className="text-2xl">({variantSelected.name})</h3>
+              <h1 className="text-3xl">{productDetails?.name}</h1>
+              {productDetails?.category.name === "Mobile" &&
+                variantSelected?.length != 0 && (
+                  <h3 className="text-2xl">({variantSelected?.name})</h3>
                 )}
             </div>
             {/* Check if it is Mobile Product */}

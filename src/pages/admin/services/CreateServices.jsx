@@ -5,6 +5,7 @@ import {
   useUploadServicesImageMutation,
 } from "@api/servicesApi";
 import { toast } from "react-toastify";
+import { slugify } from "../../../utils/general/slugify";
 
 const initialState = {
   currentForm: {
@@ -19,6 +20,7 @@ const initialState = {
     serviceFor: "",
     type: "",
     serviceName: "",
+    uniqueURL: "",
     inspectionCharges: 0,
     status: "Active",
     serviceImage: "",
@@ -28,12 +30,14 @@ const initialState = {
     type: "",
     serviceCategoryId: "",
     brandName: "",
+    uniqueURL: "",
     brandImage: "",
   },
   serviceBrandProblem: {
     serviceFor: "",
     serviceCategoryId: "",
     brandProblemName: "",
+    uniqueURL: "",
     brandProblemImage: "",
   },
   serviceSubCategory: {
@@ -41,6 +45,7 @@ const initialState = {
     type: "",
     serviceCategoryId: "",
     subServiceName: "",
+    uniqueURL: "",
     subServiceImage: "",
   },
   serviceSubProduct: {
@@ -48,6 +53,7 @@ const initialState = {
     serviceCategoryId: "",
     subServiceId: "",
     productName: "",
+    uniqueURL: "",
     subProdDesc: "",
     prodDisPer: "",
     productPrice: "",
@@ -408,6 +414,25 @@ const CreateServiceForm = () => {
                   />
                 </div>
 
+                {/* Unique URL */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Unique URL</label>
+                  <input
+                    type="text"
+                    value={state.serviceCategory.uniqueURL}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceCategory",
+                        key: "uniqueURL",
+                        value: slugify(e.target.value),
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Unique URL"
+                    required
+                  />
+                </div>
+
                 {/* Service Inspection Charges */}
                 <div className={`${inputDiv}`}>
                   <label className={`${inputLabel}`}>Inspection Charges</label>
@@ -570,6 +595,25 @@ const CreateServiceForm = () => {
                   />
                 </div>
 
+                {/* Unique URL */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Unique URL</label>
+                  <input
+                    type="text"
+                    value={state.serviceBrand.uniqueURL}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceBrand",
+                        key: "uniqueURL",
+                        value: slugify(e.target.value),
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Unique URL"
+                    required
+                  />
+                </div>
+
                 {/* Image */}
                 <div className={`${inputDiv}`}>
                   <input
@@ -658,6 +702,25 @@ const CreateServiceForm = () => {
                     }}
                     className="px-2 py-1 border rounded"
                     placeholder="Enter Name"
+                    required
+                  />
+                </div>
+
+                {/* Unique URL */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Unique URL</label>
+                  <input
+                    type="text"
+                    value={state.serviceBrandProblem.uniqueURL}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceBrandProblem",
+                        key: "uniqueURL",
+                        value: slugify(e.target.value),
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Unique URL"
                     required
                   />
                 </div>
@@ -780,6 +843,25 @@ const CreateServiceForm = () => {
                     }}
                     className="px-2 py-1 border rounded"
                     placeholder="Enter Name"
+                    required
+                  />
+                </div>
+
+                {/* Unique URL */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Unique URL</label>
+                  <input
+                    type="text"
+                    value={state.serviceSubCategory.uniqueURL}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceSubCategory",
+                        key: "uniqueURL",
+                        value: slugify(e.target.value),
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Unique URL"
                     required
                   />
                 </div>
@@ -909,6 +991,26 @@ const CreateServiceForm = () => {
                     required
                   />
                 </div>
+
+                {/* Unique URL */}
+                <div className={`${inputDiv}`}>
+                  <label className={`${inputLabel}`}>Unique URL</label>
+                  <input
+                    type="text"
+                    value={state.serviceSubProduct.uniqueURL}
+                    onChange={(e) => {
+                      dispatch({
+                        type: "serviceSubProduct",
+                        key: "uniqueURL",
+                        value: slugify(e.target.value),
+                      });
+                    }}
+                    className="px-2 py-1 border rounded"
+                    placeholder="Enter Unique URL"
+                    required
+                  />
+                </div>
+
                 <div className={`${inputDiv}`}>
                   <label>Product Description</label>
                   <input

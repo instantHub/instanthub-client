@@ -12,7 +12,8 @@ import CardHeader from "@components/admin/CardHeader";
 import { ROUTES } from "@routes";
 
 const UpdateProduct = () => {
-  const { productId } = useParams();
+  const { productId, productSlug } = useParams();
+  console.log("productSlug", productSlug);
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [prodName, setProdName] = useState("");
@@ -27,7 +28,7 @@ const UpdateProduct = () => {
   const [uploadProductImage, { isLoading: uploadLoading }] =
     useUploadProductImageMutation();
   const { data: productData, isLoading: productDataLoading } =
-    useGetProductDetailsQuery(productId);
+    useGetProductDetailsQuery(productSlug);
   const [updateProduct, { isLoading: updateProductLoading }] =
     useUpdateProductMutation();
 
@@ -111,7 +112,7 @@ const UpdateProduct = () => {
 
     try {
       const updatedProduct = await updateProduct({
-        productId,
+        productSlug,
         data: updatedProductData,
       }).unwrap();
 

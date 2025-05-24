@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useCreateSeriesMutation } from "@api/seriesApi";
 import { useGetAllBrandQuery } from "@api/brandsApi";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import SeriesList from "./SeriesList";
 
 const CreateSeries = () => {
   const { data: categoryData, isLoading: categoryLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   const { data: BrandData, isLoading: BrandLoading } = useGetAllBrandQuery();
   const [createSeries] = useCreateSeriesMutation();
   const [selectedCategory, setSelectedCategory] = useState("");

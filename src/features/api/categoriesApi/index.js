@@ -2,8 +2,12 @@ import { baseApi } from "@api";
 
 export const categoriesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategory: build.query({
+    getCategories: build.query({
       query: () => "/api/category",
+      providesTags: ["Categories"],
+    }),
+    getCategory: build.query({
+      query: (categoryId) => `/api/category/${categoryId}`,
       providesTags: ["Categories"],
     }),
     uploadCategoryImage: build.mutation({
@@ -44,6 +48,7 @@ export const categoriesApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetCategoriesQuery,
   useGetCategoryQuery,
   useUploadCategoryImageMutation,
   useCreateCategoryMutation,

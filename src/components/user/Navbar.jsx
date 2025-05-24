@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import SearchBar from "./search/SearchBar";
 import SearchBar2 from "./search/SearchBar2";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
 import { ROUTES } from "@routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: categoryData, isLoading: categoryLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
   // console.log("categoryData from NAV", categoryData);
+
+  const geoLocation = localStorage.getItem("location");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -66,11 +68,13 @@ const Navbar = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function handleNavigation(to, id) {
+  function handleNavigation(to, uniqueURL) {
+    const location = localStorage.getItem("location");
     if (to === "brands")
-      navigate(generatePathWithParams(ROUTES.user.brands, id));
+      // navigate(generatePathWithParams(ROUTES.user.brands, uniqueURL));
+      navigate(`${location}/${uniqueURL}`);
     else if (to === "products")
-      navigate(generatePathWithParams(ROUTES.user.products, cat.id));
+      navigate(generatePathWithParams(ROUTES.user.products, uniqueURL));
   }
 
   useEffect(() => {
@@ -218,7 +222,7 @@ const Navbar = () => {
               activePath.service && activeButton
             }`}
             onClick={() => {
-              navigate("/services");
+              navigate(`/services`);
             }}
           >
             <span
@@ -254,7 +258,7 @@ const Navbar = () => {
               activePath.recycle && activeButton
             }`}
             onClick={() => {
-              navigate("/recycle-categories");
+              navigate(ROUTES.user.recycleCategories);
             }}
           >
             <span
@@ -279,7 +283,7 @@ const Navbar = () => {
                     key={i}
                     onClick={() => {
                       setHoveredCategoryId(null);
-                      handleNavigation("brands", category.id);
+                      handleNavigation("brands", category.uniqueURL);
                     }}
                   >
                     <div
@@ -322,7 +326,10 @@ const Navbar = () => {
                                     key={index}
                                     onClick={() => {
                                       setHoveredCategoryId(null);
-                                      handleNavigation("products", brand.id);
+                                      handleNavigation(
+                                        "products",
+                                        brand.uniqueURL
+                                      );
                                     }}
                                   >
                                     <li className="py-1 px-2 rounded hover:bg-gray-100">

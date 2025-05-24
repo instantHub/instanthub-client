@@ -2,10 +2,10 @@ import React from "react";
 import { useGetBrandSeriesQuery } from "@api/seriesApi";
 import { Link } from "react-router-dom";
 
-const ProductSeries = ({ brandId }) => {
+const ProductSeries = ({ brandUniqueURL }) => {
   // console.log("series", brandId);
   const { data: brandSeries, isLoading: seriesLoading } =
-    useGetBrandSeriesQuery(brandId);
+    useGetBrandSeriesQuery(brandUniqueURL);
 
   return (
     <div className="mt-10">

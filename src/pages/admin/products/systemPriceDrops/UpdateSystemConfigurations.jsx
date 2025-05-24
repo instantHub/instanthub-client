@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { LAPTOP_DESKTOP } from "@utils/user/constants";
 
 const UpdateSystemConfigurations = (props) => {
-  const { productDetail, productId, type } = props;
+  const { productDetail, productUniqueURL, type } = props;
   console.log("UpdateSystemConfigurations", type);
 
   const [selectedDeductions, setSelectedDeductions] = useState(null);
@@ -86,7 +86,7 @@ const UpdateSystemConfigurations = (props) => {
   const handleSubmit = async () => {
     try {
       await updatePriceDrop({
-        productId: productId,
+        productId: productDetail.id,
         data: productData,
         type,
         brand: productData.brand.name,

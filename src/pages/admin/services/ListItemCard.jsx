@@ -55,6 +55,13 @@ const ListItemCard = ({ data, service, handleEdit, handleDelete }) => {
             </div>
           </>
         )}
+
+        <div className="w-full flex items-center justify-center gap-1 pb-2 max-sm:pb-1">
+          <p className={`max-sm:text-[10px]`}>Unique URL -</p>
+          <strong className="text-[16px] max-sm:text-[12px]">
+            {data.uniqueURL}
+          </strong>
+        </div>
       </div>
 
       {/* Edit or Delete */}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import {
   useGetAllProductsQuery,
   useDeleteProductMutation,
@@ -46,7 +46,7 @@ const ProductsList = () => {
   // console.log(productsData && productsData);
 
   const { data: categoryData, isLoading: categoryDataLoading } =
-    useGetCategoryQuery();
+    useGetCategoriesQuery();
 
   const [deleteProduct] = useDeleteProductMutation();
 

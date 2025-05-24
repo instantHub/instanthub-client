@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetBrandQuery } from "@api/brandsApi";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
-import ItemGrid from "@components/user/ItemGrid";
 import SellContent from "@components/user/static/SellContent";
-import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
-import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
-import { ROUTES } from "@routes";
+
+import { slugify } from "@utils/general/slugify";
+import Breadcrumbs from "@components/user/breadcrumbs/Breadcrumbs";
 
 const Brands = () => {
-  const { catId } = useParams();
+  // const { catId } = useParams();
+  const { categoryUniqueURL } = useParams();
+
+  const { data: brands = [], isLoading: brandsLoading } =
+    useGetBrandQuery(categoryUniqueURL);
 
   const [category, setCategory] = useState(null);
-  const { data: brands = [], isLoading: brandsLoading } =
-    useGetBrandQuery(catId);
-  // console.log("brands", brands);
 
   useEffect(() => {
     if (!brandsLoading) setCategory(brands[0]?.category);
@@ -39,7 +39,10 @@ const Brands = () => {
             category?.name
           } on Instant Hub, Instant Hub, instant hub, instanthub, Instant Pick, InstantHub, sell ${category?.name.toLowerCase()} on instanthub`}
         />
-        <link rel="canonical" href={`https://www.instanthub.in/${catId}`} />
+        <link
+          rel="canonical"
+          href={`https://www.instanthub.in/${categoryUniqueURL}`}
+        />
       </Helmet>
 
       <div className="pt-8 max-sm:pt-5 w-4/5 max-sm:w-[90%] mx-auto">
@@ -47,25 +50,36 @@ const Brands = () => {
           Sell your {category?.name} for Instant Cash
         </h1>
 
-        {!brandsLoading && (
-          <BreadCrumbLinks
-            brands={{
-              link: ``,
-              label: `${category?.name}`,
-              isLast: true,
-            }}
-          />
-        )}
+        <Breadcrumbs />
 
         {brandsLoading ? (
           <Loading />
         ) : (
           <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3">
             {brands?.length > 0 ? (
-              <ItemGrid
-                items={brands}
-                linkPath={removeLastParamFromPath(ROUTES.user.products)}
-              />
+              brands?.map((item) => (
+                <div className="flex justify-center" key={item.id}>
+                  <Link
+                    // to={`${slugify(item.uniqueURL)}`}
+                    to={`${item.uniqueURL}`}
+                    className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
+                              transition ease-in-out duration-500 ${
+                                false
+                                  ? `w-32 h-32 max-sm:w-24 max-sm:h-24`
+                                  : `w-28 h-28 max-sm:w-24 max-sm:h-24`
+                              }`}
+                  >
+                    <img
+                      src={import.meta.env.VITE_APP_BASE_URL + item?.image}
+                      alt={item?.name || "Item"}
+                      className="justify-center"
+                      loading="lazy" // Native lazy loading
+                    />
+                    {/* Optional: display item name */}
+                    {/* <p className="size-4 pt-1">{item?.name}</p> */}
+                  </Link>
+                </div>
+              ))
             ) : (
               <h2>No Data Available</h2>
             )}

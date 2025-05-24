@@ -16,10 +16,10 @@ import ClientProductDeductions from "./pages/user/products/questionnaire/Product
 import ClientOtpGenerator from "./pages/user/otp/OTPGenerator";
 import ClientProductFinalPrice from "./pages/user/products/ProductFinalPrice";
 import ClientServices from "./pages/user/services/Services";
-import ClientSubServices from "./pages/user/services/ServiceSubCategory";
-import ClientServiceSubProducts from "./pages/user/services/ServiceSubProducts";
-import ClientServicesBrands from "./pages/user/services/ServiceBrands";
-import ClientServicesBrandsProblems from "./pages/user/services/ServiceBrandProblems";
+import ClientSubServices from "./pages/user/services/sellingservice/ServiceSubCategory";
+import ClientServiceSubProducts from "./pages/user/services/sellingservice/ServiceSubProducts";
+import ClientServicesBrands from "./pages/user/services/brands/ServiceBrands";
+import ClientServicesBrandsProblems from "./pages/user/services/brands/ServiceBrandProblems";
 import ClientBookService from "./pages/user/services/BookService";
 import ClientRecycleCategories from "./pages/user/recycle/RecycleCategories";
 import ClientRecycleBrands from "./pages/user/recycle/RecycleBrands";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoryQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api/categoriesApi";
 import { useGetStocksQuery } from "@api/stocksApi";
 import StockCard from "./StockCard";
 import ViewStock from "./ViewStock";
@@ -10,7 +10,7 @@ const ManageStocks = () => {
 
   console.log("stocksData", stocksData);
 
-  const { data: categoryData } = useGetCategoryQuery();
+  const { data: categoryData } = useGetCategoriesQuery();
   const [categoryImages, setCategoryImages] = useState({});
   // console.log('categoryImages',categoryImages);
 

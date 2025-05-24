@@ -5,14 +5,21 @@ import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
 import SellContent from "@components/user/static/SellContent";
-import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
+import BreadCrumb from "@components/user/breadcrumbs/Breadcrumbs";
 import { MOBILE } from "@utils/user/constants";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 
 const ProductDetail = () => {
-  const { prodId } = useParams();
-  const { data: productDetails, isLoading } = useGetProductDetailsQuery(prodId);
+  const { prodId, categorySlug, brandSlug, productUniqueURL } = useParams();
+  console.log(prodId, categorySlug, brandSlug, productUniqueURL);
+
+  // const { data: productDetails, isLoading } = useGetProductDetailsQuery(prodId);
+  const { data: productDetails, isLoading } =
+    useGetProductDetailsQuery(productUniqueURL);
+
+  console.log("productDetails", productDetails);
+
   const [variantState, setVariantState] = useState({
     variantSelected: null,
     selectedDiv: null,
@@ -51,7 +58,8 @@ const ProductDetail = () => {
         />
         <link
           rel="canonical"
-          href={`https://www.instanthub.in/categories/brands/productDetails/${prodId}`}
+          // href={`https://www.instanthub.in/categories/brands/productDetails/${prodId}`}
+          href={`https://www.instanthub.in/categories/brands/productDetails/${productUniqueURL}`}
         />
       </Helmet>
 
@@ -63,22 +71,7 @@ const ProductDetail = () => {
           </span>
         </p>
 
-        {/* Header Links: Home > Category > Brand > Products > ProductName */}
-        <BreadCrumbLinks
-          brands={{
-            link: generatePathWithParams(ROUTES.user.brands, category.id),
-            label: `${category?.name}`,
-          }}
-          products={{
-            link: generatePathWithParams(ROUTES.user.products, brand.id),
-            label: `${brand?.name}`,
-          }}
-          productDetail={{
-            link: ``,
-            label: name,
-            isLast: true,
-          }}
-        />
+        <BreadCrumb />
 
         <div className="bg-white flex flex-col sm:flex-row px-3 sm:px-6 sm:py-1">
           {/* Product Image */}
@@ -174,7 +167,8 @@ const ProductDetail = () => {
 
               {variantState.variantSelected ? (
                 <Link
-                  to={`/sell/deductions?productId=${prodId}&variant=${variantState.variantSelected.name}`}
+                  // to={`/sell/deductions?productId=${prodId}&variant=${variantState.variantSelected.name}`}
+                  to={`/sell/deductions?product=${productUniqueURL}&variant=${variantState.variantSelected.name}`}
                   className="flex items-center w-fit text-lg max-sm:text-sm bg-emerald-600 text-white px-4 py-2 rounded-md"
                 >
                   Get Exact Value <FaAngleRight />

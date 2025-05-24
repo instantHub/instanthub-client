@@ -10,12 +10,14 @@ import { ROUTES } from "@routes";
 
 const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   const { state, dispatch } = reducer;
+  console.log("state from submit form of final price", state);
 
   const navigate = useNavigate();
 
   const [createOrder, { isLoading: ordersLoading }] = useCreateOrderMutation();
 
   const [schedulePickUp, setSchedulePickUp] = useState(null);
+  console.log("schedulePickUp", schedulePickUp);
 
   const handlePinCodeChange = (e) => {
     let value = e.target.value;
@@ -88,15 +90,29 @@ const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
       if (order.data.success) {
         setIsOpen(false);
         toast.success("Order placed, check your email for the bill.");
-        navigate(
-          generatePathWithParams(ROUTES.user.productDetails, formData.productId)
+        // navigate(
+        //   generatePathWithParams(
+        //     ROUTES.user.productDetails,
+        //     formData.productUniqueURL
+        //   )
+        // );
+        const { category, brand, product } = formData?.uniqueURLs;
+        const location = localStorage.getItem("location");
+        console.log(
+          "`${category}/${brand}/${product}`",
+          `${category}/${brand}/${product}`
         );
+        navigate(`/${location}/${category}/${brand}/${product}`, {
+          replace: true,
+        });
       }
     } catch (error) {
       console.log("Eror while creating order", error);
       toast.error("Error while Creating Order. Please try after sometime.");
     }
   };
+  // http://localhost:5173/sell-mobile/used-apple-mobile/Apple%20iPhone%2012%20Pro%20Max
+  // http://localhost:5173/bengaluru/sell-mobile/used-apple-mobile/Apple%20iPhone%2012%20Pro%20Max
 
   return (
     <div

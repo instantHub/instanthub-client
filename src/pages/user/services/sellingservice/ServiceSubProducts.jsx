@@ -4,11 +4,13 @@ import { useGetServicesQuery } from "@api/servicesApi";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
-import ServiceHeaderImage from "./ServiceHeaderImage";
+import ServiceHeaderImage from "../ServiceHeaderImage";
 
 const ServiceBrands = () => {
   const { subServiceId } = useParams();
   // console.log("subServiceId", subServiceId);
+
+  const location = localStorage.getItem("location");
 
   const { data: servicesData, isLoading: servicesDataLoading } =
     useGetServicesQuery();
@@ -107,7 +109,8 @@ const ServiceBrands = () => {
                 serviceSubProducts.map((serviceSubProduct, i) => (
                   <Link
                     key={i}
-                    to={`/services/book-service/${serviceSubProduct._id}?st=ss`}
+                    // to={`/services/book-service/${serviceSubProduct._id}?st=ss`}
+                    to={`/${location}/services/${serviceSubProduct.uniqueURL}?st=ss`}
                   >
                     <div
                       key={i}

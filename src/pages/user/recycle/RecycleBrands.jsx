@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetBrandQuery } from "@api/brandsApi";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
-import ItemGrid from "@components/user/ItemGrid";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
-import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
-import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
 import { ROUTES } from "@routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import RecycleBreadcrumbs from "@components/user/breadcrumbs/RecycleBreadcrumbs";
 
 const RecycleBrands = () => {
-  const { catId } = useParams();
-  // console.log("catID", catId);
+  const { categoryURL } = useParams();
+  console.log("categoryURL", categoryURL);
 
   const [category, setCategory] = useState(null);
   const { data: brands = [], isLoading: brandsLoading } =
-    useGetBrandQuery(catId);
+    useGetBrandQuery(categoryURL);
   // console.log("brands", brands);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const RecycleBrands = () => {
         />
         <link
           rel="canonical"
-          href={`https://www.instanthub.in/recycle-categories/recycle-brands/${catId}`}
+          href={`https://www.instanthub.in/recycle-categories/recycle-brands/${categoryURL}`}
         />
       </Helmet>
       <div className="pt-10 max-sm:pt-5 w-4/5 max-2sm:w-[90%] mx-auto">
@@ -49,25 +48,32 @@ const RecycleBrands = () => {
         </p>
 
         {/* BreadCrumbLinks Headers */}
-        <BreadCrumbLinks
-          recycle={true}
-          brands={{
-            link: ``,
-            label: `Recycle ${category?.name}`,
-            isLast: true,
-          }}
-        />
+        <RecycleBreadcrumbs />
 
         {brandsLoading ? (
           <Loading />
         ) : (
           <div className="grid grid-cols-7 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3">
             {brands?.length > 0 ? (
-              <ItemGrid
-                items={brands}
-                linkPath={removeLastParamFromPath(ROUTES.user.recycleProducts)}
-                displayBig={false}
-              />
+              brands?.map((item) => (
+                <div className="flex justify-center" key={item.id}>
+                  <Link
+                    to={`${generatePathWithParams(
+                      ROUTES.user.recycleProducts,
+                      item.uniqueURL
+                    )}?b=${categoryURL}`}
+                    className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
+                                          transition ease-in-out duration-500 w-28 h-28 max-sm:w-24 max-sm:h-24`}
+                  >
+                    <img
+                      src={import.meta.env.VITE_APP_BASE_URL + item?.image}
+                      alt={item?.name || "Item"}
+                      className="justify-center"
+                      loading="lazy" // Native lazy loading
+                    />
+                  </Link>
+                </div>
+              ))
             ) : (
               <h2>No Data Available</h2>
             )}
