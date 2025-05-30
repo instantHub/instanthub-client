@@ -13,7 +13,6 @@ import OtpGenerator from "../../otp/OTPGenerator";
 import { Helmet } from "react-helmet-async";
 import Loading from "@components/user/loader/Loading";
 import ProgressBar from "@components/user/ProgressBar";
-import { LAPTOP_DESKTOP } from "@utils/user/constants";
 import NextPrevButton from "./NextPrevButton";
 import { groupConditionsByPage } from "@utils/user/helper";
 import DisplayCondition from "./DisplayCondition";
@@ -112,7 +111,8 @@ const ProductQuestions = () => {
       );
 
       // Setting deductions and its pages
-      if (category.name === "Mobile") {
+      // if (category.name === "Mobile") {
+      if (category.categoryType.multiVariants) {
         const varDeduction = variantDeductions.find(
           (vd) => vd.variantName === selectedVariant
         );
@@ -185,14 +185,15 @@ const ProductQuestions = () => {
             {/* Products that are not under Laptop Category */}
             {aboutDevice.isDeviceOn &&
             deductions &&
-            !LAPTOP_DESKTOP.includes(
-              productsData.category.name.toLowerCase()
-            ) ? (
+            // !LAPTOP_DESKTOP.includes(
+            //   productsData.category.name.toLowerCase()
+            // ) ? (
+            !productsData.category.categoryType.processorBased ? (
               <div
-                key={sortedConditions[currentPageIndex].page}
+                key={sortedConditions[currentPageIndex]?.page}
                 className="flex flex-col gap-5"
               >
-                {sortedConditions[currentPageIndex].conditions.map(
+                {sortedConditions[currentPageIndex]?.conditions?.map(
                   (condition) => (
                     <DisplayCondition
                       key={condition.conditionId}

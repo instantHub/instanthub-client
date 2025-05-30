@@ -1,5 +1,5 @@
 function groupConditionsByPage(conditions) {
-  console.log("IN groupConditionsByPage", conditions);
+  // console.log("IN groupConditionsByPage", conditions);
   const grouped = conditions.reduce((acc, condition) => {
     const { page } = condition;
     // console.log("condition", condition);
@@ -22,7 +22,7 @@ function groupConditionsByPage(conditions) {
       conditions: grouped[page],
     }));
 
-  console.log("sortedPages", sortedPages);
+  // console.log("sortedPages", sortedPages);
 
   return sortedPages;
 }

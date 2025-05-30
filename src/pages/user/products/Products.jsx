@@ -44,7 +44,7 @@ const Products = () => {
   const { data: productsData, isLoading: productsLoading } =
     useGetProductsQuery({ brandUniqueURL, search });
 
-  console.log("productsData", productsData);
+  // console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
     setSeriesAction((prevSeries) => ({

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useReducer } from "react";
+import React, { useReducer, useRef } from "react";
 import {
   useCreateCategoryMutation,
   useUploadCategoryImageMutation,
@@ -9,209 +9,231 @@ import { SubmitButton } from "@components/admin/SubmitButton";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
 
+const CATEGORY_TYPES = ["simple", "multiVariants", "processorBased"];
+
 const initialState = {
   category: "",
   uniqueURL: "",
-  imageSelected: "",
+  categoryType: {
+    simple: false,
+    multiVariants: false,
+    processorBased: false,
+  },
+  imageSelected: null,
 };
 
 function reducer(state, action) {
-  console.log("reducer func:", action);
-  const { type, value } = action;
-  console.log(type, value);
+  const { type, name, value } = action;
+
   switch (type) {
-    case "category":
-      // return (state[type] = value);
-      return { ...state, [type]: value };
-    case "uniqueURL":
-      return { ...state, [type]: value };
-    case "imageSelected":
-      return { ...state, [type]: value };
+    case "UPDATE_FIELD":
+      return { ...state, [name]: value };
+
+    case "UPDATE_CATEGORY_TYPE":
+      // If setting one to true, disable others
+      const updatedTypes = CATEGORY_TYPES.reduce((acc, item) => {
+        acc[item] = item === name ? value : false;
+        return acc;
+      }, {});
+      return {
+        ...state,
+        categoryType: updatedTypes,
+      };
+
+    case "RESET":
+      return initialState;
+
     default:
-      throw new Error();
+      throw new Error(`Unknown action type: ${type}`);
   }
 }
 
 const CreateCategory = () => {
-  const [category, setCategory] = useState("");
-  const [uniqueURL, setUniqueURL] = useState("");
-  const [imageSelected, setImageSelected] = useState("");
-  const [createCategory, { isLoading: createCategoryloading }] =
-    useCreateCategoryMutation();
-
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log("Reducer state:", state);
-
-  const [uploadCategoryImage, { isLoading: uploadLoading }] =
-    useUploadCategoryImageMutation();
-
-  // Create a ref to store the reference to the file input element
+  console.log("state", state);
   const fileInputRef = useRef(null);
+  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const [uploadCategoryImage] = useUploadCategoryImageMutation();
+
+  const isAnyCategoryTypeSelected = Object.values(state.categoryType).some(
+    Boolean
+  );
 
   const inputValidation = () => {
+    const { category, uniqueURL, imageSelected } = state;
+
     if (
-      category.trim() === "" ||
-      uniqueURL.trim() === "" ||
-      imageSelected === ""
+      !category.trim() ||
+      !uniqueURL.trim() ||
+      !imageSelected ||
+      !isAnyCategoryTypeSelected
     ) {
+      toast.error("All fields including one Category Type are required!");
       return false;
-    } else {
-      return true;
     }
+    return true;
   };
 
-  // File handler
   const uploadFileHandler = async () => {
     const formData = new FormData();
-    formData.append("image", imageSelected);
-    // formData.append("uploadURL", "category");
+    formData.append("image", state.imageSelected);
 
     try {
       const res = await uploadCategoryImage(formData).unwrap();
-      console.log("res.image", res.image);
-
       return res.image;
     } catch (error) {
-      console.log("Error: ", error);
+      toast.error("Image upload failed");
+      return null;
     }
   };
 
-  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!inputValidation()) return;
 
-    const validate = inputValidation();
+    const imageURL = await uploadFileHandler();
+    if (!imageURL) return;
 
-    if (validate) {
-      // Image upload handler call
-      const imageURL = await uploadFileHandler();
+    const payload = {
+      name: state.category,
+      uniqueURL: state.uniqueURL,
+      image: imageURL,
+      categoryType: state.categoryType,
+    };
 
-      console.log("handlesubmit ", category, uniqueURL, imageURL);
+    console.log("payload", payload);
 
-      const categoryData = {
-        name: category,
-        uniqueURL: uniqueURL,
-        image: imageURL,
-      };
-
-      try {
-        await createCategory(JSON.stringify(categoryData)).unwrap();
-        toast.success("Category created successfull..!");
-        setCategory("");
-        setUniqueURL("");
-        setImageSelected("");
-        // Clear the value of the file input
-        fileInputRef.current.value = "";
-        // Mark the file input as required again
-        fileInputRef.current.required = true;
-      } catch (error) {
-        console.log("Error: ", error);
-        toast.error("Error Creating Category..!");
-      }
-    } else {
-      console.log("All fields are required");
-      return;
+    try {
+      await createCategory(JSON.stringify(payload)).unwrap();
+      toast.success("Category created successfully!");
+      dispatch({ type: "RESET" });
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (error) {
+      toast.error("Failed to create category");
     }
+  };
+
+  const handleCategoryTypeSelect = (selectedType) => {
+    setFormData((prev) => ({
+      ...prev,
+      categoryType: {
+        multiVariants: false,
+        processorBased: false,
+        simple: false,
+        [selectedType]: true,
+      },
+    }));
   };
 
   return (
     <div className="w-full px-[2%] pt-[2%] max-sm:text-sm">
       <div className="flex justify-between items-center">
-        <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">
-          Create Category
-        </h1>
-        <div className="flex max-sm:hidden">
-          <h2>Home </h2>
-          <h2 className="pl-1 "> / Add Category</h2>
-        </div>
-
+        <h1 className="bold text-[1.4rem] mb-2">Create Category</h1>
         <ListButton
           location={ROUTES.admin.categoriesList}
-          text={"Categories List"}
+          text="Categories List"
         />
       </div>
+
       <div className="bg-white border rounded-md shadow-lg">
         <form
-          action=""
-          method="post"
-          className="flex flex-col gap-4  p-5"
-          encType="multipart/form-data"
+          className="flex flex-col gap-4 p-5"
           onSubmit={handleSubmit}
+          encType="multipart/form-data"
         >
-          <div>
-            <h2 className="">Add Category</h2>
-          </div>
+          <h2>Add Category</h2>
           <hr />
+
           <div className="grid grid-cols-2 gap-4">
+            {/* Category Name */}
             <div className="flex flex-col">
-              <label htmlFor="productName">Category Name :</label>
+              <label htmlFor="category">Category Name</label>
               <input
                 type="text"
-                id="category"
                 name="category"
-                className=" border p-2 rounded-sm max-md:p-1"
+                value={state.category}
+                onChange={(e) =>
+                  dispatch({
+                    type: "UPDATE_FIELD",
+                    name: "category",
+                    value: e.target.value,
+                  })
+                }
+                className="border p-2 rounded-sm"
                 placeholder="Enter Category Name"
-                value={category}
-                // value={name}
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                  dispatch({ type: e.target.name, value: e.target.value });
-                }}
-                required
               />
             </div>
 
+            {/* Unique URL */}
             <div className="flex flex-col">
-              <label htmlFor="uniqueURL">Make Unique URL :</label>
+              <label htmlFor="uniqueURL">Unique URL</label>
               <input
                 type="text"
-                id="uniqueURL"
                 name="uniqueURL"
-                value={uniqueURL}
-                onChange={(e) => {
-                  setUniqueURL(slugify(e.target.value));
+                value={state.uniqueURL}
+                onChange={(e) =>
                   dispatch({
-                    type: e.target.name,
+                    type: "UPDATE_FIELD",
+                    name: "uniqueURL",
                     value: slugify(e.target.value),
-                  });
-                }}
-                className=" border p-2 rounded-sm max-md:p-1"
+                  })
+                }
+                className="border p-2 rounded-sm"
                 placeholder="Enter Unique URL"
-                required
               />
             </div>
 
-            <div className="p-2">
-              <label htmlFor="image">File Input</label>
-              <div className="flex">
-                <div className="mb-4">
-                  <label htmlFor="image" className="block font-medium ">
-                    Image:
-                  </label>
-                  <input
-                    type="file"
-                    id="imageSelected"
-                    name="imageSelected"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    onChange={(e) => {
-                      setImageSelected(e.target.files[0]);
+            {/* Category Type Checkboxes */}
+            <div className="flex flex-col col-span-2">
+              <span className="font-semibold mb-2">
+                Select Type Of Category
+              </span>
+              <div className="flex gap-4 flex-wrap">
+                {Object.entries(state.categoryType).map(([type, isActive]) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() =>
                       dispatch({
-                        type: e.target.name,
-                        value: e.target.files[0],
-                      });
-                    }}
-                    className="w-full border border-gray-300 p-2 rounded-md max-md:p-1"
-                    required
-                  />
-                </div>
+                        type: "UPDATE_CATEGORY_TYPE",
+                        name: type,
+                        value: !isActive,
+                      })
+                    }
+                    className={`px-4 py-2 rounded-lg border transition-all duration-300 ${
+                      isActive
+                        ? "bg-blue-600 text-white border-blue-600"
+                        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                    }`}
+                  >
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </button>
+                ))}
               </div>
             </div>
+
+            {/* Image Upload */}
+            <div className="flex flex-col">
+              <label htmlFor="imageSelected">Upload Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                name="imageSelected"
+                onChange={(e) =>
+                  dispatch({
+                    type: "UPDATE_FIELD",
+                    name: "imageSelected",
+                    value: e.target.files?.[0] || null,
+                  })
+                }
+                className="border p-2 rounded-sm"
+              />
+            </div>
           </div>
-          <div className="w-1/2 py-3 max-md:p-1">
-            <SubmitButton loading={createCategoryloading}>
-              Create Category
-            </SubmitButton>
+
+          <div className="mt-4 w-1/2">
+            <SubmitButton loading={isLoading}>Create Category</SubmitButton>
           </div>
         </form>
       </div>
@@ -220,11 +242,3 @@ const CreateCategory = () => {
 };
 
 export default CreateCategory;
-
-// const result = await axios.post(
-//   "http://localhost:8000/api/upload",
-//   formData,
-//   {
-//     headers: { "Content-Type": "multipart/formdata" },
-//   }
-// );

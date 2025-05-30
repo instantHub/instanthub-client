@@ -22,12 +22,6 @@ const Footer = () => {
               className="w-[150px] h-[80px] my-[1px] max-sm:w-[60px] max-sm:h-[50px]"
               loading="lazy" // Native lazy loading
             />
-            {/* <p className="flex flex- items-center gap-1 text-white ">
-              <span className="font-serif text-3xl max-sm:text-lg">
-                Instant
-              </span>
-              <span className="font-serif text-3xl max-sm:text-sm">Hub</span>
-            </p> */}
           </div>
 
           {/* Follow Us for large screen */}
@@ -95,6 +89,12 @@ const Footer = () => {
                   <Link to={`/about`}>
                     <span className={`${listItemStyle}`}>About Us</span>
                   </Link>
+                </li>
+                <li className="flex flex-col">
+                  <p className={`${listItemStyle}`}>
+                    We also accept Bulk Orders
+                    <span className="text-[10px]"> (Contact Us)</span>
+                  </p>
                 </li>
                 <li>
                   <Link>

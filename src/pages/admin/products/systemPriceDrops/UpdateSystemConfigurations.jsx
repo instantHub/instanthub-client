@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import UpdateButton from "./UpdateButton";
 import { useUpdateLaptopConfigurationsPriceDropMutation } from "@api/productsApi";
 import { toast } from "react-toastify";
-import { LAPTOP_DESKTOP } from "@utils/user/constants";
 
 const UpdateSystemConfigurations = (props) => {
   const { productDetail, productUniqueURL, type } = props;
@@ -80,9 +79,7 @@ const UpdateSystemConfigurations = (props) => {
     setSelectedDeductions(updatedProductData.simpleDeductions);
   };
 
-  // Function to handle form submission
-  // const handleSubmit = async (event) => {
-  // event.preventDefault();
+
   const handleSubmit = async () => {
     try {
       await updatePriceDrop({
@@ -106,7 +103,8 @@ const UpdateSystemConfigurations = (props) => {
     if (productDetail) {
       // Set the matched product to the component state
       setProductData(productDetail);
-      if (LAPTOP_DESKTOP.includes(productDetail.category.name.toLowerCase())) {
+      // if (LAPTOP_DESKTOP.includes(productDetail.category.name.toLowerCase())) {
+      if (productDetail.category.categoryType.processorBased) {
         setSelectedDeductions(productDetail.simpleDeductions);
       }
     }
@@ -121,7 +119,8 @@ const UpdateSystemConfigurations = (props) => {
       <div className="w-fit max-sm:w-full flex flex-col mx-auto my-1 bg-white rounded text-sm max-sm:text-xs">
         {/* {productData && productData.category.name === "Laptop" && ( */}
         {productData &&
-          LAPTOP_DESKTOP.includes(productData.category.name.toLowerCase()) && (
+          // LAPTOP_DESKTOP.includes(productData.category.name.toLowerCase()) && (
+          productData.category.categoryType.processorBased && (
             <>
               <h3 className="text-2xl max-sm:text-lg font-serif text-center font-bold">
                 {title} to update

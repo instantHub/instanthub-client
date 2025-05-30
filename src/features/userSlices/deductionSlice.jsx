@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LAPTOP, LAPTOP_DESKTOP } from "@utils/user/constants";
+import { LAPTOP } from "@utils/user/constants";
 
 const initialState = {
   selectedProduct: {},
@@ -29,7 +29,7 @@ export const deductionSlice = createSlice({
     },
 
     addDeductions: (state, action) => {
-      console.log("addDeduction Reducer", action.payload);
+      // console.log("addDeduction Reducer", action.payload);
 
       let { condition, conditionLabel } = action.payload;
       // console.log(condition, conditionLabel);
@@ -53,7 +53,7 @@ export const deductionSlice = createSlice({
     },
 
     addSingleDeductions: (state, action) => {
-      console.log("addSingleDeductions Reducer", action.payload);
+      // console.log("addSingleDeductions Reducer", action.payload);
       let { condition, conditionLabel } = action.payload;
       // console.log(condition, conditionLabel);
 
@@ -87,8 +87,10 @@ export const deductionSlice = createSlice({
     performCalculation: (state, _) => {
       console.log("performCalculation Reducer");
 
-      let category = state.selectedProduct.category.name.toLowerCase();
-      let PROCESSOR_CATEGORY = LAPTOP_DESKTOP.includes(category);
+      // let category = state.selectedProduct.category.name.toLowerCase();
+      // let PROCESSOR_CATEGORY = LAPTOP_DESKTOP.includes(category);
+      let PROCESSOR_CATEGORY =
+        state.selectedProduct.category.categoryType.processorBased;
       console.log("PROCESSOR_CATEGORY", PROCESSOR_CATEGORY);
 
       const CONFIG_ITEMS = ["Hard Disk", "Ram"];

@@ -7,18 +7,16 @@ import Loading from "@components/user/loader/Loading";
 import SellContent from "@components/user/static/SellContent";
 import BreadCrumb from "@components/user/breadcrumbs/Breadcrumbs";
 import { MOBILE } from "@utils/user/constants";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
-import { ROUTES } from "@routes";
 
 const ProductDetail = () => {
-  const { prodId, categorySlug, brandSlug, productUniqueURL } = useParams();
-  console.log(prodId, categorySlug, brandSlug, productUniqueURL);
+  const { productUniqueURL } = useParams();
+  console.log(productUniqueURL);
 
   // const { data: productDetails, isLoading } = useGetProductDetailsQuery(prodId);
   const { data: productDetails, isLoading } =
     useGetProductDetailsQuery(productUniqueURL);
 
-  console.log("productDetails", productDetails);
+  // console.log("productDetails", productDetails);
 
   const [variantState, setVariantState] = useState({
     variantSelected: null,
@@ -35,7 +33,8 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && productDetails?.category?.name !== MOBILE) {
+    // if (!isLoading && productDetails?.category?.name !== MOBILE) {
+    if (!isLoading && !productDetails?.category?.categoryType.multiVariants) {
       handleToggle(productDetails.variants[0]);
     }
   }, [productDetails, isLoading]);
@@ -92,7 +91,8 @@ const ProductDetail = () => {
               <h1 className="text-3xl max-sm:text-2xl">
                 {productDetails?.name}
               </h1>
-              {productDetails?.category?.name === "Mobile" &&
+              {/* {productDetails?.category?.name === "Mobile" && */}
+              {productDetails?.category?.categoryType?.multiVariants &&
                 variantState.variantSelected && (
                   <h3 className="text-2xl max-sm:text-lg">
                     ({variantState.variantSelected?.name})
@@ -101,7 +101,8 @@ const ProductDetail = () => {
             </div>
 
             <div>
-              {productDetails?.category?.name === "Mobile" ? (
+              {/* {productDetails?.category?.name === "Mobile" ? ( */}
+              {productDetails?.category?.categoryType?.multiVariants ? (
                 <div className="flex flex-col gap-4">
                   {!variantState.variantSelected && (
                     <div>

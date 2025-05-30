@@ -20,8 +20,6 @@ const Breadcrumbs = () => {
     return "/" + paths.slice(0, index + 1).join("/");
   };
 
-  console.log("bread crumbs", paths);
-
   return (
     <nav className="w-full mx-0 mb-6 text-[16px] breadcrumbs ">
       <div className="flex items-center gap-1 max-sm:gap-[2px] text-[16px] max-sm:text-xs opacity-60">

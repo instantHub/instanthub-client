@@ -70,6 +70,32 @@ const ListCard = ({ data }) => {
           </div>
         </div>
 
+        <div className="p-2 flex flex-col gap-2 items-center">
+          <div className="flex items-center gap-2">
+            <h2 className="text-sm font-semibold">Category Type</h2>
+            {Object.entries(data.categoryType).map(
+              ([key, isActive]) =>
+                isActive && (
+                  <p
+                    key={key}
+                    className={`px-4 py-1 rounded-lg border transition-all duration-300 bg-blue-600 text-white`}
+                  >
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </p>
+                )
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-sm font-semibold">Unique URL: </h2>
+
+            <p
+              className={`px-4 py-1 rounded-lg border transition-all duration-300 bg-green-600 text-white`}
+            >
+              {data.uniqueURL}
+            </p>
+          </div>
+        </div>
+
         {/* Edit or Delete */}
         <ActionButton
           actionOne={"Edit"}
