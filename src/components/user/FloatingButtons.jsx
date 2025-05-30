@@ -175,7 +175,7 @@ const FloatingButtons = () => {
             <span className="animate-puls">
               🚨 We are currently operating in
             </span>
-            <strong>Bangalore</strong>
+            <strong>Bangalore & Mysore</strong>
             <span className="animate-">only. Stay tuned for updates!</span>
           </p>
         </div>
@@ -292,7 +292,7 @@ const FloatingButtons = () => {
             <span className="animate-puls">
               🚨 We are currently operating in
             </span>
-            <strong>Bangalore</strong>
+            <strong>Bangalore & Mysore</strong>
             <span className="animate-">only. Stay tuned for updates!</span>
           </p>
         </div>

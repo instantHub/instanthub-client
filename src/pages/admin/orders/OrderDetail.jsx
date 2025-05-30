@@ -199,17 +199,18 @@ const OrderDetail = () => {
         }
 
         // Checking accessories for old data format
-        let accessoriesLen = 0;
-        let accessoriesNotAvaiLen = 0;
+        // let accessoriesLen = 0;
+        // let accessoriesNotAvaiLen = 0;
         // type.includes("accessories") || type.includes("accessoriesnotselected")
-        if (type.includes("accessories")) {
-          accessoriesLen = item.conditions.length;
-        } else if (type.includes("accessoriesnotselected")) {
-          accessoriesNotAvaiLen = item.conditions.length;
-        }
-        setIsAccessoriesAvailable(
-          accessoriesLen > 0 || accessoriesNotAvaiLen > 0
-        );
+        // if (type.includes("accessories")) {
+        //   accessoriesLen = item.conditions.length;
+        // }
+        //  else if (type.includes("accessoriesnotselected")) {
+        //   accessoriesNotAvaiLen = item.conditions.length;
+        // }
+        // setIsAccessoriesAvailable(
+        //   accessoriesLen > 0 || accessoriesNotAvaiLen > 0
+        // );
         // End
 
         item.conditions.forEach((condition) => {
@@ -290,7 +291,7 @@ const OrderDetail = () => {
           </DetailWrapper>
 
           {/* Accessories Available */}
-          {isAccessoriesAvailable && (
+          {/* {isAccessoriesAvailable && (
             <DetailWrapper icon={BsBoxSeam} heading="Accessories">
               {finalDeductionSet.map((deduction, i) => {
                 return (
@@ -319,23 +320,23 @@ const OrderDetail = () => {
                 );
               })}
             </DetailWrapper>
-          )}
+          )} */}
 
           {/* Selected Conditions Info */}
           <DetailWrapper icon={TbListDetails} heading="Selected Conditions">
             {finalDeductionSet.map((deduction, i) => {
               return (
                 <div key={i}>
-                  {!deduction.type.toLowerCase().includes("accessories") &&
-                    deduction?.conditions?.map((condition) => {
-                      return (
-                        <DetailDiv
-                          key={condition.conditionName}
-                          label={deduction?.type}
-                          text={condition.conditionLabel}
-                        />
-                      );
-                    })}
+                  {/* {!deduction.type.toLowerCase().includes("accessories") && */}
+                  {deduction?.conditions?.map((condition) => {
+                    return (
+                      <DetailDiv
+                        key={condition.conditionName}
+                        label={deduction?.type}
+                        text={condition.conditionLabel}
+                      />
+                    );
+                  })}
                 </div>
               );
             })}

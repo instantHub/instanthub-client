@@ -7,12 +7,14 @@ import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 
 const ProductCard = ({ data, pendingPricingMobiles }) => {
-  //   console.log(data);
+  console.log("data", data);
   const navigate = useNavigate();
   const [deleteProduct] = useDeleteProductMutation();
 
   const [deductionSelected, setDeductionSelected] = useState("");
-  const MOBILE_CATEGORY = data.category.name === "Mobile";
+  // const MOBILE_CATEGORY = data.category.name === "Mobile";
+  const MultiVariantProduct = data?.category?.categoryType?.multiVariants;
+  console.log("MultiVariantProduct", MultiVariantProduct);
 
   const style = {
     boldness: "font-semibold max-sm:font-norma",
@@ -66,7 +68,7 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
 
   useEffect(() => {
     async function checkPricing() {
-      if (MOBILE_CATEGORY) {
+      if (MultiVariantProduct) {
         let check = await checkPendingPrices();
         // console.log("check", check);
         setPricingNeededFor(check);
@@ -131,16 +133,18 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
           {/* Variant & Price */}
           <div className="w-full flex flex-col items-center gap-1">
             <p className="max-sm:text-[10p">
-              {MOBILE_CATEGORY ? "Variant & Price" : "Price"}
+              {MultiVariantProduct ? "Variant & Price" : "Price"}
             </p>
             {data.variants.map((variant, i) => (
               <div
                 key={`${variant.id}-${i}`}
+                // data.category.name === "Mobile" ? "gap-2 justify-center" : ""
                 className={`flex ${
-                  data.category.name === "Mobile" ? "gap-2 justify-center" : ""
+                  MultiVariantProduct ? "gap-2 justify-center" : ""
                 }`}
               >
-                {data.category.name === "Mobile" ? (
+                {/* {data.category.name === "Mobile" ? ( */}
+                {MultiVariantProduct ? (
                   <>
                     <VariantDetail label="Name" value={variant.name} />
                     <VariantDetail label="Price" value={variant.price} />
@@ -155,7 +159,8 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
           {/* Price Drop */}
           <div className="w-full flex flex-col items-center gap-1">
             <p>Price Drop</p>
-            {data.category.name === "Mobile" ? (
+            {/* {data.category.name === "Mobile" ? ( */}
+            {MultiVariantProduct ? (
               <div className="flex flex-col items-center gap-2 max-sm:gap-1">
                 <div>
                   <select
@@ -268,31 +273,3 @@ const VariantDetail = ({ label, value }) => (
     <span className="max-sm:text-[9px]">{value}</span>
   </div>
 );
-
-// edit & delete
-{
-  //   <div className="w-full h-fit flex justify-around items-center">
-  //   <button
-  //     className={`w-full ${style.btnStyle} text-blue-600 border-r`}
-  //     onClick={() => {
-  //       navigate();
-  //     }}
-  //   >
-  //     <span className="tracking-[5px] max-sm:tracking-[4px] max-sm:text-[10px]">
-  //       Edit {data.name.slice(0, 16)}
-  //     </span>
-  //     <span>
-  //       <FaEdit />
-  //     </span>
-  //   </button>
-  //   <button
-  //     className={`${style.btnStyle} text-red-600 hover:bg-red-600 hover:text-white transition-all ease-in-out duration-1000`}
-  //     onClick={() => {}}
-  //   >
-  //     <span className="tracking-widest">Delete</span>
-  //     <span>
-  //       <MdDeleteForever />
-  //     </span>
-  //   </button>
-  // </div>
-}

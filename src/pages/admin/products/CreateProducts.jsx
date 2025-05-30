@@ -12,17 +12,18 @@ import { SubmitButton } from "@components/admin/SubmitButton";
 import CardHeader from "@components/admin/CardHeader";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
+import ObjectSelect from "./ObjectSelect";
 
 const CreateProducts = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  console.log("selectedCategory", selectedCategory);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [imageSelected, setImageSelected] = useState("");
   const [prodName, setProdName] = useState("");
   const [uniqueURL, setUniqueURL] = useState("");
   const [status, setStatus] = useState("Active");
   const { data: seriesData, isLoading: seriesLoading } = useGetAllSeriesQuery();
-  const [uploadProductImage, { isLoading: uploadLoading }] =
-    useUploadProductImageMutation();
+  const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct, { isLoading: productCreationLoading }] =
     useCreateProductMutation();
   const { data: categoryData, isLoading: categoryLoading } =
@@ -32,7 +33,7 @@ const CreateProducts = () => {
   const [selectedSeries, setSelectedSeries] = useState("");
   const [seriesYes, setSeriesYes] = useState(false);
   const [mobileCategory, setMobileCategory] = useState("");
-  console.log("mobileCategory", mobileCategory);
+  // console.log("mobileCategory", mobileCategory);
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
@@ -40,7 +41,7 @@ const CreateProducts = () => {
   // if (!seriesLoading) {
   //   console.log("series from products", seriesData);
   // }
-  console.log("selected series from products", selectedSeries, seriesYes);
+  // console.log("selected series from products", selectedSeries, seriesYes);
 
   // VARIANTS
   const [variants, setVariants] = useState([{ name: "", price: "" }]);
@@ -49,7 +50,7 @@ const CreateProducts = () => {
     updatedVariants[index][key] = value;
     setVariants(updatedVariants);
   };
-  console.log("variants", variants);
+  // console.log("variants", variants);
 
   const addVariant = () => {
     setVariants([...variants, { name: "", price: "" }]);
@@ -81,7 +82,7 @@ const CreateProducts = () => {
 
     // Check if any variant fields are empty
     let isEmptyVariant;
-    if (selectedCategory !== mobileCategory) {
+    if (selectedCategory?.categoryType?.multiVariants) {
       isEmptyVariant = variants.some(
         (variant) => variant.name.trim() === "" || variant.price.trim() === ""
       );
@@ -100,7 +101,7 @@ const CreateProducts = () => {
       name: prodName,
       uniqueURL: uniqueURL,
       image: imageURL,
-      category: selectedCategory,
+      category: selectedCategory?.id,
       brand: selectedBrand,
       series: seriesYes ? selectedSeries : null,
       variants: variants,
@@ -131,7 +132,7 @@ const CreateProducts = () => {
       // setProdName("");
       // setUniqueURL("");
       // Reset the variants state to a single empty variant
-      // setVariants([{ name: "", price: "" }]);
+      setVariants([{ name: "", price: "" }]);
       // Clear the value of the file input
       fileInputRef.current.value = "";
       // Mark the file input as required again
@@ -142,7 +143,7 @@ const CreateProducts = () => {
     }
   };
 
-  console.log("status", status);
+  // console.log("status", status);
 
   // if selectedSeries is empty than series is not selected
   useEffect(() => {
@@ -179,7 +180,7 @@ const CreateProducts = () => {
               </div>
               <hr />
               <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <label htmlFor="category">Select Category :</label>
                   <select
                     id="category"
@@ -207,7 +208,19 @@ const CreateProducts = () => {
                         </option>
                       ))}
                   </select>
-                </div>
+                </div> */}
+
+                {categoryData && (
+                  <ObjectSelect
+                    label="Select Category"
+                    options={categoryData}
+                    displayKey="name"
+                    selectedOption={selectedCategory}
+                    onSelect={setSelectedCategory}
+                    placeholder="Select Category"
+                    required
+                  />
+                )}
 
                 {/* Select a Brand */}
                 <div className="flex flex-col">
@@ -225,8 +238,7 @@ const CreateProducts = () => {
                     <option value="">Select Brand</option>
                     {!BrandLoading &&
                       BrandData.map((brand) => {
-                        // console.log("selectedCategory", selectedCategory);
-                        if (selectedCategory == brand.category.id) {
+                        if (selectedCategory?.id == brand.category.id) {
                           return (
                             <option
                               key={brand.id}
@@ -368,7 +380,7 @@ const CreateProducts = () => {
           </div>
 
           <div className="grow-0">
-            {selectedCategory && selectedCategory === mobileCategory ? (
+            {selectedCategory?.categoryType?.multiVariants ? (
               <div className="m-1 flex flex-col items-center justify-center">
                 <h3 className="text-xl inline-block">Add Variants:</h3>
                 {variants.map((variant, index) => (

@@ -15,12 +15,12 @@ import FAQ from "@components/user/static/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
 import LocationSelector from "@components/user/LocationSelector";
-import { LAPTOP, LAPTOP_DESKTOP } from "@utils/user/constants";
+import { LAPTOP } from "@utils/user/constants";
 import SubmitForm from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-import { useGetProductDetailsQuery } from "../../../features/api/productsApi";
+// import { useGetProductDetailsQuery } from "../../../features/api/productsApi";
 
 // Create the Context
 const StateContext = createContext();
@@ -104,10 +104,10 @@ const ProductFinalPrice = () => {
   const brandURL = searchParams.get("b");
   const navigate = useNavigate();
 
-  const { data: productDetails, isLoading } =
-    useGetProductDetailsQuery(productURL);
+  // const { data: productDetails, isLoading } =
+  //   useGetProductDetailsQuery(productURL);
 
-  console.log("product url from params", productURL);
+  // console.log("product url from params", productURL);
 
   const { data: couponsData } = useGetCouponQuery();
 
@@ -116,11 +116,11 @@ const ProductFinalPrice = () => {
 
   const selectedProductData = useSelector((state) => state.deductions);
   const { selectedProduct, getUpTo } = selectedProductData;
-  console.log("selectedProductData", selectedProductData);
-  console.log("selectedProduct", selectedProduct);
+  // console.log("selectedProductData", selectedProductData);
+  // console.log("selectedProduct", selectedProduct);
 
   const [formData, setFormData] = useState();
-  console.log("formData", formData);
+  // console.log("formData", formData);
 
   const [isOpen, setIsOpen] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
@@ -182,7 +182,8 @@ const ProductFinalPrice = () => {
     } else if (deductedPrice > getUpTo.price) {
       dispatch({
         type: "offerPrice",
-        value: LAPTOP_DESKTOP.includes(productCategory.toLowerCase())
+        // value: LAPTOP_DESKTOP.includes(productCategory.toLowerCase())
+        value: selectedProduct.category.categoryType.processorBased
           ? Math.ceil(deductedPrice)
           : getUpTo.price,
       });

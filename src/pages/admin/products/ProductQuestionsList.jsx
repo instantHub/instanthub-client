@@ -14,16 +14,14 @@ import UpdateSystemConditions from "./systemPriceDrops/UpdateSystemConditions";
 import BackButton from "@components/admin/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProcessorDeductions } from "@features/adminSlices/processorSlice";
-import { LAPTOP_DESKTOP } from "@utils/user/constants";
 import { ROUTES } from "@routes";
 
 const ProductQuestionsList = () => {
   const { productSlug } = useParams();
-  console.log("productSlug", productSlug);
   // Query Params
   const [searchParams] = useSearchParams();
   const selectedVariant = searchParams.get("variant");
-  console.log("selectedVariant", selectedVariant);
+  // console.log("selectedVariant", selectedVariant);
 
   const [selectedDeductions, setSelectedDeductions] = useState(null);
 
@@ -38,9 +36,9 @@ const ProductQuestionsList = () => {
   const [selectedVariantToFill, setSelectedVariantToFill] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const [selectedMobileCat, setSelectedMobileCat] = useState(false);
-  const [selectedSystemCat, setSelectedSystemCat] = useState(false);
-  const [selectedOtherCat, setSelectedOtherCat] = useState(false);
+  const [multiVariants, setMultiVariants] = useState(false);
+  const [processorBased, setProcessorBased] = useState(false);
+  const [simpleCategory, setSimpleCategory] = useState(false);
 
   const [toggle, setToggle] = useState({
     updateAllSystemConfig: false,
@@ -50,8 +48,7 @@ const ProductQuestionsList = () => {
     showSystemConfiguration: true,
   });
 
-  const { data: productDetail, isLoading: productsLoading } =
-    useGetProductDetailsQuery(productSlug);
+  const { data: productDetail } = useGetProductDetailsQuery(productSlug);
 
   const [productData, setProductData] = useState(null);
 
@@ -63,10 +60,7 @@ const ProductQuestionsList = () => {
     isLoading: variantsQuestionsDataLoading,
   } = useGetVariantsQuestionsQuery();
 
-  console.log("variantsQuestionsData", variantsQuestionsData);
-  console.log("selectedDeductions", selectedDeductions);
-
-  // const laptopDesktop = ["laptop", "desktop"];
+  // console.log("selectedDeductions", selectedDeductions);
 
   const fillVariantPriceDrops = async () => {
     console.log("fillVariantPriceDrops");
@@ -96,22 +90,8 @@ const ProductQuestionsList = () => {
       }
     );
 
-    // const updatedDeductions = productData.variantDeductions.map(
-    //   (variant, index) => {
-    //     if (index === variantIndex) {
-    //       // Update the condition label with the provided conditionLabelId
-    //       return {
-    //         ...variant,
-    //       };
-    //     } else {
-    //       // Return the variant without updating
-    //       return variant;
-    //     }
-    //   }
-    // );
-
-    console.log("updatedDeductions", updatedDeductions);
-    console.log("selectedVariantToFill", selectedVariantToFill);
+    // console.log("updatedDeductions", updatedDeductions);
+    // console.log("selectedVariantToFill", selectedVariantToFill);
 
     // Update the product data with the updated deductions
     const updatedProductData = {
@@ -293,20 +273,26 @@ const ProductQuestionsList = () => {
     if (productDetail) {
       // console.log("productDetail", productDetail);
 
+      const MULTI_VARIANTS = productDetail.category.categoryType.multiVariants;
+      const PROCESSOR_BASED =
+        productDetail.category.categoryType.processorBased;
+
       let productCat = productDetail.category.name;
       setProductCategory(productCat);
 
       // Set the matched product to the component state
       setProductData(productDetail);
-      if (productCat === "Mobile") {
-        setSelectedMobileCat(true);
+      // if (productCat === "Mobile") {
+      if (MULTI_VARIANTS) {
+        setMultiVariants(true);
         setSelectedDeductions(
           productDetail.variantDeductions.find(
             (d) => d.variantName == selectedVariant
           )
         );
-      } else if (LAPTOP_DESKTOP.includes(productCat.toLowerCase())) {
-        setSelectedSystemCat(true);
+        // } else if (LAPTOP_DESKTOP.includes(productCat.toLowerCase())) {
+      } else if (PROCESSOR_BASED) {
+        setProcessorBased(true);
         setSelectedDeductions(productDetail.simpleDeductions);
         // setProcessorBasedDeductions(productDetail.processorBasedDeduction);
         const processors = productDetail.simpleDeductions.find((d) =>
@@ -314,7 +300,7 @@ const ProductQuestionsList = () => {
         );
         setProcessorsList(processors?.conditionLabels);
       } else {
-        setSelectedOtherCat(true);
+        setSimpleCategory(true);
         setSelectedDeductions(productDetail.simpleDeductions);
       }
     }
@@ -338,15 +324,15 @@ const ProductQuestionsList = () => {
         <div className=" flex justify-center m-2">
           <h3 className="absolute top-4 text-xl max-sm:text-lg font-serif font-bold">
             {productData ? productData.name : "Loading.."}{" "}
-            {!selectedSystemCat && selectedVariant}
+            {!processorBased && selectedVariant}
           </h3>
-          {selectedSystemCat ? (
+          {processorBased ? (
             <span className="text-2xl max-sm:text-lg font-bold font-serif ">
               {productCategory} Problems & Configuration
             </span>
           ) : null}
           {/* VariantsQuestions List */}
-          {productData && selectedMobileCat ? (
+          {productData && multiVariants ? (
             // <div className="flex items-center justify-around flex-wrap gap-4 max-sm:gap-2 text-sm max-sm:text-[10px]">
             <div className="grid grid-cols-4 max-sm:grid-cols-2 items-center justify-around flex-wrap gap-4 max-sm:gap-2 text-sm max-sm:text-[10px]">
               {!variantsQuestionsDataLoading &&
@@ -375,7 +361,7 @@ const ProductQuestionsList = () => {
 
         <div className="bg-scroll relative text-sm max-sm:text-xs">
           {/* Mobile category pricedrops */}
-          {productData && selectedMobileCat && (
+          {productData && multiVariants && (
             <form onSubmit={handleSubmit}>
               {productData &&
                 selectedDeductions.deductions.map((condition, index) => (
@@ -485,7 +471,7 @@ const ProductQuestionsList = () => {
           )}
 
           {/* Laptop category pricedrops */}
-          {productData && selectedSystemCat && (
+          {productData && processorBased && (
             <div className="flex flex-col">
               {/* Buttons Wrapper */}
               {/* <div className="flex justify-center sticky top-0 bg-white z-10 border-b mb-12"> */}
@@ -715,11 +701,9 @@ const ProductQuestionsList = () => {
           )}
 
           {/* Deductions List Apart from Mobiles and Laptops */}
-          {productData && selectedOtherCat ? (
+          {productData && simpleCategory ? (
             <>
-              <h3 className="text-center text-xl">
-                Deductions List Apart from Mobiles and Laptops
-              </h3>
+              <h3 className="text-center text-xl">Simple Deductions List</h3>
               <form onSubmit={handleSubmit}>
                 {productData &&
                   selectedDeductions.map((condition, index) => (

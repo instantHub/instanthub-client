@@ -18,7 +18,7 @@ const OtpGenerator = (props) => {
     useGenerateOTPMutation();
 
   const { selectedProduct, getUpTo } = useSelector((state) => state.deductions);
-  console.log("selectedProduct Details", selectedProduct);
+  // console.log("selectedProduct Details", selectedProduct);
 
   const [otp, setOtp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
