@@ -3,7 +3,7 @@ import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
   useUploadProductImageMutation,
-} from "@api/productsApi";
+} from "@api";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { SubmitButton } from "@components/admin/SubmitButton";

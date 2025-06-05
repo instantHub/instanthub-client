@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api";
 import { Link } from "react-router-dom";
 import CategoryCard from "./CategoryCard";
 import { ROUTES } from "@routes";

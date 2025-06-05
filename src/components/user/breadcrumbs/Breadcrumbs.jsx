@@ -3,7 +3,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { MAX_LABEL_LENGTH } from "@utils/user/constants";
 
-const Breadcrumbs = () => {
+export const Breadcrumbs = () => {
   const location = useLocation();
   const paths = location.pathname.split("/").filter(Boolean);
 
@@ -47,5 +47,3 @@ const Breadcrumbs = () => {
     </nav>
   );
 };
-
-export default Breadcrumbs;

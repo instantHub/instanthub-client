@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+
 import {
+  useGetCategoriesQuery,
   useCreateProductMutation,
   useUploadProductImageMutation,
-} from "@api/productsApi";
-import { useGetAllSeriesQuery } from "@api/seriesApi";
-import { useGetAllBrandQuery } from "@api/brandsApi";
+  useGetAllSeriesQuery,
+  useGetAllBrandQuery,
+} from "@api";
+
 import { toast } from "react-toastify";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import ListButton from "@components/ListButton";

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
-const AboutPage = () => {
+export const AboutPage = () => {
   const values = [
     {
       heading: "Transparency",
@@ -155,5 +155,3 @@ const AboutPage = () => {
     </>
   );
 };
-
-export default AboutPage;

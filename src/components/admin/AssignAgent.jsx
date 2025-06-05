@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAssignAgentMutation } from "@api/ordersApi";
-import DateAndTime from "../user/DateAndTime/DateAndTime";
+import { useAssignAgentMutation } from "@api";
+import { DateAndTime } from "@components/user";
 import { toast } from "react-toastify";
 
 const AssignAgent = ({ orderDetail }) => {

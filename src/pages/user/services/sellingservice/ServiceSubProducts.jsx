@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useGetServicesQuery } from "@api/servicesApi";
+import { useGetServicesQuery } from "@api";
 import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 import ServiceHeaderImage from "../ServiceHeaderImage";
 
-const ServiceBrands = () => {
+export const ServiceSubProducts = () => {
   const { subServiceId } = useParams();
   // console.log("subServiceId", subServiceId);
 
@@ -169,5 +169,3 @@ const ServiceBrands = () => {
     </>
   );
 };
-
-export default ServiceBrands;

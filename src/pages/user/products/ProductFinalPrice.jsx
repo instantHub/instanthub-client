@@ -7,20 +7,19 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useGetCouponQuery } from "@api/couponsApi";
+import { useGetCouponQuery } from "@api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { FaAngleRight } from "react-icons/fa6";
 import FAQ from "@components/user/static/FAQ";
 import { GiPartyPopper } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
-import LocationSelector from "@components/user/LocationSelector";
+import { LocationSelector } from "@components/user";
 import { LAPTOP } from "@utils/user/constants";
-import SubmitForm from "./SubmitForm";
+import { SubmitForm } from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-// import { useGetProductDetailsQuery } from "../../../features/api/productsApi";
 
 // Create the Context
 const StateContext = createContext();
@@ -97,7 +96,7 @@ function reducer(state, action) {
   }
 }
 
-const ProductFinalPrice = () => {
+export const ProductFinalPrice = () => {
   const [searchParams] = useSearchParams();
   const productURL = searchParams.get("p");
   const categoryURL = searchParams.get("c");
@@ -314,8 +313,6 @@ const ProductFinalPrice = () => {
   );
 };
 
-export default ProductFinalPrice;
-
 // DeductionsList component to render Deductions
 const DeductionsList = () => {
   const { state } = useContext(StateContext);
@@ -505,7 +502,7 @@ const RecycleProduct = ({ productId }) => {
       <button
         onClick={() => {
           navigate(
-            `/recycle-categories/recycle-brands/recycle-productDetails/${productId}`
+            `/recycle/categories/recycle-brands/recycle-productDetails/${productId}`
           );
         }}
         className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"

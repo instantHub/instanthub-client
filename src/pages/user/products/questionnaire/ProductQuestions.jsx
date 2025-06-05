@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useGetProductDetailsQuery } from "@api/productsApi";
+import { useGetProductDetailsQuery } from "@api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -9,15 +9,14 @@ import {
 import { toast } from "react-toastify";
 import ProdDeductionsRight from "./ProdQuestionsRight";
 import LaptopsQuestions from "./LaptopsQuestions";
-import OtpGenerator from "../../otp/OTPGenerator";
+import { OtpGenerator } from "@pages/user";
 import { Helmet } from "react-helmet-async";
-import Loading from "@components/user/loader/Loading";
-import ProgressBar from "@components/user/ProgressBar";
+import { Loading, ProgressBar } from "@components/user";
 import NextPrevButton from "./NextPrevButton";
 import { groupConditionsByPage } from "@utils/user/helper";
 import DisplayCondition from "./DisplayCondition";
 
-const ProductQuestions = () => {
+export const ProductQuestions = () => {
   // Query Params
   const [searchParams] = useSearchParams();
   const product = searchParams.get("product");
@@ -234,8 +233,6 @@ const ProductQuestions = () => {
   );
 };
 
-export default ProductQuestions;
-
 const SwitchedOff = ({ productsData }) => {
   const { id, category, name } = productsData;
   const navigate = useNavigate();
@@ -253,7 +250,7 @@ const SwitchedOff = ({ productsData }) => {
         <button
           onClick={() =>
             navigate(
-              `/recycle-categories/recycle-brands/recycle-productDetails/${id}`
+              `/recycle/categories/recycle-brands/recycle-productDetails/${id}`
             )
           }
           className="bg-green-600 px-2 py-1 mt-4 rounded text-white"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UpdateButton from "./UpdateButton";
-import { useUpdateLaptopConfigurationsPriceDropMutation } from "@api/productsApi";
+import { useUpdateLaptopConfigurationsPriceDropMutation } from "@api";
 import { toast } from "react-toastify";
 
 const UpdateSystemConfigurations = (props) => {
@@ -78,7 +78,6 @@ const UpdateSystemConfigurations = (props) => {
     setProductData(updatedProductData);
     setSelectedDeductions(updatedProductData.simpleDeductions);
   };
-
 
   const handleSubmit = async () => {
     try {

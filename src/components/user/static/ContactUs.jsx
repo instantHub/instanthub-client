@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
-const ContactUs = () => {
+export const ContactUs = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -75,5 +75,3 @@ const ContactUs = () => {
     </>
   );
 };
-
-export default ContactUs;

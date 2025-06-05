@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useGetProductDetailsQuery } from "@api/productsApi";
+import { useGetProductDetailsQuery } from "@api";
 import { useParams, Link } from "react-router-dom";
 import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
-import Loading from "@components/user/loader/Loading";
+import { Loading, Breadcrumbs } from "@components/user";
 import SellContent from "@components/user/static/SellContent";
-import BreadCrumb from "@components/user/breadcrumbs/Breadcrumbs";
 import { MOBILE } from "@utils/user/constants";
 
-const ProductDetail = () => {
+export const ProductDetail = () => {
   const { productUniqueURL } = useParams();
   console.log(productUniqueURL);
 
@@ -28,14 +27,14 @@ const ProductDetail = () => {
     setToggle(!toggle);
     setVariantState({
       variantSelected: variant,
-      selectedDiv: variant.id,
+      selectedDiv: variant?.id,
     });
   };
 
   useEffect(() => {
     // if (!isLoading && productDetails?.category?.name !== MOBILE) {
     if (!isLoading && !productDetails?.category?.categoryType.multiVariants) {
-      handleToggle(productDetails.variants[0]);
+      handleToggle(productDetails?.variants[0]);
     }
   }, [productDetails, isLoading]);
 
@@ -70,7 +69,7 @@ const ProductDetail = () => {
           </span>
         </p>
 
-        <BreadCrumb />
+        <Breadcrumbs />
 
         <div className="bg-white flex flex-col sm:flex-row px-3 sm:px-6 sm:py-1">
           {/* Product Image */}
@@ -199,5 +198,3 @@ const ProductDetail = () => {
     </>
   );
 };
-
-export default ProductDetail;

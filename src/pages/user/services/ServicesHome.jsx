@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetServicesQuery } from "@api/servicesApi";
+import { useGetServicesQuery } from "@api";
 import { ROUTES } from "../../../routes";
 import ServiceItemGrid from "./ServiceItemGrid";
 
-const ServicesHome = () => {
+export const ServicesHome = () => {
   const { data: servicesData, isLoading: serviceLoading } =
     useGetServicesQuery();
 
@@ -61,5 +61,3 @@ const ServicesHome = () => {
     </>
   );
 };
-
-export default ServicesHome;

@@ -29,7 +29,11 @@ const cities = [
   },
 ];
 
-function LocationSelector({ handleAddress, setShowLocation, setIsOpen }) {
+export function LocationSelector({
+  handleAddress,
+  setShowLocation,
+  setIsOpen,
+}) {
   const handleSelectCity = (city, state) => {
     handleAddress(state, city);
     setShowLocation(false); // Close the modal
@@ -77,5 +81,3 @@ function LocationSelector({ handleAddress, setShowLocation, setIsOpen }) {
     </div>
   );
 }
-
-export default LocationSelector;

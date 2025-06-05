@@ -4,8 +4,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import {
   useGetProductDetailsQuery,
   useUpdatePriceDropMutation,
-} from "@api/productsApi";
-import { useGetVariantsQuestionsQuery } from "@api/variantQuestionsApi";
+  useGetVariantsQuestionsQuery,
+} from "@api";
 
 import { toast } from "react-toastify";
 

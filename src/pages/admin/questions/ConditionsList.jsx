@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
 import {
   useGetConditionsQuery,
   useDeleteConditionMutation,
-} from "@api/conditionsApi";
+  useGetCategoriesQuery,
+} from "@api";
 import BackButton from "@components/admin/BackButton";
 import EditButton from "@components/admin/EditButton";
 import { toast } from "react-toastify";

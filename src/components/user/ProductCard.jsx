@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ product, URL }) => (
+export const ProductCard = ({ product, URL }) => (
   <div className="flex items-center justify-center max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:">
     {/* <Link to={`${URL}/${product.id}`} className="w-full h-full"> */}
     <Link to={`${URL}`} className="w-full h-full">
@@ -22,5 +22,3 @@ const ProductCard = ({ product, URL }) => (
     </Link>
   </div>
 );
-
-export default ProductCard;

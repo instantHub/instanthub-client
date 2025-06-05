@@ -2,7 +2,7 @@ import React from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { MdOutlineRefresh } from "react-icons/md";
 
-const ErrorComponent = ({ message }) => {
+export const ErrorComponent = ({ message }) => {
   return (
     <>
       <div
@@ -36,5 +36,3 @@ const ErrorComponent = ({ message }) => {
     </>
   );
 };
-
-export default ErrorComponent;

@@ -2,7 +2,7 @@ import React from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const ServiceBreadCrumbLinks = ({
+export const ServiceBreadCrumbLinks = ({
   directService = null,
   brandsService = null,
   subService = null,
@@ -53,5 +53,3 @@ const ServiceBreadCrumbLinks = ({
     </div>
   );
 };
-
-export default ServiceBreadCrumbLinks;

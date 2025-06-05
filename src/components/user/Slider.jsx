@@ -1,9 +1,8 @@
-// BEST IN PERFORMANCE IN LIGHTHOUSE
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { RxDotFilled } from "react-icons/rx";
-import { useGetActiveSlidersListQuery } from "@api/slidersApi";
+import { useGetActiveSlidersListQuery } from "@api";
 
-function Slider() {
+export function Slider() {
   const { data: slidersData = [], isLoading: slidersLoading } =
     useGetActiveSlidersListQuery(); // Default to empty array
 
@@ -45,37 +44,6 @@ function Slider() {
 
   return (
     <>
-      {/* <div className="max-w-[1400px] w-full h-auto mx-auto group max-lg:px-2 max-sm:px-2 max-14inch:px-24">
-        {/* Main Slider Image 
-        <div>
-          <img
-            src={imageUrls[currentIndex]}
-            alt={`Banner ${currentIndex + 1}`}
-            width="1920"
-            height="600"
-            className="w-full h-auto bg-cover bg-center rounded-lg max-sm:h-[110px]"
-          />
-        </div>
-
-       Dots Navigation 
-        {imageUrls.length > 1 && (
-          <div className="flex justify-center py-2">
-            {imageUrls.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`text-2xl cursor-pointer transition-colors duration-300 ${
-                  index === currentIndex ? "text-secondary" : "text-gray-500"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              >
-                <RxDotFilled />
-              </button>
-            ))}
-          </div>
-        )}
-      </div> */}
-
       {/* Ensuring Layout Stability */}
       <div
         className="max-w-[1400px] w-full h-auto mx-auto group max-lg:px-2 max-sm:px-2 max-14inch:px-24"
@@ -134,5 +102,3 @@ function Slider() {
     </>
   );
 }
-
-export default Slider;

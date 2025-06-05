@@ -24,6 +24,7 @@ export const baseApi = createApi({
     "Variants Questions",
     "Phone Numbers",
     "Complaints",
+    "Processors",
   ],
   endpoints: () => ({}),
 });

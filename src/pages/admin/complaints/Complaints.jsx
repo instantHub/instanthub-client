@@ -3,8 +3,8 @@ import {
   useAcknowledgeComplaintMutation,
   useDeleteComplaintMutation,
   useGetComplaintsQuery,
-} from "@api/complaintsApi";
-import Loading from "@components/user/loader/Loading";
+} from "@api";
+import { Loading } from "@components/user";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 
 const Complaints = () => {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
-import { useCreateConditionsMutation } from "@api/conditionsApi";
+import { useCreateConditionsMutation, useGetCategoriesQuery } from "@api";
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { useDispatch, useSelector } from "react-redux";

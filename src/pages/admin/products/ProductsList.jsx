@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
 import {
+  useGetCategoriesQuery,
   useGetAllProductsQuery,
   useDeleteProductMutation,
-} from "@api/productsApi";
+} from "@api";
 import { Link } from "react-router-dom";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";

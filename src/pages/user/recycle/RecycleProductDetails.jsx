@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useGetProductDetailsQuery } from "@api/productsApi";
-import { useCreateRecycleOrderMutation } from "@api/recycleApi";
+import { useGetProductDetailsQuery, useCreateRecycleOrderMutation } from "@api";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
-import FormInput from "@components/user/FormInput";
-import Loading from "@components/user/loader/Loading";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
-import LocationSelector from "@components/user/LocationSelector";
 import { LAPTOP, MOBILE } from "@utils/user/constants";
-import DateAndTime from "@components/user/DateAndTime/DateAndTime";
-import InputSubmitBtn from "@components/user/InputSubmitBtn";
+import {
+  Loading,
+  DateAndTime,
+  RecycleBreadcrumbs,
+  FormInput,
+  InputSubmitBtn,
+  LocationSelector,
+} from "@components/user";
 import {
   DEAD_LAPTOP_PRICE,
   DEAD_MOBILE_PRICE,
   NON_DEAD_LAPTOP_PRICE,
   NON_DEAD_MOBILE_PRICE,
 } from "./constants";
-import RecycleBreadcrumbs from "@components/user/breadcrumbs/RecycleBreadcrumbs";
 
-const RecycleProductDetail = () => {
+export const RecycleProductDetail = () => {
   const { productURL } = useParams();
   console.log("productURL", productURL);
 
@@ -191,7 +192,7 @@ const RecycleProductDetail = () => {
       console.log("order", order);
       if (order.data.success) {
         toast.success("Your Order placed successfully");
-        navigate(`/recycle-categories`);
+        navigate(`/recycle/categories`);
       }
     } catch (error) {
       console.log("Error while booking recycle product:- ", error.message);
@@ -226,7 +227,7 @@ const RecycleProductDetail = () => {
         />
         <link
           rel="canonical"
-          href={`https://www.instanthub.in/recycle-categories/recycle-brands/recycle-productDetails/${productURL}`}
+          href={`https://www.instanthub.in/recycle/categories/recycle-brands/recycle-productDetails/${productURL}`}
         />
       </Helmet>
 
@@ -541,8 +542,6 @@ const RecycleProductDetail = () => {
     </>
   );
 };
-
-export default RecycleProductDetail;
 
 function CheckStatus({
   product,

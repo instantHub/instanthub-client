@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useAdminLogoutMutation, useAdminProfileQuery } from "@api/authApi";
+import { useAdminLogoutMutation, useAdminProfileQuery } from "@api";
 import { useNavigate } from "react-router-dom";
 import { logout } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";

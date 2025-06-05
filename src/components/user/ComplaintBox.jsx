@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useCreateComplaintMutation } from "@api/complaintsApi";
+import { useCreateComplaintMutation } from "@api";
 import { toast } from "react-toastify";
 
-const ComplaintBox = ({ setOpenComplaintBox }) => {
+export const ComplaintBox = ({ setOpenComplaintBox }) => {
   const [createComplaint, { isLoading: createComplaintLoading }] =
     useCreateComplaintMutation();
 
@@ -180,4 +180,3 @@ const ComplaintBox = ({ setOpenComplaintBox }) => {
   );
 };
 
-export default ComplaintBox;

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Condition from "./Condition";
 import ConditionLabel from "./ConditionLabel";
 import { useSelector } from "react-redux";
-import { useGetConditionsQuery } from "@api/conditionsApi";
-import { useGetConditionLabelsQuery } from "@api/conditionLabelsApi";
+import { useGetConditionsQuery, useGetConditionLabelsQuery } from "@api";
 import SideList from "./SideList";
 
 const CreateQuestions = () => {

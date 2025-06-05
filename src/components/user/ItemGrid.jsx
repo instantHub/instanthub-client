@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ItemGrid = ({ items, linkPath, displayBig = false }) => {
+export const ItemGrid = ({ items, linkPath, displayBig = false }) => {
   console.log("location from localst", localStorage.getItem("location"));
   return (
     <>
@@ -29,6 +29,5 @@ const ItemGrid = ({ items, linkPath, displayBig = false }) => {
   );
 };
 
-export default ItemGrid;
 
 // className="w-32 p-4 h-32 flex cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500 bg-white"

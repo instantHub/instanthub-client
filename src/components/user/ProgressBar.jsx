@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
-const ProgressBar = ({ progressPercentage = 20 }) => {
+export const ProgressBar = memo(({ progressPercentage = 20 }) => {
   return (
     <div
       style={{
@@ -9,6 +9,4 @@ const ProgressBar = ({ progressPercentage = 20 }) => {
       className={`h-2 bg-secondary absolute top-0 left-0 overflow-hidden`}
     ></div>
   );
-};
-
-export default memo(ProgressBar);
+});

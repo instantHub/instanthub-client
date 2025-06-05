@@ -9,9 +9,8 @@ import { router } from "@routes";
 function App() {
   return (
     <>
-      <RouterProvider router={router}>
-        <AnalyticsWrapper />
-      </RouterProvider>
+      {/* <AnalyticsWrapper /> */}
+      <RouterProvider router={router}></RouterProvider>
       <ToastContainer />
     </>
   );

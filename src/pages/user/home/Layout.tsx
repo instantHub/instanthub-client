@@ -1,11 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "@components/user/Navbar";
-import Footer from "@components/user/static/Footer";
-import FloatingButtons from "@components/user/FloatingButtons";
+import { Navbar, FloatingButtons, Footer } from "@components/user";
 import useGoogleAnalytics from "@hooks/useGoogleAnalytics";
 
-const Layout = () => {
+export const Layout = () => {
   useGoogleAnalytics();
   return (
     <>
@@ -22,5 +20,3 @@ const Layout = () => {
     </>
   );
 };
-
-export default Layout;

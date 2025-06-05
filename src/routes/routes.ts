@@ -9,15 +9,9 @@ export const ROUTES = {
     termsOfUse: "/terms-of-use",
 
     brands: "/:location/:categoryUniqueURL",
-    // brands: "/categories/brands/:slug",
-
-    // products: "/categories/brands/products/:brandId",
     products: "/:location/:categoryUniqueURL/:brandUniqueURL",
-
-    // productDetails: "/categories/brands/productDetails/:prodId",
     productDetails:
       "/:location/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
-
     productDeductions: "/sell/deductions",
     productGenerateOTP: "/sell/deductions/generateOTP",
     productFinalPrice: "/sell/deductions/finalPrice",

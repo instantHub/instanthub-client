@@ -1,4 +1,4 @@
-import { baseApi } from "@api";
+import { baseApi } from "@features/api";
 
 // const ADMIN_URL = "http://localhost:8000/api";
 const ADMIN_URL = "/api";

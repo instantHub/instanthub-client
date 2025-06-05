@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGenerateOTPMutation } from "@api/OTPApi";
+import { useGenerateOTPMutation } from "@api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaIndianRupeeSign } from "react-icons/fa6";
@@ -8,7 +8,7 @@ import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { performCalculation } from "@features/userSlices/deductionSlice";
 
-const OtpGenerator = (props) => {
+export const OtpGenerator = (props) => {
   const { closeModal } = props;
   // Query Params
   const [searchParams] = useSearchParams();
@@ -293,5 +293,3 @@ const OtpGenerator = (props) => {
     </div>
   );
 };
-
-export default OtpGenerator;

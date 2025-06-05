@@ -1,4 +1,4 @@
-import { baseApi } from "@api";
+import { baseApi } from "@features/api";
 
 export const seriesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

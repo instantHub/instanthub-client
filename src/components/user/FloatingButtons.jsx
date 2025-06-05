@@ -1,4 +1,3 @@
-// FloatingButtons.jsx
 import React, { useEffect, useState } from "react";
 import {
   FaWhatsapp,
@@ -12,12 +11,12 @@ import {
 import { GiSellCard } from "react-icons/gi";
 import { MdHomeRepairService } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 // import { FaPhone } from "react-icons/fa";
 
-const FloatingButtons = () => {
+export const FloatingButtons = () => {
   const { data: categories, categoriesLoading: categoriesLoading } =
     useGetCategoriesQuery();
 
@@ -268,7 +267,7 @@ const FloatingButtons = () => {
               activePath.recycle && activeLinkButton
             }`}
             onClick={() => {
-              navigate("/recycle-categories");
+              navigate("/recycle/categories");
             }}
           >
             <button className="flex flex-col items-center gap-1 text-center">
@@ -300,8 +299,6 @@ const FloatingButtons = () => {
     </>
   );
 };
-
-export default FloatingButtons;
 
 {
   /* <a

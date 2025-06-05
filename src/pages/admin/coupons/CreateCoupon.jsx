@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useCreateCouponMutation } from "@api/couponsApi";
-import { useDeleteSeriesMutation } from "@api/seriesApi";
+import { useCreateCouponMutation, useDeleteSeriesMutation } from "@api";
 import { toast } from "react-toastify";
 import CouponsList from "./CouponsList";
 
