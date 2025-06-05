@@ -2,7 +2,7 @@ import React, { useReducer, useRef } from "react";
 import {
   useCreateCategoryMutation,
   useUploadCategoryImageMutation,
-} from "@api/categoriesApi";
+} from "@api";
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";

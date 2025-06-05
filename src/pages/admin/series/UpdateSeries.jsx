@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetAllSeriesQuery, useUpdateSeriesMutation } from "@api/seriesApi";
+import { useGetAllSeriesQuery, useUpdateSeriesMutation } from "@api";
 import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";
 import { ROUTES } from "@routes";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "@api/authApi";
+import { useRegisterMutation } from "@api";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";

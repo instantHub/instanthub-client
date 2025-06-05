@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useGetProductsQuery } from "@api/productsApi";
-import { useGetBrandSeriesQuery } from "@api/seriesApi";
+import { useGetProductsQuery, useGetBrandSeriesQuery } from "@api";
 import { useParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import ProductCard from "@components/user/ProductCard";
-import Loading from "@components/user/loader/Loading";
+import {
+  Loading,
+  ProductCard,
+  SeriesButton,
+  RecycleBreadcrumbs,
+} from "@components/user";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
-import SeriesButton from "@components/user/SeriesButton";
-import RecycleBreadcrumbs from "@components/user/breadcrumbs/RecycleBreadcrumbs";
-import { generatePathWithParams } from "../../../utils/general/generatePathWithParams";
-import { ROUTES } from "../../../routes";
+import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ROUTES } from "@routes";
 
-const RecycleProducts = () => {
+export const RecycleProducts = () => {
   const { brandURL } = useParams();
   // console.log("brandURL", brandURL);
 
@@ -137,7 +138,7 @@ const RecycleProducts = () => {
               <ProductCard
                 key={product.id}
                 product={product}
-                // URL={`/recycle-categories/recycle-brands/recycle-productDetails/${product.uniqueURL}?b=${product.brand.uniqueURL}`}
+                // URL={`/recycle/categories/recycle-brands/recycle-productDetails/${product.uniqueURL}?b=${product.brand.uniqueURL}`}
                 URL={`${generatePathWithParams(
                   ROUTES.user.recycleProductDetails,
                   product.uniqueURL
@@ -150,5 +151,3 @@ const RecycleProducts = () => {
     </>
   );
 };
-
-export default RecycleProducts;

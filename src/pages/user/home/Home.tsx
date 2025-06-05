@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
-import Slider from "@components/user/Slider";
-import Categories from "../categories/Categories";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+
+import { Categories } from "../categories";
+import { Slider } from "@components/user";
 import TestimonialsCorousel from "@components/user/static/home/TestimonialsCorousel";
 import HowItWorks from "@components/user/static/home/HowItWorks";
 import WhyUs from "@components/user/static/home/WhyUs";
-import { Helmet } from "react-helmet-async";
 import FAQ from "@components/user/static/FAQ";
-import ServicesHome from "../services/ServicesHome";
+import { ServicesHome } from "../services";
 import { FaHandPointLeft, FaHandPointRight } from "react-icons/fa";
 import { useIPLocation } from "../../../hooks/useIPLocation";
 
-const Home = () => {
-  const { location, error, loading } = useIPLocation();
+export const Home = () => {
+  const { location } = useIPLocation();
 
   console.log("location", location);
 
@@ -91,5 +92,3 @@ const Home = () => {
     </>
   );
 };
-
-export default Home;

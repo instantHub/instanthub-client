@@ -1,6 +1,6 @@
 import React from "react";
 import { MdDeleteForever } from "react-icons/md";
-import { useDeleteCouponMutation } from "@api/couponsApi";
+import { useDeleteCouponMutation } from "@api";
 
 const CouponCard = ({ data }) => {
   // console.log("data", data);

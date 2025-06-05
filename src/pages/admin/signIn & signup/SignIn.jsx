@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "@api/authApi";
+import { useLoginMutation } from "@api";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";

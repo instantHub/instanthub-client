@@ -3,15 +3,15 @@ import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
   useUploadProductImageMutation,
-} from "@api/productsApi";
+} from "@api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { SubmitButton } from "@components/admin/SubmitButton";
 // import BackButton from "@components/BackButton";
 import CardHeader from "@components/admin/CardHeader";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 import { ROUTES } from "@routes";
-import { slugify } from "../../../utils/general/slugify";
+import { slugify } from "@utils/general/slugify";
 
 const initialState = {
   category: "",

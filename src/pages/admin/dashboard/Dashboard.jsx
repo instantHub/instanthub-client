@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useDashboardDetailsQuery } from "@api/generalApi";
-import { useGetOrdersListQuery } from "@api/ordersApi";
-import { useGetRecycleOrdersQuery } from "@api/recycleApi";
-import Loading from "@components/user/loader/Loading";
+import {
+  useDashboardDetailsQuery,
+  useGetOrdersListQuery,
+  useGetRecycleOrdersQuery,
+} from "@api";
+import { Loading } from "@components/user";
 import DoughnutChart from "./DoughnutChart";
 import BarChart from "./BarChart";
 

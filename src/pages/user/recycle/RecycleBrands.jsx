@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetBrandQuery } from "@api/brandsApi";
+import { useGetBrandQuery } from "@api";
 import { Helmet } from "react-helmet-async";
-import Loading from "@components/user/loader/Loading";
+import { Loading, RecycleBreadcrumbs } from "@components/user";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
 import { ROUTES } from "@routes";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
-import RecycleBreadcrumbs from "@components/user/breadcrumbs/RecycleBreadcrumbs";
 
-const RecycleBrands = () => {
+export const RecycleBrands = () => {
   const { categoryURL } = useParams();
   console.log("categoryURL", categoryURL);
 
@@ -39,7 +38,7 @@ const RecycleBrands = () => {
         />
         <link
           rel="canonical"
-          href={`https://www.instanthub.in/recycle-categories/recycle-brands/${categoryURL}`}
+          href={`https://www.instanthub.in/recycle/categories/recycle-brands/${categoryURL}`}
         />
       </Helmet>
       <div className="pt-10 max-sm:pt-5 w-4/5 max-2sm:w-[90%] mx-auto">
@@ -47,7 +46,7 @@ const RecycleBrands = () => {
           Recycle your {category?.name} to recycle and get Instant Cash
         </p>
 
-        {/* BreadCrumbLinks Headers */}
+        {/* RecycleBreadcrumbs Headers */}
         <RecycleBreadcrumbs />
 
         {brandsLoading ? (
@@ -85,5 +84,3 @@ const RecycleBrands = () => {
     </>
   );
 };
-
-export default RecycleBrands;

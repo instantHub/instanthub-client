@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import DateAndTime from "@components/user/DateAndTime/DateAndTime";
-import InputSubmitBtn from "@components/user/InputSubmitBtn";
-import { useCreateOrderMutation } from "@api/ordersApi";
+import { DateAndTime, InputSubmitBtn } from "@components/user";
+import { useCreateOrderMutation } from "@api";
 import { ORDER_EMAIL_MSG } from "@utils/user/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 
-const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
+export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   const { state, dispatch } = reducer;
   console.log("state from submit form of final price", state);
 
@@ -291,8 +290,6 @@ const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
     </div>
   );
 };
-
-export default SubmitForm;
 
 // Label & Input Field
 const FormData = ({ input, value, placeHolder, changeHandler, readOnly }) => {

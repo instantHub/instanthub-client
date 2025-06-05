@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputSubmitBtn = ({ loading, label, ariaLabel }) => {
+export const InputSubmitBtn = ({ loading, label, ariaLabel }) => {
   return (
     <input
       type="submit"
@@ -12,5 +12,3 @@ const InputSubmitBtn = ({ loading, label, ariaLabel }) => {
     />
   );
 };
-
-export default InputSubmitBtn;

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
-import { useCreateSeriesMutation } from "@api/seriesApi";
-import { useGetAllBrandQuery } from "@api/brandsApi";
+import {
+  useGetCategoriesQuery,
+  useCreateSeriesMutation,
+  useGetAllBrandQuery,
+} from "@api";
 import { toast } from "react-toastify";
 import SeriesList from "./SeriesList";
 

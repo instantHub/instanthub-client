@@ -1,8 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api";
 
-const Categories = () => {
+export const Categories = () => {
   const { data: categories = [], isLoading: categoriesLoading } =
     useGetCategoriesQuery();
 
@@ -71,5 +70,3 @@ const Categories = () => {
     </div>
   );
 };
-
-export default Categories;

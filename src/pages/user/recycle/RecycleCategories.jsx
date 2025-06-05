@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api";
 import { Helmet } from "react-helmet-async";
-import ItemGrid from "@components/user/ItemGrid";
-import Loading from "@components/user/loader/Loading";
+import { Loading, ItemGrid } from "@components/user";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
 import { removeLastParamFromPath } from "@utils/general/removeLastParamFromPath";
 import { ROUTES } from "@routes";
 
-const RecycleCategories = () => {
+export const RecycleCategories = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetCategoriesQuery();
 
@@ -16,13 +15,13 @@ const RecycleCategories = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: "https://www.instanthub.in/recycle-categories",
+    url: "https://www.instanthub.in/recycle/categories",
     name: "InstantHub",
     description:
       "Get instant cash payments with InstantHub on recycling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://www.instanthub.in/recycle-categories",
+      target: "https://www.instanthub.in/recycle/categories",
       "query-input": "required name=search_term_string",
     },
   };
@@ -56,7 +55,7 @@ const RecycleCategories = () => {
         <meta name="author" content="Yusufulla Qureshi" />
         <link
           rel="canonical"
-          href="https://www.instanthub.in/recycle-categories"
+          href="https://www.instanthub.in/recycle/categories"
         />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -94,5 +93,3 @@ const RecycleCategories = () => {
     </>
   );
 };
-
-export default RecycleCategories;

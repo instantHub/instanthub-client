@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useStockSoldMutation } from "@api/stocksApi";
-import DateAndTime from "@components/user/DateAndTime/DateAndTime";
+import { useStockSoldMutation } from "@api";
+import { DateAndTime } from "@components/user";
 import { SubmitButton } from "@components/admin/SubmitButton";
 
 export default function ViewStock({ stock, setViewStock }) {

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetBrandQuery } from "@api/brandsApi";
+import { useGetBrandQuery } from "@api";
 import { Helmet } from "react-helmet-async";
-import Loading from "@components/user/loader/Loading";
+import { Loading, Breadcrumbs } from "@components/user";
 import SellContent from "@components/user/static/SellContent";
 
 import { slugify } from "@utils/general/slugify";
-import Breadcrumbs from "@components/user/breadcrumbs/Breadcrumbs";
 
-const Brands = () => {
+export const Brands = () => {
   // const { catId } = useParams();
   const { categoryUniqueURL } = useParams();
 
@@ -91,5 +90,3 @@ const Brands = () => {
     </>
   );
 };
-
-export default Brands;

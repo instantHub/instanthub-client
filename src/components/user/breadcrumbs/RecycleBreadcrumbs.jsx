@@ -3,7 +3,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { MAX_LABEL_LENGTH } from "@utils/user/constants";
 
-const RecycleBreadcrumbs = () => {
+export const RecycleBreadcrumbs = () => {
   const location = useLocation();
 
   const [searchParams] = useSearchParams();
@@ -46,5 +46,3 @@ const RecycleBreadcrumbs = () => {
     </nav>
   );
 };
-
-export default RecycleBreadcrumbs;

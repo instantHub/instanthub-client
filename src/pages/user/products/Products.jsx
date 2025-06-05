@@ -1,21 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useGetProductsQuery } from "@api/productsApi";
-import { useGetBrandSeriesQuery } from "@api/seriesApi";
+import { useGetProductsQuery, useGetBrandSeriesQuery } from "@api";
 import { useParams } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { Helmet } from "react-helmet-async";
-import Loading from "@components/user/loader/Loading";
-import ProductCard from "@components/user/ProductCard";
+import {
+  Loading,
+  Breadcrumbs,
+  ProductCard,
+  SeriesButton,
+} from "@components/user";
 import SellContent from "@components/user/static/SellContent";
-import BreadCrumbLinks from "@components/user/breadcrumbs/BreadCrumbLinks";
-import SeriesButton from "@components/user/SeriesButton";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
+import { slugify } from "@utils/general/slugify";
 
-import BreadCrumb from "@components/user/breadcrumbs/Breadcrumbs";
-import { slugify } from "../../../utils/general/slugify";
-
-const Products = () => {
+export const Products = () => {
   const { brandId, categoryUniqueURL, brandUniqueURL } = useParams();
   // console.log(
   //   "brandId, categorySlug, brandUniqueURL",
@@ -160,7 +159,7 @@ const Products = () => {
           </p>
         </div>
 
-        <BreadCrumb />
+        <Breadcrumbs />
 
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {filteredProducts?.filter(
@@ -189,5 +188,3 @@ const Products = () => {
     </>
   );
 };
-
-export default Products;

@@ -3,12 +3,10 @@ import {
   useGetRecycleOrderQuery,
   useRecycleOrderCompleteMutation,
   useRecycleOrderCancelMutation,
-} from "@api/recycleApi";
-import { useUploadCustomerProofImageMutation } from "@api/ordersApi";
+  useUploadCustomerProofImageMutation,
+} from "@api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "@components/user/loader/Loading";
-import InputSubmitBtn from "@components/user/InputSubmitBtn";
-import DateAndTime from "@components/user/DateAndTime/DateAndTime";
+import { Loading, DateAndTime, InputSubmitBtn } from "@components/user";
 import { ROUTES } from "@routes";
 
 const RecycleOrderDetail = () => {

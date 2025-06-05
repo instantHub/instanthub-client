@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
+
 import {
   useCreateBrandMutation,
   useUploadBrandImageMutation,
-} from "@api/brandsApi";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+  useGetCategoriesQuery,
+} from "@api";
+
 import { toast } from "react-toastify";
 import ListButton from "@components/admin/ListButton";
 import { SubmitButton } from "@components/admin/SubmitButton";

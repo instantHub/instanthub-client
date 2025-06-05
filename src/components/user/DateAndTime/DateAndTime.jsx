@@ -2,7 +2,7 @@ import React, { memo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const DateAndTime = ({ label = true, showPreviousDate, setSchedule }) => {
+export const DateAndTime = memo(({ label = true, showPreviousDate, setSchedule }) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const currentDate = new Date();
@@ -64,9 +64,9 @@ const DateAndTime = ({ label = true, showPreviousDate, setSchedule }) => {
       </div>
     </div>
   );
-};
+});
 
-export default memo(DateAndTime);
+// export default memo(DateAndTime);
 
 // Old formatting with date and time
 {

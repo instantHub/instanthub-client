@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
-import { useGetStocksQuery } from "@api/stocksApi";
+import { useGetCategoriesQuery, useGetStocksQuery } from "@api";
 import StockCard from "./StockCard";
 import ViewStock from "./ViewStock";
 

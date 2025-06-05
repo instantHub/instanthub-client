@@ -1,0 +1,1 @@
+export { AllTermsAndPolicies } from "./AllTermsAndPolicies";

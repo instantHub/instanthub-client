@@ -1,6 +1,6 @@
 import { FaTimes } from "react-icons/fa";
 
-const SeriesButton = ({ series, isSelected, onClick }) => (
+export const SeriesButton = ({ series, isSelected, onClick }) => (
   <div
     key={series.id}
     className="relative col-span-1 max-h-44 sm:max-h-56 sm:rounded border-b border-r border-solid sm:border-0 max-sm:border-gray-300"
@@ -25,5 +25,3 @@ const SeriesButton = ({ series, isSelected, onClick }) => (
     )}
   </div>
 );
-
-export default SeriesButton;

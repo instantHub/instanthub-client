@@ -3,17 +3,16 @@ import {
   useGetAllBrandQuery,
   useUpdateBrandMutation,
   useUploadBrandImageMutation,
-} from "@api/brandsApi";
+  useGetBrandQuery,
+  useGetSingleBrandQuery,
+} from "@api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardHeader from "@components/admin/CardHeader";
 import { SubmitButton } from "@components/admin/SubmitButton";
 import { ROUTES } from "@routes";
-import {
-  useGetBrandQuery,
-  useGetSingleBrandQuery,
-} from "../../../features/api/brandsApi";
-import Loading from "../../../components/user/loader/Loading";
+
+import { Loading } from "@components/user";
 import { slugify } from "../../../utils/general/slugify";
 
 function UpdateBrand() {

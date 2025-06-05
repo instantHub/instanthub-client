@@ -4,7 +4,7 @@ import {
   useGetAllSlidersQuery,
   useUpdateSliderMutation,
   useUploadSliderImageMutation,
-} from "@api/slidersApi";
+} from "@api";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 

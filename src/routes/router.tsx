@@ -1,50 +1,23 @@
+import React, { lazy, Suspense, ComponentType, createElement } from "react";
 import { createBrowserRouter as Router, Navigate } from "react-router-dom";
-import { lazy, Suspense } from "react";
 
-// Client side
-import ClientLayout from "@pages/user/home/Layout";
-import ClientHome from "@pages/user/home/Home";
-// import ClientNavbar from "@components/Navbar";
-import ClientBrands from "@pages/user/brands/Brands";
-// import ClientProducts from "@pages/products/Products";
-import ClientProductDetail from "@pages/user/products/ProductDetail";
-import ClientProductDeductions from "@pages/user/products/questionnaire/ProductQuestions";
-import ClientOtpGenerator from "@pages/user/otp/OTPGenerator";
-import ClientProductFinalPrice from "@pages/user/products/ProductFinalPrice";
+import * as USER from "@pages/user";
 
-// Services
-import ClientServices from "@pages/user/services/Services";
-import ClientServicesBrands from "@pages/user/services/brands/ServiceBrands";
-import ClientServicesBrandsProblems from "@pages/user/services/brands/ServiceBrandProblems";
-import ClientSubServices from "@pages/user/services/sellingservice/ServiceSubCategory";
-import ClientServiceSubProducts from "@pages/user/services/sellingservice/ServiceSubProducts";
-import ClientBookService from "@pages/user/services/BookService";
+import {
+  Loading,
+  AboutPage,
+  ContactUs,
+  ErrorComponent,
+  AllTermsAndPolicies,
+} from "@components/user";
 
-// Recycle
-import ClientRecycleCategories from "@pages/user/recycle/RecycleCategories";
-import ClientRecycleBrands from "@pages/user/recycle/RecycleBrands";
-// import ClientRecycleProducts from "@pages/recycle/RecycleProducts";
-import ClientRecycleProductDetail from "@pages/user/recycle/RecycleProductDetails";
-
-const ClientProducts = lazy(() => import("@pages/user/products/Products"));
-
-// POLICIES
-import ClientTermsAndPolicies from "@components/user/policies/AllTermsAndPolicies";
-
-// Admin side
 import PrivateRoute from "@components/admin/PrivateRoute";
 import AdminSignIn from "@pages/admin/signIn & signup/SignIn";
-
-// import UpdateAdminProfile from "@admin/components/UpdateAdmin";
-// import AdminDashboard from "@admin/pages/dashboard/Dashboard";
-// const UpdateAdminProfile = lazy(() => import("@components/admin/UpdateAdmin"));
-// const AdminDashboard = lazy(() => import("@pages/admin/dashboard/Dashboard"));
-// const AdminProducts = lazy(() => import("@admin/pages/products/Products"));
-
 import Admin from "@pages/admin/Admin";
 
 import AdminCreateProducts from "@pages/admin/products/CreateProducts";
 import AdminUpdateProduct from "@pages/admin/products/UpdateProduct";
+
 import AdminBrandsList from "@pages/admin/brands/BrandsList";
 import AdminUpdateBrand from "@pages/admin/brands/UpdateBrand";
 import AdminCreateBrand from "@pages/admin/brands/CreateBrand";
@@ -54,12 +27,8 @@ import AdminUpdateCategory from "@pages/admin/categories/UpdateCategory";
 import AdminCreateSeries from "@pages/admin/series/CreateSeries";
 import AdminUpdateSeries from "@pages/admin/series/UpdateSeries";
 import AdminSeriesList from "@pages/admin/series/SeriesList";
-// import AdminCreateConditions from "@admin/pages/questions/old/CreateCondtions";
 import AdminUpdateCondition from "@pages/admin/questions/UpdateCondition";
 import AdminUpdateConditionLabel from "@pages/admin/questions/UpdateConditionLabel";
-// import AdminProductsList from "@admin/pages/products/ProductsList";
-// import AdminProductQuestions from "@admin/pages/products/ProductQuestionsList";
-
 import AdminConditionsList from "@pages/admin/questions/ConditionsList";
 import AdminConditionLabelsList from "@pages/admin/questions/ConditionLabelsList";
 import AdminCreateSlider from "@pages/admin/sliders/CreateSlider";
@@ -70,41 +39,33 @@ import AdminOrderDetail from "@pages/admin/orders/OrderDetail";
 import AdminPhoneNumbers from "@pages/admin/orders/PhoneNumbersList";
 import AdminManageStocks from "@pages/admin/stocks/ManageStocks";
 import AdminCreateCoupon from "@pages/admin/coupons/CreateCoupon";
-
-// Services
 import AdminCreateServiceForm from "@pages/admin/services/CreateServices";
 import AdminServicesList from "@pages/admin/services/ServicesList";
 import AdminServicesOrdersList from "@pages/admin/services/ServicesOrdersList";
 import AdminServiceOrderDetail from "@pages/admin/services/ServiceOrderDetail";
-
-// Recycle Orders
 import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
-
-// VARIANTS QUESTIONS
 import AdminCreateVariantsQuestions from "@pages/admin/variantQuestions/CreateVariantsQuestions";
 import AdminUpdateVariantQuestions from "@pages/admin/variantQuestions/UpdateVariantQuestions";
-
-// POSTS
-import AdminCreatePost from "@pages/admin/posts/CreatePost";
-
-import "react-toastify/dist/ReactToastify.css";
-import ErrorComponent from "@components/user/ErrorComponent";
-import AboutPage from "@components/user/static/About";
-import ContactUs from "@components/user/static/ContactUs";
 import CreateQuestions from "@pages/admin/questions/CreateQuestions";
 
-import Loading from "@components/user/loader/Loading";
 import { ROUTES } from "./routes";
 
-const lazyLoad = (importFunc) => {
+// Lazy load utility with type safety
+function lazyLoad<T extends ComponentType<any>>(
+  importFunc: () => Promise<{ default: T }>
+): React.FC<React.ComponentProps<T>> {
   const LazyComponent = lazy(importFunc);
-  return (
+
+  // Define the wrapper component with the inferred props of the LazyComponent
+  const LazyWrapper: React.FC<React.ComponentProps<T>> = (props) => (
     <Suspense fallback={<Loading />}>
-      <LazyComponent />
+      <LazyComponent {...props} />
     </Suspense>
   );
-};
+
+  return LazyWrapper;
+}
 
 export const router = Router([
   {
@@ -112,14 +73,14 @@ export const router = Router([
     // errorElement: (
     //   <ErrorComponent message={`Sorry please try after sometime..!`} />
     // ),
-    element: <ClientLayout />, // Google Analytics is used here
+    element: <USER.Layout />, // Google Analytics is used here
     children: [
       {
         index: true,
         errorElement: (
           <ErrorComponent message={`Sorry please try after sometime..!`} />
         ),
-        element: <ClientHome />,
+        element: <USER.Home />,
       },
       {
         path: ROUTES.user.about,
@@ -131,19 +92,19 @@ export const router = Router([
       },
       {
         path: ROUTES.user.privacyPolicy,
-        element: <ClientTermsAndPolicies />,
+        element: <AllTermsAndPolicies />,
       },
       {
         path: ROUTES.user.servicePolicy,
-        element: <ClientTermsAndPolicies />,
+        element: <AllTermsAndPolicies />,
       },
       {
         path: ROUTES.user.termsConditions,
-        element: <ClientTermsAndPolicies />,
+        element: <AllTermsAndPolicies />,
       },
       {
         path: ROUTES.user.termsOfUse,
-        element: <ClientTermsAndPolicies />,
+        element: <AllTermsAndPolicies />,
       },
 
       {
@@ -153,7 +114,7 @@ export const router = Router([
             message={`Sorry unable to load Brands, please try after sometime..!`}
           />
         ),
-        element: <ClientBrands />,
+        element: <USER.Brands />,
       },
 
       {
@@ -165,7 +126,7 @@ export const router = Router([
         ),
         element: (
           <Suspense fallback="Loading...">
-            <ClientProducts />
+            <USER.Products />
           </Suspense>
         ),
       },
@@ -176,22 +137,22 @@ export const router = Router([
             message={`Sorry unable to load Product Details, please try after sometime..!`}
           />
         ),
-        element: <ClientProductDetail />,
+        element: <USER.ProductDetail />,
       },
       {
         path: ROUTES.user.productDeductions,
         errorElement: (
           <ErrorComponent message={`Sorry please try after sometime..!`} />
         ),
-        element: <ClientProductDeductions />,
+        element: <USER.ProductQuestions />,
       },
       {
         path: ROUTES.user.productGenerateOTP,
-        element: <ClientOtpGenerator />,
+        element: <USER.OtpGenerator />,
       },
       {
         path: ROUTES.user.productFinalPrice,
-        element: <ClientProductFinalPrice />,
+        element: <USER.ProductFinalPrice />,
       },
       // Services
       {
@@ -201,7 +162,7 @@ export const router = Router([
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
-        element: <ClientServices />,
+        element: <USER.Services />,
       },
       {
         path: ROUTES.user.serviceSubCategory,
@@ -210,7 +171,7 @@ export const router = Router([
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
-        element: <ClientSubServices />,
+        element: <USER.ServiceSubCategory />,
       },
       {
         path: ROUTES.user.serviceSubProducts,
@@ -219,7 +180,7 @@ export const router = Router([
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
-        element: <ClientServiceSubProducts />,
+        element: <USER.ServiceSubProducts />,
       },
       {
         path: ROUTES.user.serviceBrands,
@@ -228,7 +189,7 @@ export const router = Router([
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
-        element: <ClientServicesBrands />,
+        element: <USER.ServiceBrands />,
       },
       {
         path: ROUTES.user.serviceBrandProblems,
@@ -237,7 +198,7 @@ export const router = Router([
             message={`Sorry unable to load Services Problems, please try after sometime..!`}
           />
         ),
-        element: <ClientServicesBrandsProblems />,
+        element: <USER.ServiceBrandProblems />,
       },
       {
         path: ROUTES.user.bookService,
@@ -246,7 +207,7 @@ export const router = Router([
             message={`Sorry unable to load Book-Service, please try after sometime..!`}
           />
         ),
-        element: <ClientBookService />,
+        element: <USER.BookService />,
       },
       {
         path: ROUTES.user.recycleCategories,
@@ -255,7 +216,7 @@ export const router = Router([
             message={`Sorry unable to Recycle Categories, please try after sometime..!`}
           />
         ),
-        element: <ClientRecycleCategories />,
+        element: <USER.RecycleCategories />,
       },
       {
         path: ROUTES.user.recycleBrands,
@@ -264,7 +225,7 @@ export const router = Router([
             message={`Sorry unable to Recycle Brands, please try after sometime..!`}
           />
         ),
-        element: <ClientRecycleBrands />,
+        element: <USER.RecycleBrands />,
       },
       {
         path: ROUTES.user.recycleProducts,
@@ -273,8 +234,17 @@ export const router = Router([
             message={`Sorry unable to load Products, please try after sometime..!`}
           />
         ),
-        // element: <ClientRecycleProducts />,
-        element: lazyLoad(() => import("@pages/user/recycle/RecycleProducts")),
+        // element: React.createElement(
+        //   // lazyLoad(() => import("@pages/user/recycle"))
+        //   lazyLoad(() => import("@pages/user/recycle"))
+        // ),
+        element: createElement(
+          lazyLoad(() =>
+            import("@pages/user/recycle").then((module) => ({
+              default: module.RecycleProducts,
+            }))
+          )
+        ),
       },
       {
         path: ROUTES.user.recycleProductDetails,
@@ -283,7 +253,7 @@ export const router = Router([
             message={`Sorry unable to load Product Details, please try after sometime..!`}
           />
         ),
-        element: <ClientRecycleProductDetail />,
+        element: <USER.RecycleProductDetail />,
       },
     ],
   },
@@ -311,11 +281,15 @@ export const router = Router([
           },
           {
             path: ROUTES.admin.dashboard,
-            element: lazyLoad(() => import("@pages/admin/dashboard/Dashboard")),
+            element: React.createElement(
+              lazyLoad(() => import("@pages/admin/dashboard/Dashboard"))
+            ),
           },
           {
             path: ROUTES.admin.updateProfile,
-            element: lazyLoad(() => import("@components/admin/UpdateAdmin")),
+            element: React.createElement(
+              lazyLoad(() => import("@components/admin/UpdateAdmin"))
+            ),
           },
           {
             path: ROUTES.admin.createProduct,
@@ -324,8 +298,8 @@ export const router = Router([
           {
             path: ROUTES.admin.productsList,
             // element: <AdminProductsList />,
-            element: lazyLoad(() =>
-              import("@pages/admin/products/ProductsList")
+            element: React.createElement(
+              lazyLoad(() => import("@pages/admin/products/ProductsList"))
             ),
           },
           {
@@ -335,8 +309,10 @@ export const router = Router([
           {
             path: ROUTES.admin.productQuestions,
             // element: <AdminProductQuestions />,
-            element: lazyLoad(() =>
-              import("@pages/admin/products/ProductQuestionsList")
+            element: React.createElement(
+              lazyLoad(
+                () => import("@pages/admin/products/ProductQuestionsList")
+              )
             ),
           },
 
@@ -482,14 +458,16 @@ export const router = Router([
           {
             path: ROUTES.admin.createPost,
             // element: <AdminProductQuestions />,
-            element: lazyLoad(() => import("@pages/admin/posts/CreatePost")),
+            element: React.createElement(
+              lazyLoad(() => import("@pages/admin/posts/CreatePost"))
+            ),
           },
 
           // Complaints
           {
             path: ROUTES.admin.complaintsList,
-            element: lazyLoad(() =>
-              import("@pages/admin/complaints/Complaints")
+            element: React.createElement(
+              lazyLoad(() => import("@pages/admin/complaints/Complaints"))
             ),
           },
         ],

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { useGetServicesQuery } from "@api/servicesApi";
+import { useGetServicesQuery } from "@api";
 import { Helmet } from "react-helmet-async";
 import ServiceContent from "@components/user/static/services/ServiceContent";
 import ServiceItemGrid from "./ServiceItemGrid";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 
-const Services = () => {
+export const Services = () => {
   const { data: servicesData, serviceLoading: serviceLoading } =
     useGetServicesQuery();
 
@@ -77,34 +77,3 @@ const Services = () => {
     </>
   );
 };
-
-export default Services;
-
-{
-  /* List of Service Brands */
-  // !serviceLoading &&
-  //   servicesData?.serviceCategories
-  //     .filter((s) => s.status === "Active")
-  //     .map((service, i) => (
-  //       <Link to={determineServicePath(service)} key={i}>
-  //         <div
-  //           key={i}
-  //           // className="w-28 p-4 cursor-pointer rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
-  //           className="flex flex-col items-center justify-center border p-1 cursor-pointer w-full h-full bg-white  sm:min-w-full rounded-md sm:rounded-xl sm:ring-0 sm:ring-transparent shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500"
-  //         >
-  //           <div className="flex horizontal w-28 h-28 items-center justify-center max-sm:w-24 max-sm:h-24">
-  //             <img
-  //               src={import.meta.env.VITE_APP_BASE_URL + service.image}
-  //               alt="CAT"
-  //               className="w-28 h-28 max-sm:w-20 max-sm:h-20"
-  //             />
-  //           </div>
-  //           <span className="text-center mt-2 flex-1 line-clamp-3 flex horizontal items-center justify-center h-9 sm:h-full sm:w-full sm:max-h-12">
-  //             <div className="text-[12px] font-[500] leading-7 max-sm:text-xs">
-  //               {service.name}
-  //             </div>
-  //           </span>
-  //         </div>
-  //       </Link>
-  //     ));
-}

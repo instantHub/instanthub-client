@@ -6,7 +6,7 @@ import {
   setProductData,
 } from "@features/userSlices/deductionSlice";
 import { toast } from "react-toastify";
-import OtpGenerator from "../../otp/OTPGenerator";
+import { OtpGenerator } from "@pages/user";
 // import LaptopDeductionItems from "./LaptopDeductionItems";
 import NextPrevButton from "./NextPrevButton";
 import DisplayCondition from "./DisplayCondition";

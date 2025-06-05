@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   useUpdateServiceMutation,
   useUploadServicesImageMutation,
-} from "@api/servicesApi";
-import { useDeleteImageMutation } from "@api/generalApi";
+  useDeleteImageMutation,
+} from "@api";
 import { toast } from "react-toastify";
-import { slugify } from "../../../utils/general/slugify";
+import { slugify } from "@utils/general/slugify";
 
 function UpdateService(props) {
   const [updateService, { isLoading: updateServiceLoading }] =

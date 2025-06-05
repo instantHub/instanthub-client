@@ -1,6 +1,6 @@
 import React from "react";
 
-const Time = ({setTime}) => {
+export const Time = ({ setTime }) => {
   const timings = [
     "9 AM - 11 AM",
     "11 AM - 1 PM",
@@ -27,5 +27,3 @@ const Time = ({setTime}) => {
     </div>
   );
 };
-
-export default Time;

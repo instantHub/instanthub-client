@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import {
   useGetVariantsQuestionsQuery,
   useUpdateVariantQuestionsMutation,
-} from "@api/variantQuestionsApi";
+} from "@api";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 

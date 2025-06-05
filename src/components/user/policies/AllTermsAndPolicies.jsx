@@ -5,7 +5,7 @@ import TermsOfUse from "./TermsOfUse";
 import { useLocation, useNavigate } from "react-router-dom";
 import ServicePolicy from "./ServicePolicy";
 
-const TermsAndPolicies = () => {
+export const AllTermsAndPolicies = () => {
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const [termsAndConditions, setTermsAndConditions] = useState(false);
   const [termsOfUse, setTermsOfUse] = useState(false);
@@ -122,5 +122,3 @@ const TermsAndPolicies = () => {
     </div>
   );
 };
-
-export default TermsAndPolicies;

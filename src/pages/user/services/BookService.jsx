@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  useCreateServiceOrderMutation,
-  useGetServicesQuery,
-} from "@api/servicesApi";
+import { useCreateServiceOrderMutation, useGetServicesQuery } from "@api";
 import {
   Link,
   useNavigate,
@@ -14,14 +11,16 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import ServiceFAQs from "@components/user/static/services/ServiceFAQs";
 import PriceModal from "./PriceModal";
-import InputSubmitBtn from "@components/user/InputSubmitBtn";
-import DateAndTime from "@components/user/DateAndTime/DateAndTime";
+import {
+  DateAndTime,
+  ServiceBreadCrumbLinks,
+  InputSubmitBtn,
+} from "@components/user";
 
 // New Form Validation
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ServiceBreadCrumbLinks from "@components/user/breadcrumbs/ServiceBreadCrumbsLinks";
 
 const formSchema = z
   .object({
@@ -69,7 +68,7 @@ const formSchema = z
     }
   });
 
-export default function BookService() {
+export function BookService() {
   const { serviceId, serviceUniqueURL } = useParams();
   console.log("serviceId serviceUniqueURL", serviceId, serviceUniqueURL);
 

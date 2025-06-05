@@ -4,9 +4,9 @@ import {
   useGetOrderQuery,
   useOrderReceivedMutation,
   useUploadCustomerProofImageMutation,
-} from "@api/ordersApi";
+} from "@api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 import OrderCompleteForm from "@components/admin/OrderCompleteForm";
 import { orderCurrentStatus } from "@utils/admin/helper";
 import { FaRegImages } from "react-icons/fa";

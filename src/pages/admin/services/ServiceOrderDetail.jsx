@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import {
-  useDeleteServiceOrderMutation,
-  useGetServiceOrderQuery,
-} from "@api/servicesApi";
+import { useDeleteServiceOrderMutation, useGetServiceOrderQuery } from "@api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 import { orderCurrentStatus } from "@utils/admin/helper";
 import { IoCartOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";

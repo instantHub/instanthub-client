@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useGetServicesQuery } from "@api/servicesApi";
+import { useGetServicesQuery } from "@api";
 import {
   addServiceProblems,
   removeServiceProblems,
@@ -9,10 +9,10 @@ import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import ServiceContent from "@components/user/static/services/ServiceContent";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 import ServiceHeaderImage from "../ServiceHeaderImage";
 
-const ServiceBrands = () => {
+export const ServiceBrandProblems = () => {
   const { categoryUniqueURL } = useParams();
   console.log("categoryUniqueURL", categoryUniqueURL);
 
@@ -223,5 +223,3 @@ const ServiceBrands = () => {
     </>
   );
 };
-
-export default ServiceBrands;

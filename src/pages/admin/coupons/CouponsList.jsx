@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetCouponQuery } from "@api/couponsApi";
+import { useGetCouponQuery } from "@api";
 import CouponCard from "./CouponCard";
 
 const CouponsList = () => {

@@ -4,7 +4,7 @@ import {
   useUploadConditionLabelsImageMutation,
   useUpdateConditionLabelMutation,
   useDeleteCLImageMutation,
-} from "@api/conditionLabelsApi";
+} from "@api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BackButton from "@components/admin/BackButton";

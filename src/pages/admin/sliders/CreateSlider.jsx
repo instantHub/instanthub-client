@@ -1,9 +1,6 @@
 import React, { useRef, useState } from "react";
 import SlidersList from "./SlidersList";
-import {
-  useCreateSliderMutation,
-  useUploadSliderImageMutation,
-} from "@api/slidersApi";
+import { useCreateSliderMutation, useUploadSliderImageMutation } from "@api";
 import { toast } from "react-toastify";
 
 const CreateSlider = () => {

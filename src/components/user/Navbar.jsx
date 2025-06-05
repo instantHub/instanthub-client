@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import SearchBar2 from "./search/SearchBar2";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
+import { useGetCategoriesQuery } from "@api";
 import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdHomeRepairService } from "react-icons/md";
 import { ROUTES } from "@routes";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 
-const Navbar = () => {
+export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoriesQuery();
@@ -358,5 +358,3 @@ const Navbar = () => {
     </>
   );
 };
-
-export default Navbar;

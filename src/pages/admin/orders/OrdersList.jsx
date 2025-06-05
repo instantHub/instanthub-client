@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
-import { useGetOrdersListQuery } from "@api/ordersApi";
+import { useGetCategoriesQuery, useGetOrdersListQuery } from "@api";
 
 import OrderCard from "./OrderCard";
 import OrderTabs from "@components/admin/OrderTabs";
 import CurrentOrdersAndCount from "@components/admin/CurrentOrdersAndCount";
-import Loading from "@components/user/loader/Loading";
+import { Loading } from "@components/user";
 
 const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =

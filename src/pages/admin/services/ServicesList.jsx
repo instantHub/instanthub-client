@@ -3,7 +3,7 @@ import {
   useGetServicesQuery,
   useDeleteServiceMutation,
   useUpdateServiceMutation,
-} from "@api/servicesApi";
+} from "@api";
 import UpdateService from "./UpdateService";
 import ListItemCard from "./ListItemCard";
 

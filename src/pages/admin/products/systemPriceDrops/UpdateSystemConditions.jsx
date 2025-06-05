@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUpdateLaptopConfigurationsPriceDropMutation } from "@api/productsApi";
+import { useUpdateLaptopConfigurationsPriceDropMutation } from "@api";
 import UpdateButton from "./UpdateButton";
 import { toast } from "react-toastify";
 

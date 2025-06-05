@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useGetCategoriesQuery } from "@api/categoriesApi";
-import { useGetConditionsQuery } from "@api/conditionsApi";
 import {
+  useGetCategoriesQuery,
+  useGetConditionsQuery,
   useGetConditionLabelsQuery,
   useDeleteConditionLabelMutation,
-} from "@api/conditionLabelsApi";
+} from "@api";
 import BackButton from "@components/admin/BackButton";
 import EditButton from "@components/admin/EditButton";
 import { toast } from "react-toastify";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useUpdateAdminMutation } from "@api/authApi";
+import { useUpdateAdminMutation } from "@api";
 import { setCredentials } from "@features/userSlices/authSlice";
 import { BiSolidHide, BiShow } from "react-icons/bi";
 import { ROUTES } from "@routes";

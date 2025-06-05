@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
-import { useDeleteCategoryMutation } from "@api/categoriesApi";
+import { useDeleteCategoryMutation } from "@api";
 import { toast } from "react-toastify";
 import ActionButton from "@components/admin/ActionButton";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";

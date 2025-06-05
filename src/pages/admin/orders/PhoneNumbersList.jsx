@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  useDeletePhoneNumberMutation,
-  useGetPhoneNumbersQuery,
-} from "@api/OTPApi";
+import { useDeletePhoneNumberMutation, useGetPhoneNumbersQuery } from "@api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import ConfirmationModal from "@components/admin/ConfirmationModal";

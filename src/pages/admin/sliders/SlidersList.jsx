@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetAllSlidersQuery } from "@api/slidersApi";
+import { useGetAllSlidersQuery } from "@api";
 import SliderCard from "./SliderCard";
 
 const SlidersList = () => {

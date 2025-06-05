@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetAllSeriesQuery, useDeleteSeriesMutation } from "@api/seriesApi";
+import { useGetAllSeriesQuery, useDeleteSeriesMutation } from "@api";
 import { toast } from "react-toastify";
 // import EditButton from "@components/admin/EditButton";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
