@@ -1,48 +1,58 @@
 import { baseApi } from "@features/api";
+import { CATEGORY_API_PATHS, CATEGORY_API_TAG } from "./constants";
+import {
+  ICategoryResponse,
+  ICreateCategoryRequest,
+  IDeleteCategory,
+} from "./types";
 
 export const categoriesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategories: build.query({
-      query: () => "/api/category",
-      providesTags: ["Categories"],
+    getCategories: build.query<ICategoryResponse[], void>({
+      query: () => CATEGORY_API_PATHS.BASE,
+      providesTags: [CATEGORY_API_TAG],
     }),
-    getCategory: build.query({
-      query: (categoryId) => `/api/category/${categoryId}`,
-      providesTags: ["Categories"],
+
+    getCategory: build.query<ICategoryResponse, string>({
+      query: (categoryId) => CATEGORY_API_PATHS.BY_ID(categoryId),
+      providesTags: [CATEGORY_API_TAG],
     }),
+
     uploadCategoryImage: build.mutation({
       query: (data) => ({
-        url: "/api/upload/categories",
+        url: CATEGORY_API_PATHS.UPLOAD,
         method: "POST",
         body: data,
       }),
     }),
-    createCategory: build.mutation({
+
+    createCategory: build.mutation<ICategoryResponse, string>({
       query: (catData) => ({
-        url: `api/category`,
+        url: CATEGORY_API_PATHS.BASE,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: catData,
       }),
-      invalidatesTags: ["Categories"],
+      invalidatesTags: [CATEGORY_API_TAG],
     }),
+
     updateCategory: build.mutation({
       query: ({ catId, data }) => ({
-        url: `/api/category/update-category/${catId}`,
+        url: CATEGORY_API_PATHS.BY_ID(catId),
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Categories"],
+      invalidatesTags: [CATEGORY_API_TAG],
     }),
-    deleteCategory: build.mutation({
+
+    deleteCategory: build.mutation<IDeleteCategory, string>({
       query: (catId) => ({
-        url: `/api/category/delete-category/${catId}`,
+        url: CATEGORY_API_PATHS.BY_ID(catId),
         method: "DELETE",
-        // body: data,
       }),
-      invalidatesTags: ["Categories"],
+      invalidatesTags: [CATEGORY_API_TAG],
     }),
   }),
 });

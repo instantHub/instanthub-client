@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetBrandQuery } from "@api";
+import { useGetBrandsByCategoryQuery } from "@api";
 import { Helmet } from "react-helmet-async";
 import { Loading, RecycleBreadcrumbs } from "@components/user";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
@@ -13,7 +13,7 @@ export const RecycleBrands = () => {
 
   const [category, setCategory] = useState(null);
   const { data: brands = [], isLoading: brandsLoading } =
-    useGetBrandQuery(categoryURL);
+    useGetBrandsByCategoryQuery(categoryURL);
   // console.log("brands", brands);
 
   useEffect(() => {

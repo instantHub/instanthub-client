@@ -2,14 +2,9 @@ import React, { lazy, Suspense, ComponentType, createElement } from "react";
 import { createBrowserRouter as Router, Navigate } from "react-router-dom";
 
 import * as USER from "@pages/user";
+import * as USER_COMPONENTS from "@components/user";
 
-import {
-  Loading,
-  AboutPage,
-  ContactUs,
-  ErrorComponent,
-  AllTermsAndPolicies,
-} from "@components/user";
+import * as ADMIN from "@pages/admin";
 
 import PrivateRoute from "@components/admin/PrivateRoute";
 import AdminSignIn from "@pages/admin/signIn & signup/SignIn";
@@ -21,9 +16,7 @@ import AdminUpdateProduct from "@pages/admin/products/UpdateProduct";
 import AdminBrandsList from "@pages/admin/brands/BrandsList";
 import AdminUpdateBrand from "@pages/admin/brands/UpdateBrand";
 import AdminCreateBrand from "@pages/admin/brands/CreateBrand";
-import AdminCreateCategory from "@pages/admin/categories/CreateCategory";
-import AdminCategoriesList from "@pages/admin/categories/CategoriesList";
-import AdminUpdateCategory from "@pages/admin/categories/UpdateCategory";
+
 import AdminCreateSeries from "@pages/admin/series/CreateSeries";
 import AdminUpdateSeries from "@pages/admin/series/UpdateSeries";
 import AdminSeriesList from "@pages/admin/series/SeriesList";
@@ -59,7 +52,7 @@ function lazyLoad<T extends ComponentType<any>>(
 
   // Define the wrapper component with the inferred props of the LazyComponent
   const LazyWrapper: React.FC<React.ComponentProps<T>> = (props) => (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<USER_COMPONENTS.Loading />}>
       <LazyComponent {...props} />
     </Suspense>
   );
@@ -78,39 +71,41 @@ export const router = Router([
       {
         index: true,
         errorElement: (
-          <ErrorComponent message={`Sorry please try after sometime..!`} />
+          <USER_COMPONENTS.ErrorComponent
+            message={`Sorry please try after sometime..!`}
+          />
         ),
         element: <USER.Home />,
       },
       {
         path: ROUTES.user.about,
-        element: <AboutPage />,
+        element: <USER_COMPONENTS.AboutPage />,
       },
       {
         path: ROUTES.user.contactUs,
-        element: <ContactUs />,
+        element: <USER_COMPONENTS.ContactUs />,
       },
       {
         path: ROUTES.user.privacyPolicy,
-        element: <AllTermsAndPolicies />,
+        element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
       {
         path: ROUTES.user.servicePolicy,
-        element: <AllTermsAndPolicies />,
+        element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
       {
         path: ROUTES.user.termsConditions,
-        element: <AllTermsAndPolicies />,
+        element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
       {
         path: ROUTES.user.termsOfUse,
-        element: <AllTermsAndPolicies />,
+        element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
 
       {
         path: ROUTES.user.brands,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Brands, please try after sometime..!`}
           />
         ),
@@ -120,7 +115,7 @@ export const router = Router([
       {
         path: ROUTES.user.products,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Products, please try after sometime..!`}
           />
         ),
@@ -133,7 +128,7 @@ export const router = Router([
       {
         path: ROUTES.user.productDetails,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Product Details, please try after sometime..!`}
           />
         ),
@@ -142,7 +137,9 @@ export const router = Router([
       {
         path: ROUTES.user.productDeductions,
         errorElement: (
-          <ErrorComponent message={`Sorry please try after sometime..!`} />
+          <USER_COMPONENTS.ErrorComponent
+            message={`Sorry please try after sometime..!`}
+          />
         ),
         element: <USER.ProductQuestions />,
       },
@@ -158,7 +155,7 @@ export const router = Router([
       {
         path: ROUTES.user.services,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
@@ -167,7 +164,7 @@ export const router = Router([
       {
         path: ROUTES.user.serviceSubCategory,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
@@ -176,7 +173,7 @@ export const router = Router([
       {
         path: ROUTES.user.serviceSubProducts,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
@@ -185,7 +182,7 @@ export const router = Router([
       {
         path: ROUTES.user.serviceBrands,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
@@ -194,7 +191,7 @@ export const router = Router([
       {
         path: ROUTES.user.serviceBrandProblems,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Services Problems, please try after sometime..!`}
           />
         ),
@@ -203,7 +200,7 @@ export const router = Router([
       {
         path: ROUTES.user.bookService,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Book-Service, please try after sometime..!`}
           />
         ),
@@ -212,7 +209,7 @@ export const router = Router([
       {
         path: ROUTES.user.recycleCategories,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to Recycle Categories, please try after sometime..!`}
           />
         ),
@@ -221,7 +218,7 @@ export const router = Router([
       {
         path: ROUTES.user.recycleBrands,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to Recycle Brands, please try after sometime..!`}
           />
         ),
@@ -230,7 +227,7 @@ export const router = Router([
       {
         path: ROUTES.user.recycleProducts,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Products, please try after sometime..!`}
           />
         ),
@@ -249,7 +246,7 @@ export const router = Router([
       {
         path: ROUTES.user.recycleProductDetails,
         errorElement: (
-          <ErrorComponent
+          <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Product Details, please try after sometime..!`}
           />
         ),
@@ -319,15 +316,15 @@ export const router = Router([
           // Categories
           {
             path: ROUTES.admin.createCategory,
-            element: <AdminCreateCategory />,
+            element: <ADMIN.CreateCategory />,
           },
           {
             path: ROUTES.admin.categoriesList,
-            element: <AdminCategoriesList />,
+            element: <ADMIN.CategoriesList />,
           },
           {
             path: ROUTES.admin.updateCategory,
-            element: <AdminUpdateCategory />,
+            element: <ADMIN.UpdateCategory />,
           },
 
           // Brands

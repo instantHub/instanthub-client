@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import SearchBar2 from "./search/SearchBar2";
 import { useGetCategoriesQuery } from "@api";
-import { FaAngleDown, FaAngleUp, FaHome, FaRecycle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { MdHomeRepairService } from "react-icons/md";
 import { ROUTES } from "@routes";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  HomeIcon,
+  RecycleIcon,
+  ServiceIcon,
+} from "@icons";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -212,7 +217,7 @@ export const Navbar = () => {
         )}
       </nav>
 
-      <header className="">
+      <header className="w-full">
         {/* BUTTONS -> Services - Home - Recylce on Large Screen */}
         <div className="max-sm:hidden h-12 grid grid-cols-3 border-t border bg-white w-full text-sm font-thin">
           {/* Service */}
@@ -228,7 +233,8 @@ export const Navbar = () => {
             <span
               className={`${activePath.service && activeLink} text-gray-400`}
             >
-              <MdHomeRepairService />
+              {/* <MdHomeRepairService /> */}
+              <ServiceIcon size={16} />
             </span>
             <span className={`${activePath.service && activeLinkName}`}>
               Services
@@ -246,7 +252,8 @@ export const Navbar = () => {
             }}
           >
             <span className={`${activePath.home && activeLink} text-gray-400`}>
-              <FaHome />
+              {/* <FaHome /> */}
+              <HomeIcon size={16} />
             </span>
             <span className={`${activePath.home && activeLinkName}`}>Home</span>
           </button>
@@ -264,7 +271,8 @@ export const Navbar = () => {
             <span
               className={`${activePath.recycle && activeLink} text-gray-400`}
             >
-              <FaRecycle />
+              {/* <FaRecycle /> */}
+              <RecycleIcon size={16} />
             </span>
             <span className={`${activePath.recycle && activeLinkName}`}>
               Recycle
@@ -299,9 +307,9 @@ export const Navbar = () => {
                         >
                           <span>Sell {category.name}</span>
                           {hoveredCategoryId === category.id ? (
-                            <FaAngleUp />
+                            <ArrowUpIcon size={16} />
                           ) : (
-                            <FaAngleDown />
+                            <ArrowDownIcon size={16} />
                           )}
                         </div>
 

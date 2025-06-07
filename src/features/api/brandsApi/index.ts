@@ -1,4 +1,5 @@
 import { baseApi } from "@features/api";
+import { IBrandResponse } from "./types";
 
 export const brandsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -6,12 +7,13 @@ export const brandsApi = baseApi.injectEndpoints({
       query: () => `/api/brand`,
       providesTags: ["Brands"],
     }),
-    getBrand: build.query({
+
+    getBrandsByCategory: build.query<IBrandResponse, string>({
       query: (catId) => `/api/brand/${catId}`,
       providesTags: ["CreateBrands"],
     }),
 
-    getSingleBrand: build.query({
+    getSingleBrand: build.query<IBrandResponse, string>({
       query: (brandId) => `/api/brand/single/${brandId}`,
       providesTags: ["CreateBrands"],
     }),
@@ -56,7 +58,7 @@ export const brandsApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllBrandQuery,
-  useGetBrandQuery,
+  useGetBrandsByCategoryQuery,
   useGetSingleBrandQuery,
   useCreateBrandMutation,
   useUploadBrandImageMutation,
