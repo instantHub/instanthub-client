@@ -3,7 +3,7 @@ import {
   useGetAllBrandQuery,
   useUpdateBrandMutation,
   useUploadBrandImageMutation,
-  useGetBrandQuery,
+  useGetBrandsByCategoryQuery,
   useGetSingleBrandQuery,
 } from "@api";
 import { useParams } from "react-router-dom";

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { CATEGORY_API_TAG } from "./categoriesApi/constants";
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -9,7 +10,7 @@ export const baseApi = createApi({
     "User",
     "CreateBrands",
     "Brands",
-    "Categories",
+    CATEGORY_API_TAG,
     "Products",
     "Conditions",
     "ConditionLabels",

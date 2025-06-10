@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetBrandQuery } from "@api";
+import { useGetBrandsByCategoryQuery } from "@api";
 import { Helmet } from "react-helmet-async";
 import { Loading, Breadcrumbs } from "@components/user";
 import SellContent from "@components/user/static/SellContent";
@@ -12,7 +12,7 @@ export const Brands = () => {
   const { categoryUniqueURL } = useParams();
 
   const { data: brands = [], isLoading: brandsLoading } =
-    useGetBrandQuery(categoryUniqueURL);
+    useGetBrandsByCategoryQuery(categoryUniqueURL);
 
   const [category, setCategory] = useState(null);
 
