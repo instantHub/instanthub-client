@@ -1,4 +1,4 @@
-import React, {
+import {
   useEffect,
   useState,
   useReducer,
@@ -10,16 +10,14 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useGetCouponQuery } from "@api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
-import { FaAngleRight } from "react-icons/fa6";
 import FAQ from "@components/user/static/FAQ";
-import { GiPartyPopper } from "react-icons/gi";
-import { FcCancel } from "react-icons/fc";
 import { LocationSelector } from "@components/user";
 import { LAPTOP } from "@utils/user/constants";
 import { SubmitForm } from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
+import { ArrowRightIcon, CloseIcon, PartyPopperIcon } from "@icons";
 
 // Create the Context
 const StateContext = createContext();
@@ -422,7 +420,7 @@ const ProductPricingContainer = ({
               Coupon
               <span className="flex gap-1 items-center text-green-600">
                 {state.coupon.couponCode} Applied
-                <GiPartyPopper />
+                <PartyPopperIcon size={16} />
               </span>
             </h2>
           </PricingDetail>
@@ -474,7 +472,7 @@ const ProductPricingContainer = ({
               </span>
               <span>Apply Coupon</span>
             </div>
-            <FaAngleRight />
+            <ArrowRightIcon />
           </div>
         </div>
       )}
@@ -557,7 +555,7 @@ const CouponModal = ({ submitCoupon }) => {
         </div>
         {state.coupon.couponCodeApplied && (
           <div className="w-full flex justify-center items-center text-sm max-sm:text-xs text-red-600 pb-3">
-            Coupon Already Applied <FcCancel />
+            Coupon Already Applied <CloseIcon />
           </div>
         )}
       </div>

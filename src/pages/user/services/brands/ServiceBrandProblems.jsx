@@ -5,12 +5,12 @@ import {
   addServiceProblems,
   removeServiceProblems,
 } from "@features/userSlices/serviceProblemsSlice";
-import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import ServiceContent from "@components/user/static/services/ServiceContent";
 import { Loading } from "@components/user";
 import ServiceHeaderImage from "../ServiceHeaderImage";
+import { ArrowRightIcon } from "@icons";
 
 export const ServiceBrandProblems = () => {
   const { categoryUniqueURL } = useParams();
@@ -108,17 +108,17 @@ export const ServiceBrandProblems = () => {
           <div className="flex items-center gap-1 max-sm:text-xs">
             <span className="flex items-center opacity-60 gap-1">
               <Link to={"/"}>Home</Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <Link className="max-2sm:hidden" to={`/services`}>
                 Services
               </Link>
               <Link className="2sm:hidden" to={`/services`}>
                 ...
               </Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
             </span>
             <span>{serviceBrand?.serviceCategoryId?.name}</span>
-            <FaAngleRight />
+            <ArrowRightIcon />
             <Link
               className="max-2sm:hidden"
               to={`/services/serviceBrands/${serviceBrand?.serviceCategoryId?._id}`}
@@ -131,7 +131,7 @@ export const ServiceBrandProblems = () => {
             >
               ...
             </Link>
-            <FaAngleRight />
+            <ArrowRightIcon />
             <span>{serviceBrand?.name}</span>
           </div>
 

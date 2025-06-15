@@ -164,8 +164,8 @@ export const ProductQuestions = () => {
         />
       </Helmet>
 
-      <div className=" mt-4 ">
-        <div className="flex  gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
+      <div className=" mt-4 w-full">
+        <div className="flex gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
           <div className="relative w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] overflow-hidden">
             <ProgressBar progressPercentage={progressPercentage} />
 

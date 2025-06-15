@@ -1,31 +1,10 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { BiSolidDashboard } from "react-icons/bi";
-import {
-  MdCategory,
-  MdOutlineNumbers,
-  MdOutlineMultipleStop,
-} from "react-icons/md";
-import { FaJediOrder, FaCentSign } from "react-icons/fa6";
-import { PiGitDiff } from "react-icons/pi";
-import { GoMultiSelect } from "react-icons/go";
-import { GrMultiple } from "react-icons/gr";
-import { FcMultipleInputs } from "react-icons/fc";
 
-import {
-  RiListCheck2,
-  RiListCheck3,
-  RiListIndefinite,
-  RiQuestionAnswerFill,
-} from "react-icons/ri";
-import { TbBrandAirtable } from "react-icons/tb";
-import { SiAstro, SiDatabricks, SiSlides } from "react-icons/si";
-import { GiStockpiles, GiCash } from "react-icons/gi";
-import { ImProfile } from "react-icons/im";
-import { IoMdClose } from "react-icons/io";
 import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { useDispatch } from "react-redux";
 import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
+import * as ICON from "@icons";
 
 const SideBar = () => {
   const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);
@@ -39,7 +18,7 @@ const SideBar = () => {
       links: [
         {
           name: "dashboard",
-          icon: <BiSolidDashboard />,
+          icon: <ICON.DashboardIcon />,
         },
       ],
     },
@@ -50,11 +29,11 @@ const SideBar = () => {
       links: [
         {
           name: "add-category",
-          icon: <MdCategory />,
+          icon: <ICON.CategoryIcon />,
         },
         {
           name: "categories-list",
-          icon: <RiListCheck3 />,
+          icon: <ICON.ListIndefiniteIcon />,
         },
       ],
     },
@@ -65,15 +44,15 @@ const SideBar = () => {
       links: [
         {
           name: "add-brands",
-          icon: <TbBrandAirtable />,
+          icon: <ICON.AirtableIcon />,
         },
         {
           name: "brands-list",
-          icon: <RiListIndefinite />,
+          icon: <ICON.ListIndefiniteIcon />,
         },
         {
           name: "add-series",
-          icon: <SiDatabricks />,
+          icon: <ICON.DatabricksIcon />,
         },
       ],
     },
@@ -84,12 +63,11 @@ const SideBar = () => {
       links: [
         {
           name: "add-products",
-          // icon: <TbBrandPushover />,
-          icon: <SiAstro />,
+          icon: <ICON.AstroIcon />,
         },
         {
           name: "products-list",
-          icon: <RiListCheck2 />,
+          icon: <ICON.ListIndefiniteIcon />,
         },
       ],
     },
@@ -111,7 +89,7 @@ const SideBar = () => {
       links: [
         {
           name: "create-questions",
-          icon: <RiQuestionAnswerFill />,
+          icon: <ICON.QuestionAnswerIcon />,
         },
       ],
     },
@@ -122,13 +100,11 @@ const SideBar = () => {
       links: [
         {
           name: "orders",
-          // icon: <BsBorderStyle />,
-          icon: <FcMultipleInputs />,
+          icon: <ICON.ListCheck2Icon />,
         },
         {
           name: "phone-numbers",
-          icon: <MdOutlineNumbers />,
-          // icon: <TbPasswordMobilePhone />,
+          icon: <ICON.NumbersIcon />,
         },
       ],
     },
@@ -139,7 +115,7 @@ const SideBar = () => {
       links: [
         {
           name: "recycle-orders",
-          icon: <FaJediOrder />,
+          icon: <ICON.ListCheck2Icon />,
         },
       ],
     },
@@ -150,18 +126,17 @@ const SideBar = () => {
       links: [
         {
           name: "add-services",
-          // icon: <CgProfile />,
-          icon: <GrMultiple />,
+          icon: <ICON.MultipleInputsIcon />,
         },
         {
           name: "services-list",
-          // icon: <CgProfile />,
-          icon: <GoMultiSelect />,
+          // icon: <GoMultiSelect />,
+          icon: <ICON.ListIndefiniteIcon />,
         },
         {
           name: "services-Orders",
           // icon: <CgProfile />,
-          icon: <MdOutlineMultipleStop />,
+          icon: <ICON.ListCheck2Icon />,
         },
       ],
     },
@@ -172,7 +147,8 @@ const SideBar = () => {
       links: [
         {
           name: "complaints",
-          icon: <SiSlides />,
+          // icon: <SiSlides />,
+          icon: <ICON.QuestionAnswerIcon />,
         },
       ],
     },
@@ -183,7 +159,7 @@ const SideBar = () => {
       links: [
         {
           name: "manage-stocks",
-          icon: <GiStockpiles />,
+          icon: <ICON.StockpilesIcon />,
         },
       ],
     },
@@ -194,12 +170,12 @@ const SideBar = () => {
       links: [
         {
           name: "add-sliders",
-          icon: <SiSlides />,
+          icon: <ICON.SlidesIcon />,
           // icon: <MdSlideshow />,
         },
         {
           name: "add-coupons",
-          icon: <FaCentSign />,
+          icon: <ICON.CentSignIcon />,
           // icon: <MdSlideshow />,
         },
       ],
@@ -211,7 +187,7 @@ const SideBar = () => {
       links: [
         {
           name: "variants-questions",
-          icon: <PiGitDiff />,
+          icon: <ICON.GitDiffIcon />,
         },
       ],
     },
@@ -222,7 +198,7 @@ const SideBar = () => {
       links: [
         {
           name: "create-post",
-          icon: <FaJediOrder />,
+          icon: <ICON.JediOrderIcon />,
         },
       ],
     },
@@ -234,7 +210,7 @@ const SideBar = () => {
         {
           name: "update-profile",
           // icon: <CgProfile />,
-          icon: <ImProfile />,
+          icon: <ICON.ProfileIcon />,
         },
       ],
     },
@@ -261,7 +237,7 @@ const SideBar = () => {
                 to="/admin"
                 className="gap-2 flex items-center font-extrabold tracking-tight text-white"
               >
-                <GiCash />
+                <ICON.CashIcon />
                 <span className="max-sm:text-sm text-lg tracking-widest">
                   Instant Hub
                 </span>
@@ -276,7 +252,7 @@ const SideBar = () => {
                 }}
                 className="text-3xl max-sm:text-2xl"
               >
-                <IoMdClose />
+                <ICON.CloseIcon />
               </button>
               <p className="absolute -bottom-2 text-[7px] opacity-80">close</p>
             </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetServicesQuery } from "@api";
-import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { clearServiceProblems } from "@features/userSlices/serviceProblemsSlice";
 import { useDispatch } from "react-redux";
@@ -9,6 +8,7 @@ import { Loading } from "@components/user";
 import ServiceContent from "@components/user/static/services/ServiceContent";
 import ServiceItemGrid from "../ServiceItemGrid";
 import ServiceHeaderImage from "../ServiceHeaderImage";
+import { ArrowRightIcon } from "@icons";
 
 export const ServiceBrands = () => {
   const { categoryUniqueURL } = useParams();
@@ -63,12 +63,12 @@ export const ServiceBrands = () => {
           <div className="flex items-center gap-1 max-sm:text-xs">
             <span className="flex items-center opacity-60 gap-1">
               <Link to={"/"}>Home</Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <Link to={`/services`}>Services</Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
             </span>
             <span>{serviceCategory?.name}</span>
-            <FaAngleRight />
+            <ArrowRightIcon />
             <span>Brands</span>
           </div>
 

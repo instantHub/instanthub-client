@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { FaAngleRight } from "react-icons/fa";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { MAX_LABEL_LENGTH } from "@utils/user/constants";
+import { ArrowRightIcon } from "@icons";
 
 export const RecycleBreadcrumbs = () => {
   const location = useLocation();
@@ -36,7 +36,7 @@ export const RecycleBreadcrumbs = () => {
 
           return (
             <Fragment key={index}>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <span>{label}</span>
             </Fragment>
           );

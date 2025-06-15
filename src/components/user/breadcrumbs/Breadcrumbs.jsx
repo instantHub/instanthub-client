@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { FaAngleRight } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { MAX_LABEL_LENGTH } from "@utils/user/constants";
+import { ArrowRightIcon } from "@icons";
 
 export const Breadcrumbs = () => {
   const location = useLocation();
@@ -31,7 +31,7 @@ export const Breadcrumbs = () => {
 
           return (
             <Fragment key={index}>
-              <FaAngleRight />
+              <ArrowRightIcon />
               {isLast ? (
                 <span className="font-semibold text-black">{label}</span>
               ) : isLocation ? (

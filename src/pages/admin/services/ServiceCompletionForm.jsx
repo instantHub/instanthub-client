@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { SiTicktick } from "react-icons/si";
-import { BsInfoCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 import {
   useCancelServiceOrderMutation,
@@ -9,6 +7,7 @@ import {
 import OrderCancellationForm from "@components/admin/OrderCancellationForm";
 import { DateAndTime } from "@components/user";
 import { SubmitButton } from "@components/admin/SubmitButton";
+import { InfoCircleIcon, RightTickIcon } from "@icons";
 
 const ServiceCompletionForm = ({
   serviceOrderDetail,
@@ -114,7 +113,7 @@ const ServiceCompletionForm = ({
         className="relative grid grid-cols-2 max-sm:grid-cols-1 place-items-start place-content-center gap-14 max-sm:gap-5 py-10 max-sm:py-5 w max-sm:w-fit"
       >
         {/* Completion Detail */}
-        <DetailWrapper icon={SiTicktick} heading="Completion Details">
+        <DetailWrapper icon={RightTickIcon} heading="Completion Details">
           <div className="flex flex-col gap-2">
             <DetailDiv
               label="Serviced By"
@@ -173,7 +172,7 @@ const ServiceCompletionForm = ({
         {/* Additional Service */}
         {serviceOrderDetail.serviceType === "Brand" && (
           <DetailWrapper
-            icon={BsInfoCircle}
+            icon={InfoCircleIcon}
             heading="Additional Service Details"
           >
             {additionalServices.map((service, index) => (

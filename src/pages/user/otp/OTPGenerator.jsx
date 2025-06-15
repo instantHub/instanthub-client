@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { useGenerateOTPMutation } from "@api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { FaIndianRupeeSign } from "react-icons/fa6";
-import { FaLock } from "react-icons/fa6";
-import { FaLockOpen } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { performCalculation } from "@features/userSlices/deductionSlice";
+import { LockIcon, LockOpenIcon } from "@icons";
 
 export const OtpGenerator = (props) => {
   const { closeModal } = props;
@@ -141,7 +139,7 @@ export const OtpGenerator = (props) => {
                 </h2>
               </div>
               <div className="flex items-center text-2xl text-red-500 max-sm:text-sm">
-                <FaIndianRupeeSign />
+                <span className="text-4xl max-sm:text-2xl text-black">₹</span>
                 <h2 className="">XX,XXX</h2>
               </div>
             </div>
@@ -162,8 +160,7 @@ export const OtpGenerator = (props) => {
                 </h2>
               </div>
               <div className="flex items-center gap-1 bg-green-200 text-green-700 border mb-5 px-2 py-1 rounded ">
-                {/* <GiDialPadlock className="text-lg" /> */}
-                <FaLock className="" />
+                <LockIcon className="" />
                 <h2 className="text-sm ">Generate to get the best price</h2>
               </div>
               <div className="">
@@ -207,7 +204,7 @@ export const OtpGenerator = (props) => {
           ) : (
             <>
               <div className="flex items-center gap-1 bg-green-200 text-green-700 border mb-5 px-2 py-1 rounded">
-                <FaLockOpen className="" />
+                <LockOpenIcon className="" />
                 <h2 className="text-sm ">Verify OTP to get the best price</h2>
               </div>
               <div>

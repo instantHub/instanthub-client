@@ -8,7 +8,6 @@ import HowItWorks from "@components/user/static/home/HowItWorks";
 import WhyUs from "@components/user/static/home/WhyUs";
 import FAQ from "@components/user/static/FAQ";
 import { ServicesHome } from "../services";
-import { FaHandPointLeft, FaHandPointRight } from "react-icons/fa";
 import { useIPLocation } from "../../../hooks/useIPLocation";
 
 export const Home = () => {
@@ -48,9 +47,6 @@ export const Home = () => {
           <div className="absolute px-2 max-sm:px-1 left-0 bg-secondary z-10 top-2 max-sm:top-1">
             <div className="flex items-center gap-1 ">
               <span className="animate-pulse max-sm:text-[10px]">Offers</span>
-              <span>
-                <FaHandPointRight className="text-lg max-sm:text-xs" />
-              </span>
             </div>
           </div>
           <div className="animate-marquee max-sm:animate-marquee-fast sm:w-fi flex items-center gap-20 sm:gap-96 text-[16px] max-sm:text-xs">
@@ -67,9 +63,6 @@ export const Home = () => {
           </div>
           <div className="max-sm:hidden absolute px-2 bg-secondary right-0 top-2 ">
             <div className="flex items-center gap-1">
-              <span>
-                <FaHandPointLeft className="text-lg max-sm:text-xs" />
-              </span>
               <span className="animate-pulse">Offers</span>
             </div>
           </div>

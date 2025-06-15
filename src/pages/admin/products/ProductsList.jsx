@@ -5,7 +5,6 @@ import {
   useDeleteProductMutation,
 } from "@api";
 import { Link } from "react-router-dom";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterCategory,
@@ -17,6 +16,7 @@ import ConfirmationModal from "@components/admin/ConfirmationModal";
 import ProductCard from "./ProductCard";
 import axios from "axios";
 import { ROUTES } from "@routes";
+import { ArrowLeftIcon, ArrowRightIcon } from "@icons";
 
 const ProductsList = () => {
   const [search, setSearch] = useState("");
@@ -192,7 +192,7 @@ const ProductsList = () => {
             className="bg-blue-700 flex items-center max-sm:text-xs gap-1 text-white px-2 py-1 rounded disabled:bg-blue-300"
             disabled={productsData?.page === 1}
           >
-            <FaAngleLeft />
+            <ArrowLeftIcon />
             Previous
           </button>
 
@@ -212,7 +212,7 @@ const ProductsList = () => {
             disabled={productsData?.page === productsData?.totalPages}
           >
             Next
-            <FaAngleRight />
+            <ArrowRightIcon />
           </button>
         </div>
 
@@ -284,7 +284,7 @@ const ProductsList = () => {
               }}
               className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded"
             >
-              <FaAngleLeft />
+              <ArrowLeftIcon />
               Previous
             </button>
           )}
@@ -303,7 +303,7 @@ const ProductsList = () => {
                 className="bg-blue-700 flex items-center gap-1 text-white px-2 py-1 rounded"
               >
                 Next
-                <FaAngleRight />
+                <ArrowRightIcon />
               </button>
             )}
         </div>

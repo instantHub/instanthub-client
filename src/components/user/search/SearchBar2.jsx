@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "./searchStyle.css";
-import { BsSearch } from "react-icons/bs";
 import axios from "axios";
-import { FaMobileAlt, FaLaptop } from "react-icons/fa";
-import { RiArmchairLine } from "react-icons/ri";
-import { GrServices } from "react-icons/gr";
-import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 import { determineServicePath } from "@utils/user/determineServicePath";
+import { LaptopIcon, MobileIcon, SearchIcon, ServiceIcon } from "@icons";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -138,7 +134,7 @@ const SearchBar = () => {
   return (
     <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 max-2sm:w-[58%] max-2sm:mx-2">
       <div className="flex pl- items-center bg-gray-100 pl-2">
-        <BsSearch className="text-gray-500" />
+        <SearchIcon className="text-gray-500" />
         <input
           aria-label="Search"
           type="search"
@@ -177,10 +173,11 @@ const SearchBar = () => {
                 >
                   <button className="flex items-center gap-1 py-2 border-b">
                     {product.category.name.toLowerCase().includes("laptop") ? (
-                      <FaLaptop />
+                      <LaptopIcon />
                     ) : (
-                      <FaMobileAlt />
+                      <MobileIcon />
                     )}
+
                     <h2 className="">{product.name}</h2>
                   </button>
                 </Link>
@@ -202,16 +199,7 @@ const SearchBar = () => {
               <Link key={index} to={determineServicePath(service)}>
                 <div onClick={clearSearch}>
                   <button className="flex items-center gap-1 py-2 border-b">
-                    {/* <FaMobileAlt /> */}
-                    {service.type.toLowerCase().includes("direct") && (
-                      <FaArrowRightFromBracket />
-                    )}
-                    {service.type.toLowerCase().includes("subcategory") && (
-                      <RiArmchairLine />
-                    )}
-                    {service.type.toLowerCase().includes("brand") && (
-                      <GrServices />
-                    )}
+                    <ServiceIcon />
                     <h2 className="">{service.name}</h2>
                   </button>
                 </div>

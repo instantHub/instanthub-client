@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUpdateAdminMutation } from "@api";
 import { setCredentials } from "@features/userSlices/authSlice";
-import { BiSolidHide, BiShow } from "react-icons/bi";
 import { ROUTES } from "@routes";
+import { Eye, EyeOff } from "@icons";
 
 const UpdateAdmin = () => {
   const [name, setName] = useState("");
@@ -114,11 +114,11 @@ const UpdateAdmin = () => {
               >
                 {showPassword ? (
                   <span>
-                    <BiShow />
+                    <Eye />
                   </span>
                 ) : (
                   <span>
-                    <BiSolidHide />
+                    <EyeOff />
                   </span>
                 )}
               </button>
@@ -144,11 +144,11 @@ const UpdateAdmin = () => {
               >
                 {showConfirmPassword ? (
                   <span>
-                    <BiShow />
+                    <Eye />
                   </span>
                 ) : (
                   <span>
-                    <BiSolidHide />
+                    <EyeOff />
                   </span>
                 )}
               </button>

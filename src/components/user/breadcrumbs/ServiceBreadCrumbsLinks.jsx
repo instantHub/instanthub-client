@@ -1,5 +1,5 @@
+import { ArrowRightIcon } from "@icons";
 import React from "react";
-import { FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export const ServiceBreadCrumbLinks = ({
@@ -18,11 +18,11 @@ export const ServiceBreadCrumbLinks = ({
       <div className="flex items-center gap-1 max-sm:gap-[2px] text-[16px] max-sm:text-xs opacity-60">
         <div className={` flex items-center`}>
           {getBreadcrumbLink("/", { label: "Home" })}
-          <FaAngleRight />
+          <ArrowRightIcon />
         </div>
         <div className={` flex items-center`}>
           {getBreadcrumbLink("/services", { label: "Services" })}
-          <FaAngleRight />
+          <ArrowRightIcon />
         </div>
 
         {directService && (

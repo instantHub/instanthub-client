@@ -1,4 +1,4 @@
-import { FaTimes } from "react-icons/fa";
+import { CloseIcon } from "@icons";
 
 export const SeriesButton = ({ series, isSelected, onClick }) => (
   <div
@@ -20,7 +20,7 @@ export const SeriesButton = ({ series, isSelected, onClick }) => (
     </button>
     {isSelected && (
       <button onClick={onClick} className="absolute top-1 right-1 text-white">
-        <FaTimes />
+        <CloseIcon />
       </button>
     )}
   </div>

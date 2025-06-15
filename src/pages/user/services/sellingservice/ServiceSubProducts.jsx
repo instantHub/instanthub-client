@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetServicesQuery } from "@api";
-import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { Loading } from "@components/user";
 import ServiceHeaderImage from "../ServiceHeaderImage";
+import { ArrowRightIcon } from "@icons";
 
 export const ServiceSubProducts = () => {
   const { subServiceId } = useParams();
@@ -53,14 +53,14 @@ export const ServiceSubProducts = () => {
           <div className="flex items-center gap-1 max-sm:text-xs">
             <span className="flex items-center opacity-60 gap-1">
               <Link to={"/"}>Home</Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <Link className="max-2sm:hidden" to={`/services`}>
                 Services
               </Link>
               <Link className="2sm:hidden" to={`/services`}>
                 ...
               </Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <Link
                 className="max-2sm:hidden"
                 to={`/services/serviceSubCategory/${serviceSubCategory?.serviceCategoryId?._id}`}
@@ -73,7 +73,7 @@ export const ServiceSubProducts = () => {
               >
                 ...
               </Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
             </span>
             <span>{serviceSubCategory.name}</span>
           </div>

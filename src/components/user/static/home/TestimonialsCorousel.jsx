@@ -1,6 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { RxDotFilled } from "react-icons/rx";
+import { ArrowLeftIcon, ArrowRightIcon, DotFillIcon } from "@icons";
+import { memo, useEffect, useState } from "react";
 
 const TestimonialsCorousel = () => {
   const testimonials = [
@@ -86,7 +85,7 @@ const TestimonialsCorousel = () => {
                 className="mr-4 text-black px-4 py-2 rounded focus:outline-none"
                 onClick={goToPrevSlide}
               >
-                <FaChevronLeft />
+                <ArrowLeftIcon />
               </button>
               <div className="max-w-lg mx-auto grid gap-8 lg:max-w-none">
                 <div
@@ -124,20 +123,20 @@ const TestimonialsCorousel = () => {
                 className="ml-4 text-black px-4 py-2 rounded focus:outline-none"
                 onClick={goToNextSlide}
               >
-                <FaChevronRight />
+                <ArrowRightIcon />
               </button>
             </div>
           </div>
         </div>
 
-        <div className="flex top-4 justify-center py-2">
+        <div className="flex gap-2 sm:gap-4 top-4 justify-center py-2">
           {testimonials.map((t, index) => (
             <div
               key={index}
               onClick={() => gotoSlide(index)}
               className="text-2xl cursor-pointer"
             >
-              <RxDotFilled />
+              <DotFillIcon size={12} />
             </div>
           ))}
         </div>

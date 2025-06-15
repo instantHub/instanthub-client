@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useGetProductsQuery, useGetBrandSeriesQuery } from "@api";
 import { useParams } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
 import { Helmet } from "react-helmet-async";
 import {
   Loading,
@@ -13,6 +12,7 @@ import SellContent from "@components/user/static/SellContent";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
+import { SearchIcon } from "@icons";
 
 export const Products = () => {
   const { brandId, categoryUniqueURL, brandUniqueURL } = useParams();
@@ -113,7 +113,7 @@ export const Products = () => {
       {/* Series */}
       <div
         className={`${
-          displayedSeries?.length > 0 ? "pt-10 max-sm:pt-2" : "mt-0"
+          displayedSeries?.length > 0 ? "w-full pt-10 max-sm:pt-2" : "mt-0"
         }`}
       >
         <div className="mx-10 max-sm:mx-2 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
@@ -135,7 +135,7 @@ export const Products = () => {
         {/* Search Bar */}
         <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
           <div className="flex items-center gap-1 px-2 border rounded-md">
-            <BsSearch className="text-gray-700 text-sm" />
+            <SearchIcon className="text-gray-700 text-sm" />
             <input
               type="search"
               name="search"

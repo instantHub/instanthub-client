@@ -1,6 +1,4 @@
-import React from "react";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { DeleteForeverIcon, EditIcon } from "@icons";
 
 const ActionButton = ({
   actionOne,
@@ -24,7 +22,7 @@ const ActionButton = ({
           {actionOne} {name && name}
         </span>
         <span>
-          <FaEdit />
+          <EditIcon />
         </span>
       </button>
       <button
@@ -33,7 +31,7 @@ const ActionButton = ({
       >
         <span className="tracking-widest max-sm:text-[10px]">{actionTwo}</span>
         <span>
-          <MdDeleteForever />
+          <DeleteForeverIcon />
         </span>
       </button>
     </div>

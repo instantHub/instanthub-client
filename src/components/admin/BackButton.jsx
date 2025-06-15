@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
+import { ArrowLeftIcon } from "@icons";
 
 const BackButton = ({ location, text }) => {
   return (
@@ -10,7 +9,7 @@ const BackButton = ({ location, text }) => {
       }  text-white text-lg max-sm:text-xs inline-block m-2 px-2 py-1  `}
     >
       <Link className="flex items-center justify-between" to={location}>
-        <IoIosArrowBack /> {text ? text : "Back"}
+        <ArrowLeftIcon /> {text ? text : "Back"}
       </Link>
     </div>
   );

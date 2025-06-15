@@ -5,13 +5,10 @@ import { useAdminLogoutMutation, useAdminProfileQuery } from "@api";
 import { useNavigate } from "react-router-dom";
 import { logout } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
-import { FiAlignLeft } from "react-icons/fi";
-import { IoLogOut } from "react-icons/io5";
-import { CgProfile } from "react-icons/cg";
-import { IoMdMenu } from "react-icons/io";
 import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
 import { ROUTES } from "@routes";
+import { FiAlignLeft, LogoutIcon, MenuIcon, ProfileIcon } from "@icons";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -75,7 +72,7 @@ const Navbar = () => {
           toggleSidebar();
         }}
       >
-        <IoMdMenu />
+        <MenuIcon />
       </button>
 
       {/* Current Page Name */}
@@ -104,7 +101,7 @@ const Navbar = () => {
                   <Link to={ROUTES.admin.updateProfile}>
                     <h2 className="px-4 py-2 text-gray-800 hover:bg-gray-300 flex items-center gap-1">
                       <span>Profile</span>
-                      <CgProfile />
+                      <ProfileIcon />
                     </h2>
                   </Link>
                   <button
@@ -112,7 +109,7 @@ const Navbar = () => {
                     className="flex gap-1 items-center px-4 py-2 text-gray-800 hover:bg-gray-300"
                   >
                     <span>Logout</span>
-                    <IoLogOut />
+                    <LogoutIcon />
                   </button>
                 </div>
               </div>

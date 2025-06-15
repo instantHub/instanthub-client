@@ -1,6 +1,4 @@
-import React from "react";
-import { FaExclamationTriangle } from "react-icons/fa";
-import { MdOutlineRefresh } from "react-icons/md";
+import { ErrorIcon, RefreshIcon } from "@icons";
 
 export const ErrorComponent = ({ message }) => {
   return (
@@ -11,7 +9,7 @@ export const ErrorComponent = ({ message }) => {
         role="alert"
       >
         <div className="flex flex-col items-center justify-center gap-">
-          <FaExclamationTriangle className="text-5xl max-sm:text-3xl text-red-500 mb-4" />
+          <ErrorIcon size={38} className="text-red-500 mb-4" />
           <h2 className="text-3xl max-sm:text-xl font-bold mb-2">Oops!</h2>
           <div className="flex flex-col opacity-75">
             <span className="block sm:inline max-sm:text-xl">{message}</span>
@@ -28,7 +26,7 @@ export const ErrorComponent = ({ message }) => {
           >
             <span>Refresh</span>
             <span>
-              <MdOutlineRefresh className="text-xl" />
+              <RefreshIcon className="text-xl" />
             </span>
           </button>
         </div>
