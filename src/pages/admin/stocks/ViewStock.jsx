@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useStockSoldMutation } from "@api";
 import { DateAndTime } from "@components/user";
-import { SubmitButton } from "@components/admin/SubmitButton";
+import { Button } from "@components/general";
 
 export default function ViewStock({ stock, setViewStock }) {
   // console.log("stock", stock);
@@ -144,10 +144,15 @@ export default function ViewStock({ stock, setViewStock }) {
                 />
               </div>
 
-              {/* Submit Button */}
-              <SubmitButton loading={stockSoldLoading} type="primary">
+              <Button
+                type="submit"
+                size="sm"
+                variant="greenary"
+                loading={stockSoldLoading}
+                fullWidth
+              >
                 Stock Sold
-              </SubmitButton>
+              </Button>
             </form>
           </div>
         )}

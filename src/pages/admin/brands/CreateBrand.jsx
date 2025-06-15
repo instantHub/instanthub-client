@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 import {
   useCreateBrandMutation,
@@ -7,12 +7,12 @@ import {
 } from "@api";
 
 import { toast } from "react-toastify";
-import ListButton from "@components/admin/ListButton";
-import { SubmitButton } from "@components/admin/SubmitButton";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
+import { Button } from "@components/general";
+import { useCustomNavigation } from "@hooks";
 
-const CreateBrand = () => {
+export const CreateBrand = () => {
   const [brand, setBrand] = useState("");
   const [uniqueURL, setUniqueURL] = useState("");
   const [imageSelected, setImageSelected] = useState("");
@@ -25,6 +25,8 @@ const CreateBrand = () => {
 
   // Create a ref to store the reference to the file input element
   const fileInputRef = useRef(null);
+
+  const { navigateTo } = useCustomNavigation();
 
   // File handler
   const uploadFileHandler = async () => {
@@ -94,7 +96,9 @@ const CreateBrand = () => {
             <h2 className="pl-1"> / Add Brands</h2>
           </div>
 
-          <ListButton location={ROUTES.admin.brandsList} text={"Brands List"} />
+          <Button size="sm" onClick={() => navigateTo(ROUTES.admin.brandsList)}>
+            Brands Lists
+          </Button>
         </div>
       </div>
       <div className="bg-white border rounded-md shadow-lg">
@@ -182,14 +186,17 @@ const CreateBrand = () => {
             </div>
           </div>
           <div className="py-3 px-2">
-            <SubmitButton loading={createBrandLoading}>
+            <Button
+              type="submit"
+              variant="greenary"
+              loading={createBrandLoading}
+              fullWidth
+            >
               Create Brand
-            </SubmitButton>
+            </Button>
           </div>
         </form>
       </div>
     </div>
   );
 };
-
-export default CreateBrand;

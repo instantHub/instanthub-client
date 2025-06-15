@@ -7,12 +7,16 @@ import {
 } from "@api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "@components/admin/BackButton";
 import { ROUTES } from "@routes";
+import { Button } from "@components/general";
+import { ArrowLeftIcon } from "@icons";
+import { useCustomNavigation } from "@hooks";
 
 function UpdateConditionLabel() {
   const { conditionLabelId } = useParams();
   //   console.log(conditionLabelId);
+
+  const { goBack } = useCustomNavigation();
 
   const { data: conditionLabelsData, isLoading: conditionLabelsLoading } =
     useGetConditionLabelsQuery();
@@ -156,8 +160,14 @@ function UpdateConditionLabel() {
             <div className="flex items-center gap-1">
               <h2>Home </h2>
               <h2 className="pl-1"> / Update ConditionLabel</h2>
-
-              <BackButton location={ROUTES.admin.conditionLabelsList} />
+              <Button
+                variant="secondary"
+                size="sm"
+                leftIcon={<ArrowLeftIcon />}
+                onClick={goBack}
+              >
+                Back
+              </Button>
             </div>
           </div>
           <div className="bg-white border rounded-md shadow-lg">

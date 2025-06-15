@@ -7,7 +7,7 @@ import { setCredentials } from "@features/userSlices/authSlice";
 import { ROUTES } from "@routes";
 import { Eye, EyeOff } from "@icons";
 
-const UpdateAdmin = () => {
+export const UpdateAdmin = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [adminId, setAdminId] = useState("");
@@ -166,5 +166,3 @@ const UpdateAdmin = () => {
     </div>
   );
 };
-
-export default UpdateAdmin;

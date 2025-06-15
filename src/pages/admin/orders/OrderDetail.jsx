@@ -7,11 +7,13 @@ import {
 } from "@api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@components/user";
-import OrderCompleteForm from "@components/admin/OrderCompleteForm";
 import { orderCurrentStatus } from "@utils/admin/helper";
 import { toast } from "react-toastify";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
-import AssignAgent from "@components/admin/AssignAgent";
+import {
+  AssignAgent,
+  ConfirmationModal,
+  OrderCompleteForm,
+} from "@components/admin";
 import { ROUTES } from "@routes";
 import {
   ArrowLeftIcon,

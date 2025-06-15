@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { useGetAllSeriesQuery, useDeleteSeriesMutation } from "@api";
 import { toast } from "react-toastify";
-// import EditButton from "@components/admin/EditButton";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ConfirmationModal } from "@components/admin";
 import SeriesCard from "./SeriesCard";
 
 const SeriesList = () => {
   const { data: seriesData, isLoading: seriesLoading } = useGetAllSeriesQuery();
   const [deleteSeries] = useDeleteSeriesMutation();
 
-  if (!seriesLoading) {
-    console.log("seriesData", seriesData);
-  }
+  // if (!seriesLoading) {
+  //   console.log("seriesData", seriesData);
+  // }
 
   // Delete Order
   const [isModalOpen, setModalOpen] = useState(false);

@@ -21,7 +21,7 @@
       "@api": ["src/features/api/index.ts"],
       "@utils/*": ["src/utils/*"],
       "@routes": ["src/routes/index.ts"],
-      "@hooks/*": ["src/hooks/*"],
+      "@hooks": ["src/hooks/index.ts"],
       "@icons": ["src/icons/index.ts"]
     }
   },

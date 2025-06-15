@@ -1,7 +1,13 @@
 import React from "react";
 
 // Define button variants
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "greenary"
+  | "outline"
+  | "ghost"
+  | "danger";
 
 // Define button sizes
 type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -24,6 +30,8 @@ const variantStyles: Record<ButtonVariant, string> = {
     "bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white border-transparent focus:ring-blue-500",
   secondary:
     "bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white border-transparent focus:ring-gray-500",
+  greenary:
+    "bg-green-600 hover:bg-green-700 active:bg-green-800 text-white border-transparent focus:ring-green-500",
   outline:
     "bg-transparent hover:bg-gray-50 active:bg-gray-100 text-gray-700 border-gray-300 focus:ring-gray-500",
   ghost:
@@ -35,7 +43,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 // Size styles mapping
 const sizeStyles: Record<ButtonSize, string> = {
   xs: "px-2 py-1 text-xs",
-  sm: "px-3 py-1.5 text-sm",
+  sm: "px-2 py-1 text-sm",
   md: "px-4 py-2 text-sm md:text-base",
   lg: "px-6 py-2.5 text-base md:text-lg",
   xl: "px-8 py-3 text-lg md:text-xl",
@@ -80,7 +88,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button className={buttonClasses} disabled={disabled || loading} {...props}>
       {/* Left icon */}
       {leftIcon && !loading && (
-        <span className="mr-1 flex-shrink-0">{leftIcon}</span>
+        <span className="mr- flex-shrink-0">{leftIcon}</span>
       )}
 
       {/* Loading spinner */}

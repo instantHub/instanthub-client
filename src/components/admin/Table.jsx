@@ -1,7 +1,4 @@
-// Table.js
-import React from "react";
-
-const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
+export const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
   // console.log("data from TABLE component", data);
   return (
     <table className="w-full text-sm max-sm:text-xs">
@@ -28,5 +25,3 @@ const Table = ({ headers, data, keyExtractor, rowRenderer }) => {
     </table>
   );
 };
-
-export default Table;

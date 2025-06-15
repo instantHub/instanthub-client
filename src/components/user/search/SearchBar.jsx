@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./searchStyle.css";
 import axios from "axios";
-import useDebounce, { useDebounceFunc } from "@hooks/UseDebounce";
+import { useDebounce, useDebounceFunc } from "@hooks";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 import { SearchIcon } from "@icons";

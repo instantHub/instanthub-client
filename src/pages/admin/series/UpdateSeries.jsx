@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetAllSeriesQuery, useUpdateSeriesMutation } from "@api";
 import { toast } from "react-toastify";
-import BackButton from "@components/admin/BackButton";
 import { ROUTES } from "@routes";
+import { useCustomNavigation } from "@hooks";
+import { Button } from "@components/general";
+import { ArrowLeftIcon } from "@icons";
 
 const UpdateSeries = () => {
   const { seriesId } = useParams();
@@ -13,7 +15,7 @@ const UpdateSeries = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [seriesName, setSeriesName] = useState("");
 
-  const navigate = useNavigate();
+  const { goBack, navigateTo } = useCustomNavigation();
 
   // Selecting slider which needs to update
   useEffect(() => {
@@ -54,7 +56,7 @@ const UpdateSeries = () => {
       console.log("Series created", seriesUpdated);
       toast.success("Series Updated successfull..!");
 
-      navigate(ROUTES.admin.createSeries);
+      navigateTo(ROUTES.admin.createSeries);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -67,7 +69,14 @@ const UpdateSeries = () => {
         <div className="mt-[5%] w-[80%] max-sm:w-[98%] mx-auto grow">
           <div className="flex justify-between items-center">
             <h1 className="bold text-[1.4rem] mb-2">Update Series</h1>
-            <BackButton location={ROUTES.admin.createSeries} />
+            <Button
+              variant="secondary"
+              size="sm"
+              leftIcon={<ArrowLeftIcon />}
+              onClick={goBack}
+            >
+              Back
+            </Button>
           </div>
           <div className="bg-white border rounded-md shadow-lg">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">

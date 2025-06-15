@@ -6,12 +6,11 @@ import {
 } from "@api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { SubmitButton } from "@components/admin/SubmitButton";
-// import BackButton from "@components/BackButton";
-import CardHeader from "@components/admin/CardHeader";
+import { CardHeader } from "@components/admin";
 import { Loading } from "@components/user";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
+import { Button } from "@components/general";
 
 const initialState = {
   category: "",
@@ -371,9 +370,14 @@ const UpdateProduct = () => {
                 </div>
               </div>
               <div className=" py-3 px-2">
-                <SubmitButton loading={updateProductLoading}>
+                <Button
+                  type="submit"
+                  variant="greenary"
+                  loading={updateProductLoading}
+                  fullWidth
+                >
                   Update Product
-                </SubmitButton>
+                </Button>
               </div>
             </form>
           )}

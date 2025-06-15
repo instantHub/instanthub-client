@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetServicesOrdersQuery } from "@api";
 import ServiceOrderCard from "./ServiceOrderCard";
-import OrderTabs from "@components/admin/OrderTabs";
-import CurrentOrdersAndCount from "@components/admin/CurrentOrdersAndCount";
+import { CurrentOrdersAndCount, OrderTabs } from "@components/admin";
 import { Loading } from "@components/user";
 
 const ServicesOrdersList = () => {

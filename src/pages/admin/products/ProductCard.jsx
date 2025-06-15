@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteProductMutation } from "@api";
-import ActionButton from "@components/admin/ActionButton";
+import { ActionButton, ConfirmationModal } from "@components/admin";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 

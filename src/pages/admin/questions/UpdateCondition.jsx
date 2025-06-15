@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useGetConditionsQuery, useUpdateConditionMutation } from "@api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "@components/admin/BackButton";
-import { SubmitButton } from "@components/admin/SubmitButton";
 import FormData from "./FormData";
 import { ROUTES } from "@routes";
+import { Button } from "@components/general";
+import { useCustomNavigation } from "@hooks";
+import { ArrowLeftIcon } from "@icons";
 
 function UpdateCondition() {
   const { conditionId } = useParams();
@@ -17,6 +18,8 @@ function UpdateCondition() {
     updateCondition,
     { isLoading: updateConditionLoading, isError: updateConditionError },
   ] = useUpdateConditionMutation();
+
+  const { goBack } = useCustomNavigation();
 
   const [formData, setFormData] = useState({
     category: "",
@@ -93,8 +96,14 @@ function UpdateCondition() {
             <h1 className="bold text-xl max-sm:text-lg mb-2">
               Update Condition
             </h1>
-
-            <BackButton location={ROUTES.admin.conditionsList} />
+            <Button
+              variant="secondary"
+              size="sm"
+              leftIcon={<ArrowLeftIcon />}
+              onClick={goBack}
+            >
+              Back
+            </Button>
           </div>
           {!conditionsLoading && (
             <div className="bg-white border rounded-md shadow-lg">
@@ -217,9 +226,14 @@ function UpdateCondition() {
                 </div>
 
                 <div className="py-3 flex">
-                  <SubmitButton loading={updateConditionLoading}>
+                  <Button
+                    type="submit"
+                    variant="greenary"
+                    loading={updateConditionLoading}
+                    fullWidth
+                  >
                     Update Condition
-                  </SubmitButton>
+                  </Button>
                 </div>
               </form>
             </div>

@@ -9,12 +9,11 @@ import {
 } from "@api";
 
 import { toast } from "react-toastify";
-import { SubmitButton } from "@components/admin/SubmitButton";
-// import ListButton from "@components/ListButton";
-import CardHeader from "@components/admin/CardHeader";
+import { CardHeader } from "@components/admin";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
 import ObjectSelect from "./ObjectSelect";
+import { Button } from "@components/general";
 
 const CreateProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -374,9 +373,14 @@ const CreateProducts = () => {
                 </div>
               </div>
               <div className="py-3">
-                <SubmitButton handleLoading={productCreationLoading}>
+                <Button
+                  type="submit"
+                  variant="greenary"
+                  loading={productCreationLoading}
+                  fullWidth
+                >
                   Create Product
-                </SubmitButton>
+                </Button>
               </div>
             </form>
           </div>

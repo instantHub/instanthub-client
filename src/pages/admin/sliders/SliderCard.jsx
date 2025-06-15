@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteSliderMutation } from "@api";
-import ActionButton from "@components/admin/ActionButton";
+import { ActionButton } from "@components/admin";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 

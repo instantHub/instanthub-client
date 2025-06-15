@@ -4,10 +4,10 @@ import {
   useCancelServiceOrderMutation,
   useServiceOrderCompleteMutation,
 } from "@api";
-import OrderCancellationForm from "@components/admin/OrderCancellationForm";
+import { OrderCancellationForm } from "@components/admin";
 import { DateAndTime } from "@components/user";
-import { SubmitButton } from "@components/admin/SubmitButton";
 import { InfoCircleIcon, RightTickIcon } from "@icons";
+import { Button } from "@components/general";
 
 const ServiceCompletionForm = ({
   serviceOrderDetail,
@@ -233,9 +233,14 @@ const ServiceCompletionForm = ({
 
         {/* Submit Order Completion */}
         <div className="w-full mx-auto">
-          <SubmitButton loading={orderCompleteLoading}>
+          <Button
+            type="submit"
+            variant="greenary"
+            loading={orderCompleteLoading}
+            fullWidth
+          >
             Service Completed
-          </SubmitButton>
+          </Button>
         </div>
 
         {/* Cancel confirmation */}

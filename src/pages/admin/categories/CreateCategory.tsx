@@ -257,30 +257,32 @@ export const CreateCategory = () => {
           Create Category
         </Button>
       </form>
-
-      <FlexBox direction="col" justify="evenly" gap={2}>
-        AirtableIcon: <AirtableIcon />
-        AstroIcon: <AstroIcon />
-        CashIcon: <CashIcon />
-        CategoryIcon: <CategoryIcon />
-        CloseIcon: <CloseIcon />
-        CentSignIcon: <CentSignIcon />
-        DatabricksIcon: <DatabricksIcon />
-        GitDiffIcon: <GitDiffIcon />
-        JediOrderIcon: <JediOrderIcon />
-        ListCheck2Icon: <ListCheck2Icon /> {/* this is good */}
-        ListCheck3Icon: <ListCheck3Icon />
-        ListIndefiniteIcon: <ListIndefiniteIcon />
-        MultipleIcon: <MultipleIcon />
-        MultipleStopIcon: <MultipleStopIcon />
-        MultiSelectIcon: <MultiSelectIcon />
-        MultipleInputsIcon: <MultipleInputsIcon />
-        NumbersIcon: <NumbersIcon />
-        QuestionAnswerIcon: <QuestionAnswerIcon />
-        ProfileIcon: <ProfileIcon />
-        SlidesIcon: <SlidesIcon />
-        StockpilesIcon: <StockpilesIcon />
-      </FlexBox>
     </FlexBox>
   );
 };
+
+{
+  /* <FlexBox direction="col" justify="evenly" gap={2}>
+  AirtableIcon: <AirtableIcon />
+  AstroIcon: <AstroIcon />
+  CashIcon: <CashIcon />
+  CategoryIcon: <CategoryIcon />
+  CloseIcon: <CloseIcon />
+  CentSignIcon: <CentSignIcon />
+  DatabricksIcon: <DatabricksIcon />
+  GitDiffIcon: <GitDiffIcon />
+  JediOrderIcon: <JediOrderIcon />
+  ListCheck2Icon: <ListCheck2Icon /> 
+  ListCheck3Icon: <ListCheck3Icon />
+  ListIndefiniteIcon: <ListIndefiniteIcon />
+  MultipleIcon: <MultipleIcon />
+  MultipleStopIcon: <MultipleStopIcon />
+  MultiSelectIcon: <MultiSelectIcon />
+  MultipleInputsIcon: <MultipleInputsIcon />
+  NumbersIcon: <NumbersIcon />
+  QuestionAnswerIcon: <QuestionAnswerIcon />
+  ProfileIcon: <ProfileIcon />
+  SlidesIcon: <SlidesIcon />
+  StockpilesIcon: <StockpilesIcon />
+</FlexBox> */
+}

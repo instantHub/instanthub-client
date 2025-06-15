@@ -1,6 +1,6 @@
 import React from "react";
 
-const UpdateButton = ({ updateLoading, text }) => {
+export const UpdateButton = ({ updateLoading, text }) => {
   return (
     <div className="py-3 px-2">
       <button
@@ -13,5 +13,3 @@ const UpdateButton = ({ updateLoading, text }) => {
     </div>
   );
 };
-
-export default UpdateButton;

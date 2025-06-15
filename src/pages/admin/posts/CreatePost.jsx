@@ -1,16 +1,8 @@
-import React from "react";
-import ListButton from "@components/admin/ListButton";
-
 const CreatePost = () => {
   return (
     <div className="w-full flex flex-col justify-center max-sm:w-fit px-[2%] pt-[2%] max-sm:text-sm">
       <div className="flex justify-between items-center">
         <h1 className="bold text-[1.4rem] mb-2 max-sm:text-sm">Create Post</h1>
-
-        {/* <ListButton
-          location={ROUTES.admin.categoriesList}
-          text={"Categories List"}
-        /> */}
       </div>
       <div className="bg-white border rounded-md shadow-lg max-sm:w-fit">
         <form

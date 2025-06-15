@@ -1,6 +1,3 @@
-// Table.js
-import React from "react";
-
 const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
   //   console.log("data frin TABLE component", data);
   return (

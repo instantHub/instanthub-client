@@ -12,7 +12,7 @@ import {
   filterPage,
   clearFilter,
 } from "@features/adminSlices/filterSlice";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ConfirmationModal } from "@components/admin";
 import ProductCard from "./ProductCard";
 import axios from "axios";
 import { ROUTES } from "@routes";

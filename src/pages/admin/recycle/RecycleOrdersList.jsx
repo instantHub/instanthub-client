@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetCategoriesQuery, useGetRecycleOrdersQuery } from "@api";
-import OrderTabs from "@components/admin/OrderTabs";
 import RecycleOrderCard from "./RecycleOrderCard";
-import CurrentOrdersAndCount from "@components/admin/CurrentOrdersAndCount";
+import { CurrentOrdersAndCount, OrderTabs } from "@components/admin";
 import { Loading } from "@components/user";
 
 const RecycleOrdersList = () => {

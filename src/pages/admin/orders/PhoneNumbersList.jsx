@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDeletePhoneNumberMutation, useGetPhoneNumbersQuery } from "@api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ConfirmationModal } from "@components/admin";
 import { DeleteForeverIcon } from "@icons";
 
 const PhoneNumbersList = () => {

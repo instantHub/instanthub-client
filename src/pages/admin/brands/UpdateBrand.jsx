@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   useGetAllBrandQuery,
   useUpdateBrandMutation,
@@ -8,14 +8,14 @@ import {
 } from "@api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import CardHeader from "@components/admin/CardHeader";
-import { SubmitButton } from "@components/admin/SubmitButton";
+import { CardHeader } from "@components/admin";
 import { ROUTES } from "@routes";
 
 import { Loading } from "@components/user";
 import { slugify } from "../../../utils/general/slugify";
+import { Button } from "@components/general";
 
-function UpdateBrand() {
+export function UpdateBrand() {
   const { brandId } = useParams();
 
   const { data: brandsData, isLoading } = useGetSingleBrandQuery(brandId);
@@ -177,14 +177,17 @@ function UpdateBrand() {
           </div>
 
           <div className="w-1/2 mx-auto">
-            <SubmitButton loading={updateBrandLoading}>
+            <Button
+              type="submit"
+              variant="greenary"
+              loading={updateBrandLoading}
+              fullWidth
+            >
               Update Brand
-            </SubmitButton>
+            </Button>
           </div>
         </form>
       </div>
     </div>
   );
 }
-
-export default UpdateBrand;

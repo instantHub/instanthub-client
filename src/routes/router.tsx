@@ -5,17 +5,13 @@ import * as USER from "@pages/user";
 import * as USER_COMPONENTS from "@components/user";
 
 import * as ADMIN from "@pages/admin";
+import * as ADMIN_COMPONENTS from "@components/admin";
 
-import PrivateRoute from "@components/admin/PrivateRoute";
 import AdminSignIn from "@pages/admin/signIn & signup/SignIn";
 import Admin from "@pages/admin/Admin";
 
 import AdminCreateProducts from "@pages/admin/products/CreateProducts";
 import AdminUpdateProduct from "@pages/admin/products/UpdateProduct";
-
-import AdminBrandsList from "@pages/admin/brands/BrandsList";
-import AdminUpdateBrand from "@pages/admin/brands/UpdateBrand";
-import AdminCreateBrand from "@pages/admin/brands/CreateBrand";
 
 import AdminCreateSeries from "@pages/admin/series/CreateSeries";
 import AdminUpdateSeries from "@pages/admin/series/UpdateSeries";
@@ -265,7 +261,7 @@ export const router = Router([
   },
   {
     path: "",
-    element: <PrivateRoute />,
+    element: <ADMIN_COMPONENTS.PrivateRoute />,
     children: [
       {
         path: ROUTES.admin.root,
@@ -284,9 +280,7 @@ export const router = Router([
           },
           {
             path: ROUTES.admin.updateProfile,
-            element: React.createElement(
-              lazyLoad(() => import("@components/admin/UpdateAdmin"))
-            ),
+            element: <ADMIN_COMPONENTS.UpdateAdmin />,
           },
           {
             path: ROUTES.admin.createProduct,
@@ -330,15 +324,15 @@ export const router = Router([
           // Brands
           {
             path: ROUTES.admin.createBrand,
-            element: <AdminCreateBrand />,
+            element: <ADMIN.CreateBrand />,
           },
           {
             path: ROUTES.admin.brandsList,
-            element: <AdminBrandsList />,
+            element: <ADMIN.BrandsList />,
           },
           {
             path: ROUTES.admin.updateBrand,
-            element: <AdminUpdateBrand />,
+            element: <ADMIN.UpdateBrand />,
           },
 
           // Series
@@ -463,9 +457,7 @@ export const router = Router([
           // Complaints
           {
             path: ROUTES.admin.complaintsList,
-            element: React.createElement(
-              lazyLoad(() => import("@pages/admin/complaints/Complaints"))
-            ),
+            element: <ADMIN.Complaints />,
           },
         ],
       },

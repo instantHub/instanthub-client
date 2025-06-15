@@ -528,10 +528,6 @@ export const RecycleProductDetail = () => {
                     )}
                   </div>
 
-                  {/* <SubmitButton loading={orderLoading} type="primary">
-                    Sell
-                  </SubmitButton> */}
-
                   <InputSubmitBtn loading={orderLoading} label="Book Recycle" />
                 </form>
               </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAdminLogoutMutation, useAdminProfileQuery } from "@api";
@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
-import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
+import { SideBarContext } from "@pages/admin";
 import { ROUTES } from "@routes";
 import { FiAlignLeft, LogoutIcon, MenuIcon, ProfileIcon } from "@icons";
 
-const Navbar = () => {
+export const Navbar = () => {
   const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.auth);
   const { adminProfile, isLoading, isError } = useAdminProfileQuery();
@@ -120,5 +120,3 @@ const Navbar = () => {
     </nav>
   );
 };
-
-export default Navbar;

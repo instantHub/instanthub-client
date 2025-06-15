@@ -1,6 +1,5 @@
-import React from "react";
 
-const CurrentOrdersAndCount = ({ ordersDisplaying = {}, ordersCount = {} }) => {
+export const CurrentOrdersAndCount = ({ ordersDisplaying = {}, ordersCount = {} }) => {
   // console.log("ordersCount from CurrentOrdersAndCount", ordersCount);
   const orderCurrentStatus = (status) => {
     if (status == "pending")
@@ -77,4 +76,3 @@ const CurrentOrdersAndCount = ({ ordersDisplaying = {}, ordersCount = {} }) => {
   return <p>Unknown CurrentOrdersAndCount</p>;
 };
 
-export default CurrentOrdersAndCount;
