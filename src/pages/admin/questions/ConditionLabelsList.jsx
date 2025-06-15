@@ -15,10 +15,10 @@ import {
   filterCondition,
 } from "@features/adminSlices/filterSlice";
 import Table from "@components/admin/TableView";
-import { MdDeleteForever } from "react-icons/md";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { ROUTES } from "@routes";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { DeleteForeverIcon } from "@icons";
 
 const ConditionLabelsTable = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
@@ -115,7 +115,7 @@ const ConditionLabelsTable = () => {
           >
             <span className="max-sm:hidden">Delete</span>
             <span className="lg:hidden">
-              <MdDeleteForever />
+              <DeleteForeverIcon />
             </span>
           </button>
         </div>

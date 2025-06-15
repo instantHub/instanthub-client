@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useGetProductsQuery, useGetBrandSeriesQuery } from "@api";
 import { useParams } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
 import {
   Loading,
   ProductCard,
@@ -11,6 +10,7 @@ import {
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
+import { SearchIcon } from "@icons";
 
 export const RecycleProducts = () => {
   const { brandURL } = useParams();
@@ -108,7 +108,7 @@ export const RecycleProducts = () => {
         {/* Search Bar */}
         <div className=" my-2 flex justify-end gap-2 items-center max-sm:my-4 max-sm:justify-center">
           <div className="flex pl-4 items-center border rounded">
-            <BsSearch className="text-black" />
+            <SearchIcon className="text-black" />
             <input
               type="search"
               name="search"

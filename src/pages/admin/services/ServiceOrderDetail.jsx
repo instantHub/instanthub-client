@@ -3,17 +3,21 @@ import { useDeleteServiceOrderMutation, useGetServiceOrderQuery } from "@api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@components/user";
 import { orderCurrentStatus } from "@utils/admin/helper";
-import { IoCartOutline } from "react-icons/io5";
-import { SiTicktick } from "react-icons/si";
-import { MdCancel, MdDeleteForever, MdOutlineDevices } from "react-icons/md";
-import { RiContactsLine } from "react-icons/ri";
-import { FaMapLocationDot } from "react-icons/fa6";
-import { TiArrowBackOutline } from "react-icons/ti";
-import { BsBoxSeam } from "react-icons/bs";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import ServiceCompletionForm from "./ServiceCompletionForm";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
+import {
+  ArrowLeftIcon,
+  CartIcon,
+  CloseIcon,
+  ContactIcon,
+  DeleteForeverIcon,
+  MapIcon,
+  NumbersIcon,
+  ProductIcon,
+  RightTickIcon,
+} from "@icons";
 
 const ServiceOrderDetail = () => {
   const { serviceOrderId } = useParams();
@@ -58,7 +62,7 @@ const ServiceOrderDetail = () => {
           }}
           className="text-3xl max-sm:text-xl bg-secondary text-secondary-light rounded"
         >
-          <TiArrowBackOutline />
+          <ArrowLeftIcon />
         </button>
         <button
           onClick={() => {
@@ -67,7 +71,7 @@ const ServiceOrderDetail = () => {
           }}
           className="text-3xl max-sm:text-xl bg-red-600 text-secondary-light rounded"
         >
-          <MdDeleteForever />
+          <DeleteForeverIcon size={24} />
         </button>
       </div>
 
@@ -76,7 +80,7 @@ const ServiceOrderDetail = () => {
         {/* <div className="my-10 grid grid-cols-2 max-sm:grid-cols-1 w-full"> */}
         <div className="grid grid-cols-2 max-sm:grid-cols-1 place-items-start place-content-center gap-14 max-sm:gap-5 py-10 max-sm:py-5 w-5/6 max-sm:w-fit">
           {/* Order Info */}
-          <DetailWrapper icon={IoCartOutline} heading="Service Order Details">
+          <DetailWrapper icon={CartIcon} heading="Service Order Details">
             <DetailDiv
               label={`Service Order ID`}
               text={serviceOrderDetail?.serviceOrderId}
@@ -96,7 +100,7 @@ const ServiceOrderDetail = () => {
           </DetailWrapper>
 
           {/* Product Detail */}
-          <DetailWrapper icon={MdOutlineDevices} heading="Service Details">
+          <DetailWrapper icon={ProductIcon} heading="Service Details">
             <DetailDiv label={`Service Name`} text={getServiceName()} />
             {serviceOrderDetail.serviceType === "Brand" && (
               <div className="flex flex-col">
@@ -124,7 +128,7 @@ const ServiceOrderDetail = () => {
 
           {/* Problems for Brand Services */}
           {serviceOrderDetail.serviceType === "Brand" && (
-            <DetailWrapper icon={BsBoxSeam} heading="Problems">
+            <DetailWrapper icon={NumbersIcon} heading="Problems">
               {serviceOrderDetail?.problems?.map((problem, i) => (
                 <DetailDiv label={"Problem"} text={problem.serviceProblem} />
               ))}
@@ -132,14 +136,14 @@ const ServiceOrderDetail = () => {
           )}
 
           {/* Customer Details */}
-          <DetailWrapper icon={RiContactsLine} heading="Customer Details">
+          <DetailWrapper icon={ContactIcon} heading="Customer Details">
             <DetailDiv label={`Name`} text={serviceOrderDetail?.customerName} />
             <DetailDiv label={`Phone`} text={serviceOrderDetail?.phone} />
             <DetailDiv label={`Email`} text={serviceOrderDetail?.email} />
           </DetailWrapper>
 
           {/* Address Detail*/}
-          <DetailWrapper icon={FaMapLocationDot} heading="Address Details">
+          <DetailWrapper icon={MapIcon} heading="Address Details">
             <DetailDiv label={`Address`} text={serviceOrderDetail?.address} />
           </DetailWrapper>
 
@@ -147,7 +151,7 @@ const ServiceOrderDetail = () => {
           {serviceOrderDetail.status.completed && (
             <>
               {/* Completion Detail*/}
-              <DetailWrapper icon={SiTicktick} heading="Completion Details">
+              <DetailWrapper icon={RightTickIcon} heading="Completion Details">
                 <DetailDiv
                   label={`Agent Name`}
                   text={serviceOrderDetail?.serviceAgent}
@@ -177,7 +181,7 @@ const ServiceOrderDetail = () => {
 
           {/* Cancelled Order Reason */}
           {serviceOrderDetail.status.cancelled && (
-            <DetailWrapper icon={MdCancel} heading="Cancellation Details">
+            <DetailWrapper icon={CloseIcon} heading="Cancellation Details">
               <DetailDiv
                 label={`Cancel Reason`}
                 text={serviceOrderDetail?.cancelReason}

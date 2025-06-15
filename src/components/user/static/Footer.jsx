@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { ComplaintBox } from "../ComplaintBox";
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@icons";
 
 export const Footer = () => {
   const [openComplaintBox, setOpenComplaintBox] = useState(false);
@@ -31,13 +31,13 @@ export const Footer = () => {
             </p>
             <ul className="flex items-center gap-3 text-md my-3 text-xl">
               <li className="hover:text-white text-blue-600">
-                <FaFacebookF />
+                <FacebookIcon />
               </li>
               <li className="hover:text-white text-orange-600">
-                <FaInstagram />
+                <InstagramIcon />
               </li>
               <li className="hover:text-white bg-green-600 rounded-full text-white">
-                <FaWhatsapp />
+                <WhatsAppIcon size={16} />
               </li>
             </ul>
           </div>
@@ -67,13 +67,13 @@ export const Footer = () => {
             <p className="text-xs text-white">Follow Us On</p>
             <ul className="flex gap-3 text-md">
               <li className="hover:text-white text-blue-600">
-                <FaFacebookF />
+                <FacebookIcon />
               </li>
               <li className="hover:text-white text-orange-600">
-                <FaInstagram />
+                <InstagramIcon />
               </li>
               <li className="hover:text-white bg-green-600 rounded-full text-white">
-                <FaWhatsapp />
+                <WhatsAppIcon size={16} />
               </li>
             </ul>
           </div>

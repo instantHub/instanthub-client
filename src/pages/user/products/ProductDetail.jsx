@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useGetProductDetailsQuery } from "@api";
 import { useParams, Link } from "react-router-dom";
-import { FaAngleRight, FaIndianRupeeSign } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import { Loading, Breadcrumbs } from "@components/user";
 import SellContent from "@components/user/static/SellContent";
 import { MOBILE } from "@utils/user/constants";
+import { ArrowRightIcon } from "@icons";
 
 export const ProductDetail = () => {
   const { productUniqueURL } = useParams();
@@ -116,7 +116,7 @@ export const ProductDetail = () => {
                   {variantState.variantSelected?.price && (
                     <div className="flex flex-col items-start">
                       <div className="flex items-center">
-                        <FaIndianRupeeSign className="text-4xl max-sm:text-2xl" />
+                        <span className="text-4xl max-sm:text-2xl">₹</span>
                         <h2 className="text-5xl max-sm:text-3xl text-yellow-500">
                           {variantState.variantSelected.price}
                         </h2>
@@ -156,7 +156,9 @@ export const ProductDetail = () => {
                 <div className="flex flex-col mb-4">
                   <h2>Product Price</h2>
                   <div className="flex items-center text-5xl max-sm:text-3xl text-yellow-500">
-                    <FaIndianRupeeSign className="text-4xl max-sm:text-2xl text-black" />{" "}
+                    <span className="text-4xl max-sm:text-2xl text-black">
+                      ₹
+                    </span>
                     {variantState.variantSelected?.price}
                   </div>
                   <span className="text-gray-500 text-sm max-sm:text-xs">
@@ -171,7 +173,7 @@ export const ProductDetail = () => {
                   to={`/sell/deductions?product=${productUniqueURL}&variant=${variantState.variantSelected.name}`}
                   className="flex items-center w-fit text-lg max-sm:text-sm bg-emerald-600 text-white px-4 py-2 rounded-md"
                 >
-                  Get Exact Value <FaAngleRight />
+                  Get Exact Value <ArrowRightIcon />
                 </Link>
               ) : (
                 <button

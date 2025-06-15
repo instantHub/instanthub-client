@@ -1,6 +1,6 @@
 import React from "react";
-import { MdDeleteForever } from "react-icons/md";
 import { useDeleteCouponMutation } from "@api";
+import { DeleteForeverIcon } from "@icons";
 
 const CouponCard = ({ data }) => {
   // console.log("data", data);
@@ -42,7 +42,7 @@ const CouponCard = ({ data }) => {
             onClick={(e) => handleDelete(data.id, e)}
             className="w-full flex items-center justify-center border-t border-t-red-200 text-red-600 bg-white px-3 py-1"
           >
-            Delete <MdDeleteForever />
+            Delete <DeleteForeverIcon />
           </button>
         </div>
       </div>

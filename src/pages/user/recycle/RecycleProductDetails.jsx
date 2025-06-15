@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useGetProductDetailsQuery, useCreateRecycleOrderMutation } from "@api";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaAngleRight } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import RecycleContent from "@components/user/static/recycleProduct/RecycleContent";
@@ -20,6 +19,7 @@ import {
   NON_DEAD_LAPTOP_PRICE,
   NON_DEAD_MOBILE_PRICE,
 } from "./constants";
+import { ArrowRightIcon } from "@icons";
 
 export const RecycleProductDetail = () => {
   const { productURL } = useParams();
@@ -343,7 +343,7 @@ export const RecycleProductDetail = () => {
                   }}
                 >
                   <button className="px-4">Recycle</button>
-                  <FaAngleRight />
+                  <ArrowRightIcon />
                 </div>
               ) : (
                 <div>

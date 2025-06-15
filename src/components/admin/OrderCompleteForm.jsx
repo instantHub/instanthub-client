@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { FaRegImages } from "react-icons/fa";
-import { SiTicktick } from "react-icons/si";
-import { BsInfoCircle } from "react-icons/bs";
 import OrderCancellationForm from "./OrderCancellationForm";
 import { useOrderCancelMutation } from "@api";
 import { DateAndTime, InputSubmitBtn } from "@components/user";
+import { ImageIcon, InfoCircleIcon, RightTickIcon } from "@icons";
 
 const OrderCompleteForm = ({
   orderDetail,
@@ -32,7 +30,7 @@ const OrderCompleteForm = ({
         className="relative grid grid-cols-2 max-sm:grid-cols-1 place-items-start place-content-center gap-14 max-sm:gap-5 py-10 max-sm:py-5 w max-sm:w-fit"
       >
         {/* Completion Detail */}
-        <DetailWrapper icon={SiTicktick} heading="Completion Details">
+        <DetailWrapper icon={RightTickIcon} heading="Completion Details">
           <div className="flex flex-col gap-2">
             <DetailDiv
               label="Order Picked By"
@@ -79,7 +77,7 @@ const OrderCompleteForm = ({
         </DetailWrapper>
 
         {/* Device Info */}
-        <DetailWrapper icon={BsInfoCircle} heading="Device Info">
+        <DetailWrapper icon={InfoCircleIcon} heading="Device Info">
           <div className="flex flex-col gap-2">
             <DetailDiv
               label="Serial No"
@@ -111,7 +109,7 @@ const OrderCompleteForm = ({
         </DetailWrapper>
 
         {/* Mandatory ID Proof Images */}
-        <DetailWrapper icon={FaRegImages} heading="Required Documents">
+        <DetailWrapper icon={ImageIcon} heading="Required Documents">
           <div className="flex flex-col gap-5 max-sm:gap-3">
             <DetailDiv
               label="Upload Front of Customer ID"
@@ -139,7 +137,7 @@ const OrderCompleteForm = ({
         </DetailWrapper>
 
         {/* Upload Optional Images */}
-        <DetailWrapper icon={FaRegImages} heading="Optional Images">
+        <DetailWrapper icon={ImageIcon} heading="Optional Images">
           <div className="flex flex-col gap-5 max-sm:gap-3">
             <DetailDiv
               label={`Upload Optional Image 1`}

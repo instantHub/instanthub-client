@@ -1,30 +1,34 @@
-import React from "react";
-import { BiSolidCity } from "react-icons/bi";
+import { CityIcon } from "@icons";
 
 const cities = [
   {
     city: "Bangalore",
     state: "Karnataka",
-    icon: <BiSolidCity />,
+    icon: <CityIcon size={26} />,
     available: true,
   },
   {
     city: "Mysore",
     state: "Karnataka",
-    icon: <BiSolidCity />,
+    icon: <CityIcon size={26} />,
     available: true,
   },
   {
     city: "Mumbai",
     state: "Maharashtra",
-    icon: <BiSolidCity />,
+    icon: <CityIcon size={26} />,
     available: false,
   },
-  { city: "Delhi", state: "Delhi", icon: <BiSolidCity />, available: false },
+  {
+    city: "Delhi",
+    state: "Delhi",
+    icon: <CityIcon size={26} />,
+    available: false,
+  },
   {
     city: "Hyderabad",
     state: "Telangana",
-    icon: <BiSolidCity />,
+    icon: <CityIcon size={26} />,
     available: false,
   },
 ];

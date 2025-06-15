@@ -1,35 +1,37 @@
-import React, { memo } from "react";
-import { GiTakeMyMoney } from "react-icons/gi";
-import { RiCalendarScheduleFill } from "react-icons/ri";
-import { GiPriceTag } from "react-icons/gi";
-import { TbListDetails } from "react-icons/tb";
+import { memo } from "react";
+import {
+  CalendarScheduleFillIcon,
+  CashIcon,
+  ListCheck2Icon,
+  PriceTagIcon,
+} from "@icons";
 
 const HowItWorks = () => {
   const data = [
     {
       heading: "Select Your Device",
-      icon: <TbListDetails />,
+      icon: <ListCheck2Icon />,
       text: `Begin by selecting the electronic item you wish to sell. Whether
             it's a smartphone, laptop, tablet, or gaming console and etc, we accept
             a wide range of devices.`,
     },
     {
       heading: "Get an Instant Quote",
-      icon: <GiPriceTag />,
+      icon: <PriceTagIcon />,
       text: `Once you've chosen your device, our intuitive platform will
       generate an instant quote based on its condition, age, and
       market value.`,
     },
     {
       heading: "Schedule a Pickup",
-      icon: <RiCalendarScheduleFill />,
+      icon: <CalendarScheduleFillIcon size={22} />,
       text: `After receiving your quote, simply schedule a pickup time that
       works best for you. Our team will come directly to your location
       to collect the device.`,
     },
     {
       heading: "Receive Instant Payment",
-      icon: <GiTakeMyMoney />,
+      icon: <CashIcon />,
       text: `Upon inspection of the device, you'll receive an instant cash
       payment. No waiting periods, no hidden fees – just quick and
       reliable service.`,

@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { IconProps } from "./types";
 
-export const ArrowUpIcon: React.FC<IconProps> = ({
+export const MenuIcon: FC<IconProps> = ({
   size = 24,
   className = "",
   color = "currentColor",
@@ -16,6 +17,8 @@ export const ArrowUpIcon: React.FC<IconProps> = ({
     strokeLinejoin="round"
     className={className}
   >
-    <polyline points="18,15 12,9 6,15" />
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
   </svg>
 );

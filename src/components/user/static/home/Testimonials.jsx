@@ -1,5 +1,5 @@
-import React, { memo, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { ArrowLeftIcon, ArrowRightIcon } from "@icons";
+import { memo, useState } from "react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -53,7 +53,7 @@ const Testimonials = () => {
           className="mr-4 text-black px-4 py-2 rounded focus:outline-none"
           onClick={prevTestimonial}
         >
-          <FaChevronLeft />
+          <ArrowLeftIcon />
         </button>
         <div className="max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none">
           {testimonials
@@ -87,7 +87,7 @@ const Testimonials = () => {
           className="ml-4 text-black px-4 py-2 rounded focus:outline-none"
           onClick={nextTestimonial}
         >
-          <FaChevronRight />
+          <ArrowRightIcon />
         </button>
       </div>
     </div>

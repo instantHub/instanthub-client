@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {
-  FaWhatsapp,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaRecycle,
-  FaHome,
-  FaAngleDown,
-  FaAngleUp,
-} from "react-icons/fa";
-import { GiSellCard } from "react-icons/gi";
-import { MdHomeRepairService } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "@api";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-// import { FaPhone } from "react-icons/fa";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  EmailIcon,
+  GitDiffIcon,
+  HomeIcon,
+  PhoneIcon,
+  RecycleIcon,
+  ServiceIcon,
+  WhatsAppIcon,
+} from "@icons";
 
 export const FloatingButtons = () => {
   const { data: categories, categoriesLoading: categoriesLoading } =
@@ -131,8 +130,7 @@ export const FloatingButtons = () => {
             className="flex-none text-gray-500 max-sm:text-gray-900 text-2xl hover:text-gray-900
                       w-fit flex justify-center items-center rounded-md transition-all ease-in-out duration-300"
           >
-            <FaAngleUp />
-            {/* <FaChevronUp /> */}
+            <ArrowUpIcon />
           </button>
         )}
         <a
@@ -141,19 +139,19 @@ export const FloatingButtons = () => {
           rel="noopener noreferrer"
           className="flex-none bg-green-500 text-white p-4 max-sm:p-3 w-fit flex justify-center items-center rounded-full shadow-lg hover:bg-green-600 transition "
         >
-          <FaWhatsapp className="size-6 max-sm:size-6" />
+          <WhatsAppIcon className="size-6 max-sm:size-6" />
         </a>
         <a
           href="tel:8722288017"
           className="flex-none bg-blue-500 text-white p-4 max-sm:p-3 w-fit flex justify-center items-center rounded-full shadow-lg hover:bg-blue-600 transition "
         >
-          <FaPhoneAlt size={24} />
+          <PhoneIcon />
         </a>
         <a
           href="mailto:instantcashpick@gmail.com"
           className="flex-none bg-red-500 text-white p-4 max-sm:p-3 w-fit flex justify-center items-center rounded-full shadow-lg hover:bg-red-600 transition "
         >
-          <FaEnvelope size={24} />
+          <EmailIcon size={24} />
         </a>
         <button
           aria-label="Scroll to Bottom"
@@ -161,8 +159,7 @@ export const FloatingButtons = () => {
           className="flex-none text-gray-700 text-2xl hover:text-[29px] hover:text-gray-900 hover:pt-1 
                     w-fit flex justify-center items-center rounded-md transition-all ease-in-out duration-300 max-sm:hidden"
         >
-          <FaAngleDown />
-          {/* <FaChevronDown /> */}
+          <ArrowDownIcon />
         </button>
       </div>
 
@@ -194,7 +191,7 @@ export const FloatingButtons = () => {
               <span
                 className={`${activePath.home && activeLink} text-gray-400`}
               >
-                <FaHome />
+                <HomeIcon size={20} />
               </span>
               <span className={`${activePath.home && activeLinkName} `}>
                 Home
@@ -232,7 +229,7 @@ export const FloatingButtons = () => {
               <span
                 className={`${activePath.sell && activeLink} text-gray-400`}
               >
-                <GiSellCard />
+                <GitDiffIcon />
               </span>
               <span className={`${activePath.sell && activeLinkName}`}>
                 Sell
@@ -253,7 +250,7 @@ export const FloatingButtons = () => {
               <span
                 className={`${activePath.service && activeLink} text-gray-400`}
               >
-                <MdHomeRepairService />
+                <ServiceIcon size={20} />
               </span>
               <span className={`${activePath.service && activeLinkName}`}>
                 Services
@@ -274,7 +271,7 @@ export const FloatingButtons = () => {
               <span
                 className={`${activePath.recycle && activeLink} text-gray-400`}
               >
-                <FaRecycle />
+                <RecycleIcon />
               </span>
               <span className={`${activePath.recycle && activeLinkName}`}>
                 Recycle

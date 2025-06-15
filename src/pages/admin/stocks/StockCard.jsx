@@ -1,5 +1,5 @@
+import { Eye } from "@icons";
 import React from "react";
-import { FaHandsHoldingCircle } from "react-icons/fa6";
 
 const StockCard = ({ data, categoryImage, handleView }) => {
   // console.log("data", data);
@@ -116,7 +116,7 @@ const StockCard = ({ data, categoryImage, handleView }) => {
       >
         <span className="tracking-[5px]">View Stock</span>
         <span>
-          <FaHandsHoldingCircle />
+          <Eye />
         </span>
       </button>
     </div>

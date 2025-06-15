@@ -1,5 +1,4 @@
-import React from "react";
-import { FaEdit } from "react-icons/fa";
+import { EditIcon } from "@icons";
 import { Link } from "react-router-dom";
 
 const EditButton = ({ location }) => {
@@ -13,7 +12,7 @@ const EditButton = ({ location }) => {
     >
       <Link className="flex items-center gap-1" to={location}>
         <span className="max-sm:hidden">Edit</span>
-        <FaEdit />
+        <EditIcon />
       </Link>
     </div>
   );

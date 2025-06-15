@@ -9,20 +9,23 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@components/user";
 import OrderCompleteForm from "@components/admin/OrderCompleteForm";
 import { orderCurrentStatus } from "@utils/admin/helper";
-import { FaRegImages } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
-import { SiTicktick } from "react-icons/si";
-import { MdCancel, MdDeleteForever, MdOutlineDevices } from "react-icons/md";
-import { BsInfoCircle } from "react-icons/bs";
-import { RiContactsLine } from "react-icons/ri";
-import { FaMapLocationDot } from "react-icons/fa6";
-import { TiArrowBackOutline } from "react-icons/ti";
-import { BsBoxSeam } from "react-icons/bs";
-import { TbListDetails } from "react-icons/tb";
 import { toast } from "react-toastify";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
 import AssignAgent from "@components/admin/AssignAgent";
 import { ROUTES } from "@routes";
+import {
+  ArrowLeftIcon,
+  CartIcon,
+  CloseIcon,
+  ContactIcon,
+  DeleteForeverIcon,
+  ImageIcon,
+  InfoCircleIcon,
+  ListIndefiniteIcon,
+  MapIcon,
+  ProductIcon,
+  RightTickIcon,
+} from "@icons";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
@@ -248,7 +251,7 @@ const OrderDetail = () => {
           }}
           className="text-3xl max-sm:text-xl bg-secondary text-secondary-light rounded"
         >
-          <TiArrowBackOutline />
+          <ArrowLeftIcon size={24} />
         </button>
         <button
           onClick={() => {
@@ -257,7 +260,7 @@ const OrderDetail = () => {
           }}
           className="text-3xl max-sm:text-xl bg-red-600 text-secondary-light rounded"
         >
-          <MdDeleteForever />
+          <DeleteForeverIcon />
         </button>
       </div>
 
@@ -265,7 +268,7 @@ const OrderDetail = () => {
       <div className="flex flex-col bg-white justify-center border rounded-xl items-center w-[95%]">
         <div className="grid grid-cols-2 max-sm:grid-cols-1 place-items-start place-content-center gap-14 max-sm:gap-5 py-10 max-sm:py-5 w-5/6 max-sm:w-fit">
           {/* Order Info */}
-          <DetailWrapper icon={IoCartOutline} heading="Order Details">
+          <DetailWrapper icon={CartIcon} heading="Order Details">
             <DetailDiv label={`Order ID`} text={orderDetail?.orderId} />
             <DetailDiv label={`Offered Price`} text={orderDetail?.offerPrice} />
             <DetailDiv
@@ -279,7 +282,7 @@ const OrderDetail = () => {
           </DetailWrapper>
 
           {/* Product Detail */}
-          <DetailWrapper icon={MdOutlineDevices} heading="Product Details">
+          <DetailWrapper icon={ProductIcon} heading="Product Details">
             <DetailDiv label={`Product`} text={orderDetail?.productName} />
             <div className="flex gap-4">
               <DetailDiv
@@ -292,7 +295,7 @@ const OrderDetail = () => {
 
           {/* Accessories Available */}
           {/* {isAccessoriesAvailable && (
-            <DetailWrapper icon={BsBoxSeam} heading="Accessories">
+            <DetailWrapper icon={ProductIcon} heading="Accessories">
               {finalDeductionSet.map((deduction, i) => {
                 return (
                   <div key={i}>
@@ -323,7 +326,10 @@ const OrderDetail = () => {
           )} */}
 
           {/* Selected Conditions Info */}
-          <DetailWrapper icon={TbListDetails} heading="Selected Conditions">
+          <DetailWrapper
+            icon={ListIndefiniteIcon}
+            heading="Selected Conditions"
+          >
             {finalDeductionSet.map((deduction, i) => {
               return (
                 <div key={i}>
@@ -349,14 +355,14 @@ const OrderDetail = () => {
           </DetailWrapper>
 
           {/* Customer Details */}
-          <DetailWrapper icon={RiContactsLine} heading="Customer Details">
+          <DetailWrapper icon={ContactIcon} heading="Customer Details">
             <DetailDiv label={`Name`} text={orderDetail?.customerName} />
             <DetailDiv label={`Phone`} text={orderDetail?.phone} />
             <DetailDiv label={`Email`} text={orderDetail?.email} />
           </DetailWrapper>
 
           {/* Address Detail*/}
-          <DetailWrapper icon={FaMapLocationDot} heading="Address Details">
+          <DetailWrapper icon={MapIcon} heading="Address Details">
             <DetailDiv
               label={`Address`}
               text={orderDetail?.addressDetails?.address}
@@ -381,7 +387,7 @@ const OrderDetail = () => {
           {orderDetail.status.completed && (
             <>
               {/* Completion Detail*/}
-              <DetailWrapper icon={SiTicktick} heading="Completion Details">
+              <DetailWrapper icon={RightTickIcon} heading="Completion Details">
                 <DetailDiv
                   label={`Agent Name`}
                   text={orderDetail?.pickedUpDetails?.agentName}
@@ -404,7 +410,7 @@ const OrderDetail = () => {
               </DetailWrapper>
 
               {/* Device Info: */}
-              <DetailWrapper icon={BsInfoCircle} heading="Device Info">
+              <DetailWrapper icon={InfoCircleIcon} heading="Device Info">
                 <DetailDiv
                   label={`Serial Number`}
                   text={
@@ -418,7 +424,7 @@ const OrderDetail = () => {
               </DetailWrapper>
 
               {/* Customer proof images to view or download */}
-              <DetailWrapper icon={FaRegImages} heading="Customer IDs">
+              <DetailWrapper icon={ImageIcon} heading="Customer IDs">
                 {/* Customer proof images to view and download */}
                 {/* <div className="flex max-sm:flex-col  items-center justify-center gap-3 p-1 rounded"> */}
                 <div className="grid grid-cols-4 max-sm:grid-cols-2 items-start justify-center gap-3 p-1 rounded">
@@ -484,7 +490,7 @@ const OrderDetail = () => {
 
           {/* Cancelled Order Reason */}
           {orderDetail.status.cancelled && (
-            <DetailWrapper icon={MdCancel} heading="Cancellation Details">
+            <DetailWrapper icon={CloseIcon} heading="Cancellation Details">
               <DetailDiv
                 label={`Cancel Reason`}
                 text={orderDetail?.cancelReason}

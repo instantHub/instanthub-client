@@ -1,4 +1,6 @@
-export const PlusIcon = () => (
+import { memo } from "react";
+
+export const PlusIcon = memo(() => (
   <svg
     className="w-4 h-4"
     fill="none"
@@ -12,4 +14,4 @@ export const PlusIcon = () => (
       d="M12 4v16m8-8H4"
     />
   </svg>
-);
+));

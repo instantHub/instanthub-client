@@ -10,7 +10,30 @@ import { ICategoryType } from "@features/api/categoriesApi/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { Link } from "react-router-dom";
 import { TAction, TState } from "./types";
-import { PlusIcon } from "@icons";
+import {
+  AirtableIcon,
+  AstroIcon,
+  CashIcon,
+  CategoryIcon,
+  CentSignIcon,
+  CloseIcon,
+  DatabricksIcon,
+  GitDiffIcon,
+  JediOrderIcon,
+  ListCheck2Icon,
+  ListCheck3Icon,
+  ListIndefiniteIcon,
+  MultipleIcon,
+  MultipleInputsIcon,
+  MultipleStopIcon,
+  MultiSelectIcon,
+  NumbersIcon,
+  PlusIcon,
+  ProfileIcon,
+  QuestionAnswerIcon,
+  SlidesIcon,
+  StockpilesIcon,
+} from "@icons";
 
 const CATEGORY_TYPES: (keyof ICategoryType)[] = [
   "simple",
@@ -234,6 +257,30 @@ export const CreateCategory = () => {
           Create Category
         </Button>
       </form>
+
+      <FlexBox direction="col" justify="evenly" gap={2}>
+        AirtableIcon: <AirtableIcon />
+        AstroIcon: <AstroIcon />
+        CashIcon: <CashIcon />
+        CategoryIcon: <CategoryIcon />
+        CloseIcon: <CloseIcon />
+        CentSignIcon: <CentSignIcon />
+        DatabricksIcon: <DatabricksIcon />
+        GitDiffIcon: <GitDiffIcon />
+        JediOrderIcon: <JediOrderIcon />
+        ListCheck2Icon: <ListCheck2Icon /> {/* this is good */}
+        ListCheck3Icon: <ListCheck3Icon />
+        ListIndefiniteIcon: <ListIndefiniteIcon />
+        MultipleIcon: <MultipleIcon />
+        MultipleStopIcon: <MultipleStopIcon />
+        MultiSelectIcon: <MultiSelectIcon />
+        MultipleInputsIcon: <MultipleInputsIcon />
+        NumbersIcon: <NumbersIcon />
+        QuestionAnswerIcon: <QuestionAnswerIcon />
+        ProfileIcon: <ProfileIcon />
+        SlidesIcon: <SlidesIcon />
+        StockpilesIcon: <StockpilesIcon />
+      </FlexBox>
     </FlexBox>
   );
 };

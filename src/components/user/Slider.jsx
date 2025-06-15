@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import { RxDotFilled } from "react-icons/rx";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useGetActiveSlidersListQuery } from "@api";
+import { DotFillIcon } from "@icons";
 
 export function Slider() {
   const { data: slidersData = [], isLoading: slidersLoading } =
@@ -79,7 +79,7 @@ export function Slider() {
 
             {/* Dots Navigation */}
             {imageUrls.length > 1 && (
-              <div className="flex justify-center py-2">
+              <div className="flex gap-2 sm:gap-4 justify-center py-2">
                 {imageUrls.map((_, index) => (
                   <button
                     key={index}
@@ -91,7 +91,7 @@ export function Slider() {
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   >
-                    <RxDotFilled />
+                    <DotFillIcon size={10} />
                   </button>
                 ))}
               </div>

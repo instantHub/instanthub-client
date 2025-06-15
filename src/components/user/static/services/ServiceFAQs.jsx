@@ -1,5 +1,5 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@icons";
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const ServiceFAQs = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -69,9 +69,9 @@ const ServiceFAQs = () => {
               {faq.question}
             </span>
             {activeIndex === index ? (
-              <FaChevronUp size={16} />
+              <ArrowUpIcon size={22} />
             ) : (
-              <FaChevronDown size={16} />
+              <ArrowDownIcon size={22} />
             )}
           </button>
           {activeIndex === index && (

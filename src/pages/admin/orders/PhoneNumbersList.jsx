@@ -3,7 +3,7 @@ import { useDeletePhoneNumberMutation, useGetPhoneNumbersQuery } from "@api";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import ConfirmationModal from "@components/admin/ConfirmationModal";
-import { MdDeleteForever } from "react-icons/md";
+import { DeleteForeverIcon } from "@icons";
 
 const PhoneNumbersList = () => {
   const { data: phoneNumbers, isLoading: phoneNumbersLoading } =
@@ -120,7 +120,7 @@ const PhoneNumbersList = () => {
                     Delete
                   </span>
                   <span>
-                    <MdDeleteForever />
+                    <DeleteForeverIcon />
                   </span>
                 </button>
               </div>

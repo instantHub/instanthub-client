@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetServicesQuery } from "@api";
-import { FaAngleRight } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { Loading } from "@components/user";
 import ServiceHeaderImage from "../ServiceHeaderImage";
+import { ArrowRightIcon } from "@icons";
 
 export const ServiceSubCategory = () => {
   const { serviceCategoryId } = useParams();
@@ -54,12 +54,12 @@ export const ServiceSubCategory = () => {
           <div className="flex items-center gap-1 max-sm:text-xs">
             <span className="flex items-center opacity-60 gap-1">
               <Link to={"/"}>Home</Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <Link to={`/services`}>Services</Link>
-              <FaAngleRight />
+              <ArrowRightIcon />
               <span>{serviceCategory?.name}</span>
             </span>
-            <FaAngleRight />
+            <ArrowRightIcon />
             <span>Sub Services</span>
           </div>
 

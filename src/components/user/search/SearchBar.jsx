@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./searchStyle.css";
-import { BsSearch } from "react-icons/bs";
 import axios from "axios";
 import useDebounce, { useDebounceFunc } from "@hooks/UseDebounce";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
+import { SearchIcon } from "@icons";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -109,7 +109,7 @@ const SearchBar = () => {
     <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 max-2sm:w-[58%] max-2sm:mx-2">
       {/* <div className="bg-white grow border rounded mx-4 md:w-80 sm:w-64 2sm:w-3/4 3sm:mx-1 3sm:w-[100px]"> */}
       <div className="flex pl- items-center bg-gray-100 pl-2">
-        <BsSearch className="text-gray-500" />
+        <SearchIcon className="text-gray-500" />
         <input
           type="search"
           name="search"

@@ -4,8 +4,7 @@ import {
   addDeductions,
   addSingleDeductions,
 } from "@features/userSlices/deductionSlice";
-
-import { BsCircle } from "react-icons/bs";
+import { CircleIcon } from "@icons";
 
 const DeductionItems = ({ condition }) => {
   const {
@@ -139,11 +138,7 @@ function DisplayCondtionLabels({
             : `justify-between gap-1 ${isYesNoType ? "h-[40px]" : "h-[75px]"}`
         }`}
       >
-        {!shouldShowImage && (
-          <span>
-            <BsCircle />
-          </span>
-        )}
+        {!shouldShowImage && <CircleIcon size={16} />}
         <span className="block text-xs max-sm:text-[11px] px-1">
           {label.conditionLabel}
         </span>
