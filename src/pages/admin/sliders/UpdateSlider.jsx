@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   useGetAllSlidersQuery,
@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 
-const UpdateSlider = () => {
+export const UpdateSlider = () => {
   const { sliderId } = useParams();
   const { data: slidersList, isLoading: slidersLoading } =
     useGetAllSlidersQuery();
@@ -163,5 +163,3 @@ const UpdateSlider = () => {
     </div>
   );
 };
-
-export default UpdateSlider;

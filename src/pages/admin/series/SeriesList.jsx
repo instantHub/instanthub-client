@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useGetAllSeriesQuery, useDeleteSeriesMutation } from "@api";
 import { toast } from "react-toastify";
 import { ConfirmationModal } from "@components/admin";
-import SeriesCard from "./SeriesCard";
+import { SeriesCard } from "./components";
 
-const SeriesList = () => {
+export const SeriesList = () => {
   const { data: seriesData, isLoading: seriesLoading } = useGetAllSeriesQuery();
   const [deleteSeries] = useDeleteSeriesMutation();
 
@@ -61,5 +61,3 @@ const SeriesList = () => {
     </>
   );
 };
-
-export default SeriesList;

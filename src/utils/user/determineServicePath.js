@@ -1,5 +1,5 @@
 import { ROUTES } from "@routes";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general";
 
 export const determineServicePath = (service) => {
   const type = service?.type?.toLowerCase();

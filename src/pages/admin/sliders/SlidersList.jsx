@@ -1,8 +1,7 @@
-import React from "react";
 import { useGetAllSlidersQuery } from "@api";
-import SliderCard from "./SliderCard";
+import { SliderCard } from "./components";
 
-const SlidersList = () => {
+export const SlidersList = () => {
   const { data: slidersList, isLoading: slidersLoading } =
     useGetAllSlidersQuery();
 
@@ -26,8 +25,6 @@ const SlidersList = () => {
     </>
   );
 };
-
-export default SlidersList;
 
 {
   // <table className="w-full">

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetConditionsQuery, useUpdateConditionMutation } from "@api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import FormData from "./FormData";
+import { FormData } from "../components";
 import { ROUTES } from "@routes";
 import { Button } from "@components/general";
 import { useCustomNavigation } from "@hooks";
 import { ArrowLeftIcon } from "@icons";
 
-function UpdateCondition() {
+export function UpdateCondition() {
   const { conditionId } = useParams();
   // console.log(conditionId);
 
@@ -243,5 +243,3 @@ function UpdateCondition() {
     </>
   );
 }
-
-export default UpdateCondition;

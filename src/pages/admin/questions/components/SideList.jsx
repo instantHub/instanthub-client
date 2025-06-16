@@ -1,4 +1,4 @@
-const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
+export const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
   //   console.log("data frin TABLE component", data);
   return (
     <table className="w-full text-sm max-sm:text-xs">
@@ -24,5 +24,3 @@ const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
     </table>
   );
 };
-
-export default SideList;

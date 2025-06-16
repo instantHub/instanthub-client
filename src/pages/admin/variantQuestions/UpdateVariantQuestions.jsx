@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import {
@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 
-const UpdateVariantQuestions = () => {
+export const UpdateVariantQuestions = () => {
   const { variantQuestionsId } = useParams();
   //   console.log("variantQuestionsId", variantQuestionsId);
 
@@ -218,5 +218,3 @@ const UpdateVariantQuestions = () => {
     </div>
   );
 };
-
-export default UpdateVariantQuestions;

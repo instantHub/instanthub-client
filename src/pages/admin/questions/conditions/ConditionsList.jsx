@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   useGetConditionsQuery,
   useDeleteConditionMutation,
@@ -9,12 +9,12 @@ import { Table } from "@components/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { ROUTES } from "@routes";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general";
 import { ArrowLeftIcon, DeleteForeverIcon, EditIcon } from "@icons";
 import { Button } from "@components/general";
 import { useCustomNavigation } from "@hooks";
 
-const ConditionsList = () => {
+export const ConditionsList = () => {
   //   const [questions, setQuestions] = useState([]);
   const { data: conditions, isLoading: conditionsLoading } =
     useGetConditionsQuery();
@@ -273,5 +273,3 @@ const ConditionsList = () => {
     </>
   );
 };
-
-export default ConditionsList;

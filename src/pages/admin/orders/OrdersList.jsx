@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useGetCategoriesQuery, useGetOrdersListQuery } from "@api";
 
-import OrderCard from "./OrderCard";
+import { OrderCard } from "./OrderCard";
 import { CurrentOrdersAndCount, OrderTabs } from "@components/admin";
 import { Loading } from "@components/user";
 
-const OrdersList = () => {
+export const OrdersList = () => {
   const { data: ordersData, isLoading: ordersLoading } =
     useGetOrdersListQuery();
 
@@ -111,5 +111,3 @@ const OrdersList = () => {
     </div>
   );
 };
-
-export default OrdersList;

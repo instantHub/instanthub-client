@@ -1,10 +1,9 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ActionButton } from "@components/admin";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general";
 import { ROUTES } from "@routes";
 
-const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
+export const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
   // console.log("data", data);
   const navigate = useNavigate();
 
@@ -52,5 +51,3 @@ const SeriesCard = ({ data, setModalOpen, setSeriesToDelete }) => {
     </>
   );
 };
-
-export default SeriesCard;

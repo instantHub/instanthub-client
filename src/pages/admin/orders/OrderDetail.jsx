@@ -29,7 +29,7 @@ import {
   RightTickIcon,
 } from "@icons";
 
-const OrderDetail = () => {
+export const OrderDetail = () => {
   const { orderId } = useParams();
 
   // Delete Order
@@ -533,8 +533,6 @@ const OrderDetail = () => {
     </div>
   );
 };
-
-export default OrderDetail;
 
 function DetailWrapper({ icon: Icon, heading, children }) {
   const style = {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   useGetCategoriesQuery,
   useGetConditionsQuery,
@@ -14,12 +14,12 @@ import {
 } from "@features/adminSlices/filterSlice";
 import { ConfirmationModal, Table } from "@components/admin";
 import { ROUTES } from "@routes";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general";
 import { ArrowLeftIcon, DeleteForeverIcon, EditIcon } from "@icons";
 import { Button } from "@components/general";
 import { useCustomNavigation } from "@hooks";
 
-const ConditionLabelsTable = () => {
+export const ConditionLabelsList = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
   const { data: conditionLabelsData, isLoading: conditionLabelsLoading } =
@@ -258,5 +258,3 @@ const ConditionLabelsTable = () => {
     </div>
   );
 };
-
-export default ConditionLabelsTable;

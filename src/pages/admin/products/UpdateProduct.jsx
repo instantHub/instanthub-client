@@ -64,7 +64,7 @@ function reducer(state, action) {
   }
 }
 
-const UpdateProduct = () => {
+export const UpdateProduct = () => {
   const { productId, productSlug } = useParams();
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -526,8 +526,6 @@ const UpdateProduct = () => {
     </div>
   );
 };
-
-export default UpdateProduct;
 
 const VariantSection = ({ title, variants, dispatch, isEditable }) => {
   const handleInputChange = (index, key, value) => {

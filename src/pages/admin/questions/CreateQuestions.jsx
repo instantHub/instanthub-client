@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Condition from "./Condition";
-import ConditionLabel from "./ConditionLabel";
+import { CreateCondtions } from "./conditions";
+import { CreateConditionLabels } from "./conditionLabels";
 import { useSelector } from "react-redux";
 import { useGetConditionsQuery, useGetConditionLabelsQuery } from "@api";
-import SideList from "./SideList";
+import { SideList } from "./components";
 
-const CreateQuestions = () => {
+export const CreateQuestions = () => {
   const { data: conditionsData } = useGetConditionsQuery();
   console.log("conditionsData", conditionsData);
   const { data: conditionsLabelsData } = useGetConditionLabelsQuery();
@@ -65,7 +65,7 @@ const CreateQuestions = () => {
       {/* Conditions */}
       <div className="flex gap-5 max-md:flex-col w-full">
         <div className="flex-1 overflow-hidden max-md:overflow-visible w-full">
-          <Condition />
+          <CreateCondtions />
         </div>
         {/* Condition SideList */}
         <div className="flex-1 text-center overflow-y-auto scrollbar max-h-[380px]">
@@ -91,7 +91,7 @@ const CreateQuestions = () => {
       {/* ConditionLabels */}
       <div className="flex gap-5 max-md:flex-col w-full">
         <div className="flex-1 overflow-hidden max-md:overflow-visible">
-          <ConditionLabel />
+          <CreateConditionLabels />
         </div>
         {/* ConditionLabels SideList */}
         <div className="flex-1 text-center overflow-y-auto scrollbar max-h-[380px] ">
@@ -121,5 +121,3 @@ const CreateQuestions = () => {
     </div>
   );
 };
-
-export default CreateQuestions;

@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -30,7 +24,7 @@ const initialFormState = {
   conditionLabelImg: undefined,
 };
 
-const CreateConditionLabels = () => {
+export const CreateConditionLabels = memo(() => {
   const { data: categoryData = [], isLoading: categoryLoading } =
     useGetCategoriesQuery();
   const { data: conditionsData = [], isLoading: conditionsLoading } =
@@ -263,6 +257,4 @@ const CreateConditionLabels = () => {
       </div>
     </div>
   );
-};
-
-export default React.memo(CreateConditionLabels);
+});

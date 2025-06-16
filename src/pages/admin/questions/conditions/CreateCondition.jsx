@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCreateConditionsMutation, useGetCategoriesQuery } from "@api";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
-import FormData from "./FormData";
+import { FormData } from "../components";
 import { ROUTES } from "@routes";
 import { Button } from "@components/general";
 import { useCustomNavigation } from "@hooks";
 
-function Condtions() {
+export function CreateCondtions() {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoriesQuery();
   const [createConditions, { isLoading: createConditonLoading }] =
@@ -235,5 +235,3 @@ function Condtions() {
     </div>
   );
 }
-
-export default Condtions;

@@ -12,10 +12,10 @@ import { toast } from "react-toastify";
 import { CardHeader } from "@components/admin";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general/slugify";
-import ObjectSelect from "./ObjectSelect";
+import { ObjectSelect } from "./components";
 import { Button } from "@components/general";
 
-const CreateProducts = () => {
+export const CreateProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   console.log("selectedCategory", selectedCategory);
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -479,5 +479,3 @@ const CreateProducts = () => {
     </div>
   );
 };
-
-export default CreateProducts;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   useGetConditionLabelsQuery,
   useUploadConditionLabelsImageMutation,
@@ -12,7 +12,7 @@ import { Button } from "@components/general";
 import { ArrowLeftIcon } from "@icons";
 import { useCustomNavigation } from "@hooks";
 
-function UpdateConditionLabel() {
+export function UpdateConditionLabel() {
   const { conditionLabelId } = useParams();
   //   console.log(conditionLabelId);
 
@@ -275,5 +275,3 @@ function UpdateConditionLabel() {
     </>
   );
 }
-
-export default UpdateConditionLabel;

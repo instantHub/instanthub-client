@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   useGetVariantsQuestionsQuery,
@@ -10,11 +10,11 @@ import {
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ConfirmationModal, Table } from "@components/admin";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general";
 import { ROUTES } from "@routes";
 import { data } from "autoprefixer";
 
-function CreateVariantsQuestions() {
+export function CreateVariantsQuestions() {
   const [deductionSelected, setDeductionSelected] = useState("");
   console.log("deductionSelected", deductionSelected);
 
@@ -180,5 +180,3 @@ function CreateVariantsQuestions() {
     </>
   );
 }
-
-export default CreateVariantsQuestions;

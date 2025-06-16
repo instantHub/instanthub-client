@@ -3,7 +3,7 @@ import { useGetCategoriesQuery, useGetStocksQuery } from "@api";
 import StockCard from "./StockCard";
 import ViewStock from "./ViewStock";
 
-const ManageStocks = () => {
+export const ManageStocks = () => {
   const { data: stocksData, isLoading: stocksDataLoading } =
     useGetStocksQuery();
 
@@ -139,5 +139,3 @@ const ManageStocks = () => {
     </>
   );
 };
-
-export default ManageStocks;

@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDeleteProductMutation } from "@api";
 import { ActionButton, ConfirmationModal } from "@components/admin";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { generatePathWithParams } from "@utils/general";
 import { ROUTES } from "@routes";
 
-const ProductCard = ({ data, pendingPricingMobiles }) => {
-  console.log("data", data);
+export const ProductCard = ({ data, pendingPricingMobiles }) => {
+  // console.log("data", data);
   const navigate = useNavigate();
   const [deleteProduct] = useDeleteProductMutation();
 
   const [deductionSelected, setDeductionSelected] = useState("");
   // const MOBILE_CATEGORY = data.category.name === "Mobile";
   const MultiVariantProduct = data?.category?.categoryType?.multiVariants;
-  console.log("MultiVariantProduct", MultiVariantProduct);
 
   const style = {
     boldness: "font-semibold max-sm:font-norma",
@@ -234,8 +233,6 @@ const ProductCard = ({ data, pendingPricingMobiles }) => {
     </>
   );
 };
-
-export default ProductCard;
 
 const ItemWithImage = ({ label, image, text, product, status }) => (
   <div className="w-full flex flex-col items-center gap-1">

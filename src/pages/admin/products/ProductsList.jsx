@@ -13,7 +13,7 @@ import {
   clearFilter,
 } from "@features/adminSlices/filterSlice";
 import { ConfirmationModal } from "@components/admin";
-import ProductCard from "./ProductCard";
+import { ProductCard } from "./components";
 import axios from "axios";
 import { ROUTES } from "@routes";
 import { ArrowLeftIcon, ArrowRightIcon } from "@icons";

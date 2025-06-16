@@ -4,7 +4,7 @@ import { orderCurrentStatus } from "@utils/admin/helper";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 
-const OrderCard = ({ data, categoryImage }) => {
+export const OrderCard = ({ data, categoryImage }) => {
   // console.log("data", data);
   const navigate = useNavigate();
 
@@ -99,8 +99,6 @@ const OrderCard = ({ data, categoryImage }) => {
     </>
   );
 };
-
-export default OrderCard;
 
 // accessoriesAvailable : (2) [{…}, {…}]
 // addressDetails : {address: 'No 270 4th Main 2nd Cross', state: 'KARNATAKA', city: 'Bangalore', pinCode: 560032}
