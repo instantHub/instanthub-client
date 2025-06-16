@@ -21,7 +21,13 @@ export default {
           light: "#ebebeb", // Lighter shade
           dark: "#D97706", // Darker shade
         },
+        instant: {
+          start: "#A7438B", // magenta-purple
+          mid: "#7A84B0", // blended midpoint (optional)
+          end: "#4AC0CC", // teal-cyan
+        },
       },
+
       animation: {
         marquee: "marquee 30s linear infinite",
         "marquee-fast": "marquee-fast 25s linear infinite",
@@ -31,7 +37,7 @@ export default {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-150%)" },
         },
-        'marquee-fast': {
+        "marquee-fast": {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-450%)" },
         },

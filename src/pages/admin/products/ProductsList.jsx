@@ -43,7 +43,6 @@ const ProductsList = () => {
       search: filterData.product,
       categoryId,
     });
-  // console.log(productsData && productsData);
 
   const { data: categoryData, isLoading: categoryDataLoading } =
     useGetCategoriesQuery();

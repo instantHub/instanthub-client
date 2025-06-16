@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGetProductsQuery, useGetBrandSeriesQuery } from "@api";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -15,13 +15,7 @@ import { slugify } from "@utils/general/slugify";
 import { SearchIcon } from "@icons";
 
 export const Products = () => {
-  const { brandId, categoryUniqueURL, brandUniqueURL } = useParams();
-  // console.log(
-  //   "brandId, categorySlug, brandUniqueURL",
-  //   brandId,
-  //   categoryUniqueURL,
-  //   brandUniqueURL
-  // );
+  const { categoryUniqueURL, brandUniqueURL } = useParams();
 
   const { data: brandSeries, isLoading: seriesLoading } =
     useGetBrandSeriesQuery(brandUniqueURL);
@@ -30,7 +24,6 @@ export const Products = () => {
     showSeries: false,
     selectedSeries: "",
   });
-  // console.log("seriesAction", seriesAction);
 
   const [brand, setBrand] = useState(null);
   const [category, setCategory] = useState(null);
@@ -38,11 +31,8 @@ export const Products = () => {
   const [search, setSearch] = useState("");
 
   // Get Products by Brand
-  // const { data: productsData, isLoading: productsLoading } =
-  //   useGetProductsQuery({ brandId, search });
   const { data: productsData, isLoading: productsLoading } =
     useGetProductsQuery({ brandUniqueURL, search });
-
   // console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
@@ -106,7 +96,7 @@ export const Products = () => {
         />
         <link
           rel="canonical"
-          href={`https://www.instanthub.in/categories/brands/products/${brandId}`}
+          // href={`https://www.instanthub.in/categories/brands/products/${brandId}`}
         />
       </Helmet>
 

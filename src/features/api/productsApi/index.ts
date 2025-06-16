@@ -1,10 +1,18 @@
 import { baseApi } from "@features/api";
+import {
+  IGetAllProductsParams,
+  IGetProductsByBrandParams,
+  IProductResponse,
+} from "./types";
 
 export const productsURL = "/api/products";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllProducts: build.query({
+    getAllProducts: build.query<
+      Omit<IProductResponse, "simpleDeductions">[],
+      IGetAllProductsParams
+    >({
       query: ({ page, limit, search, categoryId }) => ({
         url: productsURL,
         method: "GET",
@@ -12,13 +20,17 @@ export const productsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Products"],
     }),
-    getProducts: build.query({
+    getProducts: build.query<
+      Omit<IProductResponse, "simpleDeductions" | "variantDeductions">[],
+      IGetProductsByBrandParams
+    >({
       query: ({ brandUniqueURL, search }) => ({
         url: `/api/products/${brandUniqueURL}?search=${search}`,
       }),
       providesTags: ["Products"],
     }),
-    getProductDetails: build.query({
+
+    getProductDetails: build.query<IProductResponse, string>({
       query: (productUniqueURL) =>
         `/api/products/product-details/${productUniqueURL}`,
       providesTags: ["Products"],
@@ -36,7 +48,7 @@ export const productsApi = baseApi.injectEndpoints({
         },
         body: data,
       }),
-      providesTags: ["Products"],
+      invalidatesTags: ["Products"],
     }),
     uploadProductImage: build.mutation({
       query: (data) => ({
