@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   useGetCategoriesQuery,
   useGetConditionsQuery,
   useGetConditionLabelsQuery,
   useDeleteConditionLabelMutation,
 } from "@api";
-import BackButton from "@components/admin/BackButton";
-import EditButton from "@components/admin/EditButton";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,13 +12,14 @@ import {
   filterCategory,
   filterCondition,
 } from "@features/adminSlices/filterSlice";
-import Table from "@components/admin/TableView";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ConfirmationModal, Table } from "@components/admin";
 import { ROUTES } from "@routes";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
-import { DeleteForeverIcon } from "@icons";
+import { generatePathWithParams } from "@utils/general";
+import { ArrowLeftIcon, DeleteForeverIcon, EditIcon } from "@icons";
+import { Button } from "@components/general";
+import { useCustomNavigation } from "@hooks";
 
-const ConditionLabelsTable = () => {
+export const ConditionLabelsList = () => {
   const { data: conditionsData, isLoading: conditionsLoading } =
     useGetConditionsQuery();
   const { data: conditionLabelsData, isLoading: conditionLabelsLoading } =
@@ -34,6 +33,8 @@ const ConditionLabelsTable = () => {
   // console.log("filterData", filterData);
 
   const dispatch = useDispatch();
+
+  const { goBack, navigateTo } = useCustomNavigation();
 
   const selectedCategory = filterData.category;
   // console.log("selectedCategory", selectedCategory);
@@ -90,20 +91,23 @@ const ConditionLabelsTable = () => {
       </td>
       <td className="text-white py-2">
         <div className="flex gap-2 justify-center">
-          <EditButton
-            location={generatePathWithParams(
-              ROUTES.admin.updateConditionLabel,
-              conditionLabel.id
-            )}
-          />
+          <Button
+            size="sm"
+            rightIcon={<EditIcon size={16} />}
+            onClick={() =>
+              navigateTo(
+                generatePathWithParams(
+                  ROUTES.admin.updateConditionLabel,
+                  conditionLabel.id
+                )
+              )
+            }
+          >
+            Edit
+          </Button>
           <button
             className="bg-red-600 px-3 py-1 rounded-md disabled:cursor-none disabled:bg-gray-400"
             onClick={() => {
-              // handleDelete(
-              //   conditionLabel.category.id,
-              //   conditionLabel.id,
-              //   conditionLabel.conditionLabel
-              // );
               setModalOpen(true);
               setLabelToDelete([
                 conditionLabel.category.id,
@@ -221,10 +225,14 @@ const ConditionLabelsTable = () => {
 
         {/* Create ConditionLabel Button */}
         <div className="flex items-center">
-          <BackButton
-            location={ROUTES.admin.createQuestions}
-            text={"Create ConditionLabels"}
-          />
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<ArrowLeftIcon />}
+            onClick={goBack}
+          >
+            Create ConditionLabels
+          </Button>
         </div>
       </div>
 
@@ -250,5 +258,3 @@ const ConditionLabelsTable = () => {
     </div>
   );
 };
-
-export default ConditionLabelsTable;

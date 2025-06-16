@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const useGoogleAnalytics = () => {
+export const useGoogleAnalytics = () => {
   const location = useLocation();
 
   //   console.log("useGoogleAnalytics invoked:", location);
@@ -16,5 +16,3 @@ const useGoogleAnalytics = () => {
     }
   }, [location]);
 };
-
-export default useGoogleAnalytics;

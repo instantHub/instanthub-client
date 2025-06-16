@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import {
   useGetProductDetailsQuery,
@@ -11,10 +11,11 @@ import { toast } from "react-toastify";
 
 import UpdateSystemConfigurations from "./systemPriceDrops/UpdateSystemConfigurations";
 import UpdateSystemConditions from "./systemPriceDrops/UpdateSystemConditions";
-import BackButton from "@components/admin/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProcessorDeductions } from "@features/adminSlices/processorSlice";
 import { ROUTES } from "@routes";
+import { Button } from "@components/general";
+import { ArrowLeftIcon } from "@icons";
 
 const ProductQuestionsList = () => {
   const { productSlug } = useParams();
@@ -251,6 +252,11 @@ const ProductQuestionsList = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(ROUTES.admin.productsList);
+  };
+
   const handleProcessor = async (event) => {
     console.log("handle processor");
 
@@ -317,7 +323,14 @@ const ProductQuestionsList = () => {
 
   return (
     <div className="relative">
-      <BackButton location={ROUTES.admin.productsList} />
+      <Button
+        variant="secondary"
+        size="sm"
+        leftIcon={<ArrowLeftIcon />}
+        onClick={handleNavigate}
+      >
+        Back
+      </Button>
 
       <div className="w-full flex flex-col mx-auto my-1 bg-white px-4 max-sm:px-2 py-2">
         {/* Heading */}

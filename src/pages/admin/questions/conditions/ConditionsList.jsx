@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   useGetConditionsQuery,
   useDeleteConditionMutation,
   useGetCategoriesQuery,
 } from "@api";
-import BackButton from "@components/admin/BackButton";
-import EditButton from "@components/admin/EditButton";
 import { toast } from "react-toastify";
-import Table from "@components/admin/TableView";
+import { Table } from "@components/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { ROUTES } from "@routes";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
-import { DeleteForeverIcon } from "@icons";
+import { generatePathWithParams } from "@utils/general";
+import { ArrowLeftIcon, DeleteForeverIcon, EditIcon } from "@icons";
+import { Button } from "@components/general";
+import { useCustomNavigation } from "@hooks";
 
-const ConditionsList = () => {
+export const ConditionsList = () => {
   //   const [questions, setQuestions] = useState([]);
   const { data: conditions, isLoading: conditionsLoading } =
     useGetConditionsQuery();
@@ -31,6 +31,8 @@ const ConditionsList = () => {
   console.log("filterData from ConditionsList", filterData);
 
   const dispatch = useDispatch();
+
+  const { goBack, navigateTo } = useCustomNavigation();
 
   if (conditions) {
     const cats = conditions.filter(
@@ -73,10 +75,6 @@ const ConditionsList = () => {
       console.log(error.message);
     }
   };
-
-  // if (!conditionsLoading) {
-  //   console.log(conditions);
-  // }
 
   const headers = [
     "Category",
@@ -124,12 +122,20 @@ const ConditionsList = () => {
 
       <td className=" text-white py-2">
         <div className="flex gap-2 justify-center">
-          <EditButton
-            location={generatePathWithParams(
-              ROUTES.admin.updateCondition,
-              condition.id
-            )}
-          />
+          <Button
+            size="sm"
+            rightIcon={<EditIcon size={16} />}
+            onClick={() =>
+              navigateTo(
+                generatePathWithParams(
+                  ROUTES.admin.updateCondition,
+                  condition.id
+                )
+              )
+            }
+          >
+            Edit
+          </Button>
           <button
             className="bg-red-600 px-3 py-1 max-sm:px-2 rounded-md"
             onClick={() =>
@@ -189,10 +195,14 @@ const ConditionsList = () => {
             Conditions Table
           </h2>
 
-          <BackButton
-            location={ROUTES.admin.createQuestions}
-            text={"Create Condtion"}
-          />
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<ArrowLeftIcon />}
+            onClick={goBack}
+          >
+            Create Condtion
+          </Button>
         </div>
 
         {!conditionsLoading && (
@@ -263,87 +273,3 @@ const ConditionsList = () => {
     </>
   );
 };
-
-export default ConditionsList;
-
-{
-  /* <table className="w-full">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 text-white bg-gray-800">Category</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Condition</th>
-              <th className="px-4 py-2 text-white bg-gray-800">Page</th>
-              <th className="px-4 py-2 text-white bg-gray-800">
-                Edit & Delete
-              </th>
-            </tr>
-          </thead>
-
-          <tbody className="text-center">
-            {!conditionsLoading && !selectedCategory
-              ? conditions.map((condition, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
-                  >
-                    <td className=" py-2">{condition.category.name}</td>
-                    <td className=" py-2">{condition.conditionName}</td>
-                    <td className=" py-2">{condition.page}</td>
-                    <td className="text-white py-2">
-                      <div className="flex gap-2 justify-center">
-                        <EditButton
-                          location={}
-                        />
-                        <button
-                          className="bg-red-600 px-3 py-1 rounded-md"
-                          onClick={() =>
-                            openModal(
-                              condition.category.id,
-                              condition.category.name,
-                              condition.id,
-                              condition.conditionName
-                            )
-                          }
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              : !conditionsLoading &&
-                conditions
-                  .filter((cond) => cond.category.id === selectedCategory)
-                  .map((condition, index) => (
-                    <tr
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-200" : "bg-white"}
-                    >
-                      <td className=" py-2">{condition.category.name}</td>
-                      <td className=" py-2">{condition.conditionName}</td>
-                      <td className=" py-2">{condition.page}</td>
-                      <td className="text-white py-2">
-                        <div className="flex gap-2 justify-center">
-                          <EditButton
-                            location={}
-                          />
-                          <button
-                            className="bg-red-600 px-3 py-1 rounded-md"
-                            onClick={() =>
-                              openModal(
-                                condition.category.id,
-                                condition.category.name,
-                                condition.id,
-                                condition.conditionName
-                              )
-                            }
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-          </tbody>
-        </table> */
-}

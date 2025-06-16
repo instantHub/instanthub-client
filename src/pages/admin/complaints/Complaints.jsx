@@ -5,9 +5,9 @@ import {
   useGetComplaintsQuery,
 } from "@api";
 import { Loading } from "@components/user";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ConfirmationModal } from "@components/admin";
 
-const Complaints = () => {
+export const Complaints = () => {
   const { data: complaints, isLoading: complaintsLoading } =
     useGetComplaintsQuery();
 
@@ -31,8 +31,6 @@ const Complaints = () => {
     </div>
   );
 };
-
-export default Complaints;
 
 function ComplaintCard({ complaint }) {
   //   console.log("complaint", complaint);

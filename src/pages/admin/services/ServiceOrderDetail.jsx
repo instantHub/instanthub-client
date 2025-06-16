@@ -3,7 +3,7 @@ import { useDeleteServiceOrderMutation, useGetServiceOrderQuery } from "@api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@components/user";
 import { orderCurrentStatus } from "@utils/admin/helper";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
+import { ConfirmationModal } from "@components/admin";
 import ServiceCompletionForm from "./ServiceCompletionForm";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";

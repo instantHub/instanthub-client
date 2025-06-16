@@ -1,11 +1,10 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteSliderMutation } from "@api";
-import ActionButton from "@components/admin/ActionButton";
-import { generatePathWithParams } from "@utils/general/generatePathWithParams";
+import { ActionButton } from "@components/admin";
+import { generatePathWithParams } from "@utils/general";
 import { ROUTES } from "@routes";
 
-const SliderCard = ({ data }) => {
+export const SliderCard = ({ data }) => {
   // console.log("data", data);
   const navigate = useNavigate();
   const [deleteSlider] = useDeleteSliderMutation();
@@ -64,5 +63,3 @@ const SliderCard = ({ data }) => {
     </>
   );
 };
-
-export default SliderCard;

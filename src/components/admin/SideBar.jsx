@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { useDispatch } from "react-redux";
-import { SideBarContext } from "@pages/admin/adminLayout/AdminLayout";
+import { SideBarContext } from "@pages/admin";
 import * as ICON from "@icons";
 
-const SideBar = () => {
+export const SideBar = () => {
   const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);
 
   const dispatch = useDispatch();
@@ -296,5 +296,3 @@ const SideBar = () => {
     </div>
   );
 };
-
-export default SideBar;

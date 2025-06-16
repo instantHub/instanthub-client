@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
-import SlidersList from "./SlidersList";
+import { useRef, useState } from "react";
+import { SlidersList } from "./SlidersList";
 import { useCreateSliderMutation, useUploadSliderImageMutation } from "@api";
 import { toast } from "react-toastify";
 
-const CreateSlider = () => {
+export const CreateSlider = () => {
   const [sliderImage, setSliderImage] = useState();
   const [status, setStatus] = useState("Active");
 
@@ -112,5 +112,3 @@ const CreateSlider = () => {
     </>
   );
 };
-
-export default CreateSlider;

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   useGetCategoriesQuery,
   useCreateSeriesMutation,
   useGetAllBrandQuery,
 } from "@api";
 import { toast } from "react-toastify";
-import SeriesList from "./SeriesList";
+import { SeriesList } from "./SeriesList";
 
-const CreateSeries = () => {
+export const CreateSeries = () => {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoriesQuery();
   const { data: BrandData, isLoading: BrandLoading } = useGetAllBrandQuery();
@@ -159,5 +159,3 @@ const CreateSeries = () => {
     </>
   );
 };
-
-export default CreateSeries;

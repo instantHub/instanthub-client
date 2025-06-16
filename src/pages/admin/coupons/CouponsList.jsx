@@ -1,8 +1,7 @@
-import React from "react";
 import { useGetCouponQuery } from "@api";
-import CouponCard from "./CouponCard";
+import { CouponCard } from "./CouponCard";
 
-const CouponsList = () => {
+export const CouponsList = () => {
   const { data: couponsData, isLoading: couponsDataLoading } =
     useGetCouponQuery();
 
@@ -22,5 +21,3 @@ const CouponsList = () => {
     </div>
   );
 };
-
-export default CouponsList;

@@ -1,57 +1,38 @@
-import React, { lazy, Suspense, ComponentType, createElement } from "react";
+import {
+  lazy,
+  Suspense,
+  ComponentType,
+  createElement,
+  FC,
+  ComponentProps,
+} from "react";
 import { createBrowserRouter as Router, Navigate } from "react-router-dom";
 
 import * as USER from "@pages/user";
 import * as USER_COMPONENTS from "@components/user";
 
 import * as ADMIN from "@pages/admin";
+import * as ADMIN_COMPONENTS from "@components/admin";
 
-import PrivateRoute from "@components/admin/PrivateRoute";
 import AdminSignIn from "@pages/admin/signIn & signup/SignIn";
-import Admin from "@pages/admin/Admin";
 
-import AdminCreateProducts from "@pages/admin/products/CreateProducts";
-import AdminUpdateProduct from "@pages/admin/products/UpdateProduct";
-
-import AdminBrandsList from "@pages/admin/brands/BrandsList";
-import AdminUpdateBrand from "@pages/admin/brands/UpdateBrand";
-import AdminCreateBrand from "@pages/admin/brands/CreateBrand";
-
-import AdminCreateSeries from "@pages/admin/series/CreateSeries";
-import AdminUpdateSeries from "@pages/admin/series/UpdateSeries";
-import AdminSeriesList from "@pages/admin/series/SeriesList";
-import AdminUpdateCondition from "@pages/admin/questions/UpdateCondition";
-import AdminUpdateConditionLabel from "@pages/admin/questions/UpdateConditionLabel";
-import AdminConditionsList from "@pages/admin/questions/ConditionsList";
-import AdminConditionLabelsList from "@pages/admin/questions/ConditionLabelsList";
-import AdminCreateSlider from "@pages/admin/sliders/CreateSlider";
-import AdminSlidersList from "@pages/admin/sliders/SlidersList";
-import AdminUpdateSlider from "@pages/admin/sliders/UpdateSlider";
-import AdminOrdersList from "@pages/admin/orders/OrdersList";
-import AdminOrderDetail from "@pages/admin/orders/OrderDetail";
-import AdminPhoneNumbers from "@pages/admin/orders/PhoneNumbersList";
-import AdminManageStocks from "@pages/admin/stocks/ManageStocks";
-import AdminCreateCoupon from "@pages/admin/coupons/CreateCoupon";
 import AdminCreateServiceForm from "@pages/admin/services/CreateServices";
 import AdminServicesList from "@pages/admin/services/ServicesList";
 import AdminServicesOrdersList from "@pages/admin/services/ServicesOrdersList";
 import AdminServiceOrderDetail from "@pages/admin/services/ServiceOrderDetail";
 import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
-import AdminCreateVariantsQuestions from "@pages/admin/variantQuestions/CreateVariantsQuestions";
-import AdminUpdateVariantQuestions from "@pages/admin/variantQuestions/UpdateVariantQuestions";
-import CreateQuestions from "@pages/admin/questions/CreateQuestions";
 
 import { ROUTES } from "./routes";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
   importFunc: () => Promise<{ default: T }>
-): React.FC<React.ComponentProps<T>> {
+): FC<ComponentProps<T>> {
   const LazyComponent = lazy(importFunc);
 
   // Define the wrapper component with the inferred props of the LazyComponent
-  const LazyWrapper: React.FC<React.ComponentProps<T>> = (props) => (
+  const LazyWrapper: FC<ComponentProps<T>> = (props) => (
     <Suspense fallback={<USER_COMPONENTS.Loading />}>
       <LazyComponent {...props} />
     </Suspense>
@@ -231,13 +212,10 @@ export const router = Router([
             message={`Sorry unable to load Products, please try after sometime..!`}
           />
         ),
-        // element: React.createElement(
-        //   // lazyLoad(() => import("@pages/user/recycle"))
-        //   lazyLoad(() => import("@pages/user/recycle"))
-        // ),
+        // TODO: this is not lazy loading the component, need to fix this!
         element: createElement(
           lazyLoad(() =>
-            import("@pages/user/recycle").then((module) => ({
+            import("@pages/user").then((module) => ({
               default: module.RecycleProducts,
             }))
           )
@@ -265,11 +243,12 @@ export const router = Router([
   },
   {
     path: "",
-    element: <PrivateRoute />,
+    element: <ADMIN_COMPONENTS.PrivateRoute />,
     children: [
       {
         path: ROUTES.admin.root,
-        element: <Admin />,
+        // element: <Admin />,
+        element: <ADMIN.AdminLayout />,
 
         children: [
           {
@@ -278,35 +257,33 @@ export const router = Router([
           },
           {
             path: ROUTES.admin.dashboard,
-            element: React.createElement(
+            element: createElement(
               lazyLoad(() => import("@pages/admin/dashboard/Dashboard"))
             ),
           },
           {
             path: ROUTES.admin.updateProfile,
-            element: React.createElement(
-              lazyLoad(() => import("@components/admin/UpdateAdmin"))
-            ),
+            element: <ADMIN_COMPONENTS.UpdateAdmin />,
           },
           {
             path: ROUTES.admin.createProduct,
-            element: <AdminCreateProducts />,
+            element: <ADMIN.CreateProduct />,
           },
           {
             path: ROUTES.admin.productsList,
             // element: <AdminProductsList />,
-            element: React.createElement(
+            element: createElement(
               lazyLoad(() => import("@pages/admin/products/ProductsList"))
             ),
           },
           {
             path: ROUTES.admin.updateProduct,
-            element: <AdminUpdateProduct />,
+            element: <ADMIN.UpdateProduct />,
           },
           {
             path: ROUTES.admin.productQuestions,
             // element: <AdminProductQuestions />,
-            element: React.createElement(
+            element: createElement(
               lazyLoad(
                 () => import("@pages/admin/products/ProductQuestionsList")
               )
@@ -330,87 +307,79 @@ export const router = Router([
           // Brands
           {
             path: ROUTES.admin.createBrand,
-            element: <AdminCreateBrand />,
+            element: <ADMIN.CreateBrand />,
           },
           {
             path: ROUTES.admin.brandsList,
-            element: <AdminBrandsList />,
+            element: <ADMIN.BrandsList />,
           },
           {
             path: ROUTES.admin.updateBrand,
-            element: <AdminUpdateBrand />,
+            element: <ADMIN.UpdateBrand />,
           },
 
           // Series
           {
             path: ROUTES.admin.createSeries,
-            element: <AdminCreateSeries />,
-          },
-          {
-            path: ROUTES.admin.seriesList,
-            element: <AdminSeriesList />,
+            element: <ADMIN.CreateSeries />,
           },
           {
             path: ROUTES.admin.updateSeries,
-            element: <AdminUpdateSeries />,
+            element: <ADMIN.UpdateSeries />,
           },
 
           // Conditions
           {
             path: ROUTES.admin.createQuestions,
-            element: <CreateQuestions />,
+            element: <ADMIN.CreateQuestions />,
           },
           {
             path: ROUTES.admin.conditionsList,
-            element: <AdminConditionsList />,
+            element: <ADMIN.ConditionsList />,
           },
           {
             path: ROUTES.admin.updateCondition,
-            element: <AdminUpdateCondition />,
+            element: <ADMIN.UpdateCondition />,
           },
           {
             path: ROUTES.admin.conditionLabelsList,
-            element: <AdminConditionLabelsList />,
+            element: <ADMIN.ConditionLabelsList />,
           },
           {
             path: ROUTES.admin.updateConditionLabel,
-            element: <AdminUpdateConditionLabel />,
+            element: <ADMIN.UpdateConditionLabel />,
           },
 
           // Slider
           {
             path: ROUTES.admin.createSlider,
-            element: <AdminCreateSlider />,
-          },
-          {
-            path: ROUTES.admin.slidersList,
-            element: <AdminSlidersList />,
+            element: <ADMIN.CreateSlider />,
           },
           {
             path: ROUTES.admin.updateSlider,
-            element: <AdminUpdateSlider />,
+            element: <ADMIN.UpdateSlider />,
           },
 
           // Orders
           {
             path: ROUTES.admin.ordersList,
-            element: <AdminOrdersList />,
+            element: <ADMIN.OrdersList />,
           },
           {
             path: ROUTES.admin.orderDetail,
-            element: <AdminOrderDetail />,
+            element: <ADMIN.OrderDetail />,
           },
           {
             path: ROUTES.admin.manageStock,
-            element: <AdminManageStocks />,
+            element: <ADMIN.ManageStocks />,
           },
           {
             path: ROUTES.admin.phoneNumbers,
-            element: <AdminPhoneNumbers />,
+            element: <ADMIN.PhoneNumbersList />,
           },
           {
             path: ROUTES.admin.createCoupon,
-            element: <AdminCreateCoupon />,
+            element: <ADMIN.CreateCoupon />,
           },
 
           // SERVICES
@@ -444,28 +413,17 @@ export const router = Router([
           // VARIANTS QUESTIONS
           {
             path: ROUTES.admin.variantsQuestions,
-            element: <AdminCreateVariantsQuestions />,
+            element: <ADMIN.CreateVariantsQuestions />,
           },
           {
             path: ROUTES.admin.updateVariantQuestions,
-            element: <AdminUpdateVariantQuestions />,
-          },
-
-          // POSTS
-          {
-            path: ROUTES.admin.createPost,
-            // element: <AdminProductQuestions />,
-            element: React.createElement(
-              lazyLoad(() => import("@pages/admin/posts/CreatePost"))
-            ),
+            element: <ADMIN.UpdateVariantQuestions />,
           },
 
           // Complaints
           {
             path: ROUTES.admin.complaintsList,
-            element: React.createElement(
-              lazyLoad(() => import("@pages/admin/complaints/Complaints"))
-            ),
+            element: <ADMIN.Complaints />,
           },
         ],
       },

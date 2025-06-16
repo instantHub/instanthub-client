@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { SubmitButton } from "./SubmitButton";
+import { Button } from "@components/general";
 
-const OrderCancellationForm = ({
+export const OrderCancellationForm = ({
   orderId,
   cancelOrder,
   cancelLoading = false,
@@ -65,15 +65,9 @@ const OrderCancellationForm = ({
             />
           </div>
           <div className="text-[16px] max-sm:text-sm">
-            {/* <input
-              type="submit"
-              value="Cancel Order"
-              className="bg-red-600 text-white px-3 py-1 rounded cursor-pointer disabled:bg-gray-200"
-              disabled={cancelLoading}
-            /> */}
-            <SubmitButton loading={cancelLoading} type="secondary">
+            <Button type="submit" variant="danger" loading={cancelLoading}>
               Cancel Order
-            </SubmitButton>
+            </Button>
           </div>
         </form>
         <button
@@ -86,5 +80,3 @@ const OrderCancellationForm = ({
     </div>
   );
 };
-
-export default OrderCancellationForm;

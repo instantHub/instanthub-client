@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCreateCouponMutation, useDeleteSeriesMutation } from "@api";
 import { toast } from "react-toastify";
-import CouponsList from "./CouponsList";
+import { CouponsList } from "./CouponsList";
 
-const CreateCoupon = () => {
+export const CreateCoupon = () => {
   const [deleteSeries] = useDeleteSeriesMutation();
   const [createCoupon, { isLoading: createCouponLoading }] =
     useCreateCouponMutation();
@@ -95,5 +95,3 @@ const CreateCoupon = () => {
     </>
   );
 };
-
-export default CreateCoupon;

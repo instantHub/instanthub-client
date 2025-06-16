@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteCategoryMutation } from "@api";
 import { toast } from "react-toastify";
-import ActionButton from "@components/admin/ActionButton";
+import { ActionButton, ConfirmationModal } from "@components/admin";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 import { IBrandLite } from "@features/api/brandsApi/types";

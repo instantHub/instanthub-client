@@ -73,7 +73,6 @@ export const ROUTES = {
     // updateBrand: "/admin/update-brand/:brandUniqueURL",
 
     createSeries: "/admin/add-series",
-    seriesList: "/admin/series-list",
     updateSeries: "/admin/update-series/:seriesId",
 
     createQuestions: "/admin/create-questions",
@@ -83,7 +82,6 @@ export const ROUTES = {
     updateConditionLabel: "/admin/updateConditionLabel/:conditionLabelId",
 
     createSlider: "/admin/add-sliders",
-    slidersList: "/admin/sliders-list",
     updateSlider: "/admin/update-sliders/:sliderId",
 
     ordersList: "/admin/orders",

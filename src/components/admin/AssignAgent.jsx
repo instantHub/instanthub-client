@@ -3,7 +3,7 @@ import { useAssignAgentMutation } from "@api";
 import { DateAndTime } from "@components/user";
 import { toast } from "react-toastify";
 
-const AssignAgent = ({ orderDetail }) => {
+export const AssignAgent = ({ orderDetail }) => {
   // console.log("AssignAgent orderDetail", orderDetail);
 
   const [assignAgent, { isLoading: loadingAssignment }] =
@@ -96,4 +96,3 @@ const AssignAgent = ({ orderDetail }) => {
   );
 };
 
-export default AssignAgent;

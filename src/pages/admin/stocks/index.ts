@@ -1,0 +1,1 @@
+export { ManageStocks } from "./ManageStocks";

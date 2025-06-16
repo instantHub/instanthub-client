@@ -1,8 +1,7 @@
-import React from "react";
 import { useDeleteCouponMutation } from "@api";
 import { DeleteForeverIcon } from "@icons";
 
-const CouponCard = ({ data }) => {
+export const CouponCard = ({ data }) => {
   // console.log("data", data);
 
   const [deleteCoupon] = useDeleteCouponMutation();
@@ -49,5 +48,3 @@ const CouponCard = ({ data }) => {
     </>
   );
 };
-
-export default CouponCard;

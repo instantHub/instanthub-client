@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useUpdateLaptopConfigurationsPriceDropMutation } from "@api";
-import UpdateButton from "./UpdateButton";
+import { UpdateButton } from "./UpdateButton";
 import { toast } from "react-toastify";
 
 const UpdateSystemConditions = (props) => {

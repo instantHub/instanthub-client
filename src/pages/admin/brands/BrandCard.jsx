@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "@components/admin/ConfirmationModal";
 import { useDeleteBrandMutation } from "@api";
 import { toast } from "react-toastify";
-import ActionButton from "@components/admin/ActionButton";
+import { ActionButton, ConfirmationModal } from "@components/admin";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 
-const BrandCard = ({ data }) => {
+export const BrandCard = ({ data }) => {
   const navigate = useNavigate();
   const [deleteBrand] = useDeleteBrandMutation();
 
@@ -106,5 +105,3 @@ const BrandCard = ({ data }) => {
     </>
   );
 };
-
-export default BrandCard;

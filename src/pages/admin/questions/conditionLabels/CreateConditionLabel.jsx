@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -14,12 +8,13 @@ import {
   useUploadConditionLabelsImageMutation,
 } from "@api";
 
-import ListButton from "@components/admin/ListButton";
 import {
   filterCategory,
   filterCondition,
 } from "@features/adminSlices/filterSlice";
 import { ROUTES } from "@routes";
+import { Button } from "@components/general";
+import { useCustomNavigation } from "@hooks";
 
 const initialFormState = {
   category: "",
@@ -29,7 +24,7 @@ const initialFormState = {
   conditionLabelImg: undefined,
 };
 
-const CreateConditionLabels = () => {
+export const CreateConditionLabels = memo(() => {
   const { data: categoryData = [], isLoading: categoryLoading } =
     useGetCategoriesQuery();
   const { data: conditionsData = [], isLoading: conditionsLoading } =
@@ -43,6 +38,8 @@ const CreateConditionLabels = () => {
   const [conditionSelection, setConditionSelection] = useState("");
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
+
+  const { navigateTo } = useCustomNavigation();
 
   const processorId = useMemo(() => {
     return conditionsData.find(
@@ -131,10 +128,13 @@ const CreateConditionLabels = () => {
         <h1 className="font-bold text-sm max-sm:text-xs mb-2">
           Create ConditionLabels
         </h1>
-        <ListButton
-          location={ROUTES.admin.conditionLabelsList}
-          text="ConditionLabels List"
-        />
+
+        <Button
+          size="sm"
+          onClick={() => navigateTo(ROUTES.admin.conditionLabelsList)}
+        >
+          ConditionLabels Lists
+        </Button>
       </div>
 
       <div className="flex">
@@ -257,6 +257,4 @@ const CreateConditionLabels = () => {
       </div>
     </div>
   );
-};
-
-export default React.memo(CreateConditionLabels);
+});

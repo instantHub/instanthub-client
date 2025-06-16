@@ -1,6 +1,4 @@
-import React from "react";
-
-const OrderTabs = ({ handleDisplay, ordersDisplaying, ordersCount }) => {
+export const OrderTabs = ({ handleDisplay, ordersDisplaying, ordersCount }) => {
   const tabStyle =
     "w-full flex items-center justify-center gap-1 py-3 transition-all ease-linear duration-1000";
   const activeTab = "border-b-4 max-sm:border-b-2 border-b-secondary";
@@ -51,5 +49,3 @@ const OrderTabs = ({ handleDisplay, ordersDisplaying, ordersCount }) => {
     </div>
   );
 };
-
-export default OrderTabs;

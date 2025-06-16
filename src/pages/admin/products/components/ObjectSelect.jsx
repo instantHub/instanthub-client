@@ -1,6 +1,4 @@
-import React from "react";
-
-const ObjectSelect = ({
+export const ObjectSelect = ({
   label,
   options,
   displayKey = "name",
@@ -36,5 +34,3 @@ const ObjectSelect = ({
     </div>
   );
 };
-
-export default ObjectSelect;

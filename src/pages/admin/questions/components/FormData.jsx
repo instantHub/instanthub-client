@@ -1,6 +1,4 @@
-import React from "react";
-
-const FormData = ({ label, value, type, handleChange }) => {
+export const FormData = ({ label, value, type, handleChange }) => {
   return (
     <div className="flex items-center gap-1">
       <label>{label}:</label>
@@ -16,5 +14,3 @@ const FormData = ({ label, value, type, handleChange }) => {
     </div>
   );
 };
-
-export default FormData;

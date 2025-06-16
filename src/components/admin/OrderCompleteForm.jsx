@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import OrderCancellationForm from "./OrderCancellationForm";
+import { useState } from "react";
+import { OrderCancellationForm } from "./OrderCancellationForm";
 import { useOrderCancelMutation } from "@api";
 import { DateAndTime, InputSubmitBtn } from "@components/user";
 import { ImageIcon, InfoCircleIcon, RightTickIcon } from "@icons";
 
-const OrderCompleteForm = ({
+export const OrderCompleteForm = ({
   orderDetail,
   handleSubmit,
   setImagesSelected,
@@ -197,8 +197,6 @@ const OrderCompleteForm = ({
     </div>
   );
 };
-
-export default OrderCompleteForm;
 
 function UploadImage({ image, setImagesSelected }) {
   return (

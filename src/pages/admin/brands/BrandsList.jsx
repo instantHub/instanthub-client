@@ -1,12 +1,11 @@
-import React from "react";
 import { useGetCategoriesQuery, useGetAllBrandQuery } from "@api";
 import { Link } from "react-router-dom";
 import { filterCategory } from "@features/adminSlices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
-import BrandCard from "./BrandCard";
+import { BrandCard } from "./BrandCard";
 import { ROUTES } from "@routes";
 
-const BrandsList = () => {
+export const BrandsList = () => {
   const { data: brandsData, isLoading: brandsLoading } = useGetAllBrandQuery();
 
   const { data: categoryData, isLoading: categoryDataLoading } =
@@ -76,5 +75,3 @@ const BrandsList = () => {
     </div>
   );
 };
-
-export default BrandsList;

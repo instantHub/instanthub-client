@@ -1,6 +1,6 @@
 import { DeleteForeverIcon, EditIcon } from "@icons";
 
-const ActionButton = ({
+export const ActionButton = ({
   actionOne,
   actionTwo,
   actionOneHandler,
@@ -38,4 +38,3 @@ const ActionButton = ({
   );
 };
 
-export default ActionButton;

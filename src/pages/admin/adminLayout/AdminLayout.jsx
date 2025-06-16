@@ -1,12 +1,11 @@
 import React, { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "@components/admin/Navbar";
-import SideBar from "@components/admin/SideBar";
+import { Navbar, SideBar } from "@components/admin";
 
 // Create the context
 export const SideBarContext = createContext();
 
-const AdminLayout = () => {
+export const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -27,12 +26,3 @@ const AdminLayout = () => {
     </SideBarContext.Provider>
   );
 };
-
-export default AdminLayout;
-
-// className={`${
-//   isSidebarOpen ? `max-sm:ml-[6%] ml-[12%]` : `max-sm:ml-[13%] ml-[5%]`
-// }  `}
-// className={`${
-//   isSidebarOpen ? `max-sm:ml-[6%] ml-[12%]` : `max-sm:ml-[13%] ml-[5%]`
-// }  `}

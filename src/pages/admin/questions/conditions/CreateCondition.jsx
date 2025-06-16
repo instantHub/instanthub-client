@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCreateConditionsMutation, useGetCategoriesQuery } from "@api";
 import { toast } from "react-toastify";
-import ListButton from "@components/admin/ListButton";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCategory } from "@features/adminSlices/filterSlice";
-import { SubmitButton } from "@components/admin/SubmitButton";
-import FormData from "./FormData";
+import { FormData } from "../components";
 import { ROUTES } from "@routes";
+import { Button } from "@components/general";
+import { useCustomNavigation } from "@hooks";
 
-function Condtions() {
+export function CreateCondtions() {
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoriesQuery();
   const [createConditions, { isLoading: createConditonLoading }] =
@@ -18,6 +18,8 @@ function Condtions() {
   //   console.log("filterData from Conditions", filterData);
 
   const dispatch = useDispatch();
+
+  const { navigateTo } = useCustomNavigation();
 
   const [formData, setFormData] = useState({
     category: filterData.category,
@@ -79,10 +81,13 @@ function Condtions() {
     <div className="flex flex-col">
       <div className="flex justify-between items-center">
         <h1 className="bold text-lg max-sm:text-sm mb-2">Create Condition</h1>
-        <ListButton
-          location={ROUTES.admin.conditionsList}
-          text={"Conditions List"}
-        />
+
+        <Button
+          size="sm"
+          onClick={() => navigateTo(ROUTES.admin.conditionsList)}
+        >
+          Conditions Lists
+        </Button>
       </div>
       {/* Create Condition BOX */}
       <div className="flex">
@@ -215,9 +220,14 @@ function Condtions() {
             </div>
 
             <div className="py-3">
-              <SubmitButton loading={createConditonLoading}>
+              <Button
+                type="submit"
+                variant="greenary"
+                loading={createConditonLoading}
+                fullWidth
+              >
                 Create Condition
-              </SubmitButton>
+              </Button>
             </div>
           </form>
         </div>
@@ -225,5 +235,3 @@ function Condtions() {
     </div>
   );
 }
-
-export default Condtions;
