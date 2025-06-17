@@ -419,7 +419,7 @@ export const Navbar = () => {
 
   const getNavLinkClass = (url: string) =>
     `px-2 py-1 border border-white rounded ${
-      location.pathname === url ? "bg-secondary text-white" : ""
+      location.pathname === url ? "bg-instant-mid text-white" : ""
     } hover:border-secondary`;
 
   return (
@@ -432,7 +432,7 @@ export const Navbar = () => {
                 <img
                   src="/images/instanthg-logo.png"
                   alt="InstantHub"
-                  className="w-[65px] sm:w-[75px] p-1 sm:p-0 ml-0 sm:ml-2"
+                  className="w-[65px] sm:w-[75px] p-1 sm:p-0"
                   loading="lazy"
                 />
               </Link>

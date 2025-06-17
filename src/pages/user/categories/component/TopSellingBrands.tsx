@@ -82,7 +82,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
           <button
             onClick={scrollLeft}
             disabled={!canScrollLeft}
-            className={`absolute -left-4 sm:-left-10 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-200 ${
+            className={`absolute -left-2 sm:-left-10 top-1/2 -translate-y-1/2 z-10 p-1 sm:p-3 rounded-full shadow-lg transition-all duration-200 ${
               canScrollLeft
                 ? "bg-white hover:bg-gray-50 text-gray-800 hover:shadow-xl"
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -96,7 +96,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
           <button
             onClick={scrollRight}
             disabled={!canScrollRight}
-            className={`absolute -right-10 sm:-right-16 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-200 ${
+            className={`absolute -right-2 sm:-right-16 top-1/2 -translate-y-1/2 z-10 p-1 sm:p-3 rounded-full shadow-lg transition-all duration-200 ${
               canScrollRight
                 ? "bg-white hover:bg-gray-50 text-gray-800 hover:shadow-xl"
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -124,7 +124,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
                     <img
                       src={`${import.meta.env.VITE_APP_BASE_URL}${brand.image}`}
                       alt={brand.name}
-                      className="w-[75px] h-[75px] group-hover:scale-105 transition-transform duration-300"
+                      className="w-[55px] sm:w-[75px] h-[55px] sm:h-[75px] group-hover:scale-105 transition-transform duration-300"
                       // className="w-[70px] h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </FlexBox>
@@ -134,7 +134,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
                     {/* <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-200">
                       {brand.name}
                     </h3> */}
-                    <p className="text-[12px] sm:text-xs text-gray-500 mb-2">
+                    <p className="text-[11px] sm:text-xs text-gray-500 mb-2">
                       Explore {brand.name} products
                     </p>
 

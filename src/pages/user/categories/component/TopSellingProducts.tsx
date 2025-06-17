@@ -161,7 +161,7 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
                     <div className="mt-3 flex items-center justify-between">
                       <div>
                         <div className="text-xs text-gray-500">Get Upto</div>
-                        <div className="text-xl font-bold text-red-500">
+                        <div className="text-sm font-bold text-red-500">
                           {formatPrice(product.variants[0].price)}
                         </div>
                       </div>
