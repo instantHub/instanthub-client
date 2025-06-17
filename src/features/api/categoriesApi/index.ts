@@ -2,8 +2,8 @@ import { baseApi } from "@features/api";
 import { CATEGORY_API_PATHS, CATEGORY_API_TAG } from "./constants";
 import {
   ICategoryResponse,
-  ICreateCategoryRequest,
   IDeleteCategory,
+  ITopSellingProductsResponse,
 } from "./types";
 
 export const categoriesApi = baseApi.injectEndpoints({
@@ -13,8 +13,18 @@ export const categoriesApi = baseApi.injectEndpoints({
       providesTags: [CATEGORY_API_TAG],
     }),
 
+    // getCategory: build.query<ICategoryResponse, string>({
+    //   query: (categoryId) => CATEGORY_API_PATHS.BY_ID(categoryId),
+    //   providesTags: [CATEGORY_API_TAG],
+    // }),
+
     getCategory: build.query<ICategoryResponse, string>({
-      query: (categoryId) => CATEGORY_API_PATHS.BY_ID(categoryId),
+      query: (categoryUniqueURL) => CATEGORY_API_PATHS.BY_ID(categoryUniqueURL),
+      providesTags: [CATEGORY_API_TAG],
+    }),
+
+    getTopSellingProducts: build.query<ITopSellingProductsResponse[], string>({
+      query: (categoryName) => CATEGORY_API_PATHS.TOP_PROD(categoryName),
       providesTags: [CATEGORY_API_TAG],
     }),
 
@@ -60,6 +70,7 @@ export const categoriesApi = baseApi.injectEndpoints({
 export const {
   useGetCategoriesQuery,
   useGetCategoryQuery,
+  useLazyGetTopSellingProductsQuery,
   useUploadCategoryImageMutation,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,

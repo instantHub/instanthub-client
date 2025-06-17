@@ -5,7 +5,7 @@ import {
   useUploadServicesImageMutation,
 } from "@api";
 import { toast } from "react-toastify";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 
 const initialState = {
   currentForm: {

@@ -38,7 +38,9 @@ export const CategoryCard = ({ category }: ICategoryCardProps) => {
   };
 
   function handleEdit(): void {
-    navigate(generatePathWithParams(ROUTES.admin.updateCategory, category.id));
+    navigate(
+      generatePathWithParams(ROUTES.admin.updateCategory, category.uniqueURL)
+    );
   }
 
   function openDeleteModel(): void {

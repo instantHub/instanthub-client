@@ -10,4 +10,7 @@ export interface IBrandResponse {
   category: ICategoryResponse;
 }
 
-export type IBrandLite = Pick<IBrandResponse, "id" | "name">;
+export type IBrandLite = Pick<
+  IBrandResponse,
+  "id" | "name" | "image" | "uniqueURL"
+>;

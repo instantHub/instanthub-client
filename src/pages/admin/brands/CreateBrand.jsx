@@ -8,7 +8,7 @@ import {
 
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 import { Button } from "@components/general";
 import { useCustomNavigation } from "@hooks";
 

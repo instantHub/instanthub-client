@@ -10,11 +10,11 @@ import { Breakpoint, FontWeight, Variant } from "./types";
 // ];
 
 export const variantClasses: Record<Variant, string> = {
-  h1: "text-4xl font-bold",
-  h2: "text-3xl font-semibold",
+  h1: "text-2xl sm:text-4xl font-bold",
+  h2: "text-xl sm:text-3xl font-semibold",
   h3: "text-2xl font-semibold",
   h4: "text-xl font-medium",
-  h5: "text-lg font-medium",
+  h5: "text-sm sm:text-lg font-medium",
   h6: "text-base font-medium",
   body: "text-sm",
   caption: "text-xs",

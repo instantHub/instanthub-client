@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useGetProductDetailsQuery } from "@api";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Loading, Breadcrumbs } from "@components/user";
+import {
+  Loading,
+  Breadcrumbs,
+  PageNotFound,
+  ServerError,
+} from "@components/user";
 import SellContent from "@components/user/static/SellContent";
 import { MOBILE } from "@utils/user/constants";
 import { ArrowRightIcon } from "@icons";
@@ -11,9 +16,11 @@ export const ProductDetail = () => {
   const { productUniqueURL } = useParams();
   console.log(productUniqueURL);
 
-  // const { data: productDetails, isLoading } = useGetProductDetailsQuery(prodId);
-  const { data: productDetails, isLoading } =
-    useGetProductDetailsQuery(productUniqueURL);
+  const {
+    data: productDetails,
+    isLoading,
+    error,
+  } = useGetProductDetailsQuery(productUniqueURL);
 
   // console.log("productDetails", productDetails);
 
@@ -32,7 +39,6 @@ export const ProductDetail = () => {
   };
 
   useEffect(() => {
-    // if (!isLoading && productDetails?.category?.name !== MOBILE) {
     if (!isLoading && !productDetails?.category?.categoryType.multiVariants) {
       handleToggle(productDetails?.variants[0]);
     }
@@ -41,6 +47,12 @@ export const ProductDetail = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  if (error && "status" in error && error.status === 404)
+    return <PageNotFound />;
+
+  if (error && "status" in error && error.status === 500)
+    return <ServerError />;
 
   if (isLoading) return <Loading />;
 

@@ -3,6 +3,7 @@ export * from "./breadcrumbs";
 export * from "./loader";
 export * from "./static";
 export * from "./policies";
+export * from "./errors";
 
 export { ErrorComponent } from "./ErrorComponent";
 export { ComplaintBox } from "./ComplaintBox";
@@ -19,3 +20,4 @@ export { SeriesButton } from "./SeriesButton";
 export { SearchBar } from "./search";
 export { Slider } from "./Slider";
 export { Footer } from "./footer";
+export { BillBoardAds } from "./BillBoardAds";

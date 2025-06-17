@@ -5,7 +5,7 @@ import {
 } from "@api";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 import { ICategoryType } from "@features/api/categoriesApi/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { Link } from "react-router-dom";

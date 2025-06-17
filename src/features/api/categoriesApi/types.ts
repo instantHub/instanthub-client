@@ -1,4 +1,5 @@
 import { IBrandLite } from "../brandsApi/types";
+import { IProductResponse } from "../productsApi/types";
 
 export interface ICategoryResponse {
   id: string;
@@ -31,3 +32,13 @@ export interface IDeleteCategory {
   DeletedCategory: ICategoryResponse;
   message: string;
 }
+
+export interface ITopSellingProductsResponse {
+  productId: IProductResponse;
+}
+
+// [
+//   { productId: IProductResponse },
+//   { productId: IProductResponse },
+//   { productId: IProductResponse },
+// ];

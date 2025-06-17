@@ -12,7 +12,7 @@ import { CardHeader } from "@components/admin";
 import { ROUTES } from "@routes";
 
 import { Loading } from "@components/user";
-import { slugify } from "../../../utils/general/slugify";
+import { slugify } from "@utils/general";
 import { Button } from "@components/general";
 
 export function UpdateBrand() {

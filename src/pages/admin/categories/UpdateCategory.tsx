@@ -8,13 +8,13 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 import { Loading } from "@components/user";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 import { ICategoryType } from "@features/api/categoriesApi/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { ArrowLeftIcon } from "@icons";
 
 type TUpdateCategoryParams = {
-  categoryId: string;
+  categoryUniqueURL: string;
 };
 
 type TFormData = {
@@ -25,14 +25,14 @@ type TFormData = {
 };
 
 export function UpdateCategory() {
-  const { categoryId } = useParams<TUpdateCategoryParams>();
+  const { categoryUniqueURL } = useParams<TUpdateCategoryParams>();
 
-  if (!categoryId) {
+  if (!categoryUniqueURL) {
     throw new Error("Category ID is required to update a category.");
   }
 
   const { data: categoryData, isLoading: categoryLoading } =
-    useGetCategoryQuery(categoryId);
+    useGetCategoryQuery(categoryUniqueURL);
 
   const [newImgSelected, setNewImgSelected] = useState(false);
   const [uploadCategoryImage] = useUploadCategoryImageMutation();
@@ -100,7 +100,8 @@ export function UpdateCategory() {
 
     try {
       await updateCategory({
-        catId: categoryId,
+        // catId: categoryId,
+        catId: categoryData?.id,
         data: {
           ...formData,
           image: updatedImage as string,

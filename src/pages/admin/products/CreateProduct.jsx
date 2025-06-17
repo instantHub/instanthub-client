@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import {
   useGetCategoriesQuery,
@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { CardHeader } from "@components/admin";
 import { ROUTES } from "@routes";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 import { ObjectSelect } from "./components";
 import { Button } from "@components/general";
 

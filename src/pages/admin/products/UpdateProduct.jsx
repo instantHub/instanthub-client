@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CardHeader } from "@components/admin";
 import { Loading } from "@components/user";
 import { ROUTES } from "@routes";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 import { Button } from "@components/general";
 
 const initialState = {

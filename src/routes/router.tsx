@@ -82,6 +82,10 @@ export const router = Router([
         path: ROUTES.user.termsOfUse,
         element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
+      {
+        path: ROUTES.user.category,
+        element: <USER.Category />,
+      },
 
       {
         path: ROUTES.user.brands,

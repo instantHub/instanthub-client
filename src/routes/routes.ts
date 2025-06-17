@@ -8,20 +8,19 @@ export const ROUTES = {
     termsConditions: "/terms-conditions",
     termsOfUse: "/terms-of-use",
 
-    brands: "/:location/:categoryUniqueURL",
+    // brands: "/:location/:categoryUniqueURL",
+    // products: "/:location/:categoryUniqueURL/:brandUniqueURL",
+    // productDetails:
+    //   "/:location/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
+
+    category: "/:location/:categoryUniqueURL",
+    brands: "/:location/:categoryUniqueURL/brands",
     products: "/:location/:categoryUniqueURL/:brandUniqueURL",
     productDetails:
       "/:location/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
     productDeductions: "/sell/deductions",
     productGenerateOTP: "/sell/deductions/generateOTP",
     productFinalPrice: "/sell/deductions/finalPrice",
-
-    // services: "/services",
-    // serviceSubCategory: "/services/serviceSubCategory/:serviceCategoryId",
-    // serviceSubProducts: "/services/serviceSubProducts/:subServiceId",
-    // serviceBrands: "/services/serviceBrands/:serviceCategoryId",
-    // serviceBrandProblems: "/services/serviceBrandProblems/:serviceBrandId",
-    // bookService: "/services/book-service/:serviceId",
 
     services: "/services",
     serviceBrands: "/:location/services/brands/:categoryUniqueURL",
@@ -31,13 +30,6 @@ export const ROUTES = {
     serviceSubCategory: "/services/serviceSubCategory/:serviceCategoryId",
     serviceSubProducts: "/services/serviceSubProducts/:subServiceId",
     bookService: "/:location/services/:serviceUniqueURL",
-
-    // recycleCategories: "/recycle-categories",
-    // recycleBrands: "/recycle-categories/recycle-brands/:categoryURL",
-    // recycleProducts:
-    //   "/recycle-categories/recycle-brands/recycle-products/:brandURL",
-    // recycleProductDetails:
-    //   "/recycle-categories/recycle-brands/recycle-productDetails/:prodId",
 
     recycleCategories: "/recycle/categories",
     recycleBrands: "/recycle/categories/brands/:categoryURL",
@@ -65,7 +57,7 @@ export const ROUTES = {
 
     createCategory: "/admin/add-category",
     categoriesList: "/admin/categories-list",
-    updateCategory: "/admin/update-category/:categoryId",
+    updateCategory: "/admin/update-category/:categoryUniqueURL",
 
     createBrand: "/admin/add-brands",
     brandsList: "/admin/brands-list",

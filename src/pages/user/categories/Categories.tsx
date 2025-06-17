@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "@api";
+import { ICategoryResponse } from "@features/api/categoriesApi/types";
 
 export const Categories = () => {
   const { data: categories = [], isLoading: categoriesLoading } =
     useGetCategoriesQuery();
+
+  const navigate = useNavigate();
+  const location = localStorage.getItem("location");
+
+  const handleNavigate = (category: ICategoryResponse): void => {
+    navigate(`${location}/${category.uniqueURL}`, {
+      state: { categoryId: category.id },
+    });
+  };
 
   return (
     <div className="w-4/5 max-sm:w-[92%] mx-auto">
@@ -31,21 +41,22 @@ export const Categories = () => {
           </>
         ) : (
           <>
-            {categories?.map((item) => (
-              <div className="flex justify-center" key={item.id}>
-                <Link
-                  to={`${localStorage.getItem("location")}/${item.uniqueURL}`}
+            {categories?.map((category) => (
+              <div className="flex justify-center" key={category.id}>
+                <button
+                  onClick={() => handleNavigate(category)}
+                  // to={`${localStorage.getItem("location")}/${item.uniqueURL}`}
                   className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
                               transition ease-in-out duration-500 w-32 h-32 max-sm:w-24 max-sm:h-24
                             }`}
                 >
                   <img
-                    src={import.meta.env.VITE_APP_BASE_URL + item?.image}
-                    alt={item?.name || "Item"}
+                    src={import.meta.env.VITE_APP_BASE_URL + category?.image}
+                    alt={category?.name || "Item"}
                     className="justify-center"
-                    loading="lazy" // Native lazy loading
+                    loading="lazy"
                   />
-                </Link>
+                </button>
               </div>
             ))}
 

@@ -67,7 +67,7 @@ export const FooterLinks = memo(
         <hr className="sm:hidden bg-gray-300 h-[2px] w-full absolut" />
 
         {/* Address Section */}
-        <FlexBox
+        {/* <FlexBox
           direction="col"
           align="start"
           className="sm:items-center space-y-2"
@@ -86,7 +86,7 @@ export const FooterLinks = memo(
             <br />
             GST: 29CSJPA4571K1ZE
           </address>
-        </FlexBox>
+        </FlexBox> */}
 
         <GoogleMap />
       </div>

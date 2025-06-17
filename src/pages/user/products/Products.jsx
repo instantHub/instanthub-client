@@ -7,12 +7,15 @@ import {
   Breadcrumbs,
   ProductCard,
   SeriesButton,
+  ErrorComponent,
+  PageNotFound,
 } from "@components/user";
 import SellContent from "@components/user/static/SellContent";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-import { slugify } from "@utils/general/slugify";
+import { slugify } from "@utils/general";
 import { SearchIcon } from "@icons";
+import { ServerError } from "@components/user/errors/ServerError";
 
 export const Products = () => {
   const { categoryUniqueURL, brandUniqueURL } = useParams();
@@ -31,8 +34,11 @@ export const Products = () => {
   const [search, setSearch] = useState("");
 
   // Get Products by Brand
-  const { data: productsData, isLoading: productsLoading } =
-    useGetProductsQuery({ brandUniqueURL, search });
+  const {
+    data: productsData,
+    isLoading: productsLoading,
+    error,
+  } = useGetProductsQuery({ brandUniqueURL, search });
   // console.log("productsData", productsData);
 
   const handleSeries = (seriesId) => {
@@ -43,7 +49,6 @@ export const Products = () => {
   };
 
   const handleSearch = async (e) => {
-    // console.log("handleSearch");
     let searchValue = e.target.value;
     setSearch(searchValue);
   };
@@ -76,6 +81,12 @@ export const Products = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  if (error && "status" in error && error.status === 404)
+    return <PageNotFound />;
+
+  if (error && "status" in error && error.status === 500)
+    return <ServerError />;
 
   if (productsLoading) return <Loading />;
 

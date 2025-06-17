@@ -1,9 +1,23 @@
 import { useEffect, useState } from "react";
-import { slugify } from "../utils/general/slugify";
+import { slugify } from "@utils/general";
 
-export const useIPLocation = () => {
-  const [location, setLocation] = useState({});
-  const [error, setError] = useState(null);
+interface ILocation {
+  city: string;
+  region: string;
+}
+
+interface IIPLocationReturnType {
+  location: ILocation;
+  error: string;
+  loading: boolean;
+}
+
+export const useIPLocation = (): IIPLocationReturnType => {
+  const [location, setLocation] = useState<ILocation>({
+    city: "",
+    region: "",
+  });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

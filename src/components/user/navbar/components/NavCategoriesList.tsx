@@ -1,3 +1,4 @@
+import { FlexBox } from "@components/general";
 import { useGetCategoriesQuery } from "@features/api";
 import { ArrowDownIcon, ArrowUpIcon } from "@icons";
 import { ROUTES } from "@routes";
@@ -34,7 +35,7 @@ export const NavCategoriesList = () => {
   return (
     <div className="relative hidden sm:flex pb-3 border-b text-sm">
       <div className="bg-primary-bg shadow-bottom1 w-full">
-        <div className="flex flex-row w-full max-w-screen-xl justify-between px-4 max-14inch:px-14">
+        <div className="flex w-full justify-evenly px-4 max-14inch:px-14">
           {!categoryLoading &&
             categoryData.map((category) => (
               <div
@@ -58,33 +59,29 @@ export const NavCategoriesList = () => {
                   </div>
                   {hoveredCategoryId === category.id && (
                     <div
-                      className={`absolute z-10 top-full mt-0 pt-3 bg-white shadow-md p-2 w-[150%] ${getDropdownPosition(
+                      className={`absolute z-10 top-full mt-0 pt-3 bg-white shadow-md p-2 w-full ${getDropdownPosition(
                         category.id
                       )}`}
                       onMouseEnter={() => setHoveredCategoryId(category.id)}
                     >
                       <h2 className="py-2 font-bold">Brands</h2>
-                      <ul>
+                      <FlexBox direction="col" align="start">
                         {category.brands?.length ? (
-                          category.brands.map((brand) => (
+                          category.brands.map((brand, i) => (
                             <button
-                            // key={brand.uniqueURL}
-                            // onClick={() =>
-                            //   handleNavigation(
-                            //     "products",
-                            //     brand.uniqueURL
-                            //   )
-                            // }
+                              key={`${brand.uniqueURL}-${i}`}
+                              // onClick={() =>
+                              //   handleNavigation("products", brand.uniqueURL)
+                              // }
+                              className="py-1 px-2 rounded hover:bg-gray-100"
                             >
-                              <li className="py-1 px-2 rounded hover:bg-gray-100">
-                                {brand.name}
-                              </li>
+                              {brand.name}
                             </button>
                           ))
                         ) : (
                           <li className="text-sm">No Brands</li>
                         )}
-                      </ul>
+                      </FlexBox>
                     </div>
                   )}
                 </span>
