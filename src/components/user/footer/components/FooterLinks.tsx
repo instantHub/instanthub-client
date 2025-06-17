@@ -1,4 +1,5 @@
 import { FlexBox, Typography } from "@components/general";
+import { GoogleMap } from "@components/user/map";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
@@ -86,6 +87,8 @@ export const FooterLinks = memo(
             GST: 29CSJPA4571K1ZE
           </address>
         </FlexBox>
+
+        <GoogleMap />
       </div>
     );
   }
