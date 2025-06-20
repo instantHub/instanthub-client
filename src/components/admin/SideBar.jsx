@@ -120,6 +120,17 @@ export const SideBar = () => {
       ],
     },
 
+    // Testimonials
+    {
+      title: "Testimonials",
+      links: [
+        {
+          name: "testimonial",
+          icon: <ICON.AstroIcon />,
+        },
+      ],
+    },
+
     // SERVICES
     {
       title: "Services",

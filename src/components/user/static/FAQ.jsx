@@ -137,7 +137,7 @@ const FAQ = (props) => {
       <div className="text-center mt-4">
         <button
           onClick={toggleShowAll}
-          className=" text-white rounded py-2 text-[16px] max-sm:text-xs pb-1 bg-secondary px-4 hover:border-b hover:border-secondary hover:pb-[3px] transition"
+          className=" text-white rounded py-2 text-[16px] max-sm:text-xs pb-1 bg-instant-mid px-4 hover:border-b hover:border-secondary hover:pb-[3px] transition"
         >
           {showAll ? "Show Less FAQs" : "Show More FAQs"}
         </button>

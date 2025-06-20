@@ -92,6 +92,8 @@ export const ROUTES = {
     recycleOrdersList: "/admin/recycle-orders",
     recycleOrderDetail: "/admin/recycleOrder-detail/:recycleOrderId",
 
+    testimonial: "/admin/testimonial",
+
     variantsQuestions: "/admin/variants-questions",
     updateVariantQuestions:
       "/admin/update-variant-questions/:variantQuestionsId",

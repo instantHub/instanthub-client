@@ -8,7 +8,7 @@ export const Footer: FC = () => {
   const [openComplaintBox, setOpenComplaintBox] = useState<boolean>(false);
 
   return (
-    <footer className="bg-secondary-light/50 mt-5 text-secondary w-full px-4 pt-10 pb-10 max-sm:mb-10">
+    <footer className="bg-instant-mid/10 mt-5 text-secondary w-full px-4 pt-10 pb-10 max-sm:mb-10">
       <div className="max-w-screen-xl mx-auto flex flex-col gap-6">
         <FlexBox className="justify-between items-start max-sm:flex-col max-sm:gap-6">
           <FlexBox

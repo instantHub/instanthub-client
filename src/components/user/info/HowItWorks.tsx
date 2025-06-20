@@ -15,21 +15,21 @@ export const HowItWorks: FC = () => {
       stepNo: 1,
       heading: "Check Price",
       description:
-        "Select your device & tell us about its current condition, and our advanced AI tech will tailor make the perfect price for you.",
+        "Begin by selecting your device you wish to sell & tell us about its current condition. Our intuitive platform will generate an instant quote based on its condition.",
     },
     {
       icon: <CalendarScheduleFillIcon size={32} />,
       stepNo: 2,
       heading: "Schedule Pickup",
       description:
-        "Book a free pickup from your home or work at a time slot that best suits your convenience.",
+        "After receiving your quote, simply schedule a pickup time that works best for you. Our team will come directly to your location to collect the device.",
     },
     {
       icon: <CashIcon size={32} />,
       stepNo: 3,
-      heading: "Get Paid",
+      heading: "Receive Instant Payment",
       description:
-        "Did we mention you get paid as soon as our executive picks up your device? It's instant payment, cash or bank transfer.",
+        "Upon inspection of the device, you'll receive an instant cash payment. No waiting periods, no hidden fees – just quick and reliable service.",
     },
   ];
   return (
@@ -43,11 +43,12 @@ export const HowItWorks: FC = () => {
           {steps.map(({ icon, stepNo, heading, description }) => (
             <div key={stepNo} className="text-center">
               {/* <div className="w-20 h-20 mx-auto mb-6 bg-instant-mid rounded-full flex items-center justify-center"> */}
-              <div className="w-14 sm:w-20 h-14 sm:h-20 mx-auto mb-6 bg-gradient-to-br from-instant-mid to-instant-end rounded-full flex items-center justify-center">
+              {/* <div className="w-14 sm:w-20 h-14 sm:h-20 mx-auto mb-6 bg-gradient-to-br from-instant-mid to-instant-end rounded-full flex items-center justify-center"> */}
+              <div className="w-14 sm:w-20 h-14 sm:h-20 mx-auto mb-6 bg-gradient-to-r from-instant-mid/50 to-instant-start/60 rounded-full flex items-center justify-center">
                 {icon}
               </div>
               <FlexBox className="mb-4">
-                <div className="w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-br from-instant-end to-instant-mid text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                <div className="w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-br from-instant-mid/60 to-instant-start/70 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
                   {stepNo}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900">

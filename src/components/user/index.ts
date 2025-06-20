@@ -4,6 +4,8 @@ export * from "./loader";
 export * from "./static";
 export * from "./policies";
 export * from "./errors";
+export * from "./testimonials";
+export * from "./info";
 
 export { ErrorComponent } from "./ErrorComponent";
 export { ComplaintBox } from "./ComplaintBox";

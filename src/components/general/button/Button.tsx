@@ -7,7 +7,8 @@ type ButtonVariant =
   | "greenary"
   | "outline"
   | "ghost"
-  | "danger";
+  | "danger"
+  | "instanthub";
 
 // Define button sizes
 type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -38,6 +39,8 @@ const variantStyles: Record<ButtonVariant, string> = {
     "bg-transparent hover:bg-gray-100 active:bg-gray-200 text-gray-700 border-transparent focus:ring-gray-500",
   danger:
     "bg-red-600 hover:bg-red-700 active:bg-red-800 text-white border-transparent focus:ring-red-500",
+  instanthub:
+    "bg-instant-mid hover:bg-instant-mid/90 active:bg-instant-mid text-white border-transparent focus:ring-instant-mid",
 };
 
 // Size styles mapping

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CATEGORY_API_TAG } from "./categoriesApi/constants";
+import { TESTIMONIAL_API_TAG } from "./testimonialsApi/constant";
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -26,6 +27,7 @@ export const baseApi = createApi({
     "Phone Numbers",
     "Complaints",
     "Processors",
+    TESTIMONIAL_API_TAG,
   ],
   endpoints: () => ({}),
 });

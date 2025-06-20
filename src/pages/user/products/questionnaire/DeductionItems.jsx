@@ -84,13 +84,13 @@ const DeductionItems = ({ condition }) => {
         const borderClass = isSelected
           ? functionalProblems
             ? "border-red-500"
-            : "border-secondary"
+            : "border-instant-mid"
           : "";
 
         const backgroundClass = isSelected
           ? functionalProblems
             ? "bg-red-500 text-white"
-            : "bg-secondary text-white"
+            : "bg-instant-mid text-white"
           : "bg-slate-100 text-black";
 
         return (
@@ -130,12 +130,11 @@ function DisplayCondtionLabels({
 
       <div
         key={label.conditonLabelId}
-        className={`${
-          style.backgroundClass
-        } text-center flex items-center py- ${
+        className={`text-center flex items-center py- 
+          ${style.backgroundClass}  ${
           shouldShowImage
             ? "w-full h-[100px] max-sm:h-[80px] justify-center"
-            : `justify-between gap-1 ${isYesNoType ? "h-[40px]" : "h-[75px]"}`
+            : `gap-1 ${isYesNoType ? "h-[40px]" : "h-[75px]"}`
         }`}
       >
         {!shouldShowImage && <CircleIcon size={16} />}

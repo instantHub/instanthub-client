@@ -10,3 +10,4 @@ export * from "./questions";
 export * from "./series";
 export * from "./sliders";
 export * from "./variantQuestions";
+export * from "./testimonials";

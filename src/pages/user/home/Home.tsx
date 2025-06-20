@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 import { Categories } from "../categories";
-import { Slider } from "@components/user";
-import TestimonialsCorousel from "@components/user/static/home/TestimonialsCorousel";
-import HowItWorks from "@components/user/static/home/HowItWorks";
+import { HowItWorks, Slider } from "@components/user";
 import WhyUs from "@components/user/static/home/WhyUs";
 import FAQ from "@components/user/static/FAQ";
 import { ServicesHome } from "../services";
 import { useIPLocation } from "@hooks";
+import { TestimonialCarousel } from "@components/user";
 
 export const Home = () => {
   const { location } = useIPLocation();
@@ -45,14 +44,12 @@ export const Home = () => {
       {/* Bill Board Advertisement */}
       <div className="flex flex-col gap-10 max-sm:gap-5 w-full mt-5">
         <Slider />
-
         <Categories />
-
-        <div className="mt-10 pt-5 pb-16 bg-secondary-light/40">
+        <div className="mt-10 pt-5 pb-16 bg-instant-mid/10">
           <ServicesHome />
         </div>
         <HowItWorks />
-        <TestimonialsCorousel />
+        <TestimonialCarousel />
         <WhyUs />
         <FAQ from="home" />
       </div>
