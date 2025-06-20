@@ -18,6 +18,12 @@ import SelectedProduct from "./questionnaire/SelectedProduct";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
 import { ArrowRightIcon, CloseIcon, PartyPopperIcon } from "@icons";
+import {
+  NON_DEAD_LAPTOP_PRICE,
+  NON_DEAD_MOBILE_PRICE,
+} from "../recycle/constants";
+import { Button } from "@components/general";
+import { useIPLocation } from "@hooks";
 
 // Create the Context
 const StateContext = createContext();
@@ -100,6 +106,7 @@ export const ProductFinalPrice = () => {
   const categoryURL = searchParams.get("c");
   const brandURL = searchParams.get("b");
   const navigate = useNavigate();
+  const { location } = useIPLocation();
 
   // const { data: productDetails, isLoading } =
   //   useGetProductDetailsQuery(productURL);
@@ -113,8 +120,8 @@ export const ProductFinalPrice = () => {
 
   const selectedProductData = useSelector((state) => state.deductions);
   const { selectedProduct, getUpTo } = selectedProductData;
-  // console.log("selectedProductData", selectedProductData);
-  // console.log("selectedProduct", selectedProduct);
+  console.log("selectedProductData", selectedProductData);
+  console.log("selectedProduct", selectedProduct);
 
   const [formData, setFormData] = useState();
   // console.log("formData", formData);
@@ -161,6 +168,13 @@ export const ProductFinalPrice = () => {
   //   completeFinalData();
   // }, [selectedProductData]);
 
+  const handleBack = () => {
+    const { brand, category } = selectedProduct;
+    navigate(
+      `/${location.city}/${category.uniqueURL}/${brand.uniqueURL}/${selectedProduct.uniqueURL}`
+    );
+  };
+
   async function completeFinalData() {
     if (!selectedProduct) return;
 
@@ -171,7 +185,10 @@ export const ProductFinalPrice = () => {
       Number(selectedProductData.toBeDeducted) +
       Number(selectedProductData.toBeAdded);
 
-    const minPrice = productCategory === LAPTOP ? 1500 : 500;
+    const minPrice =
+      productCategory === LAPTOP
+        ? NON_DEAD_LAPTOP_PRICE
+        : NON_DEAD_MOBILE_PRICE;
 
     // Setting Price
     if (deductedPrice > minPrice && deductedPrice <= getUpTo.price) {
@@ -263,7 +280,7 @@ export const ProductFinalPrice = () => {
       </Helmet>
 
       <div className="flex flex-col justify-between pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
-        <Link
+        {/* <Link
           to={generatePathWithParams(
             ROUTES.user.productDetails,
             selectedProduct?.id
@@ -271,7 +288,11 @@ export const ProductFinalPrice = () => {
           className="w-fit text-secondary bg-white px-2 border border-secondary rounded"
         >
           Back
-        </Link>
+        </Link> */}
+
+        <Button variant="outline" size="md" onClick={handleBack} className="w-fit">
+          Back
+        </Button>
 
         <div className="w-full flex gap-10 max-sm:gap-5 max-sm:flex-col text-[16px] max-sm:text-xs">
           {/* Left */}
@@ -447,7 +468,7 @@ const ProductPricingContainer = ({
             </button>
           ) : (
             ["Laptop", "Mobile"].includes(selectedProduct.category.name) && (
-              <RecycleProduct productId={selectedProduct.uniqueURL} />
+              <RecycleProduct uniqueURL={selectedProduct.uniqueURL} />
             )
           )}
         </div>
@@ -493,14 +514,14 @@ const PricingDetail = ({ children, free, price }) => {
   );
 };
 
-const RecycleProduct = ({ productId }) => {
+const RecycleProduct = ({ uniqueURL }) => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center">
       <button
         onClick={() => {
           navigate(
-            `/recycle/categories/recycle-brands/recycle-productDetails/${productId}`
+            `/recycle/categories/brands/products/productDetails/${uniqueURL}`
           );
         }}
         className="w-3/4 px-4 py-1 border text-white bg-green-600 rounded"

@@ -1,9 +1,15 @@
 import { FlexBox, Typography } from "@components/general";
-import { Breadcrumbs, Loading, PageNotFound } from "@components/user";
+import {
+  Breadcrumbs,
+  HowItWorks,
+  Loading,
+  PageNotFound,
+  TestimonialSlider,
+} from "@components/user";
 import { useGetCategoryQuery } from "@features/api";
 import { ChangeEvent, FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BrandSelection, HowItWorks, TopSellingProducts } from "./component";
+import { BrandSelection, TopSellingProducts } from "./component";
 import { ICategoryResponse } from "@features/api/categoriesApi/types";
 import { TopSellingBrands } from "./component";
 
@@ -40,7 +46,7 @@ export const Category = () => {
       <Breadcrumbs />
 
       {/* Hero Section */}
-      <div className="max-w-6xl sm:w-full rounded-xl px-5 sm:px-16 py-8 md:py-12 bg-secondary-light/50 mx-aut mx-4 sm:mx-0">
+      <div className="max-w-6xl sm:w-full rounded-xl px-5 sm:px-16 py-8 md:py-12 bg-instant-mid/10 mx-aut mx-4 sm:mx-0">
         <div className="flex flex-col lg:flex-row items-center gap-8">
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left">
@@ -85,6 +91,8 @@ export const Category = () => {
       {category?.brands && <TopSellingBrands brands={category.brands} />}
 
       {category?.name && <TopSellingProducts categoryName={category.name} />}
+
+      <TestimonialSlider />
     </FlexBox>
   );
 };

@@ -127,9 +127,10 @@ export const ProductDetail = () => {
                   {/* VARIANT PRICE WILL BE SHOWN WHEN CLICKED ON A VARIANT */}
                   {variantState.variantSelected?.price && (
                     <div className="flex flex-col items-start">
-                      <div className="flex items-center">
+                      <div className="flex items-center text-transparent bg-clip-text bg-gradient-to-r from-instant-mid to-instant-start">
                         <span className="text-4xl max-sm:text-2xl">₹</span>
-                        <h2 className="text-5xl max-sm:text-3xl text-yellow-500">
+                        {/* <h2 className="text-5xl max-sm:text-3xl text-yellow-500"> */}
+                        <h2 className="text-5xl max-sm:text-3xl text-transparent">
                           {variantState.variantSelected.price}
                         </h2>
                       </div>
@@ -151,11 +152,20 @@ export const ProductDetail = () => {
                         <div
                           className={`${
                             variantState.selectedDiv === variant.id
-                              ? "bg-amber-500 text-white"
+                              ? // ? "bg-amber-500 text-white"
+                                " border border-instant-mid text-instant-mid"
                               : "bg-white"
                           } flex items-center rounded-md cursor-pointer p-2.5 max-sm:p-2 shadow`}
                         >
-                          <span className="border border-solid border-surface-dark rounded-full w-5 h-5 max-sm:w-4 max-sm:h-4 mr-1.5"></span>
+                          <span
+                            className={`
+                              border border-solid border-surface-dark rounded-full w-5 h-5 max-sm:w-4 max-sm:h-4 mr-1.5
+                              ${
+                                variantState.selectedDiv === variant.id &&
+                                "bg-gradient-to-br from-instant-mid/60 to-instant-start/70"
+                              }
+                            `}
+                          ></span>
                           <span className="text-sm max-sm:text-sm flex-1 text-center">
                             {variant.name}
                           </span>

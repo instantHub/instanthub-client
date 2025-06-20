@@ -17,3 +17,4 @@ export * from "./servicesApi";
 export * from "./slidersApi";
 export * from "./stocksApi";
 export * from "./variantQuestionsApi";
+export * from "./testimonialsApi";

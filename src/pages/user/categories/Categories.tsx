@@ -19,7 +19,7 @@ export const Categories = () => {
     <div className="w-4/5 max-sm:w-[92%] mx-auto">
       <h1 className="text-2xl mb-6 pb-6 max-sm:text-lg">
         Ready to sell?{" "}
-        <span className="text-3xl text-secondary font-semibold max-sm:text-xl">
+        <span className="text-3xl text-secondary font-semibold max-sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-instant-mid to-instant-start">
           Let's turn your gadgets into cash!
         </span>
       </h1>
@@ -64,7 +64,7 @@ export const Categories = () => {
             <div className="flex justify-center">
               <Link
                 to={`/recycle/categories`}
-                className="w-32 h-32 max-sm:w-24 p-4 max-sm:h-24 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
+                className="w-32 h-32 max-sm:w-24 p-4 max-sm:h-24 flex bg-white cursor-pointer border border-instant-mid rounded-lg shadow-sm hover:shadow-xl transition ease-in-out duration-500"
               >
                 <img
                   src="/images/recycle1.png"

@@ -414,6 +414,12 @@ export const router = Router([
             element: <AdminRecycleOrderDetail />,
           },
 
+          // Testimonials
+          {
+            path: ROUTES.admin.testimonial,
+            element: <ADMIN.TestimonialList />,
+          },
+
           // VARIANTS QUESTIONS
           {
             path: ROUTES.admin.variantsQuestions,

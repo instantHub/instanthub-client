@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useGetProductDetailsQuery } from "@api";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   setProductData,
@@ -25,7 +25,7 @@ export const ProductQuestions = () => {
   const dispatch = useDispatch();
 
   const { data: productsData, isLoading } = useGetProductDetailsQuery(product);
-  // console.log("productsData", productsData);
+  console.log("productsData", productsData);
 
   const [deductions, setDeductions] = useState();
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -150,8 +150,8 @@ export const ProductQuestions = () => {
   if (aboutDevice.isDeviceChecked && !aboutDevice.isDeviceOn)
     return <SwitchedOff productsData={productsData} />;
 
-  // console.log("deductions", deductions);
-  // console.log("sortedConditions ProductQuestions", sortedConditions);
+  console.log("deductions", deductions);
+  console.log("sortedConditions ProductQuestions", sortedConditions);
 
   return (
     <>
@@ -234,29 +234,32 @@ export const ProductQuestions = () => {
 };
 
 const SwitchedOff = ({ productsData }) => {
-  const { id, category, name } = productsData;
+  const { id, category, name, uniqueURL } = productsData;
   const navigate = useNavigate();
   return (
-    <div className="flex justify-center items-center text-center min-h-svh ">
-      <div className="flex flex-col items-center">
-        <h2 className="my-3">
-          Your {category?.name}
-          <span className="font-semibold"> {name} </span>
-          is <span className="text-red-500 font-semibold">Switched Off.</span>
-        </h2>
-        <p className="text-lg max-sm:text-sm px-4 text-[#E27D60]">
-          Please Contact Customer Support 8722288017
+    <div className="min-h-[500px] flex items-center justify-center px-4">
+      <div className="text-center max-w-xl">
+        <h1 className="text-4xl font-bold text-gray-800">Recycle</h1>
+        <p className="mt-4 text-lg sm:text-2xl font-semibold text-gray-700">
+          Your Switched Off {category?.name}!
         </p>
-        <button
-          onClick={() =>
-            navigate(
-              `/recycle/categories/recycle-brands/recycle-productDetails/${id}`
-            )
-          }
-          className="bg-green-600 px-2 py-1 mt-4 rounded text-white"
-        >
-          Recycle this product
-        </button>
+        <p className="mt-2 text-gray-600">
+          Sorry for the inconvenience, your product can be recycled with us!
+          <br />
+          Please Contact Customer Support 8722288017
+          <br />
+          or <br />
+          Click on below button!
+        </p>
+
+        <div className="mt-6">
+          <Link
+            to={`/recycle/categories/brands/products/productDetails/${uniqueURL}`}
+            className="inline-block px-6 py-3 bg-instant-mid text-white font-semibold rounded-lg shadow-md hover:bg-instant-mid/60 transition"
+          >
+            Recycle this product
+          </Link>
+        </div>
       </div>
     </div>
   );

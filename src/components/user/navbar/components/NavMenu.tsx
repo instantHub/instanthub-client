@@ -42,7 +42,7 @@ export const NavMenu: FC<INavMenuProps> = ({ activePath }: INavMenuProps) => {
   const activeLink =
     "text-secondary text-xl transition-all duration-1000 ease-in-out";
   const activeLinkName = "font-extrabold text-secondary";
-  const activeButton = "bg-secondary-light/40 transition-all duration-1000";
+  const activeButton = "bg-instant-mid/10 transition-all duration-1000";
 
   return (
     <div className="max-sm:hidden h-12 grid grid-cols-3 border bg-white w-full text-sm font-thin">

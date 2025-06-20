@@ -65,7 +65,8 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
   }, []);
 
   return (
-    <div className="w-full bg-secondary-light/50 rounded-none sm:rounded-xl py-8 sm:py-12">
+    // <div className="w-full bg-secondary-light/50 rounded-none sm:rounded-xl py-8 sm:py-12">
+    <div className="w-full bg-instant-mid/10 rounded-none sm:rounded-xl py-8 sm:py-12">
       <div className="max-w-[400px] sm:max-w-6xl md:max-w-3xl lg:max-w-6xl mx-aut px-2 sm:px-4 sm:mx-0">
         {/* Header */}
         <div className="text-center mb-2 sm:mb-5">
@@ -165,16 +166,6 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
           )}
         </div>
       </div>
-
-      {/* <style jsx>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style> */}
     </div>
   );
 };
