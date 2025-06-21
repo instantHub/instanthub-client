@@ -24,6 +24,7 @@ import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
 import { ROUTES } from "./routes";
+import { ACRepair } from "@pages/user/marketing-service";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -233,6 +234,12 @@ export const router = Router([
           />
         ),
         element: <USER.RecycleProductDetail />,
+      },
+
+      // NEW SERVICES
+      {
+        path: ROUTES.user.acRepair,
+        element: <ACRepair />,
       },
     ],
   },

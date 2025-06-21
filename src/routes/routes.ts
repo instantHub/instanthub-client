@@ -36,6 +36,8 @@ export const ROUTES = {
     recycleProducts: "/recycle/categories/brands/products/:brandURL",
     recycleProductDetails:
       "/recycle/categories/brands/products/productDetails/:productURL",
+
+    acRepair: "services/ac-repair",
   },
   admin: {
     root: "/admin",
