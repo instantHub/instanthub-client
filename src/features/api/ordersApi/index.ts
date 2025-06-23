@@ -1,26 +1,47 @@
 import { baseApi } from "@features/api";
+import {
+  ORDER_API_PATHS,
+  ORDER_DETAIL_API_TAG,
+  ORDERS_API_TAG,
+} from "./constants";
+import { IOrder, IOrdersCount } from "./types";
 
 export const ordersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getOrdersList: build.query({
-      query: () => `/api/orders`,
-      providesTags: ["Orders"],
+    getOrdersList: build.query<IOrder[], void>({
+      query: () => `${ORDER_API_PATHS.BASE}`,
+      providesTags: [ORDERS_API_TAG],
     }),
-    getOrder: build.query({
+    getOrdersCount: build.query<IOrdersCount, void>({
+      query: () => `${ORDER_API_PATHS.BASE}/count`,
+    }),
+    getTodaysOrders: build.query<IOrder[], void>({
+      query: () => `${ORDER_API_PATHS.BASE}/today`,
+    }),
+    getPendingOrders: build.query<IOrder[], void>({
+      query: () => `${ORDER_API_PATHS.BASE}/pending`,
+    }),
+    getCompletedOrders: build.query<IOrder[], void>({
+      query: () => `${ORDER_API_PATHS.BASE}/completed`,
+    }),
+    getCancelledOrders: build.query<IOrder[], void>({
+      query: () => `${ORDER_API_PATHS.BASE}/cancelled`,
+    }),
+    getOrder: build.query<IOrder, void>({
       query: (orderId) => `/api/orders/${orderId}`,
-      providesTags: ["Order Detail"],
+      providesTags: [ORDERS_API_TAG],
     }),
     createOrder: build.mutation({
       query: (data) => ({
         // url: "/api/orders/create-order",
-        url: "/api/orders",
+        url: ORDER_API_PATHS.BASE,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: data,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: [ORDERS_API_TAG],
     }),
     uploadCustomerProofImage: build.mutation({
       query: (data) => ({
@@ -36,7 +57,7 @@ export const ordersApi = baseApi.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Orders", "Order Detail"],
+      invalidatesTags: [ORDERS_API_TAG, ORDER_DETAIL_API_TAG],
     }),
     orderCancel: build.mutation({
       query: ({ orderId, data }) => ({
@@ -44,14 +65,14 @@ export const ordersApi = baseApi.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Orders", "Order Detail"],
+      invalidatesTags: [ORDERS_API_TAG, ORDER_DETAIL_API_TAG],
     }),
     deleteOrder: build.mutation({
       query: (orderId) => ({
         url: `/api/orders/delete-order/${orderId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: [ORDERS_API_TAG],
     }),
     assignAgent: build.mutation({
       query: ({ orderId, data }) => ({
@@ -59,7 +80,7 @@ export const ordersApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["Order Detail"],
+      invalidatesTags: [ORDER_DETAIL_API_TAG],
     }),
   }),
 });
@@ -67,6 +88,13 @@ export const ordersApi = baseApi.injectEndpoints({
 export const {
   useGetOrderQuery,
   useGetOrdersListQuery,
+
+  useGetOrdersCountQuery,
+  useLazyGetTodaysOrdersQuery,
+  useLazyGetPendingOrdersQuery,
+  useLazyGetCompletedOrdersQuery,
+  useLazyGetCancelledOrdersQuery,
+
   useCreateOrderMutation,
   useUploadCustomerProofImageMutation,
   useOrderReceivedMutation,

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CATEGORY_API_TAG } from "./categoriesApi/constants";
 import { TESTIMONIAL_API_TAG } from "./testimonialsApi/constant";
+import { ORDER_DETAIL_API_TAG, ORDERS_API_TAG } from "./ordersApi/constants";
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -15,7 +16,8 @@ export const baseApi = createApi({
     "Products",
     "Conditions",
     "ConditionLabels",
-    "Orders",
+    ORDERS_API_TAG,
+    ORDER_DETAIL_API_TAG,
     "Sliders",
     "Series",
     "Stocks",

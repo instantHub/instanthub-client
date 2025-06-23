@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useGetServicesOrdersQuery } from "@api";
 import ServiceOrderCard from "./ServiceOrderCard";
-import { CurrentOrdersAndCount, OrderTabs } from "@components/admin";
 import { Loading } from "@components/user";
+import { CurrentOrdersAndCount, OrderTabs } from "../orders/components";
 
 const ServicesOrdersList = () => {
   const { data: servicesOrders, isLoading: servicesOrdersLoading } =
