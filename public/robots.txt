@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /admin
 Allow: /
-Sitemap: https://api.instantpick.in/sitemap.xml
+Sitemap: https://instanthub.in/sitemap.xml

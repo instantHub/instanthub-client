@@ -12,6 +12,8 @@ import { useParams } from "react-router-dom";
 import { BrandSelection, TopSellingProducts } from "./component";
 import { ICategoryResponse } from "@features/api/categoriesApi/types";
 import { TopSellingBrands } from "./component";
+import { Helmet } from "react-helmet-async";
+import { useIPLocation } from "@hooks";
 
 type TCategoryParams = {
   categoryUniqueURL: string;
@@ -19,6 +21,7 @@ type TCategoryParams = {
 
 export const Category = () => {
   const { categoryUniqueURL } = useParams<TCategoryParams>();
+  const { location } = useIPLocation();
 
   if (!categoryUniqueURL) {
     throw new Error("Category UniqueURL is required to Get a category.");
@@ -41,59 +44,89 @@ export const Category = () => {
 
   if (categoryLoading) return <Loading />;
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: category?.name,
+    description: category?.metaDescription,
+    url: `https://instanthub.in/${location.city}/${category?.uniqueURL}`,
+    about: {
+      "@type": "Thing",
+      name: category?.name,
+    },
+  };
+
   return (
-    <FlexBox direction="col" className="min-h-screen mt-10">
-      <Breadcrumbs />
+    <>
+      <Helmet>
+        <title>{category?.metaTitle || category?.name}</title>
+        <meta name="description" content={category?.metaDescription} />
+        <meta name="keywords" content={category?.metaKeywords} />
 
-      {/* Hero Section */}
-      <div className="max-w-6xl sm:w-full rounded-xl px-5 sm:px-16 py-8 md:py-12 bg-instant-mid/10 mx-aut mx-4 sm:mx-0">
-        <div className="flex flex-col lg:flex-row items-center gap-8">
-          {/* Left Content */}
-          <div className="flex-1 text-center lg:text-left">
-            <Typography as={"h1"} variant="h1">
-              Sell Old {category?.name} for Instant Cash
-            </Typography>
+        {/* Canonical Tag */}
+        <link
+          rel="canonical"
+          href={`https://instanthub.in/${location.city}/${category?.uniqueURL}`}
+        />
 
-            {/* Features */}
-            <HeadingFeatures />
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+      <FlexBox direction="col" className="min-h-screen mt-10 mx-4 sm:mx-1">
+        <Breadcrumbs />
 
-            {/* Search Bar */}
-            <div className="relative mb-8 max-w-md mx-auto lg:mx-0">
-              <input
-                type="text"
-                placeholder={`Search your ${category?.name} to sell`}
-                value={searchTerm}
-                onChange={handleSearch}
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white"
-              />
+        {/* Hero Section */}
+        <div className="max-w-6xl sm:w-full rounded-xl px-5 sm:px-16 py-8 md:py-12 bg-instant-mid/10 mx-4 sm:mx-0">
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            {/* Left Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <Typography as={"h1"} variant="h1">
+                Sell Old {category?.name} for Instant Cash
+              </Typography>
+
+              {/* Features */}
+              <HeadingFeatures />
+
+              {/* Search Bar */}
+              <div className="relative mb-8 max-w-md mx-auto lg:mx-0">
+                <input
+                  type="text"
+                  placeholder={`Search your ${category?.name} to sell`}
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white"
+                />
+              </div>
+
+              {/* Brand Selection */}
+              <BrandSelection category={category as ICategoryResponse} />
             </div>
 
-            {/* Brand Selection */}
-            <BrandSelection category={category as ICategoryResponse} />
-          </div>
-
-          {/* Right Illustration */}
-          <div className="relative w-32 sm:w-64 h-32 sm:h-64 mx-auto rounded-full flex items-center justify-center">
-            <img
-              src="/images/logo-transparent.png"
-              alt="logo"
-              className="w-[150px] sm:w-[220px] sm:mb-4 absolute z-10"
-              loading="lazy"
-            />
+            {/* Right Illustration */}
+            <div className="relative w-32 sm:w-64 h-32 sm:h-64 mx-auto rounded-full flex items-center justify-center">
+              <img
+                src="/images/logo-transparent.png"
+                alt="logo"
+                className="w-[150px] sm:w-[220px] sm:mb-4 absolute z-10"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* How It Works Section */}
-      <HowItWorks />
+        {/* How It Works Section */}
+        <HowItWorks />
 
-      {/* Top Selling Brands */}
-      {category?.brands && <TopSellingBrands brands={category.brands} />}
+        {/* Top Selling Brands */}
+        {category?.brands && <TopSellingBrands brands={category.brands} />}
 
-      {category?.name && <TopSellingProducts categoryName={category.name} />}
+        {category?.name && <TopSellingProducts categoryName={category.name} />}
 
-      <TestimonialSlider />
-    </FlexBox>
+        <TestimonialSlider />
+      </FlexBox>
+    </>
   );
 };
 

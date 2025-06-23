@@ -12,6 +12,7 @@ import { slugify } from "@utils/general";
 import { ICategoryType } from "@features/api/categoriesApi/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { ArrowLeftIcon } from "@icons";
+import { formatMetaKeywords } from "@utils/admin";
 
 type TUpdateCategoryParams = {
   categoryUniqueURL: string;
@@ -22,6 +23,9 @@ type TFormData = {
   image: File | string;
   uniqueURL: string;
   categoryType: ICategoryType;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: string;
 };
 
 export function UpdateCategory() {
@@ -41,6 +45,10 @@ export function UpdateCategory() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Add SEO fields
+  // metaTitle: { type: String },
+  // metaDescription: { type: String },
+  // metaKeywords: { type: String },
   const [formData, setFormData] = useState<TFormData>({
     name: "",
     image: "",
@@ -50,6 +58,9 @@ export function UpdateCategory() {
       processorBased: false,
       simple: false,
     },
+    metaTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
   });
 
   useEffect(() => {
@@ -60,6 +71,9 @@ export function UpdateCategory() {
       uniqueURL: categoryData.uniqueURL,
       image: categoryData.image,
       categoryType: categoryData.categoryType,
+      metaTitle: categoryData.metaTitle,
+      metaDescription: categoryData.metaDescription,
+      metaKeywords: categoryData.metaKeywords,
     });
   }, [categoryData]);
 
@@ -93,6 +107,7 @@ export function UpdateCategory() {
     }
 
     let updatedImage = formData.image;
+
     if (newImgSelected && formData.image instanceof File) {
       const uploaded = await uploadFileHandler();
       if (uploaded) updatedImage = uploaded;
@@ -137,6 +152,14 @@ export function UpdateCategory() {
         simple: false,
         [selectedType]: true,
       },
+    }));
+  };
+
+  // Format only on blur or submit
+  const handleBlur = () => {
+    setFormData((prev) => ({
+      ...prev,
+      metaKeywords: formatMetaKeywords(prev.metaKeywords),
     }));
   };
 
@@ -192,6 +215,48 @@ export function UpdateCategory() {
             }
           />
         </FlexBox>
+
+        <FlexBox gap={2} className="max-sm:flex-col">
+          <FormInput
+            variant="outlined"
+            label="Meta Title"
+            type="text"
+            placeholder="Enter Meta Title"
+            value={formData.metaTitle}
+            onChange={(e) =>
+              setFormData({ ...formData, metaTitle: e.target.value })
+            }
+          />
+
+          <FormInput
+            variant="outlined"
+            label="Meta Description"
+            type="text"
+            placeholder="Enter Meta Description"
+            value={formData.metaDescription}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                metaDescription: e.target.value,
+              })
+            }
+          />
+        </FlexBox>
+
+        <FormInput
+          variant="outlined"
+          label="Meta Keywords"
+          type="text"
+          placeholder="Enter Meta Keywords"
+          value={formData.metaKeywords}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              metaKeywords: e.target.value,
+            })
+          }
+          onBlur={handleBlur}
+        />
 
         <FlexBox gap={4} className="mx-auto">
           <img

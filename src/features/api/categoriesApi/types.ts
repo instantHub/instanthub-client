@@ -8,6 +8,10 @@ export interface ICategoryResponse {
   uniqueURL: string;
   brands: IBrandLite[];
   categoryType: ICategoryType;
+  // Add SEO fields
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: string;
 }
 
 export interface ICategoryType {
