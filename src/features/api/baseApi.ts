@@ -6,6 +6,7 @@ import { ORDER_DETAIL_API_TAG, ORDERS_API_TAG } from "./ordersApi/constants";
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_BASE_URL,
+    credentials: "include",
   }),
   reducerPath: "baseApi",
   tagTypes: [

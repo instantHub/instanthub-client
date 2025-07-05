@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { ROUTES } from "@routes";
 
-const SignIn = () => {
+export const SignIn = () => {
   const [signInData, setSignInData] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -97,5 +97,3 @@ const SignIn = () => {
     </div>
   );
 };
-
-export default SignIn;
