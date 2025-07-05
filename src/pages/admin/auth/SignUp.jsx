@@ -6,7 +6,7 @@ import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 
-const SignUp = () => {
+export const SignUp = () => {
   const [signUpData, setSignUpData] = useState();
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -121,5 +121,3 @@ const SignUp = () => {
     </div>
   );
 };
-
-export default SignUp;

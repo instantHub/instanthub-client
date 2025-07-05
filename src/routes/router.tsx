@@ -14,8 +14,6 @@ import * as USER_COMPONENTS from "@components/user";
 import * as ADMIN from "@pages/admin";
 import * as ADMIN_COMPONENTS from "@components/admin";
 
-import AdminSignIn from "@pages/admin/signIn & signup/SignIn";
-
 import AdminCreateServiceForm from "@pages/admin/services/CreateServices";
 import AdminServicesList from "@pages/admin/services/ServicesList";
 import AdminServicesOrdersList from "@pages/admin/services/ServicesOrdersList";
@@ -245,12 +243,12 @@ export const router = Router([
   },
   {
     path: ROUTES.admin.login,
-    element: <AdminSignIn />,
+    element: <ADMIN.SignIn />,
   },
   {
     path: ROUTES.admin.signUp,
-    // element: <AdminSignUp />, // Undo for new admin registration
-    element: <Navigate to={ROUTES.admin.login} replace />,
+    element: <ADMIN.SignUp />, // Undo for new admin registration
+    // element: <Navigate to={ROUTES.admin.login} replace />,
   },
   {
     path: "",
