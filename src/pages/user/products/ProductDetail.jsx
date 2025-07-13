@@ -11,6 +11,7 @@ import {
 import SellContent from "@components/user/static/SellContent";
 import { MOBILE } from "@utils/user/constants";
 import { ArrowRightIcon } from "@icons";
+import { useIPLocation } from "@hooks";
 
 export const ProductDetail = () => {
   const { productUniqueURL } = useParams();
@@ -21,8 +22,9 @@ export const ProductDetail = () => {
     isLoading,
     error,
   } = useGetProductDetailsQuery(productUniqueURL);
-
   // console.log("productDetails", productDetails);
+
+  const { location } = useIPLocation();
 
   const [variantState, setVariantState] = useState({
     variantSelected: null,
@@ -68,8 +70,7 @@ export const ProductDetail = () => {
         />
         <link
           rel="canonical"
-          // href={`https://www.instanthub.in/categories/brands/productDetails/${prodId}`}
-          href={`https://www.instanthub.in/categories/brands/productDetails/${productUniqueURL}`}
+          href={`https://www.instanthub.in/${location?.city}/${category?.uniqueURL}/${brand?.uniqueURL}/${productUniqueURL}`}
         />
       </Helmet>
 

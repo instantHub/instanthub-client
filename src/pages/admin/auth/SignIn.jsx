@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "@api";
-import { setCredentials } from "@features/userSlices/authSlice";
+import { useLoginMutation, useValidateTokenQuery } from "@api";
+import { setCredentials } from "@features/adminSlices/adminAuthSlice";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { ROUTES } from "@routes";
@@ -15,33 +15,41 @@ export const SignIn = () => {
   const dispatch = useDispatch();
 
   const [login, { isLoading }] = useLoginMutation();
-  const cookies = new Cookies();
+  const { refetch } = useValidateTokenQuery();
 
-  const { adminInfo } = useSelector((state) => state.auth);
+  // const { admin } = useSelector((state) => state.adminPanel);
 
   //   If AdminInfo(logged In) is available navigate to Admin Dashboard
-  useEffect(() => {
-    if (adminInfo) {
-      navigate(ROUTES.admin.dashboard);
-    }
-  }, [navigate, adminInfo]);
+  // useEffect(() => {
+  //   if (admin) {
+  //     navigate(ROUTES.admin.dashboard);
+  //   }
+  // }, [navigate, admin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      console.log("res", res);
+      console.log("handleSubmit login res", res);
 
       // dispatch(setCredentials(res));
       dispatch(setCredentials(res));
+
       toast.success("Logged in successfull");
-      navigate(ROUTES.admin.dashboard);
+      // navigate(ROUTES.admin.dashboard);
+
+      // Manually trigger verify
+      const result = await refetch();
+      if (!result.error) {
+        navigate("/admin/dashboard"); // ✅ push to dashboard
+      }
     } catch (err) {
       console.log("catch error");
       console.log(err?.data?.message || err.error);
       toast.error(err?.data?.message || err.error);
     }
   };
+
   return (
     <div className="mx-auto flex justify-center items-center w-[30%] max-md:w-full my-[10%] border rounded shadow-lg p-5 max-md:p-2">
       <form

@@ -1,4 +1,11 @@
 import { baseApi } from "@features/api";
+import {
+  IAdminResponse,
+  IAdminLoginCredentials,
+  IAdminLoginResponse,
+  IAdminLogoutRequest,
+  IValidateTokenResponse,
+} from "./types";
 
 // const ADMIN_URL = "http://localhost:8000/api";
 const ADMIN_URL = "/api";
@@ -12,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    login: builder.mutation({
+    login: builder.mutation<IAdminLoginResponse, IAdminLoginCredentials>({
       query: (data) => ({
         url: `${ADMIN_URL}/auth`,
         method: "POST",
@@ -23,27 +30,40 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    adminProfile: builder.query({
+
+    validateToken: builder.query<IValidateTokenResponse, void>({
+      query: () => ({ url: `${ADMIN_URL}/validate-token` }),
+    }),
+
+    refreshToken: builder.mutation<void, void>({
+      query: () => ({
+        url: `${ADMIN_URL}/refresh`,
+        method: "GET",
+      }),
+    }),
+
+    verifySession: builder.query<{ valid: boolean }, void>({
+      query: () => `${ADMIN_URL}/verify-session`,
+    }),
+
+    adminProfile: builder.query<IAdminResponse, void>({
       query: () => ({
         url: `${ADMIN_URL}/admin-profile`,
         method: "GET",
-        credentials: "include",
-        // body: data,
       }),
     }),
     updateAdmin: builder.mutation({
       query: (data) => ({
         url: `${ADMIN_URL}/update-admin`,
         method: "PUT",
-        // credentials: "include",
         body: data,
       }),
     }),
-    adminLogout: builder.mutation({
-      query: () => ({
+    adminLogout: builder.mutation<void, IAdminLogoutRequest>({
+      query: ({ admin }) => ({
         url: `${ADMIN_URL}/logout`,
         method: "POST",
-        // credentials: "include",
+        body: admin,
       }),
     }),
   }),
@@ -55,4 +75,8 @@ export const {
   useAdminProfileQuery,
   useUpdateAdminMutation,
   useAdminLogoutMutation,
+
+  useValidateTokenQuery,
+  useRefreshTokenMutation,
+  useVerifySessionQuery,
 } = authApi;
