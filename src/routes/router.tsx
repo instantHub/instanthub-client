@@ -40,6 +40,24 @@ function lazyLoad<T extends ComponentType<any>>(
   return LazyWrapper;
 }
 
+// lazyLoadNamed.ts
+export function lazyLoadNamed<T extends ComponentType<any>>(
+  importFunc: () => Promise<any>,
+  exportName: string
+): FC<ComponentProps<T>> {
+  const LazyComponent = lazy(() =>
+    importFunc().then((mod) => ({ default: mod[exportName] }))
+  );
+
+  const LazyWrapper: FC<ComponentProps<T>> = (props) => (
+    <Suspense fallback={<USER_COMPONENTS.Loading />}>
+      <LazyComponent {...props} />
+    </Suspense>
+  );
+
+  return LazyWrapper;
+}
+
 export const router = Router([
   {
     path: ROUTES.user.root,
@@ -243,21 +261,32 @@ export const router = Router([
   },
   {
     path: ROUTES.admin.login,
-    element: <ADMIN.SignIn />,
+    // element: <ADMIN.SignIn />,
+    element: (
+      // <ADMIN_COMPONENTS.ProtectedRoute>
+      <ADMIN.SignIn />
+      // </ADMIN_COMPONENTS.ProtectedRoute>
+    ),
   },
-  {
-    path: ROUTES.admin.signUp,
-    element: <ADMIN.SignUp />, // Undo for new admin registration
-    // element: <Navigate to={ROUTES.admin.login} replace />,
-  },
+  // {
+  //   path: ROUTES.admin.signUp,
+  //   element: <ADMIN.AdminRegisterForm />, // Undo for new admin registration
+  //   // element: <Navigate to={ROUTES.admin.login} replace />,
+  // },
   {
     path: "",
-    element: <ADMIN_COMPONENTS.PrivateRoute />,
+    // element: <ADMIN_COMPONENTS.PrivateRoute />,
     children: [
       {
         path: ROUTES.admin.root,
         // element: <Admin />,
-        element: <ADMIN.AdminLayout />,
+        // element: <ADMIN.AdminLayout />,
+
+        element: (
+          <ADMIN_COMPONENTS.ProtectedRoute>
+            <ADMIN.AdminLayout />
+          </ADMIN_COMPONENTS.ProtectedRoute>
+        ),
 
         children: [
           {
@@ -271,6 +300,11 @@ export const router = Router([
             ),
           },
           {
+            path: "admin-channel",
+            element: <ADMIN.AdminRegisterForm />,
+          },
+
+          {
             path: ROUTES.admin.updateProfile,
             element: <ADMIN_COMPONENTS.UpdateAdmin />,
           },
@@ -281,8 +315,11 @@ export const router = Router([
           {
             path: ROUTES.admin.productsList,
             // element: <AdminProductsList />,
+            // element: createElement(
+            //   lazyLoad(() => import("@pages/admin/products/ProductsList"))
+            // ),
             element: createElement(
-              lazyLoad(() => import("@pages/admin/products/ProductsList"))
+              lazyLoadNamed(() => import("@pages/admin"), "ProductsList")
             ),
           },
           {

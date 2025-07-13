@@ -16,9 +16,11 @@ import { ROUTES } from "@routes";
 import { slugify } from "@utils/general";
 import { SearchIcon } from "@icons";
 import { ServerError } from "@components/user/errors/ServerError";
+import { useIPLocation } from "@hooks";
 
 export const Products = () => {
   const { categoryUniqueURL, brandUniqueURL } = useParams();
+  // console.log("category & brans UniqueURL", categoryUniqueURL, brandUniqueURL);
 
   const { data: brandSeries, isLoading: seriesLoading } =
     useGetBrandSeriesQuery(brandUniqueURL);
@@ -40,6 +42,8 @@ export const Products = () => {
     error,
   } = useGetProductsQuery({ brandUniqueURL, search });
   // console.log("productsData", productsData);
+
+  const { location } = useIPLocation();
 
   const handleSeries = (seriesId) => {
     setSeriesAction((prevSeries) => ({
@@ -107,7 +111,7 @@ export const Products = () => {
         />
         <link
           rel="canonical"
-          // href={`https://www.instanthub.in/categories/brands/products/${brandId}`}
+          href={`https://www.instanthub.in/${location.city}/${categoryUniqueURL}/${brandUniqueURL}`}
         />
       </Helmet>
 

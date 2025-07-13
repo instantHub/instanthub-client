@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { useDispatch } from "react-redux";
 import { SideBarContext } from "@pages/admin";
 import * as ICON from "@icons";
@@ -36,6 +35,7 @@ export const SideBar = () => {
           icon: <ICON.ListIndefiniteIcon />,
         },
       ],
+      // show: hasPermission("create"),
     },
 
     // BRANDS and SERIES
@@ -225,7 +225,18 @@ export const SideBar = () => {
         },
       ],
     },
+    // UPDATE PROFILE
+    {
+      title: "ADMIN Channel",
+      links: [
+        {
+          name: "admin-channel",
+          icon: <ICON.AlertCircle />,
+        },
+      ],
+    },
   ];
+  // ].filter((item) => item.show);
 
   const activeLink = `flex items-center gap-3 pl-4 pt-2 pb-2 rounded-lg text-white text-md m-2 `;
   const normalLink = `flex items-center gap-3 pl-4 pt-1 pb-1 rounded-lg text-md text-white hover:text-black hover:bg-gray-200 m-2`;
@@ -288,7 +299,6 @@ export const SideBar = () => {
                     isActive ? activeLink : normalLink
                   }
                   onClick={() => {
-                    dispatch(setCurrentPage({ currentPage: link.name }));
                     toggleSidebar();
                   }}
                 >

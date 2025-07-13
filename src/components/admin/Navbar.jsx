@@ -1,23 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAdminLogoutMutation, useAdminProfileQuery } from "@api";
 import { useNavigate } from "react-router-dom";
-import { logout } from "@features/userSlices/authSlice";
+import { logout } from "@features/adminSlices/adminAuthSlice";
 import { toast } from "react-toastify";
-import { setCurrentPage } from "@features/adminSlices/adminPanelSlice";
 import { SideBarContext } from "@pages/admin";
 import { ROUTES } from "@routes";
 import { FiAlignLeft, LogoutIcon, MenuIcon, ProfileIcon } from "@icons";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
-  const { adminInfo } = useSelector((state) => state.auth);
+  const { admin } = useSelector((state) => state.adminPanel);
+  const { pathname } = useLocation();
   const { adminProfile, isLoading, isError } = useAdminProfileQuery();
-  // console.log("adminInfo", adminInfo);
-
-  const adminPanelData = useSelector((state) => state.adminPanel);
-  // console.log("adminPanelData", adminPanelData);
 
   // const { toggleSidebar, isSidebarOpen } = props;
   const { isSidebarOpen, toggleSidebar } = useContext(SideBarContext);
@@ -29,21 +25,25 @@ export const Navbar = () => {
   };
 
   const [adminLogout] = useAdminLogoutMutation();
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const res = await adminLogout();
-      dispatch(logout());
+      const res = await adminLogout({ admin }).unwrap();
       toast.success("Logged out successfully");
-      navigate(ROUTES.admin.login);
+      dispatch(logout());
+      console.log("before nav to lgoin");
+      // navigate(ROUTES.admin.login);
+      navigate("/admin/login");
     } catch (error) {}
   };
 
-  if (isError) {
-    console.log("Error in Admin Profile mainfly fro JWT Token Expiry", isError);
-    dispatch(logout());
-  }
+  // if (isError) {
+  //   console.log("Error in Admin Profile mainfly for JWT Token Expiry", isError);
+  //   navigate(ROUTES.admin.login);
+  //   dispatch(logout());
+  // }
 
   const handleClick = (event) => {
     event.preventDefault(); // Prevent default behavior
@@ -51,12 +51,6 @@ export const Navbar = () => {
       window.history.pushState({}, "", to); // Programmatic navigation
     });
   };
-
-  useEffect(() => {
-    const currentPage = localStorage.getItem("currentPage");
-    // console.log("data from localStorage:", currentPage);
-    dispatch(setCurrentPage({ currentPage }));
-  }, []);
 
   return (
     // <nav className="sticky flex justify-between items-center p-4 w-full  top-0 z-50">
@@ -78,20 +72,24 @@ export const Navbar = () => {
       {/* Current Page Name */}
       <div>
         <p className="text-xl max-sm:text-xs font-serif font-semibold">
-          {adminPanelData?.currentPage?.toUpperCase()}
+          {pathname
+            .split("/")
+            .filter((segment) => segment !== "")
+            .slice(-1)[0]
+            .toUpperCase()}
         </p>
       </div>
 
       {/* Admin Profile DropDown */}
       <div className="flex items-center ">
-        {adminInfo && (
+        {admin && (
           <div className="flex items-center justify-between flex-wrap">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
               <button
                 onClick={toggleDropdown}
                 className="group ml-4 text-black focus:outline-none flex items-center gap-1"
               >
-                <span>{adminInfo.name}</span>
+                <span>{admin.name}</span>
                 <FiAlignLeft className="group-hover:animate-bounce" />
               </button>
             </div>

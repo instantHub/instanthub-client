@@ -18,7 +18,7 @@ import axios from "axios";
 import { ROUTES } from "@routes";
 import { ArrowLeftIcon, ArrowRightIcon } from "@icons";
 
-const ProductsList = () => {
+export const ProductsList = () => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(20);
 
@@ -322,4 +322,4 @@ const ProductsList = () => {
   );
 };
 
-export default ProductsList;
+// export default ProductsList;

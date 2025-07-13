@@ -22,7 +22,8 @@
       "@utils/*": ["src/utils/*"],
       "@routes": ["src/routes/index.ts"],
       "@hooks": ["src/hooks/index.ts"],
-      "@icons": ["src/icons/index.ts"]
+      "@icons": ["src/icons/index.ts"],
+      "@types": ["src/types/index.ts"]
     }
   },
   "include": ["src"],

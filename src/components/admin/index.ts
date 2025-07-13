@@ -9,3 +9,7 @@ export { PrivateRoute } from "./PrivateRoute";
 export { SideBar } from "./SideBar";
 export { Table } from "./Table";
 export { UpdateAdmin } from "./UpdateAdmin";
+
+export { RoleGuard } from "./RoleGuard";
+export { ProtectedRoute } from "./ProtectedRoute";
+export { SessionTimeout } from "./SessionTimeout";

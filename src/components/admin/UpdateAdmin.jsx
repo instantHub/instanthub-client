@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUpdateAdminMutation } from "@api";
-import { setCredentials } from "@features/userSlices/authSlice";
+import { setCredentials } from "@features/adminSlices/adminAuthSlice";
 import { ROUTES } from "@routes";
 import { Eye, EyeOff } from "@icons";
 
@@ -18,19 +18,17 @@ export const UpdateAdmin = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { adminInfo } = useSelector((state) => state.auth);
+  const { admin } = useSelector((state) => state.adminPanel);
 
   const [updateAdmin] = useUpdateAdminMutation();
 
-  //   console.log(adminInfo);
-
   useEffect(() => {
-    if (adminInfo) {
-      setName(adminInfo.name);
-      setEmail(adminInfo.email);
-      setAdminId(adminInfo._id);
+    if (admin) {
+      setName(admin.name);
+      setEmail(admin.email);
+      setAdminId(admin._id);
     }
-  }, [adminInfo]);
+  }, [admin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

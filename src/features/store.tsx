@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./userSlices/authSlice";
+// import authSlice from "./userSlices/authSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { baseApi } from "@features/api";
 
@@ -8,17 +8,17 @@ import serviceProblemsSlice from "./userSlices/serviceProblemsSlice";
 import filterSlice from "./adminSlices/filterSlice";
 import searchSlice from "./adminSlices/searchSlice";
 import processorSlice from "./adminSlices/processorSlice";
-import adminPanelSlice from "./adminSlices/adminPanelSlice";
+import adminAuthSlice from "./adminSlices/adminAuthSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice,
+    // auth: authSlice,
     deductions: deductionSlice,
     serviceProblems: serviceProblemsSlice,
     filter: filterSlice,
     search: searchSlice,
     processor: processorSlice,
-    adminPanel: adminPanelSlice,
+    adminPanel: adminAuthSlice,
 
     [baseApi.reducerPath]: baseApi.reducer,
   },
@@ -26,3 +26,6 @@ export const store = configureStore({
 });
 
 setupListeners(store.dispatch);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
