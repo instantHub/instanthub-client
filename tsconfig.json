@@ -23,7 +23,8 @@
       "@routes": ["src/routes/index.ts"],
       "@hooks": ["src/hooks/index.ts"],
       "@icons": ["src/icons/index.ts"],
-      "@types": ["src/types/index.ts"]
+      "@types": ["src/types/index.ts"],
+      "@services/*": ["src/services/*"]
     }
   },
   "include": ["src"],

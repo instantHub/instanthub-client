@@ -14,10 +14,8 @@ import * as USER_COMPONENTS from "@components/user";
 import * as ADMIN from "@pages/admin";
 import * as ADMIN_COMPONENTS from "@components/admin";
 
-import AdminCreateServiceForm from "@pages/admin/services/CreateServices";
-import AdminServicesList from "@pages/admin/services/ServicesList";
-import AdminServicesOrdersList from "@pages/admin/services/ServicesOrdersList";
-import AdminServiceOrderDetail from "@pages/admin/services/ServiceOrderDetail";
+import * as SERVICES from "@services/user";
+
 import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
@@ -153,61 +151,27 @@ export const router = Router([
         path: ROUTES.user.productFinalPrice,
         element: <USER.ProductFinalPrice />,
       },
+
       // Services
       {
-        path: ROUTES.user.services,
+        path: ROUTES.user.services.root,
         errorElement: (
           <USER_COMPONENTS.ErrorComponent
             message={`Sorry unable to load Services, please try after sometime..!`}
           />
         ),
-        element: <USER.Services />,
+        children: [
+          {
+            index: true,
+            element: <SERVICES.Services />,
+          },
+          {
+            path: ROUTES.user.services.interior,
+            element: <SERVICES.InteriorService />,
+          },
+        ],
       },
-      {
-        path: ROUTES.user.serviceSubCategory,
-        errorElement: (
-          <USER_COMPONENTS.ErrorComponent
-            message={`Sorry unable to load Services, please try after sometime..!`}
-          />
-        ),
-        element: <USER.ServiceSubCategory />,
-      },
-      {
-        path: ROUTES.user.serviceSubProducts,
-        errorElement: (
-          <USER_COMPONENTS.ErrorComponent
-            message={`Sorry unable to load Services, please try after sometime..!`}
-          />
-        ),
-        element: <USER.ServiceSubProducts />,
-      },
-      {
-        path: ROUTES.user.serviceBrands,
-        errorElement: (
-          <USER_COMPONENTS.ErrorComponent
-            message={`Sorry unable to load Services, please try after sometime..!`}
-          />
-        ),
-        element: <USER.ServiceBrands />,
-      },
-      {
-        path: ROUTES.user.serviceBrandProblems,
-        errorElement: (
-          <USER_COMPONENTS.ErrorComponent
-            message={`Sorry unable to load Services Problems, please try after sometime..!`}
-          />
-        ),
-        element: <USER.ServiceBrandProblems />,
-      },
-      {
-        path: ROUTES.user.bookService,
-        errorElement: (
-          <USER_COMPONENTS.ErrorComponent
-            message={`Sorry unable to load Book-Service, please try after sometime..!`}
-          />
-        ),
-        element: <USER.BookService />,
-      },
+
       {
         path: ROUTES.user.recycleCategories,
         errorElement: (
@@ -426,24 +390,6 @@ export const router = Router([
           {
             path: ROUTES.admin.createCoupon,
             element: <ADMIN.CreateCoupon />,
-          },
-
-          // SERVICES
-          {
-            path: ROUTES.admin.createService,
-            element: <AdminCreateServiceForm />,
-          },
-          {
-            path: ROUTES.admin.servicesList,
-            element: <AdminServicesList />,
-          },
-          {
-            path: ROUTES.admin.serviceOrdersList,
-            element: <AdminServicesOrdersList />,
-          },
-          {
-            path: ROUTES.admin.serviceOrderDetail,
-            element: <AdminServiceOrderDetail />,
           },
 
           // Recycle Orders

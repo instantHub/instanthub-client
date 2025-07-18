@@ -5,7 +5,7 @@ import { Categories } from "../categories";
 import { HowItWorks, Slider } from "@components/user";
 import WhyUs from "@components/user/static/home/WhyUs";
 import FAQ from "@components/user/static/FAQ";
-import { ServicesHome } from "../services";
+import { ServicesHome } from "@services/user";
 import { useIPLocation } from "@hooks";
 import { TestimonialCarousel } from "@components/user";
 

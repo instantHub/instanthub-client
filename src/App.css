@@ -1,0 +1,19 @@
+.scroll-on-hover {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.scroll-on-hover::-webkit-scrollbar {
+  height: 6px;
+  transition: opacity 0.3s;
+  opacity: 0; /* Initially hidden */
+}
+
+.scroll-on-hover:hover::-webkit-scrollbar {
+  opacity: 1; /* Show on hover */
+}
+
+.scroll-on-hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
