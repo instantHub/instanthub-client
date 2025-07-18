@@ -6,6 +6,12 @@ import { toast } from "react-toastify";
 export const AssignAgent = ({ orderDetail }) => {
   // console.log("AssignAgent orderDetail", orderDetail);
 
+  const AgentData = {
+    shouaib: "Shouaib Ahmed - 87222 20088",
+    ameer: "Ameer Ahmed - 87222 20099",
+    nizam: "Nizam Khan - 79752 87637",
+  };
+
   const [assignAgent, { isLoading: loadingAssignment }] =
     useAssignAgentMutation();
 
@@ -61,9 +67,9 @@ export const AssignAgent = ({ orderDetail }) => {
             required
           >
             <option value="">Select An Agent</option>
-            <option value="Shouaib Ahmed">Shouaib Ahmed</option>
-            <option value="Nizam Khan">Nizam Khan</option>
-            <option value="Ameer Ahmed">Ameer Ahmed</option>
+            <option value={AgentData.shouaib}>{AgentData.shouaib}</option>
+            <option value={AgentData.ameer}>{AgentData.ameer}</option>
+            <option value={AgentData.nizam}>{AgentData.nizam}</option>
           </select>
         </div>
 
@@ -95,4 +101,3 @@ export const AssignAgent = ({ orderDetail }) => {
     </div>
   );
 };
-

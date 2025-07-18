@@ -42,7 +42,8 @@ export const UpdateAdmin = () => {
           email,
           password,
         }).unwrap();
-        dispatch(setCredentials(res.updatedAdmin));
+        console.log("res", res);
+        dispatch(setCredentials({ admin: res.updatedAdmin }));
         toast.success(res.message);
         navigate(ROUTES.admin.dashboard);
       } catch (err) {

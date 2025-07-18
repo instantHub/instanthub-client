@@ -57,6 +57,7 @@ export const OtpGenerator = (props) => {
 
     const otpData = {
       mobileNo: phoneNumber,
+      purpose: `${selectedProduct.category.name} - ${selectedProduct.name}`,
     };
 
     const otpGenerated = await generateOTP(otpData);

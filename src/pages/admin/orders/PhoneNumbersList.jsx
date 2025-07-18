@@ -92,6 +92,10 @@ export const PhoneNumbersList = () => {
                   <b>Number: </b>
                   <span>{number.mobileNumber}</span>
                 </div>
+                <div>
+                  <b>Purpose: </b>
+                  <span>{number?.purpose}</span>
+                </div>
 
                 {/* Pin Code */}
                 <div>
