@@ -131,27 +131,6 @@ export const SideBar = () => {
       ],
     },
 
-    // SERVICES
-    {
-      title: "Services",
-      links: [
-        {
-          name: "add-services",
-          icon: <ICON.MultipleInputsIcon />,
-        },
-        {
-          name: "services-list",
-          // icon: <GoMultiSelect />,
-          icon: <ICON.ListIndefiniteIcon />,
-        },
-        {
-          name: "services-Orders",
-          // icon: <CgProfile />,
-          icon: <ICON.ListCheck2Icon />,
-        },
-      ],
-    },
-
     // Complaints
     {
       title: "Complaints",

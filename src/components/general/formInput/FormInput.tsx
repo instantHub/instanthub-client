@@ -109,11 +109,12 @@ export const FormInput = forwardRef<
 
     switch (variant) {
       case "filled":
-        return `${baseClasses} bg-gray-100 border-0 border-b-2 border-transparent focus:bg-gray-50 focus:border-blue-500 rounded-t-md`;
+        return `${baseClasses} bg-gray-100 border-0 border-b-2 border-transparent focus:bg-gray-50 focus:border-instant-mid rounded-t-md`;
       case "underlined":
-        return `${baseClasses} bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-500 rounded-none px-0`;
+        return `${baseClasses} bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-500instant-mid rounded-none px-0`;
       default: // outlined
-        return `${baseClasses} bg-white border-2 border-gray-300 focus:border-blue-500 rounded-lg`;
+        return `${baseClasses} bg-white border border-gray-300 rounded-lg placeholder-instant-mid/50 focus:outline-none focus:ring-2 focus:ring-instant-mid/50 focus:border-transparent`;
+      // return `${baseClasses} bg-white border border-gray-300 focus:border-instant-mid rounded-lg`;
     }
   };
 
@@ -256,7 +257,8 @@ export const FormInput = forwardRef<
   };
 
   return (
-    <div className={`${fullWidth ? "w-full" : ""} mb-4`}>
+    // <div className={`${fullWidth ? "w-full" : ""} mb-4`}>
+    <div className={`${fullWidth ? "w-full" : ""} mb-`}>
       {label && (
         <label className={getLabelClasses()}>
           {label}

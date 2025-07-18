@@ -40,7 +40,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   danger:
     "bg-red-600 hover:bg-red-700 active:bg-red-800 text-white border-transparent focus:ring-red-500",
   instanthub:
-    "bg-instant-mid hover:bg-instant-mid/90 active:bg-instant-mid text-white border-transparent focus:ring-instant-mid",
+    "bg-instant-mid/85 hover:bg-instant-mid active:bg-instant-mid text-white border-transparent focus:ring-instant-mid",
 };
 
 // Size styles mapping
@@ -48,14 +48,14 @@ const sizeStyles: Record<ButtonSize, string> = {
   xs: "px-2 py-1 text-xs",
   sm: "px-2 py-1 text-sm",
   md: "px-4 py-2 text-sm md:text-base",
-  lg: "px-6 py-2.5 text-base md:text-lg",
+  lg: "px-4 md:px-6 py-2.5 text-sm md:text-lg",
   xl: "px-8 py-3 text-lg md:text-xl",
 };
 
 // Base button styles
 const baseStyles = `
   inline-flex items-center justify-center
-  font-semibold rounded-lg border
+  font-semibold rounded-full border
   transition-all duration-200 ease-in-out
   focus:outline-none focus:ring-2 focus:ring-offset-2
   disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none

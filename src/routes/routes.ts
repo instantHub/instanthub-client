@@ -8,11 +8,6 @@ export const ROUTES = {
     termsConditions: "/terms-conditions",
     termsOfUse: "/terms-of-use",
 
-    // brands: "/:location/:categoryUniqueURL",
-    // products: "/:location/:categoryUniqueURL/:brandUniqueURL",
-    // productDetails:
-    //   "/:location/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
-
     category: "/:location/:categoryUniqueURL",
     brands: "/:location/:categoryUniqueURL/brands",
     products: "/:location/:categoryUniqueURL/:brandUniqueURL",
@@ -22,14 +17,10 @@ export const ROUTES = {
     productGenerateOTP: "/sell/deductions/generateOTP",
     productFinalPrice: "/sell/deductions/finalPrice",
 
-    services: "/services",
-    serviceBrands: "/:location/services/brands/:categoryUniqueURL",
-    serviceBrandProblems:
-      "/:location/services/brands/problems/:categoryUniqueURL",
-
-    serviceSubCategory: "/services/serviceSubCategory/:serviceCategoryId",
-    serviceSubProducts: "/services/serviceSubProducts/:subServiceId",
-    bookService: "/:location/services/:serviceUniqueURL",
+    services: {
+      root: "/services",
+      interior: "interior",
+    },
 
     recycleCategories: "/recycle/categories",
     recycleBrands: "/recycle/categories/brands/:categoryURL",
