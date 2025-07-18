@@ -26,7 +26,7 @@ export const UpdateAdmin = () => {
     if (admin) {
       setName(admin.name);
       setEmail(admin.email);
-      setAdminId(admin._id);
+      setAdminId(admin.id);
     }
   }, [admin]);
 
@@ -37,7 +37,7 @@ export const UpdateAdmin = () => {
     if (password === confirmPassword) {
       try {
         const res = await updateAdmin({
-          _id: adminId,
+          id: adminId,
           name,
           email,
           password,
