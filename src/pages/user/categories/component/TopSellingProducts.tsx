@@ -21,7 +21,7 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
   };
 
   const formatPrice = (price: number): string => {
-    return `₹${price.toLocaleString("en-IN")}`;
+    return `₹${price?.toLocaleString("en-IN")}`;
   };
 
   useEffect(() => {

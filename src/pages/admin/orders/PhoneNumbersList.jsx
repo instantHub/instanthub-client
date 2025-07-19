@@ -32,7 +32,7 @@ export const PhoneNumbersList = () => {
       minute: "2-digit",
       second: "2-digit",
     };
-    return istDate.toLocaleString("en-IN", options).replace(",", "");
+    return istDate?.toLocaleString("en-IN", options).replace(",", "");
   };
 
   const downloadPhoneNumbersAsXLSX = (phoneNumbers) => {
