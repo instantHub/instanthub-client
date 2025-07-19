@@ -6,3 +6,4 @@ export { useIPLocation } from "./useIPLocation";
 export { useAuthInitialize } from "./useAuthInitialize";
 export { useAuth } from "./useAuth";
 export { useSessionTimeout } from "./useSessionTimeout";
+export { SidebarContext, useSidebar } from "./useSidebar";

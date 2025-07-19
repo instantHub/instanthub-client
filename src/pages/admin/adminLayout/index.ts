@@ -1,1 +1,1 @@
-export { AdminLayout, SideBarContext } from "./AdminLayout";
+export { AdminLayout } from "./AdminLayout";

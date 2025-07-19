@@ -59,9 +59,6 @@ export function lazyLoadNamed<T extends ComponentType<any>>(
 export const router = Router([
   {
     path: ROUTES.user.root,
-    // errorElement: (
-    //   <ErrorComponent message={`Sorry please try after sometime..!`} />
-    // ),
     element: <USER.Layout />, // Google Analytics is used here
     children: [
       {
@@ -225,27 +222,18 @@ export const router = Router([
   },
   {
     path: ROUTES.admin.login,
-    // element: <ADMIN.SignIn />,
     element: (
       // <ADMIN_COMPONENTS.ProtectedRoute>
       <ADMIN.SignIn />
       // </ADMIN_COMPONENTS.ProtectedRoute>
     ),
   },
-  // {
-  //   path: ROUTES.admin.signUp,
-  //   element: <ADMIN.AdminRegisterForm />, // Undo for new admin registration
-  //   // element: <Navigate to={ROUTES.admin.login} replace />,
-  // },
   {
     path: "",
     // element: <ADMIN_COMPONENTS.PrivateRoute />,
     children: [
       {
         path: ROUTES.admin.root,
-        // element: <Admin />,
-        // element: <ADMIN.AdminLayout />,
-
         element: (
           <ADMIN_COMPONENTS.ProtectedRoute>
             <ADMIN.AdminLayout />
