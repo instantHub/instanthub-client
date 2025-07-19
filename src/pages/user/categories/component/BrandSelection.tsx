@@ -30,7 +30,7 @@ export const BrandSelection: FC<IBrandSelection> = memo(({ category }) => {
       </div>
 
       <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-4">
-        {category?.brands.slice(0, 4).map((brand) => (
+        {category?.brands?.slice(0, 4).map((brand) => (
           <BrandCard
             key={brand.id}
             brand={brand}

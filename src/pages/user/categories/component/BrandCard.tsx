@@ -9,7 +9,6 @@ interface IBrandCard {
 }
 export const BrandCard: FC<IBrandCard> = memo(
   ({ brand, selectedBrand, handleBrandSelect }) => {
-    
     return (
       <div
         onClick={() => handleBrandSelect(brand.id)}
@@ -22,7 +21,7 @@ export const BrandCard: FC<IBrandCard> = memo(
         <Link to={`${brand.uniqueURL}`}>
           <div className="flex flex-col items-center justify-center cursor-pointer w-full h-full bg-white p-2 sm:p-4 sm:min-w-full rounded-0 rounded-xl sm:ring-0 sm:ring-transparent sm:shadow sm:max-h-56 sm:max-w-44 hover:shadow-xl transition ease-in-out duration-500">
             <img
-              src={`${import.meta.env.VITE_APP_BASE_URL}${brand.image}`}
+              src={`${import.meta.env.VITE_APP_BASE_URL}${brand?.image}`}
               alt="Product"
               className="w-[45px] h-[45px]"
               loading="lazy"

@@ -17,7 +17,7 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
 
   const handleSellNow = (product: any): void => {
     console.log("product", product);
-    navigate(`${product.brand.uniqueURL}/${product.uniqueURL}`);
+    navigate(`${product?.brand?.uniqueURL}/${product?.uniqueURL}`);
   };
 
   const formatPrice = (price: number): string => {
@@ -73,19 +73,19 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
                       <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center text-xl sm:text-2xl">
                         <img
                           src={`${import.meta.env.VITE_APP_BASE_URL}${
-                            product.image
+                            product?.image
                           }`}
-                          alt={product.name}
+                          alt={product?.name}
                           className="h-[95%]"
                         />
                       </div>
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="text-sm sm:text-base font-medium text-gray-900 truncate">
-                        {product.name}
+                        {product?.name}
                       </h3>
                       <FlexBox gap={1} justify="start">
-                        {product.category.categoryType.multiVariants &&
+                        {product?.category?.categoryType?.multiVariants &&
                           product.variants.map(({ name }) => (
                             <p
                               key={name}
@@ -102,7 +102,7 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
                   <div className="col-span-3 sm:col-span-2 text-center">
                     <div className="text-xs text-gray-500 mb-1">Get Upto</div>
                     <div className="text-lg sm:text-xl font-bold text-red-500">
-                      {formatPrice(product.variants[0].price)}
+                      {formatPrice(product?.variants[0].price)}
                     </div>
                   </div>
 
@@ -136,19 +136,19 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
                     <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center text-2xl">
                       <img
                         src={`${import.meta.env.VITE_APP_BASE_URL}${
-                          product.image
+                          product?.image
                         }`}
-                        alt={product.name}
+                        alt={product?.name}
                         className="h-[95%]"
                       />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-base font-medium text-gray-900">
-                      {product.name}
+                      {product?.name}
                     </h3>
                     <FlexBox gap={1} justify="start">
-                      {product.category.categoryType.multiVariants &&
+                      {product?.category?.categoryType?.multiVariants &&
                         product.variants.map(({ name }) => (
                           <p
                             key={name}
@@ -162,7 +162,7 @@ export const TopSellingProducts: FC<ITopSellingProductsProps> = ({
                       <div>
                         <div className="text-xs text-gray-500">Get Upto</div>
                         <div className="text-sm font-bold text-red-500">
-                          {formatPrice(product.variants[0].price)}
+                          {formatPrice(product?.variants[0].price)}
                         </div>
                       </div>
                       <button

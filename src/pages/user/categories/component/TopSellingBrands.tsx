@@ -51,7 +51,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
     console.log(`Navigating to: ${brand.uniqueURL}`);
     // Here you would typically handle navigation
     // e.g., router.push(brand.uniqueURL) or window.location.href = brand.uniqueURL
-    navigate(`${brand.uniqueURL}`);
+    navigate(`${brand?.uniqueURL}`);
   };
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
                   {/* Brand Image */}
                   <FlexBox className="mb-1 sm:mb-2 overflow-hidden ">
                     <img
-                      src={`${import.meta.env.VITE_APP_BASE_URL}${brand.image}`}
+                      src={`${import.meta.env.VITE_APP_BASE_URL}${brand?.image}`}
                       alt={brand.name}
                       className="w-[55px] sm:w-[75px] h-[55px] sm:h-[75px] group-hover:scale-105 transition-transform duration-300"
                       // className="w-[70px] h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -136,7 +136,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
                       {brand.name}
                     </h3> */}
                     <p className="text-[11px] sm:text-xs text-gray-500 mb-2">
-                      Explore {brand.name} products
+                      Explore {brand?.name} products
                     </p>
 
                     {/* CTA Button */}
@@ -156,7 +156,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
 
         {/* Scroll Indicator Dots */}
         <div className="flex justify-center mt-8 space-x-2">
-          {Array.from({ length: Math.ceil(displayBrands.length / 3) }).map(
+          {Array.from({ length: Math.ceil(displayBrands?.length / 3) }).map(
             (_, index) => (
               <div
                 key={index}
