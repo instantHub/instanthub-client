@@ -6,6 +6,7 @@ import {
   IAdminLogoutRequest,
   IValidateTokenResponse,
 } from "./types";
+import { ADMIN_API_TAG } from "./constant";
 
 // const ADMIN_URL = "http://localhost:8000/api";
 const ADMIN_URL = "/api";
@@ -18,6 +19,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: [ADMIN_API_TAG],
     }),
     login: builder.mutation<IAdminLoginResponse, IAdminLoginCredentials>({
       query: (data) => ({
@@ -46,6 +48,10 @@ export const authApi = baseApi.injectEndpoints({
       query: () => `${ADMIN_URL}/verify-session`,
     }),
 
+    getAdmins: builder.query<IAdminResponse[], void>({
+      query: () => `${ADMIN_URL}/admins`,
+      providesTags: [ADMIN_API_TAG],
+    }),
     adminProfile: builder.query<IAdminResponse, void>({
       query: () => ({
         url: `${ADMIN_URL}/admin-profile`,
@@ -53,11 +59,19 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     updateAdmin: builder.mutation({
-      query: (data) => ({
-        url: `${ADMIN_URL}/update-admin`,
+      query: ({ id, data }) => ({
+        url: `${ADMIN_URL}/${id}`,
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: [ADMIN_API_TAG],
+    }),
+    deleteAdmin: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `${ADMIN_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [ADMIN_API_TAG],
     }),
     adminLogout: builder.mutation<void, IAdminLogoutRequest>({
       query: ({ admin }) => ({
@@ -76,6 +90,8 @@ export const {
   useUpdateAdminMutation,
   useAdminLogoutMutation,
 
+  useGetAdminsQuery,
+  useDeleteAdminMutation,
   useValidateTokenQuery,
   useRefreshTokenMutation,
   useVerifySessionQuery,

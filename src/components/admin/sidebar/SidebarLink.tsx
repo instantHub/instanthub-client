@@ -1,6 +1,6 @@
 // components/admin/SidebarLink.tsx
 import { NavLink } from "react-router-dom";
-import { SidebarLink as SidebarLinkType } from "@types";
+import { SidebarLink as SidebarLinkType } from "@utils/types";
 import { useSidebar } from "@hooks";
 
 interface SidebarLinkProps {

@@ -1,4 +1,4 @@
-export * from "./adminLayout";
+export * from "./layout";
 export * from "./auth";
 export * from "./categories";
 export * from "./brands";
@@ -12,3 +12,4 @@ export * from "./series";
 export * from "./sliders";
 export * from "./variantQuestions";
 export * from "./testimonials";
+export * from "./adminChannel";

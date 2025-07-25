@@ -10,6 +10,4 @@ export * from "./sidebar";
 export { Table } from "./Table";
 export { UpdateAdmin } from "./UpdateAdmin";
 
-export { RoleGuard } from "./RoleGuard";
-export { ProtectedRoute } from "./ProtectedRoute";
-export { SessionTimeout } from "./SessionTimeout";
+export * from "./auth";

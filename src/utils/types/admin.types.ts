@@ -16,14 +16,29 @@ export const ADMIN_ROLES: Record<string, TAdminRole> = {
 export const ADMIN_PERMISSIONS = {
   // User Management
   GENERAL_READ: "general:read",
+
   CREATE: "create",
   UPDATE: "update",
   DELETE: "delete",
 
+  // CATEGORY_READ: "category:read",
+  // CATEGORY_CREATE: "category:update",
+  // CATEGORY_UPDATE: "category:update",
+  // CATEGORY_DELETE: "category:delete",
+
+  // BRAND_READ: "brand:read",
+  // BRAND_CREATE: "brand:update",
+  // BRAND_UPDATE: "brand:update",
+  // BRAND_DELETE: "brand:delete",
+
+  // PRODUCT_READ: "product:read",
+  // PRODUCT_CREATE: "product:update",
+  // PRODUCT_UPDATE: "product:update",
+  // PRODUCT_DELETE: "product:delete",
+
   ORDERS_READ: "order:read",
-  ORDERS_CREATE: "order:read",
-  ORDERS_UPDATE: "order:read",
-  ORDERS_DELETE: "order:read",
+  ORDERS_UPDATE: "order:update",
+  ORDERS_DELETE: "order:delete",
 
   // Analytics
   ANALYTICS_READ: "analytics:read",
@@ -42,6 +57,9 @@ export const ADMIN_PERMISSIONS = {
   // System Settings
   SETTINGS_READ: "settings:read",
   SETTINGS_UPDATE: "settings:update",
+
+  // Admin Channel
+  ADMIN_CHANNEL: "admin-channel",
 } as const;
 
 export const ROLE_PERMISSIONS = {
@@ -64,6 +82,7 @@ export const ROLE_PERMISSIONS = {
     ADMIN_PERMISSIONS.PARTNERS_READ,
     ADMIN_PERMISSIONS.ANALYTICS_READ,
   ],
+  none: [],
 } as const;
 
-export const SESSION_TIMEOUT = 15 * 60 * 1000; // 15 minutes
+// export const SESSION_TIMEOUT = 15 * 60 * 1000; // 15 minutes

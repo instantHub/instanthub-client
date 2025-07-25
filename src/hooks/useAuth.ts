@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { ADMIN_ROLES, TPermissionAction } from "@types";
+import { ADMIN_ROLES, TPermissionAction } from "@utils/types";
 import { useEffect } from "react";
 import { useValidateTokenQuery } from "@features/api";
 import { setCredentials } from "@features/adminSlices/adminAuthSlice";

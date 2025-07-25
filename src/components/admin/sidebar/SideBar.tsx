@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
-import { useSidebar } from "@hooks";
+import { useAuth, useSidebar } from "@hooks";
 import { CloseIcon } from "@icons";
 import { SidebarSection } from "./SidebarSection";
 import { sidebarSections } from "./sidebar.config";
+import { ROLE_PERMISSIONS } from "@utils/types";
 
 interface SidebarProps {
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  isCollapsed = false,
-  onToggleCollapse,
-}) => {
+export const Sidebar: React.FC<SidebarProps> = () => {
   const { isSidebarOpen, closeSidebar } = useSidebar();
+  const { adminData, isAdmin, isExecutive, isMarketing, isPartner } = useAuth();
+
+  const adminPermissions = ROLE_PERMISSIONS[adminData?.admin.role || "none"];
 
   return (
     <>
@@ -42,8 +43,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="w-8 h-8 bg-instant-mid rounded-lg flex items-center justify-center">
               <span className="text-sm font-bold">IH</span>
             </div>
-            <span>Instant Hub</span>
+            {/* <span>Instant Hub</span> */}
           </Link>
+
+          {/* User Role Badge */}
+          {adminData && (
+            <div className="px-4 py-2 border-b border-gray-800">
+              <span
+                className={`inline-block px-2 py-1 text-xs font-medium rounded-md ${
+                  isAdmin()
+                    ? "bg-red-600 text-white"
+                    : isExecutive()
+                    ? "bg-blue-600 text-white"
+                    : isMarketing()
+                    ? "bg-green-600 text-white"
+                    : isPartner()
+                    ? "bg-yellow-600 text-black"
+                    : "bg-gray-600 text-white"
+                }`}
+              >
+                {adminData?.admin.role?.toUpperCase()}
+              </span>
+            </div>
+          )}
 
           {/* Close button */}
           <button
@@ -62,6 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={section.title}
               section={section}
               isCollapsed={false}
+              adminPermissions={adminPermissions}
             />
           ))}
         </div>

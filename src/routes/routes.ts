@@ -32,6 +32,7 @@ export const ROUTES = {
   },
   admin: {
     root: "/admin",
+    accessDenied: "/admin/access-denied",
     login: "/admin/login",
     signIn: "/admin/signin",
     signUp: "/admin/signup",

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FC } from "react";
-import { IServiceData } from "@types";
+import { IServiceData } from "@utils/types";
 
 export interface IServiceGridProps {
   service: IServiceData;
