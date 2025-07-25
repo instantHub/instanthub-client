@@ -1,4 +1,4 @@
-import { IServiceImageCarouselItem } from "@types";
+import { IServiceImageCarouselItem } from "@utils/types";
 
 export const personalisedData: IServiceImageCarouselItem[] = [
   {

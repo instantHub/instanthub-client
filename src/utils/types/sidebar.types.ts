@@ -4,12 +4,14 @@ export interface SidebarLink {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string | number;
+  permissions?: string[];
 }
 
 export interface SidebarSection {
   title: string;
   links: SidebarLink[];
   show?: boolean;
+  permissions?: string[];
 }
 
 export interface SidebarContextType {

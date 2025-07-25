@@ -1,20 +1,15 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useRegisterMutation } from "@api";
-import { setCredentials } from "@features/adminSlices/adminAuthSlice";
 import { toast } from "react-toastify";
-import { ROUTES } from "@routes";
+import { TAdminRole } from "@utils/types";
 
-const roles = ["admin", "executive", "marketing", "partner"];
-const department = ["admin", "executive", "marketing", "partner"];
+const roles: TAdminRole[] = ["admin", "executive", "marketing", "partner"];
 
 export const AdminRegisterForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    department: "",
     role: "admin",
   });
 
@@ -35,7 +30,6 @@ export const AdminRegisterForm = () => {
         name: "",
         email: "",
         password: "",
-        department: "",
         role: "admin",
       });
     } catch (err: any) {
@@ -75,28 +69,7 @@ export const AdminRegisterForm = () => {
           required
           className="w-full border p-2 rounded"
         />
-        {/* <input
-          type="text"
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
-          placeholder="Department"
-          required
-          className="w-full border p-2 rounded"
-        /> */}
-        <select
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        >
-          <option value="">Select A Department</option>
-          {department.map((dep) => (
-            <option key={dep} value={dep}>
-              {dep.charAt(0).toUpperCase() + dep.slice(1)}
-            </option>
-          ))}
-        </select>
+
         <select
           name="role"
           value={formData.role}

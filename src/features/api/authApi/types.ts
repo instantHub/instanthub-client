@@ -1,4 +1,4 @@
-import { IPermissions, TAdminRole } from "@types";
+import { IPermissions, TAdminRole } from "@utils/types";
 
 export interface IAdminResponse {
   _id: string;

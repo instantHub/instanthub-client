@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ImageCarousel } from "./ImageCarousel";
 import { ArrowRightIcon } from "@icons";
-import { IServiceImageCarouselItem } from "@types";
+import { IServiceImageCarouselItem } from "@utils/types";
 
 export interface RoomSectionProps {
   title: string;

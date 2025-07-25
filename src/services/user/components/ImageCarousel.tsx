@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@icons";
-import { IServiceImageCarouselItem } from "@types";
+import { IServiceImageCarouselItem } from "@utils/types";
 
 export interface IImageCarouselProps {
   items: IServiceImageCarouselItem[];

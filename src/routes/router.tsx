@@ -21,6 +21,7 @@ import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
 import { ROUTES } from "./routes";
 import { ACRepair } from "@pages/user/marketing-service";
+import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -222,11 +223,7 @@ export const router = Router([
   },
   {
     path: ROUTES.admin.login,
-    element: (
-      // <ADMIN_COMPONENTS.ProtectedRoute>
-      <ADMIN.SignIn />
-      // </ADMIN_COMPONENTS.ProtectedRoute>
-    ),
+    element: <ADMIN.SignIn />,
   },
   {
     path: "",
@@ -253,16 +250,35 @@ export const router = Router([
           },
           {
             path: "admin-channel",
-            element: <ADMIN.AdminRegisterForm />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.AdminListPage />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+            // element: <ADMIN.AdminRegisterForm />,
           },
 
           {
             path: ROUTES.admin.updateProfile,
-            element: <ADMIN_COMPONENTS.UpdateAdmin />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN_COMPONENTS.UpdateAdmin />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.createProduct,
-            element: <ADMIN.CreateProduct />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.CreateProduct />
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.productsList,
@@ -276,11 +292,16 @@ export const router = Router([
           },
           {
             path: ROUTES.admin.updateProduct,
-            element: <ADMIN.UpdateProduct />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateProduct />
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.productQuestions,
-            // element: <AdminProductQuestions />,
             element: createElement(
               lazyLoad(
                 () => import("@pages/admin/products/ProductQuestionsList")
@@ -299,7 +320,13 @@ export const router = Router([
           },
           {
             path: ROUTES.admin.updateCategory,
-            element: <ADMIN.UpdateCategory />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateCategory />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Brands
@@ -313,103 +340,259 @@ export const router = Router([
           },
           {
             path: ROUTES.admin.updateBrand,
-            element: <ADMIN.UpdateBrand />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateBrand />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Series
           {
             path: ROUTES.admin.createSeries,
-            element: <ADMIN.CreateSeries />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.CreateSeries />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.updateSeries,
-            element: <ADMIN.UpdateSeries />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateSeries />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Conditions
           {
             path: ROUTES.admin.createQuestions,
-            element: <ADMIN.CreateQuestions />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.CreateQuestions />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.conditionsList,
-            element: <ADMIN.ConditionsList />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.ConditionsList />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.updateCondition,
-            element: <ADMIN.UpdateCondition />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateCondition />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.conditionLabelsList,
-            element: <ADMIN.ConditionLabelsList />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.ConditionLabelsList />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.updateConditionLabel,
-            element: <ADMIN.UpdateConditionLabel />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateConditionLabel />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Slider
           {
             path: ROUTES.admin.createSlider,
-            element: <ADMIN.CreateSlider />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.CreateSlider />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.updateSlider,
-            element: <ADMIN.UpdateSlider />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.UpdateSlider />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Orders
           {
             path: ROUTES.admin.ordersList,
-            element: <ADMIN.OrdersList />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                ]}
+              >
+                <ADMIN.OrdersList />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.orderDetail,
-            element: <ADMIN.OrderDetail />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                ]}
+              >
+                <ADMIN.OrderDetail />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.manageStock,
-            element: <ADMIN.ManageStocks />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                ]}
+              >
+                <ADMIN.ManageStocks />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.phoneNumbers,
-            element: <ADMIN.PhoneNumbersList />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.PhoneNumbersList />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.createCoupon,
-            element: <ADMIN.CreateCoupon />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.CreateCoupon />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Recycle Orders
           {
             path: ROUTES.admin.recycleOrdersList,
-            element: <AdminRecycleOrdersList />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                ]}
+              >
+                <AdminRecycleOrdersList />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.recycleOrderDetail,
-            element: <AdminRecycleOrderDetail />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                ]}
+              >
+                <AdminRecycleOrderDetail />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Testimonials
           {
             path: ROUTES.admin.testimonial,
-            element: <ADMIN.TestimonialList />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.TestimonialList />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // VARIANTS QUESTIONS
           {
             path: ROUTES.admin.variantsQuestions,
-            element: <ADMIN.CreateVariantsQuestions />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.CreateVariantsQuestions />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
           {
             path: ROUTES.admin.updateVariantQuestions,
-            element: <ADMIN.UpdateVariantQuestions />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.UpdateVariantQuestions />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
 
           // Complaints
           {
             path: ROUTES.admin.complaintsList,
-            element: <ADMIN.Complaints />,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.Complaints />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
           },
         ],
       },

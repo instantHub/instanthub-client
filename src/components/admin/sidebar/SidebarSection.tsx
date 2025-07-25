@@ -1,16 +1,26 @@
-import { SidebarSection as SidebarSectionType } from "@types";
+import {
+  ADMIN_PERMISSIONS,
+  SidebarSection as SidebarSectionType,
+} from "@utils/types";
 import { SidebarLink } from "./SidebarLink";
 
 interface SidebarSectionProps {
   section: SidebarSectionType;
   isCollapsed: boolean;
+  adminPermissions: readonly string[];
 }
 
 export const SidebarSection: React.FC<SidebarSectionProps> = ({
   section,
   isCollapsed,
+  adminPermissions,
 }) => {
   if (section.show === false) return null;
+
+  const visibleLinks = section.links.filter((link) => {
+    if (!link.permissions) return true;
+    return link.permissions.some((perm) => adminPermissions.includes(perm));
+  });
 
   return (
     <div className="mb-6">
@@ -20,7 +30,8 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
         </h3>
       )}
       <nav className="space-y-1">
-        {section.links.map((link) => (
+        {/* {section.links.map((link) => ( */}
+        {visibleLinks.map((link) => (
           <SidebarLink key={link.name} link={link} isCollapsed={isCollapsed} />
         ))}
       </nav>

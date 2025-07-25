@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Navbar, Sidebar } from "@components/admin";
 import { SidebarContext } from "@hooks";
-import { SidebarContextType } from "@types";
+import { SidebarContextType } from "@utils/types";
 import { Outlet } from "react-router-dom";
 
 export const AdminLayout: FC = () => {

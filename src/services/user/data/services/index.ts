@@ -1,4 +1,4 @@
-import { IServiceData } from "@types";
+import { IServiceData } from "@utils/types";
 
 export const serviceData: Record<string, IServiceData> = {
   interior: {
