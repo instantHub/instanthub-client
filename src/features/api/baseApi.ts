@@ -10,6 +10,11 @@ import { CATEGORY_API_TAG } from "./categoriesApi/constants";
 import { TESTIMONIAL_API_TAG } from "./testimonialsApi/constant";
 import { ORDER_DETAIL_API_TAG, ORDERS_API_TAG } from "./ordersApi/constants";
 import { ADMIN_API_TAG } from "./authApi/constant";
+import {
+  SERVICE_BRAND_API_TAG,
+  SERVICE_CATEGORY_API_TAG,
+  SERVICE_PROBLEM_API_TAG,
+} from "./servicesApi/constants";
 
 // Typed baseQuery using fetchBaseQuery
 const baseQuery = fetchBaseQuery({
@@ -74,6 +79,9 @@ export const baseApi = createApi({
     "Complaints",
     "Processors",
     TESTIMONIAL_API_TAG,
+    SERVICE_CATEGORY_API_TAG,
+    SERVICE_BRAND_API_TAG,
+    SERVICE_PROBLEM_API_TAG,
   ],
   endpoints: () => ({}),
 });

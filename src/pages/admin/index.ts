@@ -13,3 +13,4 @@ export * from "./sliders";
 export * from "./variantQuestions";
 export * from "./testimonials";
 export * from "./adminChannel";
+export * from "./icons";

@@ -20,6 +20,8 @@ export const ROUTES = {
     services: {
       root: "/services",
       interior: "interior",
+      laptop: "laptop-service",
+      mobile: "mobile-service",
     },
 
     recycleCategories: "/recycle/categories",
@@ -78,9 +80,8 @@ export const ROUTES = {
 
     createCoupon: "/admin/add-coupons",
 
-    createService: "/admin/add-services",
-    servicesList: "/admin/services-list",
-    serviceOrdersList: "/admin/services-orders",
+    manageServices: "/admin/manage-services",
+    serviceOrders: "/admin/service-orders",
     serviceOrderDetail: "/admin/serviceOrder-detail/:serviceOrderId",
 
     recycleOrdersList: "/admin/recycle-orders",
@@ -94,5 +95,7 @@ export const ROUTES = {
 
     createPost: "/admin/create-post",
     complaintsList: "/admin/complaints",
+
+    iconsList: "/admin/icons",
   },
 };

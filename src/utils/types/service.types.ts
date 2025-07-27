@@ -1,8 +1,10 @@
+import { FC, ReactNode } from "react";
+
 export interface IServiceData {
-  id: number;
+  _id: number;
   name: string;
-  path: string;
-  description: string;
+  uniqueURL: string;
+  description?: string;
   image: string;
 }
 
@@ -13,4 +15,10 @@ export interface IServiceImageCarouselItem {
   description?: string;
   price?: string;
   features?: string[];
+}
+
+export interface IWhyChooseItems {
+  icon: ReactNode;
+  title: string;
+  description: string;
 }

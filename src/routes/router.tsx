@@ -15,6 +15,7 @@ import * as ADMIN from "@pages/admin";
 import * as ADMIN_COMPONENTS from "@components/admin";
 
 import * as SERVICES from "@services/user";
+import * as SERVICES_ADMIN from "@services/admin";
 
 import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
@@ -167,6 +168,14 @@ export const router = Router([
             path: ROUTES.user.services.interior,
             element: <SERVICES.InteriorService />,
           },
+          {
+            path: ROUTES.user.services.mobile,
+            element: <SERVICES.Mobile />,
+          },
+          {
+            path: ROUTES.user.services.laptop,
+            element: <SERVICES.Laptop />,
+          },
         ],
       },
 
@@ -255,6 +264,17 @@ export const router = Router([
                 allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
               >
                 <ADMIN.AdminListPage />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+            // element: <ADMIN.AdminRegisterForm />,
+          },
+          {
+            path: ROUTES.admin.iconsList,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <ADMIN.IconsGrid />,
               </ADMIN_COMPONENTS.RoleGuard>
             ),
             // element: <ADMIN.AdminRegisterForm />,
@@ -591,6 +611,28 @@ export const router = Router([
                 ]}
               >
                 <ADMIN.Complaints />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+          },
+
+          // Services
+          {
+            path: ROUTES.admin.manageServices,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <SERVICES_ADMIN.ManageServices />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+          },
+          {
+            path: ROUTES.admin.serviceOrders,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
+              >
+                <SERVICES_ADMIN.ServiceOrders />,
               </ADMIN_COMPONENTS.RoleGuard>
             ),
           },

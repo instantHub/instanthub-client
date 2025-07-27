@@ -3,9 +3,12 @@ import { Helmet } from "react-helmet-async";
 import ServiceContent from "@components/user/static/services/ServiceContent";
 import { Loading } from "@components/user";
 import { serviceData } from "../../data";
-import { ServiceItemGrid } from "@services/user";
+import { ServiceCategoryItem, ServiceItemGrid } from "@services/user";
+import { useGetServiceCategoriesQuery } from "@features/api";
 
 export const Services = () => {
+  const { data: serviceCategories, isLoading } = useGetServiceCategoriesQuery();
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -55,6 +58,9 @@ export const Services = () => {
 
           <div className="grid grid-cols-6 gap-x-2 gap-y-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 w-full mx-auto items-center justify-center text-center relative">
             <ServiceItemGrid service={serviceData.interior} showTitle />
+            {serviceCategories?.map((category) => {
+              return <ServiceCategoryItem service={category} showTitle />;
+            })}
           </div>
         </div>
 

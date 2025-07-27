@@ -85,4 +85,32 @@ export const ROLE_PERMISSIONS = {
   none: [],
 } as const;
 
+// 🔐 Extract permission string type from values
+// export type TAdminPermission =
+//   (typeof ADMIN_PERMISSIONS)[keyof typeof ADMIN_PERMISSIONS];
+
+// // 🟢 Role permissions mapping
+// export const ROLE_PERMISSIONS: Record<TAdminRole, readonly TAdminPermission[]> =
+//   {
+//     admin: Object.values(ADMIN_PERMISSIONS),
+//     executive: [
+//       ADMIN_PERMISSIONS.GENERAL_READ,
+//       ADMIN_PERMISSIONS.ANALYTICS_READ,
+//       ADMIN_PERMISSIONS.CAMPAIGNS_READ,
+//       ADMIN_PERMISSIONS.PARTNERS_READ,
+//       ADMIN_PERMISSIONS.ORDERS_READ,
+//       ADMIN_PERMISSIONS.ORDERS_UPDATE,
+//     ],
+//     marketing: [
+//       ADMIN_PERMISSIONS.CAMPAIGNS_READ,
+//       ADMIN_PERMISSIONS.CAMPAIGNS_CREATE,
+//       ADMIN_PERMISSIONS.CAMPAIGNS_UPDATE,
+//       ADMIN_PERMISSIONS.ANALYTICS_READ,
+//     ],
+//     partner: [
+//       ADMIN_PERMISSIONS.PARTNERS_READ,
+//       ADMIN_PERMISSIONS.ANALYTICS_READ,
+//     ],
+//   };
+
 // export const SESSION_TIMEOUT = 15 * 60 * 1000; // 15 minutes
