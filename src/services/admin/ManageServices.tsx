@@ -6,11 +6,12 @@ import {
 import { ServiceCategoryManagement } from "./components/ServiceCategoryManagement";
 import { Button, FlexBox } from "@components/general";
 
-const TABS = ["Categories", "Brands", "Problems"] as const;
+// const TABS = ["Categories", "Brands", "Problems"] as const;
+const TABS = ["Brands", "Problems"] as const;
 type TTab = (typeof TABS)[number];
 
 export const ManageServices: FC = () => {
-  const [activeTab, setActiveTab] = useState<TTab>("Categories");
+  const [activeTab, setActiveTab] = useState<TTab>("Brands");
 
   return (
     <div className="p-4 max-w-6xl mx-auto space-y-8">
@@ -29,7 +30,7 @@ export const ManageServices: FC = () => {
       </FlexBox>
 
       <div className="space-y-8">
-        {activeTab === "Categories" && <ServiceCategoryManagement />}
+        {/* {activeTab === "Categories" && <ServiceCategoryManagement />} */}
 
         {activeTab === "Brands" && <ServiceBrandsManagement />}
 

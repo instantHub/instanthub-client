@@ -145,7 +145,9 @@ export const ServiceProblemManagement: FC = () => {
           />
         </div>
 
-        <Button type="submit">Add Problem</Button>
+        <Button variant="greenary" type="submit">
+          Add Problem
+        </Button>
       </form>
 
       <div className="border p-4 rounded shadow space-y-4">

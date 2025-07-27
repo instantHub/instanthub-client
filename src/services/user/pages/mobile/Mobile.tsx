@@ -8,6 +8,9 @@ import {
 import { useLocation } from "react-router-dom";
 import { ElectronicServiceWrapper } from "@services/user/components";
 import { whyChooseUsMobileData } from "@services/user/data/electronics";
+import { Accordion } from "@components/user";
+import { MOBILE_FAQs } from "@services/user/data";
+import { FlexBox } from "@components/general";
 
 export const Mobile: FC = () => {
   const location = useLocation();
@@ -39,7 +42,11 @@ export const Mobile: FC = () => {
         isLoadingBrands={isLoadingBrands}
         isLoadingProblems={isLoadingProblems}
         whyChooseUsData={whyChooseUsMobileData}
-      />
+      >
+        <FlexBox direction="col" gap={5}>
+          <Accordion faqs={MOBILE_FAQs} />
+        </FlexBox>
+      </ElectronicServiceWrapper>
     </>
   );
 };

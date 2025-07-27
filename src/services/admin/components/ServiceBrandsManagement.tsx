@@ -150,7 +150,9 @@ export const ServiceBrandsManagement: FC = () => {
           />
         </div>
 
-        <Button type="submit">Add Brand</Button>
+        <Button variant="greenary" type="submit">
+          Add Brand
+        </Button>
       </form>
 
       <div className="border p-4 rounded shadow space-y-4">

@@ -8,6 +8,9 @@ import {
 import { useLocation } from "react-router-dom";
 import { ElectronicServiceWrapper } from "@services/user/components";
 import { whyChooseLaptopData } from "@services/user/data/electronics";
+import { FlexBox } from "@components/general";
+import { LAPTOP_FAQs } from "@services/user/data";
+import { Accordion } from "@components/user";
 
 export const Laptop: FC = () => {
   const location = useLocation();
@@ -39,7 +42,9 @@ export const Laptop: FC = () => {
       isLoadingProblems={isLoadingProblems}
       whyChooseUsData={whyChooseLaptopData}
     >
-      {/* <h1>Coming from laptop</h1> */}
+      <FlexBox direction="col" gap={5}>
+        <Accordion faqs={LAPTOP_FAQs} />
+      </FlexBox>
     </ElectronicServiceWrapper>
   );
 };
