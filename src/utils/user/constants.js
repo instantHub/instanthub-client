@@ -3,9 +3,17 @@ const ORDER_EMAIL_MSG =
 
 const MOBILE = "Mobile";
 const LAPTOP = "Laptop";
+const DESKTOP = "Desktop";
 
 const LAPTOP_DESKTOP = ["laptop", "desktop"];
 
 const MAX_LABEL_LENGTH = 20;
 
-export { ORDER_EMAIL_MSG, MOBILE, LAPTOP, LAPTOP_DESKTOP, MAX_LABEL_LENGTH };
+export {
+  ORDER_EMAIL_MSG,
+  MOBILE,
+  LAPTOP,
+  LAPTOP_DESKTOP,
+  MAX_LABEL_LENGTH,
+  DESKTOP,
+};
