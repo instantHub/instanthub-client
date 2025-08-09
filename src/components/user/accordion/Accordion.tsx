@@ -5,9 +5,13 @@ import { Button } from "@components/general";
 
 interface AccordionProps {
   faqs: IFAQItem[];
+  bgColor?: string;
 }
 
-export const Accordion: React.FC<AccordionProps> = ({ faqs }) => {
+export const Accordion: React.FC<AccordionProps> = ({
+  faqs,
+  bgColor = "bg-instant-mid/10 hover:bg-instant-mid/25",
+}) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState<boolean>(false);
 
@@ -27,7 +31,7 @@ export const Accordion: React.FC<AccordionProps> = ({ faqs }) => {
           <div key={index} className="border-t-2 border-b-2  overflow-hidden">
             <button
               onClick={() => toggle(index)}
-              className="flex items-center justify-between w-full px-4 py-3 bg-instant-mid/10 hover:bg-instant-mid/25 transition text-left"
+              className={`flex items-center justify-between w-full px-4 py-3 transition text-left ${bgColor}`}
             >
               <span className="text-sm font-medium text-gray-800">
                 {faq.question}

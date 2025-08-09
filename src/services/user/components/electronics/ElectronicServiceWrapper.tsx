@@ -722,6 +722,7 @@ export const ElectronicServiceWrapper: FC<ElectronicServiceWrapperProps> = ({
               onChange={handleChange}
               required
             />
+            {/* @ts-ignore */}
             <DateAndTime setSchedule={setDateAndTime} />
             <Button type="submit" variant="instanthub" fullWidth>
               Confirm Order

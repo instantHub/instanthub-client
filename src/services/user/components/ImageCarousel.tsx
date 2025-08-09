@@ -69,7 +69,7 @@ export const ImageCarousel: FC<IImageCarouselProps> = ({
           {visibleItems.map((item) => (
             <div
               key={item.id}
-              className="flex-1 min-w-0 rounded-xl shadow-md overflow-hidden"
+              className="flex-1 min-w-0 max-w-[500px] rounded-xl shadow-md overflow-hidden"
             >
               <img
                 src={item.image}

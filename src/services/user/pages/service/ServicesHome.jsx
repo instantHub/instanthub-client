@@ -27,7 +27,7 @@ export const ServicesHome = () => {
         {/* Ensuring Layout Stability */}
         <div
           className="grid grid-cols-6 gap-x-2 gap-y-5 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-3 w-full mx-auto items-center justify-center text-center relative"
-          style={{ minHeight: "200px" }} // Prevent layout shift
+          // style={{ minHeight: "200px" }} // TODO: Uncomment this when services are available, Prevent layout shift
         ></div>
       </div>
     </>

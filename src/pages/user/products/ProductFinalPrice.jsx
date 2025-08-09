@@ -22,7 +22,7 @@ import {
   NON_DEAD_LAPTOP_PRICE,
   NON_DEAD_MOBILE_PRICE,
 } from "../recycle/constants";
-import { Button } from "@components/general";
+import { Button, Typography } from "@components/general";
 import { useIPLocation } from "@hooks";
 
 // Create the Context
@@ -290,7 +290,12 @@ export const ProductFinalPrice = () => {
           Back
         </Link> */}
 
-        <Button variant="outline" size="md" onClick={handleBack} className="w-fit">
+        <Button
+          variant="outline"
+          size="md"
+          onClick={handleBack}
+          className="w-fit"
+        >
           Back
         </Button>
 
@@ -457,6 +462,14 @@ const ProductPricingContainer = ({
         >
           Total
         </PricingDetail>
+
+        <Typography
+          variant="h6"
+          align="center"
+          className="bg-yellow-300 text-red-500 px-2 py-1"
+        >
+          Final price will be quoted after full inspection!
+        </Typography>
 
         <div className="w-full flex justify-center">
           {!state.recycleProduct ? (

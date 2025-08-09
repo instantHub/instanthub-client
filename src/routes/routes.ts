@@ -19,6 +19,9 @@ export const ROUTES = {
 
     services: {
       root: "/services",
+      acRepair: "ac-repair",
+      catering: "catering",
+      carpentry: "carpentry",
       interior: "interior",
       laptop: "laptop-service",
       mobile: "mobile-service",
@@ -29,8 +32,6 @@ export const ROUTES = {
     recycleProducts: "/recycle/categories/brands/products/:brandURL",
     recycleProductDetails:
       "/recycle/categories/brands/products/productDetails/:productURL",
-
-    acRepair: "services/ac-repair",
   },
   admin: {
     root: "/admin",

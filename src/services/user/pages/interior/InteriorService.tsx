@@ -1,11 +1,12 @@
 import { FC, useState } from "react";
-import { RoomSection, ImageCarousel } from "@services/user";
-import { Testimonials, WhatYouGet, WhyChooseUs } from "./components";
+import { RoomSection, ImageCarousel, TestimonialSlider } from "@services/user";
+import { WhatYouGet, WhyChooseUs } from "./components";
 import {
   bedroomData,
   kitchenData,
   livingRoomItems,
   personalisedData,
+  interiorTestimonials,
 } from "@services/user/data";
 import { Button, Modal } from "@components/general";
 import { InteriorConsultationForm } from "./components";
@@ -138,7 +139,13 @@ export const InteriorService: FC = () => {
 
         <WhatYouGet style="bg-instant-mid/10" openModal={openModal} />
 
-        <Testimonials style="bg-white" openModal={openModal} />
+        <TestimonialSlider data={interiorTestimonials}>
+          <div className="flex justify-center mt-8">
+            <Button className="*:p-2" variant="instanthub" onClick={openModal}>
+              Book A Free Consultation
+            </Button>
+          </div>
+        </TestimonialSlider>
       </div>
 
       <Modal

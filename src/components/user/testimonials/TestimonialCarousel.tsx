@@ -1,6 +1,5 @@
 import { FlexBox, Typography } from "@components/general";
 import { useGetPublicTestimonialsQuery } from "@features/api";
-import { ITestimonial } from "@features/api/testimonialsApi/types";
 import { ArrowLeftIcon, ArrowRightIcon, AstroIcon, SlidesIcon } from "@icons";
 import { useState, useEffect, FC } from "react";
 

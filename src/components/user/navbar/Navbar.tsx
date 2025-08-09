@@ -122,7 +122,7 @@ export const Navbar = () => {
         )}
       </nav>
 
-      <header className="w-full mx-auto">
+      <header className="max-sm:hidden w-full mx-auto ">
         <NavMenu activePath={activePath} />
 
         {!isServicePages && <NavCategoriesList />}

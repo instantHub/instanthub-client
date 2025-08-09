@@ -66,8 +66,8 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
 
   return (
     // <div className="w-full bg-secondary-light/50 rounded-none sm:rounded-xl py-8 sm:py-12">
-    <div className="w-full bg-instant-mid/10 rounded-none sm:rounded-xl py-8 sm:py-12">
-      <div className="max-w-[400px] sm:max-w-6xl md:max-w-3xl lg:max-w-6xl mx-aut px-2 sm:px-4 sm:mx-0">
+    <div className="w-full max-w-6xl bg-instant-mid/10 rounded-none sm:rounded-xl py-8 sm:py-12">
+      <div className="max-w-[410px] mx-auto sm:max-w-6xl md:max-w-3xl lg:max-w-6xl mx-aut px-2 sm:px-4 sm:mx-0">
         {/* Header */}
         <div className="text-center mb-2 sm:mb-5">
           <Typography variant="h2">Top Selling Brands</Typography>
@@ -97,7 +97,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
           <button
             onClick={scrollRight}
             disabled={!canScrollRight}
-            className={`absolute -right-2 sm:-right-16 top-1/2 -translate-y-1/2 z-10 p-1 sm:p-3 rounded-full shadow-lg transition-all duration-200 ${
+            className={`absolute -right-4 sm:-right-16 top-1/2 -translate-y-1/2 z-10 p-1 sm:p-3 rounded-full shadow-lg transition-all duration-200 ${
               canScrollRight
                 ? "bg-white hover:bg-gray-50 text-gray-800 hover:shadow-xl"
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -110,7 +110,7 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
           {/* Scrollable Container */}
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto scrollbar-hide gap-2 sm:gap-4 px-8 sm:px-12 py-2 sm:py-4"
+            className="flex overflow-x-auto scrollbar-hide gap-2 sm:gap-4 px-3 sm:px-12 py-2 sm:py-4"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {displayBrands.map((brand) => (
@@ -123,7 +123,9 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
                   {/* Brand Image */}
                   <FlexBox className="mb-1 sm:mb-2 overflow-hidden ">
                     <img
-                      src={`${import.meta.env.VITE_APP_BASE_URL}${brand?.image}`}
+                      src={`${import.meta.env.VITE_APP_BASE_URL}${
+                        brand?.image
+                      }`}
                       alt={brand.name}
                       className="w-[55px] sm:w-[75px] h-[55px] sm:h-[75px] group-hover:scale-105 transition-transform duration-300"
                       // className="w-[70px] h-full object-cover group-hover:scale-105 transition-transform duration-300"

@@ -165,6 +165,19 @@ export const router = Router([
             element: <SERVICES.Services />,
           },
           {
+            path: ROUTES.user.services.acRepair,
+            element: <SERVICES.ACRepair />,
+            // element: <ACRepair />,
+          },
+          {
+            path: ROUTES.user.services.catering,
+            element: <SERVICES.Catering />,
+          },
+          {
+            path: ROUTES.user.services.carpentry,
+            element: <SERVICES.Carpentry />,
+          },
+          {
             path: ROUTES.user.services.interior,
             element: <SERVICES.InteriorService />,
           },
@@ -221,12 +234,6 @@ export const router = Router([
           />
         ),
         element: <USER.RecycleProductDetail />,
-      },
-
-      // NEW SERVICES
-      {
-        path: ROUTES.user.acRepair,
-        element: <ACRepair />,
       },
     ],
   },

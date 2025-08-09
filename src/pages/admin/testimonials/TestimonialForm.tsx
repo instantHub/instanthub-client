@@ -5,9 +5,6 @@ import {
 } from "@features/api";
 import { ITestimonial } from "@features/api/testimonialsApi/types";
 import { AlertCircle, AstroIcon, CloseIcon, PlusIcon } from "@icons";
-// import { X, Star, Upload, Save, AlertCircle } from 'lucide-react';
-// import { Testimonial, TestimonialFormData } from '../types/testimonial';
-// import { testimonialAPI } from '../services/testimonialApi';
 
 interface TestimonialFormProps {
   testimonial?: ITestimonial;

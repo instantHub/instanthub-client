@@ -21,7 +21,7 @@ export const Breadcrumbs = () => {
   };
 
   return (
-    <nav className="w-full mx-0 mb-6 text-[16px] breadcrumbs ">
+    <div className="w-full mx-0 mb-6 text-[16px] breadcrumbs max-sm:px-4">
       <div className="flex items-center gap-1 max-sm:gap-[2px] text-[16px] max-sm:text-xs opacity-60">
         <Link to="/">Home</Link>
         {paths.map((segment, index) => {
@@ -44,6 +44,6 @@ export const Breadcrumbs = () => {
         })}
       </div>
       <hr className="my-2" />
-    </nav>
+    </div>
   );
 };

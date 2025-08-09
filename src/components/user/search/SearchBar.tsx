@@ -264,7 +264,7 @@ export const SearchBar: FC = () => {
   const navigate = useNavigate();
   const productListRef = useRef<HTMLDivElement | null>(null);
 
-  const debounce = (func: (...args: any[]) => void, delay = 500) => {
+  const debounce = (func: (...args: any[]) => void, delay = 200) => {
     let timer: number | undefined;
     return (...args: any[]) => {
       clearTimeout(timer);
@@ -284,21 +284,26 @@ export const SearchBar: FC = () => {
         limit: 10,
       };
 
-      const [productRes, serviceRes] = await Promise.all([
-        axios.get<ProductResponse>(
-          `${import.meta.env.VITE_APP_BASE_URL}/api/products`,
-          { params }
-        ),
-        axios.get<ServiceResponse>(
-          `${import.meta.env.VITE_APP_BASE_URL}/api/services/search`,
-          { params }
-        ),
-      ]);
+      const productRes = await axios.get<ProductResponse>(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/products`,
+        { params }
+      );
+
+      // const [productRes, serviceRes] = await Promise.all([
+      //   axios.get<ProductResponse>(
+      //     `${import.meta.env.VITE_APP_BASE_URL}/api/products`,
+      //     { params }
+      //   ),
+      //   axios.get<ServiceResponse>(
+      //     `${import.meta.env.VITE_APP_BASE_URL}/api/services/search`,
+      //     { params }
+      //   ),
+      // ]);
 
       setProductsData(productRes.data);
-      setServicesData(
-        productRes.data.totalProducts === 0 ? serviceRes.data : null
-      );
+      // setServicesData(
+      //   productRes.data.totalProducts === 0 ? serviceRes.data : null
+      // );
     } catch (error) {
       console.error("Search error:", error);
     } finally {
