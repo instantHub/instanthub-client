@@ -12,12 +12,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)\\.php$",
-      "status": 404,
-      "dest": "/404"
-    }
   ]
 }
