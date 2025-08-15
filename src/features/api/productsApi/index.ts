@@ -21,7 +21,7 @@ export const productsApi = baseApi.injectEndpoints({
       providesTags: ["Products"],
     }),
     getProducts: build.query<
-      Omit<IProductResponse, "simpleDeductions" | "variantDeductions">[],
+      Omit<IProductResponse[], "simpleDeductions" | "variantDeductions">[],
       IGetProductsByBrandParams
     >({
       query: ({ brandUniqueURL, search }) => ({
@@ -98,7 +98,9 @@ export const productsApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllProductsQuery,
+  useLazyGetAllProductsQuery,
   useGetProductsQuery,
+  useLazyGetProductsQuery,
   useGetProductDetailsQuery,
   useGetProductQuestionsQuery,
   useCreateProductMutation,

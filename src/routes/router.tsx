@@ -486,6 +486,7 @@ export const router = Router([
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
+                  ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.OrdersList />,
@@ -609,7 +610,7 @@ export const router = Router([
 
           // Complaints
           {
-            path: ROUTES.admin.complaintsList,
+            path: ROUTES.admin.marketing.complaintsList,
             element: (
               <ADMIN_COMPONENTS.RoleGuard
                 allowedRoles={[
@@ -618,6 +619,34 @@ export const router = Router([
                 ]}
               >
                 <ADMIN.Complaints />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+          },
+
+          // SEO
+          {
+            path: ROUTES.admin.marketing.seo,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.MetaTags />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+          },
+          {
+            path: ROUTES.admin.marketing.metaTagList,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <ADMIN.MetaTagsList />,
               </ADMIN_COMPONENTS.RoleGuard>
             ),
           },

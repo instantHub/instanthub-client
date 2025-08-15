@@ -1,4 +1,4 @@
-export const ROUTES = {
+export const ROUTES_CONST = {
   user: {
     root: "/",
     about: "/about",
@@ -96,7 +96,6 @@ export const ROUTES = {
 
     marketing: {
       seo: "/admin/seo",
-      metaTagList: "/admin/meta-tags-list",
       createPost: "/admin/create-post",
       complaintsList: "/admin/complaints",
     },

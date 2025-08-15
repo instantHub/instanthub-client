@@ -1,22 +1,18 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-
 import { Categories } from "../categories";
-import { HowItWorks, Slider } from "@components/user";
+import { Accordion, GuideHome, Slider } from "@components/user";
 import WhyUs from "@components/user/static/home/WhyUs";
-import FAQ from "@components/user/static/FAQ";
-import { ServicesHome } from "@services/user";
-import { useIPLocation } from "@hooks";
+import { useIPLocation, useScrollToTop } from "@hooks";
 import { TestimonialCarousel } from "@components/user";
+import { SELL_FAQ_DATA, sellProcessStepsData } from "src/data";
+import { MobileStepper, VerticalTimeline } from "@components/general";
 
 export const Home = () => {
+  useScrollToTop();
   const { location } = useIPLocation();
 
   console.log("location", location);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
 
   return (
     <>
@@ -45,13 +41,44 @@ export const Home = () => {
       <div className="flex flex-col gap-10 max-sm:gap-5 w-full mt-5">
         <Slider />
         <Categories />
-        <div className="mt-10 pt-5 pb-16 bg-instant-mid/10">
+
+        {/* <div className="mt-10 pt-5 pb-16 bg-instant-mid/10">
           <ServicesHome />
-        </div>
-        <HowItWorks />
+        </div> */}
+        {/* <HowItWorks /> */}
+
         <TestimonialCarousel />
+
         <WhyUs />
-        <FAQ from="home" />
+
+        <VerticalTimeline
+          steps={sellProcessStepsData}
+          completedSteps={[1, 2, 3, 4]}
+          title={`Our Simple ${sellProcessStepsData.length}-Step Process`}
+          subtitle="We've streamlined our process to get your gadgets sold fast."
+          primaryColor="bg-gradient-to-br from-instant-end/30 via-instant-mid/50 to-instant-start/30"
+          backgroundColor="bg-gradient-to-br from-instant-start/10 via-instant-mid/10 to-instant-end/10"
+          className="max-sm:hidden"
+        />
+
+        <MobileStepper
+          steps={sellProcessStepsData}
+          completedSteps={[1, 2, 3, 4]}
+          title={`Our Simple ${sellProcessStepsData.length}-Step Process`}
+          subtitle="We've streamlined our process to get your gadgets sold fast."
+          circleColor="bg-gradient-to-br from-instant-end/70 via-instant-mid/70 to-instant-start/70"
+          backgroundColor="bg-gradient-to-br from-instant-start/10 via-instant-mid/10 to-instant-end/10"
+          className="sm:hidden"
+        />
+
+        <Accordion
+          faqs={SELL_FAQ_DATA}
+          bgColor="bg-white"
+          descBGColor="bg-instant-mid/10"
+          borderTop={1}
+        />
+
+        <GuideHome />
       </div>
       {/* </div> */}
     </>

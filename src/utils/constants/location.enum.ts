@@ -1,0 +1,17 @@
+export enum LOCATIONS {
+  BENGALURU = "bengaluru",
+  MUMBAI = "mumbai",
+  DELHI = "delhi",
+  CHENNAI = "chennai",
+  KOLKATA = "kolkata",
+  HYDERABAD = "hyderabad",
+  PUNE = "pune",
+  AHMEDABAD = "ahmedabad",
+  CHANDIGARH = "chandigarh",
+  JAIPUR = "jaipur",
+  COIMBATORE = "coimbatore",
+  KOCHI = "kochi",
+  VISAKHAPATNAM = "visakhapatnam",
+  LUCKNOW = "lucknow",
+  INDORE = "indore",
+}

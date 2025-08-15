@@ -2,6 +2,7 @@ import { FlexBox, Typography } from "@components/general";
 import { GoogleMap } from "@components/user/map";
 import { memo } from "react";
 import { Link } from "react-router-dom";
+import { FooterSellLinks } from "./FooterSellLinks";
 
 interface IFooterLinksProps {
   setOpenComplaintBox: (val: boolean) => void;
@@ -14,16 +15,15 @@ export const FooterLinks = memo(
 
     return (
       <div className="w-full flex max-sm:flex-col justify-evenly gap-6 sm:gap-4">
+        {/* Quick Links Section */}
+        <FooterSellLinks />
+
         {/* Company Section */}
-        <FlexBox direction="col" align="start">
-          <Typography variant="h5" className="py-2">
+        <FlexBox direction="col" align="start" justify="start">
+          <Typography variant="h4" className="py-2">
             Company
           </Typography>
-          <FlexBox
-            direction="col"
-            align="start"
-            className="font-thin space-y-2"
-          >
+          <FlexBox direction="col" align="start" className="text-gray-700">
             <Link to="/about" className={listItemStyle}>
               About Us
             </Link>
@@ -41,15 +41,11 @@ export const FooterLinks = memo(
         <hr className="sm:hidden bg-gray-300 h-[2px] w-full absolut" />
 
         {/* Support Section */}
-        <FlexBox direction="col" align="start">
-          <Typography variant="h5" className="py-2">
+        <FlexBox direction="col" align="start" justify="start">
+          <Typography variant="h4" className="py-2">
             Support
           </Typography>
-          <FlexBox
-            direction="col"
-            align="start"
-            className="font-thin space-y-2"
-          >
+          <FlexBox direction="col" align="start" className="text-gray-700">
             <span className={listItemStyle}>FAQ</span>
             <Link to="/contact-us" className={listItemStyle}>
               Contact Us

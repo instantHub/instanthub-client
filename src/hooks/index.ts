@@ -7,3 +7,4 @@ export { useAuthInitialize } from "./useAuthInitialize";
 export { useAuth } from "./useAuth";
 export { useSessionTimeout } from "./useSessionTimeout";
 export { SidebarContext, useSidebar } from "./useSidebar";
+export { useScrollToTop } from "./useScrollToTop";

@@ -11,7 +11,8 @@ export interface ICategoryResponse {
   // Add SEO fields
   metaTitle: string;
   metaDescription: string;
-  metaKeywords: string;
+  metaKeywords: Array<string>;
+  canonicalUrl: string;
 }
 
 export interface ICategoryType {

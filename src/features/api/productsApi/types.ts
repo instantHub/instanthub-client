@@ -14,6 +14,10 @@ export interface IProductResponse {
   simpleDeductions: IConditions[] | [];
   variantDeductions: IVariantDeductions[] | [];
   variants: IVariants[];
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: Array<string>;
+  canonicalUrl: string;
 }
 
 export interface IVariants {
