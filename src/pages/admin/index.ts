@@ -14,3 +14,4 @@ export * from "./variantQuestions";
 export * from "./testimonials";
 export * from "./adminChannel";
 export * from "./icons";
+export * from "./seo";

@@ -7,6 +7,7 @@ export * from "./errors";
 export * from "./testimonials";
 export * from "./info";
 export * from "./accordion";
+export * from "./guide";
 
 export { ErrorComponent } from "./ErrorComponent";
 export { ComplaintBox } from "./ComplaintBox";

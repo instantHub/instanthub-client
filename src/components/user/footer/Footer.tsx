@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { ComplaintBox } from "../ComplaintBox";
 import { FlexBox, Typography } from "@components/general";
-import { FooterLinks, SocialLinks } from "./components";
+import { FooterLinks, FooterSellLinks, SocialLinks } from "./components";
 
 export const Footer: FC = () => {
   const [openComplaintBox, setOpenComplaintBox] = useState<boolean>(false);

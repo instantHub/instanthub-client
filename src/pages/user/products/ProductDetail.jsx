@@ -63,7 +63,7 @@ export const ProductDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${name} ${category?.name} | InstantHub`}</title>
+        {/* <title>{`Sell Old ${name} ${category?.name} | InstantHub`}</title>
         <meta
           name="description"
           content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
@@ -71,7 +71,15 @@ export const ProductDetail = () => {
         <link
           rel="canonical"
           href={`https://www.instanthub.in/${location?.city}/${category?.uniqueURL}/${brand?.uniqueURL}/${productUniqueURL}`}
+        /> */}
+
+        <title>{productDetails?.metaTitle || productDetails?.name}</title>
+        <meta name="description" content={productDetails?.metaDescription} />
+        <meta
+          name="keywords"
+          content={productDetails?.metaKeywords.join(", ")}
         />
+        <link rel="canonical" href={productDetails?.canonicalUrl} />
       </Helmet>
 
       <div className="w-[80%] mx-auto my-5 max-md:w-[90%] max-sm:my-5">

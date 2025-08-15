@@ -22,9 +22,11 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
     return link.permissions.some((perm) => adminPermissions.includes(perm));
   });
 
+  const hasVisibleLinks: boolean = visibleLinks.length > 0;
+
   return (
     <div className="mb-6">
-      {!isCollapsed && (
+      {!isCollapsed && hasVisibleLinks && (
         <h3 className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
           {section.title}
         </h3>

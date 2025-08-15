@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { slugify } from "@utils/general";
+import { LOCATIONS } from "@utils/constants";
 
 interface ILocation {
   city: string;
@@ -32,7 +33,7 @@ export const useIPLocation = (): IIPLocationReturnType => {
         );
         const data = await res.json();
 
-        const city = slugify(data.city || "bangalore");
+        const city = slugify(data.city || LOCATIONS.BENGALURU);
 
         const region = slugify(data.region || "karnataka");
 

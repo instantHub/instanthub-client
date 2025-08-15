@@ -7,7 +7,7 @@ import {
   TestimonialSlider,
 } from "@components/user";
 import { useGetCategoryQuery } from "@features/api";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BrandSelection, HeroSection, TopSellingProducts } from "./component";
 import { ICategoryResponse } from "@features/api/categoriesApi/types";
@@ -39,6 +39,10 @@ export const Category = () => {
     setSearchTerm((e.target as HTMLInputElement).value);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (error && "status" in error && error.status === 404)
     return <PageNotFound />;
 
@@ -62,13 +66,8 @@ export const Category = () => {
       <Helmet>
         <title>{category?.metaTitle || category?.name}</title>
         <meta name="description" content={category?.metaDescription} />
-        <meta name="keywords" content={category?.metaKeywords} />
-
-        {/* Canonical Tag */}
-        <link
-          rel="canonical"
-          href={`https://instanthub.in/${location.city}/${category?.uniqueURL}`}
-        />
+        <meta name="keywords" content={category?.metaKeywords.join(", ")} />
+        <link rel="canonical" href={category?.canonicalUrl} />
 
         {/* Structured Data */}
         <script type="application/ld+json">

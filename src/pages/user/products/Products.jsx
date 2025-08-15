@@ -97,7 +97,7 @@ export const Products = () => {
   return (
     <>
       <Helmet>
-        <title>{`Sell Old ${brand?.name} ${category?.name} | InstantHub`}</title>
+        {/* <title>{`Sell Old ${brand?.name} ${category?.name} | InstantHub`}</title>
 
         <meta
           name="description"
@@ -112,7 +112,12 @@ export const Products = () => {
         <link
           rel="canonical"
           href={`https://www.instanthub.in/${location.city}/${categoryUniqueURL}/${brandUniqueURL}`}
-        />
+        /> */}
+
+        <title>{brand?.metaTitle || brand?.name}</title>
+        <meta name="description" content={brand?.metaDescription} />
+        <meta name="keywords" content={brand?.metaKeywords.join(", ")} />
+        <link rel="canonical" href={brand?.canonicalUrl} />
       </Helmet>
 
       {/* Series */}

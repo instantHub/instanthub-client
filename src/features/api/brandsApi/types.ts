@@ -8,6 +8,10 @@ export interface IBrandResponse {
   series: Array<Object>;
   products: Array<string>;
   category: ICategoryResponse;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: Array<string>;
+  canonicalUrl: string;
 }
 
 export type IBrandLite = Pick<

@@ -6,11 +6,15 @@ import { Button } from "@components/general";
 interface AccordionProps {
   faqs: IFAQItem[];
   bgColor?: string;
+  descBGColor?: string;
+  borderTop?: number;
 }
 
 export const Accordion: React.FC<AccordionProps> = ({
   faqs,
   bgColor = "bg-instant-mid/10 hover:bg-instant-mid/25",
+  descBGColor = "bg-white",
+  borderTop = 2,
 }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState<boolean>(false);
@@ -23,17 +27,20 @@ export const Accordion: React.FC<AccordionProps> = ({
 
   return (
     <div className="w-full max-w-screen-lg mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4 text-center">
+      <h2 className="text-xl sm:text-3xl font-bold mb-4 text-cente">
         Frequently Asked Questions
       </h2>
       <div className="space-y-5">
         {visibleFaqs.map((faq, index) => (
-          <div key={index} className="border-t-2 border-b-2  overflow-hidden">
+          <div
+            key={index}
+            className={`border-t-${borderTop} border-b  overflow-hidden`}
+          >
             <button
               onClick={() => toggle(index)}
               className={`flex items-center justify-between w-full px-4 py-3 transition text-left ${bgColor}`}
             >
-              <span className="text-sm font-medium text-gray-800">
+              <span className="text-sm font-bold text-gray-800">
                 {faq.question}
               </span>
               {openIndex === index ? (
@@ -43,7 +50,10 @@ export const Accordion: React.FC<AccordionProps> = ({
               )}
             </button>
             {openIndex === index && (
-              <div className="px-4 py-3 text-sm text-gray-700 bg-white">
+              <div
+                className={`px-4 py-3 text-sm text-gray-700 ${descBGColor}`}
+                // style={{ backgroundColor: descBGColor }}
+              >
                 {faq.answer}
               </div>
             )}

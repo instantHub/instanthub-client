@@ -20,6 +20,7 @@ import {
   ROLE_PERMISSIONS,
   SidebarSection,
 } from "@utils/types";
+import { ROUTES_CONST } from "@utils/types/routes.types";
 
 export const sidebarSections: SidebarSection[] = [
   {
@@ -29,7 +30,10 @@ export const sidebarSections: SidebarSection[] = [
         name: "dashboard",
         href: "/admin/dashboard",
         icon: DashboardIcon,
-        permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
+        permissions: [
+          ADMIN_PERMISSIONS.GENERAL_READ,
+          ADMIN_PERMISSIONS.CAMPAIGNS_READ,
+        ],
       },
     ],
     permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
@@ -180,13 +184,19 @@ export const sidebarSections: SidebarSection[] = [
       },
       {
         name: "add-coupons",
-        href: "/admin/add-coupons",
+        href: ROUTES_CONST.admin.createCoupon,
         icon: SlidesIcon,
         permissions: [ADMIN_PERMISSIONS.CAMPAIGNS_CREATE],
       },
       {
+        name: "SEO",
+        href: ROUTES_CONST.admin.marketing.seo,
+        icon: DatabricksIcon,
+        permissions: [ADMIN_PERMISSIONS.CAMPAIGNS_CREATE],
+      },
+      {
         name: "create-post",
-        href: "/admin/create-post",
+        href: ROUTES_CONST.admin.marketing.createPost,
         icon: JediOrderIcon,
         permissions: [ADMIN_PERMISSIONS.CAMPAIGNS_CREATE],
       },
