@@ -124,7 +124,7 @@ export const sidebarSections: SidebarSection[] = [
         name: "phone-numbers",
         href: "/admin/phone-numbers",
         icon: NumbersIcon,
-        permissions: [ADMIN_PERMISSIONS.ORDERS_READ],
+        permissions: [ADMIN_PERMISSIONS.NUMBERS_READ],
       },
       {
         name: "recycle-orders",

@@ -49,6 +49,8 @@ export const ADMIN_PERMISSIONS = {
   CAMPAIGNS_UPDATE: "campaigns:update",
   CAMPAIGNS_DELETE: "campaigns:delete",
 
+  NUMBERS_READ: "product:read",
+
   // Partner Management
   PARTNERS_READ: "partners:read",
   PARTNERS_CREATE: "partners:create",
@@ -62,6 +64,7 @@ export const ADMIN_PERMISSIONS = {
   ADMIN_CHANNEL: "admin-channel",
 } as const;
 
+/* Adding role inside this hides and displays sidebar option and makes routers to deny access for the perticular role */
 export const ROLE_PERMISSIONS = {
   [ADMIN_ROLES.ADMIN]: Object.values(ADMIN_PERMISSIONS),
   [ADMIN_ROLES.EXECUTIVE]: [
@@ -71,6 +74,7 @@ export const ROLE_PERMISSIONS = {
     ADMIN_PERMISSIONS.PARTNERS_READ,
     ADMIN_PERMISSIONS.ORDERS_READ,
     ADMIN_PERMISSIONS.ORDERS_UPDATE,
+    ADMIN_PERMISSIONS.NUMBERS_READ,
   ],
   [ADMIN_ROLES.MARKETING]: [
     ADMIN_PERMISSIONS.CAMPAIGNS_READ,
