@@ -1,3 +1,4 @@
+import { Typography } from "@components/general";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -72,7 +73,7 @@ export const BlogCarousel = () => {
             >
               <div className="bg-white rounded-2xl overflow-hidden hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
                 {/* Card Header */}
-                <div className="bg-gradient-to-br from-instant-mid to-instant-end p-8 text-white relative overflow-hidden">
+                <div className="bg-gradient-to-br from-instant-mid to-instant-end p-4 sm:p-8 text-white relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
                   <div className="absolute bottom-0 left-0 w-24 h-24 bg-white opacity-10 rounded-full -ml-12 -mb-12"></div>
 
@@ -84,20 +85,23 @@ export const BlogCarousel = () => {
                       <div className="text-4xl">{post.image}</div>
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
+                    <Typography variant="h2" className="mb-3 leading-tight">
                       {post.title}
-                    </h3>
+                    </Typography>
 
-                    <p className="text-lg opacity-90 leading-relaxed">
+                    <Typography
+                      variant="h5"
+                      className="opacity-90 leading-relaxed"
+                    >
                       {post.excerpt}
-                    </p>
+                    </Typography>
                   </div>
                 </div>
 
                 {/* Card Body */}
                 <div className="p-8">
                   <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 max-sm:text-xs">
                       <div className="flex items-center gap-1">
                         <ProfileIcon className="w-4 h-4" />
                         {post.author}
