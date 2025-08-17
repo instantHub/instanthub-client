@@ -97,6 +97,14 @@ export const router = Router([
         element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
       {
+        path: "/blogs",
+        element: <USER.BlogSystem />,
+      },
+      {
+        path: "/blogs/:id",
+        element: <USER.SelectedBlog />,
+      },
+      {
         path: ROUTES.user.category,
         element: <USER.Category />,
       },
@@ -525,7 +533,7 @@ export const router = Router([
               <ADMIN_COMPONENTS.RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
-                  ADMIN_ROLE_ENUM.MARKETING,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <ADMIN.PhoneNumbersList />,

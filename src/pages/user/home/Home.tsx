@@ -7,12 +7,14 @@ import { useIPLocation, useScrollToTop } from "@hooks";
 import { TestimonialCarousel } from "@components/user";
 import { SELL_FAQ_DATA, sellProcessStepsData } from "src/data";
 import { MobileStepper, VerticalTimeline } from "@components/general";
+import { TopSellings } from "./topSellings";
+import { BlogSystem } from "../blogs";
 
 export const Home = () => {
   useScrollToTop();
   const { location } = useIPLocation();
 
-  console.log("location", location);
+  // console.log("location", location);
 
   return (
     <>
@@ -47,6 +49,8 @@ export const Home = () => {
         </div> */}
         {/* <HowItWorks /> */}
 
+        <TopSellings />
+
         <TestimonialCarousel />
 
         <WhyUs />
@@ -77,6 +81,8 @@ export const Home = () => {
           descBGColor="bg-instant-mid/10"
           borderTop={1}
         />
+
+        <BlogSystem />
 
         <GuideHome />
       </div>

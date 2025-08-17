@@ -377,7 +377,7 @@ const ProductQuestionsList = () => {
           {productData && multiVariants && (
             <form onSubmit={handleSubmit}>
               {productData &&
-                selectedDeductions.deductions.map((condition, index) => (
+                selectedDeductions?.deductions?.map((condition, index) => (
                   <div
                     key={condition.id}
                     className={`border my-4 max-sm:my-2 rounded `}
@@ -390,7 +390,7 @@ const ProductQuestionsList = () => {
                     <hr />
                     <div className="flex flex-col py-2">
                       {condition.conditionLabels &&
-                        condition.conditionLabels.map(
+                        condition?.conditionLabels?.map(
                           (conditionLabel, index) => (
                             <div
                               key={conditionLabel.id}
@@ -603,7 +603,7 @@ const ProductQuestionsList = () => {
                   >
                     <option value="">Select Processor</option>
 
-                    {processorsList.map((processor, i) => (
+                    {processorsList?.map((processor, i) => (
                       <option value={processor.conditionLabelId} key={i}>
                         {processor.conditionLabel}
                       </option>
@@ -614,7 +614,7 @@ const ProductQuestionsList = () => {
 
               {/* Show Current Laptop Configuration */}
               {toggle.showSystemConfiguration &&
-                selectedDeductions.map((condition, index) => (
+                selectedDeductions?.map((condition, index) => (
                   <div
                     key={condition.id}
                     className={`w-1/2 max-sm:w-full mx-auto mb-10 border my-2 py- px- rounded ${
@@ -630,7 +630,7 @@ const ProductQuestionsList = () => {
 
                     <div className="flex px-4 py-2 flex-col ">
                       {condition.conditionLabels &&
-                        condition.conditionLabels.map(
+                        condition.conditionLabels?.map(
                           (conditionLabel, index) => (
                             <div
                               key={index + condition.page}
@@ -659,7 +659,7 @@ const ProductQuestionsList = () => {
                                       : "bg-blue-200 px-4"
                                   } text-black font-bold py-1 rounded`}
                                 >
-                                  {conditionLabel.operation}
+                                  {conditionLabel?.operation}
                                 </h3>
                               </div>
                             </div>
@@ -719,7 +719,7 @@ const ProductQuestionsList = () => {
               <h3 className="text-center text-xl">Simple Deductions List</h3>
               <form onSubmit={handleSubmit}>
                 {productData &&
-                  selectedDeductions.map((condition, index) => (
+                  selectedDeductions?.map((condition, index) => (
                     <div
                       key={index}
                       className={`mb-10 border my-2 py- px- rounded ${
@@ -734,7 +734,7 @@ const ProductQuestionsList = () => {
                       <hr />
                       <div className="flex px-4 py-2 flex-col">
                         {condition.conditionLabels &&
-                          condition.conditionLabels.map(
+                          condition.conditionLabels?.map(
                             (conditionLabel, index) => (
                               <div
                                 key={index}
@@ -743,7 +743,7 @@ const ProductQuestionsList = () => {
                                 <div>
                                   <div>
                                     <h3 className="text-sm">
-                                      {conditionLabel.conditionLabel}
+                                      {conditionLabel?.conditionLabel}
                                     </h3>
                                   </div>
 
@@ -769,7 +769,7 @@ const ProductQuestionsList = () => {
                                   </div>
                                 </div>
 
-                                {conditionLabel.conditionLabelImg && (
+                                {conditionLabel?.conditionLabelImg && (
                                   <div>
                                     <img
                                       src={
