@@ -25,3 +25,4 @@ export { SearchBar } from "./search";
 export { Slider } from "./Slider";
 export { Footer } from "./footer";
 export { BillBoardAds } from "./BillBoardAds";
+export { NoDataBlock } from "./NoDataBlock";

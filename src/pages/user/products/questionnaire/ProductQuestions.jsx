@@ -11,7 +11,7 @@ import ProdDeductionsRight from "./ProdQuestionsRight";
 import LaptopsQuestions from "./LaptopsQuestions";
 import { OtpGenerator } from "@pages/user";
 import { Helmet } from "react-helmet-async";
-import { Loading, ProgressBar } from "@components/user";
+import { Loading, NoDataBlock, ProgressBar } from "@components/user";
 import NextPrevButton from "./NextPrevButton";
 import { groupConditionsByPage } from "@utils/user/helper";
 import DisplayCondition from "./DisplayCondition";
@@ -149,6 +149,8 @@ export const ProductQuestions = () => {
   /* If the product if switched off */
   if (aboutDevice.isDeviceChecked && !aboutDevice.isDeviceOn)
     return <SwitchedOff productsData={productsData} />;
+
+  if (!sortedConditions.length) return <NoDataBlock />;
 
   console.log("deductions", deductions);
   console.log("sortedConditions ProductQuestions", sortedConditions);
@@ -295,60 +297,3 @@ const DeviceCheck = ({ productsData, setAboutDevice }) => {
     </div>
   );
 };
-
-// Important and Needed
-{
-  // // if no deduction questions found
-  // if (productsData?.category?.name === "Mobile") {
-  //   // const { category } = productsData;
-  //   if (productsData?.variantDeductions.length < 1) {
-  //     return (
-  //       <h2 className="my-[10%] mx-auto text-center">
-  //         No Questions Available Yet for Category{" "}
-  //         <b>{productsData.category.name}</b>
-  //       </h2>
-  //     );
-  //   }
-  // } else if (productsData?.category?.name !== "Mobile") {
-  //   // const { category } = productsData;
-  //   if (productsData?.simpleDeductions.length < 1) {
-  //     return (
-  //       <h2 className="my-[10%] mx-auto text-center">
-  //         No Questions Available Yet for Category{" "}
-  //         <b>{productsData.category.name}</b>
-  //       </h2>
-  //     );
-  //   }
-  // }
-}
-
-// getConditionSubTitle
-{
-  // function getConditionSubTitle(conditionName) {
-  //   const subTitleMap = {
-  //     functional:
-  //       "Please choose appropriate condition to get an accurate quote",
-  //     accessories: (
-  //       <>
-  //         <span className="block text-lg max-sm:text-sm">
-  //           Do you have the following?
-  //         </span>
-  //         <span className="text-sm max-sm:text-xs font-medium text-gray-600">
-  //           Please select accessories which are available
-  //         </span>
-  //       </>
-  //     ),
-  //     age: "Let us know how old your device is. Valid bill is needed for devices less than 3 years.",
-  //     "screen condition":
-  //       "The better condition your device is in, the more we will pay you.",
-  //     defect: "Please provide correct details",
-  //     "physical condition": "Please provide correct details",
-  //   };
-  //   for (const [condition, subTitle] of Object.entries(subTitleMap)) {
-  //     if (conditionName.toLowerCase().includes(condition)) {
-  //       return subTitle;
-  //     }
-  //   }
-  //   return null;
-  // }
-}
