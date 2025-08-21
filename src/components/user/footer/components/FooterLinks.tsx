@@ -3,6 +3,7 @@ import { GoogleMap } from "@components/user/map";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { FooterSellLinks } from "./FooterSellLinks";
+import { EMAILS, LOCATIONS } from "@utils/constants";
 
 interface IFooterLinksProps {
   setOpenComplaintBox: (val: boolean) => void;
@@ -29,12 +30,19 @@ export const FooterLinks = memo(
             </Link>
             <div className={listItemStyle}>
               <p>We also accept Bulk Orders</p>
-              <span className="text-xs">(Contact Us)</span>
+              <span className="text-xs">
+                (Contact Us @ <strong>{EMAILS.SUPPORT}</strong>)
+              </span>
             </div>
-            <div className={listItemStyle}>
+            <FlexBox direction="col" align="start" className={listItemStyle}>
               <span>Partner with Us</span>
-              <span className="text-xs text-gray-500">Coming soon</span>
-            </div>
+              <span>
+                We are available in {LOCATIONS.BENGALURU.toUpperCase()}!
+              </span>
+              <span className="text-xs text-gray-800">
+                Drop your details today @ <strong>{EMAILS.SUPPORT}</strong>
+              </span>
+            </FlexBox>
           </FlexBox>
         </FlexBox>
 
