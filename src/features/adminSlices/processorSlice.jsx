@@ -12,7 +12,7 @@ export const fetchProcessorDeductions = createAsyncThunk(
         }/api/processors/deductions/${processorId}`
         // }/api/products/processor-deductions/${processorId}`
       );
-      console.log("res", response.data);
+      console.log("fetchProcessorDeductions", response.data);
       return response.data; // Assuming the API returns an array of products
     } catch (error) {
       console.log("ERROR in THUNK", error);

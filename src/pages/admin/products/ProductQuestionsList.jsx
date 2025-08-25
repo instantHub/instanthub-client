@@ -9,12 +9,12 @@ import {
 
 import { toast } from "react-toastify";
 
-import UpdateSystemConfigurations from "./systemPriceDrops/UpdateSystemConfigurations";
-import UpdateSystemConditions from "./systemPriceDrops/UpdateSystemConditions";
+import UpdateSystemConfigurations from "./processbased/systemPriceDrops/UpdateSystemConfigurations";
+import UpdateSystemConditions from "./processbased/systemPriceDrops/UpdateSystemConditions";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProcessorDeductions } from "@features/adminSlices/processorSlice";
 import { ROUTES } from "@routes";
-import { Button } from "@components/general";
+import { Button, FlexBox, Modal, Typography } from "@components/general";
 import { ArrowLeftIcon } from "@icons";
 
 const ProductQuestionsList = () => {
@@ -31,6 +31,7 @@ const ProductQuestionsList = () => {
   // const [selectedProcessorId, setSelectedProcessorId] = useState(null);
   const [selectedProcessorDeductions, setSelectedProcessorDeductions] =
     useState(null);
+
   // const [processorBasedDeductions, setProcessorBasedDeductions] =
   //   useState(null);
 
@@ -248,7 +249,7 @@ const ProductQuestionsList = () => {
     loading,
     error,
   } = useSelector((state) => state.processor);
-  // console.log("processorThunk", processorThunk);
+  console.log("processorThunk", processorThunk);
 
   const dispatch = useDispatch();
 
@@ -268,11 +269,9 @@ const ProductQuestionsList = () => {
 
   const toggleBtnStyle =
     "px-1 py-2 max-sm:py-1 flex gap-1 h-full flex-wrap font-thin text-black bg-gray-200 border border-gray-600 transition-all duration-300";
-  // "px-2 py-1 my-1 w-fit right-0 text-end flex justify-end items-end  border border-green-600 text-black rounded ";
 
   const toggleStyle =
     "bg-gray-800 border rounded text-white font-bold translate-y-5 max-sm:translate-y-0 mx-1";
-  // const toggleStyle = "bg-red-600 text-white font-thin text-lg border-red-50";
 
   //  UseEffect to set the Deductions what is selected
   useEffect(() => {
@@ -313,19 +312,18 @@ const ProductQuestionsList = () => {
   }, [productDetail]);
 
   useEffect(() => {
-    console.log("thunk response in useEffect");
+    console.log("thunk response in useEffect", Object.keys(processorThunk));
     if (Object.keys(processorThunk).length > 0) {
       setSelectedProcessorDeductions(processorThunk);
     }
   }, [processorThunk]);
-
-  // console.log("processorsList", processorsList);
 
   return (
     <div className="relative">
       <Button
         variant="secondary"
         size="sm"
+        shape="square"
         leftIcon={<ArrowLeftIcon />}
         onClick={handleNavigate}
       >
@@ -833,43 +831,34 @@ const ProductQuestionsList = () => {
       </div>
 
       {isOpen && (
-        <div>
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-fit">
-              <div className="flex justify-center">
-                <h2 className="text-xl font-semibold mb-4 text-center">
-                  Sure want to Update this Variants Data?
-                </h2>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="flex gap-4 items-center">
-                  <span>Selected Variant</span>
-                  <h3 className="text-2xl font-semibold">
-                    {selectedVariantToFill?.name}
-                  </h3>
-                </div>
-              </div>
-              <div className="flex justify-around mt-8">
-                <button
-                  onClick={() => fillVariantPriceDrops()}
-                  className="bg-green-600 text-white px-4 py-1 rounded"
-                >
-                  Yes
-                </button>
+        <Modal isOpen={isOpen} className="p-5">
+          <Typography variant="h3">
+            Sure want to Update this Variants Data?
+          </Typography>
+          <Typography variant="h5">
+            Selected Variant: <strong>{selectedVariantToFill?.name}</strong>
+          </Typography>
+          <FlexBox justify="around" className="mt-8">
+            <Button
+              onClick={() => fillVariantPriceDrops()}
+              variant="danger"
+              shape="square"
+            >
+              Yes
+            </Button>
 
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    setSelectedVariantToFill(null);
-                  }}
-                  className="bg-red-700 text-white px-4 py-1 rounded"
-                >
-                  No
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+            <Button
+              onClick={() => {
+                setIsOpen(false);
+                setSelectedVariantToFill(null);
+              }}
+              variant="greenary"
+              shape="square"
+            >
+              No
+            </Button>
+          </FlexBox>
+        </Modal>
       )}
     </div>
   );

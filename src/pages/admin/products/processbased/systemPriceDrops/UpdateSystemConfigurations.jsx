@@ -16,7 +16,6 @@ const UpdateSystemConfigurations = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // const laptopDesktop = ["laptop", "desktop"];
 
   const title = getTitle();
 

@@ -50,7 +50,8 @@ export const ROUTES = {
     updateProduct: "/admin/update-product/:productSlug",
 
     // productQuestions: "/admin/products/product-questions/:productId",
-    productQuestions: "/admin/products/product-questions/:productSlug",
+    MVProductQuestions: "/admin/products/product-questions/mv/:productSlug",
+    PBProductQuestions: "/admin/products/product-questions/pb/:productSlug",
 
     createCategory: "/admin/add-category",
     categoriesList: "/admin/categories-list",

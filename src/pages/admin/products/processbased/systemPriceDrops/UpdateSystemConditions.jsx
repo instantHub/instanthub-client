@@ -12,7 +12,7 @@ const UpdateSystemConditions = (props) => {
     type,
   } = props;
 
-  console.log("UpdateSystemConditions", type);
+  // console.log("UpdateSystemConditions", type);
 
   const [updatePriceDrop, { isLoading: updateLoading }] =
     useUpdateLaptopConfigurationsPriceDropMutation();
@@ -75,7 +75,6 @@ const UpdateSystemConditions = (props) => {
         })),
       };
     }
-    // setProductData(updatedProductData);
     setSelectedProcessorDeductions(updatedData);
   }
 
@@ -105,7 +104,7 @@ const UpdateSystemConditions = (props) => {
     }
   };
 
-  console.log("productData", productData && productData);
+  // console.log("productData", productData && productData);
 
   return (
     <>

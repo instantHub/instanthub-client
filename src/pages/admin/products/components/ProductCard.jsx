@@ -45,15 +45,6 @@ export const ProductCard = ({ data, pendingPricingMobiles }) => {
     setIsModalOpen(true);
   }
 
-  // async function checkPendingPrices() {
-  //   console.log("pendingPricingMobiles",pendingPricingMobiles);
-  //   return pendingPricingMobiles.find((product) => {
-  //     console.log("checkPendingPrices :-", product.productName, ":", data.name);
-  //     if (product.productName === data.name) return product.variants;
-  //     return [];
-  //   });
-  // }
-
   const checkPendingPrices = async () => {
     // console.log("pendingPricingMobiles", pendingPricingMobiles);
 
@@ -183,7 +174,7 @@ export const ProductCard = ({ data, pendingPricingMobiles }) => {
                 <div>
                   {deductionSelected[data.id] && (
                     <Link
-                      to={`/admin/products/product-questions/${
+                      to={`/admin/products/product-questions/mv/${
                         data.uniqueURL
                       }?variant=${deductionSelected[data.id]}`}
                     >
@@ -196,7 +187,7 @@ export const ProductCard = ({ data, pendingPricingMobiles }) => {
               </div>
             ) : (
               <Link
-                to={`/admin/products/product-questions/${data.uniqueURL}?t=${data.category.name}`}
+                to={`/admin/products/product-questions/pb/${data.uniqueURL}?t=${data.category.name}`}
               >
                 <button className={`${style.priceDropBtn}`}>Price Drop</button>
               </Link>

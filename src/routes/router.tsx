@@ -23,6 +23,7 @@ import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 import { ROUTES } from "./routes";
 import { ACRepair } from "@pages/user/marketing-service";
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
+// import { ProductQuestionsLists2 } from "@pages/admin/products/ProductQuestionsList2";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -336,12 +337,22 @@ export const router = Router([
             ),
           },
           {
-            path: ROUTES.admin.productQuestions,
-            element: createElement(
-              lazyLoad(
-                () => import("@pages/admin/products/ProductQuestionsList")
-              )
-            ),
+            path: ROUTES.admin.MVProductQuestions,
+            element: <ADMIN.MVProductQuestionsList />,
+            // element: createElement(
+            //   lazyLoad(
+            //     () => import("@pages/admin/products/ProductQuestionsList")
+            //   )
+            // ),
+          },
+          {
+            path: ROUTES.admin.PBProductQuestions,
+            element: <ADMIN.PBProductQuestionsList />,
+            // element: createElement(
+            //   lazyLoad(
+            //     () => import("@pages/admin/products/ProductQuestionsList")
+            //   )
+            // ),
           },
 
           // Categories

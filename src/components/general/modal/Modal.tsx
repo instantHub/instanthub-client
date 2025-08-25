@@ -137,7 +137,7 @@ export const Modal: FC<IModalProps> = ({
       {/* Modal Content */}
       <div
         // className={`p-5 sm:p-10 relative bg-white rounded-2xl shadow-xl max-h-[90vh] overflow-y-auto ${className}`}
-        className={`relative bg-white rounded-2xl shadow-xl max-h-[90vh] overflow-y-auto ${className}`}
+        className={`p-5 sm:p-8 relative bg-white rounded-2xl shadow-xl max-h-[90vh] overflow-y-auto ${className}`}
       >
         {children}
       </div>
