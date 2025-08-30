@@ -9,6 +9,7 @@ export { PrivateRoute } from "./PrivateRoute";
 export * from "./sidebar";
 export { Table } from "./Table";
 export { UpdateAdmin } from "./UpdateAdmin";
+export { OperationSelector } from "./OperationSelector";
 
 export * from "./auth";
 export * from "./formContainer";

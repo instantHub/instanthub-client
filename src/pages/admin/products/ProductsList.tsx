@@ -24,6 +24,14 @@ import {
   useGetAllProductsQuery,
   useGetCategoriesQuery,
 } from "@api";
+import {
+  Button,
+  CustomSelect,
+  FlexBox,
+  FormInput,
+  Typography,
+} from "@components/general";
+import { Loading } from "@components/user";
 
 export interface IPendingPricingMobile {
   productName: string;
@@ -120,34 +128,19 @@ export const ProductsList = () => {
     checkPricing();
   }, []);
 
-  return (
-    <div className="flex flex-col items-center p-4 text-sm">
-      <h2 className="text-center text-2xl font-bold font-serif mb-4">
-        Products Table
-      </h2>
+  if (loading) return <Loading />;
 
-      {loading ? (
-        <div className="w-full text-right px-4">Loading...</div>
-      ) : (
-        <div className="w-full flex flex-wrap justify-end gap-2 text-xs sm:text-sm mb-4">
-          <p>Total: {pendingPricingMobiles.length} products pending pricing</p>
-          <select
-            className="border px-2 py-1 rounded disabled:bg-gray-200"
-            onChange={(e) =>
-              dispatch(
-                filterProduct({ product: e.target.value, from: "productsList" })
-              )
-            }
-          >
-            <option value="">View Pending</option>
-            {pendingPricingMobiles.map((item, i) => (
-              <option key={item.productName} value={item.productName}>
-                {i + 1}. {item.productName}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+  return (
+    <div className="flex flex-col gap-2 p-1 md:p-4">
+      <CustomSelect
+        label={`Total: ${pendingPricingMobiles.length} products pending for pricing..!`}
+        options={pendingPricingMobiles}
+        onChange={() => {}}
+        displayKey="productName"
+        valueKey="productName"
+        placeholder="View product names..."
+        className="w-72"
+      />
 
       {/* Filters */}
       <div className="w-[96%] flex flex-wrap items-center justify-between gap-3 border rounded-lg shadow px-3 py-2 mb-6">
@@ -165,84 +158,101 @@ export const ProductsList = () => {
             </option>
           ))}
         </select>
+        <FlexBox className="gap-2 max-sm:flex-col" fullWidth>
+          {/* Search Product */}
 
-        {/* Search Product */}
-        <input
-          type="search"
-          value={filterData.product}
-          placeholder="Search a product"
-          className="px-2 py-1 border rounded text-sm"
-          onChange={(e) => {
-            dispatch(
-              filterProduct({ product: e.target.value, from: "productsList" })
-            );
-            dispatch(filterPage({ page: 1, from: "productsList" }));
-          }}
-        />
-
-        {/* Pagination Controls */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() =>
+          <FormInput
+            type="search"
+            value={filterData.product}
+            placeholder="Search a product"
+            onChange={(e) => {
               dispatch(
-                filterPage({ page: filterData.page - 1, from: "productsList" })
+                filterProduct({ product: e.target.value, from: "productsList" })
+              );
+              dispatch(filterPage({ page: 1, from: "productsList" }));
+            }}
+          />
+
+          {/* Jump to Page */}
+          <FormInput
+            type="number"
+            value={filterData.page}
+            placeholder="Go to page"
+            onChange={(e) =>
+              dispatch(
+                filterPage({
+                  page: Number(e.target.value),
+                  from: "productsList",
+                })
               )
             }
-            className="bg-blue-700 text-white px-2 py-1 rounded flex items-center gap-1 disabled:bg-blue-300"
-            disabled={productsData?.page === 1}
+            disabled={productsData?.totalPages <= 1}
+          />
+        </FlexBox>
+
+        <FlexBox justify="around" className="max-sm:flex-col" fullWidth>
+          {/* Clear Filter */}
+          <Button
+            shape="square"
+            variant="danger"
+            size="sm"
+            onClick={() => {
+              dispatch(clearFilter({ clear: "productsList" }));
+              setCategoryId("");
+            }}
+            disabled={!filterData.filtered}
           >
-            <ArrowLeftIcon /> Previous
-          </button>
+            Clear
+          </Button>
 
-          <span className="text-sm">
-            Page {productsData?.page || 0} of {productsData?.totalPages || 0}
-          </span>
+          {/* Pagination Controls */}
+          <FlexBox gap={2}>
+            <Button
+              shape="square"
+              size="sm"
+              leftIcon={<ArrowLeftIcon />}
+              onClick={() =>
+                dispatch(
+                  filterPage({
+                    page: filterData.page - 1,
+                    from: "productsList",
+                  })
+                )
+              }
+              disabled={productsData?.page === 1}
+            >
+              Previous
+            </Button>
 
-          <button
-            onClick={() =>
-              dispatch(
-                filterPage({ page: filterData.page + 1, from: "productsList" })
-              )
-            }
-            className="bg-blue-700 text-white px-2 py-1 rounded flex items-center gap-1 disabled:bg-blue-300"
-            disabled={productsData?.page === productsData?.totalPages}
-          >
-            Next <ArrowRightIcon />
-          </button>
-        </div>
+            <Typography>
+              Page {productsData?.page || 0} of {productsData?.totalPages || 0}
+            </Typography>
 
-        {/* Jump to Page */}
-        <input
-          type="number"
-          value={filterData.page}
-          placeholder="Go to page"
-          className="px-2 py-1 border rounded w-20 text-sm"
-          onChange={(e) =>
-            dispatch(
-              filterPage({ page: Number(e.target.value), from: "productsList" })
-            )
-          }
-          disabled={productsData?.totalPages <= 1}
-        />
+            <Button
+              shape="square"
+              size="sm"
+              rightIcon={<ArrowRightIcon />}
+              onClick={() =>
+                dispatch(
+                  filterPage({
+                    page: filterData.page + 1,
+                    from: "productsList",
+                  })
+                )
+              }
+              disabled={productsData?.page === productsData?.totalPages}
+            >
+              Next
+            </Button>
+          </FlexBox>
 
-        {/* Clear Filter */}
-        <button
-          className="text-sm text-red-600 px-2 py-1 border border-red-600 rounded disabled:text-gray-400 disabled:border-gray-400"
-          onClick={() => {
-            dispatch(clearFilter({ clear: "productsList" }));
-            setCategoryId("");
-          }}
-          disabled={!filterData.filtered}
-        >
-          Clear
-        </button>
-
-        {/* Create Product */}
-        <Link to={ROUTES.admin.createProduct}>
-          <button className="bg-blue-700 text-white px-2 py-1 rounded text-sm">
-            Create Product
-          </button>
-        </Link>
+          {/* Create Product */}
+          <Link to={ROUTES.admin.createProduct}>
+            <Button shape="square" size="sm">
+              Create Product
+            </Button>
+          </Link>
+        </FlexBox>
       </div>
 
       {/* Products */}
@@ -251,7 +261,6 @@ export const ProductsList = () => {
           <ProductCard
             key={product.id}
             data={product}
-            // pendingPricingMobiles={pendingPricingMobiles}
             isPricingPending={findPendingPricing(product)}
           />
         ))}

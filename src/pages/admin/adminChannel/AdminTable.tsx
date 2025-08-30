@@ -16,8 +16,65 @@ export const AdminTable: FC<AdminTableProps> = ({
   onToggleActive,
   onDelete,
 }) => {
+  const handleSendEmail = async () => {
+    console.log("handleSendEmail");
+
+    try {
+      const data = {
+        customerEmail: "shouaibahmed111@gmail.com",
+        customerName: "Shouaib Ahmed",
+        customerPhone: "8722220088",
+        orderId: "CMI000032545",
+        invoiceNo: "32813",
+        items: [
+          { sku: "14669", name: "MacBook Air 2020", price: 27000, qty: 1 },
+        ],
+        total: 27000,
+      };
+
+      const data2 = {
+        orderId: "INV-2025-001",
+        order: {
+          customerName: "Shouaib Ahmed",
+          email: "shouaibahmed111@gmail.com",
+          phone: "8722220088",
+          schedulePickUp: "2025-09-05 14:30",
+          addressDetails: {
+            address:
+              "Near Kumar Mens Wear, Ramna layout 1st floor, Kothanur Police Station",
+            state: "Karnataka",
+            city: "Bangalore",
+            pinCode: "560077",
+          },
+          productCategory: "Laptop",
+          productName: "MacBook Air 2020",
+          variant: {
+            variantName: "Apple M1, 8GB RAM, 256GB SSD",
+          },
+          paymentMode: "Cash on Pickup",
+          offerPrice: 27000,
+        },
+      };
+
+      const res = await fetch("https://api.instantpick.in/api/check/bill", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data2),
+      });
+      console.log("res", res);
+
+      const result = await res.json(); // parse backend response
+      console.log("Email sent successfully:", result);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
+
   return (
     <div className="w-full max-w-[450px] sm:max-w-screen-14inch mx-auto bg-white rounded-lg shadow overflow-hidden">
+      <Button onClick={handleSendEmail}>Mock Sending Email</Button>
       <div
         className="overflow-x-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}

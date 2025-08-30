@@ -9,7 +9,13 @@ import {
 } from "@api";
 
 import { ROUTES } from "@routes";
-import { Button, FlexBox, Modal, Typography } from "@components/general";
+import {
+  Button,
+  FlexBox,
+  FormInput,
+  Modal,
+  Typography,
+} from "@components/general";
 import { ArrowLeftIcon } from "@icons";
 import {
   IConditions,
@@ -18,6 +24,11 @@ import {
 } from "@features/api/productsApi/types";
 import { IVQResponse } from "@features/api/variantQuestionsApi/types";
 import { MOBILE } from "@utils/user/constants";
+import {
+  FormCardContainer,
+  FormFooterWrapper,
+  OperationSelector,
+} from "@components/admin";
 
 export type PriceDropChangeType = "priceDrop" | "operation";
 
@@ -188,76 +199,69 @@ export const ProductQuestionsList: React.FC = () => {
 
   return (
     <div className="relative">
-      {/* Back Button */}
-      <Button
-        variant="secondary"
-        size="sm"
-        shape="square"
-        leftIcon={<ArrowLeftIcon />}
-        onClick={() => navigate(ROUTES.admin.productsList)}
-      >
-        Back
-      </Button>
+      {/* <div className="w-full flex flex-col mx-auto my-1 bg-white px-4 max-sm:px-2 py-2"> */}
+      <div className="w-full flex flex-col">
+        {/* Variants Questions */}
+        {productData && productCategoryType.multiVariants && (
+          <FlexBox direction="col" gap={2}>
+            <Typography variant="h4">Variants Based Pricing</Typography>
+            <FlexBox justify="around" wrap="wrap" gap={2}>
+              {variantsQuestionsData?.map((vq) => (
+                <Button
+                  key={vq._id}
+                  variant="greenary"
+                  shape="square"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedVariantToFill(vq);
+                    setIsOpen(true);
+                  }}
+                  className={`px-4 py-2 ${
+                    vq.name === selectedVariantToFill?.name ? "bg-red-600" : ""
+                  }`}
+                >
+                  {vq.name}
+                </Button>
+              ))}
+            </FlexBox>
+          </FlexBox>
+        )}
+        {/* </div> */}
 
-      <div className="w-full flex flex-col mx-auto my-1 bg-white px-4 max-sm:px-2 py-2">
-        {/* Heading */}
-        <div className="flex justify-center m-2">
-          <h3 className="absolute top-4 text-xl max-sm:text-lg font-serif font-bold">
-            {productData?.name ?? "Loading.."} - {selectedVariant}
-          </h3>
-
-          {/* Variants Questions */}
-          {productData && productCategoryType.multiVariants && (
-            <div className="grid grid-cols-4 max-sm:grid-cols-2 gap-4 max-sm:gap-2 text-sm max-sm:text-[10px]">
-              {!variantsQuestionsDataLoading &&
-                variantsQuestionsData?.map((vq) => (
-                  <button
-                    key={vq._id}
-                    onClick={() => {
-                      setSelectedVariantToFill(vq);
-                      setIsOpen(true);
-                    }}
-                    className={`w-full px-2 py-1 rounded text-white ${
-                      vq.name === selectedVariantToFill?.name
-                        ? "bg-red-600 text-xl"
-                        : "bg-green-600"
-                    }`}
-                  >
-                    {vq.name}
-                  </button>
-                ))}
-            </div>
-          )}
-        </div>
-
-        {/* Conditions Form */}
-        <form onSubmit={handleSubmit}>
-          {selectedDeductions?.map((condition) => (
-            <div key={condition.id} className="border my-4 max-sm:my-2 rounded">
-              <Typography variant="h4" className="text-center font-bold">
-                {condition.conditionName}
-              </Typography>
-              <hr />
-              <div className="flex flex-col py-2">
-                {condition.conditionLabels.map((label, idx) => (
-                  <div
-                    key={label.id}
-                    className={`flex gap-6 max-sm:gap-1 max-sm:justify-center items-center mt-2 px-4 max-sm:px-2 py-2 ${
-                      idx % 2 !== 0 ? "bg-gray-100" : ""
-                    }`}
-                  >
-                    {/* Label + PriceDrop */}
-                    <div>
-                      <Typography variant="h5">
-                        {label.conditionLabel}
-                      </Typography>
+        <FormCardContainer
+          title={`${productData?.name} - ${selectedVariant}`}
+          description="Fill in the details to update pricing for this product."
+          className="max-sm:px-4 rounded-none shadow-none border-none"
+          headerAction={
+            <Button
+              shape="square"
+              onClick={() => navigate(ROUTES.admin.productsList)}
+            >
+              Product List
+            </Button>
+          }
+        >
+          <form onSubmit={handleSubmit}>
+            {selectedDeductions?.map((condition) => (
+              <FormCardContainer
+                title={condition.conditionName}
+                className="max-sm:px-2 roun"
+              >
+                <hr />
+                <div className="flex flex-col">
+                  {condition.conditionLabels.map((label, idx) => (
+                    <div
+                      key={label.id}
+                      className={`flex gap-6 max-sm:gap-1 max-sm:justify-center items-center mt-2 px-4 max-sm:px-2 py-2 ${
+                        idx % 2 !== 0 ? "bg-gray-100" : ""
+                      }`}
+                    >
                       <FlexBox gap={1}>
-                        {productCategory !== MOBILE && <b>₹</b>}
-                        <input
+                        <FormInput
                           type="number"
                           name="priceDrop"
+                          label={label.conditionLabel}
                           value={label.priceDrop}
-                          className="border px-3 py-1 rounded"
                           placeholder="Price Drop"
                           onChange={(e) =>
                             handlePriceDropChange(
@@ -268,67 +272,52 @@ export const ProductQuestionsList: React.FC = () => {
                           }
                           required
                         />
-                        {productCategory === MOBILE && <b>%</b>}
+                        <Typography variant="h4">%</Typography>
                       </FlexBox>
-                    </div>
 
-                    {/* Label Image */}
-                    {label.conditionLabelImg && (
-                      <img
-                        src={`${import.meta.env.VITE_APP_BASE_URL}${
-                          label.conditionLabelImg
-                        }`}
-                        alt="conditionLabelImg"
-                        className="w-[60px] h-[60px] mx-auto max-sm:w-[45px] max-sm:h-[45px]"
-                      />
-                    )}
+                      {/* Label Image */}
+                      {label.conditionLabelImg && (
+                        <img
+                          src={`${import.meta.env.VITE_APP_BASE_URL}${
+                            label.conditionLabelImg
+                          }`}
+                          alt="conditionLabelImg"
+                          className="w-[60px] h-[60px] mx-auto max-sm:w-[45px] max-sm:h-[45px]"
+                        />
+                      )}
 
-                    {/* Operation */}
-                    <div className="flex gap-4 max-sm:flex-col max-sm:gap-1">
-                      <h3
-                        className={`${
-                          label.operation === "Subtrack"
-                            ? "bg-red-200 px-2"
-                            : "bg-blue-200 px-4"
-                        } text-black font-bold py-1 rounded text-center`}
-                      >
-                        {label.operation}
-                      </h3>
-                      <select
-                        name="operation"
-                        className="border rounded px-1"
-                        onChange={(e) =>
-                          e.target.value &&
+                      {/* Operation */}
+                      <OperationSelector
+                        value={label.operation}
+                        label={label.operation}
+                        onChange={(operation, name) =>
                           handlePriceDropChange(
                             label.conditionLabelId,
-                            e.target.value as TOperation,
-                            e.target.name as PriceDropChangeType
+                            operation,
+                            name
                           )
                         }
-                      >
-                        <option value="">Select Operation</option>
-                        <option value="Subtrack">Subtrack</option>
-                        <option value="Add">Add</option>
-                      </select>
+                      />
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                  ))}
+                </div>
+              </FormCardContainer>
+            ))}
 
-          {/* Submit */}
-          <div className="flex justify-center">
-            <Button
-              type="submit"
-              variant="greenary"
-              shape="square"
-              disabled={updateLoading}
-            >
-              {updateLoading ? "Loading..." : "Update Price Drops"}
-            </Button>
-          </div>
-        </form>
+            {/* Submit */}
+            <FormFooterWrapper>
+              <Button
+                type="submit"
+                variant="greenary"
+                shape="square"
+                loading={updateLoading}
+                disabled={updateLoading}
+              >
+                Update Price Drops
+              </Button>
+            </FormFooterWrapper>
+          </form>
+        </FormCardContainer>
       </div>
 
       {/* Confirmation Modal */}
