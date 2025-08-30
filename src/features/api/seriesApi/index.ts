@@ -1,14 +1,14 @@
 import { baseApi } from "@features/api";
+import { ISeriesResponse } from "./types";
 
 export const seriesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllSeries: build.query({
+    getAllSeries: build.query<ISeriesResponse[], void>({
       query: () => `/api/series`,
       providesTags: ["Series"],
     }),
-    getBrandSeries: build.query({
+    getBrandSeries: build.query<ISeriesResponse[], string>({
       query: (brandUniqueURL) => `/api/series/${brandUniqueURL}`,
-      // providesTags: ["Brands"],
       providesTags: ["Series"],
     }),
     createSeries: build.mutation({
@@ -46,6 +46,7 @@ export const seriesApi = baseApi.injectEndpoints({
 export const {
   useGetAllSeriesQuery,
   useGetBrandSeriesQuery,
+  useLazyGetBrandSeriesQuery,
   useCreateSeriesMutation,
   useUpdateSeriesMutation,
   useDeleteSeriesMutation,

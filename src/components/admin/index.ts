@@ -11,3 +11,4 @@ export { Table } from "./Table";
 export { UpdateAdmin } from "./UpdateAdmin";
 
 export * from "./auth";
+export * from "./formContainer";

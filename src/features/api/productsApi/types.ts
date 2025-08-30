@@ -9,7 +9,7 @@ export interface IProductResponse {
   image: string;
   uniqueURL: string;
   status: string;
-  brands: Omit<IBrandResponse, "series" | "products">;
+  brand: Omit<IBrandResponse, "series" | "products">;
   category: Omit<ICategoryResponse, "brands">;
   simpleDeductions: IConditions[] | [];
   variantDeductions: IVariantDeductions[] | [];
@@ -18,6 +18,12 @@ export interface IProductResponse {
   metaDescription: string;
   metaKeywords: Array<string>;
   canonicalUrl: string;
+}
+
+export interface IAllProductsResponse {
+  products: IProductResponse[];
+  page: number;
+  totalPages: number;
 }
 
 export interface IVariants {
@@ -57,8 +63,8 @@ export interface IVariantDeductions {
 }
 
 export interface IGetAllProductsParams {
-  page: string;
-  limit: string;
+  page: number;
+  limit: number;
   search: string;
   categoryId: string;
 }

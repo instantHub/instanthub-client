@@ -6,7 +6,6 @@ import {
   useUpdateSingleLaptopConfigurationMutation,
   useUpdateSingleLaptopProcessorProblemsMutation,
 } from "@api";
-import { UpdateButton } from "./systemPriceDrops/UpdateButton";
 import { toast } from "react-toastify";
 import {
   IConditionLabels,
@@ -16,7 +15,6 @@ import {
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
 import { Button, FlexBox, Modal, Typography } from "@components/general";
 
-// Union type for the data that can be updated
 type UpdateData = IProductResponse | IProcessorDeductionResponse;
 
 type TComponentType =

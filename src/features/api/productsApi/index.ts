@@ -1,5 +1,6 @@
 import { baseApi } from "@features/api";
 import {
+  IAllProductsResponse,
   IGetAllProductsParams,
   IGetProductsByBrandParams,
   IProductResponse,
@@ -9,10 +10,7 @@ export const productsURL = "/api/products";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllProducts: build.query<
-      Omit<IProductResponse, "simpleDeductions">[],
-      IGetAllProductsParams
-    >({
+    getAllProducts: build.query<IAllProductsResponse, IGetAllProductsParams>({
       query: ({ page, limit, search, categoryId }) => ({
         url: productsURL,
         method: "GET",

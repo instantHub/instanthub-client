@@ -4,4 +4,5 @@ export { FormInput } from "./formInput";
 export { Typography } from "./typography";
 export * from "./modal";
 export * from "./checkbox";
+export * from "./select";
 export * from "./stepper";

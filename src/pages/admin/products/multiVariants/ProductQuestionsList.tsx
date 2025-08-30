@@ -27,6 +27,7 @@ export const ProductQuestionsList: React.FC = () => {
   const { productSlug } = useParams<{ productSlug: string }>();
   const [searchParams] = useSearchParams();
   const selectedVariant = searchParams.get("variant");
+  console.log("selectedVariant", selectedVariant);
 
   const [selectedDeductions, setSelectedDeductions] = useState<
     IConditions[] | null
@@ -202,7 +203,7 @@ export const ProductQuestionsList: React.FC = () => {
         {/* Heading */}
         <div className="flex justify-center m-2">
           <h3 className="absolute top-4 text-xl max-sm:text-lg font-serif font-bold">
-            {productData?.name ?? "Loading.."}
+            {productData?.name ?? "Loading.."} - {selectedVariant}
           </h3>
 
           {/* Variants Questions */}

@@ -3,13 +3,13 @@ import { IBrandResponse } from "./types";
 
 export const brandsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllBrand: build.query({
+    getAllBrand: build.query<IBrandResponse[], void>({
       query: () => `/api/brand`,
       providesTags: ["Brands"],
     }),
 
     getBrandsByCategory: build.query<IBrandResponse[], string>({
-      query: (catId) => `/api/brand/${catId}`,
+      query: (categoryUniqueURL) => `/api/brand/${categoryUniqueURL}`,
       providesTags: ["CreateBrands"],
     }),
 
