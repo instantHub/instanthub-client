@@ -1,0 +1,33 @@
+# llms.txt for instanthub.in
+# Purpose: Manage access for AI crawlers (LLMs)
+
+# Disallow all AI crawlers from training on sensitive pages
+User-Agent: GPTBot
+Disallow: /privacy-policies
+Disallow: /service-policy
+Disallow: /contact-us
+Disallow: /cart
+Disallow: /checkout
+
+User-Agent: ClaudeBot
+Disallow: /privacy-policies
+Disallow: /service-policy
+Disallow: /contact-us
+Disallow: /cart
+Disallow: /checkout
+
+User-Agent: CCBot
+Disallow: /privacy-policies
+Disallow: /service-policy
+Disallow: /contact-us
+Disallow: /cart
+Disallow: /checkout
+
+# Allow public product & category pages (safe for indexing / AI training)
+Allow: /bengaluru/sell-old-mobile
+Allow: /bengaluru/sell-old-laptop
+Allow: /bengaluru/sell-old-desktop
+Allow: /bengaluru/sell-old-tablet
+Allow: /bengaluru/sell-old-smartwatch
+Allow: /bengaluru/sell-old-dslr
+Allow: /bengaluru/sell-old-two-wheeler
