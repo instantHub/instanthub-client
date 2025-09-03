@@ -54,7 +54,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({
   return (
     <>
       <div
-        className={`relative w-full shadow flex flex-col justify-center items-center cursor-pointer 
+        className={`relative bg-white w-full shadow flex flex-col justify-center items-center cursor-pointer 
           rounded-md pt-3 max-sm:pt-2 text-center text-sm max-sm:text-[10px] border 
           ${isPricingPending ? "border-yellow-500" : ""}`}
       >

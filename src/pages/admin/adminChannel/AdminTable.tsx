@@ -56,7 +56,8 @@ export const AdminTable: FC<AdminTableProps> = ({
         },
       };
 
-      const res = await fetch("https://api.instantpick.in/api/check/bill", {
+      // const res = await fetch("https://api.instantpick.in/api/check/bill", {
+      const res = await fetch("http://localhost:8000/api/check/bill", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +75,7 @@ export const AdminTable: FC<AdminTableProps> = ({
 
   return (
     <div className="w-full max-w-[450px] sm:max-w-screen-14inch mx-auto bg-white rounded-lg shadow overflow-hidden">
-      <Button onClick={handleSendEmail}>Mock Sending Email</Button>
+      {/* <Button onClick={handleSendEmail}>Mock Sending Email</Button> */}
       <div
         className="overflow-x-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}

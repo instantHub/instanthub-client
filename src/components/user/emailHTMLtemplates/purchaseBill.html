@@ -126,7 +126,7 @@
 
       <!-- Order Info -->
       <div class="section">
-        <p><strong>Order #:</strong> ${orderId}</p>
+        <p><strong>Order #:</strong> ${updatedOrder.orderId}</p>
         <p>
           <strong>Website:</strong>
           <a href="https://instanthub.in">instanthub.in</a>
@@ -147,18 +147,28 @@
         </h4>
       </div>
 
+      <div class="section">
+        <h4>
+          <strong>Pickup Agent:</strong> ${
+          updatedOrder.pickedUpDetails.agentName }
+        </h4>
+        <h4>
+          <strong>Pickup Time:</strong> ${
+          updatedOrder.pickedUpDetails.pickedUpDate }
+        </h4>
+      </div>
+
       <!-- Product Table -->
       <table>
         <tr>
           <th>Product Details</th>
-          <th>Agent Details</th>
           <th>Price</th>
         </tr>
         <tr>
           <td>
             <p>
-              <strong>${updatedOrder.productCategory}</strong> -
-              ${updatedOrder.productName}
+              <strong>${updatedOrder.productCategory}</strong> - ${
+              updatedOrder.productName }
             </p>
             ${ updatedOrder.productCategory.toLowerCase().includes("mobile") ? `
             <p>${updatedOrder.variant.variantName}</p>
@@ -173,16 +183,7 @@
             </p>
             ` : "" }
           </td>
-          <td>
-            <p>
-              <strong>Pickup Agent:</strong>
-              ${updatedOrder.pickedUpDetails.agentName}
-            </p>
-            <p>
-              <strong>Pickup Time:</strong>
-              ${updatedOrder.pickedUpDetails.pickedUpDate}
-            </p>
-          </td>
+
           <td>₹ ${updatedOrder.finalPrice}</td>
         </tr>
       </table>
@@ -199,7 +200,6 @@
         Your information is protected and secured, and it will be erased after
         use.
       </p>
-      <p class="note" style="text-align: right">GST Number: 29CSJPA4571K1ZE</p>
       <p class="note">
         Visit us again at
         <a href="https://instanthub.in">instanthub.in</a>

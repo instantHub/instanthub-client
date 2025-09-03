@@ -10,6 +10,7 @@ import { OtpGenerator } from "@pages/user";
 // import LaptopDeductionItems from "./LaptopDeductionItems";
 import NextPrevButton from "./NextPrevButton";
 import DisplayCondition from "./DisplayCondition";
+import { useLazyGetProcessorDeductionsQuery } from "@features/api";
 
 const LaptopsQuestions = (props) => {
   console.log("LaptopsQuestions");
@@ -22,6 +23,9 @@ const LaptopsQuestions = (props) => {
 
   const [processorBasedDeductions, setProcessorBasedDeductions] =
     useState(null);
+
+  const [getProcessorDeductionsRTK, { data: processorDeductions }] =
+    useLazyGetProcessorDeductionsQuery();
 
   const deductionSliceDate = useSelector((state) => state.deductions);
   // console.log("deductionSliceDate", deductionSliceDate);
@@ -219,26 +223,8 @@ const LaptopsQuestions = (props) => {
 
   async function getProcessorDeductions(processorId) {
     try {
-      const baseURL =
-        import.meta.env.VITE_BUILD === "development"
-          ? "http://localhost:8000"
-          : "https://api.instantpick.in";
-
-      const URL = `${baseURL}/api/processors/deductions/${processorId}`;
-
-      const response = await fetch(URL, {
-        method: "GET", // HTTP method
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json(); // Parse the JSON response
-      // console.log("Processor Deductions:", data);
+      const response = await getProcessorDeductionsRTK(processorId);
+      const data = await response?.data; // Parse the JSON response
 
       if (productsData.brand.name !== "Apple") {
         data.deductions = data.deductions.map((condition) => {
