@@ -50,7 +50,7 @@ export const AssignAgent = ({ orderDetail }) => {
   return (
     <div className="w-full flex flex-col my-5 text-sm max-sm:text-xs">
       <hr />
-      <p className="text-center font-serif text-xl text-wrap max-sm:text-sm my-5">
+      <p className="text-center  text-xl text-wrap max-sm:text-sm my-5">
         Assign An Agent For Order PickUp
       </p>
 

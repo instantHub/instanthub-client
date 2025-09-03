@@ -398,7 +398,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
         {renderProcessorHeader()}
 
         {isConditionsComponent(props) && (
-          <p className="text-center flex max-sm:flex-col justify-center gap-1 text-lg max-sm:text-xs font-serif">
+          <p className="text-center flex max-sm:flex-col justify-center gap-1 text-lg max-sm:text-xs ">
             <span>
               Update <span className="font-bold">{title}</span>
             </span>
@@ -407,7 +407,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
         )}
 
         {isConfigurationComponent(props) && (
-          <h3 className="text-2xl max-sm:text-lg font-serif text-center font-bold">
+          <h3 className="text-2xl max-sm:text-lg  text-center font-bold">
             {title} to update
           </h3>
         )}
@@ -416,7 +416,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
           {dataSource.map((condition, conditionIndex) => (
             <div key={condition.id} className="border my-4 rounded">
               <h3
-                className={`text-2xl max-sm:text-lg font-serif text-center py-2 bg-white ${
+                className={`text-2xl max-sm:text-lg  text-center py-2 bg-white ${
                   isConditionsComponent(props) ? "font-extrabold" : "font-bold"
                 }`}
               >

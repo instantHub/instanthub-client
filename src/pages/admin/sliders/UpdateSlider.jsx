@@ -87,7 +87,7 @@ export const UpdateSlider = () => {
   return (
     <div>
       {sliderImage && status && (
-        <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%] font-serif text-sm max-sm:text-xs">
+        <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%]  text-sm max-sm:text-xs">
           <div className="flex justify-between items-center">
             {/* Back Button */}
             <div className="py-3 px-2 text-center">

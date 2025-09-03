@@ -1,6 +1,6 @@
 export function ACRepair() {
   return (
-    <div className="bg-cyan-50 min-h-screen font-sans text-gray-800">
+    <div className="bg-cyan-50 min-h-screen text-gray-800">
       <header className="bg-cyan-100 p-6 shadow-md">
         <h1 className="text-3xl font-bold text-center text-cyan-700">
           AC & Geyser Repair Services in Bangalore

@@ -30,7 +30,7 @@ export const SeriesList = () => {
   return (
     <>
       <div className="flex flex-col items-center mt-[5%] w-fit max-sm:w-[99%] mx-auto">
-        <h1 className="text-2xl py-2 font-serif">Series List</h1>
+        <h1 className="text-2xl py-2 ">Series List</h1>
         {/* Series Cards */}
         <div className="mt-2 mb-5 flex flex-col items-center">
           <div className="w-full px-10 max-sm:px-2 mx-auto grid grid-cols-5 max-md:grid-cols-3 max-sm:grid-cols-2 gap-4 max-sm:gap-2 ">

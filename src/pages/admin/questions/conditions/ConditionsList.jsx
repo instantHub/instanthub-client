@@ -191,7 +191,7 @@ export const ConditionsList = () => {
             </div>
           </div>
 
-          <h2 className="text-black text-xl max-sm:text-sm font-serif font-bold mb-4">
+          <h2 className="text-black text-xl max-sm:text-sm  font-bold mb-4">
             Conditions Table
           </h2>
 

@@ -179,7 +179,7 @@ export function CreateVariantsQuestions() {
 
       {/* Variant List */}
       <div className="mt-10 overflow-y-auto scrollbar w-full">
-        <p className="font-serif text-2xl max-sm:text-lg text-center py-2 font-semibold">
+        <p className=" text-2xl max-sm:text-lg text-center py-2 font-semibold">
           List of Variants Created
         </p>
         {!variantsQuestionsDataLoading && variantsQuestionsData && (

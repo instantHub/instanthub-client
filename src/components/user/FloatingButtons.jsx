@@ -164,7 +164,7 @@ export const FloatingButtons = () => {
       </div>
 
       {/* Home - Sell */}
-      <div className="fixed bottom-0 h-[52px] w-full z-10 flex font-serif">
+      <div className="fixed bottom-0 h-[52px] w-full z-10 flex ">
         {/* Temporary note for customers for small screens*/}
         <div className="z-10 absolute top-[-33%] sm:hidden h-5 bg-secondary w-full text-secondary-light flex items-center justify-center text-[10px]">
           <p>
@@ -279,7 +279,7 @@ export const FloatingButtons = () => {
       </div>
 
       {/* Temporary note for customers for large screen */}
-      <div className="fixed bottom-0 h-12 w-full z-10 flex font-serif max-sm:hidden">
+      <div className="fixed bottom-0 h-12 w-full z-10 flex max-sm:hidden">
         <div className="z-10 absolute top-[-40%] sm:top-[55%] h-6 bg-secondary w-full text-secondary-light flex items-center justify-center text-xs">
           <p>
             We are currently operating in

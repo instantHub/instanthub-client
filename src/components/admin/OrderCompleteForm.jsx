@@ -22,7 +22,7 @@ export const OrderCompleteForm = ({
   return (
     <div className="w-full my-5">
       <hr />
-      <h2 className="text-center font-serif text-xl text-wrap max-sm:text-sm my-5">
+      <h2 className="text-center  text-xl text-wrap max-sm:text-sm my-5">
         Fill the below required details for completing Order.
       </h2>
       <form
@@ -247,7 +247,7 @@ function DetailWrapper({ icon: Icon, heading, children }) {
     detailDiv: "flex items-start gap-2",
     detailIcon:
       "rounded-full bg-secondary-light p-3 max-sm:p-[7px] text-lg max-sm:text-sm",
-    detailHeading: "text-2xl font-serif text-start max-sm:text-lg",
+    detailHeading: "text-2xl  text-start max-sm:text-lg",
     detailSubDiv: "flex flex-col",
   };
 

@@ -7,7 +7,7 @@ export const Layout = () => {
   useGoogleAnalytics();
   useScrollToTop();
   return (
-    <FlexBox direction="col" className="min-h-screen w-full font-serif">
+    <FlexBox direction="col" className="min-h-screen w-full">
       <Navbar />
 
       <Outlet />

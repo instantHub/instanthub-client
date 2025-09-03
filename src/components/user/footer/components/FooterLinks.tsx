@@ -12,7 +12,7 @@ interface IFooterLinksProps {
 export const FooterLinks = memo(
   ({ setOpenComplaintBox }: IFooterLinksProps) => {
     const listItemStyle =
-      "px-2 py-1 text-sm hover:text-base hover:bg-secondary-light hover:text-secondary rounded-md transition-all";
+      "px-2 py-1 text-sm hover:font-semibold rounded-md transition-all";
 
     return (
       <div className="w-full flex max-sm:flex-col justify-evenly gap-6 sm:gap-4">
@@ -36,9 +36,7 @@ export const FooterLinks = memo(
             </div>
             <FlexBox direction="col" align="start" className={listItemStyle}>
               <span>Partner with Us</span>
-              <span>
-                We are available in {LOCATIONS.BENGALURU.toUpperCase()}!
-              </span>
+              <span>We are available in all over India!</span>
               <span className="text-xs text-gray-800">
                 Drop your details today @ <strong>{EMAILS.SUPPORT}</strong>
               </span>

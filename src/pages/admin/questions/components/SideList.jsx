@@ -3,7 +3,7 @@ export const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
   return (
     <table className="w-full text-sm max-sm:text-xs">
       <thead>
-        <tr className="py-10 font-serif text-xl border shadow-xl text-blue-800 font-bold max-sm:text-sm">
+        <tr className="py-10  text-xl border shadow-xl text-blue-800 font-bold max-sm:text-sm">
           {headers.map((header, index) => (
             <th key={index} className="px-4 py-2 max-sm:p-2">
               {header}

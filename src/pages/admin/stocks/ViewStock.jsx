@@ -48,7 +48,7 @@ export default function ViewStock({ stock, setViewStock }) {
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-fit text-sm max-sm:text-xs font-serif">
+      <div className="relative bg-white p-8 max-sm:p-4 rounded-lg shadow-lg w-fit text-sm max-sm:text-xs ">
         {/* Model Header & Close Button */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Stock Detail</h2>

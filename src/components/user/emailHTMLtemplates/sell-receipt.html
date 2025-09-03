@@ -4,15 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Purchase Receipt</title>
-
+    <title>Order Summary</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 20px;
         background-color: #fff;
-        color: #333;
       }
 
       .container {
@@ -23,6 +21,7 @@
 
       .logo {
         width: 120px;
+        height: auto;
         margin: 0 auto 10px;
         display: block;
       }
@@ -41,21 +40,22 @@
         margin-bottom: 20px;
       }
 
-      .section {
-        font-size: 13px;
-        margin-bottom: 15px;
+      h2 {
+        color: #333;
+        margin: 15px 0;
+        font-size: 16px;
       }
 
-      .section h4 {
-        margin: 5px 0;
-        font-size: 13px;
+      a {
+        color: #007bff;
+        text-decoration: none;
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
-        font-size: 13px;
+        font-size: 14px;
       }
 
       th,
@@ -86,11 +86,40 @@
         margin: 4px 0;
       }
 
+      .total {
+        text-align: right;
+        font-weight: bold;
+      }
+
+      .deduction-group {
+        margin: 3px 0;
+      }
+
+      .deduction-title {
+        font-weight: bold;
+        font-size: 13px;
+        margin: 0;
+      }
+
+      .deduction-list {
+        margin-left: 8px;
+        font-size: 12px;
+      }
+
+      .deduction-item {
+        display: inline-block;
+        margin-right: 8px;
+        font-size: 11px;
+      }
+
+      .md-text {
+        font-size: 13px;
+      }
+
       .rights {
         text-align: center;
         font-size: 11px;
         color: #aaa;
-        margin-top: 15px;
       }
 
       @media only screen and (max-width: 600px) {
@@ -111,21 +140,18 @@
   </head>
   <body>
     <div class="container">
-      <!-- Logo -->
       <img
         src="https://api.instantpick.in/uploads/instanthub-logo.png"
         alt="Instant Hub"
         class="logo"
       />
 
-      <!-- Titles -->
-      <div class="title">Purchase Receipt</div>
+      <div class="title">Sell Receipt</div>
       <div class="subtitle">
-        Thank you for selling your product and trusting InstantHub.
+        Congratulations, your order has been placed with InstantHub
       </div>
 
-      <!-- Order Info -->
-      <div class="section">
+      <div class="md-text">
         <p><strong>Order #:</strong> ${orderId}</p>
         <p>
           <strong>Website:</strong>
@@ -133,61 +159,50 @@
         </p>
       </div>
 
-      <!-- Customer & Seller Info -->
-      <div class="section">
-        <h4><strong>Customer Name:</strong> ${updatedOrder.customerName}</h4>
-        <h4><strong>Email:</strong> ${updatedOrder.email}</h4>
-        <h4><strong>Phone:</strong> ${updatedOrder.phone}</h4>
-        <h4>
-          <strong>Address:</strong>
-          ${updatedOrder.addressDetails.address},
-          ${updatedOrder.addressDetails.city},
-          ${updatedOrder.addressDetails.state} -
-          ${updatedOrder.addressDetails.pinCode}
-        </h4>
-      </div>
-
-      <!-- Product Table -->
       <table>
         <tr>
-          <th>Product Details</th>
-          <th>Agent Details</th>
-          <th>Price</th>
+          <th>Seller Details</th>
+          <th>Pickup Details</th>
         </tr>
-        <tr>
+        <tr class="md-text">
           <td>
-            <p>
-              <strong>${updatedOrder.productCategory}</strong> -
-              ${updatedOrder.productName}
-            </p>
-            ${ updatedOrder.productCategory.toLowerCase().includes("mobile") ? `
-            <p>${updatedOrder.variant.variantName}</p>
-            ` : "" } ${ updatedOrder.deviceInfo?.serialNumber ? `
-            <p>
-              <strong>Serial No:</strong>
-              ${updatedOrder.deviceInfo.serialNumber}
-            </p>
-            ` : "" } ${ updatedOrder.deviceInfo?.imeiNumber ? `
-            <p>
-              <strong>IMEI No:</strong> ${updatedOrder.deviceInfo.imeiNumber}
-            </p>
-            ` : "" }
+            ${order.customerName}<br />
+            <strong>Email:</strong> ${order.email}<br />
+            <strong>Phone:</strong> ${order.phone}<br />
+            <strong>Address:</strong> ${order.addressDetails.address},
+            ${order.addressDetails.state}, ${order.addressDetails.city}<br />
+            <strong>Pincode:</strong> ${order.addressDetails.pinCode}
           </td>
-          <td>
-            <p>
-              <strong>Pickup Agent:</strong>
-              ${updatedOrder.pickedUpDetails.agentName}
-            </p>
-            <p>
-              <strong>Pickup Time:</strong>
-              ${updatedOrder.pickedUpDetails.pickedUpDate}
-            </p>
-          </td>
-          <td>₹ ${updatedOrder.finalPrice}</td>
+          <td><strong>Scheduled:</strong> ${order.schedulePickUp}</td>
         </tr>
       </table>
 
-      <!-- Notes -->
+      <table>
+        <tr>
+          <th>Product Details</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+        <tr>
+          <td>
+            <p class="md-text">
+              <strong>${order.productCategory}</strong> - ${order.productName}
+              ${ order.productCategory.toLowerCase().includes("mobile") ? ` (
+              ${order.variant.variantName} ) ` : "" }
+            </p>
+
+            <div>${filteredDeductionsHTML(order)}</div>
+            <p class="md-text">
+              <strong>Payment Mode:</strong> ${ order.paymentMode }
+            </p>
+          </td>
+          <td>₹ ${order.offerPrice}</td>
+          <td>1</td>
+          <td>₹ ${order.offerPrice}</td>
+        </tr>
+      </table>
+
       <p class="note">
         *This is a computer generated receipt. Signature not required.
       </p>
@@ -196,19 +211,14 @@
         <a href="tel:8722288017">8722288017</a>
       </p>
       <p class="note">
-        Your information is protected and secured, and it will be erased after
-        use.
-      </p>
-      <p class="note" style="text-align: right">GST Number: 29CSJPA4571K1ZE</p>
-      <p class="note">
-        Visit us again at
-        <a href="https://instanthub.in">instanthub.in</a>
+        If you have any questions or concerns about your order, please email us
+        at
+        <a href="mailto:support@instanthub.in">support@instanthub.in</a>
       </p>
 
-      <!-- Footer -->
       <div class="footer">
         <p>Thanks & Regards</p>
-        <p><strong>InstantHub</strong></p>
+        <p><strong>Instant Hub</strong></p>
       </div>
 
       <p class="rights">&copy; 2025 InstantHub. All rights reserved.</p>

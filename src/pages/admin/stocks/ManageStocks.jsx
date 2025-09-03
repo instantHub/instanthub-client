@@ -27,7 +27,7 @@ export const ManageStocks = () => {
       buttonType
         ? `bg-green-700 text-white px-4 max-sm:px-2 py-3 max-sm:py-1 text-lg max-sm:text-xs`
         : `bg-white px-4 max-sm:px-2 py-2 max-sm:py-1 max-sm:text-[10px]`
-    } border flex justify-center items-center gap-1 font-serif text-black rounded-md shadow-xl max-sm:shadow cursor-pointer`;
+    } border flex justify-center items-center gap-1  text-black rounded-md shadow-xl max-sm:shadow cursor-pointer`;
   };
 
   // Setting Category Images
@@ -58,7 +58,7 @@ export const ManageStocks = () => {
   return (
     <>
       <div className="p-4 max-sm:p-2">
-        <p className="text-center text-xl max-sm:text-sm py-2 font-serif font-semibold ">
+        <p className="text-center text-xl max-sm:text-sm py-2  font-semibold ">
           Total Stocks {stocksData?.length}
         </p>
         {/* Buttons */}

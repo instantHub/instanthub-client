@@ -92,7 +92,7 @@ export const UpdateVariantQuestions = () => {
       {/* Main Card */}
       <div className="relative flex flex-col mx-auto my-1 bg-white px-4 max-sm:px-1 py-2">
         <div className="relative m-2">
-          <h1 className="text-xl max-sm:text-lg text-center font-serif font-bold text-green-700 mb-2">
+          <h1 className="text-xl max-sm:text-lg text-center  font-bold text-green-700 mb-2">
             {selectedVariantQuestions
               ? `${selectedVariantQuestions.name} Variant`
               : "Loading.."}
@@ -104,7 +104,7 @@ export const UpdateVariantQuestions = () => {
           {!variantsQuestionsDataLoading &&
             selectedDeductions?.map((condition, conditionIdx) => (
               <div key={conditionIdx} className="border my-2 rounded">
-                <h2 className="text-2xl max-sm:text-lg py-2 text-center font-serif font-extrabold bg-white">
+                <h2 className="text-2xl max-sm:text-lg py-2 text-center  font-extrabold bg-white">
                   {condition.conditionName}
                 </h2>
                 <hr />

@@ -227,7 +227,7 @@ export default RecycleOrdersList;
 {
   /* <table className="w-full">
           <thead>
-            <tr className="py-10 font-serif text-lg border shadow-xl text-green-800">
+            <tr className="py-10  text-lg border shadow-xl text-green-800">
               <th className="px-4 py-4">Recycle Order ID</th>
               <th className="px-4 py-2 ">Product Details</th>
               <th className="px-4 py-2 ">Customer Details</th>

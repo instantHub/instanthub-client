@@ -55,7 +55,7 @@ export const CreateSlider = () => {
   };
   return (
     <>
-      <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%] font-serif text-sm max-sm:text-xs">
+      <div className="flex flex-col mt-[5%] w-[80%] mx-auto max-sm:w-[98%]  text-sm max-sm:text-xs">
         <div className="bg-white border rounded-md shadow-lg">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-5 ">
             <div className="flex gap-2 items-center">

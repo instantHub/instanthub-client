@@ -19,7 +19,7 @@ export const Complaints = () => {
     <div>
       {/* Orders Cards */}
       <div className="mt-2 mb-5 flex flex-col items-center">
-        <div className="my-2 text-lg max-sm:text-sm font-serif font-semibold">
+        <div className="my-2 text-lg max-sm:text-sm  font-semibold">
           All Complaints
         </div>
         <div className="w-full grid grid-cols-5 gap-4 max-sm:gap-2 max-md:grid-cols-2 max-sm:grid-cols-2 px-5 max-sm:px-1 mx-auto">

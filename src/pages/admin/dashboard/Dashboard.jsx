@@ -138,7 +138,7 @@ const ChartSection = ({ title, children, className = "" }) => (
   <div
     className={`flex flex-col items-center border px-3 py-10 max-sm:py-5 rounded-xl shadow-lg ${className}`}
   >
-    <h2 className="font-serif text-3xl max-sm:text-xl mb-4">{title}</h2>
+    <h2 className=" text-3xl max-sm:text-xl mb-4">{title}</h2>
     {children}
   </div>
 );
@@ -279,7 +279,7 @@ const Dashboard = () => {
             </ChartContainer>
           </div>
 
-          <p className="text-center font-serif text-xl max-sm:text-sm">
+          <p className="text-center  text-xl max-sm:text-sm">
             Total {dashboardDetail?.ordersCount?.total || 0} Orders
           </p>
         </ChartSection>
@@ -310,7 +310,7 @@ const Dashboard = () => {
             </ChartContainer>
           </div>
 
-          <p className="text-center font-serif text-xl max-sm:text-sm">
+          <p className="text-center  text-xl max-sm:text-sm">
             Total {dashboardDetail?.recycleOrdersCount?.total || 0} Orders
           </p>
         </ChartSection>

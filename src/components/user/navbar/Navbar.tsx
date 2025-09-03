@@ -54,7 +54,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white text-black p-2 max-sm:py-1 max-sm:rounded-xl w-full mt-1 sticky top-0 z-50 border-b font-serif">
+      <nav className="bg-white text-black p-2 max-sm:py-1 max-sm:rounded-xl w-full mt-1 sticky top-0 z-50 border-b">
         <div className="max-w-full mx-auto px-4 max-2sm:px-1">
           <div className="flex items-center">
             <div className="flex items-center sm:grow">

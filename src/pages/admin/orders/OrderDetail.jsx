@@ -539,7 +539,7 @@ function DetailWrapper({ icon: Icon, heading, children }) {
     detailDiv: "flex items-start gap-2",
     detailIcon:
       "rounded-full bg-secondary-light p-3 max-sm:p-[7px] text-lg max-sm:text-sm",
-    detailHeading: "text-2xl font-serif text-start max-sm:text-lg",
+    detailHeading: "text-2xl  text-start max-sm:text-lg",
     detailSubDiv: "flex flex-col",
   };
 
