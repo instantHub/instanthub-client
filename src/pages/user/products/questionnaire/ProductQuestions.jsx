@@ -25,7 +25,7 @@ export const ProductQuestions = () => {
   const dispatch = useDispatch();
 
   const { data: productsData, isLoading } = useGetProductDetailsQuery(product);
-  console.log("productsData", productsData);
+  // console.log("productsData", productsData);
 
   const [deductions, setDeductions] = useState();
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -152,8 +152,8 @@ export const ProductQuestions = () => {
 
   if (!sortedConditions.length) return <NoDataBlock />;
 
-  console.log("deductions", deductions);
-  console.log("sortedConditions ProductQuestions", sortedConditions);
+  // console.log("deductions", deductions);
+  // console.log("sortedConditions ProductQuestions", sortedConditions);
 
   return (
     <>

@@ -33,6 +33,8 @@ export interface IVariants {
 }
 
 export interface IConditions {
+  // TODO: remove this 'isSelected' after Laptop Questionnaire refactoring is done
+  isSelected: any;
   id: string;
   conditionId: string;
   conditionName: string;
