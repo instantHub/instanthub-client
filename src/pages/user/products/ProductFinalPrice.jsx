@@ -23,7 +23,6 @@ import {
   NON_DEAD_MOBILE_PRICE,
 } from "../recycle/constants";
 import { Button, Typography } from "@components/general";
-import { useIPLocation } from "@hooks";
 
 // Create the Context
 const StateContext = createContext();
@@ -106,7 +105,6 @@ export const ProductFinalPrice = () => {
   const categoryURL = searchParams.get("c");
   const brandURL = searchParams.get("b");
   const navigate = useNavigate();
-  const { location } = useIPLocation();
 
   // const { data: productDetails, isLoading } =
   //   useGetProductDetailsQuery(productURL);
@@ -171,7 +169,7 @@ export const ProductFinalPrice = () => {
   const handleBack = () => {
     const { brand, category } = selectedProduct;
     navigate(
-      `/${location.city}/${category.uniqueURL}/${brand.uniqueURL}/${selectedProduct.uniqueURL}`
+      `/${category.uniqueURL}/${brand.uniqueURL}/${selectedProduct.uniqueURL}`
     );
   };
 
@@ -258,9 +256,7 @@ export const ProductFinalPrice = () => {
   // UseEffect to handle page refresh
   useEffect(() => {
     if (handlePageRefresh()) {
-      const location = localStorage.getItem("location");
-
-      navigate(`/${location}/${categoryURL}/${brandURL}/${productURL}`, {
+      navigate(`/${categoryURL}/${brandURL}/${productURL}`, {
         replace: true,
       });
     }

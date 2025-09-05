@@ -18,7 +18,6 @@ export const BrandSelection: FC<IBrandSelection> = memo(({ category }) => {
 
   const handleNavigate = (): void => {
     navigate("brands");
-    // navigate(`/${location}/${categoryUniqueURL}/brands`);
   };
 
   return (

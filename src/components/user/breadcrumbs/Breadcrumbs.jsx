@@ -5,6 +5,7 @@ import { ArrowRightIcon } from "@icons";
 
 export const Breadcrumbs = () => {
   const location = useLocation();
+
   const paths = location.pathname.split("/").filter(Boolean);
 
   const formatLabel = (segment) => {
@@ -26,7 +27,6 @@ export const Breadcrumbs = () => {
         <Link to="/">Home</Link>
         {paths.map((segment, index) => {
           const isLast = index === paths.length - 1;
-          const isLocation = index === 0; // 'bengaluru' is first segment
           const label = formatLabel(segment);
 
           return (
@@ -34,8 +34,6 @@ export const Breadcrumbs = () => {
               <ArrowRightIcon />
               {isLast ? (
                 <span className="font-semibold text-black">{label}</span>
-              ) : isLocation ? (
-                <span>{label}</span> // Unclickable location
               ) : (
                 <Link to={createUrl(index)}>{label}</Link>
               )}

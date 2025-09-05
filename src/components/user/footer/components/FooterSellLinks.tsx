@@ -3,7 +3,6 @@ import { FlexBox, Typography } from "@components/general";
 import { useGetCategoriesQuery } from "@features/api";
 import { ICategoryResponse } from "@features/api/categoriesApi/types";
 import { useNavigate } from "react-router-dom";
-import { LOCATIONS } from "@utils/constants";
 
 export const FooterSellLinks: FC = () => {
   const navigate = useNavigate();
@@ -12,8 +11,7 @@ export const FooterSellLinks: FC = () => {
     useGetCategoriesQuery();
 
   const handleNavigate = ({ uniqueURL }: ICategoryResponse) => {
-    const geoLocation = localStorage.getItem("location") || LOCATIONS.BENGALURU;
-    navigate(`${geoLocation}/${uniqueURL}`);
+    navigate(uniqueURL);
   };
 
   return (

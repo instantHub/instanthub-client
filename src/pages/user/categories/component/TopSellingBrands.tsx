@@ -48,9 +48,6 @@ export const TopSellingBrands: FC<ITopSellingBrands> = ({ brands }) => {
   };
 
   const handleBrandClick = (brand: IBrandLite) => {
-    console.log(`Navigating to: ${brand.uniqueURL}`);
-    // Here you would typically handle navigation
-    // e.g., router.push(brand.uniqueURL) or window.location.href = brand.uniqueURL
     navigate(`${brand?.uniqueURL}`);
   };
 

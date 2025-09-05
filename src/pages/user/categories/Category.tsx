@@ -1,4 +1,4 @@
-import { FlexBox, Typography } from "@components/general";
+import { useEffect } from "react";
 import {
   Breadcrumbs,
   HowItWorks,
@@ -7,13 +7,10 @@ import {
   TestimonialSlider,
 } from "@components/user";
 import { useGetCategoryQuery } from "@features/api";
-import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BrandSelection, HeroSection, TopSellingProducts } from "./component";
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { HeroSection, TopSellingProducts } from "./component";
 import { TopSellingBrands } from "./component";
 import { Helmet } from "react-helmet-async";
-import { useIPLocation } from "@hooks";
 
 export type TCategoryParams = {
   categoryUniqueURL: string;
@@ -21,7 +18,6 @@ export type TCategoryParams = {
 
 export const Category = () => {
   const { categoryUniqueURL } = useParams<TCategoryParams>();
-  const { location } = useIPLocation();
 
   if (!categoryUniqueURL) {
     throw new Error("Category UniqueURL is required to Get a category.");
@@ -32,12 +28,6 @@ export const Category = () => {
     isLoading: categoryLoading,
     error,
   } = useGetCategoryQuery(categoryUniqueURL);
-
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = (e: ChangeEvent) => {
-    setSearchTerm((e.target as HTMLInputElement).value);
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,7 +44,7 @@ export const Category = () => {
     "@type": "CollectionPage",
     name: category?.name,
     description: category?.metaDescription,
-    url: `https://instanthub.in/${location.city}/${category?.uniqueURL}`,
+    url: `https://instanthub.in/${category?.uniqueURL}`,
     about: {
       "@type": "Thing",
       name: category?.name,

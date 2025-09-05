@@ -8,11 +8,10 @@ export const ROUTES = {
     termsConditions: "/terms-conditions",
     termsOfUse: "/terms-of-use",
 
-    category: "/:location/:categoryUniqueURL",
-    brands: "/:location/:categoryUniqueURL/brands",
-    products: "/:location/:categoryUniqueURL/:brandUniqueURL",
-    productDetails:
-      "/:location/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
+    category: "/:categoryUniqueURL",
+    brands: "/:categoryUniqueURL/brands",
+    products: "/:categoryUniqueURL/:brandUniqueURL",
+    productDetails: "/:categoryUniqueURL/:brandUniqueURL/:productUniqueURL",
     productDeductions: "/sell/deductions",
     productGenerateOTP: "/sell/deductions/generateOTP",
     productFinalPrice: "/sell/deductions/finalPrice",
