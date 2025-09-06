@@ -11,7 +11,6 @@ import {
 import SellContent from "@components/user/static/SellContent";
 
 import { slugify } from "@utils/general";
-import { useIPLocation } from "@hooks";
 
 export const Brands = () => {
   const { categoryUniqueURL } = useParams();
@@ -24,13 +23,11 @@ export const Brands = () => {
 
   const [category, setCategory] = useState(null);
 
-  const { location } = useIPLocation();
-
   const navigate = useNavigate();
 
   const handleNavigate = (brand) => {
     const { category } = brand;
-    navigate(`/${location.city}/${category.uniqueURL}/${brand.uniqueURL}`);
+    navigate(`/${category.uniqueURL}/${brand.uniqueURL}`);
   };
 
   useEffect(() => {
@@ -52,23 +49,6 @@ export const Brands = () => {
   return (
     <>
       <Helmet>
-        {/* <title>{`Sell Old ${category?.name}s | InstantHub`}</title> */}
-        {/* <title>{`Sell Old ${category?.name}s | InstantHub`}</title>
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-        <meta
-          name="keywords"
-          content={`Sell ${
-            category?.name
-          } on Instant Hub, Instant Hub, instant hub, instanthub, Instant Pick, InstantHub, sell ${category?.name.toLowerCase()} on instanthub`}
-        />
-        <link
-          rel="canonical"
-          href={`https://www.instanthub.in/${categoryUniqueURL}`}
-        /> */}
-
         <title>{category?.metaTitle || category?.name}</title>
         <meta name="description" content={category?.metaDescription} />
         <meta name="keywords" content={category?.metaKeywords.join(", ")} />
@@ -77,7 +57,7 @@ export const Brands = () => {
 
       <div className="pt-8 max-sm:pt-5 w-4/5 max-sm:w-[90%] mx-auto">
         <h1 className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
-          Sell your {category?.name} for Instant Cash
+          Sell your {category?.name} for Instant Cash asknaskdnj
         </h1>
 
         <Breadcrumbs />
@@ -87,8 +67,6 @@ export const Brands = () => {
             brands?.map((brand) => (
               <div className="flex justify-center" key={brand.id}>
                 <button
-                  // to={`${slugify(item.uniqueURL)}`}
-                  // to={`${item.uniqueURL}`}
                   onClick={() => handleNavigate(brand)}
                   className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
                               transition ease-in-out duration-500 w-32 h-32 max-sm:w-24 max-sm:h-24`}

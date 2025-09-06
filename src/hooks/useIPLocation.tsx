@@ -13,6 +13,7 @@ interface IIPLocationReturnType {
   loading: boolean;
 }
 
+// TODO: This is currently not in use. Can be used in future for location based services.
 export const useIPLocation = (): IIPLocationReturnType => {
   const [location, setLocation] = useState<ILocation>({
     city: "",

@@ -89,19 +89,13 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
       if (order.data.success) {
         setIsOpen(false);
         toast.success("Order placed, check your email for the bill.");
-        // navigate(
-        //   generatePathWithParams(
-        //     ROUTES.user.productDetails,
-        //     formData.productUniqueURL
-        //   )
-        // );
+
         const { category, brand, product } = formData?.uniqueURLs;
-        const location = localStorage.getItem("location");
         console.log(
           "`${category}/${brand}/${product}`",
           `${category}/${brand}/${product}`
         );
-        navigate(`/${location}/${category}/${brand}/${product}`, {
+        navigate(`/${category}/${brand}/${product}`, {
           replace: true,
         });
       }

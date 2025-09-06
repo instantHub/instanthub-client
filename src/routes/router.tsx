@@ -21,7 +21,6 @@ import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
 import { ROUTES } from "./routes";
-import { ACRepair } from "@pages/user/marketing-service";
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
 // import { ProductQuestionsLists2 } from "@pages/admin/products/ProductQuestionsList2";
 

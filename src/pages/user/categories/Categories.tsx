@@ -7,10 +7,9 @@ export const Categories = () => {
     useGetCategoriesQuery();
 
   const navigate = useNavigate();
-  const location = localStorage.getItem("location");
 
   const handleNavigate = (category: ICategoryResponse): void => {
-    navigate(`${location}/${category.uniqueURL}`, {
+    navigate(`${category.uniqueURL}`, {
       state: { categoryId: category.id },
     });
   };
@@ -45,7 +44,6 @@ export const Categories = () => {
               <div className="flex justify-center" key={category.id}>
                 <button
                   onClick={() => handleNavigate(category)}
-                  // to={`${localStorage.getItem("location")}/${item.uniqueURL}`}
                   className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 
                               transition ease-in-out duration-500 w-32 h-32 max-sm:w-24 max-sm:h-24
                             }`}
