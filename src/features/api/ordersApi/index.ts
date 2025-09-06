@@ -27,7 +27,7 @@ export const ordersApi = baseApi.injectEndpoints({
     getCancelledOrders: build.query<IOrder[], void>({
       query: () => `${ORDER_API_PATHS.BASE}/cancelled`,
     }),
-    getOrder: build.query<IOrder, void>({
+    getOrder: build.query<IOrder, string>({
       query: (orderId) => `/api/orders/${orderId}`,
       providesTags: [ORDERS_API_TAG],
     }),

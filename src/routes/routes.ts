@@ -76,6 +76,7 @@ export const ROUTES = {
 
     ordersList: "/admin/orders",
     orderDetail: "/admin/order-detail/:orderId",
+    orderReQuote: "/admin/order-detail/:orderId/re-quote",
     manageStock: "/admin/manage-stocks",
 
     phoneNumbers: "/admin/phone-numbers",

@@ -1,14 +1,14 @@
 import React, { useMemo, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addSingleDeductions,
   clearDeductions,
   setProductData,
-} from "@features/userSlices/deductionSlice";
+} from "@features/slices";
 import { toast } from "react-toastify";
 import { OtpGenerator } from "@pages/user";
 import NextPrevButton from "./NextPrevButton";
-import DisplayCondition from "./DisplayCondition";
+import { DisplayCondition } from "./DisplayCondition";
 import { useLazyGetProcessorDeductionsQuery } from "@features/api";
 import {
   IConditionLabels,
@@ -16,7 +16,7 @@ import {
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
-import { RootState } from "@features/store";
+import { TOperation } from "@features/api/productsApi/types";
 
 interface SelectedState {
   selected: boolean;
@@ -54,9 +54,7 @@ const LaptopsQuestions: React.FC<LaptopsQuestionsProps> = ({
 
   // Redux hooks
   const [getProcessorDeductionsRTK] = useLazyGetProcessorDeductionsQuery();
-  const deductionSliceDate = useSelector(
-    (state: RootState) => state.deductions
-  );
+
   const dispatch = useDispatch();
 
   // Constants
@@ -281,7 +279,7 @@ const LaptopsQuestions: React.FC<LaptopsQuestionsProps> = ({
       const conditionLabelData = {
         conditionLabel,
         priceDrop,
-        operation,
+        operation: operation as TOperation,
         type: conditionName,
       };
 

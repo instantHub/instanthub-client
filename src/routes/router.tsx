@@ -526,6 +526,19 @@ export const router = Router([
             ),
           },
           {
+            path: ROUTES.admin.orderReQuote,
+            element: (
+              <ADMIN_COMPONENTS.RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                ]}
+              >
+                <ADMIN.OrderReQuote />,
+              </ADMIN_COMPONENTS.RoleGuard>
+            ),
+          },
+          {
             path: ROUTES.admin.manageStock,
             element: (
               <ADMIN_COMPONENTS.RoleGuard

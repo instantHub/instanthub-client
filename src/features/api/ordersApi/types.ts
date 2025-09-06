@@ -22,6 +22,11 @@ export interface IOrder {
   pickedUpDetails: IPickedUpDetails;
   deviceInfo: IDeviceInfo;
 
+  customerProofFront: string;
+  customerProofBack: string;
+  customerOptional1: string;
+  customerOptional2: string;
+
   status: IOrderStatus;
   cancelReason: string;
 
@@ -49,6 +54,7 @@ export interface IOrdersCount {
 export interface IProductId {
   name: string;
   id: string;
+  uniqueURL: string;
 }
 
 export interface IOrderVariant {
@@ -60,7 +66,7 @@ export interface IAddress {
   address: string;
   state: string;
   city: string;
-  pincode: string;
+  pinCode: string;
 }
 
 export interface IOrderStatus {
@@ -91,8 +97,8 @@ export interface IAccessoriesAvailable {
 }
 
 export interface IDeviceInfo {
-  serialNumber: string;
-  imeiNumber: string;
+  serialNumber?: string;
+  imeiNumber?: string;
 }
 
 export interface IPickedUpDetails {

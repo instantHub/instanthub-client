@@ -3,7 +3,7 @@ import { useGenerateOTPMutation } from "@api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { performCalculation } from "@features/userSlices/deductionSlice";
+import { performCalculation } from "@features/slices";
 import { LockIcon, LockOpenIcon } from "@icons";
 
 export const OtpGenerator = (props) => {
