@@ -25,7 +25,7 @@ export const NavCategoriesList = () => {
     [navigate]
   );
 
-  console.log("brands from cat", categoryData[0]?.brands);
+  // console.log("brands from cat", categoryData[0]?.brands);
 
   const getDropdownPosition = (id: string) => {
     if (categoryData[0]?.id === id) return "left-0";
