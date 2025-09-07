@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "https://api.instantpick.in/sitemap.xml"
+      "destination": "https://api.instanthub.in/sitemap.xml"
     },
     {
       "source": "/robots.txt",
