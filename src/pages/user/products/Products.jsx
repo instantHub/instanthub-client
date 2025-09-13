@@ -16,7 +16,6 @@ import { ROUTES } from "@routes";
 import { slugify } from "@utils/general";
 import { SearchIcon } from "@icons";
 import { ServerError } from "@components/user/errors/ServerError";
-import { useIPLocation } from "@hooks";
 
 export const Products = () => {
   const { categoryUniqueURL, brandUniqueURL } = useParams();
@@ -42,8 +41,6 @@ export const Products = () => {
     error,
   } = useGetProductsQuery({ brandUniqueURL, search });
   // console.log("productsData", productsData);
-
-  const { location } = useIPLocation();
 
   const handleSeries = (seriesId) => {
     setSeriesAction((prevSeries) => ({
@@ -97,23 +94,6 @@ export const Products = () => {
   return (
     <>
       <Helmet>
-        {/* <title>{`Sell Old ${brand?.name} ${category?.name} | InstantHub`}</title>
-
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-
-        <meta
-          name="keywords"
-          content={`sell products on online, sell old mobiles online, sell old ${brand?.name} ${category?.name} online, sell ${brand?.name} ${category?.name} online, sell old mobile online, sell old laptops online, sell old laptop online,sell old products on Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, instanthub`}
-          // content="Instant Hub, Instant Cash, Instant Pick, InstantHub, instant hub, instant hub, instant pick, InstantHub"
-        />
-        <link
-          rel="canonical"
-          href={`https://www.instanthub.in/${location.city}/${categoryUniqueURL}/${brandUniqueURL}`}
-        /> */}
-
         <title>{brand?.metaTitle || brand?.name}</title>
         <meta name="description" content={brand?.metaDescription} />
         <meta name="keywords" content={brand?.metaKeywords.join(", ")} />

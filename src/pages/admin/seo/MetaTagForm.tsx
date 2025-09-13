@@ -55,11 +55,8 @@ export const MetaTagsForm: FC<IMetaTagsFormProps> = ({
   const [canonicalUrl, setCanonicalUrl] = useState("");
 
   const handleGenerateCanonical = () => {
-    const citySlug = LOCATIONS.BENGALURU;
-
     try {
       const url = generateCanonicalUrl({
-        citySlug,
         categorySlug: selectedURLS.categoryUniqueURL,
         brandSlug: selectedURLS.brandUniqueURL,
         productSlug: selectedURLS.productUniqueURL,

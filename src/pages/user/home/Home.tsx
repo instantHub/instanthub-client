@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Categories } from "../categories";
 import { Accordion, GuideHome, Slider } from "@components/user";
 import WhyUs from "@components/user/static/home/WhyUs";
-import { useIPLocation, useScrollToTop } from "@hooks";
+import { useScrollToTop } from "@hooks";
 import { TestimonialCarousel } from "@components/user";
 import { SELL_FAQ_DATA, sellProcessStepsData } from "src/data";
 import { MobileStepper, VerticalTimeline } from "@components/general";
@@ -12,9 +12,6 @@ import { BlogSystem } from "../blogs";
 
 export const Home = () => {
   useScrollToTop();
-  const { location } = useIPLocation();
-
-  // console.log("location", location);
 
   return (
     <>

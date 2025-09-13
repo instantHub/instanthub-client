@@ -214,7 +214,7 @@ export const FloatingButtons = () => {
                 {categories?.map((cat) => (
                   <Link
                     key={cat.id}
-                    to={`${localStorage.getItem("location")}/${cat.uniqueURL}`}
+                    to={cat.uniqueURL}
                     className="py-2 font-[400] hover:font-semibold text-sm border-b w-[130px]"
                   >
                     {cat.name}
@@ -291,61 +291,3 @@ export const FloatingButtons = () => {
     </>
   );
 };
-
-{
-  /* <a
-          href={`https://wa.me/+918722288017?text=${defaultMessage}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 lg:flex-none bg-green-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-green-600 transition "
-        >
-          <FaWhatsapp size={24} />
-        </a>
-        <a
-          href="tel:8722288017"
-          className="flex-1 lg:flex-none bg-blue-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-blue-600 transition "
-        >
-          <FaPhoneAlt size={24} />
-        </a>
-        <a
-          href="mailto:instantcashpick@gmail.com"
-          className="flex-1 lg:flex-none bg-red-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-red-600 transition "
-        >
-          <FaEnvelope size={24} />
-        </a> */
-}
-
-/* Button on left of screen */
-{
-  /* <div className="fixed bottom-0 h-11 right-0 w-full z-10 lg:top-[65%] lg:-translate-y-1/2 lg:right-4 lg:w-auto flex lg:flex-col lg:space-y-4 bg-gray-800 lg:bg-transparent">
-        <a
-          href={`https://wa.me/+918722288017?text=${defaultMessage}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 lg:flex-none bg-green-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-green-600 transition "
-        >
-          <FaWhatsapp size={24} />
-        </a>
-        <a
-          href="tel:8722288017"
-          className="flex-1 lg:flex-none bg-blue-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-blue-600 transition "
-        >
-          <FaPhoneAlt size={24} />
-        </a>
-        <a
-          href="mailto:instantcashpick@gmail.com"
-          className="flex-1 lg:flex-none bg-red-500 text-white p-4 flex justify-center items-center lg:rounded-full shadow-lg hover:bg-red-600 transition "
-        >
-          <FaEnvelope size={24} />
-        </a>
-      </div> */
-}
-
-// className={`flex justify-center text-center p-2 border-r ${
-//   location.pathname.substring(0, 6).includes("/cat")
-//     ? ` text-secondary transition-colors duration-1000 ease-in-out `
-//     : location.pathname === "/" ||
-//       location.pathname.substring(0, 6).includes("/sell")
-//     ? ` text-secondary transition-colors duration-1000 ease-in-out `
-//     : ``
-// }`}

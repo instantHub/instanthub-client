@@ -17,14 +17,15 @@ export const NavCategoriesList = () => {
     useGetCategoriesQuery();
 
   const handleNavigation = useCallback(
-    (to: string, uniqueURL: string) => {
-      const geoLocation = localStorage.getItem("location") || "";
-      if (to === "brands") navigate(`${geoLocation}/${uniqueURL}`);
-      else if (to === "products")
-        navigate(generatePathWithParams(ROUTES.user.products, uniqueURL));
+    (uniqueURL: string) => {
+      console.log("uniqueURL", uniqueURL);
+
+      navigate(`${uniqueURL}`);
     },
     [navigate]
   );
+
+  // console.log("brands from cat", categoryData[0]?.brands);
 
   const getDropdownPosition = (id: string) => {
     if (categoryData[0]?.id === id) return "left-0";
@@ -42,7 +43,7 @@ export const NavCategoriesList = () => {
                 key={category.id}
                 onClick={() => {
                   setHoveredCategoryId(null);
-                  handleNavigation("brands", category.uniqueURL);
+                  handleNavigation(category.uniqueURL);
                 }}
                 onMouseEnter={() => setHoveredCategoryId(category.id)}
                 onMouseLeave={() => setHoveredCategoryId(null)}
@@ -70,9 +71,11 @@ export const NavCategoriesList = () => {
                           category.brands.map((brand, i) => (
                             <button
                               key={`${brand.uniqueURL}-${i}`}
-                              // onClick={() =>
-                              //   handleNavigation("products", brand.uniqueURL)
-                              // }
+                              onClick={() =>
+                                handleNavigation(
+                                  `${category.uniqueURL}/${brand.uniqueURL}`
+                                )
+                              }
                               className="py-1 px-2 rounded hover:bg-gray-100"
                             >
                               {brand.name}

@@ -1,6 +1,5 @@
-import { IProductResponse } from "@features/api/productsApi/types";
-// import { useIPLocation } from "@hooks";
 import { FC, memo } from "react";
+import { IProductResponse } from "@features/api/productsApi/types";
 import { useNavigate } from "react-router-dom";
 
 interface IProductCardProps {
@@ -11,14 +10,9 @@ interface IProductCardProps {
 export const ProductCard: FC<IProductCardProps> = memo(({ product, URL }) => {
   // console.log("product", product);
 
-  // const { location } = useIPLocation();
-
   const navigate = useNavigate();
 
   const handleNavigate = (): void => {
-    // navigate("brands");
-    const { category } = product;
-    // navigate(`/${location.city}/${category.uniqueURL}/${product.uniqueURL}`);
     navigate(`${product.uniqueURL}`);
   };
 

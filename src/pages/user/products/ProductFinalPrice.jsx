@@ -166,7 +166,7 @@ export const ProductFinalPrice = () => {
   const handleBack = () => {
     const { brand, category } = selectedProduct;
     navigate(
-      `${category.uniqueURL}/${brand.uniqueURL}/${selectedProduct.uniqueURL}`
+      `/${category.uniqueURL}/${brand.uniqueURL}/${selectedProduct.uniqueURL}`
     );
   };
 
@@ -233,7 +233,7 @@ export const ProductFinalPrice = () => {
   // UseEffect to handle page refresh
   useEffect(() => {
     if (handlePageRefresh()) {
-      navigate(`${categoryURL}/${brandURL}/${productURL}`, {
+      navigate(`/${categoryURL}/${brandURL}/${productURL}`, {
         replace: true,
       });
     }

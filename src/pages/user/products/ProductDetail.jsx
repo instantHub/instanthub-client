@@ -11,7 +11,6 @@ import {
 import SellContent from "@components/user/static/SellContent";
 import { MOBILE } from "@utils/user/constants";
 import { ArrowRightIcon } from "@icons";
-import { useIPLocation } from "@hooks";
 
 export const ProductDetail = () => {
   const { productUniqueURL } = useParams();
@@ -23,8 +22,6 @@ export const ProductDetail = () => {
     error,
   } = useGetProductDetailsQuery(productUniqueURL);
   // console.log("productDetails", productDetails);
-
-  const { location } = useIPLocation();
 
   const [variantState, setVariantState] = useState({
     variantSelected: null,
@@ -63,16 +60,6 @@ export const ProductDetail = () => {
   return (
     <>
       <Helmet>
-        {/* <title>{`Sell Old ${name} ${category?.name} | InstantHub`}</title>
-        <meta
-          name="description"
-          content="Get instant cash payments with InstantHub on selling your old, unused gadgets with us. Get instant cash at your doorstep. Visit the website to know more!"
-        />
-        <link
-          rel="canonical"
-          href={`https://www.instanthub.in/${location?.city}/${category?.uniqueURL}/${brand?.uniqueURL}/${productUniqueURL}`}
-        /> */}
-
         <title>{productDetails?.metaTitle || productDetails?.name}</title>
         <meta name="description" content={productDetails?.metaDescription} />
         <meta
