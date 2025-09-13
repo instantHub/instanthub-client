@@ -1,11 +1,12 @@
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useGetProductDetailsQuery } from "@api";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setProductData,
   clearDeductions,
-  selectDeductionState,
+  selectIsReQuoteTheme,
+  performCalculation,
 } from "@features/slices";
 import { toast } from "react-toastify";
 import ProdDeductionsRight from "./ProdQuestionsRight";
@@ -37,15 +38,15 @@ interface ConditionStatus {
 export const ProductQuestions: FC<IProductQuestionsProps> = ({
   isReQuote = false,
 }) => {
-  // Query Params
   const [searchParams] = useSearchParams();
   const product = searchParams.get("product");
   const selectedVariant = searchParams.get("variant");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const deductionsState = useSelector(selectDeductionState);
-  console.log("deductionsState", deductionsState);
+  const reQuoteTheme = useSelector(selectIsReQuoteTheme);
+  // console.log("reQuoteTheme", reQuoteTheme);
 
   const { data: productsData, isLoading } = useGetProductDetailsQuery(product!);
 
@@ -95,6 +96,9 @@ export const ProductQuestions: FC<IProductQuestionsProps> = ({
     } else {
       if (!isReQuote) {
         setShowOTP(true);
+      } else {
+        navigate("completion");
+        dispatch(performCalculation());
       }
     }
   }, [currentPageIndex, sortedConditions, isReQuote]);
@@ -161,7 +165,6 @@ export const ProductQuestions: FC<IProductQuestionsProps> = ({
     }
   }, [sortedConditions, currentPageIndex]);
 
-  // Loading state
   if (isLoading) return <Loading />;
 
   // Device switched off state
@@ -178,7 +181,9 @@ export const ProductQuestions: FC<IProductQuestionsProps> = ({
   return (
     <div className="mt-4 w-full">
       <div className="flex gap-3 justify-center my-auto max-sm:flex-col max-sm:items-center">
-        <div className="relative w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] overflow-hidden">
+        <div
+          className={`relative w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] overflow-hidden`}
+        >
           <ProgressBar progressPercentage={progressPercentage} />
 
           <Typography variant="h5" className=" mx-auto font-semibold">

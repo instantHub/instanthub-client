@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { MVBQuestions } from "./MVBQuestions";
 import { PBQuestions } from "./PBQuestions";
 import { ProductQuestions } from "@pages/user";
+import { useDispatch } from "react-redux";
+import { setReQuoteTheme } from "@features/slices";
 
 export const OrderReQuote: FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -15,8 +17,10 @@ export const OrderReQuote: FC = () => {
     { data: productDetail, isLoading: loadingProductDetail },
   ] = useLazyGetProductDetailsQuery();
 
-  console.log("re-quote orderDetail", orderDetail);
-  console.log("re-quote productDetail", productDetail);
+  const dispatch = useDispatch();
+
+  // console.log("re-quote orderDetail", orderDetail);
+  // console.log("re-quote productDetail", productDetail);
 
   const goBack = (): void => {
     window.history.back();
@@ -27,6 +31,10 @@ export const OrderReQuote: FC = () => {
       getProductDetails(orderDetail?.productId.uniqueURL);
     }
   }, [orderDetail]);
+
+  useEffect(() => {
+    dispatch(setReQuoteTheme({ re_quote: true }));
+  }, []);
 
   return (
     <FlexBox direction="col" gap={2} className="p-4">

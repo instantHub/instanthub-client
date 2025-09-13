@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import SelectedProduct from "./SelectedProduct";
+import { selectDeductionState } from "@features/slices";
 
 const ProdDeductionsRight = () => {
   const { selectedProduct, getUpTo, deductions, singleDeductions } =
-    useSelector((state) => state.deductions);
-  // console.log("productsData", productsData);
+    useSelector(selectDeductionState);
 
   return (
     <div className="w-[25%] border rounded sm:h-[450px] max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">

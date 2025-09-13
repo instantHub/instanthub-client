@@ -7,7 +7,7 @@ import { TMakePartial } from "@utils/types";
 
 export interface IGetUpTo {
   variantName: string;
-  price: number | null;
+  price: number;
 }
 
 export interface IDeduction extends IConditionLabels {
@@ -34,6 +34,7 @@ export interface IDeductionState {
   getUpTo: IGetUpTo;
   toBeAdded: number;
   toBeDeducted: number;
+  offerPrice: number;
   deductions: IDeduction[];
   singleDeductions: ISingleDeductions;
 }

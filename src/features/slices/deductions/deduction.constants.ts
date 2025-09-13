@@ -13,6 +13,7 @@ export const INITIAL_STATE = {
   },
   toBeAdded: 0,
   toBeDeducted: 0,
+  offerPrice: 0,
   deductions: [],
   singleDeductions: {},
 } as const;

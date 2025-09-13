@@ -11,6 +11,11 @@ import {
   isAddOperation,
   processDeductionCalculation,
 } from "./deduction.utils";
+import { LAPTOP } from "@utils/user/constants";
+import {
+  NON_DEAD_LAPTOP_PRICE,
+  NON_DEAD_MOBILE_PRICE,
+} from "@pages/user/recycle/constants";
 
 export const deductionSlice = createSlice({
   name: "deductions",
@@ -88,6 +93,13 @@ export const deductionSlice = createSlice({
           state.toBeDeducted
         );
 
+        console.log(
+          deduction.conditionLabel + " - toAdd: ",
+          toAdd,
+          "toDeduct: ",
+          toDeduct
+        );
+
         totalToBeAdded += toAdd;
         totalToBeDeducted += toDeduct;
       });
@@ -99,6 +111,11 @@ export const deductionSlice = createSlice({
           basePrice,
           deduction.priceDrop
         );
+
+        // console.log("isAdd", isAdd);
+        // console.log(
+        //   deduction.conditionLabel + " calculatedAmount :" + calculatedAmount
+        // );
 
         if (isAdd) {
           totalToBeAdded += calculatedAmount;
@@ -113,6 +130,29 @@ export const deductionSlice = createSlice({
       console.log(
         `amountToBeAdded: ${totalToBeAdded}, amountToBeDeducted: ${totalToBeDeducted}`
       );
+
+      let deductedPrice =
+        state.getUpTo.price + totalToBeAdded - totalToBeDeducted;
+
+      // console.log("deductedPrice", deductedPrice);
+
+      const minPrice =
+        state.selectedProduct.category.name === LAPTOP
+          ? NON_DEAD_LAPTOP_PRICE
+          : NON_DEAD_MOBILE_PRICE;
+
+      if (deductedPrice > minPrice && deductedPrice <= state.getUpTo.price) {
+        state.offerPrice = Math.ceil(deductedPrice);
+      } else if (deductedPrice > state.getUpTo.price) {
+        const price = state.selectedProduct.category.categoryType.processorBased
+          ? Math.ceil(deductedPrice)
+          : state.getUpTo.price;
+        // console.log("price", price);
+
+        state.offerPrice = Math.ceil(price);
+      } else {
+        state.offerPrice = Math.ceil(minPrice);
+      }
     },
 
     clearDeductions: (state) => {

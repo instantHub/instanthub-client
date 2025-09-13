@@ -4,10 +4,10 @@ import {
   addDeductions,
   addSingleDeductions,
   selectDeductionState,
+  selectIsReQuoteTheme,
 } from "@features/slices";
 import { CircleIcon } from "@icons";
 import { IConditionLabels, IConditions } from "@features/api/productsApi/types";
-import { RootState } from "@features/store";
 
 interface DeductionItemsProps {
   condition: IConditions;
@@ -72,7 +72,8 @@ const getGridColumnsClass = (
 
 const getStyleClasses = (
   isSelected: boolean,
-  isFunctionalProblem: boolean
+  isFunctionalProblem: boolean,
+  reQuoteTheme: boolean
 ): { backgroundClass: string; borderClass: string } => {
   if (!isSelected) {
     return {
@@ -84,9 +85,11 @@ const getStyleClasses = (
   const isError = isFunctionalProblem;
   return {
     backgroundClass: isError
-      ? "bg-red-500 text-white"
-      : "bg-instant-mid text-white",
-    borderClass: isError ? "border-red-500" : "border-instant-mid",
+      ? "bg-red-600 text-white"
+      : `${reQuoteTheme ? "bg-gray-600" : "bg-instant-mid"} text-white`,
+    borderClass: isError
+      ? "border-red-600"
+      : `{${reQuoteTheme ? "border-gray-600" : "border-instant-mid"}}`,
   };
 };
 
@@ -104,6 +107,7 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
 
   const { deductions: deductionData, singleDeductions } =
     useSelector(selectDeductionState);
+  const reQuoteTheme = useSelector(selectIsReQuoteTheme);
 
   console.log("deductionData", deductionData);
   console.log("singleDeductions", singleDeductions);
@@ -204,7 +208,8 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
         const isSelected = isLabelSelected(label);
         const styleClasses = getStyleClasses(
           isSelected,
-          conditionTypes.functionalProblems
+          conditionTypes.functionalProblems,
+          reQuoteTheme
         );
 
         return (

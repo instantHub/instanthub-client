@@ -8,6 +8,7 @@ import filterSlice from "./adminSlices/filterSlice";
 import searchSlice from "./adminSlices/searchSlice";
 import processorSlice from "./adminSlices/processorSlice";
 import adminAuthSlice from "./adminSlices/adminAuthSlice";
+import themesSlice from "./slices/themes/themes.slice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     search: searchSlice,
     processor: processorSlice,
     adminPanel: adminAuthSlice,
+    themes: themesSlice,
 
     [baseApi.reducerPath]: baseApi.reducer,
   },

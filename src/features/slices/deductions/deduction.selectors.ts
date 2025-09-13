@@ -106,6 +106,11 @@ export const selectBasePrice = createSelector(
   (getUpTo) => getUpTo.price ?? 0
 );
 
+export const selectOfferPrice = createSelector(
+  [selectDeductionState],
+  ({ offerPrice }) => offerPrice
+);
+
 export const selectVariantName = createSelector(
   [selectGetUpTo],
   (getUpTo) => getUpTo.variantName
@@ -133,10 +138,12 @@ export const selectIsMultiVariant = createSelector(
 
 // ===== COMPLEX COMPUTED SELECTORS =====
 
+// TODO: Update or remove this as this returns wrong data
 export const selectCalculatedAmounts = createSelector(
-  [selectBasePrice, selectToBeAdded, selectToBeDeducted],
-  (basePrice, toBeAdded, toBeDeducted) => ({
+  [selectBasePrice, selectOfferPrice, selectToBeAdded, selectToBeDeducted],
+  (basePrice, toBeAdded, toBeDeducted, offerPrice) => ({
     basePrice,
+    offerPrice,
     toBeAdded,
     toBeDeducted,
     finalPrice: basePrice + toBeAdded - toBeDeducted,
