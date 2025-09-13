@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Purchase Summary - PDF</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #fff;
+        box-sizing: border-box;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 25px;
+      }
+
+      .logo {
+        width: 120px;
+        height: auto;
+        margin: 0 auto 10px;
+        display: block;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 20px;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .purchase-block {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .purchase-block-details {
+        font-size: 13px;
+        margin-top: 5px;
+      }
+
+      .block {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .block-header {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .block-title {
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #7a84b0;
+        color: white;
+        /* padding: 10px; */
+        text-align: center;
+      }
+
+      .inner-block {
+        width: 100%;
+        display: flex;
+        border: 1px solid #ddd;
+      }
+
+      .block-items {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .border-right {
+        border-right: 1px solid #ddd;
+      }
+
+      .border-bottom {
+        border-bottom: 1px solid #ddd;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        vertical-align: top;
+      }
+
+      th {
+        text-align: center;
+        padding: 16px;
+      }
+
+      .padding-left {
+        padding-left: 10px;
+      }
+
+      .note {
+        font-size: 12px;
+        color: #777;
+        margin: 5px 0;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #555;
+      }
+
+      .footer p {
+        margin: 4px 0;
+      }
+
+      .total {
+        text-align: right;
+        font-weight: bold;
+      }
+
+      .deduction-group {
+        margin: 3px 0;
+      }
+
+      .deduction-title {
+        font-weight: bold;
+        font-size: 13px;
+        margin: 0;
+      }
+
+      .deduction-list {
+        margin-left: 8px;
+        font-size: 12px;
+      }
+
+      .deduction-item {
+        display: inline-block;
+        margin-right: 8px;
+      }
+
+      .md-text {
+        font-size: 13px;
+      }
+
+      .rights {
+        text-align: center;
+        font-size: 11px;
+        color: #aaa;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .container {
+          padding: 15px;
+        }
+        table {
+          font-size: 12px !important;
+        }
+        .title {
+          font-size: 18px;
+        }
+        .logo {
+          width: 90px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Instant Hub</div>
+
+      <div class="subtitle">
+        Thank you, your order has been completed with InstantHub.
+      </div>
+
+      <div class="purchase-block">
+        <div class="block-title capitalize">
+          <p>Purchase Receipt</p>
+        </div>
+        <div class="purchase-block-details md-text">
+          <p><strong>Date:</strong> ${order.schedulePickUp}</p>
+          <p>${order.orderId}</p>
+          <p>${order.customerName}</p>
+          <p>
+            ${order.addressDetails.address}, ${order.addressDetails.state},
+            ${order.addressDetails.city}, ${order.addressDetails.pinCode}
+          </p>
+        </div>
+      </div>
+
+      <div class="block md-text">
+        <div class="block-header block-title">
+          <p>Product Details</p>
+        </div>
+        <div class="inner-block md-text">
+          <div class="block-items border-right">
+            <div class="border-bottom padding-left">
+              <p>Product Name</p>
+            </div>
+            <div class="border-bottom padding-left">
+              <p>Product Variant</p>
+            </div>
+            <div class="padding-left">
+              <p>Product IMEI Number</p>
+            </div>
+          </div>
+
+          <div class="block-items">
+            <div class="border-bottom padding-left">
+              <p>${order.productName}</p>
+            </div>
+            <div class="border-bottom padding-left">
+              <p>
+                ${ order.productCategory.toLowerCase().includes("mobile") ?
+                order.variant.variantName : "-" }
+              </p>
+            </div>
+            <div class="padding-left">
+              <p>
+                ${ order.deviceInfo?.imeiNumber ? order.deviceInfo?.imeiNumber :
+                "-" }
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="md-text">
+        <tr class="block-title">
+          <th>Item</th>
+          <th>Price</th>
+        </tr>
+        <tr>
+          <td>
+            <strong>${order.productCategory}</strong> - ${order.productName} ${
+            order.productCategory.toLowerCase().includes("mobile") ? ` (
+            ${order.variant.variantName} ) ` : "" }
+          </td>
+          <td>${order.offerPrice}</td>
+        </tr>
+        <tr>
+          <td>Payment Mode</td>
+          <td>${order.paymentMode}</td>
+        </tr>
+        <tr>
+          <td>Final Price</td>
+          <td>${order.finalPrice}</td>
+        </tr>
+      </table>
+
+      <p class="note">
+        *This is a computer generated receipt. Signature not required.
+      </p>
+      <p class="note">
+        Get in touch with us if you need any additional help:
+        <a href="tel:8722288017">8722288017</a>
+      </p>
+      <p class="note">
+        If you have any questions or concerns about your order, please email us
+        at
+        <a href="mailto:support@instanthub.in">support@instanthub.in</a>
+      </p>
+
+      <div class="footer">
+        <p>Thanks & Regards</p>
+        <p><strong>Instant Hub</strong></p>
+      </div>
+
+      <p class="rights">&copy; 2025 InstantHub. All rights reserved.</p>
+    </div>
+  </body>
+</html>

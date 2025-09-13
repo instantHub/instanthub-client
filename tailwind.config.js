@@ -23,7 +23,7 @@ export default {
         },
         instant: {
           start: "#A7438B", // magenta-purple
-          mid: "#7A84B0", // blended midpoint (optional)
+          mid: "#7A84B0", // blended midpoint
           end: "#4AC0CC", // teal-cyan
         },
       },
