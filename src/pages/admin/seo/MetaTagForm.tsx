@@ -7,7 +7,6 @@ import {
 import { IMetaTagsPayload } from "@features/api/seoApi/types";
 import { Typography } from "@components/general";
 import { generateCanonicalUrl } from "@utils/general";
-import { LOCATIONS } from "@utils/constants";
 import { ISelectedURLs } from "./MetaTags";
 
 interface IMetaTagsFormProps {

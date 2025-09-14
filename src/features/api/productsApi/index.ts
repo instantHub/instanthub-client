@@ -100,6 +100,7 @@ export const {
   useGetProductsQuery,
   useLazyGetProductsQuery,
   useGetProductDetailsQuery,
+  useLazyGetProductDetailsQuery,
   useGetProductQuestionsQuery,
   useCreateProductMutation,
   useUploadProductImageMutation,

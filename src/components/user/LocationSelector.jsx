@@ -1,33 +1,58 @@
 import { CityIcon } from "@icons";
+import { LOCATIONS_CITY, LOCATIONS_STATE } from "@utils/constants";
 
 const cities = [
   {
-    city: "Bangalore",
-    state: "Karnataka",
+    city: LOCATIONS_CITY.BENGALURU,
+    state: LOCATIONS_STATE.KARNATAKA,
     icon: <CityIcon size={26} />,
     available: true,
   },
   {
-    city: "Mysore",
-    state: "Karnataka",
+    city: LOCATIONS_CITY.MYSORE,
+    state: LOCATIONS_STATE.KARNATAKA,
     icon: <CityIcon size={26} />,
     available: true,
   },
   {
-    city: "Mumbai",
-    state: "Maharashtra",
+    city: LOCATIONS_CITY.MUMBAI,
+    state: LOCATIONS_STATE.MAHARASHTRA,
     icon: <CityIcon size={26} />,
-    available: false,
+    available: true,
   },
   {
-    city: "Delhi",
-    state: "Delhi",
+    city: LOCATIONS_CITY.PUNE,
+    state: LOCATIONS_STATE.MAHARASHTRA,
     icon: <CityIcon size={26} />,
-    available: false,
+    available: true,
   },
   {
-    city: "Hyderabad",
-    state: "Telangana",
+    city: LOCATIONS_CITY.DELHI,
+    state: LOCATIONS_STATE.DELHI,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.NOIDA,
+    state: LOCATIONS_STATE.UTTAR_PRADESH,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.TUMKUR,
+    state: LOCATIONS_STATE.KARNATAKA,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.GHAZIABAD,
+    state: LOCATIONS_STATE.UTTAR_PRADESH,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.HYDERABAD,
+    state: LOCATIONS_STATE.TELANGANA,
     icon: <CityIcon size={26} />,
     available: false,
   },

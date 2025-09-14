@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order Summary</title>
+    <title>Order Summary - PDF</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -66,8 +66,9 @@
       }
 
       th {
-        background-color: #f2f2f2;
-        text-align: left;
+        background-color: #7a84b0;
+        color: #fff;
+        text-align: center;
       }
 
       .note {
@@ -140,19 +141,13 @@
   </head>
   <body>
     <div class="container">
-      <img
-        src="https://api.instantpick.in/uploads/instanthub-logo.png"
-        alt="Instant Hub"
-        class="logo"
-      />
-
       <div class="title">Sell Receipt</div>
       <div class="subtitle">
         Congratulations, your order has been placed with InstantHub
       </div>
 
       <div class="md-text">
-        <p><strong>Order #:</strong> ${orderId}</p>
+        <p><strong>Order #:</strong> ${order.orderId}</p>
         <p>
           <strong>Website:</strong>
           <a href="https://instanthub.in">instanthub.in</a>
@@ -197,9 +192,9 @@
               <strong>Payment Mode:</strong> ${ order.paymentMode }
             </p>
           </td>
-          <td>₹ ${order.offerPrice}</td>
+          <td>${order.offerPrice}</td>
           <td>1</td>
-          <td>₹ ${order.offerPrice}</td>
+          <td>${order.offerPrice}</td>
         </tr>
       </table>
 

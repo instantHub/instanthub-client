@@ -3,6 +3,8 @@ import { OrderCancellationForm } from "./OrderCancellationForm";
 import { useOrderCancelMutation } from "@api";
 import { DateAndTime, InputSubmitBtn } from "@components/user";
 import { ImageIcon, InfoCircleIcon, RightTickIcon } from "@icons";
+import { Button, FlexBox } from "@components/general";
+import { useNavigate } from "react-router-dom";
 
 export const OrderCompleteForm = ({
   orderDetail,
@@ -16,6 +18,8 @@ export const OrderCompleteForm = ({
 }) => {
   const [orderCancel, { isLoading: orderCancelLoading }] =
     useOrderCancelMutation();
+
+  const navigate = useNavigate();
 
   const [cancelModal, setCancelModal] = useState(false);
 
@@ -164,26 +168,43 @@ export const OrderCompleteForm = ({
           </div>
         </DetailWrapper>
 
-        {/* Submit Order Completion */}
-        <div className="w-fit mx-auto">
-          <InputSubmitBtn
+        <FlexBox justify="around" className="w-full max-md:flex-col">
+          {/* Submit Order Completion */}
+          <Button
+            type="submit"
+            shape="square"
+            variant="greenary"
             loading={orderReceivedLoading}
-            label="Order Complete"
-          />
-        </div>
+          >
+            Order Complete
+          </Button>
 
-        {/* Cancel confirmation */}
-        <div className="w-fit mx-auto">
-          <button
+          {/* Re-Quote */}
+          <Button
+            shape="square"
+            variant="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(
+                `re-quote?product=${orderDetail?.productId?.uniqueURL}&variant=${orderDetail?.variant?.variantName}`
+              );
+            }}
+          >
+            Re-Quote
+          </Button>
+
+          {/* Cancel confirmation */}
+          <Button
+            shape="square"
+            variant="danger"
             onClick={(e) => {
               e.preventDefault();
               setCancelModal(true);
             }}
-            className={`bg-red-600 hover:bg-red-700 cursor-pointer rounded px-2 py-1 w-fit text-white disabled:bg-gray-300`}
           >
             Cancel Order
-          </button>
-        </div>
+          </Button>
+        </FlexBox>
       </form>
 
       {cancelModal && (

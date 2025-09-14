@@ -6,10 +6,20 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
+import { Button, FlexBox, FormInput, Typography } from "@components/general";
+import {
+  EmailIcon,
+  MapIcon,
+  NumbersIcon,
+  PhoneIcon,
+  ProfileIcon,
+  StockpilesIcon,
+} from "@icons";
 
 export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   const { state, dispatch } = reducer;
-  console.log("state from submit form of final price", state);
+  // console.log("state from submit form of final price", state);
+  console.log("formData", formData);
 
   const navigate = useNavigate();
 
@@ -19,6 +29,8 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   console.log("schedulePickUp", schedulePickUp);
 
   const handlePinCodeChange = (e) => {
+    console.log("handlePinCodeChange");
+
     let value = e.target.value;
 
     // Remove non-numeric characters
@@ -104,13 +116,11 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
       toast.error("Error while Creating Order. Please try after sometime.");
     }
   };
-  // http://localhost:5173/sell-mobile/used-apple-mobile/Apple%20iPhone%2012%20Pro%20Max
-  // http://localhost:5173/bengaluru/sell-mobile/used-apple-mobile/Apple%20iPhone%2012%20Pro%20Max
 
   return (
     <div
       role="dialog"
-      className="z-20 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+      className="z-50 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div className="relative bg-white p-6 max-sm:py-2 max-sm:px-4 rounded-lg shadow-lg w-fit max-lg:w-3/4 max-sm:w-[90%]">
         <h2 className="text-xl max-sm:text-lg font-semibold mb-4">
@@ -126,71 +136,95 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
           onSubmit={handleSubmit}
           className="w-full flex flex-col gap-2 justify-center"
         >
-          {/* Name */}
-          <FormData
-            input={{ label: "Name", type: "text", name: "name" }}
+          <FormInput
+            startIcon={<ProfileIcon size={16} />}
+            size="sm"
+            label="Name"
+            type="text"
+            name="name"
             value={formData.customerName}
             placeHolder="Enter Full Name"
-            changeHandler={(e) => {
+            onChange={(e) => {
               setFormData({ ...formData, customerName: e.target.value });
             }}
+            required
           />
-
-          {/* Email */}
-          <FormData
-            input={{ label: "Email", type: "email", name: "email" }}
-            value={formData.email}
-            placeHolder="Enter Email"
-            changeHandler={(e) => {
-              setFormData({ ...formData, email: e.target.value });
-            }}
-          />
-
-          {/* Phone Number */}
-          <FormData
-            input={{ label: "Mobile", type: "number", name: "phone" }}
-            value={formData.phone}
-            placeHolder="Enter Phone Number"
-            changeHandler={handlePhoneChange}
-          />
-
-          {/* Address */}
-          <FormData
-            input={{ label: "Address", type: "text", name: "address" }}
+          <FlexBox gap={2}>
+            <FormInput
+              startIcon={<EmailIcon size={16} />}
+              size="sm"
+              label="Email"
+              type="email"
+              name="email"
+              value={formData.email}
+              placeHolder="Enter Email"
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value });
+              }}
+              required
+            />
+            <FormInput
+              startIcon={<PhoneIcon size={16} />}
+              size="sm"
+              label="Mobile"
+              type="number"
+              name="phone"
+              value={formData.phone}
+              placeHolder="Enter Phone Number"
+              onChange={handlePhoneChange}
+              required
+            />
+          </FlexBox>
+          <FormInput
+            startIcon={<MapIcon size={16} />}
+            size="sm"
+            label="Address"
+            type="text"
+            name="address"
             value={state.addressDetails.address}
             placeHolder="Add your address"
-            changeHandler={(e) => {
+            onChange={(e) => {
               dispatch({
                 type: "address",
                 value: e.target.value,
               });
             }}
+            required
           />
+          <FlexBox gap={2}>
+            <FormInput
+              startIcon={<MapIcon size={16} />}
+              size="sm"
+              label="State"
+              type="text"
+              name="state"
+              value={state.addressDetails.state}
+              placeHolder="Enter State"
+              onChange={() => {}}
+            />
 
-          {/* State */}
-          <FormData
-            input={{ label: "State", type: "text", name: "pinCOde" }}
-            value={state.addressDetails.state}
-            placeHolder="Enter State"
-            readOnly={true}
-          />
-
-          {/* City */}
-          <FormData
-            input={{ label: "City", type: "text", name: "pinCOde" }}
-            value={state.addressDetails.city}
-            placeHolder="Enter City"
-            readOnly={true}
-          />
-
-          {/* Pincode */}
-          <FormData
-            input={{ label: "PinCode", type: "number", name: "pinCOde" }}
+            <FormInput
+              startIcon={<StockpilesIcon size={16} />}
+              size="sm"
+              label="City"
+              type="text"
+              name="city"
+              value={state.addressDetails.city}
+              placeHolder="Enter City"
+              onChange={() => {}}
+            />
+          </FlexBox>
+          <FormInput
+            startIcon={<NumbersIcon size={16} />}
+            size="sm"
+            label="Pin Code"
+            type="number"
+            name="pinCode"
             value={state.addressDetails.pinCode}
-            placeHolder="Add PinCode"
-            changeHandler={handlePinCodeChange}
+            onChange={handlePinCodeChange}
+            placeHolder="Enter Pin Code"
+            required
           />
-
           {/* Date Picker */}
           <DateAndTime
             showPreviousDate={false}
@@ -198,9 +232,13 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
           />
 
           {/* Payment */}
-          <div className="flex flex-col gap-2 justify-center w-full items-center py-2 border-t border-b">
-            <h2 className="text-lg max-sm:text-sm">Select Payment Mode</h2>
-            <div className="flex flex-col gap-2">
+          <FlexBox
+            direction="col"
+            gap={2}
+            className="w-full py-2 border-t border-b"
+          >
+            <Typography>Select Payment Mode</Typography>
+            <FlexBox direction="col" gap={2}>
               <PaymentMode
                 input={{
                   role: "radio",
@@ -229,7 +267,7 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
                 changeHandler={handlePaymentModeChange}
                 icon={{ src: "/images/upi2.webp", alt: "digitalpayment" }}
               />
-            </div>
+            </FlexBox>
 
             {state.selectedPaymentMode === "Digital Payments" && (
               <div className="grid grid-cols-3 place-items-center items-center gap-2">
@@ -268,41 +306,23 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
                 />
               </div>
             )}
-          </div>
-
-          <InputSubmitBtn
+          </FlexBox>
+          <Button
+            variant="greenary"
+            shape="square"
+            size="sm"
             loading={ordersLoading}
-            label="Sell"
-            ariaLabel="Order Booking Submit Button"
-          />
-
-          <span className="text-center bg-yellow-400 text-[11px] max-sm:text-[9px]">
+          >
+            Sell
+          </Button>
+          <Typography
+            variant="caption"
+            className="text-center bg-yellow-400 text-[11px] max-sm:text-[9px]"
+          >
             Note: {ORDER_EMAIL_MSG}
-          </span>
+          </Typography>
         </form>
       </div>
-    </div>
-  );
-};
-
-// Label & Input Field
-const FormData = ({ input, value, placeHolder, changeHandler, readOnly }) => {
-  const { label, type, name } = input;
-  return (
-    <div className="grid grid-cols-4 gap-1 place-items-end items-center">
-      <label htmlFor={name} className="max-sm:text-sm w-fit max-sm:col-span-">
-        {label}:
-      </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        placeholder={placeHolder}
-        className="col-span-3 border rounded px-2 py-1 w-full max-sm:text-sm max-sm:px-1 max-sm:py-0 read-only:bg-secondary-light"
-        onChange={changeHandler}
-        readOnly={readOnly}
-        required
-      />
     </div>
   );
 };
@@ -336,14 +356,3 @@ const PaymentMode = ({ input, checked, changeHandler, icon }) => {
     </div>
   );
 };
-
-{
-  /* <input
-          type="submit"
-          value={`${!ordersLoading ? "Sell" : "Loading..."} `}
-          className="border rounded px-2 py-1 bg-green-600 text-white cursor-pointer hover:bg-green-700 max-sm:text-sm disabled:bg-green-300 disabled:cursor-none"
-          aria-label="Order Booking Submit Button"
-          disabled={ordersLoading}
-          aria-disabled={ordersLoading}
-        /> */
-}

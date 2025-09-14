@@ -1,10 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { FlexBox } from "@components/general";
-import { useLazyGetTopSellingProductsQuery } from "@features/api";
 import { useNavigate } from "react-router-dom";
 import { SkeletonRow } from "./TopProductsSkeleton";
 import { IProductResponse } from "@features/api/productsApi/types";
-import { LOCATIONS } from "@utils/constants";
 
 interface ITopProduct {
   totalSold: number;
@@ -22,7 +20,7 @@ export const TopProducts: FC<ITopProductsProps> = ({ products }) => {
 
   const handleSellNow = (product: any): void => {
     navigate(
-      `${LOCATIONS.BENGALURU}/${product?.category?.uniqueURL}/${product?.brand?.uniqueURL}/${product?.uniqueURL}`
+      `${product?.category?.uniqueURL}/${product?.brand?.uniqueURL}/${product?.uniqueURL}`
     );
   };
 

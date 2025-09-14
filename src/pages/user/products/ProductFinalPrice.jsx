@@ -23,6 +23,7 @@ import {
   NON_DEAD_MOBILE_PRICE,
 } from "../recycle/constants";
 import { Button, Typography } from "@components/general";
+import { selectOfferPrice } from "@features/slices";
 
 // Create the Context
 const StateContext = createContext();
@@ -106,20 +107,16 @@ export const ProductFinalPrice = () => {
   const brandURL = searchParams.get("b");
   const navigate = useNavigate();
 
-  // const { data: productDetails, isLoading } =
-  //   useGetProductDetailsQuery(productURL);
-
-  // console.log("product url from params", productURL);
-
   const { data: couponsData } = useGetCouponQuery();
 
   const [state, dispatch] = useReducer(reducer, initialState);
   // console.log("Reducer state:", state);
 
+  const offeredPrice = useSelector(selectOfferPrice);
   const selectedProductData = useSelector((state) => state.deductions);
   const { selectedProduct, getUpTo } = selectedProductData;
   console.log("selectedProductData", selectedProductData);
-  console.log("selectedProduct", selectedProduct);
+  // console.log("selectedProduct", selectedProduct);
 
   const [formData, setFormData] = useState();
   // console.log("formData", formData);
@@ -162,10 +159,6 @@ export const ProductFinalPrice = () => {
     return false;
   };
 
-  // useEffect(() => {
-  //   completeFinalData();
-  // }, [selectedProductData]);
-
   const handleBack = () => {
     const { brand, category } = selectedProduct;
     navigate(
@@ -178,33 +171,14 @@ export const ProductFinalPrice = () => {
 
     const productCategory = selectedProduct?.category?.name;
 
-    let deductedPrice =
-      Number(getUpTo.price) -
-      Number(selectedProductData.toBeDeducted) +
-      Number(selectedProductData.toBeAdded);
-
     const minPrice =
       productCategory === LAPTOP
         ? NON_DEAD_LAPTOP_PRICE
         : NON_DEAD_MOBILE_PRICE;
 
-    // Setting Price
-    if (deductedPrice > minPrice && deductedPrice <= getUpTo.price) {
-      dispatch({ type: "offerPrice", value: Math.ceil(deductedPrice) });
-    } else if (deductedPrice > getUpTo.price) {
-      dispatch({
-        type: "offerPrice",
-        // value: LAPTOP_DESKTOP.includes(productCategory.toLowerCase())
-        value: selectedProduct.category.categoryType.processorBased
-          ? Math.ceil(deductedPrice)
-          : getUpTo.price,
-      });
-    } else {
-      dispatch({ type: "offerPrice", value: minPrice });
-      dispatch({ type: "recycleProduct", value: true });
-    }
+    dispatch({ type: "offerPrice", value: offeredPrice });
+    dispatch({ type: "recycleProduct", value: offeredPrice <= minPrice });
 
-    //
     let finalDeductionSet = selectedProductData.deductions.reduce(
       (res, curr) => {
         (res[curr.type] = res[curr.type] || []).push(curr);
@@ -248,7 +222,6 @@ export const ProductFinalPrice = () => {
       productCategory: selectedProduct?.category?.name,
       variant: getUpTo,
       deductions: selectedProductData.deductions,
-      // accessoriesAvailable: AccessoriesSelected,
       finalDeductionSet: finalDeductionArray,
     });
   }
@@ -276,16 +249,6 @@ export const ProductFinalPrice = () => {
       </Helmet>
 
       <div className="flex flex-col justify-between pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
-        {/* <Link
-          to={generatePathWithParams(
-            ROUTES.user.productDetails,
-            selectedProduct?.id
-          )}
-          className="w-fit text-secondary bg-white px-2 border border-secondary rounded"
-        >
-          Back
-        </Link> */}
-
         <Button
           variant="outline"
           size="md"
