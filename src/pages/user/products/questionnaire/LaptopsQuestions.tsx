@@ -1,8 +1,10 @@
 import React, { useMemo, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addSingleDeductions,
   clearDeductions,
+  performCalculation,
+  selectIsReQuoteTheme,
   setProductData,
 } from "@features/slices";
 import { toast } from "react-toastify";
@@ -17,6 +19,7 @@ import {
 } from "@features/api/productsApi/types";
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
 import { TOperation } from "@features/api/productsApi/types";
+import { useNavigate } from "react-router-dom";
 
 interface SelectedState {
   selected: boolean;
@@ -51,6 +54,9 @@ const LaptopsQuestions: React.FC<LaptopsQuestionsProps> = ({
   const [processorBasedDeductions, setProcessorBasedDeductions] = useState<
     GroupedCondition[] | null
   >(null);
+
+  const isReQuote = useSelector(selectIsReQuoteTheme);
+  const navigate = useNavigate();
 
   // Redux hooks
   const [getProcessorDeductionsRTK] = useLazyGetProcessorDeductionsQuery();
@@ -210,7 +216,12 @@ const LaptopsQuestions: React.FC<LaptopsQuestionsProps> = ({
       setCurrentPageIndex((prevIndex) => prevIndex + 1);
       scrollToTop();
     } else {
-      setShowOTP(true);
+      if (!isReQuote) {
+        setShowOTP(true);
+      } else {
+        navigate("completion");
+        dispatch(performCalculation());
+      }
     }
   }, [
     currentPageIndex,
