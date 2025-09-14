@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { slugify } from "@utils/general";
-import { LOCATIONS } from "@utils/constants";
+import { LOCATIONS_CITY, LOCATIONS_STATE } from "@utils/constants";
 
 interface ILocation {
   city: string;
@@ -34,9 +34,9 @@ export const useIPLocation = (): IIPLocationReturnType => {
         );
         const data = await res.json();
 
-        const city = slugify(data.city || LOCATIONS.BENGALURU);
+        const city = slugify(data.city || LOCATIONS_CITY.BENGALURU);
 
-        const region = slugify(data.region || "karnataka");
+        const region = slugify(data.region || LOCATIONS_STATE.KARNATAKA);
 
         setLocation({ city, region });
         localStorage.setItem("location", city);

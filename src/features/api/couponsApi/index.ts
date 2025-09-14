@@ -2,7 +2,7 @@ import { baseApi } from "@features/api";
 
 export const couponsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCoupon: build.query({
+    getCoupon: build.query<void, void>({
       query: () => `/api/coupons`,
       providesTags: ["Coupons"],
     }),

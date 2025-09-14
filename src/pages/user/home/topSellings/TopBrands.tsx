@@ -1,7 +1,6 @@
 import { FlexBox, Typography } from "@components/general";
 import { IBrandResponse } from "@features/api/brandsApi/types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@icons";
-import { LOCATIONS } from "@utils/constants";
 import { FC, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -51,9 +50,7 @@ export const TopBrands: FC<ITopBrandsProps> = ({ brands }) => {
   };
 
   const handleBrandClick = (brand: ITopBrand["brand"]) => {
-    navigate(
-      `${LOCATIONS.BENGALURU}/${brand?.category?.uniqueURL}/${brand?.uniqueURL}`
-    );
+    navigate(`${brand?.category?.uniqueURL}/${brand?.uniqueURL}`);
   };
 
   useEffect(() => {

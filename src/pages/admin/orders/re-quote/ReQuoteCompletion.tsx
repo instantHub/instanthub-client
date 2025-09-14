@@ -13,5 +13,9 @@ export const ReQuoteCompletion = () => {
   console.log("deductionFull", deductionFull);
   console.log("offerPrice", offerPrice);
 
-  return <div>ReQuoteCompletion</div>;
+  return (
+    <div>
+      <h1>ReQuoteCompletion - PENDING</h1>
+    </div>
+  );
 };

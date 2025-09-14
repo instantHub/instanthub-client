@@ -22,7 +22,11 @@ import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
 import { ROUTES } from "./routes";
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
-// import { ProductQuestionsLists2 } from "@pages/admin/products/ProductQuestionsList2";
+
+/**
+ * Using TSX Product Final Price, If everything works fine remove JSX and keep this TSX
+ */
+import { ProductFinalPrice2 } from "@pages/user/products/ProductFinalPrice2";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -156,7 +160,8 @@ export const router = Router([
       },
       {
         path: ROUTES.user.productFinalPrice,
-        element: <USER.ProductFinalPrice />,
+        // element: <USER.ProductFinalPrice />,
+        element: <ProductFinalPrice2 />,
       },
 
       // Services

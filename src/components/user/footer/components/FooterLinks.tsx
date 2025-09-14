@@ -3,7 +3,7 @@ import { GoogleMap } from "@components/user/map";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { FooterSellLinks } from "./FooterSellLinks";
-import { EMAILS, LOCATIONS } from "@utils/constants";
+import { EMAILS } from "@utils/constants";
 
 interface IFooterLinksProps {
   setOpenComplaintBox: (val: boolean) => void;

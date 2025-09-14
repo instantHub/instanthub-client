@@ -184,6 +184,8 @@ export const ProductQuestions: FC<IProductQuestionsProps> = ({
         <div
           className={`relative w-[55%] flex flex-col sm:min-h-[450px] border py-6 rounded my-auto max-sm:w-[95%] overflow-hidden`}
         >
+          {/* <OtpGenerator closeModal={() => {}} /> */}
+
           <ProgressBar progressPercentage={progressPercentage} />
 
           <Typography variant="h5" className=" mx-auto font-semibold">
