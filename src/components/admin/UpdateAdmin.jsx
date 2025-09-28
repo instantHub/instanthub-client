@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUpdateAdminMutation } from "@api";
-import { setCredentials } from "@features/adminSlices/adminAuthSlice";
+import { setCredentials } from "@features/slices/auth/auth.slice";
 import { ROUTES } from "@routes";
 import { Eye, EyeOff } from "@icons";
 

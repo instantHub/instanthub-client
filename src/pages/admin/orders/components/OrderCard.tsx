@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { orderCurrentStatus } from "@utils/admin/helper";
+import { orderCurrentStatus } from "@utils/admin";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-import { IOrder } from "@features/api/ordersApi/types";
+import { IOrder, ORDER_STATUS } from "@features/api/ordersApi/types";
 
 interface OrderCardProps {
   data: IOrder;
@@ -16,13 +16,14 @@ export const OrderCard: React.FC<OrderCardProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const borderColor = data.status.pending
-    ? "border-blue-600"
-    : data.status.completed
-    ? "border-green-600"
-    : data.status.cancelled
-    ? "border-red-600"
-    : "border-gray-300";
+  const borderColor =
+    data.status == ORDER_STATUS.PENDING
+      ? "border-blue-600"
+      : data.status == ORDER_STATUS.COMPLETED
+      ? "border-green-600"
+      : data.status == ORDER_STATUS.CANCELLED
+      ? "border-red-600"
+      : "border-gray-300";
 
   const boldness = "font-semibold max-sm:font-normal";
 

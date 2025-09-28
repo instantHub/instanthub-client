@@ -20,3 +20,4 @@ export * from "./variantQuestionsApi";
 export * from "./testimonialsApi";
 export * from "./seoApi";
 export * from "./stats";
+export * from "./partnersApi";

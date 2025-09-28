@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@components/general";
+import { ORDER_STATUS } from "@features/api/ordersApi/types";
 
 export const OrderCancellationForm = ({
   orderId,
@@ -15,11 +16,7 @@ export const OrderCancellationForm = ({
 
     try {
       const formData = {
-        status: {
-          pending: false,
-          completed: false,
-          cancelled: true,
-        },
+        status: ORDER_STATUS.CANCELLED,
         cancelReason: cancelReason || null,
       };
 

@@ -14,7 +14,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
   const { isSidebarOpen, closeSidebar } = useSidebar();
   const { adminData, isAdmin, isExecutive, isMarketing, isPartner } = useAuth();
 
-  const adminPermissions = ROLE_PERMISSIONS[adminData?.admin.role || "none"];
+  const adminPermissions = ROLE_PERMISSIONS[adminData?.role || "none"];
 
   return (
     <>
@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
                     : "bg-gray-600 text-white"
                 }`}
               >
-                {adminData?.admin.role?.toUpperCase()}
+                {adminData?.role?.toUpperCase()}
               </span>
             </div>
           )}

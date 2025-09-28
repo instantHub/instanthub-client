@@ -34,10 +34,8 @@ export const ROUTES = {
   },
   admin: {
     root: "/admin",
+    loginPage: "/dashboard-login",
     accessDenied: "/admin/access-denied",
-    login: "/admin/login",
-    signIn: "/admin/signin",
-    signUp: "/admin/signup",
 
     dashboard: "/admin/dashboard",
     updateProfile: "/admin/update-profile",

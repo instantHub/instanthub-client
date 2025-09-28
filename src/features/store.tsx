@@ -7,7 +7,8 @@ import serviceProblemsSlice from "./slices/services/serviceProblemsSlice";
 import filterSlice from "./adminSlices/filterSlice";
 import searchSlice from "./adminSlices/searchSlice";
 import processorSlice from "./adminSlices/processorSlice";
-import adminAuthSlice from "./adminSlices/adminAuthSlice";
+import adminAuthSlice from "./slices/auth/auth.slice";
+import partnerAuthSlice from "./slices/partner/partner_auth.slice";
 import themesSlice from "./slices/themes/themes.slice";
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     search: searchSlice,
     processor: processorSlice,
     adminPanel: adminAuthSlice,
+    partnerPanel: partnerAuthSlice,
     themes: themesSlice,
 
     [baseApi.reducerPath]: baseApi.reducer,

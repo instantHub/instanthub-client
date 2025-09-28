@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { EditIcon, EyeOff, Eye, DeleteForeverIcon } from "@icons";
 import { IAdminResponse } from "@features/api/authApi/types";
-import { Button } from "@components/general";
+import { Button, Typography } from "@components/general";
 
 interface AdminTableProps {
   admins: IAdminResponse[];
@@ -76,6 +76,11 @@ export const AdminTable: FC<AdminTableProps> = ({
   return (
     <div className="w-full max-w-[450px] sm:max-w-screen-14inch mx-auto bg-white rounded-lg shadow overflow-hidden">
       {/* <Button onClick={handleSendEmail}>Mock Sending Email</Button> */}
+
+      <Typography variant="h5" className="text-center my-4">
+        ADMINS & EXECUTIVES List
+      </Typography>
+
       <div
         className="overflow-x-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}

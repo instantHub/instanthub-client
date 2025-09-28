@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAssignAgentMutation } from "@api";
 import { DateAndTime } from "@components/user";
 import { toast } from "react-toastify";
+import { ASSIGNMENT_STATUS, ORDER_STATUS } from "@features/api/ordersApi/types";
 
 export const AssignAgent = ({ orderDetail }) => {
   // console.log("AssignAgent orderDetail", orderDetail);
@@ -37,7 +38,10 @@ export const AssignAgent = ({ orderDetail }) => {
 
       const updatedOrderData = await assignAgent({
         orderId: orderDetail.id,
-        data: pickedUpDetails,
+        data: {
+          pickedUpDetails: pickedUpDetails,
+          assignmentStatus: ASSIGNMENT_STATUS.EXECUTIVE,
+        },
       }).unwrap();
 
       toast.success(updatedOrderData.message);

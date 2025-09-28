@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@hooks";
-import { logout } from "@features/adminSlices/adminAuthSlice";
+import { logout } from "@features/slices/auth/auth.slice";
 import { useRefreshTokenMutation } from "@api";
 
+// TODO: Check and remove this if not needed
 export const SessionTimeout: React.FC = () => {
   const [showWarning, setShowWarning] = useState(false);
   const [countdown, setCountdown] = useState(0);

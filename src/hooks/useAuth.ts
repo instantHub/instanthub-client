@@ -1,30 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { ADMIN_ROLES, TPermissionAction } from "@utils/types";
-import { useEffect } from "react";
-import { useValidateTokenQuery } from "@features/api";
-import { setCredentials } from "@features/adminSlices/adminAuthSlice";
+import { RootState } from "@features/store";
 
 export const useAuth = () => {
   console.log("useAuth hook called");
-  const dispatch = useDispatch();
 
-  const {
-    data: adminData,
-    isSuccess: tokenValidated,
-    isLoading,
-  } = useValidateTokenQuery();
-
-  // const { admin, isAuthenticated, loading, sessionExpiry } = useSelector(
-  //   (state: RootState) => state.adminPanel
-  // );
+  const { admin, isAuthenticated, loading, sessionExpiry } = useSelector(
+    (state: RootState) => state.adminPanel
+  );
 
   const hasRole = (role: string) => {
-    return adminData?.admin.role === role;
+    return admin?.role === role;
   };
 
   const hasPermission = (permission: TPermissionAction) => {
-    if (!adminData) return false;
-    return adminData?.admin?.permissions?.some(
+    if (!admin) return false;
+    return admin?.permissions?.some(
       (p) => p.actions.includes(permission) || p.actions.includes("*")
     );
   };
@@ -39,21 +30,15 @@ export const useAuth = () => {
   const isPartner = () => hasRole(ADMIN_ROLES.PARTNER);
 
   const isSessionExpired = () => {
-    if (!adminData?.sessionExpiry) return false;
-    return Date.now() > adminData?.sessionExpiry;
+    if (!sessionExpiry) return false;
+    return Date.now() > sessionExpiry;
   };
 
-  useEffect(() => {
-    if (tokenValidated && adminData) {
-      dispatch(setCredentials({ admin: adminData }));
-    }
-  }, [dispatch, adminData]);
-
   return {
-    adminData,
-    isAuthenticated: tokenValidated,
-    loading: isLoading,
-    sessionExpiry: adminData?.sessionExpiry,
+    adminData: admin,
+    isAuthenticated: isAuthenticated,
+    loading: loading,
+    sessionExpiry: sessionExpiry,
     hasRole,
     hasPermission,
     hasAnyPermission,
@@ -64,3 +49,23 @@ export const useAuth = () => {
     isSessionExpired,
   };
 };
+
+// export const useAuth = () => {
+//   console.log("useAuth hook called");
+
+//   return {
+//     adminData: [],
+//     isAuthenticated: "tokenValidated",
+//     loading: false,
+//     // sessionExpiry: adminData?.sessionExpiry,
+//     sessionExpiry: "",
+//     hasRole: [],
+//     hasPermission: [],
+//     hasAnyPermission: [],
+//     isAdmin: () => true,
+//     isExecutive: false,
+//     isMarketing: false,
+//     isPartner: false,
+//     isSessionExpired: false,
+//   };
+// };

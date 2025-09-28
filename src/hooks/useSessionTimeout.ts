@@ -4,7 +4,7 @@ import { useAuth } from "./useAuth";
 import {
   logout,
   updateSessionExpiry,
-} from "@features/adminSlices/adminAuthSlice";
+} from "@features/slices/auth/auth.slice";
 import { useRefreshTokenMutation } from "@api";
 
 export const useSessionTimeout = () => {

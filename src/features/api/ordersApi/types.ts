@@ -27,7 +27,9 @@ export interface IOrder {
   customerOptional1: string;
   customerOptional2: string;
 
-  status: IOrderStatus;
+  // status: IOrderStatus;
+  status: ORDER_STATUS;
+  assignmentStatus: ASSIGNMENT_STATUS;
   cancelReason: string;
 
   offerPrice: number;
@@ -73,6 +75,20 @@ export interface IOrderStatus {
   pending: boolean;
   completed: boolean;
   cancelled: boolean;
+}
+
+export enum ORDER_STATUS {
+  IN_PROGRESS = "in-progress",
+  PENDING = "pending",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+}
+
+// assignmentStatus
+export enum ASSIGNMENT_STATUS {
+  UNASSIGNED = "unassigned",
+  PARTNER = "partner",
+  EXECUTIVE = "executive",
 }
 
 export type TOperation = "Add" | "Subtract";
