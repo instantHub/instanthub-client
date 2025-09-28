@@ -3,7 +3,7 @@ import { useRegisterMutation } from "@api";
 import { toast } from "react-toastify";
 import { TAdminRole } from "@utils/types";
 
-const roles: TAdminRole[] = ["admin", "executive", "marketing", "partner"];
+const roles: TAdminRole[] = ["admin", "executive", "marketing"];
 
 export const AdminRegisterForm = () => {
   const [formData, setFormData] = useState({

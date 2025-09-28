@@ -9,7 +9,7 @@ import {
 import { ADMIN_API_TAG } from "./constant";
 
 // const ADMIN_URL = "http://localhost:8000/api";
-const ADMIN_URL = "/api";
+const ADMIN_URL = "/api/admin";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -49,9 +49,10 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     getAdmins: builder.query<IAdminResponse[], void>({
-      query: () => `${ADMIN_URL}/admins`,
+      query: () => `${ADMIN_URL}/all-admin`,
       providesTags: [ADMIN_API_TAG],
     }),
+
     adminProfile: builder.query<IAdminResponse, void>({
       query: () => ({
         url: `${ADMIN_URL}/admin-profile`,
@@ -73,11 +74,10 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [ADMIN_API_TAG],
     }),
-    adminLogout: builder.mutation<void, IAdminLogoutRequest>({
-      query: ({ admin }) => ({
+    adminLogout: builder.mutation<void, void>({
+      query: () => ({
         url: `${ADMIN_URL}/logout`,
         method: "POST",
-        body: admin,
       }),
     }),
   }),

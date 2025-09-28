@@ -104,7 +104,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button className={buttonClasses} disabled={disabled || loading} {...props}>
       {/* Left icon */}
       {leftIcon && !loading && (
-        <span className="mr- flex-shrink-0">{leftIcon}</span>
+        <span className="mr-1 flex-shrink-0">{leftIcon}</span>
       )}
 
       {/* Loading spinner */}

@@ -5,7 +5,6 @@ export { ConfirmationModal } from "./ConfirmationModal";
 export { Navbar } from "./Navbar";
 export { OrderCancellationForm } from "./OrderCancellationForm";
 export { OrderCompleteForm } from "./OrderCompleteForm";
-export { PrivateRoute } from "./PrivateRoute";
 export * from "./sidebar";
 export { Table } from "./Table";
 export { UpdateAdmin } from "./UpdateAdmin";

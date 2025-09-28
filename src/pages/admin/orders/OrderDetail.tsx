@@ -7,7 +7,7 @@ import {
 } from "@api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@components/user";
-import { orderCurrentStatus } from "@utils/admin/helper";
+import { orderCurrentStatus } from "@utils/admin";
 import { toast } from "react-toastify";
 import {
   AssignAgent,
@@ -32,6 +32,7 @@ import {
   IDeviceInfo,
   IOrderStatus,
   IPickedUpDetails,
+  ORDER_STATUS,
 } from "@features/api/ordersApi/types";
 import { CustomerIDImage, DetailDiv, DetailWrapper } from "./components";
 import { Button, FlexBox } from "@components/general";
@@ -53,7 +54,7 @@ interface FormData {
   pickedUpDetails: IPickedUpDetails;
   deviceInfo?: IDeviceInfo;
   finalPrice: string;
-  status: IOrderStatus;
+  status: ORDER_STATUS;
 }
 
 // Constants
@@ -75,6 +76,8 @@ export const OrderDetail: React.FC = () => {
   const { data: orderDetail, isLoading: orderDetailLoading } = useGetOrderQuery(
     orderId!
   );
+  console.log("orderDetail", orderDetail);
+
   const [deleteOrder] = useDeleteOrderMutation();
   const [orderReceived, { isLoading: orderReceivedLoading }] =
     useOrderReceivedMutation();
@@ -245,11 +248,7 @@ export const OrderDetail: React.FC = () => {
           pickedUpDetails,
           deviceInfo,
           finalPrice,
-          status: {
-            pending: false,
-            completed: true,
-            cancelled: false,
-          },
+          status: ORDER_STATUS.COMPLETED,
         };
 
         console.log("formData from OrderList handleSubmit", formData);
@@ -407,121 +406,128 @@ export const OrderDetail: React.FC = () => {
           </DetailWrapper>
 
           {/* Completed Order Details */}
-          {orderDetail.status.completed && orderDetail.pickedUpDetails && (
-            <>
-              {/* Completion Detail */}
-              <DetailWrapper icon={RightTickIcon} heading="Completion Details">
-                <DetailDiv
-                  label="Agent Name"
-                  text={orderDetail.pickedUpDetails.agentName}
-                />
-                <DetailDiv
-                  label="Picked Up On"
-                  text={orderDetail.pickedUpDetails.pickedUpDate}
-                />
-                <div className="flex gap-4">
+          {orderDetail.status === ORDER_STATUS.COMPLETED &&
+            orderDetail.pickedUpDetails && (
+              <>
+                {/* Completion Detail */}
+                <DetailWrapper
+                  icon={RightTickIcon}
+                  heading="Completion Details"
+                >
                   <DetailDiv
-                    label="Offered Price"
-                    text={orderDetail.offerPrice.toString()}
+                    label="Agent Name"
+                    text={orderDetail.pickedUpDetails.agentName}
                   />
                   <DetailDiv
-                    label="Final Price"
-                    text={orderDetail.finalPrice?.toString() || "N/A"}
+                    label="Picked Up On"
+                    text={orderDetail.pickedUpDetails.pickedUpDate}
                   />
-                </div>
-              </DetailWrapper>
-
-              {/* Device Info */}
-              <DetailWrapper icon={InfoCircleIcon} heading="Device Info">
-                <DetailDiv
-                  label="Serial Number"
-                  text={orderDetail.deviceInfo?.serialNumber || "Not Available"}
-                />
-                <DetailDiv
-                  label="IMEI Number"
-                  text={orderDetail.deviceInfo?.imeiNumber || "Not Available"}
-                />
-              </DetailWrapper>
-
-              {/* Customer proof images */}
-              {(orderDetail.customerProofFront ||
-                orderDetail.customerProofBack) && (
-                <DetailWrapper icon={ImageIcon} heading="Customer IDs">
-                  <div className="grid grid-cols-4 max-sm:grid-cols-2 items-start justify-center gap-3 p-1 rounded">
-                    {orderDetail.customerProofFront && (
-                      <CustomerIDImage
-                        label="Customer ID Front"
-                        imageSrc={orderDetail.customerProofFront}
-                        imageAlt="Customer Front ID"
-                        downloadHandler={() =>
-                          downloadImage(
-                            BASE_URL + orderDetail.customerProofFront!,
-                            `${orderDetail.customerName}-customerProofFront`
-                          )
-                        }
-                      />
-                    )}
-
-                    {orderDetail.customerProofBack && (
-                      <CustomerIDImage
-                        label="Customer ID Back"
-                        imageSrc={orderDetail.customerProofBack}
-                        imageAlt="Customer Back ID"
-                        downloadHandler={() =>
-                          downloadImage(
-                            BASE_URL + orderDetail.customerProofBack!,
-                            `${orderDetail.customerName}-customerProofBack`
-                          )
-                        }
-                      />
-                    )}
-
-                    {orderDetail.customerOptional1 && (
-                      <CustomerIDImage
-                        label="Optional Proof 1"
-                        imageSrc={orderDetail.customerOptional1}
-                        imageAlt="Optional Proof 1"
-                        downloadHandler={() =>
-                          downloadImage(
-                            BASE_URL + orderDetail.customerOptional1!,
-                            `${orderDetail.customerName}-customerOptional1`
-                          )
-                        }
-                      />
-                    )}
-
-                    {orderDetail.customerOptional2 && (
-                      <CustomerIDImage
-                        label="Optional Proof 2"
-                        imageSrc={orderDetail.customerOptional2}
-                        imageAlt="Optional Proof 2"
-                        downloadHandler={() =>
-                          downloadImage(
-                            BASE_URL + orderDetail.customerOptional2!,
-                            `${orderDetail.customerName}-customerOptional2`
-                          )
-                        }
-                      />
-                    )}
+                  <div className="flex gap-4">
+                    <DetailDiv
+                      label="Offered Price"
+                      text={orderDetail.offerPrice.toString()}
+                    />
+                    <DetailDiv
+                      label="Final Price"
+                      text={orderDetail.finalPrice?.toString() || "N/A"}
+                    />
                   </div>
                 </DetailWrapper>
-              )}
-            </>
-          )}
+
+                {/* Device Info */}
+                <DetailWrapper icon={InfoCircleIcon} heading="Device Info">
+                  <DetailDiv
+                    label="Serial Number"
+                    text={
+                      orderDetail.deviceInfo?.serialNumber || "Not Available"
+                    }
+                  />
+                  <DetailDiv
+                    label="IMEI Number"
+                    text={orderDetail.deviceInfo?.imeiNumber || "Not Available"}
+                  />
+                </DetailWrapper>
+
+                {/* Customer proof images */}
+                {(orderDetail.customerProofFront ||
+                  orderDetail.customerProofBack) && (
+                  <DetailWrapper icon={ImageIcon} heading="Customer IDs">
+                    <div className="grid grid-cols-4 max-sm:grid-cols-2 items-start justify-center gap-3 p-1 rounded">
+                      {orderDetail.customerProofFront && (
+                        <CustomerIDImage
+                          label="Customer ID Front"
+                          imageSrc={orderDetail.customerProofFront}
+                          imageAlt="Customer Front ID"
+                          downloadHandler={() =>
+                            downloadImage(
+                              BASE_URL + orderDetail.customerProofFront!,
+                              `${orderDetail.customerName}-customerProofFront`
+                            )
+                          }
+                        />
+                      )}
+
+                      {orderDetail.customerProofBack && (
+                        <CustomerIDImage
+                          label="Customer ID Back"
+                          imageSrc={orderDetail.customerProofBack}
+                          imageAlt="Customer Back ID"
+                          downloadHandler={() =>
+                            downloadImage(
+                              BASE_URL + orderDetail.customerProofBack!,
+                              `${orderDetail.customerName}-customerProofBack`
+                            )
+                          }
+                        />
+                      )}
+
+                      {orderDetail.customerOptional1 && (
+                        <CustomerIDImage
+                          label="Optional Proof 1"
+                          imageSrc={orderDetail.customerOptional1}
+                          imageAlt="Optional Proof 1"
+                          downloadHandler={() =>
+                            downloadImage(
+                              BASE_URL + orderDetail.customerOptional1!,
+                              `${orderDetail.customerName}-customerOptional1`
+                            )
+                          }
+                        />
+                      )}
+
+                      {orderDetail.customerOptional2 && (
+                        <CustomerIDImage
+                          label="Optional Proof 2"
+                          imageSrc={orderDetail.customerOptional2}
+                          imageAlt="Optional Proof 2"
+                          downloadHandler={() =>
+                            downloadImage(
+                              BASE_URL + orderDetail.customerOptional2!,
+                              `${orderDetail.customerName}-customerOptional2`
+                            )
+                          }
+                        />
+                      )}
+                    </div>
+                  </DetailWrapper>
+                )}
+              </>
+            )}
 
           {/* Cancelled Order Reason */}
-          {orderDetail.status.cancelled && orderDetail.cancelReason && (
-            <DetailWrapper icon={CloseIcon} heading="Cancellation Details">
-              <DetailDiv
-                label="Cancel Reason"
-                text={orderDetail.cancelReason}
-              />
-            </DetailWrapper>
-          )}
+          {orderDetail.status === ORDER_STATUS.CANCELLED &&
+            orderDetail.cancelReason && (
+              <DetailWrapper icon={CloseIcon} heading="Cancellation Details">
+                <DetailDiv
+                  label="Cancel Reason"
+                  text={orderDetail.cancelReason}
+                />
+              </DetailWrapper>
+            )}
         </div>
 
         {/* Order Complete Form for Pending Orders */}
-        {orderDetail.status.pending && (
+        {orderDetail.status === ORDER_STATUS.PENDING && (
           <div>
             <AssignAgent orderDetail={orderDetail} />
             <OrderCompleteForm

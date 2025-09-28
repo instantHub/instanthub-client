@@ -1,19 +1,22 @@
 // Orders
 
+// TODO: this is use in recycle orders, keep now and remove later if not needed
+import { ORDER_STATUS } from "@features/api/ordersApi/types";
+
 export const orderCurrentStatus = (status) => {
-  if (status.pending)
+  if (status == ORDER_STATUS.PENDING)
     return (
       <span className="text-blue-600 bg-blue-200 text-xs px-2 py-[2px] rounded-full ">
         Pending
       </span>
     );
-  if (status.completed)
+  if (status == ORDER_STATUS.COMPLETED)
     return (
       <span className="text-green-600 bg-green-200 text-xs px-2 py-[2px] rounded-full">
         Completed
       </span>
     );
-  if (status.cancelled)
+  if (status === ORDER_STATUS.CANCELLED)
     return (
       <span className="text-red-600 bg-red-200 text-xs px-2 py-[2px] rounded-full">
         Cancelled
@@ -24,11 +27,11 @@ export const orderCurrentStatus = (status) => {
 
 export const orderViewBtnColor = (status) => {
   // if (status.pending) return "text-white bg-blue-500 hover:bg-blue-700";
-  if (status.pending)
+  if (status == ORDER_STATUS.PENDING)
     return "border border-blue-600 text-blue-600 hover:bg-blue-700 hover:text-white";
-  if (status.completed)
+  if (status == ORDER_STATUS.COMPLETED)
     return "border border-green-600 text-green-600 hover:bg-green-700 hover:text-white";
-  if (status.cancelled)
+  if (status == ORDER_STATUS.CANCELLED)
     return "border border-red-600 text-red-600 hover:bg-red-700 hover:text-white";
   return "bg-black text-white";
 };

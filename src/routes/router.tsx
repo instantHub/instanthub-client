@@ -24,9 +24,12 @@ import { ROUTES } from "./routes";
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 /**
- * Using TSX Product Final Price, If everything works fine remove JSX and keep this TSX
+ * TODO: Using TSX Product Final Price, If everything works fine remove JSX and keep this TSX
  */
 import { ProductFinalPrice2 } from "@pages/user/products/ProductFinalPrice2";
+import { PartnerDashboard, PartnerLayout } from "@partner/layout";
+import { RoleGuard } from "src/guards";
+import { PartnerProfile } from "@pages/partner/settings";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -61,6 +64,32 @@ export function lazyLoadNamed<T extends ComponentType<any>>(
 
   return LazyWrapper;
 }
+
+const PartnerAnalytics = () => (
+  <div className="bg-white rounded-lg shadow-sm p-6">
+    <h2 className="text-2xl font-bold text-gray-900 mb-4">Analytics</h2>
+    <p className="text-gray-600">Analytics dashboard coming soon...</p>
+  </div>
+);
+
+const PartnerSettings = () => (
+  <div className="bg-white rounded-lg shadow-sm p-6">
+    <h2 className="text-2xl font-bold text-gray-900 mb-4">Settings</h2>
+    <p className="text-gray-600">Settings panel coming soon...</p>
+  </div>
+);
+
+const UnauthorizedPage = () => (
+  <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-gray-900 mb-4">403</h1>
+      <p className="text-xl text-gray-600 mb-8">Unauthorized Access</p>
+      <p className="text-gray-500">
+        You don't have permission to access this resource.
+      </p>
+    </div>
+  </div>
+);
 
 export const router = Router([
   {
@@ -251,20 +280,50 @@ export const router = Router([
     ],
   },
   {
-    path: ROUTES.admin.login,
-    element: <ADMIN.SignIn />,
+    path: ROUTES.admin.loginPage,
+    element: <ADMIN.LoginLandingPage />,
+  },
+  {
+    path: "/unauthorized",
+    element: <UnauthorizedPage />,
+  },
+  {
+    path: "/partner",
+    element: <PartnerLayout />,
+    // element: (
+    //   <PartnerProtectedRoute allowedRoles={["partner", "admin"]}>
+    //     <PartnerLayout />
+    //   </PartnerProtectedRoute>
+    // ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/partner/dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <PartnerDashboard />,
+      },
+      // {
+      //   path: "clients",
+      //   element: <PartnerClients />,
+      // },
+      {
+        path: "analytics",
+        element: <PartnerAnalytics />,
+      },
+      {
+        path: "settings",
+        element: <PartnerProfile />,
+      },
+    ],
   },
   {
     path: "",
-    // element: <ADMIN_COMPONENTS.PrivateRoute />,
     children: [
       {
         path: ROUTES.admin.root,
-        element: (
-          <ADMIN_COMPONENTS.ProtectedRoute>
-            <ADMIN.AdminLayout />
-          </ADMIN_COMPONENTS.ProtectedRoute>
-        ),
+        element: <ADMIN.AdminLayout />,
 
         children: [
           {
@@ -280,44 +339,34 @@ export const router = Router([
           {
             path: "admin-channel",
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.AdminListPage />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
-            // element: <ADMIN.AdminRegisterForm />,
           },
           {
             path: ROUTES.admin.iconsList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.IconsGrid />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
-            // element: <ADMIN.AdminRegisterForm />,
           },
 
           {
             path: ROUTES.admin.updateProfile,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN_COMPONENTS.UpdateAdmin />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.createProduct,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.CreateProduct />
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
@@ -333,11 +382,9 @@ export const router = Router([
           {
             path: ROUTES.admin.updateProduct,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateProduct />
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
@@ -371,11 +418,9 @@ export const router = Router([
           {
             path: ROUTES.admin.updateCategory,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateCategory />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -391,11 +436,9 @@ export const router = Router([
           {
             path: ROUTES.admin.updateBrand,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateBrand />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -403,21 +446,17 @@ export const router = Router([
           {
             path: ROUTES.admin.createSeries,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.CreateSeries />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.updateSeries,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateSeries />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -425,51 +464,41 @@ export const router = Router([
           {
             path: ROUTES.admin.createQuestions,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.CreateQuestions />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.conditionsList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.ConditionsList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.updateCondition,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateCondition />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.conditionLabelsList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.ConditionLabelsList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.updateConditionLabel,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateConditionLabel />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -477,27 +506,27 @@ export const router = Router([
           {
             path: ROUTES.admin.createSlider,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.CreateSlider />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.updateSlider,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.UpdateSlider />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -505,7 +534,7 @@ export const router = Router([
           {
             path: ROUTES.admin.ordersList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
@@ -513,82 +542,80 @@ export const router = Router([
                 ]}
               >
                 <ADMIN.OrdersList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.orderDetail,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <ADMIN.OrderDetail />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.orderReQuote,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <ADMIN.OrderReQuote />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.orderReQuoteCompletion,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <ADMIN.ReQuoteCompletion />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.manageStock,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <ADMIN.ManageStocks />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.phoneNumbers,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <ADMIN.PhoneNumbersList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.createCoupon,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.CreateCoupon />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -596,27 +623,27 @@ export const router = Router([
           {
             path: ROUTES.admin.recycleOrdersList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <AdminRecycleOrdersList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.recycleOrderDetail,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
                 ]}
               >
                 <AdminRecycleOrderDetail />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -624,14 +651,14 @@ export const router = Router([
           {
             path: ROUTES.admin.testimonial,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.TestimonialList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -639,21 +666,17 @@ export const router = Router([
           {
             path: ROUTES.admin.variantsQuestions,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.CreateVariantsQuestions />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.updateVariantQuestions,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <ADMIN.UpdateVariantQuestions />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -661,14 +684,14 @@ export const router = Router([
           {
             path: ROUTES.admin.marketing.complaintsList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.Complaints />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -676,27 +699,27 @@ export const router = Router([
           {
             path: ROUTES.admin.marketing.seo,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.MetaTags />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.marketing.metaTagList,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
+              <RoleGuard
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <ADMIN.MetaTagsList />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
 
@@ -704,21 +727,17 @@ export const router = Router([
           {
             path: ROUTES.admin.manageServices,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <SERVICES_ADMIN.ManageServices />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
           {
             path: ROUTES.admin.serviceOrders,
             element: (
-              <ADMIN_COMPONENTS.RoleGuard
-                allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}
-              >
+              <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
                 <SERVICES_ADMIN.ServiceOrders />,
-              </ADMIN_COMPONENTS.RoleGuard>
+              </RoleGuard>
             ),
           },
         ],

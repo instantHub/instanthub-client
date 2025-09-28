@@ -1,6 +1,6 @@
 import { useAuth } from "@hooks";
 import { TAdminRole, TPermissionAction } from "@utils/types";
-import { AccessDenied } from "./AccessDenied";
+import { AccessDenied } from "../components/admin/auth/AccessDenied";
 
 interface RoleGuardProps {
   children: React.ReactNode;
@@ -18,19 +18,16 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
   fallback,
 }) => {
   const { adminData, hasRole, hasPermission, hasAnyPermission } = useAuth();
-  // const navigate = useNavigate();
 
   if (!adminData) {
-    // navigate(ROUTES.admin.accessDenied);
     return fallback || <AccessDenied />;
   }
 
   // Check role-based access
   if (allowedRoles.length > 0 && !allowedRoles.some((role) => hasRole(role))) {
-    // navigate(ROUTES.admin.accessDenied);
     return fallback || <AccessDenied />;
   }
-
+  
   // Check permission-based access
   if (requiredPermissions.length > 0) {
     const hasRequiredPermissions = requireAll
@@ -38,9 +35,7 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
           hasPermission(permission)
         )
       : hasAnyPermission(requiredPermissions);
-
     if (!hasRequiredPermissions) {
-      // navigate(ROUTES.admin.accessDenied);
       return fallback || <AccessDenied />;
     }
   }

@@ -1,19 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  IAdminResponse,
-  IValidateTokenResponse,
-} from "@features/api/authApi/types";
+import { IAdminResponse } from "@features/api/authApi/types";
 
 export interface AdminAuthState {
   admin: IAdminResponse | null;
+  token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
-  sessionExpiry: number | null;
+  sessionExpiry?: number | null;
   sideBarOpen: boolean;
 }
 
 const initialState: AdminAuthState = {
   admin: null,
+  token: localStorage.getItem("token"),
   isAuthenticated: false,
   loading: false,
   sessionExpiry: null,
@@ -26,17 +25,28 @@ const adminAuthSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ admin: IValidateTokenResponse }>
+      action: PayloadAction<{ admin: IAdminResponse }>
     ) => {
       const { admin } = action.payload;
-      state.admin = admin.admin;
+      console.log("setCred slice", admin);
+
+      state.admin = admin;
       state.isAuthenticated = true;
       state.sessionExpiry = admin?.sessionExpiry;
+
+      if (admin.token) {
+        console.log("token present");
+
+        state.token = admin.token;
+        localStorage.setItem("token", admin.token);
+      }
     },
+
     logout: (state) => {
       state.admin = null;
+      state.token = null;
       state.isAuthenticated = false;
-      state.sessionExpiry = null;
+      localStorage.removeItem("token");
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;

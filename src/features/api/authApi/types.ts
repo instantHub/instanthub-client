@@ -8,6 +8,8 @@ export interface IAdminResponse {
   loginAttempts: number;
   role: TAdminRole;
   permissions: IPermissions[];
+  sessionExpiry: number;
+  token: string;
   passwordChangedAt: string;
   department: string;
   lastLogin: string; // ISO timestamp format
@@ -20,7 +22,8 @@ export interface IAdminLogoutRequest {
 
 export interface IValidateTokenResponse {
   admin: IAdminResponse;
-  sessionExpiry: number; // timestamp in milliseconds
+  token?: string;
+  sessionExpiry?: number; // timestamp in milliseconds
 }
 
 export interface IAdminAuthState {

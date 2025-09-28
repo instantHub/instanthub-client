@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "@api";
-import { setCredentials } from "@features/userSlices/authSlice";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 
@@ -31,7 +30,6 @@ export const SignUp = () => {
     if (password === confirmPassword) {
       try {
         const res = await register({ name, email, password }).unwrap();
-        dispatch(setCredentials(res));
         toast.success("Registered in successfull");
         navigate(ROUTES.admin.dashboard);
       } catch (err) {
@@ -111,11 +109,11 @@ export const SignUp = () => {
           </div>
         </form>
         <div className="text-end -mt-11">
-          <Link to={ROUTES.admin.login}>
-            <button className="text-sm bg-blue-500 px-2 py-1 mt-3 border rounded text-white">
-              Login
-            </button>
-          </Link>
+          {/* <Link to={ROUTES.admin.}> */}
+          <button className="text-sm bg-blue-500 px-2 py-1 mt-3 border rounded text-white">
+            Login
+          </button>
+          {/* </Link> */}
         </div>
       </div>
     </div>
