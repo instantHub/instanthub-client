@@ -15,6 +15,7 @@ import {
   ProfileIcon,
   StockpilesIcon,
 } from "@icons";
+import { ORDER_STATUS } from "@features/api/ordersApi/types";
 
 export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
   const { state, dispatch } = reducer;
@@ -84,7 +85,7 @@ export const SubmitForm = ({ formData, setFormData, reducer, setIsOpen }) => {
       ...formData,
       schedulePickUp,
       addressDetails: state.addressDetails,
-      status: { pending: true, completed: false, cancelled: false },
+      status: ORDER_STATUS.PENDING,
       paymentMode: state.selectedPaymentMode.toLowerCase().includes("instant")
         ? state.selectedPaymentMode
         : state.selectedDigitalPayment,
