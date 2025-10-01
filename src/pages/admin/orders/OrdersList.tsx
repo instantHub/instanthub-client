@@ -154,17 +154,16 @@ export const OrdersList = () => {
       <div className="mt-2 mb-5 flex flex-col items-center">
         <div className="w-full grid grid-cols-3 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1 px-10 max-sm:px-1 mx-auto">
           {ordersToDisplay?.map(
-            (order) => (
-              // order && (
-              <OrderCard
-                key={order.id}
-                data={order}
-                categoryImage={
-                  categoryImages[order?.productDetails?.productCategory]
-                }
-              />
-            )
-            // )
+            (order) =>
+              order && (
+                <OrderCard
+                  key={order.id}
+                  data={order}
+                  categoryImage={
+                    categoryImages[order.productDetails.productCategory]
+                  }
+                />
+              )
           )}
         </div>
       </div>
