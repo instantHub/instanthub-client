@@ -158,7 +158,7 @@ export const OrdersList = () => {
               key={order.id}
               data={order}
               categoryImage={
-                categoryImages[order.productDetails.productCategory]
+                categoryImages[order?.productDetails?.productCategory]
               }
             />
           ))}
