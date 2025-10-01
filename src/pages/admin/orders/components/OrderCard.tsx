@@ -56,10 +56,10 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           </div>
 
           <div className="flex gap-2 justify-start">
-            <span className={boldness}>{data.productDetails.productName}</span>
-            {data.productDetails.productCategory === "Mobile" && (
+            <span className={boldness}>{data.productDetails?.productName}</span>
+            {data.productDetails?.productCategory === "Mobile" && (
               <span className={boldness}>
-                {data.productDetails.variant.variantName}
+                {data.productDetails?.variant.variantName}
               </span>
             )}
           </div>
@@ -70,7 +70,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           <div>
             <span>Product Price: </span>
             <span className={boldness}>
-              {data.productDetails.variant.price}
+              {data.productDetails?.variant.price}
             </span>
           </div>
           <div>
@@ -82,7 +82,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
         {/* Customer Name */}
         <div>
           <span>Customer Name: </span>
-          <span className={boldness}>{data.customerDetails.name}</span>
+          <span className={boldness}>{data.customerDetails?.name}</span>
         </div>
 
         {/* Schedule time */}
@@ -96,7 +96,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           <div>
             <span>Pin Code: </span>
             <span className={boldness}>
-              {data.customerDetails.addressDetails.pinCode}
+              {data.customerDetails?.addressDetails.pinCode}
             </span>
           </div>
           <div>
