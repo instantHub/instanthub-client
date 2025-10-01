@@ -56,9 +56,11 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           </div>
 
           <div className="flex gap-2 justify-start">
-            <span className={boldness}>{data.productName}</span>
-            {data.productCategory === "Mobile" && (
-              <span className={boldness}>{data.variant.variantName}</span>
+            <span className={boldness}>{data.productDetails.productName}</span>
+            {data.productDetails.productCategory === "Mobile" && (
+              <span className={boldness}>
+                {data.productDetails.variant.variantName}
+              </span>
             )}
           </div>
         </div>
@@ -67,7 +69,9 @@ export const OrderCard: React.FC<OrderCardProps> = ({
         <div className="flex gap-2">
           <div>
             <span>Product Price: </span>
-            <span className={boldness}>{data.variant.price}</span>
+            <span className={boldness}>
+              {data.productDetails.variant.price}
+            </span>
           </div>
           <div>
             <span>Offered Price: </span>
@@ -78,7 +82,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
         {/* Customer Name */}
         <div>
           <span>Customer Name: </span>
-          <span className={boldness}>{data.customerName}</span>
+          <span className={boldness}>{data.customerDetails.name}</span>
         </div>
 
         {/* Schedule time */}
@@ -91,7 +95,9 @@ export const OrderCard: React.FC<OrderCardProps> = ({
         <div className="flex gap-2 items-center">
           <div>
             <span>Pin Code: </span>
-            <span className={boldness}>{data.addressDetails.pinCode}</span>
+            <span className={boldness}>
+              {data.customerDetails.addressDetails.pinCode}
+            </span>
           </div>
           <div>
             <span>Status: </span>
@@ -102,22 +108,3 @@ export const OrderCard: React.FC<OrderCardProps> = ({
     </div>
   );
 };
-
-// accessoriesAvailable : (2) [{…}, {…}]
-// addressDetails : {address: 'No 270 4th Main 2nd Cross', state: 'KARNATAKA', city: 'Bangalore', pinCode: 560032}
-// cancelReason : "Testing cancel to delete stock"
-// customerName : "Yusuf"
-// deductions : (4) [{…}, {…}, {…}, {…}]
-// email : "yousuf337692qureshi@gmail.com"
-// id : "6776956a6783a2a7966d42d7"
-// offerPrice : 4278
-// orderId : "ORD250102YU097004"
-// paymentMode : "Instant Cash"
-// phone : 6363821097
-// productBrand : "Samsung"
-// productCategory : "Mobile"
-// productId : {name: 'Samsung Galaxy A12', id: '665f4f923c216ac53e8c8f3e'}
-// productName : "Samsung Galaxy A12"
-// schedulePickUp : "January 2, 2025 6:00 PM"
-// status : {pending: false, completed: false, cancelled: true}
-// variant : {variantName: '4GB / 64GB ', price: 4860}

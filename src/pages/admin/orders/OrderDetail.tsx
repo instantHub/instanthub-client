@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   useDeleteOrderMutation,
   useGetOrderQuery,
@@ -30,12 +30,13 @@ import {
 } from "@icons";
 import {
   IDeviceInfo,
-  IOrderStatus,
   IPickedUpDetails,
   ORDER_STATUS,
 } from "@features/api/ordersApi/types";
 import { CustomerIDImage, DetailDiv, DetailWrapper } from "./components";
 import { Button, FlexBox } from "@components/general";
+import { useSelector } from "react-redux";
+import { selectAdminState } from "@features/slices";
 
 // Type Definitions
 interface ImageSelection {
@@ -51,7 +52,8 @@ interface FormData {
   customerProofBack: string;
   customerOptional1: string | null;
   customerOptional2: string | null;
-  pickedUpDetails: IPickedUpDetails;
+  completedAt: string;
+  // pickedUpDetails: IPickedUpDetails;
   deviceInfo?: IDeviceInfo;
   finalPrice: string;
   status: ORDER_STATUS;
@@ -77,6 +79,8 @@ export const OrderDetail: React.FC = () => {
     orderId!
   );
   console.log("orderDetail", orderDetail);
+
+  const { admin } = useSelector(selectAdminState);
 
   const [deleteOrder] = useDeleteOrderMutation();
   const [orderReceived, { isLoading: orderReceivedLoading }] =
@@ -233,19 +237,14 @@ export const OrderDetail: React.FC = () => {
               : Promise.resolve(null),
           ]);
 
-        const pickedUpDetails: IPickedUpDetails = {
-          agentName: pickedUpBy,
-          pickedUpDate: selectedDate,
-          agentAssigned: true,
-        };
-
         const formData: FormData = {
           orderId,
           customerProofFront: frontImageURL,
           customerProofBack: backImageURL,
           customerOptional1: optional1URL,
           customerOptional2: optional2URL,
-          pickedUpDetails,
+          completedAt: selectedDate,
+
           deviceInfo,
           finalPrice,
           status: ORDER_STATUS.COMPLETED,
@@ -342,15 +341,18 @@ export const OrderDetail: React.FC = () => {
 
           {/* Product Detail */}
           <DetailWrapper icon={ProductIcon} heading="Product Details">
-            <DetailDiv label="Product" text={orderDetail.productName} />
+            <DetailDiv
+              label="Product"
+              text={orderDetail.productDetails.productName}
+            />
             <div className="flex gap-4">
               <DetailDiv
                 label="Variant"
-                text={orderDetail.variant.variantName}
+                text={orderDetail.productDetails.variant.variantName}
               />
               <DetailDiv
                 label="Price"
-                text={orderDetail.variant.price.toString()}
+                text={orderDetail.productDetails.variant.price.toString()}
               />
             </div>
           </DetailWrapper>
@@ -381,129 +383,122 @@ export const OrderDetail: React.FC = () => {
 
           {/* Customer Details */}
           <DetailWrapper icon={ContactIcon} heading="Customer Details">
-            <DetailDiv label="Name" text={orderDetail.customerName} />
-            <DetailDiv label="Phone" text={orderDetail.phone} />
-            <DetailDiv label="Email" text={orderDetail.email} />
+            <DetailDiv label="Name" text={orderDetail.customerDetails.name} />
+            <DetailDiv label="Phone" text={orderDetail.customerDetails.phone} />
+            <DetailDiv label="Email" text={orderDetail.customerDetails.email} />
           </DetailWrapper>
 
           {/* Address Detail */}
           <DetailWrapper icon={MapIcon} heading="Address Details">
             <DetailDiv
               label="Address"
-              text={orderDetail.addressDetails.address}
+              text={orderDetail.customerDetails.addressDetails.address}
             />
             <div className="flex gap-4">
-              <DetailDiv label="City" text={orderDetail.addressDetails.city} />
+              <DetailDiv
+                label="City"
+                text={orderDetail.customerDetails.addressDetails.city}
+              />
               <DetailDiv
                 label="State"
-                text={orderDetail.addressDetails.state}
+                text={orderDetail.customerDetails.addressDetails.state}
               />
             </div>
             <DetailDiv
               label="Pin Code"
-              text={orderDetail.addressDetails.pinCode}
+              text={orderDetail.customerDetails.addressDetails.pinCode}
             />
           </DetailWrapper>
 
           {/* Completed Order Details */}
-          {orderDetail.status === ORDER_STATUS.COMPLETED &&
-            orderDetail.pickedUpDetails && (
-              <>
-                {/* Completion Detail */}
-                <DetailWrapper
-                  icon={RightTickIcon}
-                  heading="Completion Details"
-                >
+          {orderDetail.status === ORDER_STATUS.COMPLETED && (
+            <>
+              {/* Completion Detail */}
+              <DetailWrapper icon={RightTickIcon} heading="Completion Details">
+                <DetailDiv
+                  label="Agent Name"
+                  text={orderDetail.assignmentStatus.assignedTo.name}
+                />
+                <DetailDiv
+                  label="Picked Up On"
+                  text={orderDetail.completedAt}
+                />
+                <div className="flex gap-4">
                   <DetailDiv
-                    label="Agent Name"
-                    text={orderDetail.pickedUpDetails.agentName}
+                    label="Offered Price"
+                    text={orderDetail.offerPrice.toString()}
                   />
                   <DetailDiv
-                    label="Picked Up On"
-                    text={orderDetail.pickedUpDetails.pickedUpDate}
+                    label="Final Price"
+                    text={orderDetail.finalPrice?.toString() || "N/A"}
                   />
-                  <div className="flex gap-4">
-                    <DetailDiv
-                      label="Offered Price"
-                      text={orderDetail.offerPrice.toString()}
-                    />
-                    <DetailDiv
-                      label="Final Price"
-                      text={orderDetail.finalPrice?.toString() || "N/A"}
-                    />
-                  </div>
-                </DetailWrapper>
+                </div>
+              </DetailWrapper>
 
-                {/* Device Info */}
-                <DetailWrapper icon={InfoCircleIcon} heading="Device Info">
-                  <DetailDiv
-                    label="Serial Number"
-                    text={
-                      orderDetail.deviceInfo?.serialNumber || "Not Available"
-                    }
-                  />
-                  <DetailDiv
-                    label="IMEI Number"
-                    text={orderDetail.deviceInfo?.imeiNumber || "Not Available"}
-                  />
-                </DetailWrapper>
+              {/* Device Info */}
+              <DetailWrapper icon={InfoCircleIcon} heading="Device Info">
+                <DetailDiv
+                  label="Serial Number"
+                  text={orderDetail.deviceInfo?.serialNumber || "Not Available"}
+                />
+                <DetailDiv
+                  label="IMEI Number"
+                  text={orderDetail.deviceInfo?.imeiNumber || "Not Available"}
+                />
+              </DetailWrapper>
 
-                {/* Customer proof images */}
-                {(orderDetail.customerProofFront ||
-                  orderDetail.customerProofBack) && (
+              {/* Customer proof images */}
+              {orderDetail.customerIDProof.front &&
+                orderDetail.customerIDProof.back && (
                   <DetailWrapper icon={ImageIcon} heading="Customer IDs">
                     <div className="grid grid-cols-4 max-sm:grid-cols-2 items-start justify-center gap-3 p-1 rounded">
-                      {orderDetail.customerProofFront && (
-                        <CustomerIDImage
-                          label="Customer ID Front"
-                          imageSrc={orderDetail.customerProofFront}
-                          imageAlt="Customer Front ID"
-                          downloadHandler={() =>
-                            downloadImage(
-                              BASE_URL + orderDetail.customerProofFront!,
-                              `${orderDetail.customerName}-customerProofFront`
-                            )
-                          }
-                        />
-                      )}
+                      <CustomerIDImage
+                        label="Customer ID Front"
+                        imageSrc={orderDetail.customerIDProof.front}
+                        imageAlt="Customer Front ID"
+                        downloadHandler={() =>
+                          downloadImage(
+                            BASE_URL + orderDetail.customerIDProof.front!,
+                            `${orderDetail.customerDetails.name}-customerProofFront`
+                          )
+                        }
+                      />
 
-                      {orderDetail.customerProofBack && (
-                        <CustomerIDImage
-                          label="Customer ID Back"
-                          imageSrc={orderDetail.customerProofBack}
-                          imageAlt="Customer Back ID"
-                          downloadHandler={() =>
-                            downloadImage(
-                              BASE_URL + orderDetail.customerProofBack!,
-                              `${orderDetail.customerName}-customerProofBack`
-                            )
-                          }
-                        />
-                      )}
+                      <CustomerIDImage
+                        label="Customer ID Back"
+                        imageSrc={orderDetail.customerIDProof.back}
+                        imageAlt="Customer Back ID"
+                        downloadHandler={() =>
+                          downloadImage(
+                            BASE_URL + orderDetail.customerIDProof.back!,
+                            `${orderDetail.customerDetails.name}-customerProofBack`
+                          )
+                        }
+                      />
 
-                      {orderDetail.customerOptional1 && (
+                      {orderDetail.customerIDProof.optional1 && (
                         <CustomerIDImage
                           label="Optional Proof 1"
-                          imageSrc={orderDetail.customerOptional1}
+                          imageSrc={orderDetail.customerIDProof.optional1}
                           imageAlt="Optional Proof 1"
                           downloadHandler={() =>
                             downloadImage(
-                              BASE_URL + orderDetail.customerOptional1!,
-                              `${orderDetail.customerName}-customerOptional1`
+                              BASE_URL + orderDetail.customerIDProof.optional1!,
+                              `${orderDetail.customerDetails.name}-customerOptional1`
                             )
                           }
                         />
                       )}
 
-                      {orderDetail.customerOptional2 && (
+                      {orderDetail.customerIDProof.optional2 && (
                         <CustomerIDImage
                           label="Optional Proof 2"
-                          imageSrc={orderDetail.customerOptional2}
+                          imageSrc={orderDetail.customerIDProof.optional2}
                           imageAlt="Optional Proof 2"
                           downloadHandler={() =>
                             downloadImage(
-                              BASE_URL + orderDetail.customerOptional2!,
-                              `${orderDetail.customerName}-customerOptional2`
+                              BASE_URL + orderDetail.customerIDProof.optional2!,
+                              `${orderDetail.customerDetails.name}-customerOptional2`
                             )
                           }
                         />
@@ -511,16 +506,16 @@ export const OrderDetail: React.FC = () => {
                     </div>
                   </DetailWrapper>
                 )}
-              </>
-            )}
+            </>
+          )}
 
           {/* Cancelled Order Reason */}
           {orderDetail.status === ORDER_STATUS.CANCELLED &&
-            orderDetail.cancelReason && (
+            orderDetail.cancellationDetails.cancelReason && (
               <DetailWrapper icon={CloseIcon} heading="Cancellation Details">
                 <DetailDiv
                   label="Cancel Reason"
-                  text={orderDetail.cancelReason}
+                  text={orderDetail.cancellationDetails.cancelReason}
                 />
               </DetailWrapper>
             )}
@@ -529,7 +524,9 @@ export const OrderDetail: React.FC = () => {
         {/* Order Complete Form for Pending Orders */}
         {orderDetail.status === ORDER_STATUS.PENDING && (
           <div>
-            <AssignAgent orderDetail={orderDetail} />
+            {admin?.role !== "executive" && (
+              <AssignAgent orderDetail={orderDetail} />
+            )}
             <OrderCompleteForm
               orderDetail={orderDetail}
               handleSubmit={handleSubmit}

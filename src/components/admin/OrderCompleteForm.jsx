@@ -3,7 +3,7 @@ import { OrderCancellationForm } from "./OrderCancellationForm";
 import { useOrderCancelMutation } from "@api";
 import { DateAndTime, InputSubmitBtn } from "@components/user";
 import { ImageIcon, InfoCircleIcon, RightTickIcon } from "@icons";
-import { Button, FlexBox } from "@components/general";
+import { Button, FlexBox, FormInput } from "@components/general";
 import { useNavigate } from "react-router-dom";
 
 export const OrderCompleteForm = ({
@@ -41,13 +41,24 @@ export const OrderCompleteForm = ({
               isRequired={true}
               flexColSScr={false}
               text={
-                <InputDiv
+                <FormInput
                   placeholder="Order Picked By"
                   isRequired={true}
                   type={"text"}
                   name="pickedUpBy"
-                  changeHandler={setPickUpHandler}
+                  value={orderDetail?.assignmentStatus?.assignedTo?.name}
+                  size="sm"
+                  disabled
+                  // changeHandler={setPickUpHandler}
                 />
+                // <InputDiv
+                //   // placeholder="Order Picked By"
+                //   // isRequired={true}
+                //   // type={"text"}
+                //   // name="pickedUpBy"
+                //   value={orderDetail?.assignmentStatus?.assignedTo?.name}
+                //   // changeHandler={setPickUpHandler}
+                // />
               }
             />
 

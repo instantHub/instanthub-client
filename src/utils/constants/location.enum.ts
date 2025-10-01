@@ -18,6 +18,7 @@ export enum LOCATIONS_CITY {
   VISAKHAPATNAM = "Visakhapatnam",
   LUCKNOW = "Lucknow",
   INDORE = "Indore",
+  KOLAR = "Kolar",
 }
 
 export enum LOCATIONS_STATE {

@@ -3,6 +3,8 @@ import { useAssignAgentMutation } from "@api";
 import { DateAndTime } from "@components/user";
 import { toast } from "react-toastify";
 import { ASSIGNMENT_STATUS, ORDER_STATUS } from "@features/api/ordersApi/types";
+import { useSelector } from "react-redux";
+import { selectAdminState } from "@features/slices";
 
 export const AssignAgent = ({ orderDetail }) => {
   // console.log("AssignAgent orderDetail", orderDetail);
@@ -16,8 +18,10 @@ export const AssignAgent = ({ orderDetail }) => {
   const [assignAgent, { isLoading: loadingAssignment }] =
     useAssignAgentMutation();
 
+  const { admin } = useSelector(selectAdminState);
+
   const {
-    pickedUpDetails: { agentName, pickedUpDate, agentAssigned },
+    assignmentStatus: { assignedTo, assignedBy, assigned, assignedAt },
   } = orderDetail;
 
   const [pickUpDate, setPickUpDate] = useState();
@@ -29,20 +33,25 @@ export const AssignAgent = ({ orderDetail }) => {
       const data = new FormData(e.target);
       const formData = Object.fromEntries(data.entries());
 
-      const pickedUpDetails = {
-        agentName: formData.agent,
-        pickedUpDate: pickUpDate,
-        agentAssigned: true,
-      };
-      console.log("pickedUpDetails", pickedUpDetails);
-
       const updatedOrderData = await assignAgent({
         orderId: orderDetail.id,
         data: {
-          pickedUpDetails: pickedUpDetails,
-          assignmentStatus: ASSIGNMENT_STATUS.EXECUTIVE,
+          assignmentStatus: {
+            assigned: true,
+            assignedTo: {
+              name: formData.agent,
+              role: ASSIGNMENT_STATUS.EXECUTIVE,
+            },
+            assignedBy: {
+              name: admin.name,
+              role: admin.role,
+            },
+            assignedAt: new Date().toISOString(),
+          },
         },
       }).unwrap();
+
+      window.location.reload();
 
       toast.success(updatedOrderData.message);
 
@@ -77,19 +86,20 @@ export const AssignAgent = ({ orderDetail }) => {
           </select>
         </div>
 
-        <DateAndTime showPreviousDate={false} setSchedule={setPickUpDate} />
+        {/* TODO: check later, currently removing Pickup date and adding assignedAt date */}
+        {/* <DateAndTime showPreviousDate={false} setSchedule={setPickUpDate} /> */}
 
         {/* Agent Already Assigned */}
-        {agentAssigned && (
+        {assigned && (
           <div className="w-full flex flex-col justify-start items-center gap-1">
             <p className="text-lg max-sm:text-sm">Agent Already Assigned</p>
             <p>
               Assigned Agent:
-              <span className="font-semibold"> {agentName}</span>
+              <span className="font-semibold"> {assignedTo.name}</span>
             </p>
             <p>
-              PickUp Date & Time:
-              <span className="font-semibold"> {pickedUpDate}</span>
+              Assigned At:
+              <span className="font-semibold"> {assignedAt}</span>
             </p>
           </div>
         )}
@@ -98,8 +108,8 @@ export const AssignAgent = ({ orderDetail }) => {
           className="px-2 py-1 border rounded bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-200"
           disabled={loadingAssignment}
         >
-          {!agentAssigned ? "Assign" : "Re-Assign"}
-          {/* {!orderDetail.pickedUpDetails.agentAssigned ? "Assign" : "Re-Assign"} */}
+          {!assigned ? "Assign" : "Re-Assign"}
+          {/* {!orderDetail.pickedUpDetails.assigned ? "Assign" : "Re-Assign"} */}
         </button>
       </form>
     </div>

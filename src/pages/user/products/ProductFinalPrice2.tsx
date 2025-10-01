@@ -12,11 +12,9 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useGetCouponQuery } from "@api";
 import { toast } from "react-toastify";
-import { Helmet } from "react-helmet-async";
 import FAQ from "@components/user/static/FAQ";
 import { LocationSelector } from "@components/user";
 import { LAPTOP } from "@utils/user/constants";
-import { SubmitForm } from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 import { ArrowRightIcon, CloseIcon, PartyPopperIcon } from "@icons";
 import {
@@ -30,12 +28,14 @@ import {
   Modal,
   Typography,
 } from "@components/general";
-import { selectOfferPrice } from "@features/slices";
+import { IGetUpTo, selectOfferPrice } from "@features/slices";
 import { IAddress } from "@features/api/ordersApi/types";
 import {
   IConditionLabels,
   IProductResponse,
 } from "@features/api/productsApi/types";
+import { SubmitForm2 } from "./SubmitForm2";
+import { RootState } from "@features/store";
 
 interface ICouponState {
   couponCode: string;
@@ -50,7 +50,10 @@ interface ICoupon {
   couponValue: number;
 }
 
-interface IState {
+export interface IReducerState {
+  name: string;
+  email: string;
+  phone: string | number;
   addressDetails: IAddress;
   coupon: ICouponState;
   offerPrice: number | null;
@@ -58,32 +61,41 @@ interface IState {
   recycleProduct: boolean;
   selectedPaymentMode: string;
   selectedDigitalPayment: string;
-  deductionsByType: Record<string, IDeductionsByType[]>;
+  deductionsByType: IDeductionsByType;
   isOpen: boolean;
 }
 
 interface IDeductionsByType {
-  type: string;
-  conditionLabel: string;
-  [key: string]: unknown;
+  [key: string]: Array<Partial<IConditionLabels>>;
 }
 
-type TAction =
+interface IFinalDeductionSet {
+  type: string;
+  conditions: Partial<IConditionLabels>[];
+}
+
+export type TReducerAction =
   | { type: keyof IAddress; value: string }
   | { type: "location"; value: Partial<IAddress> }
   | { type: "offerPrice" | "specialPrice"; value: number }
   | { type: "selectedPaymentMode" | "selectedDigitalPayment"; value: string }
   | { type: "recycleProduct"; value: boolean }
-  | { type: "deductionsByType"; value: Record<string, IDeductionsByType[]> }
-  | { type: keyof ICouponState; value: string | number | boolean };
+  | { type: "deductionsByType"; value: IDeductionsByType }
+  | { type: keyof ICouponState; value: string | number | boolean }
+  | { type: "name" | "email" | "phone"; value: string | number };
 
 interface ContextType {
-  state: IState;
-  dispatch: Dispatch<TAction>;
+  state: IReducerState;
+  formData: IProductFinalData;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  dispatch: Dispatch<TReducerAction>;
 }
 
 // ---------- Initial State ----------
-const initialState: IState = {
+const initialState: IReducerState = {
+  name: "",
+  email: "",
+  phone: "",
   addressDetails: { address: "", state: "", city: "", pinCode: "" },
   coupon: {
     couponCode: "",
@@ -101,7 +113,7 @@ const initialState: IState = {
 };
 
 // ---------- Reducer ----------
-function reducer(state: IState, action: TAction): IState {
+function reducer(state: IReducerState, action: TReducerAction): IReducerState {
   const { type, value } = action;
 
   const updateAddress = (key: keyof IAddress, val: string) => ({
@@ -120,6 +132,8 @@ function reducer(state: IState, action: TAction): IState {
   switch (type) {
     case "address":
     case "pinCode":
+    case "state":
+    case "city":
       return updateAddress(type, value as string);
     case "location":
       return {
@@ -132,6 +146,9 @@ function reducer(state: IState, action: TAction): IState {
     case "selectedDigitalPayment":
     case "recycleProduct":
     case "deductionsByType":
+    case "name":
+    case "email":
+    case "phone":
       return { ...state, [type]: value as any };
     case "couponCode":
     case "couponPrice":
@@ -144,7 +161,21 @@ function reducer(state: IState, action: TAction): IState {
 }
 
 // ---------- Context ----------
-const StateContext = createContext<ContextType | null>(null);
+export const StateContext = createContext<ContextType | null>(null);
+
+export interface IProductFinalData {
+  productId: string;
+  productName: string;
+  productBrand: string;
+  productCategory: string;
+  variant: IGetUpTo;
+  uniqueURLs: {
+    category: string;
+    brand: string;
+    product: string;
+  };
+  finalDeductionSet: IFinalDeductionSet[];
+}
 
 // ---------- Component ----------
 export const ProductFinalPrice2: React.FC = () => {
@@ -160,13 +191,13 @@ export const ProductFinalPrice2: React.FC = () => {
     useGetCouponQuery();
 
   const [state, dispatch] = useReducer(reducer, initialState);
+  console.log("final state", state);
 
   const offeredPrice = useSelector(selectOfferPrice);
-  const selectedProductData = useSelector((s: any) => s.deductions);
+  const selectedProductData = useSelector((s: RootState) => s.deductions);
   const { selectedProduct, getUpTo } = selectedProductData;
-  // console.log("selectedProductData", selectedProductData);
 
-  const [formData, setFormData] = useState<Record<string, unknown>>({});
+  const [formData, setFormData] = useState<IProductFinalData>();
   const [isOpen, setIsOpen] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
 
@@ -222,14 +253,11 @@ export const ProductFinalPrice2: React.FC = () => {
     dispatch({ type: "recycleProduct", value: offeredPrice <= minPrice });
 
     // Memoized transformation
-    const finalDeductionSet = {
-      ...selectedProductData.deductions.reduce(
-        (res: Record<string, IDeductionsByType[]>, curr: IDeductionsByType) => {
-          (res[curr.type] = res[curr.type] || []).push(curr);
-          return res;
-        },
-        {}
-      ),
+    const finalDeductionSet: IDeductionsByType = {
+      ...selectedProductData.deductions.reduce((res: any, curr: any) => {
+        (res[curr.type] = res[curr.type] || []).push(curr);
+        return res;
+      }, {}),
       ...Object.fromEntries(
         Object.entries(selectedProductData.singleDeductions || {}).map(
           ([k, v]) => [k, [v]]
@@ -239,28 +267,32 @@ export const ProductFinalPrice2: React.FC = () => {
 
     dispatch({ type: "deductionsByType", value: finalDeductionSet });
 
-    const finalDeductionArray = Object.entries(finalDeductionSet).map(
-      ([type, conditions]) => ({ type, conditions })
-    );
+    const finalDeductionArray: IFinalDeductionSet[] = Object.entries(
+      finalDeductionSet
+    ).map(([type, conditions]) => ({ type, conditions }));
 
     setFormData({
       productId: selectedProduct.id,
+      productName: selectedProduct.name,
+      productBrand: selectedProduct.brand?.name,
+      productCategory: selectedProduct.category?.name,
+      variant: getUpTo,
       uniqueURLs: {
         category: categoryURL,
         brand: brandURL,
         product: productURL,
       },
-      productName: selectedProduct.name,
-      productBrand: selectedProduct.brand?.name,
-      productCategory: selectedProduct.category?.name,
-      variant: getUpTo,
-      deductions: selectedProductData.deductions,
+      // deductions: selectedProductData.deductions,
       finalDeductionSet: finalDeductionArray,
     });
   }, [selectedProductData, offeredPrice]);
 
+  console.log("final formData", formData);
+
   return (
-    <StateContext.Provider value={{ state, dispatch }}>
+    <StateContext.Provider
+      value={{ state, dispatch, formData: formData!, setIsOpen }}
+    >
       <div className="flex flex-col justify-between pt-2 px-10 bg-slate-200 bg-opacity-10 w-full max-2sm:px-4">
         <Button
           variant="outline"
@@ -299,22 +331,19 @@ export const ProductFinalPrice2: React.FC = () => {
         />
       )}
 
-      {isOpen && (
-        <SubmitForm
-          formData={formData}
-          setFormData={setFormData}
-          reducer={{ state, dispatch }}
-          setIsOpen={setIsOpen}
-        />
-      )}
+      {isOpen && <SubmitForm2 />}
     </StateContext.Provider>
   );
 };
 
 // DeductionsList component to render Deductions
 const DeductionsList = () => {
-  // @ts-ignore
-  const { state } = useContext(StateContext);
+  const contextValue = useContext(StateContext);
+  if (!contextValue) {
+    throw new Error("StateContext is not provided");
+  }
+
+  const { state } = contextValue;
 
   return (
     <FlexBox direction="col" fullWidth>

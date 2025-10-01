@@ -1,43 +1,96 @@
+import { ADMIN_ROLE_ENUM } from "@utils/constants";
 import { IProductResponse } from "../productsApi/types";
 
 export interface IOrder {
   id: string;
   orderId: string;
-  customerName: string;
-  phone: number;
-  email: string;
-  addressDetails: IAddress;
-
-  productCategory: string;
-  productBrand: string;
-  productName: string;
   productId: IProductId | IProductResponse;
-  variant: IOrderVariant;
 
-  accessoriesAvailable: IAccessoriesAvailable[];
+  productDetails: {
+    productCategory: string;
+    productBrand: string;
+    productName: string;
+    variant: IOrderVariant;
+  };
+  deviceInfo: IDeviceInfo;
+
+  customerDetails: {
+    name: string;
+    phone: number;
+    email: string;
+    addressDetails: IAddress;
+  };
+
+  // accessoriesAvailable: IAccessoriesAvailable[];
   finalDeductionSet: IFinalDeductionSet[];
   //   deductions: IDeductions[];
 
+  customerIDProof: {
+    front: string;
+    back: string;
+    optional1: string;
+    optional2: string;
+  };
+
   schedulePickUp: string;
-  pickedUpDetails: IPickedUpDetails;
-  deviceInfo: IDeviceInfo;
+  completedAt: string;
 
-  customerProofFront: string;
-  customerProofBack: string;
-  customerOptional1: string;
-  customerOptional2: string;
-
-  // status: IOrderStatus;
   status: ORDER_STATUS;
-  assignmentStatus: ASSIGNMENT_STATUS;
-  cancelReason: string;
 
-  offerPrice: number;
+  partner: IPartner;
+  // pickedUpDetails: IPickedUpDetails;
+
+  // assignmentStatus: ASSIGNMENT_STATUS;
+  assignmentStatus: IAssignmentStatus;
+  rescheduleStatus: IRescheduleStatus;
+
+  cancellationDetails: ICancellationDetails;
+
   paymentMode: string;
+  offerPrice: number;
   finalPrice: number;
 
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ICancellationDetails {
+  cancelledBy: string;
+  cancelReason: string;
+  cancelledAt: string;
+}
+
+export interface IRescheduleStatus {
+  rescheduleStatus: {
+    rescheduled: boolean;
+    rescheduledBy: string;
+    rescheduleReason: string;
+    rescheduleCount: number;
+    lastRescheduledDate: Date;
+    previousScheduledDates: Array<Date>;
+  };
+}
+
+export interface IAssignmentStatus {
+  assigned: boolean;
+  assignedAt: string;
+
+  assignedTo: {
+    name: string;
+    role: ADMIN_ROLE_ENUM.EXECUTIVE | ADMIN_ROLE_ENUM.PARTNER;
+  };
+  assignedBy: {
+    name: string;
+    role: ADMIN_ROLE_ENUM.ADMIN | ADMIN_ROLE_ENUM.PARTNER;
+  };
+}
+
+// TODO: Update IPartner when implementing partners feature
+export interface IPartner {
+  id: string;
+  name: string;
+  email: string;
+  phone: number;
 }
 
 export interface IOrdersCount {
@@ -69,12 +122,6 @@ export interface IAddress {
   state: string;
   city: string;
   pinCode: string;
-}
-
-export interface IOrderStatus {
-  pending: boolean;
-  completed: boolean;
-  cancelled: boolean;
 }
 
 export enum ORDER_STATUS {

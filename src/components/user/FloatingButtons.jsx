@@ -166,13 +166,13 @@ export const FloatingButtons = () => {
       {/* Home - Sell */}
       <div className="fixed bottom-0 h-[52px] w-full z-10 flex ">
         {/* Temporary note for customers for small screens*/}
-        <div className="z-10 absolute top-[-33%] sm:hidden h-5 bg-secondary w-full text-secondary-light flex items-center justify-center text-[10px]">
+        {/* <div className="z-10 absolute top-[-33%] sm:hidden h-5 bg-secondary w-full text-secondary-light flex items-center justify-center text-[10px]">
           <p>
             We are currently operating in
             <strong> Bangalore & Mysore </strong>
             only. Stay tuned for updates!
           </p>
-        </div>
+        </div> */}
         {/* </div> */}
 
         <div className="grid grid-cols-4 border-t shadow-xl bg-white w-full sm:hidden text-sm font-thin">
@@ -279,7 +279,7 @@ export const FloatingButtons = () => {
       </div>
 
       {/* Temporary note for customers for large screen */}
-      <div className="fixed bottom-0 h-12 w-full z-10 flex max-sm:hidden">
+      {/* <div className="fixed bottom-0 h-12 w-full z-10 flex max-sm:hidden">
         <div className="z-10 absolute top-[-40%] sm:top-[55%] h-6 bg-secondary w-full text-secondary-light flex items-center justify-center text-xs">
           <p>
             We are currently operating in
@@ -287,7 +287,7 @@ export const FloatingButtons = () => {
             only. Stay tuned for updates!
           </p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

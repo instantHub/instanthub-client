@@ -54,7 +54,13 @@ const cities = [
     city: LOCATIONS_CITY.HYDERABAD,
     state: LOCATIONS_STATE.TELANGANA,
     icon: <CityIcon size={26} />,
-    available: false,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.KOLAR,
+    state: LOCATIONS_STATE.KARNATAKA,
+    icon: <CityIcon size={26} />,
+    available: true,
   },
 ];
 

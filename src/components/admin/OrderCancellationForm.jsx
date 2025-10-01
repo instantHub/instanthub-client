@@ -2,6 +2,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@components/general";
 import { ORDER_STATUS } from "@features/api/ordersApi/types";
+import { useSelector } from "react-redux";
+import { selectAdminState } from "@features/slices";
 
 export const OrderCancellationForm = ({
   orderId,
@@ -10,6 +12,7 @@ export const OrderCancellationForm = ({
   closeModal,
 }) => {
   const [cancelReason, setCancelReason] = useState("");
+  const { admin } = useSelector(selectAdminState);
 
   async function handleCancelOrder(e) {
     e.preventDefault();
@@ -17,7 +20,11 @@ export const OrderCancellationForm = ({
     try {
       const formData = {
         status: ORDER_STATUS.CANCELLED,
-        cancelReason: cancelReason || null,
+        cancellationDetails: {
+          cancelReason: cancelReason || "",
+          cancelledBy: admin?.name || "Unknown",
+          cancelledAt: new Date().toISOString(),
+        },
       };
 
       const canceledData = await cancelOrder({
