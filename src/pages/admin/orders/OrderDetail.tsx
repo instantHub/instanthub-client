@@ -448,8 +448,8 @@ export const OrderDetail: React.FC = () => {
               </DetailWrapper>
 
               {/* Customer proof images */}
-              {orderDetail.customerIDProof.front &&
-                orderDetail.customerIDProof.back && (
+              {orderDetail?.customerIDProof?.front &&
+                orderDetail?.customerIDProof?.back && (
                   <DetailWrapper icon={ImageIcon} heading="Customer IDs">
                     <div className="grid grid-cols-4 max-sm:grid-cols-2 items-start justify-center gap-3 p-1 rounded">
                       <CustomerIDImage
