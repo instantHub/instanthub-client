@@ -42,7 +42,8 @@ export const OrderCard: React.FC<OrderCardProps> = ({
 
       {/* Order Info */}
       <div
-        onClick={() => navigate(`/executive/${data.id}/order-detail`)}
+        // @ts-ignore
+        onClick={() => navigate(`/executive/${data?._id}/order-detail`)}
         className="grow flex flex-col gap-[2px]"
       >
         {/* Order ID & Product */}

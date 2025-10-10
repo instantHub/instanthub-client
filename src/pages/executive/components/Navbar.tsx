@@ -40,10 +40,10 @@ export const Navbar: FC = () => {
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <FlexBox justify="between">
-        <Typography variant="h4">{currentPage}</Typography>
+        <Typography variant="h5">{currentPage}</Typography>
 
         <FlexBox gap={2}>
-          <h1 className="flex items-cente text-lg text-gray-700 hover:bg-gray-100 hover:text-black transition">
+          <h1 className="flex items-cente text-lg max-md:text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition">
             {admin?.name}
           </h1>
           <button

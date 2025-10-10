@@ -58,7 +58,7 @@ export const Dashboard = () => {
           </FlexBox>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button variant="primary" shape="square">
+          <Button variant="primary" shape="square" disabled>
             Edit Profile
           </Button>
         </CardFooter>
