@@ -143,7 +143,8 @@ export const OrderDetail: React.FC = () => {
 
   // Event Handlers
   const handleGoBack = useCallback(() => {
-    navigate(ROUTES.admin.ordersList);
+    // navigate(ROUTES.admin.ordersList);
+    window.history.back();
   }, [navigate]);
 
   const toggleAgentModal = useCallback(() => {
