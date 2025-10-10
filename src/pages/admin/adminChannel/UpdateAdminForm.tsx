@@ -1,12 +1,12 @@
 // components/UpdateAdminForm.tsx
 import { FC, useEffect, useState } from "react";
-import { IAdminResponse } from "@features/api/authApi/types";
+import { IAdmin } from "@features/api/admin/types";
 import { useUpdateAdminMutation } from "@api";
 import { toast } from "react-toastify";
 import { Button, FormInput } from "@components/general";
 
 interface UpdateAdminFormProps {
-  admin: IAdminResponse | null;
+  admin: IAdmin | null;
   onClose: () => void;
 }
 

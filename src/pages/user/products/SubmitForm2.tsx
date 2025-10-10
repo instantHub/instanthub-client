@@ -1,10 +1,16 @@
 import React, { FC, useContext, useState } from "react";
-import { DateAndTime } from "@components/user";
 import { useCreateOrderMutation } from "@api";
 import { ORDER_EMAIL_MSG } from "@utils/user/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button, FlexBox, FormInput, Typography } from "@components/general";
+import {
+  Button,
+  Dropdown,
+  FlexBox,
+  FormInput,
+  ReusableDatePicker,
+  Typography,
+} from "@components/general";
 import {
   EmailIcon,
   MapIcon,
@@ -14,7 +20,8 @@ import {
   StockpilesIcon,
 } from "@icons";
 import { StateContext } from "./ProductFinalPrice2";
-import { ORDER_STATUS } from "@features/api/ordersApi/types";
+import { ORDER_STATUS } from "@features/api/orders/types";
+import { ITimeSlot, timeSlots } from "@utils/constants";
 
 export const SubmitForm2: FC = () => {
   const contextValue = useContext(StateContext);
@@ -29,6 +36,7 @@ export const SubmitForm2: FC = () => {
     useCreateOrderMutation();
 
   const [schedulePickUp, setSchedulePickUp] = useState<Date | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<ITimeSlot | null>(null);
 
   const handlePinCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -80,7 +88,10 @@ export const SubmitForm2: FC = () => {
         productCategory: formData.productCategory,
         variant: formData.variant,
       },
-      schedulePickUp,
+      schedulePickUp: {
+        date: schedulePickUp,
+        timeSlot: selectedSlot?.label,
+      },
       customerDetails: {
         name: state.name,
         email: state.email,
@@ -96,6 +107,8 @@ export const SubmitForm2: FC = () => {
         ? state.specialPrice
         : state.offerPrice,
     };
+
+    console.log("orderData", orderData);
 
     try {
       const order = await createOrder(orderData).unwrap();
@@ -221,12 +234,22 @@ export const SubmitForm2: FC = () => {
             placeholder="Enter Pin Code"
             required
           />
-          {/* Date Picker */}
-          <DateAndTime
-            // @ts-ignore
-            showPreviousDate={false}
-            setSchedule={setSchedulePickUp}
-          />
+
+          <FlexBox gap={2}>
+            <ReusableDatePicker
+              selectedDate={schedulePickUp}
+              onChange={(date) => setSchedulePickUp(date)}
+              minDate={new Date()}
+              required={true}
+            />
+            <Dropdown<ITimeSlot>
+              options={timeSlots}
+              value={selectedSlot}
+              onChange={(slot) => setSelectedSlot(slot)}
+              getOptionLabel={(option) => option.label}
+              placeholder="Choose a slot..."
+            />
+          </FlexBox>
 
           {/* Payment */}
           <FlexBox

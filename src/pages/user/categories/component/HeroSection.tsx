@@ -1,4 +1,4 @@
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
 import { BrandSelection } from "./BrandSelection";
 import { FlexBox, Typography } from "@components/general";
 import { FC } from "react";

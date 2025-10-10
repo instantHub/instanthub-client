@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CategoryCard } from "./CategoryCard";
 import { ROUTES } from "@routes";
 import { Loading } from "@components/user";
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
 import { Button, FlexBox, Typography } from "@components/general";
 import { PlusIcon } from "@icons";
 

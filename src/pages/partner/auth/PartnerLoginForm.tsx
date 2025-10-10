@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "@features/slices/auth/auth.slice";
 import { useLoginMutation, useLoginPartnerMutation } from "@features/api";
 import { EmailIcon, Eye, EyeOff, LockIcon, ProfileIcon } from "@icons";
-import { IAdminResponse } from "@features/api/authApi/types";
+import { IAdmin } from "@features/api/admin/types";
 
 interface IPartnerLoginFormProps {
   className?: string;
@@ -43,7 +43,7 @@ export const PartnerLoginForm: React.FC<IPartnerLoginFormProps> = ({
       const { email, password } = formData;
       const result = await login({ email, password }).unwrap();
 
-      dispatch(setCredentials({ admin: result as unknown as IAdminResponse }));
+      dispatch(setCredentials({ admin: result as unknown as IAdmin }));
 
       // Redirect based on role
       // if (result.admin.role === "partner") {

@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import {
-  useGetCategoriesQuery,
   useLazyGetCancelledOrdersQuery,
   useLazyGetCompletedOrdersQuery,
   useLazyGetPendingOrdersQuery,
@@ -12,7 +11,10 @@ import { OrderCard } from "./components";
 import { CurrentOrdersAndCount, OrderTabs } from "./components";
 import { Loading } from "@components/user";
 
-import { IOrder, IOrdersCount } from "@features/api/ordersApi/types";
+import { IOrder, IOrdersCount } from "@features/api/orders/types";
+import { useCategoryImages } from "@hooks";
+import { POLLING_INTERVALS } from "@utils/constants";
+import { CompactOrderStatusLegend } from "@components/admin";
 
 export type TDisplayType = "today" | "pending" | "completed" | "cancelled";
 
@@ -26,13 +28,14 @@ export interface IOrdersDisplaying {
 export const OrdersList = () => {
   const [activeTab, setActiveTab] = useState<TDisplayType>("today");
 
-  const { data: categoryData = [] } = useGetCategoriesQuery();
   const { data: ordersCountData } = useGetOrdersCountQuery();
 
   const [
     getTodaysOrders,
     { data: todaysOrders = [], isLoading: isLoadingToday },
-  ] = useLazyGetTodaysOrdersQuery();
+  ] = useLazyGetTodaysOrdersQuery({
+    pollingInterval: POLLING_INTERVALS.THIRTY_MINUTES,
+  });
 
   const [
     getPendingOrders,
@@ -50,12 +53,7 @@ export const OrdersList = () => {
   ] = useLazyGetCancelledOrdersQuery();
 
   // Memoize category images to prevent unnecessary re-renders
-  const categoryImages = useMemo(() => {
-    return categoryData.reduce((acc: Record<string, string>, cat) => {
-      if (!acc[cat.name]) acc[cat.name] = cat.image;
-      return acc;
-    }, {});
-  }, [categoryData]);
+  const { categoryImages } = useCategoryImages();
 
   // Memoize fetch functions to prevent re-creation on every render
   const fetchFunctions = useMemo(
@@ -137,7 +135,9 @@ export const OrdersList = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
+      <CompactOrderStatusLegend />
+
       <OrderTabs
         handleDisplay={handleTabChange}
         ordersDisplaying={ordersDisplaying}

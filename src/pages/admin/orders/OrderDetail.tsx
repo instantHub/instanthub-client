@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react";
 import {
+  useCompleteOrderMutation,
   useDeleteOrderMutation,
-  useGetOrderQuery,
-  useOrderReceivedMutation,
-  useUploadCustomerProofImageMutation,
+  useGetExecutiveOrderDetailsQuery,
+  useGetOrderDetailQuery,
 } from "@api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@components/user";
@@ -28,18 +28,14 @@ import {
   ProductIcon,
   RightTickIcon,
 } from "@icons";
-import {
-  IDeviceInfo,
-  IPickedUpDetails,
-  ORDER_STATUS,
-} from "@features/api/ordersApi/types";
+import { IDeviceInfo, ORDER_STATUS } from "@features/api/orders/types";
 import { CustomerIDImage, DetailDiv, DetailWrapper } from "./components";
-import { Button, FlexBox } from "@components/general";
-import { useSelector } from "react-redux";
-import { selectAdminState } from "@features/slices";
+import { Button, FlexBox, Modal, Typography } from "@components/general";
+import { useAuth } from "@hooks";
+import { formatDate } from "@utils/general";
 
 // Type Definitions
-interface ImageSelection {
+export interface ImageSelection {
   front: File | null;
   back: File | null;
   optional1: File | null;
@@ -69,26 +65,42 @@ const CONDITION_MAPPING = {
 
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
+// Remove ORDER_DETAIL_MAP and use conditional hook selection below
+
 // Component
 export const OrderDetail: React.FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
+  console.log("orderId", orderId);
 
-  // API Hooks
-  const { data: orderDetail, isLoading: orderDetailLoading } = useGetOrderQuery(
-    orderId!
-  );
+  const { isAdmin, adminData } = useAuth();
+
+  // const { data: orderDetail, isLoading: orderDetailLoading } = useGetOrderDetailQuery(
+  //   orderId!
+  // );
+
+  /**
+   * TODO: Carefully check if this works fine as this same OrderDetail
+   * is used for both Admin + Executive dashboards but with diff API calls
+   */
+  const isExecutive = adminData?.role === "executive";
+  const { data: orderDetail, isLoading: orderDetailLoading } = isExecutive
+    ? useGetExecutiveOrderDetailsQuery(
+        { orderId: orderId! },
+        { skip: !adminData?.role }
+      )
+    : useGetOrderDetailQuery({ orderId: orderId! });
+
   console.log("orderDetail", orderDetail);
 
-  const { admin } = useSelector(selectAdminState);
-
   const [deleteOrder] = useDeleteOrderMutation();
-  const [orderReceived, { isLoading: orderReceivedLoading }] =
-    useOrderReceivedMutation();
-  const [uploadCustomerProof] = useUploadCustomerProofImageMutation();
+
+  const [completeOrder, { isLoading: completeOrderLoading }] =
+    useCompleteOrderMutation();
 
   // State
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [assignAgent, setAssignAgent] = useState<boolean>(false);
   const [orderToDelete, setOrderToDelete] = useState<string>("");
   const [imagesSelected, setImagesSelected] = useState<ImageSelection>({
     front: null,
@@ -97,9 +109,9 @@ export const OrderDetail: React.FC = () => {
     optional2: null,
   });
   const [deviceInfo, setDeviceInfo] = useState<IDeviceInfo>({});
-  const [pickedUpBy, setPickedUpBy] = useState<string>("");
+  // const [pickedUpBy, setPickedUpBy] = useState<string>("");
   const [finalPrice, setFinalPrice] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   // Memoized processed deduction set
   const finalDeductionSet = useMemo(() => {
@@ -134,6 +146,10 @@ export const OrderDetail: React.FC = () => {
     navigate(ROUTES.admin.ordersList);
   }, [navigate]);
 
+  const toggleAgentModal = useCallback(() => {
+    setAssignAgent(!assignAgent);
+  }, [assignAgent]);
+
   const handleDeleteClick = useCallback(() => {
     if (orderDetail) {
       setModalOpen(true);
@@ -154,12 +170,12 @@ export const OrderDetail: React.FC = () => {
     [deleteOrder, navigate]
   );
 
-  const setPickUpHandler = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPickedUpBy(e.target.value);
-    },
-    []
-  );
+  // const setPickUpHandler = useCallback(
+  //   (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     setPickedUpBy(e.target.value);
+  //   },
+  //   []
+  // );
 
   const finalPriceHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -197,22 +213,6 @@ export const OrderDetail: React.FC = () => {
     []
   );
 
-  const uploadFileHandler = useCallback(
-    async (image: File): Promise<string> => {
-      const formData = new FormData();
-      formData.append("image", image);
-
-      try {
-        const res = await uploadCustomerProof(formData).unwrap();
-        return res.image;
-      } catch (error) {
-        console.error("Upload error:", error);
-        throw new Error("Failed to upload image");
-      }
-    },
-    [uploadCustomerProof]
-  );
-
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -225,48 +225,29 @@ export const OrderDetail: React.FC = () => {
           return;
         }
 
-        const [frontImageURL, backImageURL, optional1URL, optional2URL] =
-          await Promise.all([
-            uploadFileHandler(imagesSelected.front),
-            uploadFileHandler(imagesSelected.back),
-            imagesSelected.optional1
-              ? uploadFileHandler(imagesSelected.optional1)
-              : Promise.resolve(null),
-            imagesSelected.optional2
-              ? uploadFileHandler(imagesSelected.optional2)
-              : Promise.resolve(null),
-          ]);
+        const formData = new FormData();
+        formData.append("orderId", orderId);
+        formData.append("finalPrice", finalPrice.toString());
+        formData.append("completedAt", selectedDate.toISOString());
+        formData.append("deviceInfo", JSON.stringify(deviceInfo));
+        formData.append("status", ORDER_STATUS.COMPLETED);
 
-        const formData: FormData = {
-          orderId,
-          customerProofFront: frontImageURL,
-          customerProofBack: backImageURL,
-          customerOptional1: optional1URL,
-          customerOptional2: optional2URL,
-          completedAt: selectedDate,
-
-          deviceInfo,
-          finalPrice,
-          status: ORDER_STATUS.COMPLETED,
-        };
+        // Append the raw image files
+        formData.append("customerProofFront", imagesSelected.front);
+        formData.append("customerProofBack", imagesSelected.back);
+        if (imagesSelected.optional1) {
+          formData.append("customerOptional1", imagesSelected.optional1);
+        }
+        if (imagesSelected.optional2) {
+          formData.append("customerOptional2", imagesSelected.optional2);
+        }
 
         console.log("formData from OrderList handleSubmit", formData);
 
-        await orderReceived(formData);
-
-        // Reset form
-        setPickedUpBy("");
-        setFinalPrice("");
-        setDeviceInfo({});
-        setSelectedDate(null);
-        setImagesSelected({
-          front: null,
-          back: null,
-          optional1: null,
-          optional2: null,
-        });
+        await completeOrder(formData).unwrap();
 
         toast.success("Order completed successfully");
+        window.location.reload();
       } catch (error) {
         console.error("Submit error:", error);
         toast.error("Failed to complete order");
@@ -276,11 +257,10 @@ export const OrderDetail: React.FC = () => {
       orderId,
       selectedDate,
       imagesSelected,
-      uploadFileHandler,
-      pickedUpBy,
+      // pickedUpBy,
       deviceInfo,
       finalPrice,
-      orderReceived,
+      completeOrder,
     ]
   );
 
@@ -308,6 +288,13 @@ export const OrderDetail: React.FC = () => {
         >
           Back
         </Button>
+
+        {isAdmin() && orderDetail.status !== ORDER_STATUS.COMPLETED && (
+          <Button onClick={toggleAgentModal} shape="square" variant="greenary">
+            Assign Agent
+          </Button>
+        )}
+
         <Button
           onClick={handleDeleteClick}
           size="sm"
@@ -320,7 +307,33 @@ export const OrderDetail: React.FC = () => {
       </FlexBox>
 
       {/* Order Detail Content */}
-      <FlexBox direction="col" className=" bg-white border rounded-xl w-[95%]">
+      <FlexBox
+        direction="col"
+        className={`bg-whit border rounded-xl w-[95%] ${
+          orderDetail.assignmentStatus.assigned
+            ? "border-green-800 bg-green-100/30"
+            : ""
+        }`}
+      >
+        {orderDetail.assignmentStatus.assigned && isAdmin() && (
+          <FlexBox direction="col" className="mt-5 gap-2">
+            <Typography
+              variant="h5"
+              className="border-b pb-1 border-b-green-600"
+            >
+              This Order Has Been Assigned To:{" "}
+              {orderDetail.assignmentStatus.assignedTo.name}
+            </Typography>
+          </FlexBox>
+        )}
+
+        {orderDetail.rescheduleStatus.rescheduled && isAdmin() && (
+          <Typography variant="h6" className="text-red-600">
+            This Order Has Been Rescheduled:{" "}
+            {orderDetail.rescheduleStatus.rescheduleCount} times
+          </Typography>
+        )}
+
         <div className="grid grid-cols-2 max-sm:grid-cols-1 place-items-start place-content-center gap-14 max-sm:gap-5 py-10 max-sm:py-5 w-5/6 max-sm:w-fit">
           {/* Order Info */}
           <DetailWrapper icon={CartIcon} heading="Order Details">
@@ -331,8 +344,11 @@ export const OrderDetail: React.FC = () => {
             />
             <DetailDiv
               label="Scheduled PickUp"
-              text={orderDetail.schedulePickUp}
+              text={`${formatDate(orderDetail.schedulePickUp?.date)} - ${
+                orderDetail.schedulePickUp.timeSlot
+              }`}
             />
+
             <DetailDiv
               label="Status"
               text={orderCurrentStatus(orderDetail.status)}
@@ -420,8 +436,8 @@ export const OrderDetail: React.FC = () => {
                   text={orderDetail.assignmentStatus.assignedTo.name}
                 />
                 <DetailDiv
-                  label="Picked Up On"
-                  text={orderDetail.completedAt}
+                  label="Completed On"
+                  text={formatDate(orderDetail.completedAt)}
                 />
                 <div className="flex gap-4">
                   <DetailDiv
@@ -524,18 +540,16 @@ export const OrderDetail: React.FC = () => {
         {/* Order Complete Form for Pending Orders */}
         {orderDetail.status === ORDER_STATUS.PENDING && (
           <div>
-            {admin?.role !== "executive" && (
-              <AssignAgent orderDetail={orderDetail} />
-            )}
             <OrderCompleteForm
               orderDetail={orderDetail}
               handleSubmit={handleSubmit}
               setImagesSelected={setImagesSelected}
-              setPickUpHandler={setPickUpHandler}
+              // setPickUpHandler={setPickUpHandler}
               finalPriceHandler={finalPriceHandler}
+              selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
               deviceInfoHandler={deviceInfoHandler}
-              orderReceivedLoading={orderReceivedLoading}
+              orderReceivedLoading={completeOrderLoading}
             />
           </div>
         )}
@@ -552,6 +566,10 @@ export const OrderDetail: React.FC = () => {
         confirmText="Delete"
         cancelText="Cancel"
       />
+
+      <Modal isOpen={assignAgent} onClose={() => toggleAgentModal()}>
+        <AssignAgent orderDetail={orderDetail} />
+      </Modal>
     </FlexBox>
   );
 };

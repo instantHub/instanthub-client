@@ -5,11 +5,11 @@ import { toast } from "react-toastify";
 import { ActionButton, ConfirmationModal } from "@components/admin";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
-import { IBrandLite } from "@features/api/brandsApi/types";
+import { IBrandLite } from "@features/api/brands/types";
 import {
   ICategoryResponse,
   ICategoryType,
-} from "@features/api/categoriesApi/types";
+} from "@features/api/categories/types";
 import { FlexBox, Typography } from "@components/general";
 
 interface ICategoryCardProps {

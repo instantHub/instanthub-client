@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@components/general";
-import { ORDER_STATUS } from "@features/api/ordersApi/types";
+import { ORDER_STATUS } from "@features/api/orders/types";
 import { useSelector } from "react-redux";
 import { selectAdminState } from "@features/slices";
 

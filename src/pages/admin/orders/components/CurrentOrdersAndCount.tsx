@@ -1,4 +1,4 @@
-import { IOrdersCount } from "@features/api/ordersApi/types";
+import { IOrdersCount } from "@features/api/orders/types";
 import { IOrdersDisplaying } from "@pages/admin/orders/OrdersList";
 import { FC, useMemo } from "react";
 

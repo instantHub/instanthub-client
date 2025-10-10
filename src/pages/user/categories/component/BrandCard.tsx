@@ -1,4 +1,4 @@
-import { IBrandLite } from "@features/api/brandsApi/types";
+import { IBrandLite } from "@features/api/brands/types";
 import { FC, memo } from "react";
 import { Link } from "react-router-dom";
 

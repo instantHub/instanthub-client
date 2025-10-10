@@ -1,5 +1,5 @@
 import { FlexBox, Typography } from "@components/general";
-import { IBrandLite } from "@features/api/brandsApi/types";
+import { IBrandLite } from "@features/api/brands/types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@icons";
 import { FC, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";

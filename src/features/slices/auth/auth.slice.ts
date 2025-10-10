@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAdminResponse } from "@features/api/authApi/types";
+import { IAdmin } from "@features/api/admin/types";
 
 export interface AdminAuthState {
-  admin: IAdminResponse | null;
+  admin: IAdmin | null;
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
@@ -23,10 +23,7 @@ const adminAuthSlice = createSlice({
   name: "adminAuth",
   initialState,
   reducers: {
-    setCredentials: (
-      state,
-      action: PayloadAction<{ admin: IAdminResponse }>
-    ) => {
+    setCredentials: (state, action: PayloadAction<{ admin: IAdmin }>) => {
       const { admin } = action.payload;
       console.log("setCred slice", admin);
 

@@ -1,3 +1,5 @@
+import { executiveApi } from "@features/api";
+
 export const ROUTES = {
   user: {
     root: "/",
@@ -42,11 +44,8 @@ export const ROUTES = {
 
     createProduct: "/admin/add-products",
     productsList: "/admin/products-list",
-
-    // updateProduct: "/admin/update-product/:productId",
     updateProduct: "/admin/update-product/:productSlug",
 
-    // productQuestions: "/admin/products/product-questions/:productId",
     MVProductQuestions: "/admin/products/product-questions/mv/:productSlug",
     PBProductQuestions: "/admin/products/product-questions/pb/:productSlug",
 
@@ -102,5 +101,12 @@ export const ROUTES = {
     },
 
     iconsList: "/admin/icons",
+  },
+  executive: {
+    root: "/executive",
+    dashboard: "/executive/dashboard",
+    orders: "/executive/orders/:type",
+    ordersToday: "/executive/orders/today",
+    orderDetail: "/executive/:orderId/order-detail",
   },
 };

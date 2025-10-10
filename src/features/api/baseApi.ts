@@ -6,16 +6,21 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import { logout } from "@features/slices/auth/auth.slice";
-import { CATEGORY_API_TAG } from "./categoriesApi/constants";
+import { CATEGORY_API_TAG } from "./categories/constants";
 import { TESTIMONIAL_API_TAG } from "./testimonialsApi/constant";
-import { ORDER_DETAIL_API_TAG, ORDERS_API_TAG } from "./ordersApi/constants";
-import { ADMIN_API_TAG } from "./authApi/constant";
+import { ORDER_DETAIL_API_TAG, ORDERS_API_TAG } from "./orders/constants";
+import { ADMIN_API_TAG } from "./auth/constant";
 import {
   SERVICE_BRAND_API_TAG,
   SERVICE_CATEGORY_API_TAG,
   SERVICE_PROBLEM_API_TAG,
 } from "./servicesApi/constants";
 import { toast } from "react-toastify";
+import {
+  EXECUTIVE_API_TAG,
+  EXECUTIVE_ORDER_API_TAG,
+} from "./executive/constants";
+import { PARTNERS_API_TAG } from "./partners/constants";
 
 // Define error type mapping
 export type CustomError = {
@@ -74,10 +79,20 @@ const baseQueryWithErrorHandling: BaseQueryFn<
         api.dispatch(logout());
       }
 
-      window.location.href = "/dashboard-login";
+      // window.location.href = "/dashboard-login";
     }
     if (status === 404) {
       toast.error("Page / Endpoint not found");
+    } else if (status === 400) {
+      const errorData = result.error.data as {
+        success?: boolean;
+        message?: string;
+      };
+
+      const errMessage =
+        errorData?.message || "Error 400: Bad Request. Please try again.";
+
+      toast.error(errMessage);
     } else if (typeof status === "number" && status >= 500) {
       customError = {
         type: "SERVER_ERROR",
@@ -126,6 +141,9 @@ export const baseApi = createApi({
     SERVICE_CATEGORY_API_TAG,
     SERVICE_BRAND_API_TAG,
     SERVICE_PROBLEM_API_TAG,
+    EXECUTIVE_API_TAG,
+    EXECUTIVE_ORDER_API_TAG,
+    PARTNERS_API_TAG,
   ],
   endpoints: () => ({}),
 });

@@ -1,4 +1,4 @@
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
 import { FC, memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BrandCard } from "./BrandCard";

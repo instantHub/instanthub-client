@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FlexBox, Typography } from "@components/general";
 import { useGetCategoriesQuery } from "@features/api";
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
 import { useNavigate } from "react-router-dom";
 
 export const FooterSellLinks: FC = () => {

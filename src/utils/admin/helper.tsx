@@ -1,4 +1,4 @@
-import { ORDER_STATUS } from "@features/api/ordersApi/types";
+import { ORDER_STATUS } from "@features/api/orders/types";
 
 type OrderStatusValue = `${ORDER_STATUS}`;
 

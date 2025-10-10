@@ -22,7 +22,7 @@ import {
 } from "@utils/types";
 import { ROUTES_CONST } from "@utils/types/routes.types";
 
-export const sidebarSections: SidebarSection[] = [
+export const sidebarConfig: SidebarSection[] = [
   {
     title: "Overview",
     links: [
@@ -45,46 +45,46 @@ export const sidebarSections: SidebarSection[] = [
         name: "add-category",
         href: "/admin/add-category",
         icon: CategoryIcon,
-        permissions: [ADMIN_PERMISSIONS.CREATE],
+        permissions: [ADMIN_PERMISSIONS.CATEGORY_CREATE],
       },
       {
         name: "categories-list",
         href: "/admin/categories-list",
         icon: ListIndefiniteIcon,
-        permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
+        permissions: [ADMIN_PERMISSIONS.CATEGORY_READ],
       },
       {
         name: "add-brands",
         href: "/admin/add-brands",
         icon: AirtableIcon,
-        permissions: [ADMIN_PERMISSIONS.CREATE],
+        permissions: [ADMIN_PERMISSIONS.BRAND_CREATE],
       },
       {
         name: "brands-list",
         href: "/admin/brands-list",
         icon: ListIndefiniteIcon,
-        permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
+        permissions: [ADMIN_PERMISSIONS.BRAND_READ],
       },
       {
         name: "add-series",
         href: "/admin/add-series",
         icon: DatabricksIcon,
-        permissions: [ADMIN_PERMISSIONS.CREATE],
+        permissions: [ADMIN_PERMISSIONS.SERIES_CREATE],
       },
       {
         name: "add-products",
         href: "/admin/add-products",
         icon: AstroIcon,
-        permissions: [ADMIN_PERMISSIONS.CREATE],
+        permissions: [ADMIN_PERMISSIONS.PRODUCT_CREATE],
       },
       {
         name: "products-list",
         href: "/admin/products-list",
         icon: ListIndefiniteIcon,
-        permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
+        permissions: [ADMIN_PERMISSIONS.PRODUCT_READ],
       },
     ],
-    permissions: [ADMIN_PERMISSIONS.GENERAL_READ, ADMIN_PERMISSIONS.CREATE],
+    permissions: [ADMIN_PERMISSIONS.CATALOG_MANAGEMENT],
   },
   {
     title: "Customer Support",
@@ -93,7 +93,7 @@ export const sidebarSections: SidebarSection[] = [
         name: "create-questions",
         href: "/admin/create-questions",
         icon: QuestionAnswerIcon,
-        permissions: [ADMIN_PERMISSIONS.CREATE],
+        permissions: [ADMIN_PERMISSIONS.QUESTIONS_CREATE],
       },
       {
         name: "testimonial",
@@ -109,7 +109,7 @@ export const sidebarSections: SidebarSection[] = [
         permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
       },
     ],
-    permissions: [ADMIN_PERMISSIONS.GENERAL_READ, ADMIN_PERMISSIONS.CREATE],
+    permissions: [ADMIN_PERMISSIONS.CUSTOMER_SUPPORT],
   },
   {
     title: "Order Management",
@@ -133,7 +133,7 @@ export const sidebarSections: SidebarSection[] = [
         permissions: [ADMIN_PERMISSIONS.ORDERS_READ],
       },
     ],
-    permissions: [ADMIN_PERMISSIONS.ORDERS_READ],
+    permissions: [ADMIN_PERMISSIONS.ORDER_MANAGEMENT],
   },
   {
     title: "Services",
@@ -153,7 +153,7 @@ export const sidebarSections: SidebarSection[] = [
         // permissions: [ADMIN_PERMISSIONS.CREATE, ADMIN_PERMISSIONS.UPDATE],
       },
     ],
-    // permissions: [ADMIN_PERMISSIONS.UPDATE],
+    permissions: [ADMIN_PERMISSIONS.SERVICES_MANAGEMENT],
   },
   {
     title: "Inventory",
@@ -171,7 +171,7 @@ export const sidebarSections: SidebarSection[] = [
         permissions: [ADMIN_PERMISSIONS.CREATE, ADMIN_PERMISSIONS.UPDATE],
       },
     ],
-    permissions: [ADMIN_PERMISSIONS.UPDATE],
+    permissions: [ADMIN_PERMISSIONS.INVENTORY_MANAGEMENT],
   },
   {
     title: "Marketing",
@@ -201,10 +201,7 @@ export const sidebarSections: SidebarSection[] = [
         permissions: [ADMIN_PERMISSIONS.CAMPAIGNS_CREATE],
       },
     ],
-    permissions: [
-      ADMIN_PERMISSIONS.CAMPAIGNS_READ,
-      ADMIN_PERMISSIONS.CAMPAIGNS_CREATE,
-    ],
+    permissions: [ADMIN_PERMISSIONS.MARKETING_MANAGEMENT],
   },
   {
     title: "System",
@@ -228,9 +225,6 @@ export const sidebarSections: SidebarSection[] = [
         permissions: [ADMIN_PERMISSIONS.SETTINGS_READ],
       },
     ],
-    permissions: [
-      ADMIN_PERMISSIONS.SETTINGS_READ,
-      ADMIN_PERMISSIONS.ADMIN_CHANNEL,
-    ],
+    permissions: [ADMIN_PERMISSIONS.SETTINGS_MANAGEMENT],
   },
 ];

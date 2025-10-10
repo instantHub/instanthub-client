@@ -19,7 +19,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
 
   const visibleLinks = section.links.filter((link) => {
     if (!link.permissions) return true;
-    return link.permissions.some((perm) => adminPermissions.includes(perm));
+    return link.permissions.some((perm) => adminPermissions?.includes(perm));
   });
 
   const hasVisibleLinks: boolean = visibleLinks.length > 0;
@@ -32,7 +32,6 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
         </h3>
       )}
       <nav className="space-y-1">
-        {/* {section.links.map((link) => ( */}
         {visibleLinks.map((link) => (
           <SidebarLink key={link.name} link={link} isCollapsed={isCollapsed} />
         ))}

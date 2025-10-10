@@ -29,7 +29,7 @@ import {
   Typography,
 } from "@components/general";
 import { IGetUpTo, selectOfferPrice } from "@features/slices";
-import { IAddress } from "@features/api/ordersApi/types";
+import { IAddress } from "@features/api/orders/types";
 import {
   IConditionLabels,
   IProductResponse,

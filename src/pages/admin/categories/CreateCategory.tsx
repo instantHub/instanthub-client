@@ -6,7 +6,7 @@ import {
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general";
-import { ICategoryType } from "@features/api/categoriesApi/types";
+import { ICategoryType } from "@features/api/categories/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { Link } from "react-router-dom";
 import { TAction, TState } from "./types";

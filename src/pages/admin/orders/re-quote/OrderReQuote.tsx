@@ -1,5 +1,8 @@
 import { Button, FlexBox, Typography } from "@components/general";
-import { useGetOrderQuery, useLazyGetProductDetailsQuery } from "@features/api";
+import {
+  useGetOrderDetailQuery,
+  useLazyGetProductDetailsQuery,
+} from "@features/api";
 import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { MVBQuestions } from "./MVBQuestions";
@@ -11,7 +14,7 @@ import { setReQuoteTheme } from "@features/slices";
 export const OrderReQuote: FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
 
-  const { data: orderDetail } = useGetOrderQuery(orderId!);
+  const { data: orderDetail } = useGetOrderDetailQuery({ orderId: orderId! });
   const [
     getProductDetails,
     { data: productDetail, isLoading: loadingProductDetail },

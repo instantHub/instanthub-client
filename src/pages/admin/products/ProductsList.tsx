@@ -18,7 +18,7 @@ import {
   IAllProductsResponse,
   IProductResponse,
 } from "@features/api/productsApi/types";
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,

@@ -1,18 +1,21 @@
 import { FC, useState } from "react";
 import { useSidebar } from "@hooks";
 import { FiAlignLeft, LogoutIcon, MenuIcon, ProfileIcon } from "@icons";
-import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAdminLogoutMutation } from "@features/api";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { useLogoutMutation } from "@features/api";
 import { ROUTES } from "@routes";
 import { toast } from "react-toastify";
-import { logout } from "@features/slices/auth/auth.slice";
+import { logout as logoutAction } from "@features/slices/auth/auth.slice";
+import { RootState } from "@features/store";
+import { TAdminRole } from "@utils/types";
 
 export const Navbar: FC = () => {
   const { toggleSidebar } = useSidebar();
 
   const dispatch = useDispatch();
-  const [adminLogout] = useAdminLogoutMutation();
+  const [logout] = useLogoutMutation();
+  const { admin } = useSelector((state: RootState) => state.adminPanel);
 
   const { pathname } = useLocation();
   const currentPage: string = pathname
@@ -26,17 +29,17 @@ export const Navbar: FC = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const navigate = useNavigate();
-
   const handleLogout = async () => {
     console.log("handleLogout");
 
     try {
-      await adminLogout().unwrap();
+      await logout({
+        id: admin?._id ?? "",
+        role: admin?.role as TAdminRole,
+      }).unwrap();
       toast.success("Logged out successfully");
-      dispatch(logout());
-      console.log("before nav to lgoin");
-      navigate(ROUTES.admin.loginPage);
+      dispatch(logoutAction());
+      window.location.href = ROUTES.admin.loginPage;
     } catch (error) {}
   };
 

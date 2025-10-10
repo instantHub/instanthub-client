@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, FormInput } from "@components/general";
-import { ICreatePartnerPayload } from "@features/api/partnersApi/types";
+import { ICreatePartnerPayload } from "@features/api/partners/types";
 import { useCreatePartnerMutation } from "@features/api";
 
 interface CreatePartnerFormProps {

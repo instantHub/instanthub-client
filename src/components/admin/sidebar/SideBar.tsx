@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { useAuth, useSidebar } from "@hooks";
 import { CloseIcon } from "@icons";
 import { SidebarSection } from "./SidebarSection";
-import { sidebarSections } from "./sidebar.config";
+import { sidebarConfig } from "./sidebar.config";
 import { ROLE_PERMISSIONS } from "@utils/types";
+import { IAdmin } from "@features/api/admin/types";
+import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 interface SidebarProps {
   isCollapsed?: boolean;
@@ -14,7 +16,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
   const { isSidebarOpen, closeSidebar } = useSidebar();
   const { adminData, isAdmin, isExecutive, isMarketing, isPartner } = useAuth();
 
-  const adminPermissions = ROLE_PERMISSIONS[adminData?.role || "none"];
+  const adminPermissions = ROLE_PERMISSIONS[(adminData as IAdmin)?.role];
 
   return (
     <>
@@ -79,14 +81,24 @@ export const Sidebar: React.FC<SidebarProps> = () => {
 
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto py-4 px-3 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-          {sidebarSections.map((section) => (
-            <SidebarSection
-              key={section.title}
-              section={section}
-              isCollapsed={false}
-              adminPermissions={adminPermissions}
-            />
-          ))}
+          {sidebarConfig
+            .filter((section) => {
+              console.log("filtering sidebar section");
+              return section?.permissions?.some((perm) =>
+                ROLE_PERMISSIONS[adminData?.role as ADMIN_ROLE_ENUM]?.includes(
+                  // @ts-ignore
+                  perm
+                )
+              );
+            })
+            .map((section) => (
+              <SidebarSection
+                key={section.title}
+                section={section}
+                isCollapsed={false}
+                adminPermissions={adminPermissions}
+              />
+            ))}
         </div>
 
         {/* Footer */}

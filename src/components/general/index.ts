@@ -6,3 +6,6 @@ export * from "./modal";
 export * from "./checkbox";
 export * from "./select";
 export * from "./stepper";
+export * from "./datepicker";
+export * from "./dropdown";
+export * from "./statsCard";

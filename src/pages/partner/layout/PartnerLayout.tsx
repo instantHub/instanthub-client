@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "@features/store";
-import { useAdminLogoutMutation, usePartnerProfileQuery } from "@features/api";
+import { useLogoutMutation, usePartnerProfileQuery } from "@features/api";
 import { AstroIcon, MenuIcon, ProfileIcon } from "@icons";
 import { logout } from "@features/slices/auth/auth.slice";
 import { ROUTES } from "@routes";
@@ -17,7 +17,7 @@ export const PartnerLayout: React.FC = () => {
   const { admin } = useSelector((state: RootState) => state.adminPanel);
   const { data: profile } = usePartnerProfileQuery();
 
-  const [logoutMutation] = useAdminLogoutMutation();
+  const [logoutMutation] = useLogoutMutation();
 
   const handleLogout = async () => {
     console.log("handleLogout called..!");

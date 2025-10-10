@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "@api";
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
 
 export const Categories = () => {
   const { data: categories = [], isLoading: categoriesLoading } =

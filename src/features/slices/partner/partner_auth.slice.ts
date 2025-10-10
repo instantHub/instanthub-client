@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IPartner } from "@features/api/partnersApi/types";
+import { IPartner } from "@features/api/partners/types";
 
 export interface IPartnerAuthState {
   partner: IPartner | null;

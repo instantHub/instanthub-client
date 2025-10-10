@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
-import { ADMIN_ROLES, TPermissionAction } from "@utils/types";
+import { TPermissionAction } from "@utils/types";
 import { RootState } from "@features/store";
+import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 export const useAuth = () => {
   console.log("useAuth hook called");
@@ -24,10 +25,10 @@ export const useAuth = () => {
     return permissions.some((permission) => hasPermission(permission));
   };
 
-  const isAdmin = () => hasRole(ADMIN_ROLES.ADMIN);
-  const isExecutive = () => hasRole(ADMIN_ROLES.EXECUTIVE);
-  const isMarketing = () => hasRole(ADMIN_ROLES.MARKETING);
-  const isPartner = () => hasRole(ADMIN_ROLES.PARTNER);
+  const isAdmin = () => hasRole(ADMIN_ROLE_ENUM.ADMIN);
+  const isExecutive = () => hasRole(ADMIN_ROLE_ENUM.EXECUTIVE);
+  const isMarketing = () => hasRole(ADMIN_ROLE_ENUM.MARKETING);
+  const isPartner = () => hasRole(ADMIN_ROLE_ENUM.PARTNER);
 
   const isSessionExpired = () => {
     if (!sessionExpiry) return false;

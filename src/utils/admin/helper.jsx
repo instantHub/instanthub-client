@@ -1,7 +1,7 @@
 // Orders
 
 // TODO: this is use in recycle orders, keep now and remove later if not needed
-import { ORDER_STATUS } from "@features/api/ordersApi/types";
+import { ORDER_STATUS } from "@features/api/orders/types";
 
 export const orderCurrentStatus = (status) => {
   if (status == ORDER_STATUS.PENDING)

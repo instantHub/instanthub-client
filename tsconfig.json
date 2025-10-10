@@ -26,7 +26,8 @@
       "@types": ["src/utils/types/index.ts"],
       "@constants": ["src/utils/constants/index.ts"],
       "@services/*": ["src/services/*"],
-      "@partner/*": ["src/pages/partner/*"]
+      "@partner/*": ["src/pages/partner/*"],
+      "@executive/*": ["src/pages/executive/*"]
     }
   },
   "include": ["src"],

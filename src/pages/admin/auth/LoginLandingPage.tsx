@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { ArrowLeftIcon } from "@icons";
-import { SignIn } from "./AdminLoginPage";
+import { LoginForm } from "./LoginPage";
 import { PartnerLoginPage } from "@partner/auth";
+import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 const AdminIcon = () => (
   <svg
@@ -37,7 +38,12 @@ const PartnerIcon = () => (
   </svg>
 );
 
-type LoginView = "selection" | "admin" | "partner";
+type LoginView =
+  | "selection"
+  | ADMIN_ROLE_ENUM.ADMIN
+  | ADMIN_ROLE_ENUM.SUB_ADMIN
+  | ADMIN_ROLE_ENUM.EXECUTIVE
+  | ADMIN_ROLE_ENUM.PARTNER;
 
 export const LoginLandingPage: React.FC = () => {
   const [currentView, setCurrentView] = useState<LoginView>("selection");
@@ -59,7 +65,7 @@ export const LoginLandingPage: React.FC = () => {
         <div className="space-y-4">
           {/* Admin Login Button */}
           <button
-            onClick={() => setCurrentView("admin")}
+            onClick={() => setCurrentView(ADMIN_ROLE_ENUM.ADMIN)}
             className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"
           >
             <span className="flex items-center">
@@ -67,10 +73,28 @@ export const LoginLandingPage: React.FC = () => {
               Login as Admin
             </span>
           </button>
+          <button
+            onClick={() => setCurrentView(ADMIN_ROLE_ENUM.SUB_ADMIN)}
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105"
+          >
+            <span className="flex items-center">
+              <AdminIcon />
+              Login as Sub Admin
+            </span>
+          </button>
+          <button
+            onClick={() => setCurrentView(ADMIN_ROLE_ENUM.EXECUTIVE)}
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-transform transform hover:scale-105"
+          >
+            <span className="flex items-center">
+              <AdminIcon />
+              Login as Executive
+            </span>
+          </button>
 
           {/* Partner Login Button */}
           <button
-            onClick={() => setCurrentView("partner")}
+            onClick={() => setCurrentView(ADMIN_ROLE_ENUM.PARTNER)}
             className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105"
           >
             <span className="flex items-center">
@@ -97,7 +121,11 @@ export const LoginLandingPage: React.FC = () => {
       )}
 
       {currentView === "selection" && renderSelectionView()}
-      {currentView === "admin" && <SignIn />}
+
+      {currentView !== "selection" && (
+        <LoginForm role={currentView as ADMIN_ROLE_ENUM} />
+      )}
+
       {currentView === "partner" && <PartnerLoginPage />}
 
       <footer className="text-center mt-8 text-gray-400 text-sm">

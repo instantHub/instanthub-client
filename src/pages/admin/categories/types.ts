@@ -1,7 +1,7 @@
 import {
   ICategoryResponse,
   ICategoryType,
-} from "@features/api/categoriesApi/types";
+} from "@features/api/categories/types";
 
 export type TState = Pick<ICategoryResponse, "categoryType" | "uniqueURL"> & {
   category: string;

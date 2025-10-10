@@ -1,5 +1,5 @@
-import { IBrandResponse } from "../brandsApi/types";
-import { ICategoryResponse } from "../categoriesApi/types";
+import { IBrandResponse } from "../brands/types";
+import { ICategoryResponse } from "../categories/types";
 
 export type TOperation = "Add" | "Subtrack";
 

@@ -1,4 +1,4 @@
-import { ICategoryResponse } from "../categoriesApi/types";
+import { ICategoryResponse } from "../categories/types";
 import { IConditions } from "../productsApi/types";
 
 export interface IProcessorDeductionResponse {

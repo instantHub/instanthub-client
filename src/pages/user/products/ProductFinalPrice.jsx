@@ -13,7 +13,6 @@ import { Helmet } from "react-helmet-async";
 import FAQ from "@components/user/static/FAQ";
 import { LocationSelector } from "@components/user";
 import { LAPTOP } from "@utils/user/constants";
-import { SubmitForm } from "./SubmitForm";
 import SelectedProduct from "./questionnaire/SelectedProduct";
 import { generatePathWithParams } from "@utils/general/generatePathWithParams";
 import { ROUTES } from "@routes";
@@ -280,15 +279,6 @@ export const ProductFinalPrice = () => {
             dispatch({ type: "location", value: { state, city } });
           }}
           setShowLocation={setShowLocation}
-          setIsOpen={setIsOpen}
-        />
-      )}
-
-      {isOpen && (
-        <SubmitForm
-          formData={formData}
-          setFormData={setFormData}
-          reducer={{ state, dispatch }}
           setIsOpen={setIsOpen}
         />
       )}

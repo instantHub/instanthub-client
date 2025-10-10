@@ -17,8 +17,8 @@ import {
   FormInput,
   Typography,
 } from "@components/general";
-import { ICategoryResponse } from "@features/api/categoriesApi/types";
-import { IBrandResponse } from "@features/api/brandsApi/types";
+import { ICategoryResponse } from "@features/api/categories/types";
+import { IBrandResponse } from "@features/api/brands/types";
 import { useNavigate } from "react-router-dom";
 import { ISeriesResponse } from "@features/api/seriesApi/types";
 
