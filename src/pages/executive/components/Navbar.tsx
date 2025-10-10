@@ -38,22 +38,20 @@ export const Navbar: FC = () => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
-      <FlexBox justify="between">
-        <Typography variant="h5">{currentPage}</Typography>
+    <header className="flex justify-between items-center bg-white border-b border-gray-200 px-6 max-sm:px-3 py-4">
+      <Typography variant="h5">{currentPage}</Typography>
 
-        <FlexBox gap={2}>
-          <h1 className="flex items-cente text-lg max-md:text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition">
-            {admin?.name}
-          </h1>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition"
-          >
-            <LogoutIcon className="w-4 h-4" />
-            <span>Logout</span>
-          </button>
-        </FlexBox>
+      <FlexBox gap={2}>
+        <h1 className="flex items-cente text-lg max-md:text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition">
+          {admin?.name}
+        </h1>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-4 py-2 max-sm:px-2 max-sm:text-xs text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition"
+        >
+          <LogoutIcon className="w-3 sm:w-4 h-3 sm:h-4" />
+          <span>Logout</span>
+        </button>
       </FlexBox>
     </header>
   );
