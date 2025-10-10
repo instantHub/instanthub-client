@@ -66,7 +66,7 @@ export const LoginLandingPage: React.FC = () => {
           {/* Admin Login Button */}
           <button
             onClick={() => setCurrentView(ADMIN_ROLE_ENUM.ADMIN)}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105"
           >
             <span className="flex items-center">
               <AdminIcon />
@@ -75,7 +75,7 @@ export const LoginLandingPage: React.FC = () => {
           </button>
           <button
             onClick={() => setCurrentView(ADMIN_ROLE_ENUM.SUB_ADMIN)}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105"
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-transform transform hover:scale-105"
           >
             <span className="flex items-center">
               <AdminIcon />
@@ -84,22 +84,11 @@ export const LoginLandingPage: React.FC = () => {
           </button>
           <button
             onClick={() => setCurrentView(ADMIN_ROLE_ENUM.EXECUTIVE)}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-transform transform hover:scale-105"
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105"
           >
             <span className="flex items-center">
               <AdminIcon />
               Login as Executive
-            </span>
-          </button>
-
-          {/* Partner Login Button */}
-          <button
-            onClick={() => setCurrentView(ADMIN_ROLE_ENUM.PARTNER)}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105"
-          >
-            <span className="flex items-center">
-              <PartnerIcon />
-              Login as Partner
             </span>
           </button>
         </div>
