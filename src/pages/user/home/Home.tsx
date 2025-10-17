@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Categories } from "../categories";
-import { Accordion, GuideHome, Slider } from "@components/user";
+import { Accordion, GuideHome, HeroSlider, Slider } from "@components/user";
 import WhyUs from "@components/user/static/home/WhyUs";
 import { useScrollToTop } from "@hooks";
 import { TestimonialCarousel } from "@components/user";
@@ -35,10 +35,9 @@ export const Home = () => {
         <link rel="canonical" href="https://www.instanthub.in/" />
       </Helmet>
 
-      {/* <div className="flex flex-col w-full"> */}
-      {/* Bill Board Advertisement */}
       <div className="flex flex-col gap-10 max-sm:gap-5 w-full mt-5">
-        <Slider />
+        {/* <Slider /> */}
+        <HeroSlider />
         <Categories />
 
         {/* <div className="mt-10 pt-5 pb-16 bg-instant-mid/10">
@@ -83,7 +82,6 @@ export const Home = () => {
 
         <GuideHome />
       </div>
-      {/* </div> */}
     </>
   );
 };

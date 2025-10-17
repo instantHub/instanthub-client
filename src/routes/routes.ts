@@ -71,7 +71,9 @@ export const ROUTES = {
     updateSlider: "/admin/update-sliders/:sliderId",
 
     ordersList: "/admin/orders",
-    orderDetail: "/admin/order-detail/:orderId",
+    ordersListByStatus: "/admin/orders/:filter", // Add this route
+    orderDetail: "/admin/orders/:orderId/order-detail",
+    orderDetail2: "/admin/order/detail/:orderId",
     orderReQuote: "/admin/order-detail/:orderId/re-quote",
     orderReQuoteCompletion: "/admin/order-detail/:orderId/re-quote/completion",
     manageStock: "/admin/manage-stocks",

@@ -9,3 +9,4 @@ export * from "./stepper";
 export * from "./datepicker";
 export * from "./dropdown";
 export * from "./statsCard";
+export * from "./statusBox";

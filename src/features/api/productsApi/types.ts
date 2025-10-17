@@ -3,6 +3,12 @@ import { ICategoryResponse } from "../categories/types";
 
 export type TOperation = "Add" | "Subtrack";
 
+export interface ISearchParams {
+  search: string;
+  page?: number;
+  limit?: number;
+}
+
 export interface IProductResponse {
   id: string;
   name: string;
@@ -24,6 +30,7 @@ export interface IAllProductsResponse {
   products: IProductResponse[];
   page: number;
   totalPages: number;
+  totalProducts: number;
 }
 
 export interface IVariants {

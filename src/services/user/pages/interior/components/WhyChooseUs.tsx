@@ -36,7 +36,7 @@ export const WhyChooseUs: FC<IWhyChooseUsProps> = ({ openModal }) => {
   return (
     <section className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">
+        <h2 className="text-xl lg:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">
           Why Choose InstantHub Homes?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">

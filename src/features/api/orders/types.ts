@@ -22,9 +22,7 @@ export interface IOrder {
     addressDetails: IAddress;
   };
 
-  // accessoriesAvailable: IAccessoriesAvailable[];
   finalDeductionSet: IFinalDeductionSet[];
-  //   deductions: IDeductions[];
 
   customerIDProof: {
     front: string;
@@ -44,9 +42,7 @@ export interface IOrder {
   status: ORDER_STATUS;
 
   partner: IPartner;
-  // pickedUpDetails: IPickedUpDetails;
 
-  // assignmentStatus: ASSIGNMENT_STATUS;
   assignmentStatus: IAssignmentStatus;
   rescheduleStatus: IRescheduleStatus;
 
@@ -174,4 +170,132 @@ export interface IRescheduleOrderArgs {
     newTimeSlot: string;
     rescheduleReason: string;
   };
+}
+
+export interface IOrderStats {
+  overall: {
+    total: number;
+    pending: number;
+    completed: number;
+    cancelled: number;
+    unassigned: number;
+    overdue: number;
+  };
+  today: {
+    total: number;
+    pending: number;
+    completed: number;
+    cancelled: number;
+    unassigned: number;
+  };
+  tomorrow: {
+    total: number;
+    unassigned: number;
+  };
+}
+
+// NEW
+export interface ICustomer {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pinCode: string;
+}
+
+export interface IProduct {
+  name: string;
+  brand: string;
+  category: string;
+  variant: string;
+  variantPrice: number;
+}
+
+export interface IDevice {
+  serialNumber: string;
+  imeiNumber: string;
+}
+
+export interface IAssignment {
+  isAssigned: boolean;
+  assignedTo: string | null;
+  assignedToPhone: string | null;
+  assignedToRole: string | null;
+  assignedAt: string | null;
+  assignedBy: string | null;
+}
+
+export interface IReschedule {
+  isRescheduled: boolean;
+  rescheduleCount: number;
+  rescheduleReason: string | null;
+  lastRescheduledDate: string | null;
+}
+
+export interface ICancellation {
+  cancelledBy: string | null;
+  cancelReason: string | null;
+  cancelledAt: string | null;
+}
+
+export interface IOrder2 {
+  id: string;
+  orderId: string;
+  customer: ICustomer;
+  product: IProduct;
+  device: IDevice;
+  status: "pending" | "completed" | "cancelled" | "in-progress";
+  isOverdue: boolean;
+  scheduledDate: string;
+  timeSlot: string;
+  offerPrice: number;
+  finalPrice: number;
+  paymentMode: string;
+  assignment: IAssignment;
+  reschedule: IReschedule;
+  cancellation: ICancellation | null;
+  createdAt: string;
+  completedAt: string | null;
+}
+
+export interface IOrdersResponse {
+  orders: IOrder2[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalOrders: number;
+    ordersPerPage: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+  };
+  filters: {
+    status: string;
+    dateFilter: string;
+    sortBy: string;
+    order: string;
+  };
+}
+
+export interface IGetOrdersByStatusParams {
+  status:
+    | "pending"
+    | "completed"
+    | "cancelled"
+    | "in-progress"
+    | "unassigned"
+    | "overdue"
+    | "all";
+  dateFilter?: "today" | "tomorrow";
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  order?: "asc" | "desc";
+}
+
+export interface IApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
 }

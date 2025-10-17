@@ -33,6 +33,11 @@ import { PartnerDashboard, PartnerLayout } from "@partner/layout";
 import { RoleGuard } from "src/guards";
 import { PartnerProfile } from "@pages/partner/settings";
 import AdminProtectedRoute from "@pages/admin/layout/Protect";
+import OrderListPage from "@pages/admin/orders/OrderListPage";
+import OrdersPage from "@pages/admin/orders/OrdersPage";
+import { OrderDetail2 } from "@pages/admin/orders/orderDetail/OrderDetail2";
+import { ExecutiveDashboard } from "@pages/executive/dashboard/ExecutiveDashboard";
+import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -529,35 +534,54 @@ export const router = Router([
         ),
       },
 
-      // Orders
       {
-        path: ROUTES.admin.ordersList,
-        element: (
-          <RoleGuard
-            allowedRoles={[
-              ADMIN_ROLE_ENUM.ADMIN,
-              ADMIN_ROLE_ENUM.EXECUTIVE,
-              ADMIN_ROLE_ENUM.MARKETING,
-            ]}
-          >
-            <ADMIN.OrdersList />,
-          </RoleGuard>
-        ),
+        path: "orders",
+        children: [
+          {
+            index: true, // This will match /admin/orders exactly
+            element: (
+              <RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <OrdersPage />
+              </RoleGuard>
+            ),
+          },
+          {
+            path: ":filter", // This will match /admin/orders/:filter
+            element: (
+              <RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                  ADMIN_ROLE_ENUM.MARKETING,
+                ]}
+              >
+                <OrderListPage />
+              </RoleGuard>
+            ),
+          },
+          {
+            path: ":orderId/order-detail",
+            element: (
+              <RoleGuard
+                allowedRoles={[
+                  ADMIN_ROLE_ENUM.ADMIN,
+                  ADMIN_ROLE_ENUM.EXECUTIVE,
+                  ADMIN_ROLE_ENUM.SUB_ADMIN,
+                ]}
+              >
+                <OrderDetail2 />,
+              </RoleGuard>
+            ),
+          },
+        ],
       },
-      {
-        path: ROUTES.admin.orderDetail,
-        element: (
-          <RoleGuard
-            allowedRoles={[
-              ADMIN_ROLE_ENUM.ADMIN,
-              ADMIN_ROLE_ENUM.EXECUTIVE,
-              ADMIN_ROLE_ENUM.SUB_ADMIN,
-            ]}
-          >
-            <ADMIN.OrderDetail />,
-          </RoleGuard>
-        ),
-      },
+
       {
         path: ROUTES.admin.orderReQuote,
         element: (
@@ -743,15 +767,19 @@ export const router = Router([
       },
       {
         path: ROUTES.executive.dashboard,
-        element: <EXECUTIVE.Dashboard />,
+        element: <ExecutiveDashboard />,
+        // element: <EXECUTIVE.Dashboard />,
       },
       {
-        path: ROUTES.executive.orders,
-        element: <EXECUTIVE.Orders />,
+        // path: ROUTES.executive.orders,
+        // element: <EXECUTIVE.Orders />,
+        path: "/executive/orders",
+        element: <ExecutiveOrders />,
       },
       {
         path: ROUTES.executive.orderDetail,
-        element: <ADMIN.OrderDetail />,
+        element: <OrderDetail2 />,
+        // element: <ADMIN.OrderDetail />,
       },
     ],
   },

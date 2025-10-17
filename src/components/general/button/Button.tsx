@@ -49,7 +49,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 // Size styles mapping
 const sizeStyles: Record<ButtonSize, string> = {
   xs: "px-2 py-1 text-xs",
-  sm: "px-2 py-1 text-sm",
+  sm: "px-3 py-1 text-sm",
   md: "px-4 py-2 text-sm md:text-base",
   lg: "px-4 md:px-6 py-2.5 text-sm md:text-lg",
   xl: "px-8 py-3 text-lg md:text-xl",
@@ -69,6 +69,7 @@ const baseStyles = `
   focus:outline-none focus:ring-2 focus:ring-offset-2
   disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
   active:scale-95 transform my-2
+ 
 `
   .replace(/\s+/g, " ")
   .trim();
@@ -76,7 +77,7 @@ const baseStyles = `
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = "primary",
-  shape = "rounded",
+  shape = "square",
   size = "md",
   fullWidth = false,
   loading = false,

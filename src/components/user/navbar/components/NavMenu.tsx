@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { HomeIcon, RecycleIcon, ServiceIcon } from "@icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@routes";
@@ -8,61 +8,93 @@ interface INavMenuProps {
   activePath: IActivePath;
 }
 
-export const NavMenu: FC<INavMenuProps> = ({ activePath }: INavMenuProps) => {
-  const navigate = useNavigate();
+export const NavMenu: FC<INavMenuProps> = memo(
+  ({ activePath }: INavMenuProps) => {
+    const navigate = useNavigate();
 
-  type ActivePathKey = keyof typeof activePath;
+    type ActivePathKey = keyof typeof activePath;
 
-  const footerNavItems: {
-    key: ActivePathKey;
-    label: string;
-    icon: JSX.Element;
-    onClick: () => void;
-  }[] = [
-    {
-      key: "service",
-      label: "Services",
-      icon: <ServiceIcon size={16} />,
-      onClick: () => navigate("/services"),
-    },
-    {
-      key: "home",
-      label: "Home",
-      icon: <HomeIcon size={16} />,
-      onClick: () => navigate("/"),
-    },
-    {
-      key: "recycle",
-      label: "Recycle",
-      icon: <RecycleIcon size={16} />,
-      onClick: () => navigate(ROUTES.user.recycleCategories),
-    },
-  ];
+    const footerNavItems: {
+      key: ActivePathKey;
+      label: string;
+      icon: JSX.Element;
+      onClick: () => void;
+    }[] = [
+      {
+        key: "service",
+        label: "Services",
+        icon: <ServiceIcon size={18} />,
+        onClick: () => navigate("/services"),
+      },
+      {
+        key: "home",
+        label: "Sell Now",
+        icon: <HomeIcon size={18} />,
+        onClick: () => navigate("/"),
+      },
+      {
+        key: "recycle",
+        label: "Recycle",
+        icon: <RecycleIcon size={18} />,
+        onClick: () => navigate(ROUTES.user.recycleCategories),
+      },
+    ];
 
-  const activeLink =
-    "text-secondary text-xl transition-all duration-1000 ease-in-out";
-  const activeLinkName = "font-extrabold text-secondary";
-  const activeButton = "bg-instant-mid/10 transition-all duration-1000";
+    return (
+      <div className="max-sm:hidden grid grid-cols-3 bg-white w-full border-b text-xs">
+        {footerNavItems.map((item) => (
+          <button
+            key={item.key}
+            aria-label={`${item.label} navigation`}
+            onClick={item.onClick}
+            className={`
+            group relative flex justify-center items-center gap-2 py-3 
+            transition-all duration-300 
+            border-r last:border-r-0
+            ${
+              activePath[item.key]
+                ? "bg-gradient-to-b from-instant-mid/10 to-transparent border-t-4 border-t-purple-600"
+                : "hover:bg-instant-mid/10"
+            }
+          `}
+          >
+            {/* Icon with animation */}
+            <span
+              className={`
+              transition-all duration-300 
+              ${
+                activePath[item.key]
+                  ? "text-purple-600 scale-110"
+                  : "text-gray-500 group-hover:text-purple-600 group-hover:scale-110"
+              }
+            `}
+            >
+              {item.icon}
+            </span>
 
-  return (
-    <div className="max-sm:hidden h-12 grid grid-cols-3 border bg-white w-full text-sm font-thin">
-      {footerNavItems.map((item) => (
-        <button
-          key={item.key}
-          aria-label={`${item.label} button`}
-          onClick={item.onClick}
-          className={`flex justify-center items-center gap-1 py-2 border-r ${
-            activePath[item.key] ? activeButton : ""
-          }`}
-        >
-          <span className={activePath[item.key] ? activeLink : "text-gray-400"}>
-            {item.icon}
-          </span>
-          <span className={activePath[item.key] ? activeLinkName : ""}>
-            {item.label}
-          </span>
-        </button>
-      ))}
-    </div>
-  );
-};
+            {/* Label */}
+            <span
+              className={`
+              font-medium transition-colors duration-300
+              ${
+                activePath[item.key]
+                  ? "text-purple-600 font-bold"
+                  : "text-gray-700 group-hover:text-purple-600"
+              }
+            `}
+            >
+              {item.label}
+            </span>
+
+            {/* Active indicator line */}
+            {activePath[item.key] && (
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-t-full" />
+            )}
+          </button>
+        ))}
+      </div>
+    );
+  }
+);
+
+NavMenu.displayName = "NavMenu";

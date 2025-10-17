@@ -8,3 +8,4 @@ export { useSessionTimeout } from "./useSessionTimeout";
 export { SidebarContext, useSidebar } from "./useSidebar";
 export { useScrollToTop } from "./useScrollToTop";
 export { useCategoryImages } from "./useCategoryImages";
+export * from "./useOrders";

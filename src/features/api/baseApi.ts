@@ -8,7 +8,11 @@ import {
 import { logout } from "@features/slices/auth/auth.slice";
 import { CATEGORY_API_TAG } from "./categories/constants";
 import { TESTIMONIAL_API_TAG } from "./testimonialsApi/constant";
-import { ORDER_DETAIL_API_TAG, ORDERS_API_TAG } from "./orders/constants";
+import {
+  ORDER_DETAIL_API_TAG,
+  ORDER_STATS_API_TAG,
+  ORDERS_API_TAG,
+} from "./orders/constants";
 import { ADMIN_API_TAG } from "./auth/constant";
 import {
   SERVICE_BRAND_API_TAG,
@@ -19,6 +23,7 @@ import { toast } from "react-toastify";
 import {
   EXECUTIVE_API_TAG,
   EXECUTIVE_ORDER_API_TAG,
+  EXECUTIVE_STATS_API_TAG,
 } from "./executive/constants";
 import { PARTNERS_API_TAG } from "./partners/constants";
 
@@ -126,6 +131,7 @@ export const baseApi = createApi({
     "ConditionLabels",
     ORDERS_API_TAG,
     ORDER_DETAIL_API_TAG,
+    ORDER_STATS_API_TAG,
     "Sliders",
     "Series",
     "Stocks",
@@ -143,6 +149,7 @@ export const baseApi = createApi({
     SERVICE_PROBLEM_API_TAG,
     EXECUTIVE_API_TAG,
     EXECUTIVE_ORDER_API_TAG,
+    EXECUTIVE_STATS_API_TAG,
     PARTNERS_API_TAG,
   ],
   endpoints: () => ({}),

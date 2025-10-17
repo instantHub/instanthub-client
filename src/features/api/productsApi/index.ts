@@ -4,12 +4,37 @@ import {
   IGetAllProductsParams,
   IGetProductsByBrandParams,
   IProductResponse,
+  ISearchParams,
 } from "./types";
 
 export const productsURL = "/api/products";
 
+interface Service {
+  name: string;
+  uniqueURL: string;
+}
+
+interface ServiceResponse {
+  services: Service[];
+}
+
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    searchProducts: build.query<IAllProductsResponse, ISearchParams>({
+      query: ({ search, page = 1, limit = 10 }) => ({
+        url: "/api/products",
+        params: { search: search.trim(), page, limit },
+      }),
+      // Keep previous results while fetching new ones
+      keepUnusedDataFor: 60,
+    }),
+    searchServices: build.query<ServiceResponse, ISearchParams>({
+      query: ({ search, page = 1, limit = 10 }) => ({
+        url: "/services",
+        params: { search: search.trim(), page, limit },
+      }),
+      keepUnusedDataFor: 60,
+    }),
     getAllProducts: build.query<IAllProductsResponse, IGetAllProductsParams>({
       query: ({ page, limit, search, categoryId }) => ({
         url: productsURL,
@@ -95,6 +120,8 @@ export const productsApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useSearchProductsQuery,
+  useSearchServicesQuery,
   useGetAllProductsQuery,
   useLazyGetAllProductsQuery,
   useGetProductsQuery,

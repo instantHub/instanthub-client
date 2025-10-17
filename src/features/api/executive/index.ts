@@ -4,8 +4,11 @@ import {
   IExecutive,
   IExecutiveOrderCountsResponse,
   IExecutiveOrders,
+  IExecutiveOrdersResponse,
+  IExecutiveStats,
+  IGetExecutiveOrdersParams,
 } from "./types";
-import { EXECUTIVE_API_TAG } from "./constants";
+import { EXECUTIVE_API_TAG, EXECUTIVE_STATS_API_TAG } from "./constants";
 import { IAssignmentStatus, IOrder } from "../orders/types";
 
 const EXECUTIVES_API = "/api/executives";
@@ -119,6 +122,49 @@ export const executiveApi = baseApi.injectEndpoints({
       }),
       providesTags: [EXECUTIVE_API_TAG],
     }),
+
+    getExecutiveStats: builder.query<IExecutiveStats, void>({
+      query: () => `${EXECUTIVES_API}/orders/stats`,
+      transformResponse: (response: {
+        success: boolean;
+        data: IExecutiveStats;
+      }) => response.data,
+      providesTags: [EXECUTIVE_STATS_API_TAG],
+      keepUnusedDataFor: 60,
+    }),
+
+    getExecutiveOrders2: builder.query<
+      IExecutiveOrdersResponse,
+      IGetExecutiveOrdersParams
+    >({
+      query: ({
+        status = "all",
+        dateFilter,
+        page = 1,
+        limit = 20,
+        sortBy = "schedulePickUp.date",
+        order = "asc",
+      }) => {
+        const params = new URLSearchParams({
+          status,
+          page: page.toString(),
+          limit: limit.toString(),
+          sortBy,
+          order,
+        });
+
+        if (dateFilter) {
+          params.append("dateFilter", dateFilter);
+        }
+
+        return `${EXECUTIVES_API}/orders?${params.toString()}`;
+      },
+      transformResponse: (response: {
+        success: boolean;
+        data: IExecutiveOrdersResponse;
+      }) => response.data,
+      providesTags: [EXECUTIVE_API_TAG],
+    }),
   }),
 });
 
@@ -136,4 +182,7 @@ export const {
   useGetExecutiveOrderDetailsQuery,
   useGetExecutiveOrderCountsQuery,
   useGetExecutiveOrdersByStatusQuery,
+
+  useGetExecutiveStatsQuery,
+  useGetExecutiveOrders2Query,
 } = executiveApi;

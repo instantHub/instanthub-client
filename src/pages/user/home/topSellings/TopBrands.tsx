@@ -110,9 +110,9 @@ export const TopBrands: FC<ITopBrandsProps> = ({ brands }) => {
             className="flex overflow-x-auto scrollbar-hide gap-4 px-1 py-4"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {brands?.map(({ brand, totalSold }) => (
+            {brands?.map(({ brand, totalSold }, index) => (
               <div
-                key={brand.id}
+                key={index}
                 onClick={() => handleBrandClick(brand)}
                 className="flex-shrink-0 w-40 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group"
               >

@@ -2,42 +2,30 @@ import { baseApi } from "@features/api";
 import {
   ORDER_API_PATHS,
   ORDER_DETAIL_API_TAG,
+  ORDER_STATS_API_TAG,
   ORDERS_API_TAG,
 } from "./constants";
-import { IOrder, IOrdersCount, IRescheduleOrderArgs } from "./types";
+import {
+  IApiResponse,
+  IGetOrdersByStatusParams,
+  IOrder,
+  IOrdersCount,
+  IOrdersResponse,
+  IOrderStats,
+  IRescheduleOrderArgs,
+} from "./types";
 import { EXECUTIVE_ORDER_API_TAG } from "../executive/constants";
 
 export const orders = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getOrdersList: build.query<IOrder[], void>({
-      query: () => `${ORDER_API_PATHS.BASE}`,
-      providesTags: [ORDERS_API_TAG],
-    }),
-    getOrdersCount: build.query<IOrdersCount, void>({
-      query: () => `${ORDER_API_PATHS.BASE}/count`,
-    }),
-    getTodaysOrders: build.query<IOrder[], void>({
-      query: () => `${ORDER_API_PATHS.BASE}/today`,
-    }),
-    getPendingOrders: build.query<IOrder[], void>({
-      query: () => `${ORDER_API_PATHS.BASE}/pending`,
-    }),
-    getCompletedOrders: build.query<IOrder[], void>({
-      query: () => `${ORDER_API_PATHS.BASE}/completed`,
-    }),
-    getCancelledOrders: build.query<IOrder[], void>({
-      query: () => `${ORDER_API_PATHS.BASE}/cancelled`,
-    }),
-
     getOrderDetail: build.query<IOrder, { orderId: string }>({
-      query: ({ orderId }) => `/api/orders/${orderId}`,
+      query: ({ orderId }) => `/api/orders/${orderId}/order-details`,
       providesTags: [ORDER_DETAIL_API_TAG],
       // providesTags: (result, error, id) => [{ type: "Order", id }],
     }),
 
     createOrder: build.mutation({
       query: (data) => ({
-        // url: "/api/orders/create-order",
         url: ORDER_API_PATHS.BASE,
         method: "POST",
         headers: {
@@ -46,15 +34,6 @@ export const orders = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: [ORDERS_API_TAG],
-    }),
-
-    // TODO: we have replaced this in BE, remove this after everything goes well
-    uploadCustomerProofImage: build.mutation({
-      query: (data) => ({
-        url: "/api/upload/customer-proof",
-        method: "POST",
-        body: data,
-      }),
     }),
 
     completeOrder: build.mutation({
@@ -78,6 +57,7 @@ export const orders = baseApi.injectEndpoints({
       }),
       invalidatesTags: [ORDERS_API_TAG, ORDER_DETAIL_API_TAG],
     }),
+
     deleteOrder: build.mutation({
       query: (orderId) => ({
         url: `/api/orders/delete-order/${orderId}`,
@@ -95,18 +75,72 @@ export const orders = baseApi.injectEndpoints({
 
       invalidatesTags: [ORDER_DETAIL_API_TAG],
     }),
+
+    // Get order statistics
+    getOrderStats: build.query<IOrderStats, void>({
+      query: () => "/api/orders/stats",
+      transformResponse: (response: IApiResponse<IOrderStats>) => response.data,
+      providesTags: [ORDER_STATS_API_TAG],
+      // Refetch on mount and focus
+      keepUnusedDataFor: 60, // Cache for 60 seconds
+    }),
+
+    // Get orders by status with filtering
+    getOrdersByStatus: build.query<IOrdersResponse, IGetOrdersByStatusParams>({
+      query: ({
+        status,
+        dateFilter,
+        page = 1,
+        limit = 20,
+        sortBy = "createdAt",
+        order = "desc",
+      }) => {
+        const params = new URLSearchParams({
+          status,
+          page: page.toString(),
+          limit: limit.toString(),
+          sortBy,
+          order,
+        });
+
+        if (dateFilter) {
+          params.append("dateFilter", dateFilter);
+        }
+
+        return `/api/orders/by-status?${params.toString()}`;
+      },
+      transformResponse: (response: IApiResponse<IOrdersResponse>) =>
+        response.data,
+      providesTags: (result, error, arg) =>
+        result
+          ? [
+              ...result.orders.map(({ id }) => ({
+                type: "Orders" as const,
+                id,
+              })),
+              {
+                type: "Orders",
+                id: `${arg.status}-${arg.dateFilter || "all"}`,
+              },
+            ]
+          : [
+              {
+                type: "Orders",
+                id: `${arg.status}-${arg.dateFilter || "all"}`,
+              },
+            ],
+      // Keep cached data for pagination
+      keepUnusedDataFor: 300, // Cache for 5 minutes
+    }),
   }),
 });
 
 export const {
   useGetOrderDetailQuery,
-  useGetOrdersListQuery,
 
-  useGetOrdersCountQuery,
-  useLazyGetTodaysOrdersQuery,
-  useLazyGetPendingOrdersQuery,
-  useLazyGetCompletedOrdersQuery,
-  useLazyGetCancelledOrdersQuery,
+  useGetOrderStatsQuery,
+  useGetOrdersByStatusQuery,
+
   useRescheduleOrderMutation,
 
   useCompleteOrderMutation,
@@ -114,5 +148,4 @@ export const {
   useCreateOrderMutation,
   useOrderCancelMutation,
   useDeleteOrderMutation,
-  useUploadCustomerProofImageMutation,
 } = orders;
