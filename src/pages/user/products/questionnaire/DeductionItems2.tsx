@@ -6,8 +6,8 @@ import {
   selectDeductionState,
   selectIsReQuoteTheme,
 } from "@features/slices";
-import { CircleIcon } from "@icons";
 import { IConditionLabels, IConditions } from "@features/api/productsApi/types";
+import { CheckCircle } from "lucide-react";
 
 interface DeductionItemsProps {
   condition: IConditions;
@@ -16,19 +16,17 @@ interface DeductionItemsProps {
 interface DisplayConditionLabelsProps {
   shouldShowImage: boolean;
   isYesNoType: boolean;
-  style: {
-    backgroundClass: string;
-    borderClass: string;
-  };
+  isSelected: boolean;
+  isFunctionalProblem: boolean;
   label: IConditionLabels;
   handleOnClick: (label: IConditionLabels) => void;
+  reQuoteTheme: boolean;
 }
 
 interface ShowImageProps {
   label: IConditionLabels;
 }
 
-// Constants for condition type checking
 const LARGER_CONDITION_LABELS = ["screen condition", "physical condition"];
 const SHORTER_CONDITION_LABELS = [
   "screen size",
@@ -36,10 +34,8 @@ const SHORTER_CONDITION_LABELS = [
   "model launch year",
 ];
 const FUNCTIONAL_PROBLEM_KEYWORD = "functional";
-
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
-// Utility functions
 const checkConditionType = (
   conditionName: string,
   types: string[]
@@ -54,47 +50,17 @@ const getGridColumnsClass = (
   isYesNoType: boolean,
   shorterConditionLabel: boolean
 ): string => {
-  if (largerConditionLabel) {
-    return "lg:grid-cols-2 grid-cols-1";
-  }
-
+  if (largerConditionLabel) return "grid-cols-1 sm:grid-cols-2 gap-3";
   if (!shouldShowImage) {
-    if (isYesNoType) {
-      return "grid-cols-2";
-    }
+    if (isYesNoType) return "grid-cols-2 gap-3";
     return shorterConditionLabel
-      ? "grid-cols-2 lg:grid-cols-3"
-      : "grid-cols-1 lg:grid-cols-3";
+      ? "grid-cols-2 md:grid-cols-3 gap-3"
+      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3";
   }
-
-  return "grid-cols-2 lg:grid-cols-5 md:grid-cols-3";
+  return "grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3";
 };
 
-const getStyleClasses = (
-  isSelected: boolean,
-  isFunctionalProblem: boolean,
-  reQuoteTheme: boolean
-): { backgroundClass: string; borderClass: string } => {
-  if (!isSelected) {
-    return {
-      backgroundClass: "bg-slate-100 text-black",
-      borderClass: "",
-    };
-  }
-
-  const isError = isFunctionalProblem;
-  return {
-    backgroundClass: isError
-      ? "bg-red-600 text-white"
-      : `${reQuoteTheme ? "bg-gray-600" : "bg-instant-mid"} text-white`,
-    borderClass: isError
-      ? "border-red-600"
-      : `{${reQuoteTheme ? "border-gray-600" : "border-instant-mid"}}`,
-  };
-};
-
-// Main Component
-const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
+const DeductionItems2: React.FC<DeductionItemsProps> = ({ condition }) => {
   const {
     conditionName,
     conditionLabels,
@@ -108,13 +74,8 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
   const { deductions: deductionData, singleDeductions } =
     useSelector(selectDeductionState);
   const reQuoteTheme = useSelector(selectIsReQuoteTheme);
-
-  // console.log("DeductionItems - deductionData", deductionData);
-  // console.log("DeductionItems - singleDeductions", singleDeductions);
-
   const dispatch = useDispatch();
 
-  // Memoized condition type checks
   const conditionTypes = useMemo(
     () => ({
       largerConditionLabel: checkConditionType(
@@ -132,7 +93,6 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
     [conditionName]
   );
 
-  // Memoized grid class
   const gridClass = useMemo(
     () =>
       getGridColumnsClass(
@@ -141,15 +101,9 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
         isYesNoType,
         conditionTypes.shorterConditionLabel
       ),
-    [
-      conditionTypes.largerConditionLabel,
-      shouldShowImage,
-      isYesNoType,
-      conditionTypes.shorterConditionLabel,
-    ]
+    [conditionTypes, shouldShowImage, isYesNoType]
   );
 
-  // Click handler
   const handleOnClick = useCallback(
     (label: IConditionLabels) => {
       if (multiSelect) {
@@ -157,15 +111,12 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
       } else {
         dispatch(addSingleDeductions({ condition, conditionLabel: label }));
       }
-
-      // Update condition's selected state
       condition.isSelected.selected = true;
       condition.isSelected.selectedLabel = label;
     },
     [condition, multiSelect, dispatch]
   );
 
-  // Function to determine if a label is selected
   const isLabelSelected = useCallback(
     (label: IConditionLabels): boolean => {
       if (multiSelect) {
@@ -177,7 +128,6 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
         );
       }
 
-      // For single select mandatory conditions
       if (isMandatory) {
         return (
           condition?.isSelected?.selectedLabel?.conditionLabel ===
@@ -185,7 +135,6 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
         );
       }
 
-      // For non-mandatory single select conditions
       const exists = Boolean(singleDeductions[keyword]);
       return (
         exists &&
@@ -203,23 +152,20 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
   );
 
   return (
-    <div className={`w-full grid items-center gap-4 px-4 ${gridClass}`}>
+    <div className={`w-full grid ${gridClass}`}>
       {conditionLabels.map((label, index) => {
         const isSelected = isLabelSelected(label);
-        const styleClasses = getStyleClasses(
-          isSelected,
-          conditionTypes.functionalProblems,
-          reQuoteTheme
-        );
 
         return (
           <DisplayConditionLabels
             key={`${label.conditionLabelId}-${index}`}
             shouldShowImage={shouldShowImage}
             isYesNoType={isYesNoType}
-            style={styleClasses}
+            isSelected={isSelected}
+            isFunctionalProblem={conditionTypes.functionalProblems}
             label={label}
             handleOnClick={handleOnClick}
+            reQuoteTheme={reQuoteTheme}
           />
         );
       })}
@@ -227,61 +173,74 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
   );
 };
 
-// Sub Components
 const DisplayConditionLabels: React.FC<DisplayConditionLabelsProps> = memo(
-  ({ shouldShowImage, isYesNoType, style, label, handleOnClick }) => {
+  ({
+    shouldShowImage,
+    isYesNoType,
+    isSelected,
+    isFunctionalProblem,
+    label,
+    handleOnClick,
+    reQuoteTheme,
+  }) => {
     const handleClick = useCallback(() => {
       handleOnClick(label);
     }, [handleOnClick, label]);
 
-    const containerClass = useMemo(() => {
-      const baseClass =
-        "border rounded flex items-center cursor-pointer transition-all duration-200 hover:shadow-md";
-      const layoutClass = shouldShowImage
-        ? "flex-col"
-        : `px-2 ${style.backgroundClass}`;
-      return `${baseClass} ${layoutClass} ${style.borderClass}`;
-    }, [shouldShowImage, style.backgroundClass, style.borderClass]);
-
-    const contentClass = useMemo(() => {
-      const baseClass = `text-center flex items-center ${style.backgroundClass}`;
-      const sizeClass = shouldShowImage
-        ? "w-full h-[100px] max-sm:h-[80px] justify-center"
-        : `gap-1 ${isYesNoType ? "h-[40px]" : "h-[75px]"}`;
-      return `${baseClass} ${sizeClass}`;
-    }, [style.backgroundClass, shouldShowImage, isYesNoType]);
+    const getButtonStyles = () => {
+      if (isSelected) {
+        if (isFunctionalProblem) {
+          return "bg-red-500 border-red-600 text-white shadow-lg ring-2 ring-red-200 scale-105";
+        }
+        return reQuoteTheme
+          ? "bg-gray-700 border-gray-800 text-white shadow-lg ring-2 ring-gray-300 scale-105"
+          : "bg-instant-mid/5 text-instant-mid border-instant-mid shadow-lg ring-2 ring-instant-mid/20 scale-105";
+        // : "bg-emerald-600 border-emerald-700 text-white shadow-lg ring-2 ring-emerald-200 scale-105";
+      }
+      return "bg-white border-gray-200 text-gray-700 hover:border-instant-mid hover:shadow-md";
+    };
 
     return (
-      <div
-        className={containerClass}
+      <button
         onClick={handleClick}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            handleClick();
+        className={`
+          relative rounded-xl border-2 transition-all duration-200 
+          ${
+            shouldShowImage
+              ? "flex-col p-3"
+              : `px-4 ${isYesNoType ? "py-3" : "py-4"}`
           }
-        }}
+          ${getButtonStyles()}
+          flex items-center justify-center gap-2 group
+          active:scale-95
+        `}
         aria-label={`Select ${label.conditionLabel}`}
+        aria-pressed={isSelected}
       >
         {shouldShowImage && label.conditionLabelImg && (
           <ShowImage label={label} />
         )}
 
-        <div className={contentClass}>
-          {!shouldShowImage && (
-            <CircleIcon
-              size={16}
-              className="flex-shrink-0"
-              aria-hidden="true"
-            />
+        <div className="flex items-center justify-center gap-2 w-full">
+          {isSelected && !shouldShowImage && (
+            <CheckCircle className="w-5 h-5 flex-shrink-0" />
           )}
-          <span className="block text-xs max-sm:text-[11px] px-1 leading-tight">
+          <span className="text-sm font-medium text-center leading-tight">
             {label.conditionLabel}
           </span>
         </div>
-      </div>
+
+        {/* Selected indicator for image cards */}
+        {isSelected && shouldShowImage && (
+          <div className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md">
+            <CheckCircle
+              className={`w-5 h-5 ${
+                isFunctionalProblem ? "text-red-500" : "text-instant-mid"
+              }`}
+            />
+          </div>
+        )}
+      </button>
     );
   }
 );
@@ -295,17 +254,15 @@ const ShowImage: React.FC<ShowImageProps> = memo(({ label }) => {
   );
 
   return (
-    <div className="p-4 flex justify-center items-center">
+    <div className="w-full h-24 flex justify-center items-center mb-2 bg-gray-50 rounded-lg p-2">
       <img
         src={imageSrc}
         alt={`${label.conditionLabel} illustration`}
-        className="size-20 max-sm:size-20 object-contain"
+        className="max-h-full max-w-full object-contain"
         loading="lazy"
         onError={(e) => {
-          // Handle image loading errors gracefully
           const target = e.target as HTMLImageElement;
           target.style.display = "none";
-          console.warn(`Failed to load image: ${imageSrc}`);
         }}
       />
     </div>
@@ -314,4 +271,4 @@ const ShowImage: React.FC<ShowImageProps> = memo(({ label }) => {
 
 ShowImage.displayName = "ShowImage";
 
-export default memo(DeductionItems);
+export default memo(DeductionItems2);

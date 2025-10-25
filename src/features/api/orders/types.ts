@@ -192,6 +192,7 @@ export interface IOrderStats {
     total: number;
     unassigned: number;
   };
+  locationStats: ILocationStat[]; // <-- Add this
 }
 
 // NEW
@@ -278,6 +279,13 @@ export interface IOrdersResponse {
   };
 }
 
+// Define the new location stat type
+export interface ILocationStat {
+  location: string;
+  totalPending: number;
+  todayPending: number;
+}
+
 export interface IGetOrdersByStatusParams {
   status:
     | "pending"
@@ -292,6 +300,7 @@ export interface IGetOrdersByStatusParams {
   limit?: number;
   sortBy?: string;
   order?: "asc" | "desc";
+  location?: string; // <-- Add this
 }
 
 export interface IApiResponse<T> {

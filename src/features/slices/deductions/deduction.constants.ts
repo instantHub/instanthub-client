@@ -16,4 +16,5 @@ export const INITIAL_STATE = {
   offerPrice: 0,
   deductions: [],
   singleDeductions: {},
+  finalDeductionsSetArray: {},
 } as const;

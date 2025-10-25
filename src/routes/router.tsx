@@ -38,6 +38,8 @@ import OrdersPage from "@pages/admin/orders/OrdersPage";
 import { OrderDetail2 } from "@pages/admin/orders/orderDetail/OrderDetail2";
 import { ExecutiveDashboard } from "@pages/executive/dashboard/ExecutiveDashboard";
 import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
+import { ProductDetails2 } from "@pages/user/products/ProductDetails2";
+import { ProductFinalPrice3 } from "@pages/user/products/ProductFinalPrice3";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -180,7 +182,9 @@ export const router = Router([
             message={`Sorry unable to load Product Details, please try after sometime..!`}
           />
         ),
-        element: <USER.ProductDetail />,
+        // ProductDetails2 is the new design
+        element: <ProductDetails2 />,
+        // element: <USER.ProductDetail />,
       },
       {
         path: ROUTES.user.productDeductions,
@@ -189,16 +193,18 @@ export const router = Router([
             message={`Sorry please try after sometime..!`}
           />
         ),
+
+        // TODO: ProductQuestions2 is Latest design
+        // element: <USER.ProductQuestions2 />,
         element: <USER.ProductQuestions />,
-      },
-      {
-        path: ROUTES.user.productGenerateOTP,
-        element: <USER.OtpGenerator />,
       },
       {
         path: ROUTES.user.productFinalPrice,
         // element: <USER.ProductFinalPrice />,
         element: <ProductFinalPrice2 />,
+
+        // TODO:  ProductFinalPrice3 is the latest design
+        // element: <ProductFinalPrice3 />,
       },
 
       // Services
@@ -381,7 +387,9 @@ export const router = Router([
       {
         path: ROUTES.admin.updateProduct,
         element: (
-          <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
+          <RoleGuard
+            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.SUB_ADMIN]}
+          >
             <ADMIN.UpdateProduct />
           </RoleGuard>
         ),
@@ -616,7 +624,7 @@ export const router = Router([
         path: ROUTES.admin.phoneNumbers,
         element: (
           <RoleGuard
-            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.EXECUTIVE]}
+            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.SUB_ADMIN]}
           >
             <ADMIN.PhoneNumbersList />,
           </RoleGuard>
@@ -768,18 +776,14 @@ export const router = Router([
       {
         path: ROUTES.executive.dashboard,
         element: <ExecutiveDashboard />,
-        // element: <EXECUTIVE.Dashboard />,
       },
       {
-        // path: ROUTES.executive.orders,
-        // element: <EXECUTIVE.Orders />,
         path: "/executive/orders",
         element: <ExecutiveOrders />,
       },
       {
         path: ROUTES.executive.orderDetail,
         element: <OrderDetail2 />,
-        // element: <ADMIN.OrderDetail />,
       },
     ],
   },

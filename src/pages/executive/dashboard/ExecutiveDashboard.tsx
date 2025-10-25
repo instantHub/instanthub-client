@@ -1,4 +1,3 @@
-// src/pages/executive/ExecutiveDashboard/ExecutiveDashboard.tsx
 import React from "react";
 import {
   Calendar,
@@ -82,31 +81,6 @@ export const ExecutiveDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Performance Overview */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <PerformanceCard
-            title="Weekly Performance"
-            value={stats?.performance.weeklyCompleted || 0}
-            subtitle="orders completed this week"
-            icon={TrendingUp}
-            color="green"
-          />
-          <PerformanceCard
-            title="Completion Rate"
-            value={`${stats?.performance.completionRate}%`}
-            subtitle="of assigned orders"
-            icon={CheckCircle}
-            color="blue"
-          />
-          <PerformanceCard
-            title="Total Assigned"
-            value={stats?.overall.totalAssigned || 0}
-            subtitle="orders in total"
-            icon={Package}
-            color="purple"
-          />
-        </div>
-
         {/* Today's Overview */}
         <div className="mb-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -144,9 +118,6 @@ export const ExecutiveDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <QuickActions stats={stats!} />
-
         {/* Tomorrow's Preview */}
         <div className="mt-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -169,6 +140,9 @@ export const ExecutiveDashboard: React.FC = () => {
             />
           </div>
         </div>
+
+        {/* Quick Actions */}
+        <QuickActions stats={stats!} />
 
         {/* Overall Statistics */}
         <div className="mt-6">
@@ -205,6 +179,31 @@ export const ExecutiveDashboard: React.FC = () => {
               to="/executive/orders?status=overdue"
             />
           </div>
+        </div>
+
+        {/* Performance Overview */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 mt-10">
+          <PerformanceCard
+            title="Weekly Performance"
+            value={stats?.performance.weeklyCompleted || 0}
+            subtitle="orders completed this week"
+            icon={TrendingUp}
+            color="green"
+          />
+          <PerformanceCard
+            title="Completion Rate"
+            value={`${stats?.performance.completionRate}%`}
+            subtitle="of assigned orders"
+            icon={CheckCircle}
+            color="blue"
+          />
+          <PerformanceCard
+            title="Total Assigned"
+            value={stats?.overall.totalAssigned || 0}
+            subtitle="orders in total"
+            icon={Package}
+            color="purple"
+          />
         </div>
       </div>
     </div>

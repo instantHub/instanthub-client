@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   IAddDeductionPayload,
   IAddSingleDeductionPayload,
+  IDeductionsByType,
   IDeductionState,
+  IFinalDeductionSet,
   ISetProductDataPayload,
 } from "./deduction.types";
 import { INITIAL_STATE } from "./deduction.constants";
@@ -69,6 +71,25 @@ export const deductionSlice = createSlice({
 
       // Set or update the condition
       state.singleDeductions[keyword] = conditionLabel;
+    },
+
+    createFinalDeductionSet: (state) => {
+      const finalDeductionSet: IDeductionsByType = {
+        ...state.deductions.reduce((res: any, curr: any) => {
+          (res[curr.type] = res[curr.type] || []).push(curr);
+          return res;
+        }, {}),
+        ...Object.fromEntries(
+          Object.entries(state.singleDeductions || {}).map(([k, v]) => [k, [v]])
+        ),
+      };
+      console.log("created finalDeductionSet:", finalDeductionSet);
+
+      const finalDeductionsSetArray: IFinalDeductionSet[] = Object.entries(
+        finalDeductionSet
+      ).map(([type, conditions]) => ({ type, conditions }));
+
+      state.finalDeductionsSetArray = finalDeductionsSetArray;
     },
 
     performCalculation: (state) => {
@@ -198,6 +219,7 @@ export const {
   setProductData,
   addDeductions,
   addSingleDeductions,
+  createFinalDeductionSet,
   performCalculation,
   clearDeductions,
   removeDeduction,

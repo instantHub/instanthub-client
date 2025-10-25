@@ -3,8 +3,6 @@ export { AssignAgent } from "./AssignAgent";
 export { CardHeader } from "./CardHeader";
 export { ConfirmationModal } from "./ConfirmationModal";
 export { Navbar } from "./Navbar";
-export { OrderCancellationForm } from "./OrderCancellationForm";
-export { OrderCompleteForm } from "./orders/OrderCompleteForm";
 export * from "./sidebar";
 export { Table } from "./Table";
 export { UpdateAdmin } from "./UpdateAdmin";

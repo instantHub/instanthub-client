@@ -465,7 +465,7 @@ const LaptopsQuestions: React.FC<LaptopsQuestionsProps> = ({
       {/* OTP Modal */}
       {showOTP && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <OtpGenerator closeModal={closeModal} />
+          <OtpGenerator closeModal={closeModal} isOpen={showOTP} />
         </div>
       )}
     </div>

@@ -318,6 +318,9 @@ export function CustomSelect<T = any>({
           </div>
         )}
       </div>
+
+      {/* TODO: convert to Render dropdown in portal for best solution */}
+      {/* {dropdownContent && createPortal(dropdownContent, document.body)} */}
     </div>
   );
 }

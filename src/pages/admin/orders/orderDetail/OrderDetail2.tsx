@@ -13,6 +13,7 @@ import {
   Image as ImageIcon,
   XCircle,
   Clock,
+  PhoneOutgoing,
 } from "lucide-react";
 
 import {
@@ -23,7 +24,13 @@ import {
 import { useAuth } from "@hooks";
 import { ORDER_STATUS } from "@features/api/orders/types";
 import { Loading } from "@components/user";
-import { Button, FlexBox, Modal, StatusBox } from "@components/general";
+import {
+  Button,
+  FlexBox,
+  Modal,
+  StatusBox,
+  Typography,
+} from "@components/general";
 import { ConfirmationModal, AssignAgent } from "@components/admin";
 import { OrderCompleteForm } from "./OrderCompleteForm";
 import { OrderInfoCard } from "./OrderInfoCard";
@@ -235,7 +242,13 @@ export const OrderDetail2: React.FC = () => {
               <StatusBox
                 color="yellow"
                 icon={<Clock className="text-yellow-600 shrink-0" size={20} />}
-                text={`Rescheduled: ${orderDetail.rescheduleStatus.rescheduleCount} time(s)`}
+                text={
+                  <Typography>
+                    Rescheduled:
+                    {orderDetail.rescheduleStatus.rescheduleCount} time(s) (
+                    {orderDetail.rescheduleStatus.rescheduleReason})
+                  </Typography>
+                }
               />
             )}
 
@@ -300,7 +313,18 @@ export const OrderDetail2: React.FC = () => {
               <InfoRow label="Name" value={orderDetail.customerDetails?.name} />
               <InfoRow
                 label="Phone"
-                value={orderDetail.customerDetails?.phone}
+                value={
+                  <FlexBox gap={1} justify="start">
+                    <PhoneOutgoing size={16} />
+                    <a
+                      className="text-blue-700 underline"
+                      href={`tel: ${orderDetail.customerDetails?.phone}`}
+                    >
+                      {orderDetail.customerDetails?.phone}
+                    </a>
+                  </FlexBox>
+                }
+                // value={orderDetail.customerDetails?.phone}
               />
               <InfoRow
                 label="Email"

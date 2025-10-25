@@ -8,7 +8,8 @@ const ProdDeductionsRight = () => {
     useSelector(selectDeductionState);
 
   return (
-    <div className="w-[25%] border rounded sm:h-[450px] max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">
+    // <div className="border rounded sm:h-[450px] max-h-[550px] overflow-y-auto scrollbar max-sm:w-[90%] max-2sm:w-[95%]">
+    <div className="max-h-[550px] border rounded-lg shadow-xl overflow-y-auto scrollbar p-2">
       <SelectedProduct selectedProduct={selectedProduct} getUpTo={getUpTo} />
 
       {/* Evaluation */}
@@ -19,7 +20,7 @@ const ProdDeductionsRight = () => {
           {Object.entries(singleDeductions)?.map(([keyword, label]) => {
             return (
               <DisplayData
-                key={label.conditionLabel}
+                key={label.conditionLabel + keyword}
                 keyword={keyword}
                 label={label.conditionLabel}
               />
@@ -29,7 +30,7 @@ const ProdDeductionsRight = () => {
           {deductions?.map((deduction, i) => {
             return (
               <DisplayData
-                key={deduction.conditionLabel}
+                key={deduction.conditionLabel + deduction.type + i}
                 index={i}
                 keyword={deduction.type}
                 label={deduction.conditionLabel}

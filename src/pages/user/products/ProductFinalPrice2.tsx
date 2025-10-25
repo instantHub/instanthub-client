@@ -28,7 +28,11 @@ import {
   Modal,
   Typography,
 } from "@components/general";
-import { IGetUpTo, selectOfferPrice } from "@features/slices";
+import {
+  IDeductionsByType,
+  IGetUpTo,
+  selectOfferPrice,
+} from "@features/slices";
 import { IAddress } from "@features/api/orders/types";
 import {
   IConditionLabels,
@@ -61,12 +65,8 @@ export interface IReducerState {
   recycleProduct: boolean;
   selectedPaymentMode: string;
   selectedDigitalPayment: string;
-  deductionsByType: IDeductionsByType;
+  finalDeductionsSetArray: IFinalDeductionSet[];
   isOpen: boolean;
-}
-
-interface IDeductionsByType {
-  [key: string]: Array<Partial<IConditionLabels>>;
 }
 
 interface IFinalDeductionSet {
@@ -80,7 +80,7 @@ export type TReducerAction =
   | { type: "offerPrice" | "specialPrice"; value: number }
   | { type: "selectedPaymentMode" | "selectedDigitalPayment"; value: string }
   | { type: "recycleProduct"; value: boolean }
-  | { type: "deductionsByType"; value: IDeductionsByType }
+  | { type: "finalDeductionsSetArray"; value: IFinalDeductionSet[] }
   | { type: keyof ICouponState; value: string | number | boolean }
   | { type: "name" | "email" | "phone"; value: string | number };
 
@@ -108,7 +108,7 @@ const initialState: IReducerState = {
   recycleProduct: false,
   selectedPaymentMode: "",
   selectedDigitalPayment: "",
-  deductionsByType: {},
+  finalDeductionsSetArray: [],
   isOpen: false,
 };
 
@@ -145,7 +145,7 @@ function reducer(state: IReducerState, action: TReducerAction): IReducerState {
     case "selectedPaymentMode":
     case "selectedDigitalPayment":
     case "recycleProduct":
-    case "deductionsByType":
+    case "finalDeductionsSetArray":
     case "name":
     case "email":
     case "phone":
@@ -195,7 +195,8 @@ export const ProductFinalPrice2: React.FC = () => {
 
   const offeredPrice = useSelector(selectOfferPrice);
   const selectedProductData = useSelector((s: RootState) => s.deductions);
-  const { selectedProduct, getUpTo } = selectedProductData;
+  const { selectedProduct, getUpTo, finalDeductionsSetArray } =
+    selectedProductData;
 
   const [formData, setFormData] = useState<IProductFinalData>();
   const [isOpen, setIsOpen] = useState(false);
@@ -252,24 +253,10 @@ export const ProductFinalPrice2: React.FC = () => {
     dispatch({ type: "offerPrice", value: offeredPrice });
     dispatch({ type: "recycleProduct", value: offeredPrice <= minPrice });
 
-    // Memoized transformation
-    const finalDeductionSet: IDeductionsByType = {
-      ...selectedProductData.deductions.reduce((res: any, curr: any) => {
-        (res[curr.type] = res[curr.type] || []).push(curr);
-        return res;
-      }, {}),
-      ...Object.fromEntries(
-        Object.entries(selectedProductData.singleDeductions || {}).map(
-          ([k, v]) => [k, [v]]
-        )
-      ),
-    };
-
-    dispatch({ type: "deductionsByType", value: finalDeductionSet });
-
-    const finalDeductionArray: IFinalDeductionSet[] = Object.entries(
-      finalDeductionSet
-    ).map(([type, conditions]) => ({ type, conditions }));
+    dispatch({
+      type: "finalDeductionsSetArray",
+      value: finalDeductionsSetArray,
+    });
 
     setFormData({
       productId: selectedProduct.id,
@@ -282,8 +269,8 @@ export const ProductFinalPrice2: React.FC = () => {
         brand: brandURL,
         product: productURL,
       },
-      // deductions: selectedProductData.deductions,
-      finalDeductionSet: finalDeductionArray,
+      // finalDeductionSet: finalDeductionArray,
+      finalDeductionSet: finalDeductionsSetArray,
     });
   }, [selectedProductData, offeredPrice]);
 
@@ -354,16 +341,15 @@ const DeductionsList = () => {
         </Typography>
 
         <div className="mt-5 text-lg max-sm:text-sm">
-          {Object.entries(state.deductionsByType).map(
-            ([conditionName, conditionLabels]) => (
-              <Section
-                key={conditionName}
-                conditionName={conditionName}
-                // @ts-ignore
-                conditionLabels={conditionLabels}
-              />
-            )
-          )}
+          {/* {Object.entries(state.deductionsByType).map( */}
+          {state.finalDeductionsSetArray?.map((deduction) => (
+            <Section
+              key={deduction.type}
+              conditionName={deduction.type}
+              // @ts-ignore
+              conditionLabels={deduction.conditions}
+            />
+          ))}
         </div>
       </div>
 

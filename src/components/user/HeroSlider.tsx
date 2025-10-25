@@ -141,7 +141,7 @@ export function HeroSlider() {
   }, [handleNext, handlePrev]);
 
   return (
-    <section className="w-full py-2 md:py-4 m-0 sm:mt-[90px]">
+    <section className="w-full py-2 md:py-4">
       <div className="max-w-[1400px] mx-auto px-1 md:px-6 lg:px-8">
         {slidersLoading ? (
           <div className="space-y-4">

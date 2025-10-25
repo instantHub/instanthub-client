@@ -1,4 +1,3 @@
-// src/pages/admin/orders/OrderDetail/components/CustomerProofGallery.tsx
 import React from "react";
 import { Download, Image as ImageIcon } from "lucide-react";
 import { toast } from "react-toastify";

@@ -1,4 +1,5 @@
 import { baseApi } from "@features/api";
+import { IPhoneNumber } from "./types";
 
 export const OTPApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -15,7 +16,7 @@ export const OTPApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    getPhoneNumbers: build.query({
+    getPhoneNumbers: build.query<IPhoneNumber[], void>({
       query: () => `/api/otp`,
       providesTags: ["Phone Numbers"],
     }),

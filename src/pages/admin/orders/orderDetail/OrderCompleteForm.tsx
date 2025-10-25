@@ -20,12 +20,13 @@ import {
   ReusableDatePicker,
   Dropdown,
   Modal,
+  CustomSelect,
 } from "@components/general";
 import { IOrder, IDeviceInfo, ORDER_STATUS } from "@features/api/orders/types";
 import { ITimeSlot, timeSlots } from "@utils/constants";
 import { OrderInfoCard } from "./OrderInfoCard";
-import { OrderCancellationForm } from "@components/admin";
 import { CARDS } from "./OrderDetail2";
+import { OrderCancellation } from "./OrderCancellation";
 
 interface ImageSelection {
   front: File | null;
@@ -37,6 +38,22 @@ interface ImageSelection {
 interface OrderCompleteFormProps {
   orderDetail: IOrder;
 }
+
+export const RESCHEDULE_REASONS = [
+  { id: 1, label: "Bdcs reschedule" },
+  { id: 2, label: "Customer asked to reschedule" },
+  { id: 3, label: "Out of town now" },
+  { id: 4, label: "Reschedule for same day next slot" },
+  { id: 5, label: "Waiting for new phone" },
+  { id: 6, label: "Not available today" },
+  { id: 7, label: "Customer not responding/reachable" },
+  { id: 8, label: "Not having accessories today" },
+  { id: 9, label: "Data backup issue" },
+  { id: 10, label: "iCloud / country lock issue" },
+  { id: 11, label: "Dead Device" },
+  { id: 12, label: "Requote price not agreed" },
+  { id: 13, label: "Devices not available and store is asking for time" },
+];
 
 export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
   orderDetail,
@@ -64,7 +81,10 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
   const [showReschedule, setShowReschedule] = useState(false);
   const [rescheduleDate, setRescheduleDate] = useState<Date | null>(null);
   const [rescheduleSlot, setRescheduleSlot] = useState<ITimeSlot | null>(null);
-  const [rescheduleReason, setRescheduleReason] = useState("");
+  const [rescheduleReason, setRescheduleReason] = useState<{
+    id: number;
+    label: string;
+  } | null>(null);
 
   // Cancel states
   const [showCancel, setShowCancel] = useState(false);
@@ -123,7 +143,7 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
   };
 
   const handleReschedule = async () => {
-    if (!rescheduleDate || !rescheduleSlot || !rescheduleReason) {
+    if (!rescheduleDate || !rescheduleSlot || !rescheduleReason?.label) {
       toast.error("Please fill all reschedule fields");
       return;
     }
@@ -134,7 +154,7 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
         body: {
           newDate: rescheduleDate,
           newTimeSlot: rescheduleSlot.value,
-          rescheduleReason,
+          rescheduleReason: rescheduleReason.label,
         },
       }).unwrap();
       toast.success("Order rescheduled successfully");
@@ -321,12 +341,20 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
               placeholder="Select slot"
             />
           </FlexBox>
-          <FormInput
-            placeholder="Reason for rescheduling"
+
+          <CustomSelect
+            label="Reschedule Reason"
+            options={RESCHEDULE_REASONS}
             value={rescheduleReason}
-            onChange={(e) => setRescheduleReason(e.target.value)}
-            className="mb-4"
+            onChange={setRescheduleReason}
+            displayKey="label"
+            valueKey="id"
+            placeholder="-- select a reason to reschedule --"
+            clearable
+            searchable
+            required
           />
+
           <Button
             onClick={handleReschedule}
             loading={rescheduling}
@@ -339,8 +367,12 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
 
       {/* Cancel Modal */}
       {showCancel && (
-        <Modal isOpen={showCancel} onClose={() => setShowCancel(false)}>
-          <OrderCancellationForm
+        <Modal
+          isOpen={showCancel}
+          onClose={() => setShowCancel(false)}
+          className="min-h-[350px]"
+        >
+          <OrderCancellation
             orderId={orderDetail.id}
             cancelOrder={cancelOrder}
             cancelLoading={cancelling}

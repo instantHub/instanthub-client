@@ -1,21 +1,16 @@
-// src/components/layout/Footer.tsx
 import { FC, useState, memo } from "react";
 import { Link } from "react-router-dom";
 import {
   Mail,
   Phone,
-  MapPin,
   Facebook,
   Instagram,
   Twitter,
   Linkedin,
-  Send,
   ArrowRight,
-  CheckCircle2,
   Zap,
   Shield,
   TrendingUp,
-  Heart,
 } from "lucide-react";
 import { ComplaintBox } from "../ComplaintBox";
 import { FooterSellLinks } from "./components/FooterSellLinks";
@@ -24,19 +19,6 @@ import { EMAILS } from "@utils/constants";
 
 export const Footer: FC = memo(() => {
   const [openComplaintBox, setOpenComplaintBox] = useState<boolean>(false);
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setSubscribed(false);
-        setEmail("");
-      }, 3000);
-    }
-  };
 
   const socialLinks = [
     {
@@ -285,45 +267,9 @@ export const Footer: FC = memo(() => {
             </div>
           </div>
 
-          {/* Newsletter & Map */}
-          <div className="lg:col-span-2">
-            {/* <h3 className="text-white font-bold text-lg mb-4">Stay Updated</h3> */}
-
-            {/* Newsletter */}
-            {/* <form onSubmit={handleSubscribe} className="mb-6">
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none text-white placeholder:text-gray-500 transition-all"
-                  required
-                />
-                <button
-                  type="submit"
-                  disabled={subscribed}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50"
-                >
-                  {subscribed ? (
-                    <CheckCircle2 size={18} className="text-white" />
-                  ) : (
-                    <Send size={18} className="text-white" />
-                  )}
-                </button>
-              </div>
-              {subscribed && (
-                <p className="mt-2 text-xs text-green-400 flex items-center gap-1">
-                  <CheckCircle2 size={14} />
-                  Successfully subscribed!
-                </p>
-              )}
-            </form> */}
-
-            {/* Map */}
-            <div className="rounded-lg overflow-hidden border border-gray-700 shadow-lg">
-              <GoogleMap />
-            </div>
+          {/* Map */}
+          <div className="col-span-2 rounded-lg overflow-hidden border border-gray-700 shadow-lg">
+            <GoogleMap />
           </div>
         </div>
 
@@ -352,9 +298,9 @@ export const Footer: FC = memo(() => {
         </div>
 
         {/* GST Info */}
-        <div className="text-center mt-6 text-xs text-white">
+        {/* <div className="text-center mt-6 text-xs text-white">
           GST: 29CSJPA4571K1ZE
-        </div>
+        </div> */}
       </div>
 
       {/* Complaint Box Modal */}

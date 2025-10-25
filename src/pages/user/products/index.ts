@@ -3,3 +3,4 @@ export { ProductFinalPrice } from "./ProductFinalPrice";
 export { Products } from "./Products";
 
 export { ProductQuestions } from "./questionnaire/ProductQuestions";
+export { ProductQuestions2 } from "./questionnaire/ProductQuestions2";

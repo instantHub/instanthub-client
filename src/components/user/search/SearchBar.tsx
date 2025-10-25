@@ -1,4 +1,3 @@
-// src/components/navigation/SearchBar.tsx
 import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import {

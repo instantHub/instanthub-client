@@ -66,6 +66,15 @@ export const orders = baseApi.injectEndpoints({
       invalidatesTags: [ORDERS_API_TAG],
     }),
 
+    orderReopen: build.mutation<IOrder, { id: string }>({
+      query: ({ id }) => ({
+        url: `/api/orders/${id}/reopen`,
+        method: "PUT",
+      }),
+
+      invalidatesTags: [ORDER_DETAIL_API_TAG],
+    }),
+
     rescheduleOrder: build.mutation<IOrder, IRescheduleOrderArgs>({
       query: ({ id, body }) => ({
         url: `/api/orders/${id}/reschedule`,
@@ -92,11 +101,13 @@ export const orders = baseApi.injectEndpoints({
         dateFilter,
         page = 1,
         limit = 20,
+        location,
         sortBy = "createdAt",
         order = "desc",
       }) => {
         const params = new URLSearchParams({
           status,
+          location: location || "all",
           page: page.toString(),
           limit: limit.toString(),
           sortBy,
@@ -141,6 +152,7 @@ export const {
   useGetOrderStatsQuery,
   useGetOrdersByStatusQuery,
 
+  useOrderReopenMutation,
   useRescheduleOrderMutation,
 
   useCompleteOrderMutation,

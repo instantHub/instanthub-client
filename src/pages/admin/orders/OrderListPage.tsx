@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import {
   IGetOrdersByStatusParams,
   ORDER_STATUS,
 } from "@features/api/orders/types";
 import { useCategoryImages, useOrders } from "@hooks";
-import { useNavigate, useParams } from "react-router-dom";
-import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
-import { FlexBox } from "@components/general";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { AlertCircle, ArrowLeft, PackageOpen, RefreshCw } from "lucide-react";
+import { Button, FlexBox } from "@components/general";
 import { ROUTES } from "@routes";
+import { useOrderReopenMutation } from "@features/api";
+import { toast } from "react-toastify";
 
 const OrderListPage: React.FC = () => {
   const { filter } = useParams<{ filter: string }>();
+
+  const [searchParams] = useSearchParams(); // <-- Get search params
+  const location = searchParams.get("location"); // <-- Get location from URL
+
   console.log("filter", filter);
+  console.log("location", location); // <-- Check if location is present
+
+  const [orderReopen] = useOrderReopenMutation();
 
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
@@ -27,9 +36,16 @@ const OrderListPage: React.FC = () => {
       limit,
     };
 
+    // Add location to params if it exists
+    if (location) {
+      baseParams.location = location;
+    }
+
     switch (filter) {
       case "today":
         return { ...baseParams, status: "all", dateFilter: "today" };
+      case "today-pending":
+        return { ...baseParams, status: "pending", dateFilter: "today" };
       case "tomorrow":
         return { ...baseParams, status: "all", dateFilter: "tomorrow" };
       case "pending":
@@ -53,17 +69,42 @@ const OrderListPage: React.FC = () => {
   const getTitle = () => {
     const titles: Record<string, string> = {
       today: "Today's Orders",
+      "today-pending": "Today's Pending Orders", // <-- Added this for clarity
       tomorrow: "Tomorrow's Orders",
       pending: "Pending Orders",
       completed: "Completed Orders",
       unassigned: "Unassigned Orders",
     };
-    return titles[filter || "today"] || "Orders";
+    // return titles[filter || "today"] || "Orders";
+
+    const baseTitle = titles[filter || "today"] || "Orders";
+
+    // Add location to title if it exists
+    if (location) {
+      return `${baseTitle} in ${location}`;
+    }
+    return baseTitle;
   };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleOrderReopen = async (
+    e: MouseEvent<HTMLButtonElement>,
+    id: string
+  ) => {
+    e.stopPropagation();
+    try {
+      if (window.confirm("Are you sure you want to reopen this order?")) {
+        await orderReopen({ id }).unwrap();
+        toast.success("Order re-opened successfully");
+        refetch();
+      }
+    } catch (error) {
+      console.error("Error re-opening order:", error);
+    }
   };
 
   return (
@@ -141,11 +182,11 @@ const OrderListPage: React.FC = () => {
                     )
                   }
                   className={`bg-white rounded-lg p-6 shadow hover:shadow-md transition-shadow
-                        cursor-pointer border border-transparent hover:border-blue-200
+                        cursor-pointer border border-transparent
                         ${
                           order.assignment.isAssigned
-                            ? "bg-blue-100 border-2 border-blue-700"
-                            : ""
+                            ? "border-blue-800 hover:bg-blue-50/50"
+                            : "border-red-700 hover:bg-red-50/50"
                         }`}
                 >
                   <div className="flex justify-between max-md:flex-col max-sm:gap-2 items-start mb-4">
@@ -188,6 +229,18 @@ const OrderListPage: React.FC = () => {
                       >
                         {order.status}
                       </span>
+
+                      {order.status === ORDER_STATUS.CANCELLED && (
+                        <Button
+                          leftIcon={<PackageOpen size={14} />}
+                          variant="ghost"
+                          size="sm"
+                          className="z-100"
+                          onClick={(e) => handleOrderReopen(e, order.id)}
+                        >
+                          Reopen
+                        </Button>
+                      )}
                     </FlexBox>
                   </div>
 

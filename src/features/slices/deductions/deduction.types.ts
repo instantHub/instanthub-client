@@ -22,6 +22,15 @@ export interface ISingleDeduction
   type?: string;
 }
 
+export interface IDeductionsByType {
+  [key: string]: Array<Partial<IConditionLabels>>;
+}
+
+export interface IFinalDeductionSet {
+  type: string;
+  conditions: Partial<IConditionLabels>[];
+}
+
 export interface ISingleDeductions {
   [keyword: string]: ISingleDeduction;
 }
@@ -37,6 +46,7 @@ export interface IDeductionState {
   offerPrice: number;
   deductions: IDeduction[];
   singleDeductions: ISingleDeductions;
+  finalDeductionsSetArray: IFinalDeductionSet[];
 }
 
 // Action Payload Types

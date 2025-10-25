@@ -1,4 +1,3 @@
-// src/pages/executive/ExecutiveOrders/ExecutiveOrders.tsx
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import {
@@ -11,7 +10,6 @@ import {
   Mail,
   Package,
   AlertCircle,
-  CheckCircle,
   Eye,
   Filter,
   ChevronLeft,
@@ -205,7 +203,7 @@ export const ExecutiveOrders: React.FC = () => {
       </div>
 
       {/* Orders List */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-8 py-6">
         {orders.length === 0 ? (
           <div className="bg-white rounded-lg p-12 text-center">
             <Package className="mx-auto text-gray-400 mb-4" size={48} />
@@ -323,7 +321,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+    <div className="flex flex-col gap-2 lg:gap-4 bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
       {/* Header */}
       <FlexBox justify="between" align="start" className="mb-4 flex-wrap gap-3">
         <div>
@@ -351,7 +349,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
       </FlexBox>
 
       {/* Order Details Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 mb-4">
         {/* Schedule */}
         <InfoItem
           icon={Calendar}
