@@ -104,6 +104,7 @@ export const orders = baseApi.injectEndpoints({
         location,
         sortBy = "createdAt",
         order = "desc",
+        search,
       }) => {
         const params = new URLSearchParams({
           status,
@@ -112,6 +113,7 @@ export const orders = baseApi.injectEndpoints({
           limit: limit.toString(),
           sortBy,
           order,
+          search,
         });
 
         if (dateFilter) {

@@ -1,11 +1,23 @@
-import React, { MouseEvent, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import {
   IGetOrdersByStatusParams,
   ORDER_STATUS,
 } from "@features/api/orders/types";
-import { useCategoryImages, useOrders } from "@hooks";
+import { useCategoryImages, useDebounce, useOrders } from "@hooks";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { AlertCircle, ArrowLeft, PackageOpen, RefreshCw } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowLeft,
+  Filter,
+  Hash,
+  MapPin,
+  PackageOpen,
+  Phone,
+  RefreshCw,
+  Search,
+  User,
+  X,
+} from "lucide-react";
 import { Button, FlexBox } from "@components/general";
 import { ROUTES } from "@routes";
 import { useOrderReopenMutation } from "@features/api";
@@ -25,6 +37,10 @@ const OrderListPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
 
+  const [showFilters, setShowFilters] = useState(false);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
+
   const navigate = useNavigate();
   const { categoryImages } = useCategoryImages();
 
@@ -34,6 +50,7 @@ const OrderListPage: React.FC = () => {
       status: "all" as any,
       page,
       limit,
+      search: debouncedSearch,
     };
 
     // Add location to params if it exists
@@ -107,9 +124,20 @@ const OrderListPage: React.FC = () => {
     }
   };
 
+  // Reset page when search changes
+  useEffect(() => {
+    setPage(1);
+    console.log("debouncedSearch", typeof debouncedSearch, debouncedSearch);
+  }, [debouncedSearch]);
+
+  const clearSearch = () => {
+    setSearch("");
+    setPage(1);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-0 max-md:pt-4">
         <button
           onClick={() => window.history.back()}
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
@@ -128,7 +156,7 @@ const OrderListPage: React.FC = () => {
               </p>
             )}
           </div>
-          <button
+          {/* <button
             onClick={() => refetch()}
             disabled={isFetching}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -137,8 +165,76 @@ const OrderListPage: React.FC = () => {
               className={`w-4 h-4 ${isFetching ? "animate-spin" : ""}`}
             />
             Refresh
-          </button>
+          </button> */}
+
+          <FlexBox gap={2}>
+            <Button
+              onClick={() => setShowFilters(!showFilters)}
+              variant="outline"
+              size="sm"
+              leftIcon={<Filter size={18} />}
+              className="lg:hidden"
+            >
+              Filters
+            </Button>
+            <Button
+              onClick={() => refetch()}
+              variant="outline"
+              size="sm"
+              leftIcon={
+                <RefreshCw
+                  size={18}
+                  className={isFetching ? "animate-spin" : ""}
+                />
+              }
+            >
+              <span className="hidden sm:inline">Refresh</span>
+            </Button>
+          </FlexBox>
         </header>
+
+        {/* Search Bar */}
+        <div className={`${showFilters ? "block" : "hidden"} pb-4 sm:block`}>
+          <div className="relative">
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              size={20}
+            />
+            <input
+              type="text"
+              placeholder="Search by Order ID, Customer Name, Phone, or City..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            {search && (
+              <button
+                onClick={clearSearch}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X size={20} />
+              </button>
+            )}
+          </div>
+
+          {/* Search Hints */}
+          {search && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                <Hash size={12} className="inline" /> Order ID
+              </span>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                <User size={12} className="inline" /> Customer Name
+              </span>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                <Phone size={12} className="inline" /> Phone Number
+              </span>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                <MapPin size={12} className="inline" /> City
+              </span>
+            </div>
+          )}
+        </div>
 
         {isLoading && (
           <div className="space-y-4">

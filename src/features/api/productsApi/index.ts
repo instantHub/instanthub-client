@@ -4,6 +4,7 @@ import {
   IGetAllProductsParams,
   IGetProductsByBrandParams,
   IProductResponse,
+  IProductsResponse,
   ISearchParams,
 } from "./types";
 
@@ -35,14 +36,51 @@ export const productsApi = baseApi.injectEndpoints({
       }),
       keepUnusedDataFor: 60,
     }),
-    getAllProducts: build.query<IAllProductsResponse, IGetAllProductsParams>({
-      query: ({ page, limit, search, categoryId }) => ({
-        url: productsURL,
-        method: "GET",
-        params: { page, limit, search, categoryId },
-      }),
+    // getAllProducts: build.query<IAllProductsResponse, IGetAllProductsParams>({
+    //   query: ({ page, limit, search, categoryId }) => ({
+    //     url: productsURL,
+    //     method: "GET",
+    //     params: { page, limit, search, categoryId },
+    //   }),
+    //   providesTags: ["Products"],
+    // }),
+    getAllProducts: build.query<IProductsResponse, IGetAllProductsParams>({
+      query: ({
+        page = 1,
+        limit = 20,
+        search = "",
+        categoryId = "",
+        status = "",
+      }) => {
+        const params = new URLSearchParams({
+          page: page.toString(),
+          limit: limit.toString(),
+        });
+
+        if (search) params.append("search", search);
+        if (categoryId) params.append("categoryId", categoryId);
+        if (status) params.append("status", status);
+
+        return `${productsURL}?${params.toString()}`;
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.products.map(({ id }) => ({
+                type: "Products" as const,
+                id,
+              })),
+              { type: "Products", id: "LIST" },
+            ]
+          : [{ type: "Products", id: "LIST" }],
+      keepUnusedDataFor: 300,
+    }),
+
+    getPendingPricing: build.query<any[], void>({
+      query: () => `/api/pricing/empty-pricing`,
       providesTags: ["Products"],
     }),
+
     getProducts: build.query<
       Omit<IProductResponse[], "simpleDeductions" | "variantDeductions">[],
       IGetProductsByBrandParams
@@ -123,6 +161,9 @@ export const {
   useSearchProductsQuery,
   useSearchServicesQuery,
   useGetAllProductsQuery,
+
+  useGetPendingPricingQuery,
+
   useLazyGetAllProductsQuery,
   useGetProductsQuery,
   useLazyGetProductsQuery,

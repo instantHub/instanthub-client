@@ -1,28 +1,60 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Custom hook to debounce a value
+ * @param {any} value - The value to debounce
+ * @param {number} delay - Delay in milliseconds (default: 500)
+ * @returns {any} The debounced value
+ */
 export const useDebounce = (value, delay = 500) => {
-  const [debounceValue, setDebounceValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    const timerOut = setTimeout(() => {
-      setDebounceValue(value);
+    // Set up the timeout
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
     }, delay);
-    return () => clearTimeout(timerOut);
+
+    // Clean up the timeout if value changes before delay completes
+    return () => {
+      clearTimeout(handler);
+    };
   }, [value, delay]);
 
-  return debounceValue;
+  return debouncedValue;
 };
 
-export const useDebounceFunc = (value, delay = 500) => {
-  const [debounceValue, setDebounceValue] = useState(value);
-  console.log("inside useDebouceFunc");
+/**
+ * Custom hook to debounce a function call
+ * @param {Function} callback - The function to debounce
+ * @param {number} delay - Delay in milliseconds (default: 500)
+ * @returns {Function} The debounced function
+ */
+export const useDebounceFunc = (callback, delay = 500) => {
+  const [timeoutId, setTimeoutId] = useState(null);
+
   useEffect(() => {
-    const timerOut = setTimeout(() => {
-      setDebounceValue(value);
+    // Cleanup on unmount
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
+  const debouncedCallback = (...args) => {
+    // Clear previous timeout
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    // Set new timeout
+    const newTimeoutId = setTimeout(() => {
+      callback(...args);
     }, delay);
-    return () => clearTimeout(timerOut);
-  }, [value, delay]);
 
-  return debounceValue;
+    setTimeoutId(newTimeoutId);
+  };
+
+  return debouncedCallback;
 };
-

@@ -301,6 +301,7 @@ export interface IGetOrdersByStatusParams {
   sortBy?: string;
   order?: "asc" | "desc";
   location?: string; // <-- Add this
+  search: string;
 }
 
 export interface IApiResponse<T> {

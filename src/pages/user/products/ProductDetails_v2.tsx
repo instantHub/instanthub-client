@@ -88,7 +88,8 @@ export const ProductDetails2 = () => {
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Image Section */}
-            <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 p-8 md:p-12 flex items-center justify-center">
+            {/* <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 p-8 md:p-12 flex items-center justify-center"> */}
+            <div className="relative p-8 md:p-12 flex items-center justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-emerald-600/10 blur-3xl rounded-full"></div>
                 <img
@@ -109,7 +110,7 @@ export const ProductDetails2 = () => {
             </div>
 
             {/* Product Details Section */}
-            <div className="p-8 md:p-10 flex flex-col justify-center">
+            <div className="p-8 md:p-10 flex flex-col justify-center bg-gradient-to-br from-gray-50 to-gray-100">
               {/* Product Name & Category */}
               <div className="mb-6">
                 <div className="inline-block bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">

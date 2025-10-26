@@ -38,8 +38,9 @@ import OrdersPage from "@pages/admin/orders/OrdersPage";
 import { OrderDetail2 } from "@pages/admin/orders/orderDetail/OrderDetail2";
 import { ExecutiveDashboard } from "@pages/executive/dashboard/ExecutiveDashboard";
 import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
-import { ProductDetails2 } from "@pages/user/products/ProductDetails2";
+import { ProductDetails2 } from "@pages/user/products/ProductDetails_v2";
 import { ProductFinalPrice3 } from "@pages/user/products/ProductFinalPrice3";
+import { ProductsList2 } from "@pages/admin/products/ProductsList_v2";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -201,6 +202,8 @@ export const router = Router([
       {
         path: ROUTES.user.productFinalPrice,
         // element: <USER.ProductFinalPrice />,
+
+        // Correct working final price component
         element: <ProductFinalPrice2 />,
 
         // TODO:  ProductFinalPrice3 is the latest design
@@ -380,9 +383,10 @@ export const router = Router([
       },
       {
         path: ROUTES.admin.productsList,
-        element: createElement(
-          lazyLoadNamed(() => import("@pages/admin"), "ProductsList")
-        ),
+        // element: createElement(
+        //   lazyLoadNamed(() => import("@pages/admin"), "ProductsList")
+        // ),
+        element: <ProductsList2 />,
       },
       {
         path: ROUTES.admin.updateProduct,

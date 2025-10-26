@@ -76,9 +76,53 @@ export interface IGetAllProductsParams {
   limit: number;
   search: string;
   categoryId: string;
+  status: string;
 }
 
 export interface IGetProductsByBrandParams {
   brandUniqueURL: string;
   search?: string;
+}
+
+export interface IProductsResponse {
+  success: boolean;
+  data: {
+    products: IProduct[];
+    pagination: {
+      page: number;
+      limit: number;
+      totalProducts: number;
+      totalPages: number;
+      hasNextPage: boolean;
+      hasPrevPage: boolean;
+    };
+    filters: {
+      search: string;
+      categoryId: string;
+      status: string;
+    };
+  };
+}
+
+export interface IProduct {
+  id: string;
+  name: string;
+  uniqueURL: string;
+  image: string;
+  status: "active" | "inactive";
+  category: {
+    id: string;
+    name: string;
+    image: string;
+    categoryType: {
+      multiVariants: boolean;
+    };
+  };
+  brand: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  variants: IVariants[];
+  variantDeductions: IVariantDeductions[];
 }

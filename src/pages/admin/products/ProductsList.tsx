@@ -59,6 +59,7 @@ export const ProductsList = () => {
       limit,
       search: filterData.product,
       categoryId,
+      status: "",
     });
 
   // @ts-ignore
