@@ -101,6 +101,7 @@ export const SearchBar = memo(() => {
       navigate(url);
       setSearch("");
       setIsOpen(false);
+      setIsFocused(false);
     },
     [navigate, saveRecentSearch]
   );
@@ -151,6 +152,8 @@ export const SearchBar = memo(() => {
     "iPad Air",
     "Dell XPS",
   ];
+
+  console.log("productsData?.products", productsData?.products);
 
   return (
     <div ref={searchRef} className="relative w-full">
@@ -232,7 +235,7 @@ export const SearchBar = memo(() => {
           {/* Search Results */}
           {!isLoading && debouncedSearch && productsData && (
             <>
-              {productsData.products.length > 0 ? (
+              {productsData?.products?.length > 0 ? (
                 <div className="overflow-y-auto max-h-[calc(70vh-60px)] md:max-h-[440px] custom-scrollbar">
                   {/* Results Header */}
                   <div className="sticky top-0 bg-gradient-to-r from-purple-50 via-purple-50 to-blue-50 px-4 py-3 border-b border-purple-100 z-10">

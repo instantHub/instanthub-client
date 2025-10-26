@@ -26,6 +26,8 @@ export const productsApi = baseApi.injectEndpoints({
         url: "/api/products",
         params: { search: search.trim(), page, limit },
       }),
+      transformResponse: (response: { data: IAllProductsResponse }) =>
+        response.data,
       // Keep previous results while fetching new ones
       keepUnusedDataFor: 60,
     }),
@@ -36,7 +38,7 @@ export const productsApi = baseApi.injectEndpoints({
       }),
       keepUnusedDataFor: 60,
     }),
-    // getAllProducts: build.query<IAllProductsResponse, IGetAllProductsParams>({
+    // getAllProducts: build.query<IAllProductsResponsee, IGetAllProductsParams>({
     //   query: ({ page, limit, search, categoryId }) => ({
     //     url: productsURL,
     //     method: "GET",

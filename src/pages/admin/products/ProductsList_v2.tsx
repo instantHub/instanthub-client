@@ -1,4 +1,3 @@
-// src/pages/admin/products/ProductsList/ProductsList.tsx
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {

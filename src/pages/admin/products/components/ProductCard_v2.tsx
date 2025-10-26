@@ -1,4 +1,3 @@
-// src/pages/admin/products/ProductsList/components/ProductCard.tsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
