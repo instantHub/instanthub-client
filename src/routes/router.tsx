@@ -41,6 +41,7 @@ import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
 import { ProductDetails2 } from "@pages/user/products/ProductDetails_v2";
 import { ProductFinalPrice3 } from "@pages/user/products/ProductFinalPrice3";
 import { ProductsList2 } from "@pages/admin/products/ProductsList_v2";
+import { Dashboard_v2 } from "@pages/admin/dashboard";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -342,9 +343,10 @@ export const router = Router([
       },
       {
         path: ROUTES.admin.dashboard,
-        element: createElement(
-          lazyLoad(() => import("@pages/admin/dashboard/Dashboard"))
-        ),
+        // element: createElement(
+        //   lazyLoad(() => import("@pages/admin/dashboard/Dashboard"))
+        // ),
+        element: <Dashboard_v2 />,
       },
       {
         path: "admin-channel",

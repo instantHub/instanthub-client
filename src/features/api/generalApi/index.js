@@ -12,10 +12,7 @@ export const generalApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    dashboardDetails: build.query({
-      query: () => "/api/admin/dashboard",
-    }),
   }),
 });
 
-export const { useDeleteImageMutation, useDashboardDetailsQuery } = generalApi;
+export const { useDeleteImageMutation } = generalApi;

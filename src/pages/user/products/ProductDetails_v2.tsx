@@ -89,15 +89,15 @@ export const ProductDetails2 = () => {
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Image Section */}
             {/* <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 p-8 md:p-12 flex items-center justify-center"> */}
-            <div className="relative p-8 md:p-12 flex items-center justify-center">
+            <div className="bg-white relative p-8 md:p-12 flex items-center justify-center">
               <div className="relative">
-                <div className="absolute inset-0 bg-emerald-600/10 blur-3xl rounded-full"></div>
+                <div className="absolute inset-0 bg-emerald-600/1 blur-3xl rounded-full"></div>
                 <img
                   src={
                     import.meta.env.VITE_APP_BASE_URL + productDetails?.image
                   }
                   alt={productDetails.name}
-                  className="relative z-10 w-full max-w-sm h-auto object-contain drop-shadow-2xl"
+                  className="relative z-10 w-full max-w-sm h-auto object-contain drop-shadow-2x"
                 />
               </div>
 

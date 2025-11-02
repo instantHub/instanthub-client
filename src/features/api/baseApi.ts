@@ -151,6 +151,7 @@ export const baseApi = createApi({
     EXECUTIVE_ORDER_API_TAG,
     EXECUTIVE_STATS_API_TAG,
     PARTNERS_API_TAG,
+    "OrderAnalytics",
   ],
   endpoints: () => ({}),
 });

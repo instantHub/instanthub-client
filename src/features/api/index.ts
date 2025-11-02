@@ -23,3 +23,4 @@ export * from "./stats";
 export * from "./partners";
 export * from "./executive";
 export * from "./admin";
+export * from "./orderAnalyticsApi";

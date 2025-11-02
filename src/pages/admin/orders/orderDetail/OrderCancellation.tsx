@@ -23,6 +23,16 @@ const CANCELLATION_REASONS = [
   { id: 13, label: "Incorrect lead details (Name/Product)" },
   { id: 14, label: "Pickup denied - restricted pincode" },
   { id: 15, label: "Customer sold at another store" },
+
+  { id: 16, label: "Price mismatched" },
+  { id: 17, label: "Display Issue" },
+  { id: 18, label: "Out of service location" },
+  { id: 19, label: "Customer expectations are high" },
+  { id: 20, label: "Box & Bill not available" },
+  { id: 22, label: "Device has problems & price expectations are high" },
+  { id: 23, label: "Wrong configurations mentioned" },
+  { id: 24, label: "Damaged panel or display" },
+  { id: 25, label: "Customer enquiry" },
 ];
 
 // --- Type Definitions for Props ---
@@ -76,13 +86,13 @@ export const OrderCancellation: FC<OrderCancellationProps> = ({
   };
 
   return (
-    <div className="p-4">
+    <div className="">
       <div className="mb-4 text-center text-gray-600">
         Please select a reason to cancel this order.
       </div>
       <form
         onSubmit={handleCancelOrder}
-        className="flex flex-col items-center gap-5"
+        className="flex flex-col items-center gap-5 w-full"
       >
         <CustomSelect
           label="Cancellation Reason"
@@ -92,7 +102,7 @@ export const OrderCancellation: FC<OrderCancellationProps> = ({
           displayKey="label"
           valueKey="id"
           placeholder="-- select a reason --"
-          className="min-w-[250px]"
+          className="min-w-[350px] w-full"
           clearable
           searchable
           required
