@@ -19,7 +19,7 @@ import {
   ProfileIcon,
   StockpilesIcon,
 } from "@icons";
-import { StateContext } from "./ProductFinalPrice2";
+import { StateContext } from "./ProductFinalPrice_v3";
 import { ORDER_STATUS } from "@features/api/orders/types";
 import { ITimeSlot, timeSlots } from "@utils/constants";
 

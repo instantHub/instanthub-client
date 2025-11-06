@@ -2,16 +2,15 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import SelectedProduct from "./SelectedProduct";
 import { selectDeductionState } from "@features/slices";
-import { CheckCircleIcon, XCircleIcon, SparklesIcon } from "lucide-react";
+import { CheckCircleIcon, SparklesIcon } from "lucide-react";
 
 interface DisplayDataProps {
   keyword: string;
   label: string;
   index?: number;
-  isNegative?: boolean;
 }
 
-const ProdDeductionsRight2 = () => {
+const ProdDeductionsRight_v2 = () => {
   const { selectedProduct, getUpTo, deductions, singleDeductions } =
     useSelector(selectDeductionState);
 
@@ -57,7 +56,6 @@ const ProdDeductionsRight2 = () => {
                 key={label.conditionLabel + keyword}
                 keyword={keyword}
                 label={label.conditionLabel}
-                isNegative={label.priceDrop > 0}
               />
             ))}
 
@@ -87,7 +85,7 @@ const ProdDeductionsRight2 = () => {
   );
 };
 
-export default ProdDeductionsRight2;
+export default ProdDeductionsRight_v2;
 
 const EmptySummary: React.FC = () => (
   <div className=" px-4 py-6 text-center">
@@ -118,26 +116,16 @@ const TipsCard: React.FC = () => (
 );
 
 // Single Data Display Component
-const DisplayData: React.FC<DisplayDataProps> = ({
-  keyword,
-  label,
-  isNegative = false,
-}) => {
+const DisplayData: React.FC<DisplayDataProps> = ({ keyword, label }) => {
   if (!label) return null;
 
   return (
     <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 hover:border-emerald-200 transition-colors">
       <div className="flex items-start gap-3">
         <div
-          className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${
-            isNegative ? "bg-amber-100" : "bg-instant-mid/15"
-          }`}
+          className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-instant-mid/15`}
         >
-          {isNegative ? (
-            <XCircleIcon className="w-4 h-4 text-amber-600" />
-          ) : (
-            <CheckCircleIcon className="w-4 h-4 text-instant-mid" />
-          )}
+          <CheckCircleIcon className="w-4 h-4 text-instant-mid" />
         </div>
 
         <div className="flex-1 min-w-0">

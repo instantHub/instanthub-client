@@ -6,7 +6,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-export const ProductDetails2 = () => {
+export const ProductDetails_v2 = () => {
   const { productUniqueURL } = useParams<{ productUniqueURL: string }>();
 
   const {
@@ -44,7 +44,7 @@ export const ProductDetails2 = () => {
 
   if (error || !productDetails) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <div className="bg-red-50 border-2 border-red-200 rounded-lg p-6">
             <h2 className="text-2xl font-bold text-red-800 mb-2">
@@ -55,7 +55,7 @@ export const ProductDetails2 = () => {
             </p>
             <Link
               to="/"
-              className="mt-4 inline-block bg-emerald-600 text-white px-6 py-2 rounded-md hover:bg-emerald-700 transition"
+              className="mt-4 inline-block bg-instant-mid text-white px-6 py-2 rounded-md hover:bg-instant-mid/80 transition"
             >
               Go Back Home
             </Link>

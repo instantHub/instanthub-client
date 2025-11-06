@@ -9,8 +9,6 @@ import {
   performCalculation,
 } from "@features/slices";
 import { toast } from "react-toastify";
-import ProdDeductionsRight from "./ProdQuestionsRight";
-import LaptopsQuestions from "./LaptopsQuestions";
 import { OtpGenerator } from "@pages/user";
 import { Loading, NoDataBlock, ProgressBar } from "@components/user";
 import NextPrevButton from "./NextPrevButton";
@@ -19,9 +17,9 @@ import { ISortedConditionsByPage } from "@utils/types";
 import { DeviceCheck, SwitchedOff } from "../components";
 import { Typography } from "@components/general";
 import { CheckCircle } from "lucide-react";
-import { DisplayCondition2 } from "./DisplayCondition2";
-import ProdDeductionsRight2 from "./ProdQuestionsRight2";
-import LaptopsQuestions2 from "./LaptopsQuestions2";
+import { DisplayCondition2 } from "./DisplayCondition_v2";
+import ProdDeductionsRight_v2 from "./ProdQuestionsRight_v2";
+import LaptopsQuestions_v2 from "./LaptopsQuestions_v2";
 
 export interface AboutDevice {
   isDeviceOn: boolean;
@@ -37,7 +35,7 @@ interface ConditionStatus {
   keyword: string;
 }
 
-export const ProductQuestions2: FC<IProductQuestionsProps> = ({
+export const ProductQuestions_v2: FC<IProductQuestionsProps> = ({
   isReQuote = false,
 }) => {
   const [searchParams] = useSearchParams();
@@ -83,7 +81,8 @@ export const ProductQuestions2: FC<IProductQuestionsProps> = ({
     }
 
     if (currentPageIndex < sortedConditions.length - 1) {
-      setCurrentPageIndex((prev) => prev + 1);
+      const nextPage = currentPageIndex + 1;
+      setCurrentPageIndex(nextPage);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       if (!isReQuote) {
@@ -153,7 +152,8 @@ export const ProductQuestions2: FC<IProductQuestionsProps> = ({
     }
   }, [sortedConditions, currentPageIndex]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading />; // NEW: Show loading while restoring
+
   if (aboutDevice.isDeviceChecked && !aboutDevice.isDeviceOn) {
     return <SwitchedOff />;
   }
@@ -168,16 +168,18 @@ export const ProductQuestions2: FC<IProductQuestionsProps> = ({
         {/* Progress Indicator */}
         <div className="">
           <div className="bg-white p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-instant-mid">
-                  Step {currentPageIndex + 1} of {sortedConditions.length}
+            {productsData?.category.categoryType.multiVariants && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-instant-mid">
+                    Step {currentPageIndex + 1} of {sortedConditions.length}
+                  </span>
+                </div>
+                <span className="text-xs text-gray-500">
+                  {Math.round(progressPercentage)}% Complete
                 </span>
               </div>
-              <span className="text-xs text-gray-500">
-                {Math.round(progressPercentage)}% Complete
-              </span>
-            </div>
+            )}
             <ProgressBar progressPercentage={progressPercentage} />
           </div>
         </div>
@@ -233,7 +235,7 @@ export const ProductQuestions2: FC<IProductQuestionsProps> = ({
                   productsData &&
                   deductions &&
                   isProcessorBased && (
-                    <LaptopsQuestions2
+                    <LaptopsQuestions_v2
                       productsData={productsData}
                       deductions={deductions}
                     />
@@ -245,7 +247,7 @@ export const ProductQuestions2: FC<IProductQuestionsProps> = ({
           {/* Right Side Component - Sticky */}
           <div className="w-[350px s">
             <div className="lg:sticky lg:top-6">
-              <ProdDeductionsRight2 />
+              <ProdDeductionsRight_v2 />
               {/* <ProdDeductionsRight /> */}
             </div>
           </div>

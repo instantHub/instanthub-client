@@ -60,7 +60,7 @@ const getGridColumnsClass = (
   return "grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3";
 };
 
-const DeductionItems2: React.FC<DeductionItemsProps> = ({ condition }) => {
+const DeductionItems_v2: React.FC<DeductionItemsProps> = ({ condition }) => {
   const {
     conditionName,
     conditionLabels,
@@ -271,4 +271,4 @@ const ShowImage: React.FC<ShowImageProps> = memo(({ label }) => {
 
 ShowImage.displayName = "ShowImage";
 
-export default memo(DeductionItems2);
+export default memo(DeductionItems_v2);

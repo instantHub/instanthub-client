@@ -30,18 +30,8 @@ import {
   NON_DEAD_LAPTOP_PRICE,
   NON_DEAD_MOBILE_PRICE,
 } from "../recycle/constants";
-import {
-  Button,
-  FlexBox,
-  FormInput,
-  Modal,
-  Typography,
-} from "@components/general";
-import {
-  IDeductionsByType,
-  IGetUpTo,
-  selectOfferPrice,
-} from "@features/slices";
+import { Button, FormInput, Modal } from "@components/general";
+import { IGetUpTo, selectOfferPrice } from "@features/slices";
 import { IAddress } from "@features/api/orders/types";
 import {
   IConditionLabels,
@@ -50,7 +40,6 @@ import {
 import { SubmitForm2 } from "./SubmitForm2";
 import { RootState } from "@features/store";
 
-// ... (keep all interfaces as they are) ...
 interface ICouponState {
   couponCode: string;
   couponPrice: number | null;
@@ -184,7 +173,7 @@ export interface IProductFinalData {
   finalDeductionSet: IFinalDeductionSet[];
 }
 
-export const ProductFinalPrice3: React.FC = () => {
+export const ProductFinalPrice_v3: React.FC = () => {
   const [searchParams] = useSearchParams();
   const productURL = searchParams.get("p") || "";
   const categoryURL = searchParams.get("c") || "";
@@ -272,8 +261,8 @@ export const ProductFinalPrice3: React.FC = () => {
     >
       <div className="min-h-screen">
         {/* Header Section */}
-        <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="bg-white max-sm:border-b max-sm:border-gray-200 max-sm:shadow-sm stick top-0z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 lg:py-4">
             <div className="flex items-center justify-between">
               <Button
                 leftIcon={<ArrowRight className="rotate-180" />}
@@ -297,7 +286,7 @@ export const ProductFinalPrice3: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-sm:py-4">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Column - Pricing */}
             <div className="lg:col-span-2 space-y-6">
@@ -347,7 +336,7 @@ export const ProductFinalPrice3: React.FC = () => {
 
       {showLocation && (
         <LocationSelector
-          handleAddress={(state, city) => {
+          handleAddress={(state: string, city: string) => {
             dispatch({ type: "location", value: { state, city } });
           }}
           setShowLocation={setShowLocation}
@@ -385,7 +374,8 @@ const ProductPricingContainer: FC<{
   return (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
       {/* Product Header */}
-      <div className="relative bg-gradient-to-br from-instant-mid/60 to-instant-mid/80 p-6 overflow-hidden">
+      {/* <div className="relative bg-gradient-to-br from-instant-mid/60 to-instant-mid/80 p-6 overflow-hidden"> */}
+      <div className="relative border border-gray-200 p-1 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full -mr-20 -mt-20"></div>
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-white rounded-full -ml-16 -mb-16"></div>
@@ -399,7 +389,7 @@ const ProductPricingContainer: FC<{
 
           <Link
             to={`/sell/deductions?product=${selectedProduct?.uniqueURL}&variant=${getUpTo.variantName}`}
-            className="inline-flex items-center gap-2 mt-4 text-white/90 hover:text-white text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-2 p-4 text-instant-mid hover:text-instant-mid/90 text-sm font-medium transition-colors"
           >
             <svg
               className="w-4 h-4"
@@ -505,10 +495,10 @@ const ProductPricingContainer: FC<{
                 variant="greenary"
                 shape="square"
                 onClick={() => setShowLocation(true)}
-                className="w-full h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                className="w-full h-14 flex items-center gap-1 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                rightIcon={<ArrowRightIcon className="ml-2" />}
               >
                 Continue to Sell
-                <ArrowRightIcon className="ml-2" />
               </Button>
 
               {/* Coupon Section */}
@@ -550,7 +540,7 @@ const ProductPricingContainer: FC<{
 const PricingDetail: FC<{
   children: ReactNode;
   free: boolean;
-  price: number;
+  price: number | null;
 }> = ({ children, free, price }) => {
   return (
     <div className="flex items-center justify-between">

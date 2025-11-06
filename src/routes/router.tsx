@@ -29,17 +29,13 @@ import { ADMIN_ROLE_ENUM } from "@utils/constants";
  * TODO: Using TSX Product Final Price, If everything works fine remove JSX and keep this TSX
  */
 import { ProductFinalPrice2 } from "@pages/user/products/ProductFinalPrice2";
-import { PartnerDashboard, PartnerLayout } from "@partner/layout";
 import { RoleGuard } from "src/guards";
-import { PartnerProfile } from "@pages/partner/settings";
 import AdminProtectedRoute from "@pages/admin/layout/Protect";
 import OrderListPage from "@pages/admin/orders/OrderListPage";
 import OrdersPage from "@pages/admin/orders/OrdersPage";
 import { OrderDetail2 } from "@pages/admin/orders/orderDetail/OrderDetail2";
 import { ExecutiveDashboard } from "@pages/executive/dashboard/ExecutiveDashboard";
 import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
-import { ProductDetails2 } from "@pages/user/products/ProductDetails_v2";
-import { ProductFinalPrice3 } from "@pages/user/products/ProductFinalPrice3";
 import { ProductsList2 } from "@pages/admin/products/ProductsList_v2";
 import { Dashboard_v2 } from "@pages/admin/dashboard";
 
@@ -184,9 +180,7 @@ export const router = Router([
             message={`Sorry unable to load Product Details, please try after sometime..!`}
           />
         ),
-        // ProductDetails2 is the new design
-        element: <ProductDetails2 />,
-        // element: <USER.ProductDetail />,
+        element: <USER.ProductDetails_v2 />,
       },
       {
         path: ROUTES.user.productDeductions,
@@ -197,18 +191,18 @@ export const router = Router([
         ),
 
         // TODO: ProductQuestions2 is Latest design
-        // element: <USER.ProductQuestions2 />,
-        element: <USER.ProductQuestions />,
+        element: <USER.ProductQuestions_v2 />,
+        // element: <USER.ProductQuestions />,
       },
       {
         path: ROUTES.user.productFinalPrice,
         // element: <USER.ProductFinalPrice />,
 
         // Correct working final price component
-        element: <ProductFinalPrice2 />,
+        // element: <ProductFinalPrice2 />,
 
         // TODO:  ProductFinalPrice3 is the latest design
-        // element: <ProductFinalPrice3 />,
+        element: <USER.ProductFinalPrice_v3 />,
       },
 
       // Services
@@ -304,28 +298,6 @@ export const router = Router([
   {
     path: "/unauthorized",
     element: <UnauthorizedPage />,
-  },
-  {
-    path: "/partner",
-    element: <PartnerLayout />,
-    children: [
-      {
-        index: true,
-        element: <Navigate to="/partner/dashboard" replace />,
-      },
-      {
-        path: "dashboard",
-        element: <PartnerDashboard />,
-      },
-      {
-        path: "analytics",
-        element: <PartnerAnalytics />,
-      },
-      {
-        path: "settings",
-        element: <PartnerProfile />,
-      },
-    ],
   },
 
   {

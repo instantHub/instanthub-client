@@ -21,7 +21,7 @@ import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
 import { TOperation } from "@features/api/productsApi/types";
 import { useNavigate } from "react-router-dom";
 import { CustomSelect } from "@components/general"; // Adjust the import path
-import { DisplayCondition2 } from "./DisplayCondition2";
+import { DisplayCondition2 } from "./DisplayCondition_v2";
 
 interface SelectedState {
   selected: boolean;
@@ -49,7 +49,7 @@ interface SelectionState {
   hardDisk: IConditionLabels | null;
 }
 
-const LaptopsQuestions2: React.FC<LaptopsQuestionsProps> = ({
+const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
   productsData,
   deductions,
 }) => {
@@ -533,4 +533,4 @@ const LaptopsQuestions2: React.FC<LaptopsQuestionsProps> = ({
   );
 };
 
-export default LaptopsQuestions2;
+export default LaptopsQuestions_v2;

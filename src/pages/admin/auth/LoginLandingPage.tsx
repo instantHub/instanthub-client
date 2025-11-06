@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ArrowLeftIcon } from "@icons";
 import { LoginForm } from "./LoginPage";
-import { PartnerLoginPage } from "@partner/auth";
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 const AdminIcon = () => (
@@ -42,8 +41,7 @@ type LoginView =
   | "selection"
   | ADMIN_ROLE_ENUM.ADMIN
   | ADMIN_ROLE_ENUM.SUB_ADMIN
-  | ADMIN_ROLE_ENUM.EXECUTIVE
-  | ADMIN_ROLE_ENUM.PARTNER;
+  | ADMIN_ROLE_ENUM.EXECUTIVE;
 
 export const LoginLandingPage: React.FC = () => {
   const [currentView, setCurrentView] = useState<LoginView>("selection");
@@ -114,8 +112,6 @@ export const LoginLandingPage: React.FC = () => {
       {currentView !== "selection" && (
         <LoginForm role={currentView as ADMIN_ROLE_ENUM} />
       )}
-
-      {currentView === "partner" && <PartnerLoginPage />}
 
       <footer className="text-center mt-8 text-gray-400 text-sm">
         &copy; {new Date().getFullYear()} Instant Hub. All rights reserved.

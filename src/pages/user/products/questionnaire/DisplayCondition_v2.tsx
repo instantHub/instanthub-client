@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { IConditions } from "@features/api/productsApi/types";
 import { Typography } from "@components/general";
-import DeductionItems2 from "./DeductionItems2";
+import DeductionItems_v2 from "./DeductionItems_v2";
 
 interface IDisplayConditionProps {
   condition: IConditions;
@@ -35,7 +35,7 @@ export const DisplayCondition2: FC<IDisplayConditionProps> = ({
       </div>
 
       {/* Displaying Condition Labels */}
-      <DeductionItems2 condition={condition} />
+      <DeductionItems_v2 condition={condition} />
     </div>
   );
 };
