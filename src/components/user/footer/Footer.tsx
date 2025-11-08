@@ -81,7 +81,7 @@ export const Footer: FC = memo(() => {
     { name: "Terms of Use", path: "/terms-of-use" },
   ];
 
-  const [partnerRequestModal, setPartnerRequestModal] = useState(true);
+  const [partnerRequestModal, setPartnerRequestModal] = useState(false);
   const handleOpenPartnerModal = () => setPartnerRequestModal(true);
   const handleClosePartnerModal = () => setPartnerRequestModal(false);
 
