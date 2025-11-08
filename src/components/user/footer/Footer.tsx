@@ -16,6 +16,7 @@ import { ComplaintBox } from "../ComplaintBox";
 import { FooterSellLinks } from "./components/FooterSellLinks";
 import { GoogleMap } from "@components/user/map";
 import { EMAILS } from "@utils/constants";
+import PartnerRequestForm from "@pages/partner/components/PartnerRequestForm";
 
 export const Footer: FC = memo(() => {
   const [openComplaintBox, setOpenComplaintBox] = useState<boolean>(false);
@@ -79,6 +80,10 @@ export const Footer: FC = memo(() => {
     { name: "Service Policy", path: "/service-policy" },
     { name: "Terms of Use", path: "/terms-of-use" },
   ];
+
+  const [partnerRequestModal, setPartnerRequestModal] = useState(true);
+  const handleOpenPartnerModal = () => setPartnerRequestModal(true);
+  const handleClosePartnerModal = () => setPartnerRequestModal(false);
 
   return (
     // <footer className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-300 mt-16 overflow-hidden">
@@ -197,6 +202,18 @@ export const Footer: FC = memo(() => {
                   </Link>
                 </li>
               ))}
+              <li>
+                <button
+                  onClick={handleOpenPartnerModal}
+                  className="text-white hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                >
+                  <ArrowRight
+                    size={14}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
+                  Partner with us
+                </button>
+              </li>
             </ul>
 
             {/* Bulk Orders */}
@@ -306,6 +323,10 @@ export const Footer: FC = memo(() => {
       {/* Complaint Box Modal */}
       {openComplaintBox && (
         <ComplaintBox setOpenComplaintBox={setOpenComplaintBox} />
+      )}
+
+      {partnerRequestModal && (
+        <PartnerRequestForm onClose={handleClosePartnerModal} />
       )}
 
       {/* Decorative Background Elements */}

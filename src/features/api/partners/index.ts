@@ -32,7 +32,6 @@ export const partner = baseApi.injectEndpoints({
     }),
     getPartner: builder.query<IPartner, string>({
       query: (id) => `/partners/${id}`,
-      //   providesTags: (_result, _error, id) => [{ type: "Partner", id }],
     }),
     createPartner: builder.mutation<IPartner, ICreatePartnerPayload>({
       query: (body) => ({
@@ -40,7 +39,6 @@ export const partner = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      //   invalidatesTags: [{ type: "Partner", id: "LIST" }],
       invalidatesTags: [PARTNERS_API_TAG],
     }),
     updatePartner: builder.mutation<
@@ -53,7 +51,6 @@ export const partner = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: [PARTNERS_API_TAG],
-      //   invalidatesTags: (_result, _error, { id }) => [{ type: "Partner", id }],
     }),
     deletePartner: builder.mutation<{ success: boolean; id: string }, string>({
       query: (id) => ({

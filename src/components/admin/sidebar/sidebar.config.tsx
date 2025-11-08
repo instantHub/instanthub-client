@@ -15,12 +15,9 @@ import {
   QuestionAnswerIcon,
   DatabricksIcon,
 } from "@icons";
-import {
-  ADMIN_PERMISSIONS,
-  ROLE_PERMISSIONS,
-  SidebarSection,
-} from "@utils/types";
+import { ADMIN_PERMISSIONS, SidebarSection } from "@utils/types";
 import { ROUTES_CONST } from "@utils/types/routes.types";
+import { Handshake } from "lucide-react";
 
 export const sidebarConfig: SidebarSection[] = [
   {
@@ -216,6 +213,12 @@ export const sidebarConfig: SidebarSection[] = [
         name: "admin-channel",
         href: "/admin/admin-channel",
         icon: AlertCircle,
+        permissions: [ADMIN_PERMISSIONS.ADMIN_CHANNEL],
+      },
+      {
+        name: "partner-requests",
+        href: "/admin/partner-requests",
+        icon: Handshake,
         permissions: [ADMIN_PERMISSIONS.ADMIN_CHANNEL],
       },
       {

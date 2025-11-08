@@ -38,6 +38,7 @@ import { ExecutiveDashboard } from "@pages/executive/dashboard/ExecutiveDashboar
 import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
 import { ProductsList2 } from "@pages/admin/products/ProductsList_v2";
 import { Dashboard_v2 } from "@pages/admin/dashboard";
+import { PartnerRequests } from "@pages/partner";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -295,11 +296,13 @@ export const router = Router([
     path: ROUTES.admin.loginPage,
     element: <ADMIN.LoginLandingPage />,
   },
+
   {
     path: "/unauthorized",
     element: <UnauthorizedPage />,
   },
 
+  // ADMIN ROUTES
   {
     path: ROUTES.admin.root,
     element: (
@@ -325,6 +328,14 @@ export const router = Router([
         element: (
           <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
             <ADMIN.AdminListPage />,
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "partner-requests",
+        element: (
+          <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
+            <PartnerRequests />,
           </RoleGuard>
         ),
       },
@@ -739,6 +750,7 @@ export const router = Router([
     ],
   },
 
+  // EXECUTIVES ROUTES
   {
     path: ROUTES.executive.root,
     element: (

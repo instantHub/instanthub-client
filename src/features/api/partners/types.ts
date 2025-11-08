@@ -1,4 +1,5 @@
 import { TAdminRole } from "@utils/types";
+import { IPartnerAddress } from "../partners_requests/types";
 
 export interface IPartner {
   _id: string;
@@ -6,6 +7,7 @@ export interface IPartner {
   email: string;
   phone: string;
   companyName?: string;
+  address: IPartnerAddress;
   role: TAdminRole;
   isActive: boolean;
   lastLogin?: string; // ISO Date string
@@ -16,10 +18,12 @@ export interface IPartner {
 }
 
 export interface ICreatePartnerPayload {
+  _id: string;
   name: string;
   email: string;
   phone: string;
   companyName?: string;
+  address: IPartnerAddress;
   password?: string;
 }
 

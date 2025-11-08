@@ -45,6 +45,11 @@ export const UserTable: FC<UserTableProps> = ({
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                 Email
               </th>
+              {title === "Partners" && (
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Location
+                </th>
+              )}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                 Role
               </th>
@@ -65,6 +70,11 @@ export const UserTable: FC<UserTableProps> = ({
                 <td className="px-6 py-4 text-sm text-gray-700">
                   {user.email}
                 </td>
+                {title === "Partners" && (
+                  <td className="px-6 py-4 text-sm text-gray-700 capitalize">
+                    {user?.address?.city}, {user?.address?.state}
+                  </td>
+                )}
                 <td className="px-6 py-4 text-sm text-gray-700 capitalize">
                   {user.role}
                 </td>

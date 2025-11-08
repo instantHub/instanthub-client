@@ -27,7 +27,6 @@ import {
   useDeletePartnerMutation,
 } from "@features/api/partners";
 
-import { CreatePartnerForm } from "@pages/partner/settings/CreatePartnerForm";
 import { CreateAdminUserForm } from "./CreateAdminUserForm";
 
 export const AdminListPage = () => {
@@ -61,14 +60,6 @@ export const AdminListPage = () => {
           leftIcon={<PlusIcon />}
         >
           Create Executive
-        </Button>
-        <Button
-          shape="square"
-          onClick={() => setCreateModalRole("PARTNER")}
-          variant="greenary"
-          leftIcon={<PlusIcon />}
-        >
-          Create Partner
         </Button>
       </FlexBox>
 
@@ -108,15 +99,6 @@ export const AdminListPage = () => {
           useDeletePartnerMutation as unknown as UseDeleteUserMutation
         }
       />
-
-      {/* --- Create Modals --- */}
-      <Modal
-        className="min-w-[400px]"
-        isOpen={createModalRole === "PARTNER"}
-        onClose={() => setCreateModalRole(null)}
-      >
-        <CreatePartnerForm onClose={() => setCreateModalRole(null)} />
-      </Modal>
 
       <Modal
         className="min-w-[400px]"
