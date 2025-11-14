@@ -5,7 +5,6 @@ export enum ADMIN_ROLE_ENUM {
   EXECUTIVE = "executive",
   MARKETING = "marketing",
   SUB_ADMIN = "sub_admin",
-  PARTNER = "partner",
 }
 
 export enum DASHBOARDS_ROUTES_ENUM {

@@ -8,7 +8,7 @@ import { TestimonialCarousel } from "@components/user";
 import { SELL_FAQ_DATA, sellProcessStepsData } from "src/data";
 import { MobileStepper, VerticalTimeline } from "@components/general";
 import { TopSellings } from "./topSellings";
-import { BlogSystem } from "../../blogs";
+import { BlogSystem } from "../blogs";
 
 export const Home = () => {
   useScrollToTop();

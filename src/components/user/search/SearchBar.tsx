@@ -153,6 +153,8 @@ export const SearchBar = memo(() => {
     "Dell XPS",
   ];
 
+  console.log("productsData?.products", productsData?.products);
+
   return (
     <div ref={searchRef} className="relative w-full">
       {/* Search Input */}

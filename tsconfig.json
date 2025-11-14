@@ -17,7 +17,6 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
-      "@blogs": ["src/pages/blogs/index.ts"],
       "@features/*": ["src/features/*"],
       "@api": ["src/features/api/index.ts"],
       "@utils/*": ["src/utils/*"],
