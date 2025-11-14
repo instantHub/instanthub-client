@@ -28,6 +28,10 @@
   }
 }
 
+.scroll-section {
+  scroll-margin-top: 80px; /* <-- ADJUST THIS VALUE */
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;

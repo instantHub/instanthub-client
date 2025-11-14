@@ -111,14 +111,18 @@ export const SubmitForm2: FC = () => {
     console.log("orderData", orderData);
 
     try {
-      const order = await createOrder(orderData).unwrap();
+      const { data: order } = await createOrder(orderData).unwrap();
+      console.log("Order created successfully:", order);
 
       setIsOpen(false);
       toast.success("Order placed, check your email for the bill.");
 
       const { category, brand, product } = formData?.uniqueURLs;
-      navigate(`/${category}/${brand}/${product}`, {
-        replace: true,
+      // navigate(`/${category}/${brand}/${product}`, {
+      //   replace: true,
+      // });
+      navigate(`/sell/confirmation`, {
+        state: { bookedOrder: order },
       });
     } catch (error) {
       console.log("Eror while creating order", error);
