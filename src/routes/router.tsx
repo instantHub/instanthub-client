@@ -19,6 +19,8 @@ import * as EXECUTIVE from "@pages/executive";
 import * as SERVICES from "@services/user";
 import * as SERVICES_ADMIN from "@services/admin";
 
+import * as BLOGS from "@pages/blogs";
+
 import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
@@ -138,14 +140,27 @@ export const router = Router([
         path: ROUTES.user.termsOfUse,
         element: <USER_COMPONENTS.AllTermsAndPolicies />,
       },
+
+      // BLOGS
       {
-        path: "/blogs",
-        element: <USER.BlogSystem />,
+        path: "blogs",
+        children: [
+          {
+            index: true,
+            element: <BLOGS.BlogSystem />,
+          },
+          {
+            path: ":id",
+            element: <BLOGS.SelectedBlog />,
+          },
+          // TODO: uncomment when blog is ready
+          {
+            path: "iphone-17-series-everything-we-expect",
+            element: <BLOGS.iPhone17 />,
+          },
+        ],
       },
-      {
-        path: "/blogs/:id",
-        element: <USER.SelectedBlog />,
-      },
+
       {
         path: ROUTES.user.category,
         element: <USER.Category />,
@@ -197,13 +212,16 @@ export const router = Router([
       },
       {
         path: ROUTES.user.productFinalPrice,
-        // element: <USER.ProductFinalPrice />,
-
         // Correct working final price component
         // element: <ProductFinalPrice2 />,
 
         // TODO:  ProductFinalPrice3 is the latest design
         element: <USER.ProductFinalPrice_v3 />,
+      },
+
+      {
+        path: "sell/confirmation",
+        element: <USER.OrderConfirmationPage />,
       },
 
       // Services
