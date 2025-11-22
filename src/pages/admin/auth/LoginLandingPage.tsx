@@ -41,7 +41,8 @@ type LoginView =
   | "selection"
   | ADMIN_ROLE_ENUM.ADMIN
   | ADMIN_ROLE_ENUM.SUB_ADMIN
-  | ADMIN_ROLE_ENUM.EXECUTIVE;
+  | ADMIN_ROLE_ENUM.EXECUTIVE
+  | ADMIN_ROLE_ENUM.MARKETING;
 
 export const LoginLandingPage: React.FC = () => {
   const [currentView, setCurrentView] = useState<LoginView>("selection");
@@ -87,6 +88,15 @@ export const LoginLandingPage: React.FC = () => {
             <span className="flex items-center">
               <AdminIcon />
               Login as Executive
+            </span>
+          </button>
+          <button
+            onClick={() => setCurrentView(ADMIN_ROLE_ENUM.MARKETING)}
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-transform transform hover:scale-105"
+          >
+            <span className="flex items-center">
+              <AdminIcon />
+              Login as Marketing Agent
             </span>
           </button>
         </div>

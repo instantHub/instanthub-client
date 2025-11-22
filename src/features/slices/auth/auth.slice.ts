@@ -25,7 +25,7 @@ const adminAuthSlice = createSlice({
   reducers: {
     setCredentials: (state, action: PayloadAction<{ admin: IAdmin }>) => {
       const { admin } = action.payload;
-      console.log("setCred slice", admin);
+      // console.log("setCred slice", admin);
 
       state.admin = admin;
       state.isAuthenticated = true;

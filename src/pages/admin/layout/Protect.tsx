@@ -12,11 +12,12 @@ const AdminProtectedRoute: React.FC<AdminProtectedRouteProps> = ({
   children,
 }) => {
   const { data: user, isLoading, isError, isSuccess } = useAdminProfileQuery();
-  console.log("user - AdminProtectedRoute", user, isSuccess);
+  // console.log("user - AdminProtectedRoute", user, isSuccess);
 
   const LayoutMap: Record<string, JSX.Element> = {
     [ADMIN_ROLE_ENUM.ADMIN]: <>{children}</>,
     [ADMIN_ROLE_ENUM.SUB_ADMIN]: <>{children}</>,
+    [ADMIN_ROLE_ENUM.MARKETING]: <>{children}</>,
     [ADMIN_ROLE_ENUM.EXECUTIVE]: (
       <Navigate to={ROUTES.executive.root} replace />
     ),

@@ -83,7 +83,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
         <div className="flex-1 overflow-y-auto py-4 px-3 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
           {sidebarConfig
             .filter((section) => {
-              console.log("filtering sidebar section");
+              // console.log("filtering sidebar section");
               return section?.permissions?.some((perm) =>
                 ROLE_PERMISSIONS[adminData?.role as ADMIN_ROLE_ENUM]?.includes(
                   // @ts-ignore

@@ -15,7 +15,6 @@ import { useGetAllProductsQuery, useGetPendingPricingQuery } from "@api";
 import { useGetCategoriesQuery } from "@api";
 import { Button, FlexBox } from "@components/general";
 import { Loading } from "@components/user";
-import { ProductCard } from "./components/ProductCard";
 import { ROUTES } from "@routes";
 import { useDebounce } from "@hooks";
 import { ProductCard2 } from "./components/ProductCard_v2";
@@ -152,7 +151,18 @@ export const ProductsList2: React.FC = () => {
                 type="text"
                 placeholder="Search products by name or URL..."
                 value={search}
-                onChange={(e) => handleSearchChange(e.target.value)}
+                // value={() => {
+                //   const search = sessionStorage.getItem("search");
+                //   return search ? JSON.parse(search).product : "";
+                // }}
+                onChange={(e) => {
+                  handleSearchChange(e.target.value);
+                  sessionStorage.setItem(
+                    "search",
+                    JSON.stringify({ product: e.target.value })
+                  );
+                  console.log("search called");
+                }}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               {search && (

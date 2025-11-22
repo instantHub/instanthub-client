@@ -41,6 +41,7 @@ import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
 import { ProductsList2 } from "@pages/admin/products/ProductsList_v2";
 import { Dashboard_v2 } from "@pages/admin/dashboard";
 import { PartnerRequests } from "@pages/partner";
+import { UpdateProduct_V2 } from "@pages/admin/products/UpdateProduct_v2";
 
 // Lazy load utility with type safety
 function lazyLoad<T extends ComponentType<any>>(
@@ -75,20 +76,6 @@ export function lazyLoadNamed<T extends ComponentType<any>>(
 
   return LazyWrapper;
 }
-
-const PartnerAnalytics = () => (
-  <div className="bg-white rounded-lg shadow-sm p-6">
-    <h2 className="text-2xl font-bold text-gray-900 mb-4">Analytics</h2>
-    <p className="text-gray-600">Analytics dashboard coming soon...</p>
-  </div>
-);
-
-const PartnerSettings = () => (
-  <div className="bg-white rounded-lg shadow-sm p-6">
-    <h2 className="text-2xl font-bold text-gray-900 mb-4">Settings</h2>
-    <p className="text-gray-600">Settings panel coming soon...</p>
-  </div>
-);
 
 const UnauthorizedPage = () => (
   <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -398,6 +385,8 @@ export const router = Router([
             allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.SUB_ADMIN]}
           >
             <ADMIN.UpdateProduct />
+            {/* TODO: this V2 of update is not tested yet. It needs complete testing and end-to-end comparison with origin functionlity */}
+            {/* <UpdateProduct_V2 /> */}
           </RoleGuard>
         ),
       },
@@ -559,7 +548,6 @@ export const router = Router([
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
-                  ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <OrdersPage />
@@ -573,7 +561,6 @@ export const router = Router([
                 allowedRoles={[
                   ADMIN_ROLE_ENUM.ADMIN,
                   ADMIN_ROLE_ENUM.EXECUTIVE,
-                  ADMIN_ROLE_ENUM.MARKETING,
                 ]}
               >
                 <OrderListPage />
@@ -707,11 +694,7 @@ export const router = Router([
         path: ROUTES.admin.marketing.complaintsList,
         element: (
           <RoleGuard
-            allowedRoles={[
-              ADMIN_ROLE_ENUM.ADMIN,
-              ADMIN_ROLE_ENUM.MARKETING,
-              ADMIN_ROLE_ENUM.SUB_ADMIN,
-            ]}
+            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.SUB_ADMIN]}
           >
             <ADMIN.Complaints />,
           </RoleGuard>
@@ -725,8 +708,8 @@ export const router = Router([
           <RoleGuard
             allowedRoles={[
               ADMIN_ROLE_ENUM.ADMIN,
-              ADMIN_ROLE_ENUM.MARKETING,
               ADMIN_ROLE_ENUM.SUB_ADMIN,
+              ADMIN_ROLE_ENUM.MARKETING,
             ]}
           >
             <ADMIN.MetaTags />,

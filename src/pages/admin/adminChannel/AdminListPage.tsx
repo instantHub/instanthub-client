@@ -61,6 +61,14 @@ export const AdminListPage = () => {
         >
           Create Executive
         </Button>
+        <Button
+          shape="square"
+          onClick={() => setCreateModalRole(ADMIN_ROLE_ENUM.MARKETING)}
+          variant="primary"
+          leftIcon={<PlusIcon />}
+        >
+          Create Marketing Account
+        </Button>
       </FlexBox>
 
       {/* --- Admins Section --- */}
@@ -100,12 +108,25 @@ export const AdminListPage = () => {
         }
       />
 
+      {/* --- Partners Section --- */}
+      <UserManagementSection
+        title="Marketing"
+        useGetUsersQuery={useGetPartnersQuery as unknown as UseGetUsersQuery}
+        useUpdateUserMutation={
+          useUpdatePartnerMutation as unknown as UseUpdateUserMutation
+        }
+        useDeleteUserMutation={
+          useDeletePartnerMutation as unknown as UseDeleteUserMutation
+        }
+      />
+
       <Modal
         className="min-w-[400px]"
         isOpen={[
           ADMIN_ROLE_ENUM.ADMIN,
           ADMIN_ROLE_ENUM.SUB_ADMIN,
           ADMIN_ROLE_ENUM.EXECUTIVE,
+          ADMIN_ROLE_ENUM.MARKETING,
         ].includes(createModalRole as any)}
         onClose={() => setCreateModalRole(null)}
       >

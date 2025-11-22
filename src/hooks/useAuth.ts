@@ -4,7 +4,7 @@ import { RootState } from "@features/store";
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
 
 export const useAuth = () => {
-  console.log("useAuth hook called");
+  // console.log("useAuth hook called");
 
   const { admin, isAuthenticated, loading, sessionExpiry } = useSelector(
     (state: RootState) => state.adminPanel

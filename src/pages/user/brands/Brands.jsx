@@ -57,7 +57,7 @@ export const Brands = () => {
 
       <div className="pt-8 max-sm:pt-5 w-4/5 max-sm:w-[90%] mx-auto">
         <h1 className="pb-5 text-2xl font-bold max-sm:text-sm max-sm:font-semibold">
-          Sell your {category?.name} for Instant Cash asknaskdnj
+          Sell your {category?.name} for Instant Cash
         </h1>
 
         <Breadcrumbs />
