@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Categories } from "../categories";
 import { Accordion, GuideHome, HeroSlider, Slider } from "@components/user";
@@ -8,7 +7,7 @@ import { TestimonialCarousel } from "@components/user";
 import { SELL_FAQ_DATA, sellProcessStepsData } from "src/data";
 import { MobileStepper, VerticalTimeline } from "@components/general";
 import { TopSellings } from "./topSellings";
-import { BlogSystem } from "../../blogs";
+import BlogCarousel from "../blogs/BlogCarousel";
 
 export const Home = () => {
   useScrollToTop();
@@ -39,11 +38,6 @@ export const Home = () => {
         {/* <Slider /> */}
         <HeroSlider />
         <Categories />
-
-        {/* <div className="mt-10 pt-5 pb-16 bg-instant-mid/10">
-          <ServicesHome />
-        </div> */}
-        {/* <HowItWorks /> */}
 
         <TopSellings />
 
@@ -78,7 +72,7 @@ export const Home = () => {
           borderTop={1}
         />
 
-        <BlogSystem />
+        <BlogCarousel />
 
         <GuideHome />
       </div>

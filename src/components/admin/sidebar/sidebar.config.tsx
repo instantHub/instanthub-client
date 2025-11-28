@@ -191,12 +191,12 @@ export const sidebarConfig: SidebarSection[] = [
         icon: DatabricksIcon,
         permissions: [ADMIN_PERMISSIONS.SEO_CRUD],
       },
-      // {
-      //   name: "create-post",
-      //   href: ROUTES_CONST.admin.marketing.createPost,
-      //   icon: JediOrderIcon,
-      //   // permissions: [ADMIN_PERMISSIONS.CAMPAIGNS_CREATE],
-      // },
+      {
+        name: "blogs",
+        href: ROUTES_CONST.admin.marketing.newBlog,
+        icon: JediOrderIcon,
+        permissions: [ADMIN_PERMISSIONS.GENERAL_READ],
+      },
     ],
     permissions: [ADMIN_PERMISSIONS.MARKETING_MANAGEMENT],
   },

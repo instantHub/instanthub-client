@@ -25,3 +25,4 @@ export * from "./executive";
 export * from "./admin";
 export * from "./orderAnalyticsApi";
 export * from "./partners_requests";
+export * from "./blogs";

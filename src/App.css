@@ -65,3 +65,808 @@
 .animate-slideUp {
   animation: slideUp 0.3s ease-out;
 }
+
+/* ============================================
+   BLOG-SPECIFIC STYLES
+   Aligned with Navbar max-w-[1600px] constraint
+   ============================================ */
+
+.blog-content {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, sans-serif;
+  line-height: 1.8;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Blog Page Wrapper - Use this on the parent container */
+.blog-page-wrapper {
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  margin-top: 24px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .blog-page-wrapper {
+    padding: 0 24px;
+  }
+
+  .blog-content {
+    padding: 30px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-page-wrapper {
+    padding: 0 32px;
+  }
+
+  .blog-content {
+    padding: 40px 32px;
+  }
+}
+
+.blog-content p {
+  margin-bottom: 20px;
+  font-size: 17px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.blog-content h2 {
+  font-size: 26px;
+  color: #1a1a2e;
+  margin: 40px 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #3498db;
+  word-wrap: break-word;
+}
+
+.blog-content h3 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin: 30px 0 15px 0;
+}
+
+.blog-content h4 {
+  font-size: 18px;
+  color: #34495e;
+  margin: 25px 0 12px 0;
+}
+
+/* ============================================
+   BLOG SECTIONS
+   ============================================ */
+
+.blog-section {
+  margin-bottom: 45px;
+}
+
+.blog-section-intro {
+  font-size: 18px;
+  color: #555;
+  border-left: 4px solid #3498db;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+/* ============================================
+   BLOG TABLES - Responsive Fix
+   ============================================ */
+
+.blog-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 25px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.blog-table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: auto;
+}
+
+.blog-table thead tr {
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+  color: #ffffff;
+  text-align: left;
+}
+
+.blog-table th {
+  padding: 14px 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.blog-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e9ecef;
+  word-wrap: break-word;
+}
+
+.blog-table tbody tr {
+  background-color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.blog-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.blog-table tbody tr:hover {
+  background-color: #e8f4fd;
+}
+
+/* Table Variants */
+.blog-table--specs thead tr {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+.blog-table--comparison thead tr {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+
+.blog-table--benchmark thead tr {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.blog-table--pricing thead tr {
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+}
+
+/* Winner/Highlight Cell */
+.blog-table .cell-winner {
+  background-color: #d4edda !important;
+  font-weight: 600;
+  color: #155724;
+}
+
+.blog-table .cell-highlight {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* ============================================
+   BLOG TIP BOXES
+   ============================================ */
+
+.blog-tip {
+  padding: 18px 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.blog-tip-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.blog-tip-content {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Tip Variants */
+.blog-tip--info {
+  background-color: #e8f4fd;
+  border-left: 5px solid #3498db;
+}
+
+.blog-tip--info .blog-tip-title {
+  color: #2980b9;
+}
+
+.blog-tip--info .blog-tip-content {
+  color: #1a5276;
+}
+
+.blog-tip--success {
+  background-color: #d4edda;
+  border-left: 5px solid #28a745;
+}
+
+.blog-tip--success .blog-tip-title {
+  color: #155724;
+}
+
+.blog-tip--success .blog-tip-content {
+  color: #155724;
+}
+
+.blog-tip--warning {
+  background-color: #fff3cd;
+  border-left: 5px solid #ffc107;
+}
+
+.blog-tip--warning .blog-tip-title {
+  color: #856404;
+}
+
+.blog-tip--warning .blog-tip-content {
+  color: #856404;
+}
+
+.blog-tip--danger {
+  background-color: #f8d7da;
+  border-left: 5px solid #dc3545;
+}
+
+.blog-tip--danger .blog-tip-title {
+  color: #721c24;
+}
+
+.blog-tip--danger .blog-tip-content {
+  color: #721c24;
+}
+
+.blog-tip--pro {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border-left: none;
+}
+
+.blog-tip--pro .blog-tip-title {
+  color: #ffffff;
+}
+
+.blog-tip--pro .blog-tip-content {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* ============================================
+   BLOG LISTS
+   ============================================ */
+
+.blog-list {
+  padding-left: 0;
+  margin: 20px 0;
+  list-style: none;
+}
+
+.blog-list li {
+  margin-bottom: 12px;
+  line-height: 1.7;
+  font-size: 16px;
+  padding-left: 30px;
+  position: relative;
+}
+
+.blog-list--check li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.blog-list--cross li::before {
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Standard bullet list */
+.blog-list--bullet li::before {
+  content: "•";
+  position: absolute;
+  left: 8px;
+  color: #3498db;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* ============================================
+   BLOG CARDS
+   ============================================ */
+
+.blog-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin: 22px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.blog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+}
+
+.blog-card-content {
+  font-size: 15px;
+  color: #555;
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* Card Variants */
+.blog-card--featured {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  border-top: 4px solid #3498db;
+}
+
+.blog-card--numbered {
+  position: relative;
+  padding-left: 70px;
+}
+
+.blog-card--numbered::before {
+  content: attr(data-number);
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  font-weight: 800;
+  color: #3498db;
+  opacity: 0.3;
+}
+
+/* ============================================
+   BLOG FAQ SECTION
+   ============================================ */
+
+.blog-faq {
+  margin: 35px 0;
+}
+
+.blog-faq-item {
+  margin-bottom: 22px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 22px;
+}
+
+.blog-faq-item:last-child {
+  border-bottom: none;
+}
+
+.blog-faq-question {
+  font-size: 17px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.blog-faq-question::before {
+  content: "Q";
+  background-color: #3498db;
+  color: #fff;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.blog-faq-answer {
+  font-size: 15px;
+  color: #555;
+  margin: 0;
+  padding-left: 36px;
+  line-height: 1.7;
+}
+
+/* ============================================
+   BLOG VERDICT/CONCLUSION BOX
+   ============================================ */
+
+.blog-verdict {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 35px 0;
+  box-sizing: border-box;
+}
+
+.blog-verdict-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 18px 0;
+  color: #ffffff;
+}
+
+.blog-verdict-content {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 15px 0;
+}
+
+.blog-verdict-content:last-of-type {
+  margin-bottom: 0;
+}
+
+.blog-verdict-highlight {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px 18px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ============================================
+   BLOG COMPARISON HIGHLIGHT
+   ============================================ */
+
+.blog-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.blog-compare-item {
+  padding: 22px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.blog-compare-item--left {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+  color: #fff;
+}
+
+.blog-compare-item--right {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: #fff;
+}
+
+.blog-compare-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.blog-compare-score {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 8px 0;
+  line-height: 1;
+}
+
+.blog-compare-label {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+/* ============================================
+   BLOG QUOTE/HIGHLIGHT
+   ============================================ */
+
+.blog-quote {
+  font-size: 18px;
+  font-style: italic;
+  color: #555;
+  border-left: 4px solid #3498db;
+  padding: 18px 24px;
+  margin: 30px 0;
+  background-color: #f8f9fa;
+  border-radius: 0 8px 8px 0;
+}
+
+.blog-quote-author {
+  font-size: 14px;
+  font-style: normal;
+  color: #888;
+  margin-top: 10px;
+  display: block;
+}
+
+/* ============================================
+   BLOG CTA (Call to Action)
+   ============================================ */
+
+.blog-cta {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  padding: 35px 30px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 35px 0;
+  box-sizing: border-box;
+}
+
+.blog-cta-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.blog-cta-text {
+  font-size: 15px;
+  margin: 0 0 22px 0;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+.blog-cta-button {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #764ba2;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 768px) {
+  .blog-content {
+    padding: 15px 16px;
+  }
+
+  .blog-content h2 {
+    font-size: 22px;
+    margin: 35px 0 18px 0;
+  }
+
+  .blog-content h3 {
+    font-size: 18px;
+    margin: 25px 0 12px 0;
+  }
+
+  .blog-content p {
+    font-size: 16px;
+  }
+
+  .blog-section-intro {
+    font-size: 16px;
+    padding-left: 15px;
+  }
+
+  .blog-table {
+    font-size: 13px;
+  }
+
+  .blog-table th,
+  .blog-table td {
+    padding: 10px 12px;
+  }
+
+  .blog-compare {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .blog-compare-score {
+    font-size: 28px;
+  }
+
+  .blog-card {
+    padding: 18px 20px;
+  }
+
+  .blog-card--numbered {
+    padding-left: 20px;
+    padding-top: 50px;
+  }
+
+  .blog-card--numbered::before {
+    left: 20px;
+    top: 18px;
+    transform: none;
+    font-size: 28px;
+  }
+
+  .blog-tip {
+    padding: 15px 16px;
+  }
+
+  .blog-tip-title {
+    font-size: 15px;
+  }
+
+  .blog-tip-content {
+    font-size: 14px;
+  }
+
+  .blog-cta {
+    padding: 28px 20px;
+  }
+
+  .blog-cta-title {
+    font-size: 20px;
+  }
+
+  .blog-verdict {
+    padding: 22px 18px;
+  }
+
+  .blog-verdict-title {
+    font-size: 20px;
+  }
+
+  .blog-faq-question {
+    font-size: 16px;
+  }
+
+  .blog-faq-answer {
+    padding-left: 36px;
+    font-size: 14px;
+  }
+
+  .blog-quote {
+    font-size: 16px;
+    padding: 15px 18px;
+  }
+
+  .blog-list li {
+    font-size: 15px;
+    padding-left: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-content {
+    padding: 12px;
+  }
+
+  .blog-content p {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  .blog-content h2 {
+    font-size: 20px;
+  }
+
+  .blog-content h3 {
+    font-size: 17px;
+  }
+
+  .blog-table th,
+  .blog-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .blog-card {
+    padding: 15px;
+    margin: 18px 0;
+  }
+
+  .blog-card-title {
+    font-size: 16px;
+  }
+
+  .blog-card-content {
+    font-size: 14px;
+  }
+
+  .blog-verdict {
+    padding: 18px 15px;
+  }
+
+  .blog-verdict-highlight {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .blog-cta-button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR BLOG
+   ============================================ */
+
+.blog-text-center {
+  text-align: center;
+}
+
+.blog-text-muted {
+  color: #6c757d;
+}
+
+.blog-mt-0 {
+  margin-top: 0;
+}
+.blog-mb-0 {
+  margin-bottom: 0;
+}
+.blog-mt-sm {
+  margin-top: 15px;
+}
+.blog-mb-sm {
+  margin-bottom: 15px;
+}
+.blog-mt-md {
+  margin-top: 25px;
+}
+.blog-mb-md {
+  margin-bottom: 25px;
+}
+.blog-mt-lg {
+  margin-top: 40px;
+}
+.blog-mb-lg {
+  margin-bottom: 40px;
+}
+
+/* Image handling for blog */
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* Prevent overflow issues */
+.blog-content * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Code blocks if needed */
+.blog-content code {
+  background-color: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.blog-content pre {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 14px;
+}

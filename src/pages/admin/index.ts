@@ -16,3 +16,4 @@ export * from "./adminChannel";
 export * from "./icons";
 export * from "./seo";
 export * from "./phoneNumbers";
+export * from "./blogs";

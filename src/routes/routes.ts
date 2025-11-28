@@ -97,8 +97,10 @@ export const ROUTES = {
 
     marketing: {
       seo: "/admin/seo",
+      blogs: "/admin/blogs",
+      newBlog: "/admin/blogs/new",
+      blogsList: "/admin/blogs/list",
       metaTagList: "/admin/meta-tags-list",
-      createPost: "/admin/create-post",
       complaintsList: "/admin/complaints",
     },
 

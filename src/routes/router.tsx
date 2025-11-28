@@ -19,8 +19,6 @@ import * as EXECUTIVE from "@pages/executive";
 import * as SERVICES from "@services/user";
 import * as SERVICES_ADMIN from "@services/admin";
 
-import * as BLOGS from "@pages/blogs";
-
 import AdminRecycleOrdersList from "@pages/admin/recycle/RecycleOrdersList";
 import AdminRecycleOrderDetail from "@pages/admin/recycle/RecycleOrderDetail";
 
@@ -131,21 +129,11 @@ export const router = Router([
       // BLOGS
       {
         path: "blogs",
-        children: [
-          {
-            index: true,
-            element: <BLOGS.BlogSystem />,
-          },
-          {
-            path: ":id",
-            element: <BLOGS.SelectedBlog />,
-          },
-          // TODO: uncomment when blog is ready
-          {
-            path: "iphone-17-series-everything-we-expect",
-            element: <BLOGS.iPhone17 />,
-          },
-        ],
+        element: <USER.BlogListPublic />,
+      },
+      {
+        path: "/blog/:slug",
+        element: <USER.BlogDisplay />,
       },
 
       {
@@ -516,28 +504,6 @@ export const router = Router([
         ),
       },
 
-      // Slider
-      {
-        path: ROUTES.admin.createSlider,
-        element: (
-          <RoleGuard
-            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.MARKETING]}
-          >
-            <ADMIN.CreateSlider />,
-          </RoleGuard>
-        ),
-      },
-      {
-        path: ROUTES.admin.updateSlider,
-        element: (
-          <RoleGuard
-            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.MARKETING]}
-          >
-            <ADMIN.UpdateSlider />,
-          </RoleGuard>
-        ),
-      },
-
       {
         path: "orders",
         children: [
@@ -701,6 +667,28 @@ export const router = Router([
         ),
       },
 
+      // Slider
+      {
+        path: ROUTES.admin.createSlider,
+        element: (
+          <RoleGuard
+            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.MARKETING]}
+          >
+            <ADMIN.CreateSlider />,
+          </RoleGuard>
+        ),
+      },
+      {
+        path: ROUTES.admin.updateSlider,
+        element: (
+          <RoleGuard
+            allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.MARKETING]}
+          >
+            <ADMIN.UpdateSlider />,
+          </RoleGuard>
+        ),
+      },
+
       // SEO
       {
         path: ROUTES.admin.marketing.seo,
@@ -727,6 +715,32 @@ export const router = Router([
             ]}
           >
             <ADMIN.MetaTagsList />,
+          </RoleGuard>
+        ),
+      },
+
+      // Blogs
+      {
+        path: ROUTES.admin.marketing.newBlog,
+        element: (
+          <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
+            <ADMIN.BlogEditor />,
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/admin/blogs/edit/:id",
+        element: (
+          <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
+            <ADMIN.BlogEditor />,
+          </RoleGuard>
+        ),
+      },
+      {
+        path: ROUTES.admin.marketing.blogsList,
+        element: (
+          <RoleGuard allowedRoles={[ADMIN_ROLE_ENUM.ADMIN]}>
+            <ADMIN.BlogList />,
           </RoleGuard>
         ),
       },

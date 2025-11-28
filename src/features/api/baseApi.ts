@@ -27,6 +27,7 @@ import {
 } from "./executive/constants";
 import { PARTNERS_API_TAG } from "./partners/constants";
 import { PARTNERS_REQ_API_TAG } from "./partners_requests/constants";
+import { BLOG_API_TAGS } from "./blogs/constants";
 
 // Define error type mapping
 export type CustomError = {
@@ -154,6 +155,10 @@ export const baseApi = createApi({
     PARTNERS_API_TAG,
     PARTNERS_REQ_API_TAG,
     "OrderAnalytics",
+    BLOG_API_TAGS.BLOG,
+    BLOG_API_TAGS.BLOG_LIST,
+    BLOG_API_TAGS.BLOG_STATS,
+    BLOG_API_TAGS.TAGS,
   ],
   endpoints: () => ({}),
 });
