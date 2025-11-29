@@ -297,10 +297,12 @@ export const OrderDetail2: React.FC = () => {
                 label="Variant"
                 value={orderDetail.productDetails?.variant?.variantName}
               />
-              <InfoRow
-                label="Variant Price"
-                value={`₹${orderDetail.productDetails?.variant?.price}`}
-              />
+              {!isExecutive && (
+                <InfoRow
+                  label="Variant Price"
+                  value={`₹${orderDetail.productDetails?.variant?.price}`}
+                />
+              )}
             </OrderInfoCard>
 
             {/* Customer Information */}
