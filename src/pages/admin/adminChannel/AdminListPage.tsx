@@ -108,18 +108,6 @@ export const AdminListPage = () => {
         }
       />
 
-      {/* --- Partners Section --- */}
-      <UserManagementSection
-        title="Marketing"
-        useGetUsersQuery={useGetPartnersQuery as unknown as UseGetUsersQuery}
-        useUpdateUserMutation={
-          useUpdatePartnerMutation as unknown as UseUpdateUserMutation
-        }
-        useDeleteUserMutation={
-          useDeletePartnerMutation as unknown as UseDeleteUserMutation
-        }
-      />
-
       <Modal
         className="min-w-[400px]"
         isOpen={[

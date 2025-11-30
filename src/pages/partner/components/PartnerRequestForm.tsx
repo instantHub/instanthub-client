@@ -1,12 +1,30 @@
-import { Button, FlexBox, FormInput, Modal } from "@components/general";
+import {
+  Button,
+  CustomSelect,
+  FlexBox,
+  FormInput,
+  Modal,
+} from "@components/general";
 import { useSubmitPartnerRequestMutation } from "@api";
 import React, { useState } from "react";
 import { IPartnerRequestFormData } from "@features/api/partners_requests/types";
 import { toast } from "react-toastify";
+import { LOCATIONS_CITY } from "@utils/constants";
+
+const AVAILABLE_LOCATIONS = Object.values(LOCATIONS_CITY).map((city, idx) => ({
+  id: idx + 1,
+  city: city,
+}));
 
 const PartnerRequestForm = ({ onClose }: { onClose: () => void }) => {
   const [submitRequest, { isLoading, isError, error }] =
     useSubmitPartnerRequestMutation();
+  const [city, setCity] = useState<{
+    id: number;
+    city: string;
+  } | null>(null);
+
+  console.log("AVAILABLE_LOCATIONS", AVAILABLE_LOCATIONS);
 
   const [formData, setFormData] = useState<IPartnerRequestFormData>({
     name: "",
@@ -37,6 +55,12 @@ const PartnerRequestForm = ({ onClose }: { onClose: () => void }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("formData", formData);
+    if (!formData.address.city) {
+      toast.error("Select a city.");
+      return;
+    }
+
     await submitRequest(formData);
     toast.success("Request submitted successfully!");
     onClose();
@@ -107,16 +131,25 @@ const PartnerRequestForm = ({ onClose }: { onClose: () => void }) => {
             onChange={handleChange}
             className="input"
           />
-          <FormInput
+
+          <CustomSelect
             label="City"
-            type="text"
-            name="address.city"
-            placeholder="City"
+            options={AVAILABLE_LOCATIONS}
+            value={city}
+            onChange={(e) => {
+              setFormData((prev) => ({
+                ...prev,
+                address: { ...prev.address, city: e?.city || "" },
+              }));
+              setCity(e);
+            }}
+            displayKey="city"
+            valueKey="id"
+            placeholder="-- select a city --"
+            searchable
             required
-            value={formData.address.city}
-            onChange={handleChange}
-            className="input"
           />
+
           <FormInput
             label="State"
             type="text"
