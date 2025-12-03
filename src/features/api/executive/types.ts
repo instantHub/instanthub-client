@@ -1,6 +1,7 @@
 import { ADMIN_ROLE_ENUM } from "@utils/constants";
 import { IPermissions, TAdminRole } from "@utils/types";
 import { IOrder } from "../orders/types";
+import { ICreator } from "../admin/types";
 
 export interface IExecutive {
   _id: string;
@@ -8,13 +9,14 @@ export interface IExecutive {
   email: string;
   phone: string;
   isActive: boolean;
+  executiveID: string;
+  creator: ICreator;
   loginAttempts: number;
   role: TAdminRole;
   permissions: IPermissions[];
   sessionExpiry: number;
-  token: string;
   passwordChangedAt: string;
-  orders: any[];
+  assignedOrders: any[];
   lastLogin?: string; // ISO Date string
   createdAt: string; // ISO Date string
   updatedAt: string; // ISO Date string

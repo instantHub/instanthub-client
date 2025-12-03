@@ -6,6 +6,8 @@ export interface IAdmin {
   email: string;
   phone: string | number;
   isActive: boolean;
+  adminID: string;
+  creator: ICreator;
   loginAttempts: number;
   role: TAdminRole;
   permissions: IPermissions[];
@@ -15,6 +17,12 @@ export interface IAdmin {
   department: string;
   lastLogin: string; // ISO timestamp format
   createdAt: string;
+}
+
+export interface ICreator {
+  id: string;
+  name: string;
+  role: "partner" | "admin";
 }
 
 export interface ICreateAdminPayload {
