@@ -7,6 +7,7 @@ import {
 } from "./constants";
 import {
   IApiResponse,
+  IAssignmentStatus,
   IGetOrdersByStatusParams,
   IOrder,
   IOrdersCount,
@@ -15,6 +16,7 @@ import {
   IRescheduleOrderArgs,
 } from "./types";
 import { EXECUTIVE_ORDER_API_TAG } from "../executive/constants";
+import { IPartner } from "../partners/types";
 
 export const orders = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -145,6 +147,44 @@ export const orders = baseApi.injectEndpoints({
       // Keep cached data for pagination
       keepUnusedDataFor: 300, // Cache for 5 minutes
     }),
+
+    assignOrderToPartner: build.mutation<
+      { message: string; partner: IPartner },
+      {
+        _orderId: string;
+        _userId: string;
+        userRole: string;
+        assignmentStatus: IAssignmentStatus;
+      }
+    >({
+      query: (data) => ({
+        url: ORDER_API_PATHS.ASSIGN_PARTNER,
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }),
+      invalidatesTags: [ORDER_DETAIL_API_TAG],
+    }),
+
+    unassignOrder: build.mutation<
+      { message: string; order: IOrder },
+      {
+        _orderId: string;
+      }
+    >({
+      query: ({ _orderId }) => ({
+        url: ORDER_API_PATHS.UNASSIGN_ORDER(_orderId),
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: [ORDERS_API_TAG, ORDER_DETAIL_API_TAG],
+    }),
   }),
 });
 
@@ -162,4 +202,7 @@ export const {
   useCreateOrderMutation,
   useOrderCancelMutation,
   useDeleteOrderMutation,
+
+  useAssignOrderToPartnerMutation,
+  useUnassignOrderMutation,
 } = orders;

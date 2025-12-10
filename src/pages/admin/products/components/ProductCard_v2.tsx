@@ -33,7 +33,8 @@ export const ProductCard2: React.FC<ProductCardProps> = ({
 
   const handleDelete = async () => {
     try {
-      await deleteProduct(product.id).unwrap();
+      // @ts-ignore id in this product is as returned as _id
+      await deleteProduct(product._id).unwrap();
       setIsModalOpen(false);
     } catch (error) {
       console.error("Failed to delete product:", error);

@@ -89,6 +89,7 @@ export const OrderDetail2: React.FC = () => {
   // Modal states
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isAssignAgentOpen, setAssignAgentOpen] = useState(false);
+  const [isAssignPartnerOpen, setIsAssignPartnerOpen] = useState(false);
 
   // Handlers
   const handleGoBack = () => window.history.back();
@@ -194,15 +195,28 @@ export const OrderDetail2: React.FC = () => {
 
               <FlexBox gap={2} className="flex-wrap">
                 {isAdmin() && !isCompleted && !isCancelled && (
-                  <Button
-                    onClick={() => setAssignAgentOpen(true)}
-                    variant="greenary"
-                    size="sm"
-                    leftIcon={<UserPlus size={18} />}
-                  >
-                    <span className="hidden sm:inline">Assign Agent</span>
-                    <span className="sm:hidden">Assign</span>
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => setAssignAgentOpen(true)}
+                      variant="greenary"
+                      size="sm"
+                      leftIcon={<UserPlus size={18} />}
+                    >
+                      <span className="hidden sm:inline">Assign Agent</span>
+                      <span className="sm:hidden">Assign</span>
+                    </Button>
+                    <Button
+                      onClick={() => setIsAssignPartnerOpen(true)}
+                      variant="primary"
+                      size="sm"
+                      leftIcon={<UserPlus size={18} />}
+                    >
+                      <span className="hidden sm:inline">
+                        Assign to Partner
+                      </span>
+                      <span className="sm:hidden">Assign</span>
+                    </Button>
+                  </>
                 )}
 
                 <Button
@@ -230,7 +244,8 @@ export const OrderDetail2: React.FC = () => {
                 <>
                   Assigned to:{" "}
                   <strong>
-                    {orderDetail.assignmentStatus.assignedTo?.name}
+                    {orderDetail.assignmentStatus.assignedTo?.name} -{" "}
+                    {orderDetail.assignmentStatus.assignedTo.role.toUpperCase()}
                   </strong>
                 </>
               }
@@ -473,11 +488,26 @@ export const OrderDetail2: React.FC = () => {
           cancelText="Cancel"
         />
 
+        {/* Executive Assignment */}
         <Modal
           isOpen={isAssignAgentOpen}
           onClose={() => setAssignAgentOpen(false)}
         >
-          <AssignAgent orderDetail={orderDetail} />
+          <AssignAgent
+            orderDetail={orderDetail}
+            role={ADMIN_ROLE_ENUM.EXECUTIVE}
+          />
+        </Modal>
+
+        {/* Partner Assignment */}
+        <Modal
+          isOpen={isAssignPartnerOpen}
+          onClose={() => setIsAssignPartnerOpen(false)}
+        >
+          <AssignAgent
+            orderDetail={orderDetail}
+            role={ADMIN_ROLE_ENUM.PARTNER}
+          />
         </Modal>
       </div>
     </CollapseContext.Provider>

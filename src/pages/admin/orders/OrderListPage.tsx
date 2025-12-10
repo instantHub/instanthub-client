@@ -1,6 +1,7 @@
 import React, { MouseEvent, useEffect, useState } from "react";
 import {
   IGetOrdersByStatusParams,
+  IOrder2,
   ORDER_STATUS,
 } from "@features/api/orders/types";
 import { useCategoryImages, useDebounce, useOrders } from "@hooks";
@@ -20,7 +21,10 @@ import {
 } from "lucide-react";
 import { Button, FlexBox } from "@components/general";
 import { ROUTES } from "@routes";
-import { useOrderReopenMutation } from "@features/api";
+import {
+  useOrderReopenMutation,
+  useUnassignOrderMutation,
+} from "@features/api";
 import { toast } from "react-toastify";
 
 const OrderListPage: React.FC = () => {
@@ -33,6 +37,7 @@ const OrderListPage: React.FC = () => {
   console.log("location", location); // <-- Check if location is present
 
   const [orderReopen] = useOrderReopenMutation();
+  const [unAssignOrder] = useUnassignOrderMutation();
 
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
@@ -117,6 +122,22 @@ const OrderListPage: React.FC = () => {
       if (window.confirm("Are you sure you want to reopen this order?")) {
         await orderReopen({ id }).unwrap();
         toast.success("Order re-opened successfully");
+        refetch();
+      }
+    } catch (error) {
+      console.error("Error re-opening order:", error);
+    }
+  };
+
+  const handleOrderUnAssignment = async (
+    e: MouseEvent<HTMLButtonElement>,
+    order: IOrder2
+  ) => {
+    e.stopPropagation();
+    try {
+      if (window.confirm("Are you sure you want to un-assign this order?")) {
+        await unAssignOrder({ _orderId: order.id }).unwrap();
+        toast.success("Order unassigned successfully");
         refetch();
       }
     } catch (error) {
@@ -337,6 +358,18 @@ const OrderListPage: React.FC = () => {
                           Reopen
                         </Button>
                       )}
+
+                      {order.assignment.isAssigned && (
+                        <Button
+                          leftIcon={<PackageOpen size={14} />}
+                          variant="danger"
+                          size="sm"
+                          className="z-100"
+                          onClick={(e) => handleOrderUnAssignment(e, order)}
+                        >
+                          UnAssign
+                        </Button>
+                      )}
                     </FlexBox>
                   </div>
 
@@ -396,7 +429,8 @@ const OrderListPage: React.FC = () => {
                       <p className="text-sm text-gray-600">
                         Assigned to:{" "}
                         <span className="font-medium text-gray-900">
-                          {order.assignment.assignedTo}
+                          {order.assignment.assignedTo} -{" "}
+                          {order.assignment.assignedToRole?.toUpperCase()}
                         </span>
                       </p>
                       <p className="text-sm text-gray-600">
