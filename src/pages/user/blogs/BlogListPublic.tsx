@@ -15,8 +15,8 @@ export const BlogListPublic: React.FC = () => {
     tags: tagFilter,
   });
 
-  const blogs = data?.data?.blogs || [];
-  const pagination = data?.data?.pagination;
+  const blogs = data?.blogs || [];
+  const pagination = data?.pagination;
 
   return (
     <>

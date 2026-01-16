@@ -5,7 +5,6 @@ import {
 
 export type TState = Pick<ICategoryResponse, "categoryType" | "uniqueURL"> & {
   category: string;
-  imageSelected: File | null;
 };
 
 export type TStateActionName =

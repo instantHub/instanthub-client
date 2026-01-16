@@ -56,7 +56,7 @@ const SEOTab: React.FC<SEOTabProps> = ({ formData, setFormData }) => {
           type="text"
           value={formData.seo.metaTitle}
           onChange={(e) => updateSEO("metaTitle", e.target.value)}
-          placeholder="What Are External Links? SEO Guide for Patna Businesses | NetrX Digital"
+          placeholder="What Are External Links? SEO Guide for the Business | InstantHub"
           maxLength={60}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
@@ -167,7 +167,7 @@ const SEOTab: React.FC<SEOTabProps> = ({ formData, setFormData }) => {
               type="text"
               value={formData.seo.openGraph.title}
               onChange={(e) => updateSEO("title", e.target.value, "openGraph")}
-              placeholder="What Are External Links? SEO Guide for Patna Businesses"
+              placeholder="What Are External Links? SEO Guide for the Business"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
@@ -197,7 +197,7 @@ const SEOTab: React.FC<SEOTabProps> = ({ formData, setFormData }) => {
               type="text"
               value={formData.seo.openGraph.url}
               onChange={(e) => updateSEO("url", e.target.value, "openGraph")}
-              placeholder="https://www.netrxdigital.in/blog/what-are-external-links"
+              placeholder="https://www.instanthub.in/blog/what-are-external-links"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>

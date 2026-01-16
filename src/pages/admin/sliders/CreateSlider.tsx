@@ -9,18 +9,13 @@ import {
 import { SlidersList } from "./SlidersList";
 import { useCreateSliderMutation } from "@api";
 import { toast } from "react-toastify";
-
-// For a better UX, let's add some icons.
-// You can use any icon library, lucide-react is a great choice.
-// npm install lucide-react
 import { UploadCloud, X } from "lucide-react";
-
-type SliderStatus = "Active" | "Block";
+import { TSliderStatus } from "@features/api/slidersApi/types";
 
 export const CreateSlider: FC = () => {
   const [sliderImage, setSliderImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [status, setStatus] = useState<SliderStatus>("Active");
+  const [status, setStatus] = useState<TSliderStatus>("Active");
 
   const [createSlider, { isLoading }] = useCreateSliderMutation();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -54,7 +49,7 @@ export const CreateSlider: FC = () => {
     }
 
     const formData = new FormData();
-    formData.append("slider", sliderImage);
+    formData.append("image", sliderImage);
     formData.append("status", status);
 
     try {
@@ -139,10 +134,10 @@ export const CreateSlider: FC = () => {
                 id="status"
                 className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 value={status}
-                onChange={(e) => setStatus(e.target.value as SliderStatus)}
+                onChange={(e) => setStatus(e.target.value as TSliderStatus)}
               >
                 <option value="Active">Active</option>
-                <option value="Block">Block</option>
+                <option value="Inactive">Inactive</option>
               </select>
             </div>
           </div>

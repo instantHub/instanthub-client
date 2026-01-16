@@ -310,7 +310,10 @@ export const Footer: FC = memo(() => {
 
           {/* Copyright */}
           <div className="flex items-center gap-2 text-sm text-white">
-            <span>© 2025 InstantHub. All rights reserved.</span>
+            <span>
+              &copy; {new Date().getFullYear()} Instant Hub. All rights
+              reserved.
+            </span>
           </div>
         </div>
 

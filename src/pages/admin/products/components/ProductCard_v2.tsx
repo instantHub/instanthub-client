@@ -20,7 +20,7 @@ interface ProductCardProps {
   isPricingPending?: any;
 }
 
-export const ProductCard2: React.FC<ProductCardProps> = ({
+export const ProductCard_v2: React.FC<ProductCardProps> = ({
   product,
   isPricingPending,
 }) => {
@@ -133,9 +133,9 @@ export const ProductCard2: React.FC<ProductCardProps> = ({
               {isMultiVariant ? "Variants & Pricing" : "Pricing"}
             </h4>
             <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-2">
-              {product.variants.map((variant) => (
+              {product.variants.map((variant, idx) => (
                 <FlexBox
-                  key={variant.id}
+                  key={idx}
                   justify="between"
                   gap={2}
                   className="text-xs bg-gray-50 px-3 py-2 rounded"
@@ -164,8 +164,8 @@ export const ProductCard2: React.FC<ProductCardProps> = ({
                   className="flex-1 min-w-[120px] px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Select Variant</option>
-                  {product.variantDeductions.map((vd) => (
-                    <option key={vd.id} value={vd.variantName}>
+                  {product?.variantDeductions?.map((vd, idx) => (
+                    <option key={idx} value={vd.variantName}>
                       {vd.variantName}
                     </option>
                   ))}
@@ -220,7 +220,7 @@ export const ProductCard2: React.FC<ProductCardProps> = ({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleDelete}
-        itemToDelete={product.id}
+        itemToDelete={product._id}
         title="Delete Product"
         detail={`${product.name} - ${product.category.name}`}
         description="Are you sure you want to delete this product? This action cannot be undone."

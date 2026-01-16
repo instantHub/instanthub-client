@@ -1,5 +1,5 @@
 export interface ITestimonial {
-  id: string;
+  _id: string;
   name: string;
   testimonial: string;
   rating: number;
@@ -14,4 +14,12 @@ export interface ITestimonialResponse {
   totalPages: number;
   currentPage: number;
   total: number;
+}
+
+export interface ICreateTestimonialRequest {
+  name: string;
+  testimonial: string;
+  rating: number;
+  isActive: boolean;
+  featured: boolean;
 }

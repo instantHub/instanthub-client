@@ -104,7 +104,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({
             </p>
             {data.variants.map((variant) => (
               <div
-                key={variant.id}
+                key={variant._id}
                 className={`flex 
                   ${MultiVariantProduct && "gap-2 justify-center"} `}
               >
@@ -128,7 +128,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({
                 <select
                   onChange={(e) =>
                     setDeductionSelected({
-                      [data.id]: e.target.value,
+                      [data._id]: e.target.value,
                     })
                   }
                   className="border-2 border-blue-500 rounded px-2 py-1 text-sm"
@@ -144,11 +144,11 @@ export const ProductCard: React.FC<IProductCardProps> = ({
                   ))}
                 </select>
 
-                {deductionSelected[data.id] && (
+                {deductionSelected[data._id] && (
                   <Link
                     to={`/admin/products/product-questions/mv/${
                       data.uniqueURL
-                    }?variant=${deductionSelected[data.id]}`}
+                    }?variant=${deductionSelected[data._id]}`}
                   >
                     <button className="bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
                       Price Drop
@@ -186,8 +186,8 @@ export const ProductCard: React.FC<IProductCardProps> = ({
       <ConfirmationModal
         isOpen={isModalOpen}
         onClose={closeModal}
-        onConfirm={() => handleDelete(data.id)}
-        itemToDelete={data.id}
+        onConfirm={() => handleDelete(data._id)}
+        itemToDelete={data._id}
         title="Confirm Deletion"
         detail={`You are about to delete ${data.name}, ${data.category.name} Product.`}
         description="Are you sure you want to delete this item? This action cannot be undone."

@@ -2,7 +2,6 @@ import { FC, useState, useMemo } from "react";
 import {
   useGetCategoriesQuery,
   useLazyGetBrandsByCategoryQuery,
-  useLazyGetAllProductsQuery,
   useLazyGetProductsQuery,
 } from "@features/api";
 import { Button, FlexBox } from "@components/general";
@@ -100,7 +99,7 @@ export const MetaTagsList: FC = () => {
             <option>Loading...</option>
           ) : (
             categoriesData?.map((cat: any) => (
-              <option key={cat.id} value={cat.uniqueURL}>
+              <option key={cat._id} value={cat.uniqueURL}>
                 {cat.name}
               </option>
             ))
@@ -122,7 +121,7 @@ export const MetaTagsList: FC = () => {
               <option>Loading...</option>
             ) : (
               brandsData?.map((brand: any) => (
-                <option key={brand.id} value={brand.uniqueURL}>
+                <option key={brand._id} value={brand.uniqueURL}>
                   {brand.name}
                 </option>
               ))
@@ -145,7 +144,7 @@ export const MetaTagsList: FC = () => {
               <option>Loading...</option>
             ) : (
               productsData?.map((product: any) => (
-                <option key={product.id} value={product.uniqueURL}>
+                <option key={product._id} value={product.uniqueURL}>
                   {product.name}
                 </option>
               ))
@@ -171,7 +170,7 @@ export const MetaTagsList: FC = () => {
               const missing = isMetaMissing(item);
               return (
                 <tr
-                  key={item.id}
+                  key={item._id}
                   className={`text-sm border-t ${
                     missing ? "bg-red-50" : "bg-white"
                   }`}
@@ -212,7 +211,7 @@ export const MetaTagsList: FC = () => {
           const missing = isMetaMissing(item);
           return (
             <div
-              key={item.id}
+              key={item._id}
               className={`p-4 border rounded-lg shadow-sm ${
                 missing ? "bg-red-50" : "bg-white"
               }`}

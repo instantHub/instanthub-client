@@ -1,23 +1,23 @@
 import { baseApi } from "@features/api";
 import { IVQResponse } from "./types";
-import { VARIANT_QUESTIONS_API_PATHS } from "./constant";
+import {
+  VARIANT_QUESTIONS_API_PATHS,
+  VARIANT_QUESTIONS_API_TAG,
+} from "./constant";
 
 export const variantQuestionsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getSingleVariantQuestions: build.query<IVQResponse, string>({
       query: (variantQuestionId) =>
-        `${VARIANT_QUESTIONS_API_PATHS.BASE}/single/${variantQuestionId}`,
-      providesTags: ["Variants Questions"],
+        VARIANT_QUESTIONS_API_PATHS.BY_ID(variantQuestionId),
+      providesTags: [VARIANT_QUESTIONS_API_TAG],
     }),
-    getVariantsQuestions: build.query<IVQResponse[], string>({
-      query: (categoryId) => VARIANT_QUESTIONS_API_PATHS.BY_ID(categoryId),
-      providesTags: ["Variants Questions"],
-    }),
-    getProductsWithDeductionsByCategory: build.query<IVQResponse[], string>({
+    getVariantsQuestionsByCategory: build.query<IVQResponse[], string>({
       query: (categoryId) =>
-        `${VARIANT_QUESTIONS_API_PATHS.BASE}/deductionsByCategory/${categoryId}`,
-      providesTags: ["Variants Questions"],
+        VARIANT_QUESTIONS_API_PATHS.BY_CATEGORY_ID(categoryId),
+      providesTags: [VARIANT_QUESTIONS_API_TAG],
     }),
+
     createVariantQuestions: build.mutation({
       query: (data) => ({
         url: VARIANT_QUESTIONS_API_PATHS.BASE,
@@ -27,37 +27,33 @@ export const variantQuestionsApi = baseApi.injectEndpoints({
         },
         body: data,
       }),
-      invalidatesTags: ["Variants Questions"],
+      invalidatesTags: [VARIANT_QUESTIONS_API_TAG],
     }),
-    updateVariantQuestions: build.mutation({
+    updateVariantQuestions: build.mutation<
+      any,
+      { variantQuestionsId: string; data: { deductions: any } }
+    >({
       query: ({ variantQuestionsId, data }) => ({
         url: VARIANT_QUESTIONS_API_PATHS.BY_ID(variantQuestionsId),
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Variants Questions"],
+      invalidatesTags: [VARIANT_QUESTIONS_API_TAG],
     }),
     deleteVariantQuestions: build.mutation({
       query: (variantQuestionsId) => ({
         url: VARIANT_QUESTIONS_API_PATHS.BY_ID(variantQuestionsId),
         method: "DELETE",
       }),
-      invalidatesTags: ["Variants Questions"],
-    }),
-
-    getProductByCategory: build.query({
-      query: (categoryId) => `/api/questions/single-product/${categoryId}`,
-      providesTags: ["Variants Questions"],
+      invalidatesTags: [VARIANT_QUESTIONS_API_TAG],
     }),
   }),
 });
 
 export const {
   useGetSingleVariantQuestionsQuery,
-  useLazyGetVariantsQuestionsQuery,
-  useLazyGetProductsWithDeductionsByCategoryQuery,
+  useLazyGetVariantsQuestionsByCategoryQuery,
   useCreateVariantQuestionsMutation,
   useUpdateVariantQuestionsMutation,
   useDeleteVariantQuestionsMutation,
-  useLazyGetProductByCategoryQuery,
 } = variantQuestionsApi;

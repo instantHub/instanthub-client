@@ -10,14 +10,14 @@ export interface ISearchParams {
 }
 
 export interface IProductResponse {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   uniqueURL: string;
   status: string;
   brand: Omit<IBrandResponse, "series" | "products">;
   category: Omit<ICategoryResponse, "brands">;
-  simpleDeductions: IConditions[] | [];
+  simpleDeductions: IProductConditions[] | [];
   variantDeductions: IVariantDeductions[] | [];
   variants: IVariants[];
   metaTitle: string;
@@ -34,12 +34,12 @@ export interface IAllProductsResponse {
 }
 
 export interface IVariants {
-  id: string;
+  _id: string;
   name: string;
   price: number;
 }
 
-export interface IConditions {
+export interface IProductConditions {
   // TODO: remove this 'isSelected' after Laptop Questionnaire refactoring is done
   isSelected: any;
   id: string;
@@ -52,10 +52,10 @@ export interface IConditions {
   showLabelsImage: boolean;
   keyword: string;
   page: number;
-  conditionLabels: IConditionLabels[];
+  conditionLabels: IProductConditionLabels[];
 }
 
-export interface IConditionLabels {
+export interface IProductConditionLabels {
   id: string;
   conditionLabel: string;
   conditionLabelId: string;
@@ -68,7 +68,7 @@ export interface IVariantDeductions {
   id: string;
   variantId: string;
   variantName: string;
-  deductions: IConditions[];
+  deductions: IProductConditions[];
 }
 
 export interface IGetAllProductsParams {
@@ -105,7 +105,7 @@ export interface IProductsResponse {
 }
 
 export interface IProduct {
-  id: string;
+  _id: string;
   name: string;
   uniqueURL: string;
   image: string;

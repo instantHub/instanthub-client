@@ -13,7 +13,7 @@ import {
 
 export const BlogDisplay: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { data, isLoading, error } = useGetBlogBySlugQuery(slug!);
+  const { data: blog, isLoading, error } = useGetBlogBySlugQuery(slug!);
 
   useEffect(() => {
     // Scroll to top when blog loads
@@ -28,7 +28,7 @@ export const BlogDisplay: React.FC = () => {
     );
   }
 
-  if (error || !data?.data) {
+  if (error || !blog) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -46,8 +46,6 @@ export const BlogDisplay: React.FC = () => {
       </div>
     );
   }
-
-  const blog = data.data;
 
   return (
     <>

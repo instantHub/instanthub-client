@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useGetCouponQuery } from "@api";
+import { useGetCouponQuery, useSaveOfferedPriceMutation } from "@api";
 import { toast } from "react-toastify";
 import FAQ from "@components/user/static/FAQ";
 import { LocationSelector } from "@components/user";
@@ -34,7 +34,7 @@ import { Button, FormInput, Modal } from "@components/general";
 import { IGetUpTo, selectOfferPrice } from "@features/slices";
 import { IAddress } from "@features/api/orders/types";
 import {
-  IConditionLabels,
+  IProductConditionLabels,
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { SubmitForm2 } from "./SubmitForm2";
@@ -70,7 +70,7 @@ export interface IReducerState {
 
 interface IFinalDeductionSet {
   type: string;
-  conditions: Partial<IConditionLabels>[];
+  conditions: Partial<IProductConditionLabels>[];
 }
 
 export type TReducerAction =
@@ -194,6 +194,8 @@ export const ProductFinalPrice_v3: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
 
+  const [saveOfferedPrice] = useSaveOfferedPriceMutation();
+
   const submitCoupon = () => {
     const couponFound = couponsData?.find(
       (c) => c.couponCode === state.coupon.couponCode
@@ -241,7 +243,7 @@ export const ProductFinalPrice_v3: React.FC = () => {
     });
 
     setFormData({
-      productId: selectedProduct.id,
+      productId: selectedProduct._id,
       productName: selectedProduct.name,
       productBrand: selectedProduct.brand?.name,
       productCategory: selectedProduct.category?.name,
@@ -253,6 +255,17 @@ export const ProductFinalPrice_v3: React.FC = () => {
       },
       finalDeductionSet: finalDeductionsSetArray,
     });
+
+    /**
+     * Get the saved mobile number MongoDb Object _id which received from 'GenerateOtp' API
+     * Save offered price via PATCH request to the saved mobile number via it's '_id'
+     * Remove the '_id' from storage post saving
+     */
+    const savedMobile_Id = sessionStorage.getItem("m_id");
+    if (savedMobile_Id) {
+      saveOfferedPrice({ mobile_id: savedMobile_Id, offeredPrice });
+      sessionStorage.removeItem("m_id");
+    }
   }, [selectedProductData, offeredPrice]);
 
   return (
@@ -294,7 +307,7 @@ export const ProductFinalPrice_v3: React.FC = () => {
                 selectedProduct={selectedProduct}
                 getUpTo={getUpTo}
                 setShowLocation={setShowLocation}
-                productId={selectedProduct.id}
+                productId={selectedProduct._id}
               />
 
               {/* Trust Indicators */}
@@ -585,7 +598,9 @@ const DeductionsList = () => {
             <Section
               key={`${deduction.type}-${idx}`}
               conditionName={deduction.type}
-              conditionLabels={deduction.conditions as IConditionLabels[]}
+              conditionLabels={
+                deduction.conditions as IProductConditionLabels[]
+              }
             />
           ))}
         </div>
@@ -596,7 +611,7 @@ const DeductionsList = () => {
 
 const Section: FC<{
   conditionName: string;
-  conditionLabels: IConditionLabels[];
+  conditionLabels: IProductConditionLabels[];
 }> = ({ conditionName, conditionLabels }) => {
   return (
     <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200">

@@ -49,7 +49,7 @@ export const SlidersList = () => {
           // @ts-ignore
           slidersList.map((slider) => (
             // @ts-ignore
-            <SliderCard key={slider.id} slider={slider} />
+            <SliderCard key={slider._id} slider={slider} />
           ))}
 
         {!isLoading && (!slidersList || slidersList.length === 0) && (

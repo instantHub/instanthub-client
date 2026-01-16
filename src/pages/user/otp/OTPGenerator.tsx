@@ -93,9 +93,15 @@ export const OtpGenerator: FC<OtpGeneratorProps> = ({ closeModal, isOpen }) => {
       };
 
       try {
-        await generateOTP(payload).unwrap(); // .unwrap() handles throwing errors
+        const result = await generateOTP(payload).unwrap(); // .unwrap() handles throwing errors
         dispatch(performCalculation());
         toast.success("Success! Redirecting...");
+
+        /**
+         * Saving the received otp tracker's saved mobile number MongoDb Object _id
+         * This _id will be used in Final page to PATCH the offeredPrice to otp tracker
+         */
+        sessionStorage.setItem("m_id", result?.data?._id);
 
         const { category, brand } = selectedProduct;
         const productURL = searchParams.get("product");

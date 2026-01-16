@@ -93,6 +93,12 @@ export const sidebarConfig: SidebarSection[] = [
         permissions: [ADMIN_PERMISSIONS.QUESTIONS_CREATE],
       },
       {
+        name: "variants-questions",
+        href: "/admin/variants-questions",
+        icon: GitDiffIcon,
+        permissions: [ADMIN_PERMISSIONS.CREATE, ADMIN_PERMISSIONS.UPDATE],
+      },
+      {
         name: "testimonial",
         href: "/admin/testimonial",
         icon: AstroIcon,
@@ -166,12 +172,6 @@ export const sidebarConfig: SidebarSection[] = [
         href: "/admin/manage-stocks",
         icon: StockpilesIcon,
         permissions: [ADMIN_PERMISSIONS.UPDATE],
-      },
-      {
-        name: "variants-questions",
-        href: "/admin/variants-questions",
-        icon: GitDiffIcon,
-        permissions: [ADMIN_PERMISSIONS.CREATE, ADMIN_PERMISSIONS.UPDATE],
       },
     ],
     permissions: [ADMIN_PERMISSIONS.INVENTORY_MANAGEMENT],

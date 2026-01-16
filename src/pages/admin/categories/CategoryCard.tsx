@@ -112,7 +112,7 @@ export const CategoryCard = ({ category }: ICategoryCardProps) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         onConfirm={handleDelete}
-        itemToDelete={category.id}
+        itemToDelete={category._id}
         title="Confirm Deletion"
         detail={`You are about to delete ${category.name} Category. Total Number of Brands under this Category are ${category?.brands.length}.`}
         description="Are you sure you want to delete this item? This action cannot be undone."
@@ -129,7 +129,7 @@ function DisplayBrands(brands: IBrandLite[]): JSX.Element | JSX.Element[] {
   }
 
   return brands.map((brand, i) => (
-    <Typography key={brand.id} variant="caption" className="pb-1">
+    <Typography key={brand._id} variant="caption" className="pb-1">
       {i + 1}.{brand.name}
     </Typography>
   ));

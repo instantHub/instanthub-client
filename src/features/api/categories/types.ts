@@ -2,7 +2,7 @@ import { IBrandLite } from "../brands/types";
 import { IProductResponse } from "../productsApi/types";
 
 export interface ICategoryResponse {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   uniqueURL: string;
@@ -11,7 +11,7 @@ export interface ICategoryResponse {
   // Add SEO fields
   metaTitle: string;
   metaDescription: string;
-  metaKeywords: Array<string>;
+  metaKeywords: string[] | string;
   canonicalUrl: string;
 }
 
@@ -42,8 +42,9 @@ export interface ITopSellingProductsResponse {
   productId: IProductResponse;
 }
 
-// [
-//   { productId: IProductResponse },
-//   { productId: IProductResponse },
-//   { productId: IProductResponse },
-// ];
+export interface ICreateCategory {
+  name: string;
+  image: File;
+  uniqueURL: string;
+  categoryType: ICategoryType;
+}

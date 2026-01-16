@@ -2,7 +2,6 @@ import { useEffect, useState, useRef, ChangeEvent, FormEvent } from "react";
 import {
   useGetCategoriesQuery,
   useCreateProductMutation,
-  useUploadProductImageMutation,
   useLazyGetBrandSeriesQuery,
   useLazyGetBrandsByCategoryQuery,
 } from "@api";
@@ -61,7 +60,6 @@ export const CreateProduct = () => {
     useLazyGetBrandsByCategoryQuery();
   const [getSeriesByBrand, { data: seriesData }] = useLazyGetBrandSeriesQuery();
 
-  const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct, { isLoading: productCreationLoading }] =
     useCreateProductMutation();
 
@@ -82,21 +80,6 @@ export const CreateProduct = () => {
 
   const handleRemoveVariant = (index: number) => {
     setVariants((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  // ---------- File Upload ----------
-  const uploadFileHandler = async (): Promise<string | null> => {
-    if (!imageSelected) return null;
-    const formData = new FormData();
-    formData.append("image", imageSelected);
-
-    try {
-      const res = await uploadProductImage(formData).unwrap();
-      return res.image as string;
-    } catch (error) {
-      toast.error("Image upload failed");
-      return null;
-    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -122,25 +105,36 @@ export const CreateProduct = () => {
       return;
     }
 
-    const imageURL = await uploadFileHandler();
-    if (!imageURL) return;
+    if (!imageSelected) return;
 
-    const productsData = {
-      name: prodName,
-      uniqueURL,
-      image: imageURL,
-      category: selectedCategory.id,
-      brand: selectedBrand.id,
-      series: seriesYes ? selectedSeries?.id : null,
-      variants,
-      status: status.name,
-    };
-    console.log("productsData handle submit:", productsData);
+    // const productsData = {
+    //   name: prodName,
+    //   uniqueURL,
+    //   image: imageURL,
+    //   category: selectedCategory._id,
+    //   brand: selectedBrand._id,
+    //   series: seriesYes ? selectedSeries?._id : null,
+    //   variants,
+    //   status: status.name,
+    // };
+
+    const formData = new FormData();
+    formData.append("name", prodName);
+    formData.append("uniqueURL", uniqueURL);
+    formData.append("image", imageSelected);
+    formData.append("category", selectedCategory._id);
+    formData.append("brand", selectedBrand._id);
+
+    if (seriesYes && selectedSeries)
+      formData.append("series", selectedSeries._id);
+
+    formData.append("variants", JSON.stringify(variants));
+    formData.append("status", status.name);
+
+    console.log("productsData handle submit:", Object.entries(formData));
 
     try {
-      const productCreated = await createProduct(
-        JSON.stringify(productsData)
-      ).unwrap();
+      const productCreated = await createProduct(formData).unwrap();
 
       if (
         !productCreated.success &&
@@ -201,7 +195,7 @@ export const CreateProduct = () => {
             value={selectedCategory}
             onChange={setSelectedCategory}
             displayKey="name"
-            valueKey="id"
+            valueKey="_id"
             placeholder="Choose a category..."
             clearable
             required
@@ -214,7 +208,7 @@ export const CreateProduct = () => {
             value={selectedBrand}
             onChange={setSelectedBrand}
             displayKey="name"
-            valueKey="id"
+            valueKey="_id"
             placeholder="Choose a brand..."
             clearable
             required
@@ -227,7 +221,7 @@ export const CreateProduct = () => {
             value={selectedSeries}
             onChange={setSelectedSeries}
             displayKey="name"
-            valueKey="id"
+            valueKey="_id"
             placeholder="Choose a series..."
           />
 

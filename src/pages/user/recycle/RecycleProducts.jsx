@@ -64,7 +64,7 @@ export const RecycleProducts = () => {
   }, [productsData]);
 
   const displayedSeries = seriesAction.showSeries
-    ? brandSeries.filter((series) => series.id === seriesAction.selectedSeries)
+    ? brandSeries.filter((series) => series._id === seriesAction.selectedSeries)
     : brandSeries;
 
   const filteredProducts = seriesAction.showSeries
@@ -88,13 +88,13 @@ export const RecycleProducts = () => {
         <div className="mx-10 max-sm:mx-2 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {displayedSeries?.map((series) => (
             <SeriesButton
-              key={series.id}
+              key={series._id}
               series={series}
               isSelected={
                 seriesAction.showSeries &&
-                series.id === seriesAction.selectedSeries
+                series._id === seriesAction.selectedSeries
               }
-              onClick={() => handleSeries(series.id)}
+              onClick={() => handleSeries(series._id)}
             />
           ))}
         </div>
@@ -134,14 +134,17 @@ export const RecycleProducts = () => {
         <div className="grid grid-cols-6 max-14inch:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-12 sm:gap-y-8 rounded-xl sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {filteredProducts
             ?.filter((product) => product.status.toLowerCase() !== "blocked")
-            .map((product) => (
+            .map((product, idx) => (
               // <ProductCard
-              //   key={product.id}
+              //   key={product._id}
               //   product={product}
               //   URL={`/recycle/categories/brands/products/productDetails/${product.uniqueURL}`}
               // />
 
-              <div className="flex items-center justify-center max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0 max-14inch:">
+              <div
+                className="flex items-center justify-center max-h-44 sm:max-h-56 sm:rounded-lg border-b border-r border-solid sm:border-0"
+                key={idx}
+              >
                 {/* <Link to={`${URL}`} className="w-full h-full"> */}
                 <Link
                   to={`/recycle/categories/brands/products/productDetails/${product.uniqueURL}`}

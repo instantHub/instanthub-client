@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useReducer } from "react";
-import {
-  useUpdateProductMutation,
-  useGetProductDetailsQuery,
-  useUploadProductImageMutation,
-} from "@api";
+import { useUpdateProductMutation, useGetProductDetailsQuery } from "@api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardHeader } from "@components/admin";
@@ -70,7 +66,6 @@ export const UpdateProduct = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   console.log("Reducer state:", state, productSlug);
 
-  const [uploadProductImage] = useUploadProductImageMutation();
   const { data: productData, isLoading: productDataLoading } =
     useGetProductDetailsQuery(productSlug);
   console.log("productData", productData);
@@ -87,9 +82,8 @@ export const UpdateProduct = () => {
     formData.append("image", state.imageSelected);
 
     try {
-      const res = await uploadProductImage(formData).unwrap();
-
-      return res.image;
+      // const res = await uploadProductImage(formData).unwrap();
+      // return res.image;
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -142,31 +136,6 @@ export const UpdateProduct = () => {
       // productId = product.id;
       console.log("updatedProduct", updatedProduct);
       navigate(-1);
-      // productData = updateProduct;
-
-      // Reducer
-      // const extractedVariants = updatedProduct?.variants.map((variant) => ({
-      //   variantId: variant.id,
-      //   name: variant.name,
-      //   price: variant.price,
-      // }));
-
-      // dispatch({
-      //   type: "initial",
-      //   value: {
-      //     prodName: updatedProduct?.name,
-      //     category: updatedProduct?.category.id,
-      //     brand: updatedProduct?.brand.id,
-      //     uniqueURL: updatedProduct?.uniqueURL,
-      //     imageSelected: updatedProduct?.image,
-      //     status: updatedProduct?.status,
-      //     newImgSelected: false,
-      //     variants: extractedVariants,
-      //     oldVariants: extractedVariants,
-      //     variantLen: extractedVariants?.length,
-      //     updatedVriantLen: extractedVariants?.length,
-      //   },
-      // });
 
       if (
         !updatedProduct.success &&
@@ -383,130 +352,9 @@ export const UpdateProduct = () => {
           )}
         </div>
 
-        {/* Variants Data */}
-        {/* <div className="w-fit">
-          {!productDataLoading && productData?.category.name === "Mobile" ? (
-            <div className="m-2 flex flex-col items-center justify-center">
-              <h3 className="text-xl inline-block">Add Variants:</h3>
-              {state?.variants.map((variant, index) => (
-                <div
-                  key={index}
-                  className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
-                >
-                  <div>
-                    <input
-                      type="text"
-                      value={variant.name}
-                      placeholder="variant name"
-                      onChange={(e) => {
-                        dispatch({
-                          type: "handleVariantChange",
-                          value: {
-                            index,
-                            key: "name",
-                            value: e.target.value,
-                          },
-                        });
-                      }}
-                      className="m-1 p-2 border rounded-lg"
-                      required
-                    />
-                    <input
-                      type="number"
-                      value={variant.price}
-                      placeholder="variant price"
-                      onChange={(e) => {
-                        dispatch({
-                          type: "handleVariantChange",
-                          value: {
-                            index,
-                            key: "price",
-                            value: e.target.value,
-                          },
-                        });
-                      }}
-                      className="m-1 p-2 border rounded-lg"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    {state.variants.length != 1 && (
-                      <button
-                        className="bg-red-600 px-2 py-1 text-white rounded-md"
-                        onClick={() => {
-                          const newVariants = [...state.variants];
-                          newVariants.splice(index, 1);
-                          dispatch({
-                            type: "removeVariant",
-                            value: newVariants,
-                          });
-                        }}
-                      >
-                        remove
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ))}
-              <button
-                onClick={() => {
-                  dispatch({
-                    type: "addVariant",
-                    value: [
-                      ...state.variants,
-                      { variantId: "New", name: "", price: "" },
-                    ],
-                  });
-                }}
-                className="px-3 py-1 bg-emerald-500 text-white rounded-lg"
-              >
-                Add Variant
-              </button>
-            </div>
-          ) : (
-            <div className="m-1 flex flex-col items-center justify-center">
-              <h3 className="text-xl inline-block">Add Price:</h3>
-              {state.variants.map((variant, index) => (
-                <div
-                  key={index}
-                  className="my-2 bg-white flex items-center gap-2 border rounded-md shadow-lg p-2"
-                >
-                  <div>
-                    <input
-                      type="text"
-                      value={variant.name}
-                      placeholder="variant name"
-                      className="m-1 p-2 border rounded-lg"
-                      required
-                      disabled
-                    />
-                    <input
-                      type="number"
-                      value={variant.price}
-                      placeholder="variant price"
-                      onChange={(e) => {
-                        dispatch({
-                          type: "handleVariantChange",
-                          value: {
-                            index,
-                            key: "price",
-                            value: e.target.value,
-                          },
-                        });
-                      }}
-                      className="m-1 p-2 border rounded-lg"
-                      required
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div> */}
-
         <div className="w-fit">
-          {!productDataLoading && productData?.category.name === "Mobile" ? (
+          {!productDataLoading &&
+          productData?.category.categoryType.multiVariants ? (
             <VariantSection
               title="Add Variants"
               variants={state.variants}

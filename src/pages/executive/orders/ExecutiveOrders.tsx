@@ -18,7 +18,7 @@ import {
 import { Button, FlexBox } from "@components/general";
 import { Loading } from "@components/user";
 import { formatDate } from "@utils/general";
-import { useGetExecutiveOrders2Query } from "@features/api";
+import { useGetExecutiveOrdersQuery } from "@features/api";
 
 export const ExecutiveOrders: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,7 +35,7 @@ export const ExecutiveOrders: React.FC = () => {
 
   // Fetch orders
   const { data, isLoading, isError, error, refetch, isFetching } =
-    useGetExecutiveOrders2Query({
+    useGetExecutiveOrdersQuery({
       status,
       dateFilter,
       page,

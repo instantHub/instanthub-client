@@ -1,4 +1,5 @@
 import { baseApi } from "../baseApi";
+import { PURCHASE_ORDER_BASE_API } from "../orders/constants";
 
 export interface IMonthlyStats {
   month: string;
@@ -31,7 +32,7 @@ export interface IYearlyData {
   totalRevenue: number;
 }
 
-const baseURL = "/api/orders/analytics";
+const baseURL = `${PURCHASE_ORDER_BASE_API}/analytics`;
 
 export const orderAnalyticsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

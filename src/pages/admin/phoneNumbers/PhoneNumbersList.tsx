@@ -40,6 +40,10 @@ const PhoneNumberCard: FC<PhoneNumberCardProps> = ({
           </div>
         )}
         <div>
+          <span className="font-semibold text-gray-800">Offered Price: </span>
+          <span>{number.offeredPrice ?? "N/A"}</span>
+        </div>
+        <div>
           <span className="font-semibold text-gray-800">Total Visits: </span>
           <span>{number.totalOTPsTaken}</span>
         </div>
@@ -65,7 +69,7 @@ const PhoneNumberCard: FC<PhoneNumberCardProps> = ({
           leftIcon={<DeleteIcon />}
           variant="danger"
           size="xs"
-          onClick={() => onDelete(number.id, number.mobileNumber)}
+          onClick={() => onDelete(number._id, number.mobileNumber)}
         >
           Delete
         </Button>
@@ -168,7 +172,7 @@ export const PhoneNumbersList: FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {phoneNumbers?.map((number) => (
             <MemoizedPhoneNumberCard
-              key={number.id}
+              key={number._id}
               number={number}
               onDelete={handleDelete}
               onViewDetails={setSelectedNumber}
@@ -209,7 +213,7 @@ export const PhoneNumbersList: FC = () => {
                 <FlexBox direction="col" align="start" className="pl-2">
                   {selectedNumber.selectedDeductionSet.length > 0 ? (
                     selectedNumber.selectedDeductionSet?.map((deduction) =>
-                      deduction.conditions.map((condition) => (
+                      deduction?.conditions?.map((condition) => (
                         <div
                           className="flex gap-1 lg:gap-4 mb-1"
                           key={condition.conditionLabel}

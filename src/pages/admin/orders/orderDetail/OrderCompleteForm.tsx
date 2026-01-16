@@ -120,7 +120,7 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
     }
 
     const formData = new FormData();
-    formData.append("orderId", orderDetail.id);
+    formData.append("orderId", orderDetail._id);
     formData.append("completedAt", selectedDate.toISOString());
     formData.append("finalPrice", finalPrice);
     formData.append("deviceInfo", JSON.stringify(deviceInfo));
@@ -150,7 +150,7 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
 
     try {
       await rescheduleOrder({
-        id: orderDetail.id,
+        id: orderDetail._id,
         body: {
           newDate: rescheduleDate,
           newTimeSlot: rescheduleSlot.value,
@@ -373,7 +373,7 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
           className="min-h-[350px]"
         >
           <OrderCancellation
-            orderId={orderDetail.id}
+            orderId={orderDetail._id}
             cancelOrder={cancelOrder}
             cancelLoading={cancelling}
             closeModal={() => setShowCancel(false)}

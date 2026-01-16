@@ -2,9 +2,9 @@ import { IBrandResponse } from "../brands/types";
 import { ICategoryResponse } from "../categories/types";
 
 export interface ISeriesResponse {
-  id: string;
+  _id: string;
   name: string;
-  category: Pick<ICategoryResponse, "id" | "name">;
-  brand: Pick<IBrandResponse, "id" | "name">;
+  category: Pick<ICategoryResponse, "_id" | "name">;
+  brand: Pick<IBrandResponse, "_id" | "name">;
   products: Array<any>;
 }

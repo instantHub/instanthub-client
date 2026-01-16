@@ -9,7 +9,7 @@ export const seoApi = baseApi.injectEndpoints({
     >({
       query: ({ uniqueURL, data }) => ({
         url: `/api/seo/category/${uniqueURL}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
       }),
     }),
@@ -19,7 +19,7 @@ export const seoApi = baseApi.injectEndpoints({
     >({
       query: ({ uniqueURL, data }) => ({
         url: `/api/seo/brand/${uniqueURL}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
       }),
     }),
@@ -29,7 +29,7 @@ export const seoApi = baseApi.injectEndpoints({
     >({
       query: ({ uniqueURL, data }) => ({
         url: `/api/seo/product/${uniqueURL}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
       }),
     }),

@@ -1,9 +1,12 @@
-import { useEffect, useState, useRef, FormEvent } from "react";
 import {
-  useUploadCategoryImageMutation,
-  useUpdateCategoryMutation,
-  useGetCategoryQuery,
-} from "@api";
+  useEffect,
+  useState,
+  useRef,
+  FormEvent,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
+import { useUpdateCategoryMutation, useGetCategoryQuery } from "@api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
@@ -12,7 +15,6 @@ import { slugify } from "@utils/general";
 import { ICategoryType } from "@features/api/categories/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { ArrowLeftIcon } from "@icons";
-import { formatMetaKeywords } from "@utils/admin";
 
 type TUpdateCategoryParams = {
   categoryUniqueURL: string;
@@ -25,7 +27,7 @@ type TFormData = {
   categoryType: ICategoryType;
   metaTitle: string;
   metaDescription: string;
-  metaKeywords: string;
+  metaKeywords: string[]; // Changed to string array
 };
 
 export function UpdateCategory() {
@@ -37,18 +39,16 @@ export function UpdateCategory() {
 
   const { data: categoryData, isLoading: categoryLoading } =
     useGetCategoryQuery(categoryUniqueURL);
-
-  const [newImgSelected, setNewImgSelected] = useState(false);
-  const [uploadCategoryImage] = useUploadCategoryImageMutation();
   const [updateCategory, { isLoading: updateCategoryLoading }] =
     useUpdateCategoryMutation();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Add SEO fields
-  // metaTitle: { type: String },
-  // metaDescription: { type: String },
-  // metaKeywords: { type: String },
+  // Local State
+  const [newImgSelected, setNewImgSelected] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [keywordInput, setKeywordInput] = useState(""); // Temporary state for typing a keyword
+
   const [formData, setFormData] = useState<TFormData>({
     name: "",
     image: "",
@@ -60,7 +60,7 @@ export function UpdateCategory() {
     },
     metaTitle: "",
     metaDescription: "",
-    metaKeywords: "",
+    metaKeywords: [],
   });
 
   useEffect(() => {
@@ -71,107 +71,130 @@ export function UpdateCategory() {
       uniqueURL: categoryData.uniqueURL,
       image: categoryData.image,
       categoryType: categoryData.categoryType,
-      metaTitle: categoryData.metaTitle,
-      metaDescription: categoryData.metaDescription,
-      metaKeywords: categoryData.metaKeywords,
+      metaTitle: categoryData.metaTitle || "",
+      metaDescription: categoryData.metaDescription || "",
+      // Ensure keywords is always an array
+      metaKeywords: Array.isArray(categoryData.metaKeywords)
+        ? categoryData.metaKeywords
+        : [],
     });
+
+    setImagePreview(
+      `${import.meta.env.VITE_APP_BASE_URL}${categoryData.image}`
+    );
   }, [categoryData]);
 
-  const uploadFileHandler = async (): Promise<string | undefined> => {
-    if (!(formData.image instanceof File)) return;
-
-    const imageData = new FormData();
-    imageData.append("image", formData.image);
-
-    try {
-      const res = await uploadCategoryImage(imageData).unwrap();
-      return res.image;
-    } catch (error) {
-      console.error("Image upload error:", error);
-      toast.error("Image upload failed");
+  // --- Keyword Logic ---
+  const addKeyword = () => {
+    const trimmed = keywordInput.trim();
+    if (trimmed && !formData.metaKeywords.includes(trimmed)) {
+      setFormData((prev) => ({
+        ...prev,
+        metaKeywords: [...prev.metaKeywords, trimmed],
+      }));
+      setKeywordInput("");
     }
   };
 
+  const removeKeyword = (indexToRemove: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      metaKeywords: prev.metaKeywords.filter(
+        (_, index) => index !== indexToRemove
+      ),
+    }));
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addKeyword();
+    }
+  };
+
+  // --- Image Logic ---
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData((prev) => ({ ...prev, image: file }));
+      setNewImgSelected(true);
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const cancelNewImage = () => {
+    setNewImgSelected(false);
+    if (categoryData) {
+      setFormData((prev) => ({ ...prev, image: categoryData.image }));
+      setImagePreview(
+        `${import.meta.env.VITE_APP_BASE_URL}${categoryData.image}`
+      );
+    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  // --- Submit Logic ---
   const handleSubmit = async (event: FormEvent<HTMLElement>) => {
     event.preventDefault();
 
-    const selectedTypes = Object.values(formData.categoryType).filter(Boolean);
-    if (selectedTypes.length === 0) {
-      toast.error("Please select at least one category type.");
-      return;
-    }
-
-    if (selectedTypes.length > 1) {
-      toast.error("Only one category type can be selected.");
-      return;
-    }
-
-    let updatedImage = formData.image;
-
-    if (newImgSelected && formData.image instanceof File) {
-      const uploaded = await uploadFileHandler();
-      if (uploaded) updatedImage = uploaded;
-    }
-
     try {
+      let payload: any;
+
+      if (newImgSelected) {
+        payload = new FormData();
+        payload.append("name", formData.name);
+        payload.append("uniqueURL", formData.uniqueURL);
+        payload.append("metaTitle", formData.metaTitle);
+        payload.append("metaDescription", formData.metaDescription);
+
+        // NESTJS FIX: FormData does not support arrays.
+        // We stringify the array so the @Transform in your DTO can parse it back.
+        payload.append("metaKeywords", JSON.stringify(formData.metaKeywords));
+        payload.append("categoryType", JSON.stringify(formData.categoryType));
+        payload.append("image", formData.image);
+      } else {
+        payload = { ...formData };
+      }
+
       await updateCategory({
-        // catId: categoryId,
-        catId: categoryData?.id,
-        data: {
-          ...formData,
-          image: updatedImage as string,
-        },
+        catId: categoryData?._id,
+        data: payload,
       }).unwrap();
 
-      toast.success("Category updated successfully..!");
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-        fileInputRef.current.required = true;
-      }
+      toast.success("Category updated successfully!");
+      setNewImgSelected(false);
+      window.location.href = ROUTES.admin.categoriesList;
     } catch (error) {
-      console.error("Error updating category:", error);
-      toast.error("Category update failed..!");
+      console.error("Update error:", error);
+      toast.error("Update failed. Check keywords format.");
     }
   };
 
   const handleCategoryTypeSelect = (selectedType: keyof ICategoryType) => {
-    const selectedAlready = formData.categoryType[selectedType];
-    if (selectedAlready) return;
-
-    const confirmChange = window.confirm(
-      `Are you sure you want to change the category type to "${selectedType}"? This will replace the previously selected type.`
-    );
-
-    if (!confirmChange) return;
-
-    setFormData((prev) => ({
-      ...prev,
-      categoryType: {
-        multiVariants: false,
-        processorBased: false,
-        simple: false,
-        [selectedType]: true,
-      },
-    }));
-  };
-
-  // Format only on blur or submit
-  const handleBlur = () => {
-    setFormData((prev) => ({
-      ...prev,
-      metaKeywords: formatMetaKeywords(prev.metaKeywords),
-    }));
+    if (formData.categoryType[selectedType]) return;
+    if (window.confirm(`Switch architecture to ${selectedType}?`)) {
+      setFormData((prev) => ({
+        ...prev,
+        categoryType: {
+          multiVariants: false,
+          processorBased: false,
+          simple: false,
+          [selectedType]: true,
+        },
+      }));
+    }
   };
 
   if (categoryLoading) return <Loading />;
 
   return (
-    <FlexBox direction="col" className="mt-10 p-4 mx-auto">
-      <FlexBox justify="between" fullWidth>
-        <Typography as="h2" variant="h3" className="max-sm:text-sm">
+    <FlexBox direction="col" className="mt-10 p-4 mx-auto max-w-5xl">
+      <FlexBox justify="between" fullWidth className="mb-6">
+        <Typography as="h2" variant="h3" className="font-bold">
           Update Category
         </Typography>
-
         <Button
           variant="secondary"
           size="sm"
@@ -183,124 +206,145 @@ export function UpdateCategory() {
 
       <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-4 p-5 border rounded-md shadow-lg"
+        className="w-full flex flex-col gap-6 p-6 bg-white border rounded-xl shadow-lg"
       >
         <Typography as="h2" variant="h4" align="center">
-          Update {categoryData?.name} Category
+          Editing: <span className="text-blue-600">{categoryData?.name}</span>
         </Typography>
 
-        <hr />
-
-        <FlexBox gap={2} className="max-sm:flex-col">
+        <FlexBox gap={4} className="max-sm:flex-col">
           <FormInput
-            variant="outlined"
-            label="Category Name"
-            type="text"
-            placeholder="Enter Category Name"
+            label="Name"
+            fullWidth
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
           />
-
           <FormInput
-            variant="outlined"
-            label="Unique URL"
-            type="text"
-            placeholder="Enter Unique URL"
+            label="URL Slug"
+            fullWidth
             value={formData.uniqueURL}
             onChange={(e) =>
-              setFormData({
-                ...formData,
-                uniqueURL: slugify(e.target.value),
-              })
+              setFormData({ ...formData, uniqueURL: slugify(e.target.value) })
             }
+            required
           />
         </FlexBox>
 
-        <FlexBox gap={2} className="max-sm:flex-col">
+        <FlexBox gap={4} className="max-sm:flex-col">
           <FormInput
-            variant="outlined"
             label="Meta Title"
-            type="text"
-            placeholder="Enter Meta Title"
+            fullWidth
             value={formData.metaTitle}
             onChange={(e) =>
               setFormData({ ...formData, metaTitle: e.target.value })
             }
           />
-
           <FormInput
-            variant="outlined"
             label="Meta Description"
-            type="text"
-            placeholder="Enter Meta Description"
+            fullWidth
             value={formData.metaDescription}
             onChange={(e) =>
-              setFormData({
-                ...formData,
-                metaDescription: e.target.value,
-              })
+              setFormData({ ...formData, metaDescription: e.target.value })
             }
           />
         </FlexBox>
 
-        <FormInput
-          variant="outlined"
-          label="Meta Keywords"
-          type="text"
-          placeholder="Enter Meta Keywords"
-          value={formData.metaKeywords}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              metaKeywords: e.target.value,
-            })
-          }
-          onBlur={handleBlur}
-        />
+        {/* --- Keyword Tag UI --- */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-bold text-gray-600">
+            Meta Keywords (Array)
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              className="border p-2 rounded flex-1 outline-none focus:border-blue-500"
+              placeholder="Type keyword and press Enter"
+              value={keywordInput}
+              onChange={(e) => setKeywordInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <Button type="button" onClick={addKeyword} size="sm">
+              Add
+            </Button>
+          </div>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {formData.metaKeywords.map((tag, idx) => (
+              <span
+                key={idx}
+                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => removeKeyword(idx)}
+                  className="hover:text-red-500 font-bold"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
 
-        <FlexBox gap={4} className="mx-auto">
+        {/* --- Image Section --- */}
+        <div className="p-4 border rounded-lg bg-gray-50 flex gap-6 items-center max-sm:flex-col">
           <img
-            src={
-              typeof formData.image === "string"
-                ? import.meta.env.VITE_APP_BASE_URL + formData.image
-                : ""
-            }
-            alt="Category"
-            className="w-[75px] sm:w-[100px] mx-auto"
+            src={imagePreview}
+            alt="Preview"
+            className="w-24 h-24 object-cover rounded shadow"
           />
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                setFormData({ ...formData, image: file });
-                setNewImgSelected(true);
-              }
-            }}
-          />
-        </FlexBox>
+          <div className="flex flex-col gap-2">
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+            {newImgSelected && (
+              <Button
+                type="button"
+                variant="danger"
+                size="xs"
+                onClick={cancelNewImage}
+              >
+                Cancel New Image
+              </Button>
+            )}
+          </div>
+        </div>
 
-        <FlexBox gap={4} wrap="wrap">
-          {Object.entries(formData.categoryType).map(([key, isActive]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() =>
-                handleCategoryTypeSelect(key as keyof ICategoryType)
-              }
-              className={`px-4 py-2 rounded-lg border transition-all duration-300 max-sm:text-xs ${
-                isActive
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-              }`}
-            >
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </button>
-          ))}
-        </FlexBox>
+        {/* --- Architecture Types --- */}
+        <div className="flex flex-col gap-2">
+          <Typography variant="h5" className="font-bold text-gray-600">
+            Architecture Type
+          </Typography>
+          <FlexBox gap={2} wrap="wrap">
+            {Object.entries(formData.categoryType).map(([key, isActive]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() =>
+                  handleCategoryTypeSelect(key as keyof ICategoryType)
+                }
+                className={`px-4 py-2 rounded-full border text-sm ${
+                  isActive ? "bg-blue-600 text-white" : "bg-white text-gray-600"
+                }`}
+              >
+                {key}
+              </button>
+            ))}
+          </FlexBox>
+        </div>
 
-        <Button loading={updateCategoryLoading}>Update Category</Button>
+        <Button
+          type="submit"
+          loading={updateCategoryLoading}
+          fullWidth
+          variant="primary"
+        >
+          Update Category
+        </Button>
       </form>
     </FlexBox>
   );

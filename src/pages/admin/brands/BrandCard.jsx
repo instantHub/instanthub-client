@@ -31,7 +31,7 @@ export const BrandCard = ({ data }) => {
   };
 
   function handleEdit() {
-    navigate(generatePathWithParams(ROUTES.admin.updateBrand, data.id));
+    navigate(generatePathWithParams(ROUTES.admin.updateBrand, data._id));
   }
 
   function openDeleteModel() {
@@ -95,7 +95,7 @@ export const BrandCard = ({ data }) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         onConfirm={handleDelete}
-        itemToDelete={data.id}
+        itemToDelete={data._id}
         title="Confirm Deletion"
         detail={`You are about to delete ${data.name} Brand.`}
         description="Are you sure you want to delete this item? This action cannot be undone."

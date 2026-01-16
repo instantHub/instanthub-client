@@ -7,23 +7,14 @@ import {
   IProductsResponse,
   ISearchParams,
 } from "./types";
-
-export const productsURL = "/api/products";
-
-interface Service {
-  name: string;
-  uniqueURL: string;
-}
-
-interface ServiceResponse {
-  services: Service[];
-}
+import { PRODUCT_API_PATHS, PRODUCT_API_TAG } from "./constant";
+import { VARIANT_QUESTIONS_API_TAG } from "../variantQuestionsApi/constant";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     searchProducts: build.query<IAllProductsResponse, ISearchParams>({
       query: ({ search, page = 1, limit = 10 }) => ({
-        url: "/api/products",
+        url: PRODUCT_API_PATHS.BASE,
         params: { search: search.trim(), page, limit },
       }),
       transformResponse: (response: { data: IAllProductsResponse }) =>
@@ -31,21 +22,7 @@ export const productsApi = baseApi.injectEndpoints({
       // Keep previous results while fetching new ones
       keepUnusedDataFor: 60,
     }),
-    searchServices: build.query<ServiceResponse, ISearchParams>({
-      query: ({ search, page = 1, limit = 10 }) => ({
-        url: "/services",
-        params: { search: search.trim(), page, limit },
-      }),
-      keepUnusedDataFor: 60,
-    }),
-    // getAllProducts: build.query<IAllProductsResponsee, IGetAllProductsParams>({
-    //   query: ({ page, limit, search, categoryId }) => ({
-    //     url: productsURL,
-    //     method: "GET",
-    //     params: { page, limit, search, categoryId },
-    //   }),
-    //   providesTags: ["Products"],
-    // }),
+
     getAllProducts: build.query<IProductsResponse, IGetAllProductsParams>({
       query: ({
         page = 1,
@@ -63,24 +40,24 @@ export const productsApi = baseApi.injectEndpoints({
         if (categoryId) params.append("categoryId", categoryId);
         if (status) params.append("status", status);
 
-        return `${productsURL}?${params.toString()}`;
+        return `${PRODUCT_API_PATHS.BASE}?${params.toString()}`;
       },
       providesTags: (result) =>
         result
           ? [
-              ...result.data.products.map(({ id }) => ({
-                type: "Products" as const,
-                id,
+              ...result.data.products.map(({ _id }) => ({
+                type: PRODUCT_API_TAG,
+                _id,
               })),
-              { type: "Products", id: "LIST" },
+              { type: PRODUCT_API_TAG, id: "LIST" },
             ]
-          : [{ type: "Products", id: "LIST" }],
+          : [{ type: PRODUCT_API_TAG, id: "LIST" }],
       keepUnusedDataFor: 300,
     }),
 
     getPendingPricing: build.query<any[], void>({
-      query: () => `/api/pricing/empty-pricing`,
-      providesTags: ["Products"],
+      query: () => `/api/products/check-empty-pricing`,
+      providesTags: [PRODUCT_API_TAG],
     }),
 
     getProducts: build.query<
@@ -88,94 +65,66 @@ export const productsApi = baseApi.injectEndpoints({
       IGetProductsByBrandParams
     >({
       query: ({ brandUniqueURL, search }) => ({
-        url: `/api/products/${brandUniqueURL}?search=${search}`,
+        url: `${PRODUCT_API_PATHS.BASE}/${brandUniqueURL}?search=${search}`,
       }),
-      providesTags: ["Products"],
+      providesTags: [PRODUCT_API_TAG],
     }),
 
     getProductDetails: build.query<IProductResponse, string>({
       query: (productUniqueURL) =>
-        `/api/products/product-details/${productUniqueURL}`,
-      providesTags: ["Products"],
+        PRODUCT_API_PATHS.DETAILS_UNIQUE_URL(productUniqueURL),
+      providesTags: [PRODUCT_API_TAG],
     }),
-    getProductQuestions: build.query({
-      query: (prodId) => `/api/products/product/product-questions/${prodId}`,
-      providesTags: ["Products"],
+
+    getSingleProductByCategory: build.query({
+      query: (categoryId) => PRODUCT_API_PATHS.SP_BY_CATEGORYID(categoryId),
+      providesTags: [VARIANT_QUESTIONS_API_TAG],
     }),
+
     createProduct: build.mutation({
       query: (data) => ({
-        url: "/api/products/add-product",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      }),
-      invalidatesTags: ["Products"],
-    }),
-    uploadProductImage: build.mutation({
-      query: (data) => ({
-        url: "/api/upload/products",
+        url: PRODUCT_API_PATHS.CREATE,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: [PRODUCT_API_TAG],
     }),
     updateProduct: build.mutation({
       query: ({ productSlug, data }) => ({
-        url: `/api/products/update-product/${productSlug}`,
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      }),
-      invalidatesTags: ["Products"],
-    }),
-    updatePriceDrop: build.mutation({
-      query: ({ productId, data }) => ({
-        url: `/api/products/update-pricedrop/${productId}`,
+        url: PRODUCT_API_PATHS.UPDATE(productSlug),
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Products"],
-    }),
-    deleteProduct: build.mutation({
-      query: (productId) => ({
-        url: `/api/products/delete-product/${productId}`,
-        method: "DELETE",
-        // body: data,
-      }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: [PRODUCT_API_TAG],
     }),
 
-    updateLaptopConfigurationsPriceDrop: build.mutation({
-      query: ({ productId, data, type, brand }) => ({
-        url: `/api/products/updateLaptopConfigurationsPriceDrop/${productId}?type=${type}&brand=${brand}`,
-        method: "PUT",
-        body: data,
+    deleteProduct: build.mutation({
+      query: (productId) => ({
+        url: PRODUCT_API_PATHS.DELETE(productId),
+        method: "DELETE",
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: [PRODUCT_API_TAG],
     }),
   }),
 });
 
 export const {
   useSearchProductsQuery,
-  useSearchServicesQuery,
+
   useGetAllProductsQuery,
+  useLazyGetAllProductsQuery,
 
   useGetPendingPricingQuery,
 
-  useLazyGetAllProductsQuery,
   useGetProductsQuery,
   useLazyGetProductsQuery,
+
+  useLazyGetSingleProductByCategoryQuery,
+
   useGetProductDetailsQuery,
   useLazyGetProductDetailsQuery,
-  useGetProductQuestionsQuery,
+
   useCreateProductMutation,
-  useUploadProductImageMutation,
   useUpdateProductMutation,
-  useUpdatePriceDropMutation,
   useDeleteProductMutation,
-  useUpdateLaptopConfigurationsPriceDropMutation,
 } = productsApi;

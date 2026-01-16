@@ -2,6 +2,7 @@ import { baseApi } from "@features/api";
 import { CATEGORY_API_PATHS, CATEGORY_API_TAG } from "./constants";
 import {
   ICategoryResponse,
+  ICreateCategory,
   IDeleteCategory,
   ITopSellingProductsResponse,
 } from "./types";
@@ -18,26 +19,21 @@ export const categories = baseApi.injectEndpoints({
       providesTags: [CATEGORY_API_TAG],
     }),
 
-    getTopSellingProducts: build.query<ITopSellingProductsResponse[], string>({
-      query: (categoryName) => CATEGORY_API_PATHS.TOP_PROD(categoryName),
+    getTopSellingProducts: build.query<
+      ITopSellingProductsResponse[],
+      { categoryName: string; page: number }
+    >({
+      query: ({ categoryName, page }) => ({
+        url: CATEGORY_API_PATHS.TOP_PROD(categoryName),
+        params: { page, limit: 10 },
+      }),
       providesTags: [CATEGORY_API_TAG],
     }),
 
-    uploadCategoryImage: build.mutation({
-      query: (data) => ({
-        url: CATEGORY_API_PATHS.UPLOAD,
-        method: "POST",
-        body: data,
-      }),
-    }),
-
-    createCategory: build.mutation<ICategoryResponse, string>({
+    createCategory: build.mutation({
       query: (catData) => ({
         url: CATEGORY_API_PATHS.BASE,
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: catData,
       }),
       invalidatesTags: [CATEGORY_API_TAG],
@@ -66,7 +62,6 @@ export const {
   useGetCategoriesQuery,
   useGetCategoryQuery,
   useLazyGetTopSellingProductsQuery,
-  useUploadCategoryImageMutation,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,

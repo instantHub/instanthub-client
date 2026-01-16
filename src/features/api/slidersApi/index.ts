@@ -1,82 +1,54 @@
 import { baseApi } from "@features/api";
-
-// Define the types for your data for type safety and autocompletion
-export type SliderStatus = "Active" | "Block";
-
-export interface Slider {
-  id: string; // Or _id if you use MongoDB's default
-  image: string;
-  status: SliderStatus;
-  createdAt?: string; // Optional timestamp
-  updatedAt?: string; // Optional timestamp
-}
-
-// A generic response type for mutations that return a message
-export interface MutationResponse {
-  message: string;
-  slider?: Slider;
-}
+import { SLIDERS_API_PATHS, SLIDERS_API_TAG } from "./constants";
+import { ISlider } from "./types";
 
 export const slidersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // GET all active sliders
-    getActiveSlidersList: build.query<Slider[], void>({
-      query: () => `/api/sliders/active-sliders`,
-      providesTags: ["Sliders"],
+    getActiveSlidersList: build.query<ISlider[], void>({
+      query: () => SLIDERS_API_PATHS.ACTIVE_SLIDERS,
+      providesTags: [SLIDERS_API_TAG],
     }),
 
     // GET all sliders
-    getAllSliders: build.query<Slider[], void>({
-      query: () => `/api/sliders/all-sliders`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Sliders" as const, id })),
-              "Sliders",
-            ]
-          : ["Sliders"],
+    getAllSliders: build.query<ISlider[], void>({
+      query: () => SLIDERS_API_PATHS.BASE,
+      providesTags: [SLIDERS_API_TAG],
     }),
 
     // GET a single slider by its ID
-    getSliderById: build.query<Slider, string>({
-      query: (sliderId) => `/api/sliders/${sliderId}`,
-      providesTags: (result, error, id) => [{ type: "Sliders", id }],
+    getSliderById: build.query<ISlider, string>({
+      query: (sliderId) => SLIDERS_API_PATHS.BY_ID(sliderId),
+      providesTags: [SLIDERS_API_TAG],
     }),
 
     // POST to create a new slider
-    createSlider: build.mutation<MutationResponse, FormData>({
+    createSlider: build.mutation<any, FormData>({
       query: (formData) => ({
-        url: "/api/sliders/create-slider",
+        url: SLIDERS_API_PATHS.BASE,
         method: "POST",
-        body: formData, // Browser will set Content-Type automatically for FormData
+        body: formData,
       }),
-      invalidatesTags: ["Sliders"],
+      invalidatesTags: [SLIDERS_API_TAG],
     }),
 
     // PUT to update a slider
-    updateSlider: build.mutation<
-      MutationResponse,
-      { sliderId: string; data: FormData }
-    >({
+    updateSlider: build.mutation<any, { sliderId: string; data: FormData }>({
       query: ({ sliderId, data }) => ({
-        url: `/api/sliders/update-slider/${sliderId}`,
+        url: SLIDERS_API_PATHS.BY_ID(sliderId),
         method: "PUT",
-        body: data, // Browser handles Content-Type for FormData
+        body: data,
       }),
-      // Invalidate the specific slider tag and the general list tag
-      invalidatesTags: (result, error, { sliderId }) => [
-        { type: "Sliders", id: sliderId },
-        "Sliders",
-      ],
+      invalidatesTags: [SLIDERS_API_TAG],
     }),
 
     // DELETE a slider
     deleteSlider: build.mutation<{ message: string }, string>({
       query: (sliderId) => ({
-        url: `/api/sliders/delete-slider/${sliderId}`,
+        url: SLIDERS_API_PATHS.BY_ID(sliderId),
         method: "DELETE",
       }),
-      invalidatesTags: ["Sliders"],
+      invalidatesTags: [SLIDERS_API_TAG],
     }),
   }),
 });

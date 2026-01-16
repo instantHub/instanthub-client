@@ -1,5 +1,6 @@
 import { baseApi } from "@features/api";
-import { IBlogsResponse, IGetBlogsParams } from "./types";
+import { BlogPost, IBlogsResponse, IGetBlogsParams } from "./types";
+import { BLOG_API_TAGS, BLOGS_API_PATHS } from "./constants";
 
 export const blogs = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,21 +22,12 @@ export const blogs = baseApi.injectEndpoints({
         return `/api/blogs?${searchParams.toString()}`;
       },
       // IMPROVEMENT: Refined providesTags logic
-      providesTags: (result) =>
-        result?.data?.blogs
-          ? [
-              ...result.data.blogs.map(({ _id }) => ({
-                type: "Blog" as const, // Use 'as const' for literal type
-                id: _id,
-              })),
-              { type: "Blog", id: "LIST" }, // Using "Blog" for list tag consistency
-            ]
-          : [{ type: "Blog" as const, id: "LIST" }],
+      providesTags: [BLOG_API_TAGS.BLOG_LIST],
     }),
     // Get single blog by ID
-    getBlogById: builder.query({
-      query: (id) => `/api/blogs/${id}`,
-      providesTags: (result, error, id) => [{ type: "Blog", id }],
+    getBlogById: builder.query<BlogPost, string>({
+      query: (id) => BLOGS_API_PATHS.BY_ID(id),
+      providesTags: [BLOG_API_TAGS.BLOG],
     }),
 
     // Get blog by slug (public)
@@ -61,12 +53,12 @@ export const blogs = baseApi.injectEndpoints({
         }
 
         return {
-          url: "/api/blogs",
+          url: BLOGS_API_PATHS.BASE,
           method: "POST",
           body: formData,
         };
       },
-      invalidatesTags: [{ type: "BlogList", id: "LIST" }, "BlogStats"],
+      invalidatesTags: [BLOG_API_TAGS.BLOG_LIST, BLOG_API_TAGS.BLOG_STATS],
     }),
 
     // Update blog with image
@@ -87,25 +79,21 @@ export const blogs = baseApi.injectEndpoints({
         }
 
         return {
-          url: `/api/blogs/${id}`,
+          url: BLOGS_API_PATHS.BY_ID(id),
           method: "PUT",
           body: formData,
         };
       },
-      invalidatesTags: (result, error, { id }) => [
-        { type: "Blog", id },
-        { type: "BlogList", id: "LIST" },
-        "BlogStats",
-      ],
+      invalidatesTags: [BLOG_API_TAGS.BLOG_LIST, BLOG_API_TAGS.BLOG],
     }),
 
     // Delete blog
     deleteBlog: builder.mutation({
       query: (id) => ({
-        url: `/api/blogs/${id}`,
+        url: BLOGS_API_PATHS.BY_ID(id),
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "BlogList", id: "LIST" }, "BlogStats"],
+      invalidatesTags: [BLOG_API_TAGS.BLOG_LIST, BLOG_API_TAGS.BLOG_STATS],
     }),
 
     // Publish blog
@@ -114,11 +102,7 @@ export const blogs = baseApi.injectEndpoints({
         url: `/api/blogs/${id}/publish`,
         method: "PATCH",
       }),
-      invalidatesTags: (result, error, id) => [
-        { type: "Blog", id },
-        { type: "BlogList", id: "LIST" },
-        "BlogStats",
-      ],
+      invalidatesTags: [BLOG_API_TAGS.BLOG_LIST],
     }),
 
     // Archive blog
@@ -127,11 +111,7 @@ export const blogs = baseApi.injectEndpoints({
         url: `/api/blogs/${id}/archive`,
         method: "PATCH",
       }),
-      invalidatesTags: (result, error, id) => [
-        { type: "Blog", id },
-        { type: "BlogList", id: "LIST" },
-        "BlogStats",
-      ],
+      invalidatesTags: [BLOG_API_TAGS.BLOG_LIST],
     }),
 
     // Get blog statistics
@@ -150,15 +130,6 @@ export const blogs = baseApi.injectEndpoints({
     searchBlogs: builder.query({
       query: ({ q, limit = 10 }) => `/api/blogs/search?q=${q}&limit=${limit}`,
     }),
-
-    // Upload image
-    uploadImage: builder.mutation({
-      query: (formData) => ({
-        url: "/api/blogs/upload",
-        method: "POST",
-        body: formData,
-      }),
-    }),
   }),
 });
 
@@ -166,13 +137,16 @@ export const {
   useGetBlogsQuery,
   useGetBlogByIdQuery,
   useGetBlogBySlugQuery,
+
   useCreateBlogMutation,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
+
   usePublishBlogMutation,
   useArchiveBlogMutation,
   useGetBlogStatsQuery,
+
+  // Not used yet
   useGetAllTagsQuery,
   useSearchBlogsQuery,
-  useUploadImageMutation,
 } = blogs;

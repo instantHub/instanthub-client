@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
-  useLazyGetVariantsQuestionsQuery,
+  useLazyGetVariantsQuestionsByCategoryQuery,
   useCreateVariantQuestionsMutation,
-  useLazyGetProductByCategoryQuery,
+  useLazyGetSingleProductByCategoryQuery,
   useDeleteVariantQuestionsMutation,
   useGetCategoriesQuery,
-  useLazyGetProductsWithDeductionsByCategoryQuery,
 } from "@api";
 
 import { ConfirmationModal, Table } from "@components/admin";
@@ -20,8 +19,8 @@ export function CreateVariantsQuestions() {
   const [variantName, setVariantName] = useState<string>("");
 
   // @ts-ignore
-  const [getProductByCategory, { data: product }] =
-    useLazyGetProductByCategoryQuery();
+  const [getSingleProductByCategory, { data: product }] =
+    useLazyGetSingleProductByCategoryQuery();
 
   const { data: categoriesData, isLoading: categoriesDataLoading } =
     useGetCategoriesQuery();
@@ -29,10 +28,7 @@ export function CreateVariantsQuestions() {
   const [
     getVariantsQuestions,
     { data: variantsQuestionsData, isLoading: variantsQuestionsDataLoading },
-  ] = useLazyGetVariantsQuestionsQuery();
-
-  const [getCBVQ, { data: CBVQ }] =
-    useLazyGetProductsWithDeductionsByCategoryQuery();
+  ] = useLazyGetVariantsQuestionsByCategoryQuery();
 
   const [createVariantQuestions] = useCreateVariantQuestionsMutation();
   const [deleteVariantQuestions] = useDeleteVariantQuestionsMutation();
@@ -55,7 +51,7 @@ export function CreateVariantsQuestions() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const deductions = product.variantDeductions?.[0]?.deductions;
+    const deductions = product?.variantDeductions?.[0]?.deductions;
     if (!deductions) {
       toast.error("No deductions available");
       return;
@@ -113,8 +109,6 @@ export function CreateVariantsQuestions() {
     </>
   );
 
-  console.log("CBVQ", CBVQ);
-
   return (
     <div className="flex flex-col items-center justify-center mt-10 mx-auto text-sm max-sm:text-xs w-full max-w-4xl">
       {/* Create Variant Box */}
@@ -135,9 +129,8 @@ export function CreateVariantsQuestions() {
                 onChange={(e) => {
                   const { value } = e.target;
                   setCategorySelected(value);
-                  getProductByCategory(value);
+                  getSingleProductByCategory(value);
                   getVariantsQuestions(value);
-                  getCBVQ(value);
                 }}
                 required
               >
@@ -145,7 +138,7 @@ export function CreateVariantsQuestions() {
                 {categoriesData
                   ?.filter((c) => c.categoryType.multiVariants)
                   .map((category) => (
-                    <option key={category.id} value={category.id}>
+                    <option key={category._id} value={category._id}>
                       {category.name}
                     </option>
                   ))}

@@ -7,10 +7,13 @@ import {
   selectIsReQuoteTheme,
 } from "@features/slices";
 import { CircleIcon } from "@icons";
-import { IConditionLabels, IConditions } from "@features/api/productsApi/types";
+import {
+  IProductConditionLabels,
+  IProductConditions,
+} from "@features/api/productsApi/types";
 
 interface DeductionItemsProps {
-  condition: IConditions;
+  condition: IProductConditions;
 }
 
 interface DisplayConditionLabelsProps {
@@ -20,12 +23,12 @@ interface DisplayConditionLabelsProps {
     backgroundClass: string;
     borderClass: string;
   };
-  label: IConditionLabels;
-  handleOnClick: (label: IConditionLabels) => void;
+  label: IProductConditionLabels;
+  handleOnClick: (label: IProductConditionLabels) => void;
 }
 
 interface ShowImageProps {
-  label: IConditionLabels;
+  label: IProductConditionLabels;
 }
 
 // Constants for condition type checking
@@ -151,7 +154,7 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
 
   // Click handler
   const handleOnClick = useCallback(
-    (label: IConditionLabels) => {
+    (label: IProductConditionLabels) => {
       if (multiSelect) {
         dispatch(addDeductions({ condition, conditionLabel: label }));
       } else {
@@ -167,11 +170,11 @@ const DeductionItems: React.FC<DeductionItemsProps> = ({ condition }) => {
 
   // Function to determine if a label is selected
   const isLabelSelected = useCallback(
-    (label: IConditionLabels): boolean => {
+    (label: IProductConditionLabels): boolean => {
       if (multiSelect) {
         return (
           deductionData?.some(
-            (deduction: IConditionLabels) =>
+            (deduction: IProductConditionLabels) =>
               deduction.conditionLabel === label.conditionLabel
           ) || false
         );

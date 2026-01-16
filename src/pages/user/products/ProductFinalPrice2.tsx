@@ -35,7 +35,7 @@ import {
 } from "@features/slices";
 import { IAddress } from "@features/api/orders/types";
 import {
-  IConditionLabels,
+  IProductConditionLabels,
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { SubmitForm2 } from "./SubmitForm2";
@@ -71,7 +71,7 @@ export interface IReducerState {
 
 interface IFinalDeductionSet {
   type: string;
-  conditions: Partial<IConditionLabels>[];
+  conditions: Partial<IProductConditionLabels>[];
 }
 
 export type TReducerAction =
@@ -259,7 +259,7 @@ export const ProductFinalPrice2: React.FC = () => {
     });
 
     setFormData({
-      productId: selectedProduct.id,
+      productId: selectedProduct._id,
       productName: selectedProduct.name,
       productBrand: selectedProduct.brand?.name,
       productCategory: selectedProduct.category?.name,
@@ -297,7 +297,7 @@ export const ProductFinalPrice2: React.FC = () => {
             selectedProduct={selectedProduct}
             getUpTo={getUpTo}
             setShowLocation={setShowLocation}
-            productId={selectedProduct.id}
+            productId={selectedProduct._id}
           />
 
           {/* Right */}
@@ -362,7 +362,7 @@ const DeductionsList = () => {
 
 const Section: FC<{
   conditionName: string;
-  conditionLabels: IConditionLabels[];
+  conditionLabels: IProductConditionLabels[];
 }> = ({ conditionName, conditionLabels }) => {
   return (
     <div className="mb-5">

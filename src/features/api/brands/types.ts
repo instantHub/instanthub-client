@@ -1,7 +1,7 @@
 import { ICategoryResponse } from "../categories/types";
 
 export interface IBrandResponse {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   uniqueURL: string;
@@ -16,5 +16,5 @@ export interface IBrandResponse {
 
 export type IBrandLite = Pick<
   IBrandResponse,
-  "id" | "name" | "image" | "uniqueURL"
+  "_id" | "name" | "image" | "uniqueURL"
 >;

@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useReducer, useMemo } from "react";
-import {
-  useUpdateProductMutation,
-  useGetProductDetailsQuery,
-  useUploadProductImageMutation,
-} from "@api";
+import { useUpdateProductMutation, useGetProductDetailsQuery } from "@api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardHeader } from "@components/admin";
@@ -11,9 +7,24 @@ import { Loading } from "@components/user";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general";
 import { Button } from "@components/general";
+import { IVariants } from "@features/api/productsApi/types";
+
+interface IState {
+  category: string;
+  brand: string;
+  prodName: string;
+  uniqueURL: string;
+  imageSelected: string;
+  newImgSelected: boolean;
+  status: string;
+  oldVariants: never[];
+  variants: never[];
+  variantLen: number;
+  updatedVriantLen: number;
+}
 
 // Optimized initial state
-const initialState = {
+const initialState: IState = {
   category: "",
   brand: "",
   prodName: "",
@@ -28,7 +39,7 @@ const initialState = {
 };
 
 // Optimized reducer with clearer logic
-function reducer(state, action) {
+function reducer(state: IState, action: any) {
   const { type, value } = action;
 
   switch (type) {
@@ -39,8 +50,11 @@ function reducer(state, action) {
       return { ...state, [action.field]: value };
 
     case "UPDATE_VARIANT":
-      const updatedVariants = state.variants.map((variant, idx) =>
-        idx === value.index ? { ...variant, [value.key]: value.value } : variant
+      const updatedVariants = state.variants.map(
+        (variant: IVariants, idx: number) =>
+          idx === value.index
+            ? { ...variant, [value.key]: value.value }
+            : variant
       );
       return { ...state, variants: updatedVariants };
 
@@ -69,13 +83,12 @@ function reducer(state, action) {
 export const UpdateProduct_V2 = () => {
   const { productId, productSlug } = useParams();
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [uploadProductImage] = useUploadProductImageMutation();
   const { data: productData, isLoading: productDataLoading } =
-    useGetProductDetailsQuery(productSlug);
+    useGetProductDetailsQuery(productSlug!);
   const [updateProduct, { isLoading: updateProductLoading }] =
     useUpdateProductMutation();
 
@@ -83,7 +96,7 @@ export const UpdateProduct_V2 = () => {
   const extractedVariants = useMemo(() => {
     return (
       productData?.variants?.map((variant) => ({
-        variantId: variant.id,
+        variantId: variant._id,
         name: variant.name,
         price: variant.price,
       })) || []
@@ -98,8 +111,8 @@ export const UpdateProduct_V2 = () => {
       type: "INITIALIZE",
       value: {
         prodName: productData.name,
-        category: productData.category.id,
-        brand: productData.brand.id,
+        category: productData.category._id,
+        brand: productData.brand._id,
         uniqueURL: productData.uniqueURL,
         imageSelected: productData.image,
         status: productData.status,
@@ -112,30 +125,15 @@ export const UpdateProduct_V2 = () => {
     });
   }, [productData, productDataLoading, extractedVariants]);
 
-  // Upload image handler
-  const uploadFileHandler = async () => {
-    const formData = new FormData();
-    formData.append("image", state.imageSelected);
-
-    try {
-      const res = await uploadProductImage(formData).unwrap();
-      return res.image;
-    } catch (error) {
-      console.error("Image upload error:", error);
-      toast.error("Failed to upload image");
-      throw error;
-    }
-  };
-
   // Validate variants
   const validateVariants = () => {
     return state.variants.every(
-      (variant) => variant.name.trim() !== "" && variant.price !== ""
+      (variant: IVariants) => variant.name.trim() !== "" && variant.price !== 0
     );
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateVariants()) {
@@ -144,27 +142,44 @@ export const UpdateProduct_V2 = () => {
     }
 
     try {
-      let imageURL = state.imageSelected;
+      // const updatedProductData: {
+      //   productID: string | undefined;
+      //   name: string;
+      //   uniqueURL: string;
+      //   category: string;
+      //   brand: string;
+      //   image?: File;
+      //   status: any;
+      //   variants: IVariants[];
+      //   oldVariants: IVariants[];
+      // } = {
+      //   productID: productData?._id,
+      //   name: state.prodName,
+      //   uniqueURL: state.uniqueURL,
+      //   category: state.category,
+      //   brand: state.brand,
+      //   status: state.status,
+      //   variants: state.variants,
+      //   oldVariants: state.oldVariants,
+      // };
+
+      const formData = new FormData();
+      formData.append("productID", productData?._id || "");
+      formData.append("name", state.prodName);
+      formData.append("uniqueURL", state.uniqueURL);
+      formData.append("category", state.category);
+      formData.append("brand", state.brand);
+      formData.append("status", state.status);
+      formData.append("variants", JSON.stringify(state.variants));
+      formData.append("oldVariants", JSON.stringify(state.oldVariants));
 
       if (state.newImgSelected) {
-        imageURL = await uploadFileHandler();
+        formData.append("image", state.imageSelected);
       }
-
-      const updatedProductData = {
-        productID: productData.id,
-        name: state.prodName,
-        uniqueURL: state.uniqueURL,
-        image: imageURL,
-        category: state.category,
-        brand: state.brand,
-        status: state.status,
-        variants: state.variants,
-        oldVariants: state.oldVariants,
-      };
 
       const updatedProduct = await updateProduct({
         productSlug,
-        data: updatedProductData,
+        data: formData,
       }).unwrap();
 
       if (
@@ -176,16 +191,16 @@ export const UpdateProduct_V2 = () => {
       }
 
       toast.success("Product updated successfully!");
-      navigate(-1);
+      // navigate(-1);
     } catch (error) {
-      toast.error(error?.data?.message || "Failed to update product");
+      toast.error("Failed to update product");
       console.error("Update error:", error);
     }
   };
 
   if (productDataLoading) return <Loading />;
 
-  const isMobileCategory = productData?.category?.name === "Mobile";
+  const isMultiVariants = productData?.category?.categoryType.multiVariants;
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-6">
@@ -307,10 +322,11 @@ export const UpdateProduct_V2 = () => {
                     ref={fileInputRef}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
                     onChange={(e) => {
+                      const file = fileInputRef.current?.files?.[0];
                       dispatch({
                         type: "UPDATE_FIELD",
                         field: "imageSelected",
-                        value: e.target.files[0],
+                        value: file,
                       });
                       dispatch({
                         type: "UPDATE_FIELD",
@@ -353,16 +369,18 @@ export const UpdateProduct_V2 = () => {
                       Current Variants
                     </label>
                     <div className="flex flex-wrap gap-2">
-                      {state.variants.map((variant, index) => (
-                        <div
-                          key={index}
-                          className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm"
-                        >
-                          <span className="font-medium">{variant.name}</span>
-                          <span className="text-emerald-400">•</span>
-                          <span>${variant.price}</span>
-                        </div>
-                      ))}
+                      {state.variants.map(
+                        (variant: IVariants, index: number) => (
+                          <div
+                            key={index}
+                            className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm"
+                          >
+                            <span className="font-medium">{variant.name}</span>
+                            <span className="text-emerald-400">•</span>
+                            <span>${variant.price}</span>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
                 )}
@@ -385,10 +403,10 @@ export const UpdateProduct_V2 = () => {
           {/* Variants Section */}
           <div className="lg:col-span-1">
             <VariantSection
-              title={isMobileCategory ? "Manage Variants" : "Update Price"}
+              title={isMultiVariants ? "Manage Variants" : "Update Price"}
               variants={state.variants}
               dispatch={dispatch}
-              isEditable={isMobileCategory}
+              isEditable={isMultiVariants}
             />
           </div>
         </div>
@@ -397,16 +415,31 @@ export const UpdateProduct_V2 = () => {
   );
 };
 
+interface IVariantSectionProps {
+  title: any;
+  variants: any;
+  dispatch: any;
+  isEditable: any;
+}
 // Optimized Variant Section Component
-const VariantSection = ({ title, variants, dispatch, isEditable }) => {
-  const handleInputChange = (index, key, value) => {
+const VariantSection: React.FC<IVariantSectionProps> = ({
+  title,
+  variants,
+  dispatch,
+  isEditable,
+}) => {
+  const handleInputChange = (
+    index: number,
+    key: string,
+    value: string | number
+  ) => {
     dispatch({
       type: "UPDATE_VARIANT",
       value: { index, key, value },
     });
   };
 
-  const handleRemoveVariant = (index) => {
+  const handleRemoveVariant = (index: number) => {
     dispatch({
       type: "REMOVE_VARIANT",
       value: index,
@@ -429,7 +462,7 @@ const VariantSection = ({ title, variants, dispatch, isEditable }) => {
       </div>
 
       <div className="p-6 space-y-4">
-        {variants?.map((variant, index) => (
+        {variants?.map((variant: IVariants, index: number) => (
           <div
             key={index}
             className="p-4 border border-gray-200 rounded-lg space-y-3 hover:border-emerald-300 transition"

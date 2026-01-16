@@ -1,15 +1,14 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import {
-  useUpdateAllLaptopConfigurationsMutation,
-  useUpdateAllLaptopProcessorProblemsMutation,
-  useUpdateLaptopConfigurationsPriceDropMutation,
-  useUpdateSingleLaptopConfigurationMutation,
-  useUpdateSingleLaptopProcessorProblemsMutation,
+  useUpdatePBAllProcessorsProblemsPriceDropByCategoryMutation,
+  useUpdatePBAllProductsConfigPriceDropByBrandMutation,
+  useUpdatePBSingleProcessorProblemsPriceDropMutation,
+  useUpdatePBSingleProductConfigPriceDropMutation,
 } from "@api";
 import { toast } from "react-toastify";
 import {
-  IConditionLabels,
-  IConditions,
+  IProductConditionLabels,
+  IProductConditions,
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
@@ -48,27 +47,27 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
   props
 ) => {
   const { type, productData } = props;
-  // console.log("UpdateSystemComponent - productData", productData);
+  console.log("UpdateSystemComponent - porops", props);
 
   // Local state
   const [localProductData, setLocalProductData] =
     useState<IProductResponse | null>(null);
   const [selectedDeductions, setSelectedDeductions] = useState<
-    IConditions[] | null
+    IProductConditions[] | null
   >(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const [updatePriceDrop, { isLoading: updateLoading }] =
-    useUpdateLaptopConfigurationsPriceDropMutation();
+  // Product Configurations updates
+  const [updatePBSingleProductConfig] =
+    useUpdatePBSingleProductConfigPriceDropMutation();
+  const [updatePBAllProductsConfigByBrand] =
+    useUpdatePBAllProductsConfigPriceDropByBrandMutation();
 
-  const [updateAllConfig] = useUpdateAllLaptopConfigurationsMutation();
-
-  const [updateSingleConfig] = useUpdateSingleLaptopConfigurationMutation();
-
-  const [updateSingleProblem] =
-    useUpdateSingleLaptopProcessorProblemsMutation();
-
-  const [updateAllProblems] = useUpdateAllLaptopProcessorProblemsMutation();
+  // Processor Problems update
+  const [updatePBSingleProcessorProblem] =
+    useUpdatePBSingleProcessorProblemsPriceDropMutation();
+  const [updatePBAllProcessorsProblem] =
+    useUpdatePBAllProcessorsProblemsPriceDropByCategoryMutation();
 
   // Type guards to determine which props we're dealing with
   const isConditionsComponent = (
@@ -101,7 +100,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
   const title = getTitle();
 
   // Get the appropriate data source based on component type
-  const getDataSource = (): IConditions[] | null => {
+  const getDataSource = (): IProductConditions[] | null => {
     if (isConditionsComponent(props)) {
       return props.selectedProcessorDeductions?.deductions || null;
     } else {
@@ -218,42 +217,41 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
     console.log("updateData", updateData);
 
     try {
-      // await updatePriceDrop({
-      //   productId: productData.id,
-      //   data: updateData,
-      //   type,
-      //   // @ts-ignore
-      //   brand: productData.brand.name,
-      // }).unwrap();
-      if (isConfigurationComponent(props) && type === "AllLaptopConfig") {
-        console.log("all config");
-        await updateAllConfig({
-          productId: productData.id,
-          updatedProduct: updateData,
-          // @ts-ignore
-          brand: productData.brand.name,
+      if (isConfigurationComponent(props) && type === "SingleLaptopConfig") {
+        console.log("single config");
+        await updatePBSingleProductConfig({
+          productId: productData._id,
+          simpleDeductions: (updateData as IProductResponse).simpleDeductions,
         }).unwrap();
       }
 
-      if (isConfigurationComponent(props) && type === "SingleLaptopConfig") {
-        console.log("single config");
-        await updateSingleConfig({
-          productId: productData.id,
-          updatedProduct: updateData,
+      if (isConfigurationComponent(props) && type === "AllLaptopConfig") {
+        console.log("all config");
+        await updatePBAllProductsConfigByBrand({
+          productId: productData._id,
+          brandId: productData.brand._id,
+          simpleDeductions: (updateData as IProductResponse).simpleDeductions,
         }).unwrap();
       }
 
       if (isConditionsComponent(props) && type === "SingleLaptopProblems") {
-        console.log("single problem");
-        await updateSingleProblem({
-          updatedData: updateData,
+        console.log("single problem", updateData);
+
+        await updatePBSingleProcessorProblem({
+          productId: productData._id,
+          processorId: props.selectedProcessorDeductions.processorId,
+          updatedDeductions: (updateData as IProcessorDeductionResponse)
+            .deductions,
         }).unwrap();
       }
 
       if (isConditionsComponent(props) && type === "AllLaptopProblems") {
         console.log("all problems");
-        await updateAllProblems({
-          updatedData: updateData,
+        await updatePBAllProcessorsProblem({
+          productId: productData._id,
+          categoryId: productData.category._id,
+          updatedDeductions: (updateData as IProcessorDeductionResponse)
+            .deductions,
         }).unwrap();
       }
 
@@ -345,7 +343,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
   };
 
   // Render price input with appropriate currency/symbol
-  const renderPriceInput = (conditionLabel: IConditionLabels) => {
+  const renderPriceInput = (conditionLabel: IProductConditionLabels) => {
     const showPercentage =
       isConditionsComponent(props) &&
       productData.category.name !== "Mobile" &&
@@ -375,7 +373,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
   };
 
   // Render condition label image for conditions component
-  const renderConditionImage = (conditionLabel: IConditionLabels) => {
+  const renderConditionImage = (conditionLabel: IProductConditionLabels) => {
     if (isConditionsComponent(props) && conditionLabel.conditionLabelImg) {
       return (
         <div>
@@ -414,7 +412,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
 
         <form onSubmit={handleFormSubmit}>
           {dataSource.map((condition, conditionIndex) => (
-            <div key={condition.id} className="border my-4 rounded">
+            <div key={conditionIndex} className="border my-4 rounded">
               <h3
                 className={`text-2xl max-sm:text-lg  text-center py-2 bg-white ${
                   isConditionsComponent(props) ? "font-extrabold" : "font-bold"
@@ -427,7 +425,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
               <div className="flex flex-col">
                 {condition.conditionLabels.map((conditionLabel, labelIndex) => (
                   <div
-                    key={conditionLabel.id}
+                    key={labelIndex}
                     className={`flex justify-center items-center gap-6 max-sm:gap-1 p-2 ${
                       labelIndex % 2 === 0 ? "" : "bg-gray-100"
                     }`}
@@ -472,9 +470,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
             </div>
           ))}
 
-          <Button shape="square" loading={updateLoading}>
-            Update {title}
-          </Button>
+          <Button shape="square">Update {title}</Button>
         </form>
       </div>
 
@@ -497,7 +493,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
               variant="danger"
               shape="square"
               onClick={handleSubmit}
-              disabled={updateLoading}
+              // disabled={updateLoading}
             >
               Yes
             </Button>
@@ -505,7 +501,7 @@ export const UpdateSystemComponent: FC<UpdateSystemComponentProps> = (
               variant="greenary"
               shape="square"
               onClick={() => setIsOpen(false)}
-              disabled={updateLoading}
+              // disabled={updateLoading}
             >
               No
             </Button>

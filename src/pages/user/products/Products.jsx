@@ -109,13 +109,13 @@ export const Products = () => {
         <div className="mx-10 max-sm:mx-2 grid grid-cols-8 max-md:grid-cols-4 max-sm:grid-cols-3 sm:gap-x-2 sm:gap-y-2 rounded sm:rounded-none ring-0 ring-transparent shadow sm:shadow-none mt-4 sm:mt-0">
           {displayedSeries?.map((series) => (
             <SeriesButton
-              key={series.id}
+              key={series._id}
               series={series}
               isSelected={
                 seriesAction.showSeries &&
-                series.id === seriesAction.selectedSeries
+                series._id === seriesAction.selectedSeries
               }
-              onClick={() => handleSeries(series.id)}
+              onClick={() => handleSeries(series._id)}
             />
           ))}
         </div>
@@ -164,7 +164,7 @@ export const Products = () => {
             ?.filter((product) => product.status.toLowerCase() !== "blocked")
             ?.map((product) => (
               <ProductCard
-                key={product.id}
+                key={product._id}
                 product={product}
                 URL={`${product.uniqueURL}`}
                 // URL={`${slugify(product.uniqueURL)}`}

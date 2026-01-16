@@ -136,7 +136,7 @@ const OrderListPage: React.FC = () => {
     e.stopPropagation();
     try {
       if (window.confirm("Are you sure you want to un-assign this order?")) {
-        await unAssignOrder({ _orderId: order.id }).unwrap();
+        await unAssignOrder({ _orderId: order._id }).unwrap();
         toast.success("Order unassigned successfully");
         refetch();
       }
@@ -292,10 +292,10 @@ const OrderListPage: React.FC = () => {
             <div className="space-y-4">
               {orders.map((order) => (
                 <div
-                  key={order.id}
+                  key={order._id}
                   onClick={() =>
                     navigate(
-                      ROUTES.admin.orderDetail.replace(":orderId", order.id)
+                      ROUTES.admin.orderDetail.replace(":orderId", order._id)
                     )
                   }
                   className={`bg-white rounded-lg p-6 shadow hover:shadow-md transition-shadow
@@ -353,7 +353,7 @@ const OrderListPage: React.FC = () => {
                           variant="ghost"
                           size="sm"
                           className="z-100"
-                          onClick={(e) => handleOrderReopen(e, order.id)}
+                          onClick={(e) => handleOrderReopen(e, order._id)}
                         >
                           Reopen
                         </Button>
