@@ -6,11 +6,14 @@ import {
   selectDeductionState,
   selectIsReQuoteTheme,
 } from "@features/slices";
-import { IConditionLabels, IConditions } from "@features/api/productsApi/types";
+import {
+  IProductConditionLabels,
+  IProductConditions,
+} from "@features/api/productsApi/types";
 import { CheckCircle } from "lucide-react";
 
 interface DeductionItemsProps {
-  condition: IConditions;
+  condition: IProductConditions;
 }
 
 interface DisplayConditionLabelsProps {
@@ -18,13 +21,13 @@ interface DisplayConditionLabelsProps {
   isYesNoType: boolean;
   isSelected: boolean;
   isFunctionalProblem: boolean;
-  label: IConditionLabels;
-  handleOnClick: (label: IConditionLabels) => void;
+  label: IProductConditionLabels;
+  handleOnClick: (label: IProductConditionLabels) => void;
   reQuoteTheme: boolean;
 }
 
 interface ShowImageProps {
-  label: IConditionLabels;
+  label: IProductConditionLabels;
 }
 
 const LARGER_CONDITION_LABELS = ["screen condition", "physical condition"];
@@ -105,7 +108,7 @@ const DeductionItems_v2: React.FC<DeductionItemsProps> = ({ condition }) => {
   );
 
   const handleOnClick = useCallback(
-    (label: IConditionLabels) => {
+    (label: IProductConditionLabels) => {
       if (multiSelect) {
         dispatch(addDeductions({ condition, conditionLabel: label }));
       } else {
@@ -118,11 +121,11 @@ const DeductionItems_v2: React.FC<DeductionItemsProps> = ({ condition }) => {
   );
 
   const isLabelSelected = useCallback(
-    (label: IConditionLabels): boolean => {
+    (label: IProductConditionLabels): boolean => {
       if (multiSelect) {
         return (
           deductionData?.some(
-            (deduction: IConditionLabels) =>
+            (deduction: IProductConditionLabels) =>
               deduction.conditionLabel === label.conditionLabel
           ) || false
         );

@@ -27,7 +27,7 @@ export const CategoriesList = () => {
 
       <div className="w-fit grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5 max-sm:gap-3">
         {categoryData?.map((category: ICategoryResponse) => (
-          <CategoryCard key={category.id} category={category} />
+          <CategoryCard key={category._id} category={category} />
         ))}
       </div>
     </div>

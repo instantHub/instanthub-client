@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FlexBox, Typography } from "@components/general";
-import { IConditions } from "@features/api/productsApi/types";
+import { IProductConditions } from "@features/api/productsApi/types";
 
 interface IDisplayConfigurationProps {
-  deductions: IConditions[];
+  deductions: IProductConditions[];
   isEditing?: boolean;
 }
 export const DisplayConfiguration: FC<IDisplayConfigurationProps> = ({
@@ -12,7 +12,7 @@ export const DisplayConfiguration: FC<IDisplayConfigurationProps> = ({
 }) => {
   return deductions?.map((condition) => (
     <div
-      key={condition.id}
+      key={condition.conditionName}
       className={`w-full sm:w-1/2 mx-auto mb-10 border my-2 py- px- rounded`}
     >
       <Typography variant="h3" className="py-2" align="center">

@@ -160,10 +160,10 @@ export const ProductDetails_v2 = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {productDetails.variants.map((variant) => (
                         <button
-                          key={variant.id}
+                          key={variant._id}
                           onClick={() => setSelectedVariant(variant)}
                           className={`relative p-4 rounded-xl border-2 transition-all duration-200 text-left ${
-                            selectedVariant?.id === variant.id
+                            selectedVariant?._id === variant._id
                               ? "border-emerald-600 bg-emerald-50 shadow-md"
                               : "border-gray-200 bg-white hover:border-emerald-300 hover:shadow-sm"
                           }`}
@@ -172,7 +172,7 @@ export const ProductDetails_v2 = () => {
                             <p className="font-semibold text-gray-900">
                               {variant.name}
                             </p>
-                            {selectedVariant?.id === variant.id && (
+                            {selectedVariant?._id === variant._id && (
                               <div className="bg-emerald-600 rounded-full p-1">
                                 <Check className="w-4 h-4 text-white" />
                               </div>

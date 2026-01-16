@@ -36,7 +36,6 @@ import OrdersPage from "@pages/admin/orders/OrdersPage";
 import { OrderDetail2 } from "@pages/admin/orders/orderDetail/OrderDetail2";
 import { ExecutiveDashboard } from "@pages/executive/dashboard/ExecutiveDashboard";
 import { ExecutiveOrders } from "@pages/executive/orders/ExecutiveOrders";
-import { ProductsList2 } from "@pages/admin/products/ProductsList_v2";
 import { Dashboard_v2 } from "@pages/admin/dashboard";
 import { PartnerRequests } from "@pages/partner";
 import { UpdateProduct_V2 } from "@pages/admin/products/UpdateProduct_v2";
@@ -364,7 +363,7 @@ export const router = Router([
         // element: createElement(
         //   lazyLoadNamed(() => import("@pages/admin"), "ProductsList")
         // ),
-        element: <ProductsList2 />,
+        element: <ADMIN.ProductsList_v2 />,
       },
       {
         path: ROUTES.admin.updateProduct,
@@ -372,9 +371,9 @@ export const router = Router([
           <RoleGuard
             allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.SUB_ADMIN]}
           >
-            <ADMIN.UpdateProduct />
+            {/* <ADMIN.UpdateProduct /> */}
             {/* TODO: this V2 of update is not tested yet. It needs complete testing and end-to-end comparison with origin functionlity */}
-            {/* <UpdateProduct_V2 /> */}
+            <UpdateProduct_V2 />
           </RoleGuard>
         ),
       },
@@ -439,7 +438,8 @@ export const router = Router([
           <RoleGuard
             allowedRoles={[ADMIN_ROLE_ENUM.ADMIN, ADMIN_ROLE_ENUM.SUB_ADMIN]}
           >
-            <ADMIN.CreateSeries />,
+            {/* <ADMIN.CreateSeries />, */}
+            <ADMIN.SeriesManagement />,
           </RoleGuard>
         ),
       },

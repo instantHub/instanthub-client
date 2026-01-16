@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
   useGetProductDetailsQuery,
-  useUpdatePriceDropMutation,
-  useLazyGetVariantsQuestionsQuery,
+  useUpdateMVPriceDropMutation,
+  useLazyGetVariantsQuestionsByCategoryQuery,
 } from "@api";
 
 import { ROUTES } from "@routes";
@@ -16,9 +16,8 @@ import {
   Modal,
   Typography,
 } from "@components/general";
-import { ArrowLeftIcon } from "@icons";
 import {
-  IConditions,
+  IProductConditions,
   IProductResponse,
   TOperation,
 } from "@features/api/productsApi/types";
@@ -41,7 +40,7 @@ export const ProductQuestionsList: React.FC = () => {
   console.log("selectedVariant", selectedVariant);
 
   const [selectedDeductions, setSelectedDeductions] = useState<
-    IConditions[] | null
+    IProductConditions[] | null
   >(null);
   const [selectedVariantToFill, setSelectedVariantToFill] =
     useState<IVQResponse | null>(null);
@@ -49,13 +48,13 @@ export const ProductQuestionsList: React.FC = () => {
   const [productData, setProductData] = useState<IProductResponse | null>(null);
 
   const { data: productDetail } = useGetProductDetailsQuery(productSlug || "");
-  const [updatePriceDrop, { isLoading: updateLoading }] =
-    useUpdatePriceDropMutation();
+  const [updateMVPriceDrop, { isLoading: updateLoading }] =
+    useUpdateMVPriceDropMutation();
 
   const [
     getVariantsQuestions,
     { data: variantsQuestionsData, isLoading: variantsQuestionsDataLoading },
-  ] = useLazyGetVariantsQuestionsQuery();
+  ] = useLazyGetVariantsQuestionsByCategoryQuery();
 
   const navigate = useNavigate();
 
@@ -68,11 +67,11 @@ export const ProductQuestionsList: React.FC = () => {
 
   // 🔹 Common handler for updating priceDrop/operation
   const updateConditionLabels = (
-    deductions: IConditions[],
+    deductions: IProductConditions[],
     conditionLabelId: string,
     value: number | string,
     check: PriceDropChangeType
-  ): IConditions[] =>
+  ): IProductConditions[] =>
     deductions.map((condition) => ({
       ...condition,
       conditionLabels: condition.conditionLabels.map((label) => {
@@ -167,12 +166,29 @@ export const ProductQuestionsList: React.FC = () => {
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    if (!productData) return;
+    if (!productData || !selectedVariant) {
+      toast.error(
+        "Selected variant or Product Data not found to build payload..!"
+      );
+      return;
+    }
+
+    const updatedDeduction = productData.variantDeductions.find(
+      (vd) => vd.variantName === selectedVariant
+    )?.deductions;
+
+    if (!updatedDeduction) {
+      toast.error("Updated deductions not found/matched to send to BE..!");
+      return;
+    }
 
     try {
-      await updatePriceDrop({
-        productId: productData.id,
-        data: productData,
+      await updateMVPriceDrop({
+        productId: productData._id,
+        variantInfo: {
+          variantName: selectedVariant,
+          deductions: updatedDeduction,
+        },
       }).unwrap();
       toast.success("Updated PriceDrops for the Product");
     } catch (error) {
@@ -183,13 +199,13 @@ export const ProductQuestionsList: React.FC = () => {
   // 🔹 Populate data when productDetail changes
   useEffect(() => {
     if (productDetail) {
-      setProductData(productDetail);
+      setProductData(JSON.parse(JSON.stringify(productDetail)));
 
       if (productCategoryType.multiVariants && selectedVariant) {
         const variantDeduction = productDetail.variantDeductions.find(
           (d) => d.variantName === selectedVariant
         );
-        getVariantsQuestions(productDetail.category.id);
+        getVariantsQuestions(productDetail.category._id);
         setSelectedDeductions(variantDeduction?.deductions || null);
       } else if (productCategoryType.simple) {
         setSelectedDeductions(productDetail.simpleDeductions);
@@ -208,7 +224,7 @@ export const ProductQuestionsList: React.FC = () => {
             <FlexBox justify="around" wrap="wrap" gap={2}>
               {variantsQuestionsData?.map((vq) => (
                 <Button
-                  key={vq._id}
+                  key={vq.name}
                   variant="greenary"
                   shape="square"
                   size="sm"
@@ -244,6 +260,7 @@ export const ProductQuestionsList: React.FC = () => {
           <form onSubmit={handleSubmit}>
             {selectedDeductions?.map((condition) => (
               <FormCardContainer
+                key={condition.conditionId}
                 title={condition.conditionName}
                 className="max-sm:px-2 roun"
               >
@@ -251,7 +268,7 @@ export const ProductQuestionsList: React.FC = () => {
                 <div className="flex flex-col">
                   {condition.conditionLabels.map((label, idx) => (
                     <div
-                      key={label.id}
+                      key={label.conditionLabelId}
                       className={`flex gap-6 max-sm:gap-1 max-sm:justify-center items-center mt-2 px-4 max-sm:px-2 py-2 ${
                         idx % 2 !== 0 ? "bg-gray-100" : ""
                       }`}

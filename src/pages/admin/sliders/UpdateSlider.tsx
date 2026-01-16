@@ -4,14 +4,7 @@ import { useGetSliderByIdQuery, useUpdateSliderMutation } from "@api";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 import { ArrowLeft, UploadCloud, X } from "lucide-react";
-
-// Define the types for better safety
-type SliderStatus = "Active" | "Block";
-interface ISlider {
-  id: string;
-  image: string;
-  status: SliderStatus;
-}
+import { TSliderStatus } from "@features/api/slidersApi/types";
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center h-screen">
@@ -30,7 +23,7 @@ export const UpdateSlider: FC = () => {
   const [updateSlider, { isLoading: isUpdating }] = useUpdateSliderMutation();
 
   // State for the form fields
-  const [status, setStatus] = useState<SliderStatus>("Active");
+  const [status, setStatus] = useState<TSliderStatus>("Active");
 
   // State for the new image file and its preview
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
@@ -42,7 +35,7 @@ export const UpdateSlider: FC = () => {
   useEffect(() => {
     if (slider) {
       setStatus(slider.status);
-      setPreview(`${import.meta.env.VITE_APP_BASE_URL}/${slider.image}`);
+      setPreview(`${import.meta.env.VITE_APP_BASE_URL}${slider.image}`);
     }
   }, [slider]);
 
@@ -74,7 +67,7 @@ export const UpdateSlider: FC = () => {
 
     // Only append the image if a new one has been selected
     if (newImageFile) {
-      formData.append("slider", newImageFile);
+      formData.append("image", newImageFile);
     }
 
     try {
@@ -173,10 +166,10 @@ export const UpdateSlider: FC = () => {
                 id="status"
                 className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 value={status}
-                onChange={(e) => setStatus(e.target.value as SliderStatus)}
+                onChange={(e) => setStatus(e.target.value as TSliderStatus)}
               >
                 <option value="Active">Active</option>
-                <option value="Block">Block</option>
+                <option value="Inactive">Inactive</option>
               </select>
             </div>
           </div>

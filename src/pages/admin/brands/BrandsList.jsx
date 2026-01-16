@@ -52,7 +52,7 @@ export const BrandsList = () => {
           <option value="">Select</option>
           {!categoryDataLoading &&
             categoryData?.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option key={category._id} value={category._id}>
                 {category.name}
               </option>
             ))}
@@ -65,10 +65,10 @@ export const BrandsList = () => {
             .filter((br) => {
               // Return true to include all brands when no category is selected
               if (!selectedCategory) return true;
-              else return br.category.id === selectedCategory;
+              else return br.category._id === selectedCategory;
             })
             .map((brand) => (
-              <BrandCard key={brand?.id} data={brand} />
+              <BrandCard key={brand?._id} data={brand} />
             ))}
         </div>
       )}

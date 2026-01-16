@@ -1,6 +1,6 @@
 import {
-  IConditionLabels,
-  IConditions,
+  IProductConditionLabels,
+  IProductConditions,
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { TMakePartial } from "@utils/types";
@@ -10,25 +10,25 @@ export interface IGetUpTo {
   price: number;
 }
 
-export interface IDeduction extends IConditionLabels {
+export interface IDeduction extends IProductConditionLabels {
   type: string;
 }
 
 export interface ISingleDeduction
   extends TMakePartial<
-    IConditionLabels,
+    IProductConditionLabels,
     "id" | "conditionLabelImg" | "conditionLabelId"
   > {
   type?: string;
 }
 
 export interface IDeductionsByType {
-  [key: string]: Array<Partial<IConditionLabels>>;
+  [key: string]: Array<Partial<IProductConditionLabels>>;
 }
 
 export interface IFinalDeductionSet {
   type: string;
-  conditions: Partial<IConditionLabels>[];
+  conditions: Partial<IProductConditionLabels>[];
 }
 
 export interface ISingleDeductions {
@@ -56,11 +56,11 @@ export interface ISetProductDataPayload {
 }
 
 export interface IAddDeductionPayload {
-  condition: IConditions;
-  conditionLabel: IConditionLabels;
+  condition: IProductConditions;
+  conditionLabel: IProductConditionLabels;
 }
 
 export interface IAddSingleDeductionPayload {
-  condition: IConditions;
+  condition: IProductConditions;
   conditionLabel: ISingleDeduction;
 }

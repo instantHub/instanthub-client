@@ -3,17 +3,10 @@ import { toast } from "react-toastify";
 import { useDeleteSliderMutation } from "@api";
 import { generatePathWithParams } from "@utils/general";
 import { ROUTES } from "@routes";
-// Using lucide-react for icons
 import { Pencil, Trash2 } from "lucide-react";
+import { ISlider } from "@features/api/slidersApi/types";
 
-// Define the type for your slider data for better type safety
-interface Slider {
-  id: string;
-  image: string;
-  status: "Active" | "Block";
-}
-
-export const SliderCard = ({ slider }: { slider: Slider }) => {
+export const SliderCard = ({ slider }: { slider: ISlider }) => {
   const navigate = useNavigate();
   const [deleteSlider, { isLoading: isDeleting }] = useDeleteSliderMutation();
 
@@ -21,7 +14,7 @@ export const SliderCard = ({ slider }: { slider: Slider }) => {
     e.stopPropagation(); // Prevent navigation when clicking the button
     if (window.confirm("Are you sure you want to delete this slider?")) {
       try {
-        const result = await deleteSlider(slider.id).unwrap();
+        const result = await deleteSlider(slider._id).unwrap();
         toast.success(result.message || "Slider deleted successfully!");
       } catch (error) {
         toast.error("Failed to delete slider.");
@@ -31,9 +24,7 @@ export const SliderCard = ({ slider }: { slider: Slider }) => {
 
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent navigation when clicking the button
-    navigate(
-      generatePathWithParams(ROUTES.admin.updateSlider, { id: slider.id })
-    );
+    navigate(ROUTES.admin.updateSlider.replace(":sliderId", slider._id));
   };
 
   const statusColor =
@@ -45,11 +36,11 @@ export const SliderCard = ({ slider }: { slider: Slider }) => {
     <div
       className="relative group overflow-hidden rounded-lg shadow-lg cursor-pointer transform transition-transform duration-300 hover:-translate-y-1"
       onClick={() =>
-        navigate(ROUTES.admin.updateSlider.replace(":sliderId", slider.id))
+        navigate(ROUTES.admin.updateSlider.replace(":sliderId", slider._id))
       }
     >
       <img
-        src={`${import.meta.env.VITE_APP_BASE_URL}/${slider.image}`}
+        src={`${import.meta.env.VITE_APP_BASE_URL}${slider.image}`}
         alt={slider.status}
         className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"

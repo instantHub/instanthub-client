@@ -1,2 +1,1 @@
-export { ProductCard } from "./ProductCard";
-export { ObjectSelect } from "./ObjectSelect";
+export { ProductCard_v2 } from "./ProductCard_v2";

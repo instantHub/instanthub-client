@@ -13,8 +13,8 @@ import NextPrevButton from "./NextPrevButton";
 import { DisplayCondition } from "./DisplayCondition";
 import { useLazyGetProcessorDeductionsQuery } from "@features/api";
 import {
-  IConditionLabels,
-  IConditions,
+  IProductConditionLabels,
+  IProductConditions,
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
@@ -23,17 +23,17 @@ import { useNavigate } from "react-router-dom";
 
 interface SelectedState {
   selected: boolean;
-  selectedLabel: IConditionLabels | null;
+  selectedLabel: IProductConditionLabels | null;
 }
 
 interface GroupedCondition {
   page: string;
-  conditions: IConditions[];
+  conditions: IProductConditions[];
 }
 
 interface LaptopsQuestionsProps {
   productsData: IProductResponse;
-  deductions: IConditions[];
+  deductions: IProductConditions[];
 }
 
 interface ConditionStatus {
@@ -74,10 +74,10 @@ const LaptopsQuestions: React.FC<LaptopsQuestionsProps> = ({
 
   // Memoized functions
   const groupConditionsByPage = useCallback(
-    (conditions: IConditions[]): GroupedCondition[] => {
+    (conditions: IProductConditions[]): GroupedCondition[] => {
       console.log("IN groupConditionsByPage laptop");
 
-      const grouped = conditions.reduce<Record<number, IConditions[]>>(
+      const grouped = conditions.reduce<Record<number, IProductConditions[]>>(
         (acc, condition) => {
           const { page } = condition;
           if (!acc[page]) {

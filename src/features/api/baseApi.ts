@@ -3,15 +3,14 @@ import {
   fetchBaseQuery,
   BaseQueryFn,
   FetchArgs,
-  FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import { logout } from "@features/slices/auth/auth.slice";
 import { CATEGORY_API_TAG } from "./categories/constants";
 import { TESTIMONIAL_API_TAG } from "./testimonialsApi/constant";
 import {
-  ORDER_DETAIL_API_TAG,
-  ORDER_STATS_API_TAG,
-  ORDERS_API_TAG,
+  PURCHASE_ORDER_DETAIL_API_TAG,
+  PURCHASE_ORDER_STATS_API_TAG,
+  PURCHASE_ORDERS_API_TAG,
 } from "./orders/constants";
 import { ADMIN_API_TAG } from "./auth/constant";
 import {
@@ -28,12 +27,21 @@ import {
 import { PARTNERS_API_TAG } from "./partners/constants";
 import { PARTNERS_REQ_API_TAG } from "./partners_requests/constants";
 import { BLOG_API_TAGS } from "./blogs/constants";
+import { PRICING_API_TAG } from "./pricing/constants";
+import { PRODUCT_API_TAG } from "./productsApi/constant";
+import { CONDITIONS_API_TAG } from "./conditionsApi/constants";
+import { CONDITIONS_LABELS_API_TAG } from "./conditionLabelsApi/constants";
 
 // Define error type mapping
 export type CustomError = {
   status?: number;
   message: string;
-  type: "AUTH_ERROR" | "SERVER_ERROR" | "NETWORK_ERROR" | "UNKNOWN_ERROR";
+  type:
+    | "AUTH_ERROR"
+    | "SERVER_ERROR"
+    | "NETWORK_ERROR"
+    | "UNKNOWN_ERROR"
+    | "DUPLICATE_ERROR";
 };
 
 const rawBaseQuery = fetchBaseQuery({
@@ -66,6 +74,7 @@ const baseQueryWithErrorHandling: BaseQueryFn<
       message: "Something went wrong.",
     };
 
+    // Auth error handling
     if (status === 401 || status === 403) {
       console.log("baseQueryWithErrorHandling authentication error");
 
@@ -88,6 +97,19 @@ const baseQueryWithErrorHandling: BaseQueryFn<
 
       // window.location.href = "/dashboard-login";
     }
+
+    // TODO: Duplicate handling
+    // if (status === 409) {
+    //   customError = {
+    //     type: "DUPLICATE_ERROR",
+    //     status: typeof status === "number" ? status : undefined,
+    //     message: (result.error.data as any) || "Duplicate error",
+    //   };
+
+    //   return { error: customError };
+    // }
+
+    // No found error handling
     if (status === 404) {
       toast.error("Page / Endpoint not found");
     } else if (status === 400) {
@@ -128,12 +150,14 @@ export const baseApi = createApi({
     "CreateBrands",
     "Brands",
     CATEGORY_API_TAG,
-    "Products",
-    "Conditions",
-    "ConditionLabels",
-    ORDERS_API_TAG,
-    ORDER_DETAIL_API_TAG,
-    ORDER_STATS_API_TAG,
+    PRODUCT_API_TAG,
+    CONDITIONS_API_TAG,
+    CONDITIONS_LABELS_API_TAG,
+
+    PURCHASE_ORDER_DETAIL_API_TAG,
+    PURCHASE_ORDER_STATS_API_TAG,
+    PURCHASE_ORDERS_API_TAG,
+
     "Sliders",
     "Series",
     "Stocks",
@@ -154,6 +178,7 @@ export const baseApi = createApi({
     EXECUTIVE_STATS_API_TAG,
     PARTNERS_API_TAG,
     PARTNERS_REQ_API_TAG,
+    PRICING_API_TAG,
     "OrderAnalytics",
     BLOG_API_TAGS.BLOG,
     BLOG_API_TAGS.BLOG_LIST,

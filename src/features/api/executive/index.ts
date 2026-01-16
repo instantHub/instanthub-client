@@ -15,18 +15,9 @@ const EXECUTIVES_API = "/api/executives";
 
 export const executiveApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    executiveProfile: builder.query<IExecutive, void>({
-      query: () => ({
-        url: `${EXECUTIVES_API}/profile`,
-        method: "GET",
-      }),
-    }),
     getExecutives: builder.query<IExecutive[], void>({
       query: () => EXECUTIVES_API,
       providesTags: [EXECUTIVE_API_TAG],
-    }),
-    getExecutive: builder.query<IExecutive, string>({
-      query: (id) => `/${id}`,
     }),
     assignOrderToExecutive: builder.mutation<
       { message: string; executive: IExecutive },
@@ -74,25 +65,6 @@ export const executiveApi = baseApi.injectEndpoints({
       }
     ),
 
-    getExecutiveOrders: builder.query<IExecutiveOrders, void>({
-      query: () => ({
-        url: `${EXECUTIVES_API}/orders`,
-        method: "GET",
-      }),
-      providesTags: [EXECUTIVE_API_TAG],
-    }),
-
-    getExecutiveScheduledOrders: builder.query<
-      { data: IOrder[] },
-      { day: "today" | "tomorrow" }
-    >({
-      query: ({ day }) => ({
-        url: `${EXECUTIVES_API}/schedule-orders?day=${day}`,
-        method: "GET",
-      }),
-      providesTags: [EXECUTIVE_API_TAG],
-    }),
-
     getExecutiveOrderDetails: builder.query<IOrder, { orderId: string }>({
       query: ({ orderId }) => ({
         url: `${EXECUTIVES_API}/${orderId}/order-details`,
@@ -101,39 +73,13 @@ export const executiveApi = baseApi.injectEndpoints({
       providesTags: [EXECUTIVE_API_TAG],
     }),
 
-    getExecutiveOrderCounts: builder.query<
-      IExecutiveOrderCountsResponse,
-      { id: string }
-    >({
-      query: ({ id }) => ({
-        url: `${EXECUTIVES_API}/${id}/orders-count`,
-        method: "GET",
-      }),
-      providesTags: [EXECUTIVE_API_TAG],
-    }),
-
-    getExecutiveOrdersByStatus: builder.query<
-      IExecutiveOrders,
-      { id: string; status: string }
-    >({
-      query: ({ id, status }) => ({
-        url: `${EXECUTIVES_API}/${id}/${status}/orders`,
-        method: "GET",
-      }),
-      providesTags: [EXECUTIVE_API_TAG],
-    }),
-
     getExecutiveStats: builder.query<IExecutiveStats, void>({
       query: () => `${EXECUTIVES_API}/orders/stats`,
-      transformResponse: (response: {
-        success: boolean;
-        data: IExecutiveStats;
-      }) => response.data,
       providesTags: [EXECUTIVE_STATS_API_TAG],
       keepUnusedDataFor: 60,
     }),
 
-    getExecutiveOrders2: builder.query<
+    getExecutiveOrders: builder.query<
       IExecutiveOrdersResponse,
       IGetExecutiveOrdersParams
     >({
@@ -159,30 +105,20 @@ export const executiveApi = baseApi.injectEndpoints({
 
         return `${EXECUTIVES_API}/orders?${params.toString()}`;
       },
-      transformResponse: (response: {
-        success: boolean;
-        data: IExecutiveOrdersResponse;
-      }) => response.data,
       providesTags: [EXECUTIVE_API_TAG],
     }),
   }),
 });
 
 export const {
-  useGetExecutiveQuery,
   useGetExecutivesQuery,
-  useExecutiveProfileQuery,
   useAssignOrderToExecutiveMutation,
+
+  useGetExecutiveOrderDetailsQuery,
+  useGetExecutiveStatsQuery,
+  useGetExecutiveOrdersQuery,
+
   useCreateExecutiveMutation,
   useUpdateExecutiveMutation,
   useDeleteExecutiveMutation,
-
-  useGetExecutiveOrdersQuery,
-  useGetExecutiveScheduledOrdersQuery,
-  useGetExecutiveOrderDetailsQuery,
-  useGetExecutiveOrderCountsQuery,
-  useGetExecutiveOrdersByStatusQuery,
-
-  useGetExecutiveStatsQuery,
-  useGetExecutiveOrders2Query,
 } = executiveApi;

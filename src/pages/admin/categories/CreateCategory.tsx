@@ -1,8 +1,5 @@
-import { ChangeEvent, FormEvent, useReducer, useRef } from "react";
-import {
-  useCreateCategoryMutation,
-  useUploadCategoryImageMutation,
-} from "@api";
+import { ChangeEvent, FormEvent, useReducer, useRef, useState } from "react";
+import { useCreateCategoryMutation } from "@api";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
 import { slugify } from "@utils/general";
@@ -10,30 +7,7 @@ import { ICategoryType } from "@features/api/categories/types";
 import { Button, FlexBox, FormInput, Typography } from "@components/general";
 import { Link } from "react-router-dom";
 import { TAction, TState } from "./types";
-import {
-  AirtableIcon,
-  AstroIcon,
-  CashIcon,
-  CategoryIcon,
-  CentSignIcon,
-  CloseIcon,
-  DatabricksIcon,
-  GitDiffIcon,
-  JediOrderIcon,
-  ListCheck2Icon,
-  ListCheck3Icon,
-  ListIndefiniteIcon,
-  MultipleIcon,
-  MultipleInputsIcon,
-  MultipleStopIcon,
-  MultiSelectIcon,
-  NumbersIcon,
-  PlusIcon,
-  ProfileIcon,
-  QuestionAnswerIcon,
-  SlidesIcon,
-  StockpilesIcon,
-} from "@icons";
+import { PlusIcon } from "lucide-react";
 
 const CATEGORY_TYPES: (keyof ICategoryType)[] = [
   "simple",
@@ -49,7 +23,6 @@ const initialState: TState = {
     multiVariants: false,
     processorBased: false,
   },
-  imageSelected: null,
 };
 
 function reducer(state: TState, action: TAction) {
@@ -79,68 +52,47 @@ function reducer(state: TState, action: TAction) {
 }
 
 export const CreateCategory = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  console.log("state", state);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [createCategory, { isLoading }] = useCreateCategoryMutation();
-  const [uploadCategoryImage] = useUploadCategoryImageMutation();
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [categoryImage, setCategoryImage] = useState<File | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isAnyCategoryTypeSelected = Object.values(state.categoryType).some(
     Boolean
   );
 
   const inputValidation = (): boolean => {
-    const { category, uniqueURL, imageSelected } = state;
+    const { category, uniqueURL } = state;
 
-    if (
-      !category.trim() ||
-      !uniqueURL.trim() ||
-      !imageSelected ||
-      !isAnyCategoryTypeSelected
-    ) {
+    if (!category.trim() || !uniqueURL.trim() || !isAnyCategoryTypeSelected) {
       toast.error("All fields including one Category Type are required!");
       return false;
     }
     return true;
   };
 
-  const uploadFileHandler = async (): Promise<string | null> => {
-    const formData = new FormData();
-
-    if (!state.imageSelected) {
-      toast.error("Please select an image to upload");
-      return null;
-    }
-
-    formData.append("image", state.imageSelected);
-
-    try {
-      const res = await uploadCategoryImage(formData).unwrap();
-      return res.image;
-    } catch (error) {
-      toast.error("Image upload failed");
-      return null;
-    }
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!inputValidation()) return;
 
-    const imageURL = await uploadFileHandler();
-    if (!imageURL) return;
+    if (!categoryImage) {
+      toast.error("Please select an image to upload");
+      return;
+    }
 
-    const payload = {
-      name: state.category,
-      uniqueURL: state.uniqueURL,
-      image: imageURL,
-      categoryType: state.categoryType,
-    };
+    const formData = new FormData();
+    formData.append("name", state.category);
+    formData.append("uniqueURL", state.uniqueURL);
+    formData.append("image", categoryImage);
+    formData.append("categoryType", JSON.stringify(state.categoryType));
 
-    console.log("payload", payload);
+    // View as an array of pairs
+    console.log("payload formData", [...formData.entries()]);
 
     try {
-      await createCategory(JSON.stringify(payload)).unwrap();
+      await createCategory(formData).unwrap();
       toast.success("Category created successfully!");
       dispatch({ type: "RESET" });
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -163,8 +115,8 @@ export const CreateCategory = () => {
 
       <form
         className="w-full flex flex-col gap-4 p-5 border rounded-md shadow-lg"
-        onSubmit={handleSubmit}
         encType="multipart/form-data"
+        onSubmit={handleSubmit}
       >
         <Typography variant="h5">Create Category</Typography>
         <hr />
@@ -242,13 +194,12 @@ export const CreateCategory = () => {
             accept="image/*"
             ref={fileInputRef}
             name="imageSelected"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              dispatch({
-                type: "UPDATE_FIELD",
-                name: "imageSelected",
-                value: e.target.files?.[0] || null,
-              })
-            }
+            onChange={() => {
+              const file = fileInputRef.current?.files?.[0];
+              if (file) {
+                setCategoryImage(file);
+              }
+            }}
             className="border p-2 rounded-sm"
           />
         </FlexBox>
@@ -260,29 +211,3 @@ export const CreateCategory = () => {
     </FlexBox>
   );
 };
-
-{
-  /* <FlexBox direction="col" justify="evenly" gap={2}>
-  AirtableIcon: <AirtableIcon />
-  AstroIcon: <AstroIcon />
-  CashIcon: <CashIcon />
-  CategoryIcon: <CategoryIcon />
-  CloseIcon: <CloseIcon />
-  CentSignIcon: <CentSignIcon />
-  DatabricksIcon: <DatabricksIcon />
-  GitDiffIcon: <GitDiffIcon />
-  JediOrderIcon: <JediOrderIcon />
-  ListCheck2Icon: <ListCheck2Icon /> 
-  ListCheck3Icon: <ListCheck3Icon />
-  ListIndefiniteIcon: <ListIndefiniteIcon />
-  MultipleIcon: <MultipleIcon />
-  MultipleStopIcon: <MultipleStopIcon />
-  MultiSelectIcon: <MultiSelectIcon />
-  MultipleInputsIcon: <MultipleInputsIcon />
-  NumbersIcon: <NumbersIcon />
-  QuestionAnswerIcon: <QuestionAnswerIcon />
-  ProfileIcon: <ProfileIcon />
-  SlidesIcon: <SlidesIcon />
-  StockpilesIcon: <StockpilesIcon />
-</FlexBox> */
-}

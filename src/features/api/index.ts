@@ -26,3 +26,4 @@ export * from "./admin";
 export * from "./orderAnalyticsApi";
 export * from "./partners_requests";
 export * from "./blogs";
+export * from "./pricing";

@@ -261,7 +261,7 @@ export const selectProductInfo = createSelector(
 export const selectIsConfigurationComplete = createSelector(
   [selectSelectedProduct, selectGetUpTo],
   (selectedProduct, getUpTo) =>
-    Boolean(selectedProduct.id) &&
+    Boolean(selectedProduct._id) &&
     Boolean(getUpTo.variantName) &&
     getUpTo.price !== null
 );

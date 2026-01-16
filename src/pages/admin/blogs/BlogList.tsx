@@ -17,7 +17,11 @@ export const BlogList: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<TStatusFilter>(undefined);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, isLoading, isFetching } = useGetBlogsQuery({
+  const {
+    data: blogsData,
+    isLoading,
+    isFetching,
+  } = useGetBlogsQuery({
     page,
     limit: 10,
     status: statusFilter || undefined,
@@ -34,7 +38,7 @@ export const BlogList: React.FC = () => {
         await deleteBlog(id).unwrap();
         toast.success("Blog deleted successfully");
       } catch (error: any) {
-        toast.error(error?.data?.message || "Failed to delete blog");
+        toast.error(error?.blogsData?.message || "Failed to delete blog");
       }
     }
   };
@@ -65,8 +69,8 @@ export const BlogList: React.FC = () => {
     );
   }
 
-  const blogs = data?.data?.blogs || [];
-  const pagination = data?.data?.pagination;
+  const blogs = blogsData?.blogs || [];
+  const pagination = blogsData?.pagination;
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -127,6 +131,12 @@ export const BlogList: React.FC = () => {
                 value={statusFilter}
                 onChange={(e) => {
                   const status = e.target.value;
+                  console.log("status", status);
+                  if (status.toLowerCase().includes("all")) {
+                    setStatusFilter(undefined);
+                    return;
+                  }
+
                   setStatusFilter(status as TStatusFilter);
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

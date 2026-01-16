@@ -1,4 +1,4 @@
-import { IConditions } from "@features/api/productsApi/types";
+import { IProductConditions } from "@features/api/productsApi/types";
 import { IExtendedCondition, ISortedConditionsByPage } from "@utils/types";
 
 // Structure of grouped result
@@ -7,7 +7,7 @@ interface IGroupedConditions {
 }
 
 function groupConditionsByPage(
-  conditions: IConditions[]
+  conditions: IProductConditions[]
 ): ISortedConditionsByPage[] {
   const grouped = conditions.reduce<IGroupedConditions>((acc, condition) => {
     const { page } = condition;

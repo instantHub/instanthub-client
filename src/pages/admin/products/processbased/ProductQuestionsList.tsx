@@ -7,7 +7,10 @@ import {
 import { ROUTES } from "@routes";
 import { Button, FlexBox, Typography } from "@components/general";
 import { ArrowLeftIcon } from "@icons";
-import { IConditionLabels, IConditions } from "@features/api/productsApi/types";
+import {
+  IProductConditionLabels,
+  IProductConditions,
+} from "@features/api/productsApi/types";
 import { DisplayConfiguration } from "./DisplayConfiguration";
 import { Loading } from "@components/user";
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
@@ -24,6 +27,8 @@ interface ToggleState {
 type ToggleKey = keyof ToggleState;
 
 export const ProductQuestionsList: React.FC = () => {
+  console.log("PB - ProductQuestionsList");
+
   const { productSlug } = useParams<{ productSlug: string }>();
 
   const { data: productDetail, isLoading: productDetailLoading } =
@@ -34,11 +39,11 @@ export const ProductQuestionsList: React.FC = () => {
   //   console.log("processorDeductions", processorDeductions);
 
   const [selectedDeductions, setSelectedDeductions] = useState<
-    IConditions[] | null
+    IProductConditions[] | null
   >(null);
 
   const [processorsList, setProcessorsList] = useState<
-    IConditionLabels[] | null
+    IProductConditionLabels[] | null
   >(null);
 
   const [selectedProcessorDeductions, setSelectedProcessorDeductions] =
@@ -88,7 +93,7 @@ export const ProductQuestionsList: React.FC = () => {
       setSelectedDeductions(productDetail.simpleDeductions);
 
       const processors = productDetail.simpleDeductions.find((d) =>
-        d.conditionName.toLowerCase().includes("processor")
+        d.conditionName?.toLowerCase().includes("processor")
       );
       setProcessorsList(processors?.conditionLabels || null);
     }
@@ -240,39 +245,3 @@ export const ProductQuestionsList: React.FC = () => {
     </div>
   );
 };
-
-{
-  /* {toggle.updateAllSystemConfig && (
-            <UpdateSystemConfigurations
-              type={"AllLaptopConfig"}
-              productDetail={productDetail}
-              productUniqueURL={productSlug}
-            />
-          )}
-
-          {toggle.updateSingleSystemConfig && (
-            <UpdateSystemConfigurations
-              type={"SingleLaptopConfig"}
-              productDetail={productDetail}
-              productUniqueURL={productSlug}
-            />
-          )}
-
-          {toggle.updateAllProcessorsProblems && (
-            <UpdateSystemConditions
-              productData={productDetail}
-              selectedProcessorDeductions={selectedProcessorDeductions}
-              setSelectedProcessorDeductions={setSelectedProcessorDeductions}
-              type={"AllLaptopConditions"}
-            />
-          )}
-
-          {toggle.updateSingleProcessorProblems && (
-            <UpdateSystemConditions
-              productData={productDetail}
-              selectedProcessorDeductions={selectedProcessorDeductions}
-              setSelectedProcessorDeductions={setSelectedProcessorDeductions}
-              type={"SingleLaptopConditions"}
-            />
-          )} */
-}

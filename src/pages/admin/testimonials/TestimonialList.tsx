@@ -204,7 +204,7 @@ export const TestimonialList: FC = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {testimonials?.testimonials.map((testimonial) => (
-                    <tr key={testimonial.id} className="hover:bg-gray-50">
+                    <tr key={testimonial._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
@@ -260,7 +260,9 @@ export const TestimonialList: FC = () => {
                             <EditIcon className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => handleToggleFeatured(testimonial.id)}
+                            onClick={() =>
+                              handleToggleFeatured(testimonial._id)
+                            }
                             className="text-blue-600 hover:text-blue-900 p-1 rounded"
                             title={
                               testimonial.isActive ? "Deactivate" : "Activate"
@@ -273,7 +275,7 @@ export const TestimonialList: FC = () => {
                             )}
                           </button>
                           <button
-                            onClick={() => handleToggleStatus(testimonial.id)}
+                            onClick={() => handleToggleStatus(testimonial._id)}
                             className="text-yellow-600 hover:text-yellow-900 p-1 rounded"
                             title={
                               testimonial.featured
@@ -288,7 +290,7 @@ export const TestimonialList: FC = () => {
                             />
                           </button>
                           <button
-                            onClick={() => handleDelete(testimonial.id)}
+                            onClick={() => handleDelete(testimonial._id)}
                             className="text-red-600 hover:text-red-900 p-1 rounded"
                             title="Delete"
                           >

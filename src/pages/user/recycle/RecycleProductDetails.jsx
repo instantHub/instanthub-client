@@ -72,7 +72,7 @@ export const RecycleProductDetail = () => {
 
   const handleToggle = (variantSelected) => {
     setVariantSelected(variantSelected);
-    setSelectedDiv(variantSelected.id);
+    setSelectedDiv(variantSelected._id);
   };
 
   // console.log("variantSelected", variantSelected);
@@ -296,13 +296,13 @@ export const RecycleProductDetail = () => {
                   <div className="flex flex-row flex-wrap list-none p-0 my-0 -mx-2">
                     {productDetails.variants.map((variantSelected) => (
                       <div
-                        key={variantSelected.id}
+                        key={variantSelected._id}
                         className="p-2 w-1/2 sm:w-40 sm:max-w-full"
                         onClick={() => handleToggle(variantSelected)}
                       >
                         <div
                           className={`${
-                            selectedDiv == variantSelected.id
+                            selectedDiv == variantSelected._id
                               ? "bg-amber-500 text-white"
                               : "bg-white"
                           } flex items-center rounded-md cursor-pointer p-2.5 ring-0 ring-transparent shadow`}

@@ -6,7 +6,7 @@ import {
 } from "@api";
 import { toast } from "react-toastify";
 import { ROUTES } from "@routes";
-import { IConditions } from "@features/api/productsApi/types";
+import { IProductConditions } from "@features/api/productsApi/types";
 import { IVQResponse } from "@features/api/variantQuestionsApi/types";
 
 type OperationType = "priceDrop" | "operation";
@@ -17,7 +17,7 @@ export const UpdateVariantQuestions = () => {
   const [selectedVariantQuestions, setSelectedVariantQuestions] =
     useState<IVQResponse | null>(null);
   const [selectedDeductions, setSelectedDeductions] = useState<
-    IConditions[] | null
+    IProductConditions[] | null
   >(null);
 
   const {
@@ -70,7 +70,7 @@ export const UpdateVariantQuestions = () => {
     try {
       await updateVariantQuestions({
         variantQuestionsId,
-        data: selectedVariantQuestions,
+        data: { deductions: selectedVariantQuestions.deductions },
       }).unwrap();
 
       toast.success("Updated PriceDrops for the Variant");

@@ -16,6 +16,19 @@ export const OTPApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    saveOfferedPrice: build.mutation<
+      any,
+      { mobile_id: string; offeredPrice: number }
+    >({
+      query: ({ mobile_id, offeredPrice }) => ({
+        url: `/api/otp/save/offeredPrice/${mobile_id}`,
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: { offeredPrice },
+      }),
+    }),
     getPhoneNumbers: build.query<IPhoneNumber[], void>({
       query: () => `/api/otp`,
       providesTags: ["Phone Numbers"],
@@ -33,6 +46,7 @@ export const OTPApi = baseApi.injectEndpoints({
 export const {
   useGetOTPQuery,
   useGenerateOTPMutation,
+  useSaveOfferedPriceMutation,
   useGetPhoneNumbersQuery,
   useDeletePhoneNumberMutation,
 } = OTPApi;

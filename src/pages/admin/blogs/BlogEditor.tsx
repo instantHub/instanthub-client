@@ -54,8 +54,8 @@ export const BlogEditor: React.FC = () => {
 
   // Populate form when editing
   useEffect(() => {
-    if (blogData?.data) {
-      const blog = blogData.data;
+    if (blogData) {
+      const blog = blogData;
       setFormData({
         slug: blog.slug,
         seo: blog.seo,
@@ -98,7 +98,7 @@ export const BlogEditor: React.FC = () => {
       } else {
         const result = await createBlog(payload).unwrap();
         toast.success("Blog created successfully!");
-        navigate(`/admin/blogs/edit/${result.data._id}`);
+        navigate(`/admin/blogs/edit/${result._id}`);
       }
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to save blog");

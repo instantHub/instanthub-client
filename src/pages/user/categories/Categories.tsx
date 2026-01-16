@@ -12,7 +12,7 @@ export const Categories = memo(() => {
   const handleNavigate = useCallback(
     (category: ICategoryResponse): void => {
       navigate(`${category.uniqueURL}`, {
-        state: { categoryId: category.id },
+        state: { categoryId: category._id },
       });
     },
     [navigate]
@@ -55,7 +55,7 @@ export const Categories = memo(() => {
             {/* Category Cards */}
             {categories?.map((category, index) => (
               <div
-                key={category.id}
+                key={category._id}
                 className="group justify-items-center"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >

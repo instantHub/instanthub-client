@@ -51,7 +51,7 @@ export const Brands = () => {
       <Helmet>
         <title>{category?.metaTitle || category?.name}</title>
         <meta name="description" content={category?.metaDescription} />
-        <meta name="keywords" content={category?.metaKeywords.join(", ")} />
+        <meta name="keywords" content={category?.metaKeywords?.join(", ")} />
         <link rel="canonical" href={category?.canonicalUrl} />
       </Helmet>
 
@@ -65,7 +65,7 @@ export const Brands = () => {
         <div className="grid grid-cols-8 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3">
           {brands?.length > 0 ? (
             brands?.map((brand) => (
-              <div className="flex justify-center" key={brand.id}>
+              <div className="flex justify-center" key={brand._id}>
                 <button
                   onClick={() => handleNavigate(brand)}
                   className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 

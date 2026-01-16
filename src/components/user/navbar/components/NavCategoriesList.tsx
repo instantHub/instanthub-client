@@ -31,8 +31,8 @@ export const NavCategoriesList = memo(() => {
 
   const getDropdownPosition = useCallback(
     (id: string) => {
-      if (categoryData[0]?.id === id) return "left-0";
-      if (categoryData[categoryData.length - 1]?.id === id) return "right-0";
+      if (categoryData[0]?._id === id) return "left-0";
+      if (categoryData[categoryData.length - 1]?._id === id) return "right-0";
       return "left-1/2 -translate-x-1/2";
     },
     [categoryData]
@@ -61,9 +61,9 @@ export const NavCategoriesList = memo(() => {
         <div className="flex w-full justify-evenly px-4 max-14inch:px-14">
           {categoryData.map((category) => (
             <div
-              key={category.id}
+              key={category._id}
               onClick={() => handleNavigation(category.uniqueURL)}
-              onMouseEnter={() => handleMouseEnter(category.id)}
+              onMouseEnter={() => handleMouseEnter(category._id)}
               onMouseLeave={handleMouseLeave}
               className="relative flex flex-row items-center cursor-pointer group transition-all duration-300"
             >
@@ -74,7 +74,7 @@ export const NavCategoriesList = memo(() => {
                     flex items-center gap-1 px-4 py-4 rounded-lg
                     transition-all duration-300
                     ${
-                      hoveredCategoryId === category.id
+                      hoveredCategoryId === category._id
                         ? "text-purple-600 bg-purple-50 font-semibold"
                         : "text-gray-700 hover:text-purple-600 hover:bg-purple-50/50"
                     }
@@ -82,7 +82,7 @@ export const NavCategoriesList = memo(() => {
                 >
                   <span>Sell {category.name}</span>
                   <span className="transition-transform duration-300">
-                    {hoveredCategoryId === category.id ? (
+                    {hoveredCategoryId === category._id ? (
                       <ArrowUpIcon size={16} />
                     ) : (
                       <ArrowDownIcon size={16} />
@@ -91,16 +91,16 @@ export const NavCategoriesList = memo(() => {
                 </div>
 
                 {/* Dropdown Menu */}
-                {hoveredCategoryId === category.id && (
+                {hoveredCategoryId === category._id && (
                   <div
                     className={`
                       absolute z-50 top-full mt-2 pt-2
                       bg-white shadow-2xl rounded-xl p-4 min-w-[200px]
                       border border-purple-100
                       animate-slideDown
-                      ${getDropdownPosition(category.id)}
+                      ${getDropdownPosition(category._id)}
                     `}
-                    onMouseEnter={() => handleMouseEnter(category.id)}
+                    onMouseEnter={() => handleMouseEnter(category._id)}
                     onMouseLeave={handleMouseLeave}
                   >
                     {/* Dropdown Arrow */}
@@ -154,7 +154,7 @@ export const NavCategoriesList = memo(() => {
                 )}
 
                 {/* Active indicator */}
-                {hoveredCategoryId === category.id && (
+                {hoveredCategoryId === category._id && (
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600" />
                 )}
               </span>

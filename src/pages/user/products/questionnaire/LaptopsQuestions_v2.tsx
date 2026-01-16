@@ -13,8 +13,8 @@ import NextPrevButton from "./NextPrevButton";
 import { DisplayCondition } from "./DisplayCondition";
 import { useLazyGetProcessorDeductionsQuery } from "@features/api";
 import {
-  IConditionLabels,
-  IConditions,
+  IProductConditionLabels,
+  IProductConditions,
   IProductResponse,
 } from "@features/api/productsApi/types";
 import { IProcessorDeductionResponse } from "@features/api/processorsApi/type";
@@ -25,17 +25,17 @@ import { DisplayCondition2 } from "./DisplayCondition_v2";
 
 interface SelectedState {
   selected: boolean;
-  selectedLabel: IConditionLabels | null;
+  selectedLabel: IProductConditionLabels | null;
 }
 
 interface GroupedCondition {
   page: string;
-  conditions: IConditions[];
+  conditions: IProductConditions[];
 }
 
 interface LaptopsQuestionsProps {
   productsData: IProductResponse;
-  deductions: IConditions[];
+  deductions: IProductConditions[];
 }
 
 interface ConditionStatus {
@@ -44,9 +44,9 @@ interface ConditionStatus {
 }
 
 interface SelectionState {
-  processor: IConditionLabels | null;
-  ram: IConditionLabels | null;
-  hardDisk: IConditionLabels | null;
+  processor: IProductConditionLabels | null;
+  ram: IProductConditionLabels | null;
+  hardDisk: IProductConditionLabels | null;
 }
 
 const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
@@ -87,8 +87,8 @@ const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
 
   // Memoized functions
   const groupConditionsByPage = useCallback(
-    (conditions: IConditions[]): GroupedCondition[] => {
-      const grouped = conditions.reduce<Record<number, IConditions[]>>(
+    (conditions: IProductConditions[]): GroupedCondition[] => {
+      const grouped = conditions.reduce<Record<number, IProductConditions[]>>(
         (acc, condition) => {
           const { page } = condition;
           if (!acc[page]) {
@@ -206,7 +206,7 @@ const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
 
   // Update condition selection
   const updateConditionSelection = useCallback(
-    (conditionName: string, selectedLabel: IConditionLabels) => {
+    (conditionName: string, selectedLabel: IProductConditionLabels) => {
       const targetConditions = sortedConditions[0]?.conditions || [];
 
       for (const condition of targetConditions) {
@@ -224,7 +224,7 @@ const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
 
   // Handle processor selection
   const handleProcessorChange = useCallback(
-    async (selectedLabel: IConditionLabels | null) => {
+    async (selectedLabel: IProductConditionLabels | null) => {
       if (!selectedLabel) {
         setSelections((prev) => ({ ...prev, processor: null }));
         return;
@@ -289,7 +289,7 @@ const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
 
   // Handle RAM selection
   const handleRamChange = useCallback(
-    (selectedLabel: IConditionLabels | null) => {
+    (selectedLabel: IProductConditionLabels | null) => {
       if (!selectedLabel) {
         setSelections((prev) => ({ ...prev, ram: null }));
         return;
@@ -321,7 +321,7 @@ const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
 
   // Handle Hard Disk selection
   const handleHardDiskChange = useCallback(
-    (selectedLabel: IConditionLabels | null) => {
+    (selectedLabel: IProductConditionLabels | null) => {
       if (!selectedLabel) {
         setSelections((prev) => ({ ...prev, hardDisk: null }));
         return;
@@ -484,7 +484,7 @@ const LaptopsQuestions_v2: React.FC<LaptopsQuestionsProps> = ({
                   </div>
                 </div>
 
-                <CustomSelect<IConditionLabels>
+                <CustomSelect<IProductConditionLabels>
                   label=""
                   options={condition.conditionLabels}
                   value={getSelectionValue(condition.conditionName)}

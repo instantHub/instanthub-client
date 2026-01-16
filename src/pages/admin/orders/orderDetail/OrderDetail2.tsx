@@ -234,7 +234,7 @@ export const OrderDetail2: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {/* Assignment & Reschedule Alerts */}
-          {isAssigned && (
+          {isAssigned && isAdmin() && (
             <StatusBox
               color="green"
               icon={
@@ -382,7 +382,7 @@ export const OrderDetail2: React.FC = () => {
             >
               {orderDetail.finalDeductionSet.length > 0 ? (
                 orderDetail.finalDeductionSet?.map((deduction) =>
-                  deduction.conditions.map((condition) => (
+                  deduction?.conditions?.map((condition) => (
                     <InfoRow
                       key={condition.conditionLabel}
                       label={deduction.type}
@@ -481,7 +481,7 @@ export const OrderDetail2: React.FC = () => {
           isOpen={isDeleteModalOpen}
           onClose={() => setDeleteModalOpen(false)}
           onConfirm={handleDelete}
-          itemToDelete={orderDetail.id}
+          itemToDelete={orderDetail._id}
           title="Confirm Deletion"
           description="Are you sure you want to delete this order? This action cannot be undone."
           confirmText="Delete"

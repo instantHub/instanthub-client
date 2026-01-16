@@ -35,7 +35,6 @@ export const Home = () => {
       </Helmet>
 
       <div className="flex flex-col gap-10 max-sm:gap-5 w-full mt-5">
-        {/* <Slider /> */}
         <HeroSlider />
         <Categories />
 

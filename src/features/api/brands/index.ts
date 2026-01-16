@@ -1,55 +1,46 @@
 import { baseApi } from "@features/api";
 import { IBrandResponse } from "./types";
+import { BRAND_API_PATHS } from "./constants";
 
 export const brands = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllBrand: build.query<IBrandResponse[], void>({
-      query: () => `/api/brand`,
+      query: () => BRAND_API_PATHS.BASE,
       providesTags: ["Brands"],
     }),
 
     getBrandsByCategory: build.query<IBrandResponse[], string>({
-      query: (categoryUniqueURL) => `/api/brand/${categoryUniqueURL}`,
+      query: (categoryUniqueURL) =>
+        BRAND_API_PATHS.BY_CATEGORY(categoryUniqueURL),
       providesTags: ["CreateBrands"],
     }),
 
     getSingleBrand: build.query<IBrandResponse, string>({
-      query: (brandId) => `/api/brand/single/${brandId}`,
+      query: (brandId) => BRAND_API_PATHS.BY_ID(brandId),
       providesTags: ["CreateBrands"],
     }),
 
     createBrand: build.mutation({
       query: (data) => ({
-        url: "/api/brand/add-brand",
+        url: BRAND_API_PATHS.BASE,
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: data,
       }),
       invalidatesTags: ["Brands"],
     }),
-    uploadBrandImage: build.mutation({
-      query: (data) => ({
-        url: "/api/upload/brands",
-        method: "POST",
-        body: data,
-      }),
-    }),
+
     updateBrand: build.mutation({
       query: ({ brandId, data }) => ({
-        url: `/api/brand/update-brand/${brandId}`,
+        url: BRAND_API_PATHS.BY_ID(brandId),
         method: "PUT",
-        // credentials: "include",
         body: data,
       }),
       invalidatesTags: ["Brands"],
     }),
     deleteBrand: build.mutation({
       query: (brandId) => ({
-        url: `/api/brand/delete-brand/${brandId}`,
+        url: BRAND_API_PATHS.BY_ID(brandId),
         method: "DELETE",
-        // body: data,
       }),
       invalidatesTags: ["Brands"],
     }),
@@ -62,7 +53,6 @@ export const {
   useLazyGetBrandsByCategoryQuery,
   useGetSingleBrandQuery,
   useCreateBrandMutation,
-  useUploadBrandImageMutation,
   useUpdateBrandMutation,
   useDeleteBrandMutation,
 } = brands;

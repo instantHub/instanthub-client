@@ -20,10 +20,12 @@ export const UpdateSeries = () => {
   // Selecting slider which needs to update
   useEffect(() => {
     if (!seriesLoading) {
-      const series = seriesData.filter((series) => series.id === seriesId);
-      setSelectedCategory(series[0].category);
-      setSelectedBrand(series[0].brand);
-      setSeriesName(series[0].name);
+      const series = seriesData.find((series) => series._id === seriesId);
+      console.log("series", series);
+
+      setSelectedCategory(series?.category);
+      setSelectedBrand(series?.brand);
+      setSeriesName(series?.name);
     }
   }, [seriesData]);
   //   console.log("Series To Update", selectedCategory, selectedBrand, seriesName);

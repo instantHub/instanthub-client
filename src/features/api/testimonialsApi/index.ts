@@ -1,6 +1,10 @@
 import { baseApi } from "@features/api";
 import { TESTIMONIAL_API_PATHS, TESTIMONIAL_API_TAG } from "./constant";
-import { ITestimonial, ITestimonialResponse } from "./types";
+import {
+  ICreateTestimonialRequest,
+  ITestimonial,
+  ITestimonialResponse,
+} from "./types";
 
 export const testimonialApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -20,7 +24,10 @@ export const testimonialApi = baseApi.injectEndpoints({
       query: (id) => TESTIMONIAL_API_PATHS.BY_ID(id),
       providesTags: [TESTIMONIAL_API_TAG],
     }),
-    createTestimonial: build.mutation({
+    createTestimonial: build.mutation<
+      ITestimonial[],
+      ICreateTestimonialRequest
+    >({
       query: (data) => ({
         url: TESTIMONIAL_API_PATHS.BASE,
         method: "POST",
@@ -77,9 +84,11 @@ export const {
   useLazyGetTestimonialsQuery,
   useGetPublicTestimonialsQuery,
   useGetSingleTestimonialQuery,
+
   useCreateTestimonialMutation,
   useUpdateTestimonialMutation,
   useDeleteTestimonialMutation,
+
   useToggleTestimonialStatusMutation,
   useToggleTestimonialFeaturedMutation,
 } = testimonialApi;

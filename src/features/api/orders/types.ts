@@ -3,7 +3,7 @@ import { IProductResponse } from "../productsApi/types";
 import { IPartner } from "../partners/types";
 
 export interface IOrder {
-  id: string;
+  _id: string;
   orderId: string;
   productId: IProductId | IProductResponse;
 
@@ -242,7 +242,7 @@ export interface ICancellation {
 }
 
 export interface IOrder2 {
-  id: string;
+  _id: string;
   orderId: string;
   customer: ICustomer;
   product: IProduct;

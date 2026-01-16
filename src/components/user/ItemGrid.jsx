@@ -5,7 +5,7 @@ export const ItemGrid = ({ items, linkPath, displayBig = false }) => {
   return (
     <>
       {items?.map((item) => (
-        <div className="flex justify-center" key={item.id}>
+        <div className="flex justify-center" key={item._id}>
           <Link
             to={`${linkPath}/${item.uniqueURL}`}
             className={`p-4 flex bg-white cursor-pointer border border-secondary rounded-lg shadow-sm hover:shadow-xl 

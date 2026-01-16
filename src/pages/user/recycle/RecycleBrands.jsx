@@ -55,7 +55,7 @@ export const RecycleBrands = () => {
           <div className="grid grid-cols-7 gap-y-5 max-lg:grid-cols-6 max-md:grid-cols-4 max-sm:grid-cols-3">
             {brands?.length > 0 ? (
               brands?.map((item) => (
-                <div className="flex justify-center" key={item.id}>
+                <div className="flex justify-center" key={item._id}>
                   <Link
                     to={`${generatePathWithParams(
                       ROUTES.user.recycleProducts,

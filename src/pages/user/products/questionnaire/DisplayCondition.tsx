@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { IConditions } from "@features/api/productsApi/types";
+import { IProductConditions } from "@features/api/productsApi/types";
 import DeductionItems from "./DeductionItems";
 import { FlexBox, Typography } from "@components/general";
 
 interface IDisplayConditionProps {
-  condition: IConditions;
+  condition: IProductConditions;
 }
 
 export const DisplayCondition: FC<IDisplayConditionProps> = ({ condition }) => {

@@ -1,9 +1,9 @@
 import { baseApi } from "@features/api";
 import {
-  ORDER_API_PATHS,
-  ORDER_DETAIL_API_TAG,
-  ORDER_STATS_API_TAG,
-  ORDERS_API_TAG,
+  PURCHASE_ORDER_API_PATHS,
+  PURCHASE_ORDER_DETAIL_API_TAG,
+  PURCHASE_ORDER_STATS_API_TAG,
+  PURCHASE_ORDERS_API_TAG,
 } from "./constants";
 import {
   IApiResponse,
@@ -21,77 +21,76 @@ import { IPartner } from "../partners/types";
 export const orders = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getOrderDetail: build.query<IOrder, { orderId: string }>({
-      query: ({ orderId }) => `/api/orders/${orderId}/order-details`,
-      providesTags: [ORDER_DETAIL_API_TAG],
-      // providesTags: (result, error, id) => [{ type: "Order", id }],
+      query: ({ orderId }) => PURCHASE_ORDER_API_PATHS.DETAILS(orderId),
+      providesTags: [PURCHASE_ORDER_DETAIL_API_TAG],
     }),
 
     createOrder: build.mutation({
       query: (data) => ({
-        url: ORDER_API_PATHS.BASE,
+        url: PURCHASE_ORDER_API_PATHS.BASE,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: data,
       }),
-      invalidatesTags: [ORDERS_API_TAG],
+      invalidatesTags: [PURCHASE_ORDERS_API_TAG],
     }),
 
     completeOrder: build.mutation({
       query: (data) => ({
-        url: `/api/orders/complete-order`,
+        url: PURCHASE_ORDER_API_PATHS.COMPLETE,
         method: "POST",
         body: data,
       }),
       invalidatesTags: [
-        ORDERS_API_TAG,
-        ORDER_DETAIL_API_TAG,
+        PURCHASE_ORDERS_API_TAG,
+        PURCHASE_ORDER_DETAIL_API_TAG,
         EXECUTIVE_ORDER_API_TAG,
       ],
     }),
 
     orderCancel: build.mutation({
       query: ({ orderId, data }) => ({
-        url: `/api/orders/cancel/${orderId}`,
+        url: PURCHASE_ORDER_API_PATHS.CANCEL(orderId),
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: [ORDERS_API_TAG, ORDER_DETAIL_API_TAG],
+      invalidatesTags: [PURCHASE_ORDERS_API_TAG, PURCHASE_ORDER_DETAIL_API_TAG],
     }),
 
     deleteOrder: build.mutation({
       query: (orderId) => ({
-        url: `/api/orders/delete-order/${orderId}`,
+        url: PURCHASE_ORDER_API_PATHS.DELETE(orderId),
         method: "DELETE",
       }),
-      invalidatesTags: [ORDERS_API_TAG],
+      invalidatesTags: [PURCHASE_ORDERS_API_TAG],
     }),
 
     orderReopen: build.mutation<IOrder, { id: string }>({
       query: ({ id }) => ({
-        url: `/api/orders/${id}/reopen`,
+        url: PURCHASE_ORDER_API_PATHS.REOPEN(id),
         method: "PUT",
       }),
 
-      invalidatesTags: [ORDER_DETAIL_API_TAG],
+      invalidatesTags: [PURCHASE_ORDER_DETAIL_API_TAG],
     }),
 
     rescheduleOrder: build.mutation<IOrder, IRescheduleOrderArgs>({
       query: ({ id, body }) => ({
-        url: `/api/orders/${id}/reschedule`,
+        url: PURCHASE_ORDER_API_PATHS.RESCHEDULE(id),
         method: "PUT",
         body,
       }),
 
-      invalidatesTags: [ORDER_DETAIL_API_TAG],
+      invalidatesTags: [PURCHASE_ORDER_DETAIL_API_TAG],
     }),
 
     // Get order statistics
     getOrderStats: build.query<IOrderStats, void>({
-      query: () => "/api/orders/stats",
+      query: () => PURCHASE_ORDER_API_PATHS.STATS,
       transformResponse: (response: IApiResponse<IOrderStats>) => response.data,
-      providesTags: [ORDER_STATS_API_TAG],
+      providesTags: [PURCHASE_ORDER_STATS_API_TAG],
       // Refetch on mount and focus
       keepUnusedDataFor: 60, // Cache for 60 seconds
     }),
@@ -122,16 +121,16 @@ export const orders = baseApi.injectEndpoints({
           params.append("dateFilter", dateFilter);
         }
 
-        return `/api/orders/by-status?${params.toString()}`;
+        return PURCHASE_ORDER_API_PATHS.BY_STATUS_QUERY(params.toString());
       },
       transformResponse: (response: IApiResponse<IOrdersResponse>) =>
         response.data,
       providesTags: (result, error, arg) =>
         result
           ? [
-              ...result.orders.map(({ id }) => ({
+              ...result.orders.map(({ _id }) => ({
                 type: "Orders" as const,
-                id,
+                _id,
               })),
               {
                 type: "Orders",
@@ -158,7 +157,7 @@ export const orders = baseApi.injectEndpoints({
       }
     >({
       query: (data) => ({
-        url: ORDER_API_PATHS.ASSIGN_PARTNER,
+        url: PURCHASE_ORDER_API_PATHS.ASSIGN_PARTNER,
         method: "POST",
         credentials: "include",
         headers: {
@@ -166,7 +165,7 @@ export const orders = baseApi.injectEndpoints({
         },
         body: data,
       }),
-      invalidatesTags: [ORDER_DETAIL_API_TAG],
+      invalidatesTags: [PURCHASE_ORDER_DETAIL_API_TAG],
     }),
 
     unassignOrder: build.mutation<
@@ -176,14 +175,14 @@ export const orders = baseApi.injectEndpoints({
       }
     >({
       query: ({ _orderId }) => ({
-        url: ORDER_API_PATHS.UNASSIGN_ORDER(_orderId),
+        url: PURCHASE_ORDER_API_PATHS.UNASSIGN_ORDER(_orderId),
         method: "PATCH",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       }),
-      invalidatesTags: [ORDERS_API_TAG, ORDER_DETAIL_API_TAG],
+      invalidatesTags: [PURCHASE_ORDERS_API_TAG, PURCHASE_ORDER_DETAIL_API_TAG],
     }),
   }),
 });

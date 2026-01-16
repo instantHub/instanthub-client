@@ -1,5 +1,5 @@
 export const SideList = ({ headers, data, keyExtractor, rowRenderer }) => {
-  //   console.log("data frin TABLE component", data);
+  console.log("data frin TABLE component", data);
   return (
     <table className="w-full text-sm max-sm:text-xs">
       <thead>

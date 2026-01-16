@@ -15,7 +15,7 @@ const BlogCarouselCards: React.FC = () => {
     order: "desc",
   });
 
-  const blogs = data?.data?.blogs || [];
+  const blogs = data?.blogs || [];
   const itemsPerView = 3; // Show 3 cards at a time
 
   const goToPrevious = () => {

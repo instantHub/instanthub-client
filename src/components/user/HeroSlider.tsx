@@ -15,7 +15,7 @@ export function HeroSlider() {
 
   // Precompute all image URLs once
   const imageUrls = useMemo(
-    () => slidersData.map((slider) => `${baseURL}/${slider.image}`),
+    () => slidersData.map((slider) => `${baseURL}${slider.image}`),
     [slidersData, baseURL]
   );
 

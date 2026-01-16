@@ -3,21 +3,16 @@ import {
   useCreateTestimonialMutation,
   useUpdateTestimonialMutation,
 } from "@features/api";
-import { ITestimonial } from "@features/api/testimonialsApi/types";
+import {
+  ICreateTestimonialRequest,
+  ITestimonial,
+} from "@features/api/testimonialsApi/types";
 import { AlertCircle, AstroIcon, CloseIcon, PlusIcon } from "@icons";
 
 interface TestimonialFormProps {
   testimonial?: ITestimonial;
   onClose: () => void;
   onSave: () => void;
-}
-
-export interface ITestimonialFormData {
-  name: string;
-  testimonial: string;
-  rating: number;
-  isActive: boolean;
-  featured: boolean;
 }
 
 export const TestimonialForm: FC<TestimonialFormProps> = ({
@@ -28,7 +23,7 @@ export const TestimonialForm: FC<TestimonialFormProps> = ({
   const [createTestimonial] = useCreateTestimonialMutation();
   const [updateTestimonial] = useUpdateTestimonialMutation();
 
-  const [formData, setFormData] = useState<ITestimonialFormData>({
+  const [formData, setFormData] = useState<ICreateTestimonialRequest>({
     name: "",
     testimonial: "",
     rating: 5,
@@ -57,11 +52,10 @@ export const TestimonialForm: FC<TestimonialFormProps> = ({
     try {
       if (testimonial) {
         await updateTestimonial({
-          id: testimonial.id,
+          id: testimonial._id,
           data: formData,
         }).unwrap();
       } else {
-        // createSlider(sliderData).unwrap()
         await createTestimonial(formData).unwrap();
       }
       onSave();

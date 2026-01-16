@@ -48,16 +48,12 @@ export interface CreateBlogInput {
 }
 
 export interface IBlogsResponse {
-  success: boolean;
-  message: string;
-  data: {
-    blogs: BlogPost[];
-    pagination: {
-      total: number;
-      page: number;
-      limit: number;
-      pages: number;
-    };
+  blogs: BlogPost[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    pages: number;
   };
 }
 

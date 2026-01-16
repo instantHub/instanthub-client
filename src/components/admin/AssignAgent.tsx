@@ -83,7 +83,7 @@ export const AssignAgent: React.FC<IAssignAgentProps> = ({
       // const updatedOrderData = await assignOrderToExecutive({
       if (role === ADMIN_ROLE_ENUM.EXECUTIVE) {
         const updatedOrderData = await assignOrder({
-          orderId: orderDetail.id,
+          orderId: orderDetail._id,
           executiveId: assignedAgent?._id!,
           assignmentStatus: {
             assigned: true,
@@ -104,7 +104,7 @@ export const AssignAgent: React.FC<IAssignAgentProps> = ({
         toast.success(updatedOrderData.message);
       } else {
         const updatedOrderData = await assignOrder({
-          _orderId: orderDetail.id,
+          _orderId: orderDetail._id,
           _userId: assignedAgent?._id!,
           userRole: ADMIN_ROLE_ENUM.PARTNER,
           assignmentStatus: {
