@@ -2,7 +2,13 @@ import { FC, useState, FormEvent } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { Button, CustomSelect, FlexBox, Typography } from "@components/general";
+import {
+  Button,
+  CustomSelect,
+  FlexBox,
+  FormInput,
+  Typography,
+} from "@components/general";
 import { ORDER_STATUS } from "@features/api/orders/types";
 import { selectAdminState } from "@features/slices";
 
@@ -53,6 +59,7 @@ export const OrderCancellation: FC<OrderCancellationProps> = ({
     id: number;
     label: string;
   } | null>(null);
+  const [cancelAdditionalInfo, setCancelAdditionalInfo] = useState("");
   const { admin } = useSelector(selectAdminState);
 
   const handleCancelOrder = async (e: FormEvent<HTMLFormElement>) => {
@@ -66,13 +73,11 @@ export const OrderCancellation: FC<OrderCancellationProps> = ({
     try {
       const payload = {
         orderId,
-        data: {
-          status: ORDER_STATUS.CANCELLED,
-          cancellationDetails: {
-            cancelReason: selectedReason.label,
-            cancelledBy: admin?.name || "Unknown",
-            cancelledAt: new Date().toISOString(),
-          },
+        cancellationDetails: {
+          cancelReason: selectedReason.label,
+          cancelAdditionalInfo,
+          cancelledBy: admin?.name || "Unknown",
+          cancelledAt: new Date(),
         },
       };
 
@@ -106,6 +111,15 @@ export const OrderCancellation: FC<OrderCancellationProps> = ({
           clearable
           searchable
           required
+        />
+
+        <FormInput
+          type="text"
+          placeholder="Enter cancellation additional info"
+          value={cancelAdditionalInfo}
+          onChange={(e) => setCancelAdditionalInfo(e.target.value)}
+          required
+          size="sm"
         />
 
         <Button

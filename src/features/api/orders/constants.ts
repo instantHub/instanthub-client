@@ -16,6 +16,7 @@ export const PURCHASE_ORDER_API_PATHS = {
   DELETE: (id: string) => `${PURCHASE_ORDER_BASE_API}/${id}/delete`,
   REOPEN: (id: string) => `${PURCHASE_ORDER_BASE_API}/${id}/reopen`,
   RESCHEDULE: (id: string) => `${PURCHASE_ORDER_BASE_API}/${id}/reschedule`,
+  CUSTOMER: (id: string) => `${PURCHASE_ORDER_BASE_API}/${id}/customer`,
 
   BY_STATUS_QUERY: (params: string) =>
     `${PURCHASE_ORDER_BASE_API}/by-status?${params}`,

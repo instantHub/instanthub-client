@@ -12,6 +12,7 @@ import {
   useCompleteOrderMutation,
   useRescheduleOrderMutation,
   useOrderCancelMutation,
+  useUpdateCustomerDetailsMutation,
 } from "@api";
 import {
   Button,
@@ -89,6 +90,16 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
   // Cancel states
   const [showCancel, setShowCancel] = useState(false);
 
+  // Customer info to update
+  const [updateCustomerDetails, { isLoading: updatingInfo }] =
+    useUpdateCustomerDetailsMutation();
+  const [showUpdateInfo, setShowUpdateInfo] = useState(false);
+  const [customerDetails, setCustomerDetails] = useState({
+    name: orderDetail.customerDetails.name,
+    email: orderDetail.customerDetails.email,
+    phone: orderDetail.customerDetails.phone,
+  });
+
   // Handlers
   const handleImageChange =
     (type: keyof ImageSelection) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -162,6 +173,20 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
     } catch (error) {
       console.error("Reschedule error:", error);
       toast.error("Failed to reschedule order");
+    }
+  };
+
+  const handleCustomerDetails = async () => {
+    try {
+      await updateCustomerDetails({
+        orderId: orderDetail._id,
+        customerDetails: customerDetails,
+      }).unwrap();
+      toast.success("Customer details updated successfully");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating customer details:", error);
+      toast.error("Failed to update customer details");
     }
   };
 
@@ -297,7 +322,7 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
             variant="instanthub"
             onClick={() =>
               navigate(
-                `re-quote?product=${orderDetail.productId?.uniqueURL}&variant=${orderDetail.productDetails?.variant?.variantName}`
+                `re-quote?product=${orderDetail.productId?.uniqueURL}&variant=${orderDetail.productDetails?.variant?.variantName}`,
               )
             }
           >
@@ -311,6 +336,15 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
             leftIcon={<Calendar size={18} />}
           >
             Reschedule
+          </Button>
+
+          <Button
+            type="button"
+            variant="primary"
+            onClick={() => setShowUpdateInfo(!showUpdateInfo)}
+            leftIcon={<Calendar size={18} />}
+          >
+            Update Customer Info
           </Button>
 
           <Button
@@ -361,6 +395,58 @@ export const OrderCompleteForm: React.FC<OrderCompleteFormProps> = ({
             variant="greenary"
           >
             Confirm Reschedule
+          </Button>
+        </div>
+      )}
+
+      {/* Reschedule Section */}
+      {showUpdateInfo && (
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <h3 className="text-lg font-semibold mb-4">Update customer Info</h3>
+          <FlexBox gap={3} className="flex-col sm:flex-row mb-4">
+            <FormInput
+              type="text"
+              placeholder="Update customer name"
+              value={customerDetails.name}
+              onChange={(e) => {
+                const name = e.target.value;
+                setCustomerDetails((prev) => ({ ...prev, name }));
+              }}
+              required
+              size="sm"
+            />
+            <FormInput
+              type="email"
+              placeholder="Update customer email"
+              value={customerDetails.email}
+              onChange={(e) => {
+                const email = e.target.value;
+                setCustomerDetails((prev) => ({ ...prev, email }));
+              }}
+              required
+              size="sm"
+            />
+            <FormInput
+              type="number"
+              placeholder="Update customer phone number"
+              value={customerDetails.phone}
+              onChange={(e) => {
+                setCustomerDetails((prev) => ({
+                  ...prev,
+                  phone: Number(e.target.value),
+                }));
+              }}
+              required
+              size="sm"
+            />
+          </FlexBox>
+
+          <Button
+            onClick={handleCustomerDetails}
+            loading={updatingInfo}
+            variant="greenary"
+          >
+            Confirm changes
           </Button>
         </div>
       )}

@@ -59,6 +59,7 @@ export interface IOrder {
 export interface ICancellationDetails {
   cancelledBy: string;
   cancelReason: string;
+  cancelAdditionalInfo: string;
   cancelledAt: string;
 }
 

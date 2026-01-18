@@ -1,4 +1,4 @@
-import { FC, useCallback, memo, useState } from "react";
+import { FC, useCallback, memo, useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
 // @ts-ignore
@@ -7,172 +7,213 @@ import { useDeletePhoneNumberMutation, useGetPhoneNumbersQuery } from "@api";
 import { formatDate } from "@utils/general";
 import { Button, FlexBox, Modal, Typography } from "@components/general";
 import { IPhoneNumber } from "@features/api/OTPApi/types";
-import { DeleteIcon, Eye, Loader, MapPin } from "lucide-react";
-import { OrderInfoCard } from "../orders/orderDetail/OrderInfoCard";
+import {
+  DeleteIcon,
+  Eye,
+  Loader,
+  CheckCircle,
+  Smartphone,
+  X,
+} from "lucide-react";
 
 // ============================================================================
-// 1. Child Component: PhoneNumberCard
+// 1. Memoized Card Component
 // ============================================================================
 
 interface PhoneNumberCardProps {
   number: IPhoneNumber;
   onDelete: (id: string | number, mobileNumber: string) => void;
-  // Add a new prop to handle the "View Detail" click
   onViewDetails: (number: IPhoneNumber) => void;
 }
 
-const PhoneNumberCard: FC<PhoneNumberCardProps> = ({
-  number,
-  onDelete,
-  onViewDetails, // Destructure the new prop
-}) => {
-  return (
-    <div className="flex flex-col shadow rounded-lg border text-sm overflow-hidden bg-white transition-shadow hover:shadow-md">
-      <div className="flex flex-col gap-2 p-4 flex-grow">
-        <div>
-          <span className="font-semibold text-gray-800">Number: </span>
-          <span>{number.mobileNumber}</span>
-        </div>
-        {number.purpose && (
+const PhoneNumberCard: FC<PhoneNumberCardProps> = memo(
+  ({ number, onDelete, onViewDetails }) => {
+    return (
+      <div className="flex flex-col shadow-sm rounded-xl border border-gray-200 overflow-hidden bg-white transition-all hover:shadow-lg hover:border-primary/20">
+        <div className="p-5 flex-grow space-y-3">
+          <FlexBox justify="between" align="center">
+            <div className="p-2 bg-blue-50 rounded-lg">
+              <Smartphone size={18} className="text-blue-600" />
+            </div>
+            {number?.orderPlaced ? (
+              <span className="flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700">
+                <CheckCircle size={10} /> Order Placed
+              </span>
+            ) : (
+              <span className="flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700">
+                <X size={10} /> Order N/A
+              </span>
+            )}
+          </FlexBox>
+
           <div>
-            <span className="font-semibold text-gray-800">Purpose: </span>
-            <span className="text-gray-600">{number.purpose}</span>
+            <Typography className="text-xs text-gray-400 font-medium uppercase">
+              Mobile Number
+            </Typography>
+            <Typography className="text-lg font-bold text-gray-900">
+              {number.mobileNumber}
+            </Typography>
           </div>
-        )}
-        <div>
-          <span className="font-semibold text-gray-800">Offered Price: </span>
-          <span>{number.offeredPrice ?? "N/A"}</span>
+
+          <div className="grid grid-cols-2 gap-2 pt-2">
+            <div>
+              <Typography className="text-[10px] text-gray-400 uppercase">
+                Price Offered
+              </Typography>
+              <Typography className="font-semibold text-gray-700">
+                ₹{number?.offeredPrice ?? "0"}
+              </Typography>
+            </div>
+            <div>
+              <Typography className="text-[10px] text-gray-400 uppercase">
+                Visits
+              </Typography>
+              <Typography className="font-semibold text-gray-700">
+                {number.totalOTPsTaken}
+              </Typography>
+            </div>
+          </div>
+
+          <div className="pt-2 border-t border-dashed">
+            <Typography className="text-[10px] text-gray-400 uppercase">
+              Purpose
+            </Typography>
+            <Typography className="text-sm text-gray-600 truncate">
+              {number.purpose || "General Inquiry"}
+            </Typography>
+          </div>
         </div>
-        <div>
-          <span className="font-semibold text-gray-800">Total Visits: </span>
-          <span>{number.totalOTPsTaken}</span>
-        </div>
-        <div>
-          <span className="font-semibold text-gray-800">Last Updated: </span>
-          <span className="text-gray-600">
-            {formatDate(new Date(number.updatedAt))}
-          </span>
+
+        <div className="grid grid-cols-2 border-t bg-gray-50/50">
+          <button
+            onClick={() => onViewDetails(number)}
+            className="flex items-center justify-center gap-2 py-3 text-xs font-semibold text-gray-600 hover:bg-white hover:text-primary border-r transition-colors"
+          >
+            <Eye size={14} /> View
+          </button>
+          <button
+            onClick={() => onDelete(number._id, number.mobileNumber)}
+            className="flex items-center justify-center gap-2 py-3 text-xs font-semibold text-red-500 hover:bg-red-50 transition-colors"
+          >
+            <DeleteIcon size={14} /> Delete
+          </button>
         </div>
       </div>
-      <FlexBox justify="around" className="border-t">
-        {/* Call onViewDetails prop with the current number object */}
-        <Button
-          leftIcon={<Eye />}
-          size="xs"
-          onClick={() => onViewDetails(number)}
-          variant="secondary"
-        >
-          View Detail
-        </Button>
-
-        <Button
-          leftIcon={<DeleteIcon />}
-          variant="danger"
-          size="xs"
-          onClick={() => onDelete(number._id, number.mobileNumber)}
-        >
-          Delete
-        </Button>
-      </FlexBox>
-    </div>
-  );
-};
-
-const MemoizedPhoneNumberCard = memo(PhoneNumberCard);
+    );
+  },
+);
 
 // ============================================================================
-// 2. Parent Component: PhoneNumbersList
+// 2. Main List Component
 // ============================================================================
 
-const FILENAME = "phone_numbers.xlsx";
+const FILENAME = "instant_hub_directory.xlsx";
 
 export const PhoneNumbersList: FC = () => {
-  const { data: phoneNumbers, isLoading, isError } = useGetPhoneNumbersQuery();
+  const [page, setPage] = useState(1);
+  const [selectedNumber, setSelectedNumber] = useState<IPhoneNumber | null>(
+    null,
+  );
+
+  // RTK Query
+  const { data, isLoading, isFetching, isError } = useGetPhoneNumbersQuery({
+    page,
+  });
+  console.log("data", data);
 
   const [deleteNumber] = useDeletePhoneNumberMutation();
 
-  const [selectedNumber, setSelectedNumber] = useState<IPhoneNumber | null>(
-    null
+  const phoneNumbers = data?.data || [];
+  const meta = data?.meta;
+  const hasMore = meta ? page < meta.lastPage : false;
+
+  // Infinite Scroll Logic
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastElementRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (isLoading || isFetching) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, isFetching, hasMore],
   );
 
-  const handleCloseModal = () => {
-    setSelectedNumber(null);
-  };
-
   const downloadAsXLSX = useCallback(() => {
-    if (phoneNumbers && !phoneNumbers.length) {
-      toast.info("No data available to download.");
-      return;
-    }
-    const worksheetData =
-      phoneNumbers?.map(
-        ({ mobileNumber, totalOTPsTaken, purpose, updatedAt }) => ({
-          "Mobile Number": mobileNumber,
-          "Total Visits": totalOTPsTaken,
-          "Last Seen Purpose": purpose ?? "N/A",
-          "Last Updated On": formatDate(new Date(updatedAt)),
-        })
-      ) ?? [];
-    // (XLSX generation logic remains the same)
+    if (!phoneNumbers.length) return toast.info("No data loaded to download.");
+
+    const worksheetData = phoneNumbers.map((num) => ({
+      "Mobile Number": num.mobileNumber,
+      "Price Offered": num.offeredPrice,
+      Visits: num.totalOTPsTaken,
+      "Order Placed": num.orderPlaced ? "Yes" : "No",
+      Purpose: num.purpose ?? "N/A",
+      "Updated At": formatDate(new Date(num.updatedAt)),
+    }));
+
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Phone Numbers");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Directory");
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
     });
-    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(blob, FILENAME);
+    saveAs(
+      new Blob([excelBuffer], { type: "application/octet-stream" }),
+      FILENAME,
+    );
   }, [phoneNumbers]);
 
   const handleDelete = useCallback(
-    async (id: string | number, mobileNumber: string) => {
-      if (
-        window.confirm(
-          `Are you sure you want to delete ${mobileNumber}? This action cannot be undone.`
-        )
-      ) {
+    async (id: string | number, mobile: string) => {
+      if (window.confirm(`Delete ${mobile}?`)) {
         try {
           await deleteNumber(id).unwrap();
-          toast.success(`Number ${mobileNumber} deleted successfully!`);
-        } catch (error) {
-          toast.error(`Failed to delete ${mobileNumber}. Please try again.`);
+          toast.success("Deleted successfully");
+        } catch {
+          toast.error("Failed to delete");
         }
       }
     },
-    [deleteNumber]
+    [deleteNumber],
   );
 
-  if (isLoading) return <Loader />;
-  if (isError) return <FlexBox>Failed to load data. Please refresh.</FlexBox>;
+  if (isLoading && page === 1) return <Loader />;
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen">
-      <header className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-        <Typography variant="h4" className="font-bold text-gray-800">
-          Phone Number Directory
-        </Typography>
-        <div className="flex items-center gap-4">
-          <Typography variant="body" className="text-gray-600">
-            Total:{" "}
-            <span className="font-bold text-black">{phoneNumbers?.length}</span>
-          </Typography>
-          <Button
-            onClick={downloadAsXLSX}
-            disabled={phoneNumbers?.length === 0}
-            variant="primary"
+    <div className="p-4 md:p-10 bg-gray-50 min-h-screen">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+        <div>
+          <Typography
+            variant="h3"
+            className="font-extrabold text-gray-900 tracking-tight"
           >
-            Download as XLSX
-          </Button>
+            Phone Directory
+          </Typography>
+          <Typography className="text-gray-500 mt-1">
+            Tracking {meta?.total || 0} collected contacts
+          </Typography>
         </div>
+        <Button
+          onClick={downloadAsXLSX}
+          variant="primary"
+          className="shadow-md"
+        >
+          Export to Excel
+        </Button>
       </header>
 
-      {/* Content Grid */}
-      {phoneNumbers && phoneNumbers.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {phoneNumbers?.map((number) => (
-            <MemoizedPhoneNumberCard
-              key={number._id}
+      {phoneNumbers.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {phoneNumbers.map((number, index) => (
+            <PhoneNumberCard
+              key={`${number._id}-${index}`}
               number={number}
               onDelete={handleDelete}
               onViewDetails={setSelectedNumber}
@@ -180,72 +221,107 @@ export const PhoneNumbersList: FC = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 px-6 bg-white rounded-lg shadow">
-          <Typography variant="h6">No Phone Numbers Found</Typography>
-        </div>
+        !isLoading && (
+          <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-dashed border-gray-300">
+            <Typography variant="h6" className="text-gray-400">
+              No data records found
+            </Typography>
+          </div>
+        )
       )}
 
-      {/* Modal - Rendered conditionally based on 'selectedNumber' */}
-      {selectedNumber && (
-        <Modal isOpen={!!selectedNumber} onClose={handleCloseModal}>
-          <div>
-            <Typography variant="h5" className="mb-4 font-semibold">
-              Phone Number Details
+      {/* Infinite Scroll Sentinel */}
+      <div
+        ref={lastElementRef}
+        className="py-12 flex flex-col items-center justify-center gap-2"
+      >
+        {isFetching && (
+          <>
+            <Loader className="animate-spin text-primary" />
+            <Typography className="text-xs text-gray-400 animate-pulse">
+              Loading more records...
             </Typography>
-            <div className="space-y-2">
-              <Typography variant="body">
-                <span className="font-semibold">Mobile Number:</span>{" "}
-                {selectedNumber.mobileNumber}
-              </Typography>
-              <Typography variant="body">
-                <span className="font-semibold">Purpose:</span>{" "}
-                {selectedNumber.purpose ?? "Not available"}
-              </Typography>
+          </>
+        )}
+        {!hasMore && phoneNumbers.length > 0 && (
+          <div className="flex items-center gap-4 w-full max-w-md">
+            <div className="h-[1px] bg-gray-200 flex-grow"></div>
+            <Typography className="text-xs font-bold text-gray-300 uppercase tracking-widest whitespace-nowrap">
+              All records loaded
+            </Typography>
+            <div className="h-[1px] bg-gray-200 flex-grow"></div>
+          </div>
+        )}
+      </div>
 
-              <FlexBox direction="col" align="start">
-                <Typography
-                  variant="body"
-                  className="mb-2 font-medium border-b-2 border-secondary"
-                >
-                  Conditions Chosen by this Number:
+      {/* Detail Modal */}
+      {selectedNumber && (
+        <Modal
+          isOpen={!!selectedNumber}
+          onClose={() => setSelectedNumber(null)}
+        >
+          <div className="p-2">
+            <Typography
+              variant="h5"
+              className="mb-6 font-bold text-gray-800 border-b pb-4"
+            >
+              Contact Breakdown
+            </Typography>
+
+            <div className="grid grid-cols-2 gap-6 mb-8">
+              <div className="p-4 bg-gray-50 rounded-xl">
+                <Typography className="text-[10px] uppercase text-gray-400 mb-1">
+                  Mobile
                 </Typography>
-
-                <FlexBox direction="col" align="start" className="pl-2">
-                  {selectedNumber.selectedDeductionSet.length > 0 ? (
-                    selectedNumber.selectedDeductionSet?.map((deduction) =>
-                      deduction?.conditions?.map((condition) => (
-                        <div
-                          className="flex gap-1 lg:gap-4 mb-1"
-                          key={condition.conditionLabel}
-                        >
-                          <span className="text-xs lg:text-sm text-gray-500 font-medium">
-                            {deduction.type}:
-                          </span>
-                          <span className="text-xs lg:text-sm text-gray-900 sm:text-right break-words">
-                            {condition.conditionLabel}
-                          </span>
-                        </div>
-                      ))
-                    )
-                  ) : (
-                    <p className="text-gray-500 text-[16px] max-sm:text-sm">
-                      Data not available
-                    </p>
-                  )}
-                </FlexBox>
-              </FlexBox>
-
-              <Typography variant="body">
-                <span className="font-semibold">Total Visits:</span>{" "}
-                {selectedNumber.totalOTPsTaken}
-              </Typography>
-              <Typography variant="body">
-                <span className="font-semibold">Last Visit:</span>{" "}
-                {formatDate(new Date(selectedNumber.updatedAt))}
-              </Typography>
+                <Typography className="font-bold">
+                  {selectedNumber.mobileNumber}
+                </Typography>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-xl">
+                <Typography className="text-[10px] uppercase text-gray-400 mb-1">
+                  Status
+                </Typography>
+                <Typography
+                  className={`font-bold ${selectedNumber.orderPlaced ? "text-green-600" : "text-gray-600"}`}
+                >
+                  {selectedNumber.orderPlaced ? "Active Order" : "No Order"}
+                </Typography>
+              </div>
             </div>
-            <Button onClick={handleCloseModal} className="mt-6">
-              Close
+
+            <Typography className="text-sm font-bold text-gray-700 mb-3">
+              Selected Conditions
+            </Typography>
+            <div className="min-w-[450px] max-sm:min-w-fit bg-white border rounded-xl p-4 space-y-3 max-h-60 overflow-y-auto">
+              {selectedNumber.selectedDeductionSet.length > 0 ? (
+                selectedNumber.selectedDeductionSet.map((deduction, idx) => (
+                  <div key={idx} className="pb-2 border-b last:border-0">
+                    <Typography className="text-[10px] font-bold text-blue-500 uppercase">
+                      {deduction.type}
+                    </Typography>
+                    {deduction.conditions?.map((c: any) => (
+                      <Typography
+                        key={c.conditionLabel}
+                        className="text-sm text-gray-600 mt-1"
+                      >
+                        • {c.conditionLabel}
+                      </Typography>
+                    ))}
+                  </div>
+                ))
+              ) : (
+                <Typography className="text-sm text-gray-400 italic">
+                  No specific conditions recorded.
+                </Typography>
+              )}
+            </div>
+
+            <Button
+              onClick={() => setSelectedNumber(null)}
+              className="w-full mt-8"
+              variant="secondary"
+            >
+              Close Details
             </Button>
           </div>
         </Modal>

@@ -7,5 +7,6 @@ export interface IPhoneNumber {
   totalOTPsTaken: number;
   selectedDeductionSet: IFinalDeductionSet[];
   offeredPrice?: number;
+  orderPlaced?: boolean;
   updatedAt: string;
 }

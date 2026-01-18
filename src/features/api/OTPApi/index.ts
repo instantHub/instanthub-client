@@ -29,9 +29,27 @@ export const OTPApi = baseApi.injectEndpoints({
         body: { offeredPrice },
       }),
     }),
-    getPhoneNumbers: build.query<IPhoneNumber[], void>({
-      query: () => `/api/otp`,
+    getPhoneNumbers: build.query<
+      { data: IPhoneNumber[]; meta: any },
+      { page: number }
+    >({
+      query: ({ page }) => `/api/otp?page=${page}&limit=20`,
+      // Tagging for cache invalidation
       providesTags: ["Phone Numbers"],
+      // This tells RTK Query to share the same cache key for all pages
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      // Merge incoming data with existing cache
+      merge: (currentCache, newItems) => {
+        if (newItems.meta.page === 1) {
+          return newItems; // Reset cache if we go back to page 1 (refresh)
+        }
+        currentCache.data.push(...newItems.data);
+        currentCache.meta = newItems.meta;
+      },
+      // Refetch when the page argument changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.page !== previousArg?.page;
+      },
     }),
     deletePhoneNumber: build.mutation({
       query: (numberId) => ({

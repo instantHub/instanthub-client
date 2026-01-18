@@ -50,11 +50,14 @@ export const orders = baseApi.injectEndpoints({
       ],
     }),
 
-    orderCancel: build.mutation({
-      query: ({ orderId, data }) => ({
+    orderCancel: build.mutation<
+      any,
+      { orderId: string; cancellationDetails: any }
+    >({
+      query: ({ orderId, cancellationDetails }) => ({
         url: PURCHASE_ORDER_API_PATHS.CANCEL(orderId),
         method: "PUT",
-        body: data,
+        body: cancellationDetails,
       }),
       invalidatesTags: [PURCHASE_ORDERS_API_TAG, PURCHASE_ORDER_DETAIL_API_TAG],
     }),
@@ -84,6 +87,21 @@ export const orders = baseApi.injectEndpoints({
       }),
 
       invalidatesTags: [PURCHASE_ORDER_DETAIL_API_TAG],
+    }),
+
+    updateCustomerDetails: build.mutation<
+      any,
+      {
+        orderId: string;
+        customerDetails: { name: string; email: string; phone: number };
+      }
+    >({
+      query: ({ orderId, customerDetails }) => ({
+        url: PURCHASE_ORDER_API_PATHS.CUSTOMER(orderId),
+        method: "PATCH",
+        body: customerDetails,
+      }),
+      invalidatesTags: [PURCHASE_ORDERS_API_TAG, PURCHASE_ORDER_DETAIL_API_TAG],
     }),
 
     // Get order statistics
@@ -195,6 +213,7 @@ export const {
 
   useOrderReopenMutation,
   useRescheduleOrderMutation,
+  useUpdateCustomerDetailsMutation,
 
   useCompleteOrderMutation,
 

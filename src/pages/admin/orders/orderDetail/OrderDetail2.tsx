@@ -77,11 +77,11 @@ export const OrderDetail2: React.FC = () => {
   const { data: orderDetail, isLoading } = isExecutive
     ? useGetExecutiveOrderDetailsQuery(
         { orderId: orderId! },
-        { skip: !orderId || !adminData }
+        { skip: !orderId || !adminData },
       )
     : useGetOrderDetailQuery(
         { orderId: orderId! },
-        { skip: !orderId || !adminData }
+        { skip: !orderId || !adminData },
       );
 
   const [deleteOrder] = useDeleteOrderMutation();
@@ -115,7 +115,7 @@ export const OrderDetail2: React.FC = () => {
       CARDS.COMPLETION_DETAILS,
       CARDS.CANCELLATION_DETAILS,
       CARDS.DEVICE_INFORMATION,
-    ])
+    ]),
   );
 
   const toggleCard = (id: string) => {
@@ -144,7 +144,7 @@ export const OrderDetail2: React.FC = () => {
         CARDS.SELECTED_CONDITIONS,
         CARDS.COMPLETION_DETAILS,
         CARDS.CANCELLATION_DETAILS,
-      ])
+      ]),
     );
   };
 
@@ -388,7 +388,7 @@ export const OrderDetail2: React.FC = () => {
                       label={deduction.type}
                       value={condition.conditionLabel}
                     />
-                  ))
+                  )),
                 )
               ) : (
                 <p className="text-gray-500 text-[16px] max-sm:text-sm">
@@ -459,6 +459,13 @@ export const OrderDetail2: React.FC = () => {
                 <InfoRow
                   label="Reason"
                   value={orderDetail.cancellationDetails.cancelReason}
+                />
+                <InfoRow
+                  label="Additional Info"
+                  value={
+                    orderDetail.cancellationDetails.cancelAdditionalInfo ||
+                    "N/A"
+                  }
                 />
                 <InfoRow
                   label="Cancelled By"
