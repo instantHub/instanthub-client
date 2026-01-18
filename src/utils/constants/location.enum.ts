@@ -19,6 +19,11 @@ export enum LOCATIONS_CITY {
   LUCKNOW = "Lucknow",
   INDORE = "Indore",
   KOLAR = "Kolar",
+  GURGAON = "Gurgaon",
+  FARIDABAD = "Faridabad",
+  PANCHKULA = "Panchkula",
+  MOHALI = "Mohali",
+  MANGALORE = "Mangalore",
 }
 
 export enum LOCATIONS_STATE {
@@ -28,4 +33,9 @@ export enum LOCATIONS_STATE {
   MAHARASHTRA = "Maharashtra",
   TAMIL_NADU = "Tamil Nadu",
   TELANGANA = "Telangana",
+  HARYANA = "Haryana",
+  WEST_BENGAL = "West Bengal",
+  PUNJAB = "Punjab",
+  CHANDIGARH = "Chandigarh",
+  RAJASTHAN = "Rajasthan",
 }

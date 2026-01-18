@@ -80,18 +80,24 @@ export const sidebarConfig: SidebarSection[] = [
         icon: ListIndefiniteIcon,
         permissions: [ADMIN_PERMISSIONS.PRODUCT_READ],
       },
-    ],
-    permissions: [ADMIN_PERMISSIONS.CATALOG_MANAGEMENT],
-  },
-  {
-    title: "Customer Support",
-    links: [
       {
         name: "create-questions",
         href: "/admin/create-questions",
         icon: QuestionAnswerIcon,
         permissions: [ADMIN_PERMISSIONS.QUESTIONS_CREATE],
       },
+    ],
+    permissions: [ADMIN_PERMISSIONS.CATALOG_MANAGEMENT],
+  },
+  {
+    title: "Customer Support",
+    links: [
+      // {
+      //   name: "create-questions",
+      //   href: "/admin/create-questions",
+      //   icon: QuestionAnswerIcon,
+      //   permissions: [ADMIN_PERMISSIONS.QUESTIONS_CREATE],
+      // },
       {
         name: "variants-questions",
         href: "/admin/variants-questions",

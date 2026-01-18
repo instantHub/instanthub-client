@@ -62,6 +62,60 @@ const cities = [
     icon: <CityIcon size={26} />,
     available: true,
   },
+  {
+    city: LOCATIONS_CITY.GURGAON,
+    state: LOCATIONS_STATE.HARYANA,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.FARIDABAD,
+    state: LOCATIONS_STATE.HARYANA,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.PANCHKULA,
+    state: LOCATIONS_STATE.HARYANA,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.MOHALI,
+    state: LOCATIONS_STATE.PUNJAB,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.CHANDIGARH,
+    state: LOCATIONS_STATE.CHANDIGARH,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.JAIPUR,
+    state: LOCATIONS_STATE.RAJASTHAN,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.CHENNAI,
+    state: LOCATIONS_STATE.TAMIL_NADU,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.KOLKATA,
+    state: LOCATIONS_STATE.WEST_BENGAL,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
+  {
+    city: LOCATIONS_CITY.MANGALORE,
+    state: LOCATIONS_STATE.KARNATAKA,
+    icon: <CityIcon size={26} />,
+    available: true,
+  },
 ];
 
 export function LocationSelector({
